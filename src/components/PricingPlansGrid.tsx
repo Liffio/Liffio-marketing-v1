@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import AppLink from "@/components/AppLink";
 import { pricingPlans, pricingPerks } from "@/config/pricing.config";
 import { siteConfig } from "@/config/site.config";
 
@@ -160,18 +160,18 @@ export default function PricingPlansGrid({ compact = false }: PricingPlansGridPr
       {!compact && (
         <p className="text-center mt-5 text-sm text-gray-400">
           Content creator with 5K+ followers?{" "}
-          <Link href="/creators-program" className="text-[#7c5af3] font-medium hover:underline">
+          <AppLink href="/creators-program" className="text-[#7c5af3] font-medium hover:underline">
             Apply to the Creators Program →
-          </Link>
+          </AppLink>
         </p>
       )}
 
       {compact && (
         <p className="text-center mt-5 text-sm text-gray-400">
           Need volume pricing?{" "}
-          <Link href="/help" className="text-[#7c5af3] font-medium hover:underline">
+          <AppLink href="/help" className="text-[#7c5af3] font-medium hover:underline">
             Talk to us →
-          </Link>
+          </AppLink>
         </p>
       )}
     </>

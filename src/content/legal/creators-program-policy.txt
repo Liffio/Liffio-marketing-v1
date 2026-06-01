@@ -1,0 +1,125 @@
+Reactova
+Creators Program Policy
+reactova.com — Last updated: April 2026
+Effective Date: April 2026
+This Creators Program Policy ("Policy") governs participation in the Reactova Creators Program. By applying to or participating in the program, you agree to be bound by this Policy in addition to our Terms and Conditions, Privacy Policy, and Acceptable Use Policy. This Policy should be read alongside those documents.
+1. What Is the Creators Program
+The Reactova Creators Program is an invite-only initiative that provides selected Instagram creators and influencers with free access to the Reactova Business plan (valued at $79/month) at no cost. In exchange, participating creators agree to actively use the platform and help grow Reactova organically through genuine usage and the inclusion of our branding tag in their automated DM messages.
+The program is designed to benefit both parties — creators get a powerful automation tool at no cost, and Reactova gains real-world usage, organic exposure, and authentic growth.
+2. Eligibility Requirements
+To be eligible for the Creators Program, you must:
+Be at least 18 years of age
+Own or manage an active Instagram account with genuine followers and engagement
+Have a content niche aligned with the platform (business, marketing, fitness, education, tech, or similar)
+Have an engagement rate above 3% (likes and comments divided by followers)
+Post content consistently (at least weekly)
+Not be actively promoting competitor Instagram DM automation tools
+Agree to all terms outlined in this Policy and our main Terms and Conditions
+Meeting eligibility requirements does not guarantee acceptance. All applications are reviewed manually and acceptance is at our sole discretion based on profile quality, engagement, content alignment, and available spots.
+3. Application Process
+Applications to the Creators Program must be submitted exclusively through the official application form at reactova.com/creators-program. We do not accept applications through any other channel including email, social media, or direct message.
+The application requires:
+Your full name and email address
+Your country of residence
+Your Instagram username and profile link
+Your follower count range
+Your primary content niche
+Whether you currently ask followers to comment for links or guides
+An optional statement about why you want to join
+Our team reviews all applications manually. If accepted, you will receive confirmation via email within 48-72 hours. If not accepted, you may reapply after 30 days if your profile has grown or changed. We do not provide reasons for rejection.
+4. Program Capacity and Exclusivity
+The Creators Program is limited to a maximum of 50 creators in the initial launch phase. Once all spots are filled, the program will be closed to new applications until existing spots become available.
+Participation in the Creators Program does not provide any form of exclusivity. We may accept multiple creators from the same niche, country, or audience demographic. We make no guarantees about limiting competition between creators within the program.
+5. What You Receive as a Creator
+Accepted creators receive the following at no cost for as long as they remain active and compliant members of the program:
+Full access to all Reactova Business plan features
+Unlimited automated DMs
+Unlimited automation workflows
+Advanced analytics and conversion tracking
+DM follow-up sequences
+Follow before DM verification
+Bio link page with advanced customisation
+Priority support
+Creator access does not include white label features, API access, team members, or Agency plan features. These remain exclusive to paid Agency plan subscribers.
+Access is provided on a month-to-month basis and is subject to continued compliance with this Policy. There is no guaranteed minimum duration of access.
+6. Your Obligations as a Creator
+6.1 Minimum Activity Requirements
+To maintain your free access, you must meet the following minimum requirements each calendar month:
+Send at least 300 automated DMs per month through the Reactova platform
+Run at least 2 active automation campaigns every 30 days
+Actively use the platform to send automated replies to your followers
+We monitor compliance automatically. If you fall below the 300 DM threshold, you will receive an automated alert on Day 25 of the month reminding you to run a campaign before the month ends. Failure to meet requirements by end of month constitutes a violation.
+6.2 Branding Requirement
+As a condition of receiving free access, you must retain the "⚡︎ Powered by @Reactova" tag in all automated DM messages sent through the platform. This tag must remain visible and unaltered in every automated DM you send. You must not attempt to hide, remove, modify, or work around this branding tag.
+This branding tag is how Reactova grows organically through your campaigns and is the primary exchange for your free access. Removing or tampering with this tag is a serious violation of this Policy.
+6.3 Competitor Restriction
+While participating in the Creators Program, you must not actively promote, recommend, endorse, or create sponsored content for any competing Instagram DM automation tool or platform. This restriction applies to direct promotion including sponsored posts, affiliate promotions, tutorials, reviews, and direct recommendations.
+You are free to use other unrelated tools and platforms. This restriction applies specifically to direct competitors offering Instagram comment-to-DM automation functionality.
+6.4 Content Responsibility
+You are solely responsible for all content sent through your automated DM workflows including message text, links, buttons, and any media. Reactova provides the automation infrastructure only. We are not responsible for the content of your DMs, any claims made in your messages, or the outcomes of your campaigns.
+You must ensure all automated content complies with:
+Instagram's Community Standards and Platform Policies
+Meta's Messaging Policies
+All applicable laws in your country and the countries of your recipients
+Our Acceptable Use Policy
+6.5 Account Integrity
+You must maintain genuine followers and authentic engagement on your Instagram account. Purchasing followers, using engagement pods deceptively, or artificially inflating your metrics is a violation of this Policy and Instagram's terms. Creator access may be reviewed and revoked if we detect inauthentic growth.
+7. Instagram Account Risks and Responsibility
+Reactova operates exclusively through Meta's official Instagram Graph API. However, all Instagram account usage carries inherent risks including but not limited to account restrictions, reduced reach, shadowbanning, or account suspension imposed by Instagram or Meta.
+You acknowledge and agree that:
+Any restrictions, bans, or suspensions applied to your Instagram account by Meta are entirely your responsibility
+Reactova is not liable for any negative consequences to your Instagram account resulting from your use of the platform
+We will not intervene, assist with appeals, or compensate you for account actions taken by Meta
+Instagram's policies may change at any time in ways that affect platform functionality, and we are not responsible for such changes
+8. Violations and Enforcement
+8.1 Warning System
+We operate a one warning policy for violations of this Policy:
+First violation — you will receive a written warning via email clearly describing the violation and what must be corrected. You will have 7 days to correct the issue.
+Second violation — your creator access will be revoked immediately without further notice, regardless of whether the second violation is the same as or different from the first.
+8.2 Immediate Revocation (No Warning)
+Certain violations are considered serious enough to warrant immediate revocation without warning:
+Removing or tampering with the Powered by @Reactova branding tag
+Actively promoting a direct competitor DM automation tool
+Using the platform to send illegal, harmful, or abusive content
+Providing false information in your application
+Attempting to exploit or abuse the free access in bad faith
+Violating our Acceptable Use Policy in a serious or repeated manner
+8.3 Compliance Monitoring
+We monitor creator activity automatically including DM volume, campaign activity, and branding tag presence. By participating in the program, you consent to this monitoring. We reserve the right to review your usage at any time to verify compliance.
+9. Access Review and Revocation
+Creator access is reviewed periodically. We reserve the right to revoke access at any time for any of the following reasons:
+Failure to meet monthly activity requirements
+Violation of this Policy or our Terms and Conditions
+The program no longer serving its intended purpose for Reactova
+Changes to our business model or platform direction
+Any other reason at our sole discretion
+We will make reasonable efforts to notify you via email before revoking access except in cases of immediate revocation as described in Section 8.2. Upon revocation, your access to Business plan features will end immediately and your account will revert to the Free plan.
+We are not liable to you for any losses, damages, or missed opportunities resulting from revocation of your creator access, regardless of the reason.
+10. Leaving the Program
+You may leave the Creators Program at any time by emailing support@reactova.com with the subject line "Creator Program Exit." Upon exit, your access to Business plan features will end and your account will revert to the Free plan. You may reapply to the program in the future if spots are available, though prior participation does not guarantee re-acceptance.
+11. Relationship Clarification
+Participation in the Creators Program does not create any employment, agency, partnership, joint venture, or contractual relationship between you and Reactova (sole proprietorship) beyond what is expressly stated in this Policy. You are an independent creator using our platform under a specific access arrangement.
+You are not authorised to make any statements, representations, or commitments on behalf of Reactova. You must not represent yourself as an employee, partner, official ambassador, or affiliate of Reactova unless we have provided you with a separate written agreement to that effect.
+12. Data and Privacy
+By participating in the Creators Program, you consent to Reactova collecting and retaining data related to your participation including your application details, DM volume, campaign performance, engagement statistics, and branding compliance metrics.
+This data is retained in accordance with our Privacy Policy. Upon leaving the program or having your access revoked, your campaign and usage data is retained for our analytics and platform improvement purposes as described in our Privacy Policy. You may request deletion of personal data by contacting support@reactova.com.
+We may reference your participation in the program in aggregate or anonymised marketing materials. We will not publish your name, username, or identifiable information in any marketing material without your explicit written consent.
+13. No Guarantee of Results
+Reactova does not guarantee any specific results from participation in the Creators Program including follower growth, lead generation, sales conversions, DM open rates, or engagement improvements. Results depend entirely on your content, audience, campaign strategy, and Instagram's algorithm, all of which are outside our control.
+14. Changes to the Program
+We reserve the right to modify, suspend, or terminate the Creators Program at any time with or without notice. We may change the requirements, benefits, capacity, or structure of the program at any time. If we make material changes that affect existing creators, we will make reasonable efforts to notify you via email. Continued participation after any changes constitutes your acceptance of the updated terms.
+Material changes include updates that affect your obligations, the benefits you receive, or the branding requirements of the program.
+15. Governing Law
+This Policy is governed by the laws of India. Any disputes arising from your participation in the Creators Program shall be subject to the exclusive jurisdiction of the courts in India.
+16. Relationship to Other Policies
+This Creators Program Policy supplements and should be read alongside:
+Terms and Conditions — reactova.com/terms
+Privacy Policy — reactova.com/privacy
+Acceptable Use Policy — reactova.com/acceptable-use
+Refund Policy — reactova.com/refunds
+In the event of any conflict between this Policy and the Terms and Conditions, the Terms and Conditions shall prevail. In the event of any conflict between this Policy and the Acceptable Use Policy specifically regarding creator conduct, this Policy shall prevail as the more specific document.
+17. Contact
+For questions about the Creators Program or this Policy:
+Email: support@reactova.com
+Website: reactova.com/creators-program
+Reactova — April 2026

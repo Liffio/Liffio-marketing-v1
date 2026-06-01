@@ -1,9 +1,8 @@
-import Link from "next/link";
 import Logo from "./Logo";
 
 const footerLinks = {
   Product: [
-    { label: "Features", href: "/#features" },
+    { label: "Features", href: "/features" },
     { label: "Pricing", href: "/pricing" },
     { label: "Blog", href: "/blog" },
     { label: "Help Center", href: "/help" },
@@ -11,12 +10,17 @@ const footerLinks = {
   Company: [
     { label: "About", href: "#" },
     { label: "Creators Program", href: "/creators-program" },
+    { label: "Affiliate Program", href: "/affiliate" },
     { label: "Contact", href: "#" },
   ],
   Legal: [
-    { label: "Terms of Service", href: "#" },
-    { label: "Privacy Policy", href: "#" },
-    { label: "Refund Policy", href: "#" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms of Service", href: "/terms-of-service" },
+    { label: "Cookie Policy", href: "/cookie-policy" },
+    { label: "Refund Policy", href: "/refund-policy" },
+    { label: "Acceptable Use", href: "/acceptable-use-policy" },
+    { label: "Creators Program Policy", href: "/creators-policy" },
+    { label: "Affiliate Program Policy", href: "/affiliate-policy" },
   ],
 };
 
@@ -83,12 +87,12 @@ export default function Footer() {
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <Link
+                    <a
                       href={link.href}
                       className="text-sm text-gray-400 transition-colors duration-200 hover:text-white"
                     >
                       {link.label}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>

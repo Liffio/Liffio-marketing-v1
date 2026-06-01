@@ -1,7 +1,7 @@
 export const siteConfig = {
   urls: {
     appBase: "https://app.liffio.com",
-    appSignup: "https://app.liffio.com/signup",
+    appSignup: "https://app.liffio.com/register",
     appLogin: "https://app.liffio.com/login",
     preregister: "/signup",
   },

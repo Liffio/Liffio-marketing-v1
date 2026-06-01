@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import AppLink from "@/components/AppLink";
 import PricingPlansGrid from "@/components/PricingPlansGrid";
 import { TechBadge } from "@/components/TechBadge";
 import { pricingPlans, type PricingPlan } from "@/config/pricing.config";
@@ -131,7 +131,7 @@ function PricingMobilePreview() {
         <p className="text-xs leading-relaxed text-gray-600">
           Compare all features, annual billing, and the full plan matrix on the pricing page.
         </p>
-        <Link
+        <AppLink
           href="/pricing"
           className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-brand-200 bg-white py-3 text-sm font-semibold text-brand-700 shadow-sm transition-colors hover:bg-brand-50"
         >
@@ -139,7 +139,7 @@ function PricingMobilePreview() {
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" aria-hidden>
             <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
           </svg>
-        </Link>
+        </AppLink>
       </div>
     </div>
   );

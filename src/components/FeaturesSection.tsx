@@ -114,7 +114,7 @@ function Bubble({
 
 // ─── Phone screens ────────────────────────────────────────────────────────────
 
-function CommentReplyPhone({ animKey }: { animKey: number }) {
+export function CommentReplyPhone({ animKey }: { animKey: number }) {
   const botGrad = "linear-gradient(135deg,#f06292,#e91e63)";
   const steps = [
     { delay: 400,  isBot: false },
@@ -167,7 +167,7 @@ function CommentReplyPhone({ animKey }: { animKey: number }) {
   );
 }
 
-function StoryReplyPhone({ animKey }: { animKey: number }) {
+export function StoryReplyPhone({ animKey }: { animKey: number }) {
   const contacts = [
     { init: "SG", grad: "linear-gradient(135deg,#64748b,#1e293b)", name: "sculpt gym",   sub: "Sent you a message · Ju...", dot: true  },
     { init: "FN", grad: "linear-gradient(135deg,#f472b6,#ef4444)", name: "fitgirl.nina", sub: "Let's workout together! · 3h", dot: false },
@@ -215,7 +215,7 @@ function StoryReplyPhone({ animKey }: { animKey: number }) {
   );
 }
 
-function LiveReplyPhone({ animKey }: { animKey: number }) {
+export function LiveReplyPhone({ animKey }: { animKey: number }) {
   const comments = [
     { name: "mike.wellness", msg: "Love this routine! ✨" },
     { name: "beauty.fan",    msg: "What's the serum? 🌿"  },
@@ -275,7 +275,7 @@ function LiveReplyPhone({ animKey }: { animKey: number }) {
   );
 }
 
-function DmReplyPhone({ animKey }: { animKey: number }) {
+export function DmReplyPhone({ animKey }: { animKey: number }) {
   const botGrad = "linear-gradient(135deg,#fb923c,#f59e0b)";
   const steps = [
     { delay: 500,  isBot: false },
@@ -329,7 +329,7 @@ function DmReplyPhone({ animKey }: { animKey: number }) {
   );
 }
 
-function AskFollowPhone({ animKey }: { animKey: number }) {
+export function AskFollowPhone({ animKey }: { animKey: number }) {
   const botGrad = "linear-gradient(135deg,#f06292,#9333ea)";
   const steps = [
     { delay: 400,  isBot: false }, // profile card
@@ -394,7 +394,7 @@ function AskFollowPhone({ animKey }: { animKey: number }) {
   );
 }
 
-function ReengagePhone({ animKey }: { animKey: number }) {
+export function ReengagePhone({ animKey }: { animKey: number }) {
   const rows = [
     { init: "JD", grad: "linear-gradient(135deg,#60a5fa,#2563eb)", name: "john.deals",      msg: "started following you. 2m",   action: "Follow",     highlight: true  },
     { init: "TS", grad: "linear-gradient(135deg,#f472b6,#ef4444)", name: "thesaraofficial", msg: "liked your post. 15m",         action: null,         highlight: false },
@@ -447,7 +447,7 @@ function ReengagePhone({ animKey }: { animKey: number }) {
   );
 }
 
-function CollectDataPhone({ animKey }: { animKey: number }) {
+export function CollectDataPhone({ animKey }: { animKey: number }) {
   const steps = [
     { delay: 400,  isBot: true  }, // ask email
     { delay: 1400, isBot: false }, // user replies email
@@ -504,7 +504,7 @@ function CollectDataPhone({ animKey }: { animKey: number }) {
   );
 }
 
-function WelcomeFollowersPhone({ animKey }: { animKey: number }) {
+export function WelcomeFollowersPhone({ animKey }: { animKey: number }) {
   const steps = [
     { delay: 400,  isBot: true  },
     { delay: 1500, isBot: true  },
@@ -569,6 +569,7 @@ const features = [
     tag: "Comments → DMs",
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>),
     title: "Auto Comment Reply",
+    gridLabel: "Comment Reply",
     description: "When a follower comments a keyword on your post or reel, Liffio sends them a personalised DM and a public comment reply on your schedule. Choose a custom delay from 10–60 seconds after the comment for natural, human-like timing.",
     bullets: ["Works on posts, reels, and carousels", "Unlimited keywords per campaign", "Sends public reply + private DM simultaneously"],
     Phone: CommentReplyPhone,
@@ -582,6 +583,7 @@ const features = [
     tag: "Story reactions",
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><rect x="3" y="3" width="18" height="18" rx="3" ry="3" strokeLinecap="round" strokeLinejoin="round"/><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4"/></svg>),
     title: "Story Auto Reply",
+    gridLabel: "Story Reply",
     description: "Your stories get the most engaged viewers. Liffio auto-responds the moment someone reacts, replies to, or mentions your story — capturing leads at their highest point of interest.",
     bullets: ["Triggers on reactions, replies, and @mentions", "Perfect for flash sales and limited-time offers", "Works 24/7, even mid-sleep"],
     Phone: StoryReplyPhone,
@@ -595,6 +597,7 @@ const features = [
     tag: "Live stream DMs",
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>),
     title: "Live Auto Reply",
+    gridLabel: "Live Reply",
     description: "Your Instagram Live is a live sales event. Liffio monitors comments in real-time and sends DMs to every viewer who types a keyword — turning a broadcast into a revenue funnel.",
     bullets: ["Monitors keywords during live streams", "Ideal for product launches, Q&As, and webinars", "Sends discount codes, links, and resources automatically"],
     Phone: LiveReplyPhone,
@@ -608,6 +611,7 @@ const features = [
     tag: "Inbound DM flows",
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><line x1="22" y1="2" x2="11" y2="13" strokeLinecap="round" strokeLinejoin="round"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>),
     title: "DM Auto Reply",
+    gridLabel: "DM Reply",
     description: "Build powerful automated flows triggered by incoming DMs. From simple keyword responses to multi-step qualification sequences — Liffio handles every conversation at scale.",
     bullets: ["Keyword-triggered conversation flows", "Multi-step logic with yes/no branching", "Qualify leads without lifting a finger"],
     Phone: DmReplyPhone,
@@ -621,6 +625,7 @@ const features = [
     tag: "Follow gate",
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>),
     title: "Ask for Follow",
+    gridLabel: "Ask Follow",
     description: "Gate your content behind a follow. Before delivering the promised link or resource, Liffio prompts users to follow your account — dramatically accelerating your follower growth.",
     bullets: ["Optional follow gate before content delivery", "Displays your profile card inside DMs", "Tracks follow conversion rates in analytics"],
     Phone: AskFollowPhone,
@@ -634,6 +639,7 @@ const features = [
     tag: "Win-back sequences",
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>),
     title: "Smart Re-engage",
+    gridLabel: "Re-engage",
     description: "Warm leads go cold fast. Liffio identifies users who've interacted with you before and automatically sends timed follow-ups — converting browsers into buyers on autopilot.",
     bullets: ["Re-engages previous commenters and DM contacts", "Configurable time-based follow-up sequences", "Personalised message templates per segment"],
     Phone: ReengagePhone,
@@ -647,6 +653,7 @@ const features = [
     tag: "Lead capture",
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>),
     title: "Collect User Data",
+    gridLabel: "Collect Data",
     description: "Own your audience. Liffio asks followers for their email, phone number, or any custom field right inside a DM conversation — building your list without any external tools.",
     bullets: ["Captures email, phone, and custom data", "Auto-exports to CSV and integrates with CRMs", "Fully GDPR-compliant data handling"],
     Phone: CollectDataPhone,
@@ -660,6 +667,7 @@ const features = [
     tag: "New follower DMs",
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>),
     title: "Welcome New Followers",
+    gridLabel: "Welcome",
     description: "First impressions are everything. When someone follows you, Liffio sends a warm, personalised welcome message on your schedule — starting the relationship before they even see your next post.",
     bullets: ["Fires automatically after a new follow", "Personalised with @username and first name", "Include links, offers, or a simple warm hello"],
     Phone: WelcomeFollowersPhone,
@@ -742,37 +750,62 @@ export default function FeaturesSection() {
           </div>
         </div>
 
-        {/* Mobile: tabs → demo → one detail card (minimal scroll) */}
+        {/* Mobile: buttons → demo → info */}
         <div className="space-y-5 lg:hidden">
-          <div className="snap-tabs scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-0.5">
-            {features.map((feat, i) => {
-              const isActive = i === activeFeature;
-              return (
-                <button
-                  key={feat.id}
-                  type="button"
-                  onClick={() => goToFeature(i)}
-                  className="flex shrink-0 snap-start items-center gap-2 rounded-full border px-3 py-2 text-left transition-all duration-200"
-                  style={{
-                    borderColor: isActive ? feat.color : feat.border,
-                    background: isActive ? feat.bg : "white",
-                    boxShadow: isActive ? `0 4px 16px ${feat.bg}` : "0 1px 4px rgba(0,0,0,0.04)",
-                  }}
-                  aria-pressed={isActive}
-                >
-                  <span
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[9px] font-black"
+          <div
+            className="card-base p-4 sm:p-5"
+            style={{
+              background: "linear-gradient(155deg, #faf8ff 0%, #ffffff 55%, #f8f5ff 100%)",
+            }}
+          >
+            <p
+              className="mb-4 text-center text-sm font-bold text-[#0a0a0a] sm:text-base"
+              style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
+            >
+              Tap a feature to{" "}
+              <span className="gradient-text">explore</span>
+            </p>
+
+            <div className="grid grid-cols-4 gap-1 sm:gap-1.5">
+              {features.map((feat, i) => {
+                const isActive = i === activeFeature;
+                return (
+                  <button
+                    key={feat.id}
+                    type="button"
+                    onClick={() => goToFeature(i)}
+                    className="flex flex-col items-center rounded-xl px-0.5 py-1.5 transition-all duration-200 sm:px-1 sm:py-2"
                     style={{
-                      background: isActive ? feat.color : feat.bg,
-                      color: isActive ? "white" : feat.color,
+                      background: isActive ? feat.bg : "transparent",
+                      border: isActive ? `1px solid ${feat.color}` : "1px solid transparent",
+                      boxShadow: isActive ? `0 4px 16px ${feat.bg}` : "none",
                     }}
+                    aria-pressed={isActive}
+                    aria-label={feat.title}
                   >
-                    {feat.num}
-                  </span>
-                  <span className="max-w-[9rem] truncate text-xs font-semibold text-[#0a0a0a]">{feat.title}</span>
-                </button>
-              );
-            })}
+                    <div
+                      className="flex h-9 w-9 items-center justify-center rounded-xl transition-all duration-200 sm:h-10 sm:w-10"
+                      style={{
+                        background: isActive ? feat.color : feat.bg,
+                        color: isActive ? "white" : feat.color,
+                        border: isActive ? "none" : `1px solid ${feat.border}`,
+                      }}
+                    >
+                      <div className="scale-[0.72] sm:scale-75">{feat.icon}</div>
+                    </div>
+                    <span
+                      className="mt-1.5 max-w-full text-center text-[9px] leading-tight sm:text-[10px]"
+                      style={{
+                        color: isActive ? feat.color : "#6b7280",
+                        fontWeight: isActive ? 700 : 500,
+                      }}
+                    >
+                      {feat.gridLabel}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           <SimulationMobileStage>
@@ -789,42 +822,64 @@ export default function FeaturesSection() {
             </div>
           </SimulationMobileStage>
 
-          <article
-            className="rounded-2xl bg-white p-4 sm:p-5"
+          <div
+            className="card-base p-4 sm:p-5"
             style={{
-              border: `1px solid ${f.border}`,
-              boxShadow: `0 8px 32px ${f.bg}`,
+              background: "linear-gradient(155deg, #faf8ff 0%, #ffffff 55%, #f8f5ff 100%)",
             }}
           >
-            <div className="mb-2 flex flex-wrap items-center gap-2">
-              <TechBadge label={f.tag} variant="inline" format="label" accent={f.color} />
-              <span className="text-[10px] font-bold text-gray-400">{f.num} / 08</span>
-            </div>
-            <h3 className="text-lg font-bold text-[#0a0a0a]">{f.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-gray-500 line-clamp-3">{f.description}</p>
-            <ul className="mt-3 space-y-1.5">
-              {f.bullets.slice(0, 2).map((b) => (
-                <li key={b} className="flex items-start gap-2 text-xs text-gray-600">
-                  <svg viewBox="0 0 16 16" className="mt-0.5 h-3.5 w-3.5 shrink-0" fill="none">
-                    <circle cx="8" cy="8" r="8" fill={f.bg} />
-                    <path
-                      d="M4.5 8.5l2 2 4.5-5"
-                      stroke={f.color}
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  {b}
-                </li>
-              ))}
-            </ul>
+            <article
+              className="rounded-2xl bg-white p-4 transition-all duration-300"
+              style={{
+                border: `1px solid ${f.border}`,
+                boxShadow: `0 8px 32px ${f.bg}`,
+              }}
+            >
+              <div className="mb-2 flex flex-wrap items-center gap-2">
+                <TechBadge label={f.tag} variant="inline" format="label" accent={f.color} />
+                <span className="text-[10px] font-bold text-gray-400">{f.num} / 08</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <div
+                  className="flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl"
+                  style={{ background: f.color, color: "white" }}
+                >
+                  <span className="text-[8px] font-black leading-none tracking-wider">{f.num}</span>
+                  <div className="scale-75">{f.icon}</div>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-base font-bold text-[#0a0a0a]">{f.title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-gray-500">{f.description}</p>
+                  <ul className="mt-3 space-y-1.5">
+                    {f.bullets.slice(0, 2).map((b) => (
+                      <li key={b} className="flex items-start gap-2 text-xs text-gray-600">
+                        <svg viewBox="0 0 16 16" className="mt-0.5 h-3.5 w-3.5 shrink-0" fill="none">
+                          <circle cx="8" cy="8" r="8" fill={f.bg} />
+                          <path
+                            d="M4.5 8.5l2 2 4.5-5"
+                            stroke={f.color}
+                            strokeWidth="1.6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <p className="mt-3 text-center text-xs text-gray-400">8 automations · one dashboard</p>
+
             <a
               href={siteConfig.urls.appSignup}
-              className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-all active:scale-[0.98] sm:w-auto"
+              id="features-cta"
+              className="btn-primary mt-4 flex w-full items-center justify-center gap-2 px-5 py-3.5 text-sm active:scale-[0.98]"
               style={{
                 background: `linear-gradient(135deg,${f.color},#4259f0)`,
-                boxShadow: `0 4px 14px ${f.color}40`,
+                boxShadow: `0 4px 20px ${f.color}40`,
               }}
             >
               Try It Free
@@ -832,23 +887,26 @@ export default function FeaturesSection() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
             </a>
-          </article>
 
-          <div className="flex justify-center gap-1.5">
-            {features.map((feat, i) => (
-              <button
-                key={feat.id}
-                type="button"
-                onClick={() => goToFeature(i)}
-                aria-label={`Show ${feat.title}`}
-                className="rounded-full transition-all duration-300"
-                style={{
-                  width: i === activeFeature ? 18 : 5,
-                  height: 5,
-                  background: i === activeFeature ? `linear-gradient(90deg,${feat.color},#4259f0)` : "#e5e7eb",
-                }}
-              />
-            ))}
+            <div className="mt-4 flex justify-center gap-1.5">
+              {features.map((feat, i) => (
+                <button
+                  key={feat.id}
+                  type="button"
+                  onClick={() => goToFeature(i)}
+                  aria-label={`Show ${feat.title}`}
+                  className="rounded-full transition-all duration-300"
+                  style={{
+                    width: i === activeFeature ? 18 : 5,
+                    height: 5,
+                    background:
+                      i === activeFeature
+                        ? `linear-gradient(90deg,${feat.color},#4259f0)`
+                        : "#e5e7eb",
+                  }}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
@@ -881,7 +939,7 @@ export default function FeaturesSection() {
                     }}
                   >
                     <div
-                      className="absolute left-0 top-1 bottom-0 w-1 rounded-l-2xl transition-opacity duration-300 h-auto"
+                      className="absolute left-0 top-1.5 bottom-0 w-1 rounded-l-2xl transition-opacity duration-300 h-auto"
                       style={{
                         background: `linear-gradient(180deg,${feat.color},transparent)`,
                         opacity: isActive ? 1 : 0,

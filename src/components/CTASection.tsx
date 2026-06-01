@@ -1,4 +1,4 @@
-import Link from "next/link";
+import AppLink from "@/components/AppLink";
 import { siteConfig } from "@/config/site.config";
 import { TechBadge } from "@/components/TechBadge";
 import { MetaVerifiedOnly } from "@/components/MetaVerifiedOnly";
@@ -98,12 +98,12 @@ export default function CTASection() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
               </a>
-              <Link
+              <AppLink
                 href="/pricing"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-7 py-3.5 text-sm font-semibold text-gray-800 shadow-sm transition-all duration-200 hover:border-brand-200 hover:bg-brand-50/50"
               >
                 View pricing
-              </Link>
+              </AppLink>
             </div>
 
             <p className="mt-4 text-sm text-gray-500">

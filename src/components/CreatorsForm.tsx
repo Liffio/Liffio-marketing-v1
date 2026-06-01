@@ -320,9 +320,9 @@ export default function CreatorsForm() {
         </div>
         <span className="text-sm text-gray-600 leading-relaxed">
           I agree to the{' '}
-          <a href="/help" className="text-[#4259f0] hover:underline">Terms of Service</a>,{' '}
-          <a href="/help" className="text-[#4259f0] hover:underline">Privacy Policy</a>, and{' '}
-          <a href="/help" className="text-[#4259f0] hover:underline">Creators Program Policy</a> *
+          <a href="/terms-of-service" className="text-[#4259f0] hover:underline">Terms of Service</a>,{' '}
+          <a href="/privacy-policy" className="text-[#4259f0] hover:underline">Privacy Policy</a>, and{' '}
+          <a href="/creators-policy" className="text-[#4259f0] hover:underline">Creators Program Policy</a> *
         </span>
       </label>
       {fieldErrors.termsAndConditions && <p className="text-xs text-red-500">You must agree to the terms</p>}

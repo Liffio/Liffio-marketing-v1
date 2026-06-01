@@ -116,7 +116,7 @@ export default function StatsSection() {
       />
 
       <div className="relative mx-auto max-w-7xl px-4 py-11 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
-        <div className="flex flex-col items-stretch gap-10 sm:flex-row sm:items-center sm:justify-between sm:gap-5 lg:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 items-stretch gap-10 sm:flex-row sm:items-center sm:justify-between sm:gap-5 lg:gap-6">
           {stats.map((s, i) => (
             <Fragment key={s.id}>
               {i > 0 ? <StatSeparator /> : null}

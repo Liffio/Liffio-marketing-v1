@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import AppLink from "@/components/AppLink";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PricingPlansGrid, { PricingBottomCta } from "@/components/PricingPlansGrid";
@@ -48,9 +48,9 @@ export default function PricingPage() {
             </p>
             <p className="mt-3 text-sm text-gray-500">
               Pre-launch offer:{" "}
-              <Link href={siteConfig.urls.preregister} className="text-[#7c5af3] font-semibold hover:underline">
+              <AppLink href={siteConfig.urls.preregister} className="text-[#7c5af3] font-semibold hover:underline">
                 Pre-register for 50% off your first purchase →
-              </Link>
+              </AppLink>
             </p>
           </div>
         </section>

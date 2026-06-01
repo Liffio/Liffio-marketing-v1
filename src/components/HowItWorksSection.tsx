@@ -513,6 +513,7 @@ export default function HowItWorksSection() {
   }, [activeStep, animKey]);
 
   const SimComp = simulations[activeStep];
+  const step = steps[activeStep];
 
   return (
     <section
@@ -571,36 +572,62 @@ export default function HowItWorksSection() {
           </div>
         </div>
 
-        {/* Mobile: step tabs → demo → active step only */}
+        {/* Mobile: buttons → demo → info */}
         <div className="space-y-5 lg:hidden">
-          <div className="snap-tabs scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4">
-            {steps.map((step, i) => {
-              const isActive = i === activeStep;
-              return (
-                <button
-                  key={step.num}
-                  type="button"
-                  onClick={() => goToStep(i)}
-                  className="flex shrink-0 snap-start items-center gap-2 rounded-full border px-3 py-2 transition-all"
-                  style={{
-                    borderColor: isActive ? step.color : step.border,
-                    background: isActive ? step.bg : "white",
-                  }}
-                  aria-pressed={isActive}
-                >
-                  <span
-                    className="flex h-7 w-7 items-center justify-center rounded-lg text-[9px] font-black"
+          <div
+            className="card-base p-4 sm:p-5"
+            style={{
+              background: "linear-gradient(155deg, #faf8ff 0%, #ffffff 55%, #f8f5ff 100%)",
+            }}
+          >
+            <p
+              className="mb-4 text-center text-sm font-bold text-[#0a0a0a] sm:text-base"
+              style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
+            >
+              Tap a step to{" "}
+              <span className="gradient-text">explore</span>
+            </p>
+
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+              {steps.map((s, i) => {
+                const isActive = i === activeStep;
+                return (
+                  <button
+                    key={s.num}
+                    type="button"
+                    onClick={() => goToStep(i)}
+                    className="flex flex-col items-center rounded-xl px-1 py-2 transition-all duration-200 sm:py-2.5"
                     style={{
-                      background: isActive ? step.color : step.bg,
-                      color: isActive ? "white" : step.color,
+                      background: isActive ? s.bg : "transparent",
+                      border: isActive ? `1px solid ${s.color}` : "1px solid transparent",
+                      boxShadow: isActive ? `0 4px 16px ${s.bg}` : "none",
                     }}
+                    aria-pressed={isActive}
+                    aria-label={s.title}
                   >
-                    {step.num}
-                  </span>
-                  <span className="max-w-[8.5rem] truncate text-xs font-semibold text-[#0a0a0a]">{step.title}</span>
-                </button>
-              );
-            })}
+                    <div
+                      className="flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-200 sm:h-11 sm:w-11"
+                      style={{
+                        background: isActive ? s.color : s.bg,
+                        color: isActive ? "white" : s.color,
+                        border: isActive ? "none" : `1px solid ${s.border}`,
+                      }}
+                    >
+                      <div className="scale-[0.65] sm:scale-75">{s.icon}</div>
+                    </div>
+                    <span
+                      className="mt-1.5 max-w-full text-center text-[10px] leading-tight sm:text-[11px]"
+                      style={{
+                        color: isActive ? s.color : "#6b7280",
+                        fontWeight: isActive ? 700 : 500,
+                      }}
+                    >
+                      {s.shortTitle}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           <SimulationMobileStage>
@@ -615,45 +642,73 @@ export default function HowItWorksSection() {
             </div>
           </SimulationMobileStage>
 
-          {(() => {
-            const step = steps[activeStep];
-            return (
-              <article
-                className="rounded-2xl bg-white p-4 sm:p-5"
-                style={{
-                  border: `1px solid ${step.border}`,
-                  boxShadow: `0 8px 32px ${step.bg}`,
-                }}
-              >
-                <TechBadge label={`ok ${step.note}`} variant="inline" format="label" accent={step.color} />
-                <h3 className="mt-2 text-lg font-bold text-[#0a0a0a]">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-500">{step.detail}</p>
-                <a
-                  href={siteConfig.urls.appSignup}
-                  className="mt-4 inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white sm:w-auto"
-                  style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)" }}
+          <div
+            className="card-base p-4 sm:p-5"
+            style={{
+              background: "linear-gradient(155deg, #faf8ff 0%, #ffffff 55%, #f8f5ff 100%)",
+            }}
+          >
+            <article
+              className="rounded-2xl bg-white p-4 transition-all duration-300"
+              style={{
+                border: `1px solid ${step.border}`,
+                boxShadow: `0 8px 32px ${step.bg}`,
+              }}
+            >
+              <div className="mb-2 flex flex-wrap items-center gap-2">
+                <TechBadge label={step.note} variant="inline" format="label" accent={step.color} />
+                <span className="text-[10px] font-bold text-gray-400">{step.num} / 03</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <div
+                  className="flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl"
+                  style={{ background: step.color, color: "white" }}
                 >
-                  Get Started Free →
-                </a>
-              </article>
-            );
-          })()}
+                  <span className="text-[8px] font-black leading-none tracking-wider">{step.num}</span>
+                  <div className="scale-75">{step.icon}</div>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-base font-bold text-[#0a0a0a]">{step.title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-gray-500">{step.detail}</p>
+                </div>
+              </div>
+            </article>
 
-          <div className="flex justify-center gap-2">
-            {steps.map((step, i) => (
-              <button
-                key={step.num}
-                type="button"
-                onClick={() => goToStep(i)}
-                aria-label={`Go to step ${step.num}`}
-                className="rounded-full transition-all duration-300"
-                style={{
-                  width: i === activeStep ? 20 : 6,
-                  height: 6,
-                  background: i === activeStep ? "linear-gradient(90deg,#7c5af3,#4259f0)" : "#e5e7eb",
-                }}
-              />
-            ))}
+            <p className="mt-3 text-center text-xs text-gray-400">3 steps · live in minutes</p>
+
+            <a
+              href={siteConfig.urls.appSignup}
+              className="btn-primary mt-4 flex w-full items-center justify-center gap-2 px-5 py-3.5 text-sm active:scale-[0.98]"
+              style={{
+                background: `linear-gradient(135deg,${step.color},#4259f0)`,
+                boxShadow: `0 4px 20px ${step.color}40`,
+              }}
+            >
+              Get Started Free
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+
+            <div className="mt-4 flex justify-center gap-1.5">
+              {steps.map((s, i) => (
+                <button
+                  key={s.num}
+                  type="button"
+                  onClick={() => goToStep(i)}
+                  aria-label={`Go to step ${s.num}`}
+                  className="rounded-full transition-all duration-300"
+                  style={{
+                    width: i === activeStep ? 18 : 5,
+                    height: 5,
+                    background:
+                      i === activeStep
+                        ? `linear-gradient(90deg,${s.color},#4259f0)`
+                        : "#e5e7eb",
+                  }}
+                />
+              ))}
+            </div>
           </div>
         </div>
 

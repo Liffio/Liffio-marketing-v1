@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
+import AppLink from '@/components/AppLink'
 
 function getDeviceInfo() {
   if (typeof window === 'undefined') return {}
@@ -137,16 +137,16 @@ export default function SignupForm() {
         {loading ? 'Creating your account…' : 'Get Started Free →'}
       </button>
 
-      <Link href="/creators-program"
+      <AppLink href="/creators-program"
         className="block text-center text-xs text-[#7c5af3] hover:underline mt-1">
         Content creator with 5K+ followers? Apply for the free Creators Program →
-      </Link>
+      </AppLink>
 
       <p className="text-[11px] text-gray-400 text-center leading-relaxed pt-1">
         By signing up, you agree to our{' '}
-        <Link href="/help" className="underline hover:text-[#7c5af3] transition-colors">Terms</Link>
+        <AppLink href="/terms-of-service" className="underline hover:text-[#7c5af3] transition-colors">Terms</AppLink>
         {' '}and{' '}
-        <Link href="/help" className="underline hover:text-[#7c5af3] transition-colors">Privacy Policy</Link>.
+        <AppLink href="/privacy-policy" className="underline hover:text-[#7c5af3] transition-colors">Privacy Policy</AppLink>.
         No credit card required.
       </p>
     </form>

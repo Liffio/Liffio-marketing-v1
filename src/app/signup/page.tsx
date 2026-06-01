@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import AppLink from "@/components/AppLink";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SignupForm from "@/components/SignupForm";
@@ -278,7 +278,7 @@ export default function SignupPage() {
               Apply to the Liffio Creators Program and get our full Business plan ($79/month) for
               completely free — in exchange for active usage.
             </p>
-            <Link
+            <AppLink
               href="/creators-program"
               className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90"
               style={{
@@ -287,7 +287,7 @@ export default function SignupPage() {
               }}
             >
               Apply to Creators Program →
-            </Link>
+            </AppLink>
             <p className="mt-3 text-xs text-gray-400">
               Only 50 spots · Takes 2 minutes · Reviewed within 48 hours
             </p>

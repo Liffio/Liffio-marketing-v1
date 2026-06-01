@@ -1,4 +1,3 @@
-import Link from 'next/link'
 
 type Theme = 'light' | 'dark'
 type Size = 'xs' | 'small' | 'medium' | 'large'
@@ -61,9 +60,9 @@ type LogoProps = {
 const Logo = ({ theme = 'light', size = 'large', className = '' }: LogoProps) => {
   const markSize: Size = size === 'small' ? 'small' : size === 'medium' ? 'medium' : 'large'
   return (
-    <Link href="/" className={`w-auto flex items-start justify-start ${className}`}>
+    <a href="/" className={`flex w-auto items-start justify-start ${className}`}>
       <LiffioLogoMark theme={theme} size={markSize} />
-    </Link>
+    </a>
   )
 }
 
