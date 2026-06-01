@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import CreatorsForm from "@/components/CreatorsForm";
+import { TechBadge } from "@/components/TechBadge";
 
 const BENEFITS = [
   {
@@ -152,13 +153,11 @@ export default function CreatorsProgramContent() {
       <section className="py-14 sm:py-20 px-4 text-center"
         style={{ background: "linear-gradient(155deg,#f8f5ff 0%,#f0ebff 50%,#faf5ff 100%)" }}>
         <div className="mx-auto max-w-3xl">
-          <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6"
-            style={{ background: "rgba(124,90,243,0.08)", border: "1px solid rgba(124,90,243,0.2)" }}>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#7c5af3] animate-pulse" />
-            <span className="text-xs font-bold text-[#7c5af3] tracking-wide uppercase">
-              Creators Program · Only {spotsCap} Spots
-            </span>
-          </div>
+          <TechBadge
+            className="mb-6"
+            label={`Creators program · only ${spotsCap} spots`}
+            variant="section"
+          />
 
           <h1 className="font-extrabold text-[#0a0a0a] leading-tight mb-5"
             style={{ fontFamily: "var(--font-outfit,sans-serif)", fontSize: "clamp(2.2rem,5vw,3.75rem)" }}>
@@ -340,15 +339,17 @@ export default function CreatorsProgramContent() {
               Takes under 2 minutes · Reviewed within 48 hours · No credit card needed
             </p>
             {spotsRemaining !== null && (
-              <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mt-4"
-                style={{ background: "rgba(124,90,243,0.08)", border: "1px solid rgba(124,90,243,0.18)" }}>
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-xs font-bold text-[#7c5af3]">
-                  {spotsRemaining > 0
+              <TechBadge
+                className="mt-4"
+                label={
+                  spotsRemaining > 0
                     ? `${spotsRemaining} of ${spotsCap} spots remaining`
-                    : "All spots have been claimed — join the waitlist below"}
-                </span>
-              </div>
+                    : "All spots claimed — join waitlist"
+                }
+                variant="chip"
+                accent="#10b981"
+                format="label"
+              />
             )}
           </div>
 

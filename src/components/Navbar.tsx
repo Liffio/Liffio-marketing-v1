@@ -5,12 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "./Logo";
 import { siteConfig } from "@/config/site.config";
+import { isMetaVerified } from "@/lib/meta-verification";
+import { metaCopy } from "@/config/meta-copy";
 
 const navLinks = [
   { href: "/#features", label: "Features" },
   { href: "/pricing", label: "Pricing" },
   { href: "/creators-program", label: "Creators" },
-  { href: "/blog", label: "Blog" },
+  // { href: "/blog", label: "Blog" },
   { href: "/help", label: "Support" },
 ];
 
@@ -27,14 +29,35 @@ export default function Navbar() {
   return (
     <div className="sticky top-0 z-50">
       {/* Announcement bar */}
-      <div className="text-center py-2 px-4 text-xs sm:text-sm font-medium text-white"
-        style={{ background: "linear-gradient(135deg, #7c5af3 0%, #4259f0 100%)" }}>
-        🚀 Liffio is now an{" "}
-        <strong>Official Meta Tech Provider</strong>
-        {" — "}
-        <Link href={siteConfig.urls.preregister} className="underline font-bold hover:no-underline">
-          Pre-register for 50% off →
-        </Link>
+      <div
+        className="px-3 py-2 text-center text-[11px] font-medium leading-snug text-white sm:px-4 sm:text-sm"
+        style={{ background: "linear-gradient(135deg, #7c5af3 0%, #4259f0 100%)" }}
+      >
+        <span className="sm:hidden">
+          {isMetaVerified ? (
+            <>
+              <strong>{metaCopy.navbarMobileLead}</strong>
+              {" · "}
+            </>
+          ) : null}
+          <Link href={siteConfig.urls.preregister} className="font-bold underline hover:no-underline">
+            {isMetaVerified ? "50% off →" : "Pre-register for 50% off →"}
+          </Link>
+        </span>
+        <span className="hidden sm:inline">
+          🚀{" "}
+          {isMetaVerified ? (
+            <>
+              Liffio is now an <strong>{metaCopy.navbarDesktopLead}</strong>
+              {" — "}
+            </>
+          ) : (
+            <>Join the {metaCopy.navbarDesktopLead} — </>
+          )}
+          <Link href={siteConfig.urls.preregister} className="font-bold underline hover:no-underline">
+            Pre-register for 50% off →
+          </Link>
+        </span>
       </div>
 
       {/* Nav */}
@@ -83,8 +106,15 @@ export default function Navbar() {
             </div>
 
             {/* Mobile */}
-            <div className="flex lg:hidden items-center gap-1">
-              <a href={siteConfig.urls.appLogin} className="px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-900">
+            <div className="flex lg:hidden items-center gap-0.5 sm:gap-1">
+              <a
+                href={siteConfig.urls.appSignup}
+                className="hidden min-[400px]:inline-flex rounded-lg px-3 py-2 text-xs font-semibold text-white sm:text-sm"
+                style={{ background: "linear-gradient(135deg, #7c5af3, #4259f0)" }}
+              >
+                Sign up
+              </a>
+              <a href={siteConfig.urls.appLogin} className="px-2 py-2 text-xs font-medium text-gray-500 hover:text-gray-900 sm:px-3 sm:text-sm">
                 Log in
               </a>
               <button

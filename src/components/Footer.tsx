@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import Logo from "./Logo";
 
 const footerLinks = {
@@ -54,16 +53,14 @@ const socials = [
 export default function Footer() {
   return (
     <footer className="bg-gray-950 text-gray-400">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
-          {/* Brand */}
-          <div className="lg:col-span-2">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-12">
+          <div className="col-span-2 lg:col-span-2">
             <Logo theme="dark" />
-            <p className="text-sm text-gray-400 leading-relaxed max-w-xs mt-3">
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-gray-400">
               The smartest way to automate your Instagram DMs. Grow your audience and convert followers into
               customers on autopilot.
             </p>
-            {/* Social links */}
             <div className="mt-6 flex items-center gap-4">
               {socials.map((s) => (
                 <a
@@ -72,7 +69,7 @@ export default function Footer() {
                   aria-label={s.label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-500 hover:text-white transition-colors duration-200"
+                  className="text-gray-500 transition-colors duration-200 hover:text-white"
                 >
                   {s.icon}
                 </a>
@@ -80,16 +77,15 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Links */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">{category}</h3>
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">{category}</h3>
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                      className="text-sm text-gray-400 transition-colors duration-200 hover:text-white"
                     >
                       {link.label}
                     </Link>
@@ -100,11 +96,8 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-gray-500">
-            © {new Date().getFullYear()} Liffio. All rights reserved.
-          </p>
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-800 pt-8 sm:flex-row">
+          <p className="text-xs text-gray-500">© {new Date().getFullYear()} Liffio. All rights reserved.</p>
           <p className="text-xs text-gray-600">Made with care for Instagram creators worldwide.</p>
         </div>
       </div>

@@ -10,7 +10,7 @@ export const siteConfig = {
     name: "Liffio",
     tagline: "Instagram DMs, fully automated",
     description:
-      "Turn every comment into a conversion. Liffio sends intelligent, human-like DMs the moment someone engages — so you never miss a lead.",
+      "Turn every comment into a conversion. Liffio sends intelligent, human-like DMs when someone engages — with a custom 10–60s delay so replies feel natural.",
     logoLight: "/logo/light.png",
     logoDark: "/logo/colored.png",
     defaultLogo: "/logo/light.png",

@@ -3,6 +3,9 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SignupForm from "@/components/SignupForm";
+import { TechBadge } from "@/components/TechBadge";
+import { MetaVerifiedOnly } from "@/components/MetaVerifiedOnly";
+import { getSignupTrustRow, metaCopy } from "@/config/meta-copy";
 
 export const metadata: Metadata = {
   title: "Get Started Free — Liffio",
@@ -11,8 +14,8 @@ export const metadata: Metadata = {
 };
 
 const WHY_PILLS = [
-  { icon: "⚡", text: "Replies in under 2 seconds" },
-  { icon: "🔒", text: "Meta-verified & fully compliant" },
+  { icon: "⚡", text: "Rapid fast replies" },
+  { icon: "🔒", text: metaCopy.signupCompliancePill },
   { icon: "🚀", text: "No coding, no setup complexity" },
   { icon: "🎯", text: "Works 24/7 on complete autopilot" },
 ];
@@ -22,7 +25,7 @@ const FEATURES = [
     icon: "💬",
     title: "Comment → DM Automation",
     description:
-      "Someone comments a keyword on your post → Liffio instantly sends them a personalised DM. Turn every commenter into a lead within 2 seconds, around the clock.",
+      "Someone comments a keyword on your post → Liffio sends them a personalised DM on your schedule. Set a custom delay from 10–60 seconds for more human-like replies, around the clock.",
     tag: "Core engine",
   },
   {
@@ -82,27 +85,28 @@ export default function SignupPage() {
 
             {/* Left: copy */}
             <div>
-              {/* Meta badge */}
-              <div
-                className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 mb-6"
-                style={{ background: "rgba(0,100,224,0.07)", border: "1px solid rgba(0,128,249,0.2)" }}
-              >
-                <svg viewBox="0 0 512 512" className="h-4 w-4">
-                  <defs>
-                    <linearGradient id="mlg2" x1="0%" x2="100%">
-                      <stop offset="0%" stopColor="#0064e0" />
-                      <stop offset="100%" stopColor="#0080f9" />
-                    </linearGradient>
-                  </defs>
-                  <path
-                    fill="url(#mlg2)"
-                    d="m149.4 89.4c-81.6 0-144.1 106.2-144.1 218.5 0 70.3 34 114.7 91 114.7 41 0 70.5-19.3 123-111l36.9-65.2 31.2-52.8c26.5-40.9 48.4-61.3 74.4-61.3 54 0 97.2 79.5 97.2 177.2 0 37.2-12.2 58.8-37.5 58.8-24.2 0-35.8-16-81.8-90l-42.3 36.9c47.9 80.2 74.6 107.4 123 107.4 55.5 0 86.4-45.1 86.4-116.9 0-117.7-63.9-216.5-141.6-216.5-41.1 0-73.3 31-102.4 70.3l-32.3 47.4c-31.9 49-51.3 79.7-51.3 79.7-42.5 66.7-57.2 81.6-80.9 81.6-24.4 0-38.8-21.4-38.8-59.5 0-81.6 40.7-165 89.2-165z"
-                  />
-                </svg>
-                <span className="text-xs font-bold text-[#0064e0] tracking-wide">
-                  Official Meta Business Partner
-                </span>
-              </div>
+              <MetaVerifiedOnly>
+                <TechBadge
+                  className="mb-6"
+                  label={metaCopy.signupBadge!}
+                  variant="meta"
+                  format="label"
+                  icon={
+                    <svg viewBox="0 0 512 512" className="h-4 w-4">
+                      <defs>
+                        <linearGradient id="mlg2" x1="0%" x2="100%">
+                          <stop offset="0%" stopColor="#0064e0" />
+                          <stop offset="100%" stopColor="#0080f9" />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        fill="url(#mlg2)"
+                        d="m149.4 89.4c-81.6 0-144.1 106.2-144.1 218.5 0 70.3 34 114.7 91 114.7 41 0 70.5-19.3 123-111l36.9-65.2 31.2-52.8c26.5-40.9 48.4-61.3 74.4-61.3 54 0 97.2 79.5 97.2 177.2 0 37.2-12.2 58.8-37.5 58.8-24.2 0-35.8-16-81.8-90l-42.3 36.9c47.9 80.2 74.6 107.4 123 107.4 55.5 0 86.4-45.1 86.4-116.9 0-117.7-63.9-216.5-141.6-216.5-41.1 0-73.3 31-102.4 70.3l-32.3 47.4c-31.9 49-51.3 79.7-51.3 79.7-42.5 66.7-57.2 81.6-80.9 81.6-24.4 0-38.8-21.4-38.8-59.5 0-81.6 40.7-165 89.2-165z"
+                      />
+                    </svg>
+                  }
+                />
+              </MetaVerifiedOnly>
 
               <h1
                 className="font-extrabold text-[#0a0a0a] leading-[1.06] tracking-tight mb-4"
@@ -130,20 +134,15 @@ export default function SignupPage() {
               </p>
 
               {/* Why pills */}
-              <div className="flex flex-wrap gap-2 mb-7">
+              <div className="mb-7 flex flex-wrap gap-2">
                 {WHY_PILLS.map((p) => (
-                  <div
+                  <TechBadge
                     key={p.text}
-                    className="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium"
-                    style={{
-                      background: "white",
-                      border: "1px solid rgba(124,90,243,0.15)",
-                      color: "#3f3f46",
-                    }}
-                  >
-                    <span>{p.icon}</span>
-                    <span>{p.text}</span>
-                  </div>
+                    label={p.text}
+                    variant="chip"
+                    format="label"
+                    icon={<span className="text-[0.85em] leading-none">{p.icon}</span>}
+                  />
                 ))}
               </div>
 
@@ -206,7 +205,7 @@ export default function SignupPage() {
                   className="mt-5 pt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5"
                   style={{ borderTop: "1px solid rgba(124,90,243,0.08)" }}
                 >
-                  {["No credit card required", "Meta-verified", "Cancel anytime"].map((t) => (
+                  {getSignupTrustRow().map((t) => (
                     <span key={t} className="flex items-center gap-1 text-[11px] text-gray-400">
                       <svg className="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                         <path

@@ -61,12 +61,10 @@ export default function PricingPlansGrid({ compact = false }: PricingPlansGridPr
         {pricingPlans.map((plan) => (
           <div
             key={plan.name}
-            className="relative rounded-3xl p-7 sm:p-8 flex flex-col transition-all duration-300"
+            className={`relative flex flex-col rounded-2xl p-5 transition-all duration-300 sm:rounded-3xl sm:p-7 md:p-8 ${plan.highlight && compact ? "md:scale-[1.02] md:z-[1]" : ""}`}
             style={plan.highlight ? {
               background: "linear-gradient(155deg,#7c5af3,#5648ea,#4259f0)",
               boxShadow: "0 28px 64px rgba(66,89,240,0.38), 0 0 0 1px rgba(124,90,243,0.4)",
-              transform: compact ? "scale(1.03)" : undefined,
-              zIndex: plan.highlight ? 1 : undefined,
             } : {
               background: "white",
               border: "1px solid rgba(124,90,243,0.12)",

@@ -2,15 +2,28 @@
 
 import { useState, useEffect, useRef } from "react";
 import { siteConfig } from "@/config/site.config";
+import { LiffioAvatar } from "@/components/Logo";
+import { IPhoneShell } from "@/components/simulation/IPhoneShell";
+import { SimulationContent } from "@/components/simulation/SimulationContent";
+import { SimulationMobileStage } from "@/components/simulation/SimulationMobileStage";
+import { SimulationShell } from "@/components/simulation/SimulationShell";
+import { TechBadge } from "@/components/TechBadge";
+import Image from "next/image";
+import { DEMO_POST_IMAGES } from "@/config/demo-images.config";
+import { SimulationAvatar } from "@/components/simulation/SimulationAvatar";
 
 // ─── Typing dots indicator ────────────────────────────────────────────────────
-function TypingDots({ gradient }: { gradient: string }) {
+function TypingDots({ gradient, liffio }: { gradient?: string; liffio?: boolean }) {
   return (
     <div className="flex items-end gap-1.5">
-      <div
-        className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[7px] font-bold"
-        style={{ background: gradient }}
-      />
+      {liffio ? (
+        <LiffioAvatar size={5} />
+      ) : (
+        <div
+          className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[7px] font-bold"
+          style={{ background: gradient }}
+        />
+      )}
       <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-3 py-2 shadow-sm">
         <div className="flex items-center gap-1 h-3">
           <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
@@ -66,49 +79,9 @@ function useStepAnimation(steps: { delay: number; isBot: boolean }[], animKey: n
   return { visible, typing };
 }
 
-// ─── Phone shell ──────────────────────────────────────────────────────────────
-function PhoneShell({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="relative mx-auto" style={{ width: 240 }}>
-      <div
-        className="relative rounded-[2.8rem] bg-gray-900 shadow-2xl"
-        style={{ padding: "10px 8px", boxShadow: "0 30px 80px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.1)" }}
-      >
-        {/* Status bar */}
-        <div className="flex items-center justify-between px-5 pt-2 pb-1 relative">
-          <span className="text-white text-[10px] font-semibold">9:41</span>
-          <div className="absolute left-1/2 -translate-x-1/2 top-3 w-20 h-5 bg-gray-900 rounded-full z-10" />
-          <div className="flex items-center gap-1">
-            <div className="flex items-center gap-0.5">
-              {[3, 4, 5, 6].map((h) => (
-                <div key={h} className="bg-white rounded-sm" style={{ width: 2, height: h }} />
-              ))}
-            </div>
-            <div className="w-5 h-2.5 border border-white rounded-sm relative ml-0.5">
-              <div className="absolute left-0.5 top-0.5 bottom-0.5 bg-white rounded-sm" style={{ right: 3 }} />
-              <div className="absolute right-[-3px] top-1/2 -translate-y-1/2 w-0.5 h-1 bg-white rounded-r-sm" />
-            </div>
-          </div>
-        </div>
-        {/* Screen */}
-        <div className="bg-white rounded-[2.2rem] overflow-hidden" style={{ minHeight: 420 }}>
-          {children}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── Avatar ───────────────────────────────────────────────────────────────────
+// ─── Avatar (simulation scale) ────────────────────────────────────────────────
 function Av({ label, gradient, size = 5 }: { label: string; gradient: string; size?: number }) {
-  return (
-    <div
-      className={`w-${size} h-${size} rounded-full flex-shrink-0 flex items-center justify-center text-white font-bold`}
-      style={{ background: gradient, fontSize: size <= 5 ? 7 : 9, minWidth: size * 4, minHeight: size * 4 }}
-    >
-      {label}
-    </div>
-  );
+  return <SimulationAvatar name={label} gradient={gradient} size={size} />;
 }
 
 // ─── Chat bubble ─────────────────────────────────────────────────────────────
@@ -151,15 +124,15 @@ function CommentReplyPhone({ animKey }: { animKey: number }) {
   ];
   const msgs = [
     { align: "left"  as const, av: "JD", grad: "linear-gradient(135deg,#fb923c,#ec4899)", name: "john.deals",      msg: "Fashion 🔥",                              time: "2m ago",         cta: undefined },
-    { align: "right" as const, av: "AA", grad: botGrad,                                  name: "art_apparel",     msg: "Hey John! Here's your exclusive link 👇",  time: "Sent instantly", cta: "Open Link" },
+    { align: "right" as const, av: "AA", grad: botGrad,                                  name: "art_apparel",     msg: "Hey John! Here's your exclusive link 👇",  time: "Auto-sent", cta: "Open Link" },
     { align: "left"  as const, av: "TS", grad: "linear-gradient(135deg,#22d3ee,#3b82f6)", name: "thesaraofficial", msg: "Fashion 💕",                              time: "Just now",       cta: undefined },
-    { align: "right" as const, av: "AA", grad: botGrad,                                  name: "art_apparel",     msg: "Hey Sara! Here's your exclusive link 👇",  time: "Sent instantly", cta: "Open Link" },
+    { align: "right" as const, av: "AA", grad: botGrad,                                  name: "art_apparel",     msg: "Hey Sara! Here's your exclusive link 👇",  time: "Auto-sent", cta: "Open Link" },
   ];
   const { visible, typing } = useStepAnimation(steps, animKey);
 
   return (
-    <PhoneShell>
-      <div className="flex flex-col" style={{ minHeight: 420 }}>
+    <IPhoneShell responsive>
+      <SimulationContent className="flex flex-col">
         {/* Header */}
         <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-100">
           <svg className="w-3.5 h-3.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
@@ -189,8 +162,8 @@ function CommentReplyPhone({ animKey }: { animKey: number }) {
           <div className="flex-1 bg-gray-100 rounded-full px-3 py-1 text-[9px] text-gray-400">Message...</div>
           <svg className="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
         </div>
-      </div>
-    </PhoneShell>
+      </SimulationContent>
+    </IPhoneShell>
   );
 }
 
@@ -205,8 +178,8 @@ function StoryReplyPhone({ animKey }: { animKey: number }) {
   const { visible } = useStepAnimation(steps, animKey);
 
   return (
-    <PhoneShell>
-      <div className="flex flex-col" style={{ minHeight: 420 }}>
+    <IPhoneShell responsive>
+      <SimulationContent className="flex flex-col">
         <div className="px-3 pt-3 pb-2 border-b border-gray-100">
           <div className="flex items-center gap-1.5 mb-2">
             <svg className="w-3.5 h-3.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
@@ -237,8 +210,8 @@ function StoryReplyPhone({ animKey }: { animKey: number }) {
             </div>
           ))}
         </div>
-      </div>
-    </PhoneShell>
+      </SimulationContent>
+    </IPhoneShell>
   );
 }
 
@@ -252,8 +225,8 @@ function LiveReplyPhone({ animKey }: { animKey: number }) {
   const { visible } = useStepAnimation(steps, animKey);
 
   return (
-    <PhoneShell>
-      <div className="relative overflow-hidden" style={{ minHeight: 420, background: "linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%)" }}>
+    <IPhoneShell responsive statusBarTheme="dark" batteryPercent={72}>
+      <SimulationContent className="relative overflow-hidden bg-[#0a0a0a]">
         {/* Live header */}
         <div className="flex items-start justify-between p-3">
           <div className="flex items-center gap-2">
@@ -265,11 +238,16 @@ function LiveReplyPhone({ animKey }: { animKey: number }) {
             <div className="bg-red-500 rounded-full px-2 py-0.5 flex items-center gap-1"><div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" /><span className="text-[8px] text-white font-bold">LIVE</span></div>
           </div>
         </div>
-        {/* Scene */}
-        <div className="absolute inset-0 flex items-center justify-center" style={{ top: 60 }}>
-          <div className="w-28 h-36 rounded-2xl flex items-center justify-center" style={{ background: "rgba(20,80,40,0.3)" }}>
-            <span style={{ fontSize: 44 }}>🌿</span>
-          </div>
+        {/* Live video frame */}
+        <div className="absolute inset-x-0 bottom-14 top-12 overflow-hidden">
+          <Image
+            src={DEMO_POST_IMAGES[3]}
+            alt="Live skincare session"
+            fill
+            sizes="240px"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/55" aria-hidden />
         </div>
         {/* Animated comments */}
         <div className="absolute bottom-16 left-0 right-0 px-3 space-y-1.5">
@@ -292,8 +270,8 @@ function LiveReplyPhone({ animKey }: { animKey: number }) {
             <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
           </div>
         </div>
-      </div>
-    </PhoneShell>
+      </SimulationContent>
+    </IPhoneShell>
   );
 }
 
@@ -306,8 +284,8 @@ function DmReplyPhone({ animKey }: { animKey: number }) {
   const { visible, typing } = useStepAnimation(steps, animKey);
 
   return (
-    <PhoneShell>
-      <div className="flex flex-col" style={{ minHeight: 420 }}>
+    <IPhoneShell responsive>
+      <SimulationContent className="flex flex-col">
         <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-100">
           <svg className="w-3.5 h-3.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
           <div className="flex items-center gap-1.5 flex-1">
@@ -333,7 +311,7 @@ function DmReplyPhone({ animKey }: { animKey: number }) {
               <div className="flex items-end gap-1.5">
                 <Av label="PS" gradient={botGrad} size={5} />
                 <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-3 py-2 shadow-sm">
-                  <p className="text-[9px] text-gray-800">Hey! 🍽️ Here's our menu & order link 👇</p>
+                  <p className="text-[9px] text-gray-800">Hey! Here&apos;s our menu and order link.</p>
                   <div className="mt-1.5 bg-[#4259f0] rounded-lg px-2 py-1 text-center">
                     <p className="text-[9px] text-white font-bold">View Menu</p>
                   </div>
@@ -346,8 +324,8 @@ function DmReplyPhone({ animKey }: { animKey: number }) {
           <div className="w-5 h-5 rounded-full bg-gray-200"/>
           <div className="flex-1 bg-gray-100 rounded-full px-3 py-1 text-[9px] text-gray-400">Message...</div>
         </div>
-      </div>
-    </PhoneShell>
+      </SimulationContent>
+    </IPhoneShell>
   );
 }
 
@@ -361,8 +339,8 @@ function AskFollowPhone({ animKey }: { animKey: number }) {
   const { visible, typing } = useStepAnimation(steps, animKey);
 
   return (
-    <PhoneShell>
-      <div className="flex flex-col" style={{ minHeight: 420 }}>
+    <IPhoneShell responsive>
+      <SimulationContent className="flex flex-col">
         <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-100">
           <svg className="w-3.5 h-3.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
           <div className="flex items-center gap-1.5 flex-1">
@@ -411,8 +389,8 @@ function AskFollowPhone({ animKey }: { animKey: number }) {
           <div className="w-5 h-5 rounded-full bg-gray-200"/>
           <div className="flex-1 bg-gray-100 rounded-full px-3 py-1 text-[9px] text-gray-400">Message...</div>
         </div>
-      </div>
-    </PhoneShell>
+      </SimulationContent>
+    </IPhoneShell>
   );
 }
 
@@ -428,8 +406,8 @@ function ReengagePhone({ animKey }: { animKey: number }) {
   const { visible } = useStepAnimation(steps, animKey);
 
   return (
-    <PhoneShell>
-      <div className="flex flex-col" style={{ minHeight: 420 }}>
+    <IPhoneShell responsive>
+      <SimulationContent className="flex flex-col">
         <div className="px-3 pt-3 pb-2 border-b border-gray-100">
           <p className="text-[11px] font-bold text-gray-900">Activity</p>
         </div>
@@ -464,13 +442,12 @@ function ReengagePhone({ animKey }: { animKey: number }) {
         <div className="border-t border-gray-100 px-4 py-2 flex items-center justify-around">
           {["🏠", "🔍", "❤️", "👤"].map((ic, i) => <span key={i} className="text-sm">{ic}</span>)}
         </div>
-      </div>
-    </PhoneShell>
+      </SimulationContent>
+    </IPhoneShell>
   );
 }
 
 function CollectDataPhone({ animKey }: { animKey: number }) {
-  const botGrad = "linear-gradient(135deg,#60a5fa,#9333ea)";
   const steps = [
     { delay: 400,  isBot: true  }, // ask email
     { delay: 1400, isBot: false }, // user replies email
@@ -481,28 +458,28 @@ function CollectDataPhone({ animKey }: { animKey: number }) {
   const { visible, typing } = useStepAnimation(steps, animKey);
 
   const items = [
-    { left: true,  grad: botGrad, av: "RV", name: "Liffio.com", msg: "Hey! 👋 To send you the free guide, what's your email?", cta: undefined },
+    { left: true,  name: "Liffio", msg: "Hey! 👋 To send you the free guide, what's your email?", cta: undefined },
     { left: false, grad: "linear-gradient(135deg,#60a5fa,#2563eb)", av: "JD", name: "you", msg: "john@example.com", cta: undefined },
-    { left: true,  grad: botGrad, av: "RV", name: "Liffio.com", msg: "Perfect! ✅ And your name?", cta: undefined },
+    { left: true,  name: "Liffio", msg: "Perfect! ✅ And your name?", cta: undefined },
     { left: false, grad: "linear-gradient(135deg,#60a5fa,#2563eb)", av: "JD", name: "you", msg: "John", cta: undefined },
-    { left: true,  grad: botGrad, av: "RV", name: "Liffio.com", msg: "Thanks John! 🎉 Here's your free guide 👇", cta: "Download Guide" },
+    { left: true,  name: "Liffio", msg: "Thanks John! 🎉 Here's your free guide 👇", cta: "Download Guide" },
   ];
 
   return (
-    <PhoneShell>
-      <div className="flex flex-col" style={{ minHeight: 420 }}>
+    <IPhoneShell responsive>
+      <SimulationContent className="flex flex-col">
         <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-100">
           <svg className="w-3.5 h-3.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
           <div className="flex items-center gap-1.5 flex-1">
-            <Av label="RV" gradient={botGrad} size={6} />
-            <div><p className="text-[10px] font-bold text-gray-900">Liffio.com</p><p className="text-[8px] text-green-500">Active now</p></div>
+            <LiffioAvatar size={6} />
+            <div><p className="text-[10px] font-bold text-gray-900">Liffio</p><p className="text-[8px] text-green-500">Active now</p></div>
           </div>
         </div>
         <div className="flex-1 bg-gray-50 px-2.5 py-3 space-y-2 flex flex-col justify-end overflow-hidden">
           {items.map((m, i) =>
             visible.includes(i) ? (
               <div key={i} className={`flex items-end gap-1.5 transition-all duration-500 ${!m.left ? "justify-end" : ""}`}>
-                {m.left && <Av label={m.av} gradient={m.grad} size={5} />}
+                {m.left && <LiffioAvatar size={5} />}
                 {m.left ? (
                   <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-3 py-2 shadow-sm max-w-[80%]">
                     <p className="text-[9px] text-gray-800">{m.msg}</p>
@@ -516,19 +493,18 @@ function CollectDataPhone({ animKey }: { animKey: number }) {
               </div>
             ) : null
           )}
-          {typing && <TypingDots gradient={botGrad} />}
+          {typing && <TypingDots liffio />}
         </div>
         <div className="border-t border-gray-100 px-3 py-2 flex items-center gap-2 bg-white">
           <div className="w-5 h-5 rounded-full bg-gray-200"/>
           <div className="flex-1 bg-gray-100 rounded-full px-3 py-1 text-[9px] text-gray-400">Message...</div>
         </div>
-      </div>
-    </PhoneShell>
+      </SimulationContent>
+    </IPhoneShell>
   );
 }
 
 function WelcomeFollowersPhone({ animKey }: { animKey: number }) {
-  const botGrad = "linear-gradient(135deg,#60a5fa,#9333ea)";
   const steps = [
     { delay: 400,  isBot: true  },
     { delay: 1500, isBot: true  },
@@ -537,29 +513,29 @@ function WelcomeFollowersPhone({ animKey }: { animKey: number }) {
   const { visible, typing } = useStepAnimation(steps, animKey);
 
   return (
-    <PhoneShell>
-      <div className="flex flex-col" style={{ minHeight: 420 }}>
+    <IPhoneShell responsive>
+      <SimulationContent className="flex flex-col">
         <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-100">
           <svg className="w-3.5 h-3.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
           <div className="flex items-center gap-1.5 flex-1">
-            <Av label="RV" gradient={botGrad} size={6} />
-            <div><p className="text-[10px] font-bold text-gray-900">Liffio.com ✓</p><p className="text-[8px] text-green-500">Active now</p></div>
+            <LiffioAvatar size={6} />
+            <div><p className="text-[10px] font-bold text-gray-900">Liffio ✓</p><p className="text-[8px] text-green-500">Active now</p></div>
           </div>
         </div>
         <div className="flex-1 bg-gray-50 px-3 py-3 space-y-2 flex flex-col justify-end overflow-hidden">
           <p className="text-[8px] text-gray-400 text-center">Today</p>
-          {typing && <TypingDots gradient={botGrad} />}
+          {typing && <TypingDots liffio />}
           {visible.includes(0) && (
             <div className="flex items-end gap-1.5 transition-all duration-500">
-              <Av label="RV" gradient={botGrad} size={5} />
+              <LiffioAvatar size={5} />
               <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-3 py-2 shadow-sm max-w-[85%]">
-                <p className="text-[9px] text-gray-800">Hey! 👋 Welcome to Liffio.com — so glad you're here!</p>
+                <p className="text-[9px] text-gray-800">Hey! 👋 Welcome to Liffio — so glad you&apos;re here!</p>
               </div>
             </div>
           )}
           {visible.includes(1) && (
             <div className="flex items-end gap-1.5 transition-all duration-500">
-              <Av label="RV" gradient={botGrad} size={5} />
+              <LiffioAvatar size={5} />
               <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-3 py-2 shadow-sm max-w-[85%]">
                 <p className="text-[9px] text-gray-800">🎁 As a new follower, here's an exclusive 20% off code just for you:</p>
                 <div className="mt-1.5 bg-[#4259f0] rounded-lg px-2 py-1 text-center"><p className="text-[9px] text-white font-bold">Get Discount</p></div>
@@ -576,8 +552,8 @@ function WelcomeFollowersPhone({ animKey }: { animKey: number }) {
           <div className="w-5 h-5 rounded-full bg-gray-200"/>
           <div className="flex-1 bg-gray-100 rounded-full px-3 py-1 text-[9px] text-gray-400">Message...</div>
         </div>
-      </div>
-    </PhoneShell>
+      </SimulationContent>
+    </IPhoneShell>
   );
 }
 
@@ -593,7 +569,7 @@ const features = [
     tag: "Comments → DMs",
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>),
     title: "Auto Comment Reply",
-    description: "When a follower comments a keyword on your post or reel, Liffio instantly sends them a personalised DM and a public comment reply — all within 2 seconds. Turn every commenter into a warm lead automatically.",
+    description: "When a follower comments a keyword on your post or reel, Liffio sends them a personalised DM and a public comment reply on your schedule. Choose a custom delay from 10–60 seconds after the comment for natural, human-like timing.",
     bullets: ["Works on posts, reels, and carousels", "Unlimited keywords per campaign", "Sends public reply + private DM simultaneously"],
     Phone: CommentReplyPhone,
   },
@@ -620,7 +596,7 @@ const features = [
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>),
     title: "Live Auto Reply",
     description: "Your Instagram Live is a live sales event. Liffio monitors comments in real-time and sends DMs to every viewer who types a keyword — turning a broadcast into a revenue funnel.",
-    bullets: ["Monitors keywords during live streams", "Ideal for product launches, Q&As, and webinars", "Sends discount codes, links, and resources instantly"],
+    bullets: ["Monitors keywords during live streams", "Ideal for product launches, Q&As, and webinars", "Sends discount codes, links, and resources automatically"],
     Phone: LiveReplyPhone,
   },
   {
@@ -684,35 +660,13 @@ const features = [
     tag: "New follower DMs",
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>),
     title: "Welcome New Followers",
-    description: "First impressions are everything. The instant someone follows you, Liffio sends a warm, personalised welcome message — starting the relationship before they even see your next post.",
-    bullets: ["Fires within seconds of a new follow", "Personalised with @username and first name", "Include links, offers, or a simple warm hello"],
+    description: "First impressions are everything. When someone follows you, Liffio sends a warm, personalised welcome message on your schedule — starting the relationship before they even see your next post.",
+    bullets: ["Fires automatically after a new follow", "Personalised with @username and first name", "Include links, offers, or a simple warm hello"],
     Phone: WelcomeFollowersPhone,
   },
 ] as const;
 
 // ─── Simulation shell (matches How It Works) ──────────────────────────────────
-
-function FeatureSimShell({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div
-      className="relative rounded-[28px] p-5 overflow-hidden w-full"
-      style={{
-        background: "linear-gradient(145deg,#f5f0ff,#ede8fe 55%,#f8f5ff)",
-        border: "1px solid rgba(124,90,243,0.16)",
-        boxShadow: "0 20px 60px rgba(66,89,240,0.13), 0 4px 16px rgba(124,90,243,0.08)",
-      }}
-    >
-      <div
-        className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5 bg-white rounded-full px-3 py-1"
-        style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.1)", border: "1px solid rgba(124,90,243,0.12)" }}
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-        <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase">{label}</span>
-      </div>
-      <div className="mt-8 flex justify-center">{children}</div>
-    </div>
-  );
-}
 
 // ─── Main component ────────────────────────────────────────────────────────────
 
@@ -744,7 +698,7 @@ export default function FeaturesSection() {
   const PhoneComp = f.Phone;
 
   return (
-    <section id="features" className="relative overflow-hidden bg-white py-24 sm:py-32">
+    <section id="features" className="section-py relative overflow-hidden bg-white">
       <div
         className="absolute top-0 left-0 right-0 h-px"
         style={{ background: "linear-gradient(90deg,transparent,rgba(124,90,243,0.12),transparent)" }}
@@ -762,44 +716,144 @@ export default function FeaturesSection() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header — split layout like How It Works */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-end mb-16">
-          <div>
-            <div className="section-badge mb-5">Features</div>
+        {/* Header — inline split: title + copy left, chips right */}
+        <div className="mb-8 flex flex-col gap-6 sm:mb-10 lg:mb-16 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+          <div className="max-w-xl">
+            <TechBadge label="Features" variant="section" className="mb-4 sm:mb-5" />
             <h2
-              className="text-4xl sm:text-[2.75rem] font-extrabold text-[#0a0a0a] leading-tight"
+              className="text-3xl font-extrabold leading-tight text-[#0a0a0a] sm:text-4xl sm:text-[2.75rem]"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
             >
               8 Powerful Automations.{" "}
               <span className="gradient-text">One Dashboard.</span>
             </h2>
-          </div>
-          <div>
-            <p className="text-lg text-gray-500 leading-relaxed">
-              From comments to live streams — Liffio handles every Instagram interaction automatically. Pick an automation
-              below to see it in action.
+            <p className="mt-3 text-base leading-relaxed text-gray-500 sm:text-lg">
+              From comments to live streams — Liffio handles every Instagram interaction automatically.
             </p>
-            <div className="flex flex-wrap gap-3 mt-6">
-              {[
-                { label: "8 automation types", color: "#a855f7" },
-                { label: "Under 2s response", color: "#7c5af3" },
-                { label: "24/7 autopilot", color: "#4259f0" },
-              ].map((chip) => (
-                <span
-                  key={chip.label}
-                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold"
-                  style={{ background: `${chip.color}12`, color: chip.color, border: `1px solid ${chip.color}28` }}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: chip.color }} />
-                  {chip.label}
-                </span>
-              ))}
-            </div>
+          </div>
+          <div className="flex flex-wrap gap-2 lg:max-w-sm lg:justify-end">
+            {[
+              { label: "8 automation types", color: "#a855f7" },
+              { label: "10–60s custom delay", color: "#7c5af3" },
+              { label: "24/7 autopilot", color: "#4259f0" },
+            ].map((chip) => (
+              <TechBadge key={chip.label} label={chip.label} variant="chip" accent={chip.color} />
+            ))}
           </div>
         </div>
 
-        {/* Feature nav + live simulation */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        {/* Mobile: tabs → demo → one detail card (minimal scroll) */}
+        <div className="space-y-5 lg:hidden">
+          <div className="snap-tabs scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-0.5">
+            {features.map((feat, i) => {
+              const isActive = i === activeFeature;
+              return (
+                <button
+                  key={feat.id}
+                  type="button"
+                  onClick={() => goToFeature(i)}
+                  className="flex shrink-0 snap-start items-center gap-2 rounded-full border px-3 py-2 text-left transition-all duration-200"
+                  style={{
+                    borderColor: isActive ? feat.color : feat.border,
+                    background: isActive ? feat.bg : "white",
+                    boxShadow: isActive ? `0 4px 16px ${feat.bg}` : "0 1px 4px rgba(0,0,0,0.04)",
+                  }}
+                  aria-pressed={isActive}
+                >
+                  <span
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[9px] font-black"
+                    style={{
+                      background: isActive ? feat.color : feat.bg,
+                      color: isActive ? "white" : feat.color,
+                    }}
+                  >
+                    {feat.num}
+                  </span>
+                  <span className="max-w-[9rem] truncate text-xs font-semibold text-[#0a0a0a]">{feat.title}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <SimulationMobileStage>
+            <div
+              className="w-full transition-all duration-300"
+              style={{
+                opacity: phoneVisible ? 1 : 0,
+                transform: phoneVisible ? "translateY(0) scale(1)" : "translateY(12px) scale(0.97)",
+              }}
+            >
+              <SimulationShell label={`${f.title} · Live`}>
+                <PhoneComp animKey={animKey} />
+              </SimulationShell>
+            </div>
+          </SimulationMobileStage>
+
+          <article
+            className="rounded-2xl bg-white p-4 sm:p-5"
+            style={{
+              border: `1px solid ${f.border}`,
+              boxShadow: `0 8px 32px ${f.bg}`,
+            }}
+          >
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              <TechBadge label={f.tag} variant="inline" format="label" accent={f.color} />
+              <span className="text-[10px] font-bold text-gray-400">{f.num} / 08</span>
+            </div>
+            <h3 className="text-lg font-bold text-[#0a0a0a]">{f.title}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-gray-500 line-clamp-3">{f.description}</p>
+            <ul className="mt-3 space-y-1.5">
+              {f.bullets.slice(0, 2).map((b) => (
+                <li key={b} className="flex items-start gap-2 text-xs text-gray-600">
+                  <svg viewBox="0 0 16 16" className="mt-0.5 h-3.5 w-3.5 shrink-0" fill="none">
+                    <circle cx="8" cy="8" r="8" fill={f.bg} />
+                    <path
+                      d="M4.5 8.5l2 2 4.5-5"
+                      stroke={f.color}
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  {b}
+                </li>
+              ))}
+            </ul>
+            <a
+              href={siteConfig.urls.appSignup}
+              className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-all active:scale-[0.98] sm:w-auto"
+              style={{
+                background: `linear-gradient(135deg,${f.color},#4259f0)`,
+                boxShadow: `0 4px 14px ${f.color}40`,
+              }}
+            >
+              Try It Free
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </article>
+
+          <div className="flex justify-center gap-1.5">
+            {features.map((feat, i) => (
+              <button
+                key={feat.id}
+                type="button"
+                onClick={() => goToFeature(i)}
+                aria-label={`Show ${feat.title}`}
+                className="rounded-full transition-all duration-300"
+                style={{
+                  width: i === activeFeature ? 18 : 5,
+                  height: 5,
+                  background: i === activeFeature ? `linear-gradient(90deg,${feat.color},#4259f0)` : "#e5e7eb",
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop: accordion + sticky simulation */}
+        <div className="hidden items-start gap-10 lg:grid lg:grid-cols-2 lg:gap-16">
           {/* Left: accordion-style feature cards */}
           <div className="relative">
             <div
@@ -810,7 +864,7 @@ export default function FeaturesSection() {
               }}
             />
 
-            <div className="space-y-2 max-h-[640px] overflow-y-auto pr-1">
+            <div className="max-h-[640px] space-y-2 overflow-y-auto pr-1">
               {features.map((feat, i) => {
                 const isActive = i === activeFeature;
                 return (
@@ -827,7 +881,7 @@ export default function FeaturesSection() {
                     }}
                   >
                     <div
-                      className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl transition-opacity duration-300"
+                      className="absolute left-0 top-1 bottom-0 w-1 rounded-l-2xl transition-opacity duration-300 h-auto"
                       style={{
                         background: `linear-gradient(180deg,${feat.color},transparent)`,
                         opacity: isActive ? 1 : 0,
@@ -857,12 +911,13 @@ export default function FeaturesSection() {
                             {feat.title}
                           </h3>
                           {!isActive && (
-                            <span
-                              className="hidden sm:inline-flex flex-shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold"
-                              style={{ background: feat.bg, color: feat.color }}
-                            >
-                              {feat.tag}
-                            </span>
+                            <TechBadge
+                              label={feat.tag}
+                              variant="inline"
+                              format="label"
+                              accent={feat.color}
+                              className="hidden flex-shrink-0 sm:inline-flex"
+                            />
                           )}
                         </div>
 
@@ -874,12 +929,13 @@ export default function FeaturesSection() {
                             marginTop: isActive ? 10 : 0,
                           }}
                         >
-                          <span
-                            className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold mb-2.5"
-                            style={{ background: feat.bg, color: feat.color }}
-                          >
-                            {feat.tag}
-                          </span>
+                          <TechBadge
+                            label={feat.tag}
+                            variant="inline"
+                            format="label"
+                            accent={feat.color}
+                            className="mb-2.5"
+                          />
                           <p className="text-sm text-gray-500 leading-relaxed">{feat.description}</p>
                           <ul className="mt-3 space-y-2">
                             {feat.bullets.map((b) => (
@@ -978,9 +1034,9 @@ export default function FeaturesSection() {
                   transform: phoneVisible ? "translateY(0) scale(1)" : "translateY(16px) scale(0.97)",
                 }}
               >
-                <FeatureSimShell label={`${f.title} · Live`}>
+                <SimulationShell label={`${f.title} · Live`}>
                   <PhoneComp animKey={animKey} />
-                </FeatureSimShell>
+                </SimulationShell>
               </div>
             </div>
           </div>

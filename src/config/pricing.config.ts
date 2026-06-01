@@ -112,6 +112,8 @@ export const pricingPlans: PricingPlan[] = [
   },
 ];
 
+import { metaCopy } from "@/config/meta-copy";
+
 export const pricingPerks = [
   { icon: "🔒", label: "No contracts" },
   { icon: "↩️", label: "Cancel anytime" },
@@ -123,7 +125,7 @@ export const pricingPerks = [
 export const featureCategories = [
   {
     name: "Comment-to-DM Automation",
-    description: "Real-time, webhook-driven Instagram automation built on official Meta APIs.",
+    description: metaCopy.pricingCategoryApis,
     features: [
       { name: "Keyword comment triggers", starter: true, pro: true, business: true, agency: true },
       { name: "Public comment auto-replies", starter: true, pro: true, business: true, agency: true },
@@ -176,7 +178,7 @@ export const pricingFaqs = [
   },
   {
     q: "Is Liffio safe for my Instagram account?",
-    a: "Absolutely. Liffio is an official Meta Business Partner and uses only verified Instagram APIs. All webhooks are HMAC-verified and your account stays fully compliant with Meta's terms.",
+    a: metaCopy.pricingFaqSafe,
   },
   {
     q: "What counts as one DM?",

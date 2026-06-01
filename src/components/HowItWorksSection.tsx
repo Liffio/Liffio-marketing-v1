@@ -2,12 +2,23 @@
 
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site.config";
+import { LiffioLogoMark } from "@/components/Logo";
+import { IPhoneShell } from "@/components/simulation/IPhoneShell";
+import { SimulationContent } from "@/components/simulation/SimulationContent";
+import { SimulationMobileStage } from "@/components/simulation/SimulationMobileStage";
+import { SimulationShell } from "@/components/simulation/SimulationShell";
+import { TechBadge } from "@/components/TechBadge";
+import { SimulationAvatar } from "@/components/simulation/SimulationAvatar";
+import { SimulationPostImage } from "@/components/simulation/SimulationPostImage";
+import { DEMO_POST_IMAGES } from "@/config/demo-images.config";
+import { metaCopy } from "@/config/meta-copy";
 
 // ─── Step data ────────────────────────────────────────────────────────────────
 
 const steps = [
   {
     num: "01",
+    shortTitle: "Sign up",
     color: "#a855f7",
     bg: "rgba(168,85,247,0.07)",
     border: "rgba(168,85,247,0.18)",
@@ -27,13 +38,13 @@ const steps = [
   },
   {
     num: "02",
+    shortTitle: "Connect",
     color: "#7c5af3",
     bg: "rgba(124,90,243,0.07)",
     border: "rgba(124,90,243,0.18)",
     title: "Connect Your Instagram",
-    detail:
-      "One-click OAuth via official Meta APIs. As an Official Meta Tech Provider, every connected account stays 100% secure and fully compliant with Instagram's terms of service.",
-    note: "Official Meta Tech Provider",
+    detail: metaCopy.connectStepDetail,
+    note: metaCopy.connectStepNote,
     icon: (
       <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth="1.6" stroke="currentColor">
         <path
@@ -46,6 +57,7 @@ const steps = [
   },
   {
     num: "03",
+    shortTitle: "Go live",
     color: "#4259f0",
     bg: "rgba(66,89,240,0.07)",
     border: "rgba(66,89,240,0.18)",
@@ -96,43 +108,7 @@ function usePhaseAnimation(phases: number[], animKey: number, loop = true) {
 }
 
 function Av({ label, gradient, size = 7 }: { label: string; gradient: string; size?: number }) {
-  return (
-    <div
-      className="rounded-full flex items-center justify-center text-white font-bold flex-shrink-0"
-      style={{
-        width: size * 4,
-        height: size * 4,
-        fontSize: size <= 7 ? 9 : 11,
-        background: gradient,
-        minWidth: size * 4,
-        minHeight: size * 4,
-      }}
-    >
-      {label.slice(0, 2).toUpperCase()}
-    </div>
-  );
-}
-
-function SimShell({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div
-      className="relative rounded-[28px] p-5 overflow-hidden w-full"
-      style={{
-        background: "linear-gradient(145deg,#f5f0ff,#ede8fe 55%,#f8f5ff)",
-        border: "1px solid rgba(124,90,243,0.16)",
-        boxShadow: "0 20px 60px rgba(66,89,240,0.13), 0 4px 16px rgba(124,90,243,0.08)",
-      }}
-    >
-      <div
-        className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5 bg-white rounded-full px-3 py-1"
-        style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.1)", border: "1px solid rgba(124,90,243,0.12)" }}
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-        <span className="text-[9px] font-bold text-gray-500 tracking-widest uppercase">{label}</span>
-      </div>
-      <div className="mt-8">{children}</div>
-    </div>
-  );
+  return <SimulationAvatar name={label} gradient={gradient} size={size} />;
 }
 
 // ─── Step 1: Signup simulation ────────────────────────────────────────────────
@@ -146,20 +122,18 @@ function SignupSim({ animKey }: { animKey: number }) {
   const success = phase >= 4;
 
   return (
-    <SimShell label="Step 1 · Sign Up">
-      <div className="bg-white rounded-2xl p-5 mx-auto max-w-[320px]" style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.07)" }}>
-        <div className="text-center mb-5">
-          <div
-            className="w-10 h-10 rounded-xl mx-auto mb-3 flex items-center justify-center text-white text-xs font-black"
-            style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)" }}
-          >
-            L
+    <SimulationShell label="Step 1 · Sign Up">
+      <IPhoneShell responsive>
+        <SimulationContent className="flex flex-col p-4">
+          <div className="text-center mb-4">
+            <div className="mx-auto mb-2 flex items-center justify-center">
+              <LiffioLogoMark theme="light" size="small" className="!h-8" />
+            </div>
+            <p className="text-[11px] font-bold text-gray-900">Create your free account</p>
+            <p className="text-[9px] text-gray-400 mt-0.5">No credit card required</p>
           </div>
-          <p className="text-sm font-bold text-gray-900">Create your free account</p>
-          <p className="text-[10px] text-gray-400 mt-0.5">No credit card required</p>
-        </div>
 
-        <div className="space-y-3">
+          <div className="space-y-2.5 flex-1">
           <div>
             <label className="text-[9px] font-semibold text-gray-500 uppercase tracking-wide">Email</label>
             <div
@@ -211,8 +185,9 @@ function SignupSim({ animKey }: { animKey: number }) {
           </svg>
           <span className="text-[10px] font-bold text-green-700">Account created in 47 seconds</span>
         </div>
-      </div>
-    </SimShell>
+        </SimulationContent>
+      </IPhoneShell>
+    </SimulationShell>
   );
 }
 
@@ -239,12 +214,16 @@ function ConnectSim({ animKey }: { animKey: number }) {
   const connected = phase >= 3;
 
   return (
-    <SimShell label="Step 2 · Connect">
-      <div className="bg-white rounded-2xl p-5 mx-auto max-w-[340px]" style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.07)" }}>
-        <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
-          <p className="text-[11px] font-bold text-gray-900">Connected Accounts</p>
-          <span className="text-[9px] text-gray-400">Dashboard</span>
-        </div>
+    <SimulationShell label="Step 2 · Connect">
+      <IPhoneShell responsive>
+        <SimulationContent className="flex flex-col overflow-y-auto p-3.5">
+          <div className="flex items-center justify-between mb-3 pb-2 border-b border-gray-100">
+            <div className="flex items-center gap-1.5">
+              <LiffioLogoMark theme="light" size="xs" className="!h-5" />
+              <p className="text-[10px] font-bold text-gray-900">Connected Accounts</p>
+            </div>
+            <span className="text-[8px] text-gray-400">Dashboard</span>
+          </div>
 
         {/* Disconnected card */}
         <div
@@ -299,7 +278,7 @@ function ConnectSim({ animKey }: { animKey: number }) {
               }}
             >
               <MetaLogo />
-              Connect with Meta
+              {metaCopy.connectSimButton}
             </button>
           )}
         </div>
@@ -315,7 +294,7 @@ function ConnectSim({ animKey }: { animKey: number }) {
         >
           <div className="flex items-center gap-2 mb-3">
             <MetaLogo />
-            <p className="text-[10px] font-bold text-[#0064e0]">Meta Secure Login</p>
+            <p className="text-[10px] font-bold text-[#0064e0]">{metaCopy.connectSimLoginTitle}</p>
           </div>
           {connecting && (
             <div className="flex items-center gap-2 py-2">
@@ -328,12 +307,13 @@ function ConnectSim({ animKey }: { animKey: number }) {
               <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
-              <p className="text-[9px] font-semibold text-green-700">100% Meta-compliant · Connected</p>
+              <p className="text-[9px] font-semibold text-green-700">{metaCopy.connectSimConnected}</p>
             </div>
           )}
         </div>
-      </div>
-    </SimShell>
+        </SimulationContent>
+      </IPhoneShell>
+    </SimulationShell>
   );
 }
 
@@ -347,117 +327,161 @@ function LaunchSim({ animKey }: { animKey: number }) {
   const dmVisible = phase >= 4;
   const statsVisible = phase >= 5;
 
+  const showLive = phase >= 3;
+
   return (
-    <SimShell label="Step 3 · Go Live">
-      <div className="flex gap-3 items-start justify-center flex-wrap sm:flex-nowrap">
-        {/* Builder panel */}
-        <div className="bg-white rounded-2xl p-4 flex-shrink-0 w-[200px]" style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.07)" }}>
-          <p className="text-[10px] font-bold text-gray-900 mb-3">New Automation</p>
-
-          <label className="text-[8px] font-semibold text-gray-400 uppercase">Trigger keyword</label>
+    <SimulationShell label="Step 3 · Go Live">
+      <IPhoneShell responsive>
+        <SimulationContent className="relative flex flex-col overflow-hidden">
+          {/* Setup screen */}
           <div
-            className="mt-1 rounded-lg border px-2.5 py-1.5 text-[10px] font-bold text-[#7c5af3] mb-3 transition-all duration-300"
-            style={{ borderColor: phase >= 1 ? "#7c5af3" : "#e5e7eb", background: "rgba(124,90,243,0.04)" }}
-          >
-            {keyword || <span className="text-gray-300 font-normal">Enter keyword…</span>}
-            {phase === 1 && <span className="inline-block w-0.5 h-3 bg-[#7c5af3] animate-pulse ml-0.5 align-middle" />}
-          </div>
-
-          <label className="text-[8px] font-semibold text-gray-400 uppercase">DM message</label>
-          <div className="mt-1 rounded-lg border border-gray-200 px-2.5 py-1.5 text-[9px] text-gray-600 leading-snug mb-3 bg-gray-50">
-            Hey! Here&apos;s your exclusive link 👇
-          </div>
-
-          <div className="flex items-center justify-between rounded-lg px-2.5 py-2" style={{ background: live ? "rgba(16,185,129,0.06)" : "#f9fafb" }}>
-            <span className="text-[9px] font-semibold text-gray-700">Go Live</span>
-            <div
-              className="w-9 h-5 rounded-full relative transition-all duration-300"
-              style={{ background: live ? "#10b981" : "#d1d5db" }}
-            >
-              <div
-                className="absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-300"
-                style={{ left: live ? 18 : 2 }}
-              />
-            </div>
-          </div>
-
-          {live && (
-            <div className="mt-2 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-[8px] font-bold text-green-600">Automation active</span>
-            </div>
-          )}
-        </div>
-
-        {/* Live result */}
-        <div className="flex flex-col gap-2 pt-2 flex-shrink-0 w-[175px]">
-          <div
-            className="bg-white rounded-xl px-2.5 py-2 transition-all duration-500"
+            className="absolute inset-0 flex flex-col p-3.5 transition-all duration-500"
             style={{
-              opacity: commentVisible ? 1 : 0,
-              transform: commentVisible ? "translateY(0)" : "translateY(10px)",
-              boxShadow: "0 2px 10px rgba(66,89,240,0.09)",
-              border: "1px solid rgba(124,90,243,0.09)",
+              opacity: showLive ? 0 : 1,
+              transform: showLive ? "translateX(-20px)" : "translateX(0)",
+              pointerEvents: showLive ? "none" : "auto",
             }}
           >
-            <div className="flex items-start gap-1.5">
-              <Av label="JD" gradient="linear-gradient(135deg,#94a3b8,#475569)" size={6} />
-              <div>
-                <p className="text-[9px] font-bold text-gray-800">john.deals</p>
-                <p className="text-[9px] text-gray-500 mt-0.5">Fashion 🔥</p>
+            <div className="flex items-center gap-1.5 mb-2">
+              <LiffioLogoMark theme="light" size="xs" className="!h-4" />
+              <p className="text-[10px] font-bold text-gray-900">New Automation</p>
+            </div>
+
+            <label className="text-[8px] font-semibold text-gray-400 uppercase">Trigger keyword</label>
+            <div
+              className="mt-1 rounded-lg border px-2.5 py-1.5 text-[10px] font-bold text-[#7c5af3] mb-2 transition-all duration-300"
+              style={{ borderColor: phase >= 1 ? "#7c5af3" : "#e5e7eb", background: "rgba(124,90,243,0.04)" }}
+            >
+              {keyword || <span className="text-gray-300 font-normal">Enter keyword…</span>}
+              {phase === 1 && <span className="inline-block w-0.5 h-3 bg-[#7c5af3] animate-pulse ml-0.5 align-middle" />}
+            </div>
+
+            <label className="text-[8px] font-semibold text-gray-400 uppercase">DM message</label>
+            <div className="mt-1 rounded-lg border border-gray-200 px-2.5 py-1.5 text-[9px] text-gray-600 leading-snug mb-2 bg-gray-50">
+              Hey! Here&apos;s your exclusive link 👇
+            </div>
+
+            <div className="flex items-center justify-between rounded-lg px-2.5 py-2" style={{ background: live ? "rgba(16,185,129,0.06)" : "#f9fafb" }}>
+              <span className="text-[9px] font-semibold text-gray-700">Go Live</span>
+              <div
+                className="w-9 h-5 rounded-full relative transition-all duration-300"
+                style={{ background: live ? "#10b981" : "#d1d5db" }}
+              >
+                <div
+                  className="absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-300"
+                  style={{ left: live ? 18 : 2 }}
+                />
               </div>
             </div>
-            <p className="text-[8px] text-gray-400 mt-1 ml-1">Comment · Just now</p>
+
+            {live && (
+              <div className="mt-2 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-[8px] font-bold text-green-600">Automation active</span>
+              </div>
+            )}
           </div>
 
+          {/* Live Instagram flow */}
           <div
-            className="flex items-center justify-center gap-1 py-1 transition-all duration-300"
-            style={{ opacity: dmVisible ? 1 : 0 }}
-          >
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#7c5af3]/30" />
-            <span className="text-[7px] font-bold text-[#7c5af3] uppercase tracking-wider">Auto DM · 1.2s</span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#7c5af3]/30" />
-          </div>
-
-          <div
-            className="bg-white rounded-xl px-2.5 py-2 transition-all duration-500"
+            className="absolute inset-0 flex flex-col overflow-y-auto p-2.5 gap-2 transition-all duration-500"
             style={{
-              opacity: dmVisible ? 1 : 0,
-              transform: dmVisible ? "translateY(0)" : "translateY(10px)",
-              boxShadow: "0 2px 10px rgba(66,89,240,0.09)",
-              border: "1px solid rgba(124,90,243,0.09)",
+              opacity: showLive ? 1 : 0,
+              transform: showLive ? "translateX(0)" : "translateX(20px)",
+              pointerEvents: showLive ? "auto" : "none",
             }}
           >
-            <div className="flex items-start gap-1.5">
-              <Av label="AA" gradient="linear-gradient(135deg,#f06292,#e91e63)" size={6} />
-              <div>
-                <p className="text-[9px] font-bold text-gray-800">art_apparel</p>
-                <p className="text-[9px] text-gray-500 mt-0.5">Hey John! Here&apos;s your link 👇</p>
-                <div className="mt-1 rounded-md px-2 py-0.5 text-center" style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)" }}>
-                  <span className="text-[8px] text-white font-bold">Open Link</span>
+            {/* Mini post */}
+            <div className="rounded-xl overflow-hidden border border-gray-100 flex-shrink-0">
+              <div className="flex items-center gap-1.5 px-2 py-1.5 border-b border-gray-50">
+                <Av label="AA" gradient="linear-gradient(135deg,#f06292,#e91e63)" size={5} />
+                <span className="text-[9px] font-bold text-gray-800">art_apparel</span>
+              </div>
+              <div className="relative">
+                <SimulationPostImage src={DEMO_POST_IMAGES[0]} alt="Fashion post" height={80} />
+                <span className="absolute bottom-1.5 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/55 px-2 py-0.5 text-[7px] font-bold text-white">
+                  Comment &ldquo;FASHION&rdquo;
+                </span>
+              </div>
+            </div>
+
+            <div
+              className="rounded-xl px-2.5 py-2 transition-all duration-500 bg-gray-50 border border-gray-100"
+              style={{
+                opacity: commentVisible ? 1 : 0,
+                transform: commentVisible ? "translateY(0)" : "translateY(8px)",
+              }}
+            >
+              <div className="flex items-start gap-1.5">
+                <Av label="JD" gradient="linear-gradient(135deg,#94a3b8,#475569)" size={5} />
+                <div>
+                  <p className="text-[9px] font-bold text-gray-800">john.deals</p>
+                  <p className="text-[9px] text-gray-500 mt-0.5">FASHION</p>
                 </div>
               </div>
+              <p className="text-[8px] text-gray-400 mt-1">Comment · Just now</p>
             </div>
-            <p className="text-[8px] text-green-500 font-semibold mt-1 ml-1">Sent instantly ✓</p>
-          </div>
 
-          <div
-            className="rounded-xl px-3 py-2 text-center transition-all duration-500"
-            style={{
-              opacity: statsVisible ? 1 : 0,
-              transform: statsVisible ? "scale(1)" : "scale(0.95)",
-              background: "rgba(66,89,240,0.06)",
-              border: "1px solid rgba(66,89,240,0.12)",
-            }}
-          >
-            <p className="text-[8px] text-gray-500">First automated DM</p>
-            <p className="text-sm font-black text-[#4259f0]" style={{ fontFamily: "var(--font-outfit,sans-serif)" }}>
-              4 min 12 sec
-            </p>
+            <div
+              className="flex items-center justify-center gap-1 py-0.5 transition-all duration-300"
+              style={{ opacity: dmVisible ? 1 : 0 }}
+            >
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#7c5af3]/30" />
+              <span className="text-[7px] font-bold text-[#7c5af3] uppercase tracking-wider">Auto DM · 1.2s</span>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#7c5af3]/30" />
+            </div>
+
+            {/* DM thread */}
+            <div className="flex items-center gap-1.5 px-1 pb-1 border-b border-gray-100">
+              <svg className="w-3 h-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              <Av label="AA" gradient="linear-gradient(135deg,#f06292,#e91e63)" size={5} />
+              <div>
+                <p className="text-[9px] font-bold text-gray-900">art_apparel</p>
+                <p className="text-[7px] text-green-500">Active now</p>
+              </div>
+            </div>
+
+            <div
+              className="flex-1 flex flex-col justify-end gap-1.5 min-h-[100px]"
+              style={{ opacity: dmVisible ? 1 : 0, transition: "opacity 0.5s" }}
+            >
+              <div className="flex justify-end">
+                <div className="bg-gray-100 rounded-2xl rounded-br-sm px-2.5 py-1.5 max-w-[75%]">
+                  <p className="text-[9px] text-gray-800">Fashion 🔥</p>
+                </div>
+              </div>
+              <div className="flex items-end gap-1">
+                <Av label="AA" gradient="linear-gradient(135deg,#f06292,#e91e63)" size={5} />
+                <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-2.5 py-1.5 shadow-sm max-w-[80%]">
+                  <p className="text-[9px] text-gray-800">Hey John! Here&apos;s your link 👇</p>
+                  <div className="mt-1 rounded-md px-2 py-0.5 text-center" style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)" }}>
+                    <span className="text-[8px] text-white font-bold">Open Link</span>
+                  </div>
+                </div>
+              </div>
+              <p className="text-[8px] text-green-500 font-semibold pl-1">Auto-sent ✓</p>
+            </div>
+
+            <div
+              className="rounded-xl px-3 py-2 text-center transition-all duration-500 flex-shrink-0"
+              style={{
+                opacity: statsVisible ? 1 : 0,
+                transform: statsVisible ? "scale(1)" : "scale(0.95)",
+                background: "rgba(66,89,240,0.06)",
+                border: "1px solid rgba(66,89,240,0.12)",
+              }}
+            >
+              <p className="text-[8px] text-gray-500">First automated DM</p>
+              <p className="text-sm font-black text-[#4259f0]" style={{ fontFamily: "var(--font-outfit,sans-serif)" }}>
+                4 min 12 sec
+              </p>
+            </div>
           </div>
-        </div>
-      </div>
-    </SimShell>
+        </SimulationContent>
+      </IPhoneShell>
+    </SimulationShell>
   );
 }
 
@@ -491,71 +515,179 @@ export default function HowItWorksSection() {
   const SimComp = simulations[activeStep];
 
   return (
-    <section id="how-it-works" className="relative py-24 sm:py-32 bg-white overflow-hidden">
+    <section
+      id="how-it-works"
+      className="section-py relative overflow-hidden border-y border-brand-100/80 bg-gradient-to-b from-brand-50 via-[#f4f0ff] to-white"
+    >
       <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: "linear-gradient(90deg,transparent,rgba(124,90,243,0.12),transparent)" }}
+        className="pointer-events-none absolute inset-0 opacity-[0.45]"
+        style={{
+          backgroundImage: "radial-gradient(rgba(124,90,243,0.09) 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -left-32 top-20 h-[420px] w-[420px] rounded-full"
+        style={{ background: "radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 68%)" }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -right-24 bottom-0 h-[360px] w-[360px] rounded-full"
+        style={{ background: "radial-gradient(circle, rgba(66,89,240,0.1) 0%, transparent 70%)" }}
+        aria-hidden
       />
 
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute -bottom-32 -right-32 w-[600px] h-[600px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(168,85,247,0.04) 0%, transparent 60%)" }}
-        />
-      </div>
-
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-end mb-16">
-          <div>
-            <div className="section-badge mb-5">How It Works</div>
+        {/* Header — inline split (mirrors Features, tinted section differentiates) */}
+        <div className="mb-8 flex flex-col gap-6 sm:mb-10 lg:mb-16 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+          <div className="max-w-xl">
+            <TechBadge label="How it works" variant="section" className="mb-4 sm:mb-5" />
             <h2
-              className="text-4xl sm:text-[2.75rem] font-extrabold text-[#0a0a0a] leading-tight"
+              className="text-3xl font-extrabold leading-tight text-[#0a0a0a] sm:text-4xl sm:text-[2.75rem]"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
             >
               From zero to fully automated{" "}
-              <span
-                style={{
-                  background: "linear-gradient(130deg,#a855f7,#7c5af3,#4259f0)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                in minutes.
-              </span>
+              <span className="gradient-text">in minutes.</span>
             </h2>
-          </div>
-          <div>
-            <p className="text-lg text-gray-500 leading-relaxed">
-              No developer, no tech skills, no complicated setup. Liffio is built for creators — if you can send a DM, you
-              can automate one.
+            <p className="mt-3 text-base leading-relaxed text-gray-600 sm:text-lg">
+              No developer, no tech skills, no complicated setup — if you can send a DM, you can automate one.
             </p>
-            <div className="flex flex-wrap gap-4 mt-6">
-              <a
-                href={siteConfig.urls.appSignup}
-                className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
-                style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)", boxShadow: "0 4px 16px rgba(66,89,240,0.28)" }}
-              >
-                Get Started Free →
-              </a>
-              <a
-                href="/pricing"
-                className="inline-flex items-center gap-2 rounded-xl border bg-white px-6 py-3 text-sm font-semibold text-gray-700 transition-all duration-200 hover:border-[#c4b8f5] hover:text-[#7c5af3]"
-                style={{ borderColor: "#e5e0f8" }}
-              >
-                View Pricing
-              </a>
-            </div>
+            <p className="mt-4 text-sm font-medium text-brand-700/80" aria-live="polite">
+              {steps.map((step, i) => (
+                <span key={step.num}>
+                  {i > 0 && <span className="text-brand-300/80"> · </span>}
+                  <span style={{ color: i === activeStep ? step.color : "#9ca3af" }}>
+                    {step.num} {step.shortTitle}
+                  </span>
+                </span>
+              ))}
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2 lg:max-w-sm lg:justify-end">
+            {steps.map((step) => (
+              <TechBadge key={step.num} label={step.note} variant="chip" accent={step.color} />
+            ))}
           </div>
         </div>
 
-        {/* Steps + simulation */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          {/* Step cards */}
+        {/* Mobile: step tabs → demo → active step only */}
+        <div className="space-y-5 lg:hidden">
+          <div className="snap-tabs scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4">
+            {steps.map((step, i) => {
+              const isActive = i === activeStep;
+              return (
+                <button
+                  key={step.num}
+                  type="button"
+                  onClick={() => goToStep(i)}
+                  className="flex shrink-0 snap-start items-center gap-2 rounded-full border px-3 py-2 transition-all"
+                  style={{
+                    borderColor: isActive ? step.color : step.border,
+                    background: isActive ? step.bg : "white",
+                  }}
+                  aria-pressed={isActive}
+                >
+                  <span
+                    className="flex h-7 w-7 items-center justify-center rounded-lg text-[9px] font-black"
+                    style={{
+                      background: isActive ? step.color : step.bg,
+                      color: isActive ? "white" : step.color,
+                    }}
+                  >
+                    {step.num}
+                  </span>
+                  <span className="max-w-[8.5rem] truncate text-xs font-semibold text-[#0a0a0a]">{step.title}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <SimulationMobileStage>
+            <div
+              className="w-full transition-all duration-300"
+              style={{
+                opacity: simVisible ? 1 : 0,
+                transform: simVisible ? "translateY(0) scale(1)" : "translateY(12px) scale(0.97)",
+              }}
+            >
+              <SimComp animKey={animKey} />
+            </div>
+          </SimulationMobileStage>
+
+          {(() => {
+            const step = steps[activeStep];
+            return (
+              <article
+                className="rounded-2xl bg-white p-4 sm:p-5"
+                style={{
+                  border: `1px solid ${step.border}`,
+                  boxShadow: `0 8px 32px ${step.bg}`,
+                }}
+              >
+                <TechBadge label={`ok ${step.note}`} variant="inline" format="label" accent={step.color} />
+                <h3 className="mt-2 text-lg font-bold text-[#0a0a0a]">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-gray-500">{step.detail}</p>
+                <a
+                  href={siteConfig.urls.appSignup}
+                  className="mt-4 inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white sm:w-auto"
+                  style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)" }}
+                >
+                  Get Started Free →
+                </a>
+              </article>
+            );
+          })()}
+
+          <div className="flex justify-center gap-2">
+            {steps.map((step, i) => (
+              <button
+                key={step.num}
+                type="button"
+                onClick={() => goToStep(i)}
+                aria-label={`Go to step ${step.num}`}
+                className="rounded-full transition-all duration-300"
+                style={{
+                  width: i === activeStep ? 20 : 6,
+                  height: 6,
+                  background: i === activeStep ? "linear-gradient(90deg,#7c5af3,#4259f0)" : "#e5e7eb",
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop: phone left, steps right — mirrored vs Features */}
+        <div className="hidden items-center gap-6 lg:grid lg:grid-cols-2 lg:gap-16">
+          <div className="flex max-md:justify-center">
+            <div className="relative w-full max-w-[440px]">
+              <div
+                className="pointer-events-none absolute inset-0 -z-10 scale-110"
+                style={{
+                  background: "radial-gradient(ellipse, rgba(124,90,243,0.12) 0%, transparent 70%)",
+                  filter: "blur(32px)",
+                }}
+                aria-hidden
+              />
+              <div
+                className="transition-all duration-300"
+                style={{
+                  opacity: simVisible ? 1 : 0,
+                  transform: simVisible ? "translateY(0) scale(1)" : "translateY(16px) scale(0.97)",
+                }}
+              >
+                <SimComp animKey={animKey} />
+              </div>
+            </div>
+          </div>
+
           <div className="relative space-y-4">
             <div
-              className="absolute left-[27px] top-8 bottom-8 w-px hidden sm:block"
-              style={{ background: "linear-gradient(180deg,rgba(168,85,247,0.3),rgba(124,90,243,0.3),rgba(66,89,240,0.1))" }}
+              className="absolute left-[27px] top-8 bottom-8 hidden w-px sm:block"
+              style={{
+                background:
+                  "linear-gradient(180deg,rgba(168,85,247,0.3),rgba(124,90,243,0.3),rgba(66,89,240,0.1))",
+              }}
             />
 
             {steps.map((step, i) => {
@@ -565,7 +697,7 @@ export default function HowItWorksSection() {
                   key={step.num}
                   type="button"
                   onClick={() => goToStep(i)}
-                  className="relative flex items-start gap-5 rounded-2xl bg-white p-6 w-full text-left transition-all duration-300 group"
+                  className="group relative flex w-full items-start gap-5 rounded-2xl bg-white/90 p-6 text-left backdrop-blur-sm transition-all duration-300"
                   style={{
                     border: `1px solid ${isActive ? step.color : step.border}`,
                     boxShadow: isActive ? `0 8px 32px ${step.bg}` : "0 2px 16px rgba(124,90,243,0.05)",
@@ -574,7 +706,7 @@ export default function HowItWorksSection() {
                 >
                   <div className="relative z-10 flex-shrink-0">
                     <div
-                      className="w-14 h-14 rounded-2xl flex flex-col items-center justify-center gap-0.5 transition-all duration-300"
+                      className="flex h-14 w-14 flex-col items-center justify-center gap-0.5 rounded-2xl transition-all duration-300"
                       style={{
                         background: isActive ? step.color : step.bg,
                         color: isActive ? "white" : step.color,
@@ -585,21 +717,16 @@ export default function HowItWorksSection() {
                     </div>
                   </div>
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-start justify-between gap-3 mb-1.5">
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-1.5 flex flex-wrap items-start justify-between gap-3 md:gap-0">
                       <h3 className="text-lg font-bold text-[#0a0a0a]">{step.title}</h3>
-                      <span
-                        className="flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold flex-shrink-0"
-                        style={{ background: step.bg, color: step.color }}
-                      >
-                        ✓ {step.note}
-                      </span>
+                      
                     </div>
-                    <p className="text-sm text-gray-500 leading-relaxed">{step.detail}</p>
+                    <p className="text-sm leading-relaxed text-gray-600">{step.detail}</p>
                   </div>
 
                   <div
-                    className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl transition-opacity duration-300"
+                    className="absolute inset-y-1 left-0 h-auto w-1 rounded-l-2xl transition-opacity duration-300"
                     style={{
                       background: `linear-gradient(180deg,${step.color},transparent)`,
                       opacity: isActive ? 1 : 0,
@@ -609,7 +736,6 @@ export default function HowItWorksSection() {
               );
             })}
 
-            {/* Step dots */}
             <div className="flex justify-center gap-2 pt-2 sm:justify-start sm:pl-20">
               {steps.map((step, i) => (
                 <button
@@ -621,32 +747,10 @@ export default function HowItWorksSection() {
                   style={{
                     width: i === activeStep ? 20 : 6,
                     height: 6,
-                    background: i === activeStep ? "linear-gradient(90deg,#7c5af3,#4259f0)" : "#e5e7eb",
+                    background: i === activeStep ? "linear-gradient(90deg,#7c5af3,#4259f0)" : "#d4d0e8",
                   }}
                 />
               ))}
-            </div>
-          </div>
-
-          {/* Simulation panel */}
-          <div className="flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[440px]">
-              <div
-                className="absolute inset-0 -z-10 pointer-events-none scale-110"
-                style={{
-                  background: "radial-gradient(ellipse, rgba(124,90,243,0.1) 0%, transparent 70%)",
-                  filter: "blur(32px)",
-                }}
-              />
-              <div
-                className="transition-all duration-300"
-                style={{
-                  opacity: simVisible ? 1 : 0,
-                  transform: simVisible ? "translateY(0) scale(1)" : "translateY(16px) scale(0.97)",
-                }}
-              >
-                <SimComp animKey={animKey} />
-              </div>
             </div>
           </div>
         </div>

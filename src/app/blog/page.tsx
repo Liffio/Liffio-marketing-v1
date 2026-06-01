@@ -22,7 +22,7 @@ const articles = [
     category: "Growth",
     title: "The Ultimate Guide to Instagram Story Automation",
     excerpt:
-      "Story mentions and replies are gold. Here's how to auto-reply instantly to every story interaction and never miss a lead.",
+      "Story mentions and replies are gold. Here's how to auto-reply to every story interaction and never miss a lead.",
     readTime: "7 min read",
     date: "May 10, 2026",
     slug: "#",

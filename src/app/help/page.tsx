@@ -1,50 +1,14 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { FAQAccordion } from "@/components/faq/FAQAccordion";
 import { siteConfig } from "@/config/site.config";
+import { homeFaqCategories } from "@/config/faq.config";
 
 export const metadata: Metadata = {
   title: "Help Center — Liffio",
   description: "Find answers to common questions about Liffio and get support from our team.",
 };
-
-const faqs = [
-  {
-    question: "How do I connect my Instagram account?",
-    answer:
-      "Go to your Liffio dashboard and click 'Connect Instagram'. You'll be redirected to the official Meta login page. Authorize the app and your account will be connected in seconds.",
-  },
-  {
-    question: "Is Liffio safe to use?",
-    answer:
-      "Yes! Liffio is a verified Meta Business Partner and uses only official Instagram APIs. Your account is fully compliant with Instagram's terms of service.",
-  },
-  {
-    question: "What are keyword triggers?",
-    answer:
-      "Keyword triggers are words or phrases that, when commented by a user, automatically send them a DM. For example, if someone comments 'LINK' on your post, they'll instantly receive your link in their DMs.",
-  },
-  {
-    question: "How quickly are automated DMs sent?",
-    answer:
-      "DMs are sent instantly — typically within 1-2 seconds of the trigger event (comment, story reply, etc.). This real-time response is key to maximizing engagement.",
-  },
-  {
-    question: "Can I use Liffio with multiple Instagram accounts?",
-    answer:
-      "Yes! On the Pro plan you can manage up to 5 Instagram accounts. On the Custom plan there's no limit.",
-  },
-  {
-    question: "What happens when I reach my DM limit?",
-    answer:
-      "When you reach your monthly DM limit, automation will pause until your next billing cycle. You'll receive an email notification when you reach 80% and 100% of your limit.",
-  },
-  {
-    question: "How do I cancel my subscription?",
-    answer:
-      "You can cancel anytime from your account settings. There are no cancellation fees and your account remains active until the end of your billing period.",
-  },
-];
 
 export default function HelpPage() {
   return (
@@ -98,17 +62,7 @@ export default function HelpPage() {
             >
               Frequently Asked Questions
             </h2>
-            <div className="space-y-4">
-              {faqs.map((faq, i) => (
-                <div
-                  key={i}
-                  className="bg-gray-50 rounded-2xl border border-gray-100 p-6 hover:border-gray-200 transition-colors"
-                >
-                  <h3 className="text-base font-semibold text-gray-900 mb-2">{faq.question}</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
+            <FAQAccordion categories={homeFaqCategories} allowMultiple />
           </div>
         </section>
 

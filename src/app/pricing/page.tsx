@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import PricingPlansGrid, { PricingBottomCta } from "@/components/PricingPlansGrid";
 import { featureCategories, pricingFaqs } from "@/config/pricing.config";
 import { siteConfig } from "@/config/site.config";
+import { metaCopy } from "@/config/meta-copy";
 
 export const metadata: Metadata = {
   title: "Pricing — Liffio",
@@ -43,8 +44,7 @@ export default function PricingPage() {
               Plans That Grow With You
             </h1>
             <p className="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
-              From free comment-to-DM automation to full agency white-label. Every plan runs on official Meta APIs
-              with real-time webhook delivery.
+              From free comment-to-DM automation to full agency white-label. {metaCopy.pricingHeroApis}
             </p>
             <p className="mt-3 text-sm text-gray-500">
               Pre-launch offer:{" "}
@@ -83,7 +83,7 @@ export default function PricingPage() {
                 {
                   icon: "💬",
                   title: "Comment-to-DM Engine",
-                  desc: "Keyword triggers send DMs in under 2 seconds. Public auto-replies, follow-ups, and multi-step flows included on paid plans.",
+                  desc: "Keyword triggers send rapid automated DMs with a custom 10–60s delay from comment. Public auto-replies, follow-ups, and multi-step flows included on paid plans.",
                 },
                 {
                   icon: "📅",
