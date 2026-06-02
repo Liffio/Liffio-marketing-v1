@@ -3,14 +3,22 @@ import AppLink from "@/components/AppLink";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PricingPlansGrid, { PricingBottomCta } from "@/components/PricingPlansGrid";
-import { featureCategories, pricingFaqs } from "@/config/pricing.config";
+import {
+  comparisonPlanNames,
+  featureCategories,
+  getPlanColumnValue,
+  getPricingFaqs,
+  getPricingPlans,
+} from "@/config/pricing.config";
+import { getPricingRegionLabel } from "@/lib/pricing-region";
+import { getPricingRegion } from "@/lib/pricing-region.server";
 import { siteConfig } from "@/config/site.config";
 import { metaCopy } from "@/config/meta-copy";
 
 export const metadata: Metadata = {
   title: "Pricing — Liffio",
   description:
-    "Simple, transparent pricing for Instagram DM automation. Starter (free), Pro, Business, and Agency plans. No hidden fees — scale as you grow.",
+    "Simple, transparent pricing for Instagram DM automation. Free, Starter, Pro, Business, and Agency plans. No hidden fees — scale as you grow.",
 };
 
 function CellValue({ value }: { value: boolean | string }) {
@@ -28,7 +36,12 @@ function CellValue({ value }: { value: boolean | string }) {
   );
 }
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const region = await getPricingRegion();
+  const plans = getPricingPlans(region);
+  const pricingFaqs = getPricingFaqs(region);
+  const regionLabel = getPricingRegionLabel(region);
+
   return (
     <>
       <Navbar />
@@ -46,6 +59,9 @@ export default function PricingPage() {
             <p className="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
               From free comment-to-DM automation to full agency white-label. {metaCopy.pricingHeroApis}
             </p>
+            <p className="mt-3 text-sm font-medium text-gray-500">
+              {region === "india" ? "🇮🇳" : "🌍"} {regionLabel} — detected from your location
+            </p>
             <p className="mt-3 text-sm text-gray-500">
               Pre-launch offer:{" "}
               <AppLink href={siteConfig.urls.preregister} className="text-[#7c5af3] font-semibold hover:underline">
@@ -58,7 +74,7 @@ export default function PricingPage() {
         {/* Pricing cards */}
         <section className="py-16 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <PricingPlansGrid />
+            <PricingPlansGrid plans={plans} region={region} />
           </div>
         </section>
 
@@ -136,13 +152,13 @@ export default function PricingPage() {
                     <p className="text-sm text-gray-500 mt-1">{category.description}</p>
                   </div>
                   <div className="overflow-x-auto rounded-2xl border border-gray-100 shadow-sm">
-                    <table className="w-full min-w-[640px] text-left">
+                    <table className="w-full min-w-[800px] text-left">
                       <thead>
                         <tr className="bg-gray-50 border-b border-gray-100">
                           <th className="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-500 w-[40%]">
                             Feature
                           </th>
-                          {["Starter", "Pro", "Business", "Agency"].map((plan) => (
+                          {comparisonPlanNames.map((plan) => (
                             <th
                               key={plan}
                               className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-gray-500 text-center"
@@ -156,18 +172,11 @@ export default function PricingPage() {
                         {category.features.map((row, i) => (
                           <tr key={row.name} className={i % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
                             <td className="px-5 py-3.5 text-sm text-gray-700">{row.name}</td>
-                            <td className="px-4 py-3.5 text-center">
-                              <CellValue value={row.starter} />
-                            </td>
-                            <td className="px-4 py-3.5 text-center">
-                              <CellValue value={row.pro} />
-                            </td>
-                            <td className="px-4 py-3.5 text-center">
-                              <CellValue value={row.business} />
-                            </td>
-                            <td className="px-4 py-3.5 text-center">
-                              <CellValue value={row.agency} />
-                            </td>
+                            {comparisonPlanNames.map((plan) => (
+                              <td key={plan} className="px-4 py-3.5 text-center">
+                                <CellValue value={getPlanColumnValue(row, plan)} />
+                              </td>
+                            ))}
                           </tr>
                         ))}
                       </tbody>

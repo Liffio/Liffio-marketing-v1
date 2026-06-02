@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import AppLink from "@/components/AppLink";
-import { pricingPlans, pricingPerks } from "@/config/pricing.config";
+import { pricingPerks, type PricingPlan } from "@/config/pricing.config";
+import { getPricingRegionLabel, type PricingRegion } from "@/lib/pricing-region";
 import { siteConfig } from "@/config/site.config";
 
 function CheckIcon({ highlight }: { highlight?: boolean }) {
@@ -23,15 +24,28 @@ function XIcon() {
   );
 }
 
+function isZeroPrice(price: string): boolean {
+  return price === "$0" || price === "₹0";
+}
+
 type PricingPlansGridProps = {
   compact?: boolean;
+  plans: PricingPlan[];
+  region: PricingRegion;
 };
 
-export default function PricingPlansGrid({ compact = false }: PricingPlansGridProps) {
+export default function PricingPlansGrid({ compact = false, plans, region }: PricingPlansGridProps) {
   const [annual, setAnnual] = useState(false);
+  const regionLabel = getPricingRegionLabel(region);
 
   return (
     <>
+      <p className="mb-6 text-center text-sm text-gray-500">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 font-medium text-gray-600">
+          {region === "india" ? "🇮🇳" : "🌍"} {regionLabel}
+        </span>
+      </p>
+
       {/* Billing toggle */}
       <div className="flex items-center justify-center gap-3 mb-10">
         <span className={`text-sm font-semibold transition-colors ${!annual ? "text-[#0a0a0a]" : "text-gray-400"}`}>
@@ -57,94 +71,104 @@ export default function PricingPlansGrid({ compact = false }: PricingPlansGridPr
       </div>
 
       {/* Cards */}
-      <div className={`grid grid-cols-1 gap-6 mx-auto md:grid-cols-2 xl:grid-cols-4 max-w-7xl ${compact ? "" : ""}`}>
-        {pricingPlans.map((plan) => (
-          <div
-            key={plan.name}
-            className={`relative flex flex-col rounded-2xl p-5 transition-all duration-300 sm:rounded-3xl sm:p-7 md:p-8 ${plan.highlight && compact ? "md:scale-[1.02] md:z-[1]" : ""}`}
-            style={plan.highlight ? {
-              background: "linear-gradient(155deg,#7c5af3,#5648ea,#4259f0)",
-              boxShadow: "0 28px 64px rgba(66,89,240,0.38), 0 0 0 1px rgba(124,90,243,0.4)",
-            } : {
-              background: "white",
-              border: "1px solid rgba(124,90,243,0.12)",
-              boxShadow: "0 2px 20px rgba(124,90,243,0.06)",
-            }}
-          >
-            {plan.badge && (
-              <span
-                className="absolute -top-4 left-1/2 -translate-x-1/2 text-white text-[11px] font-bold px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap"
-                style={{ background: "linear-gradient(135deg,#f59e0b,#f97316)" }}
-              >
-                {plan.badge}
-              </span>
-            )}
+      <div className="grid grid-cols-1 gap-6 mx-auto sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 max-w-7xl">
+        {plans.map((plan) => {
+          const price = annual ? plan.annual : plan.monthly;
+          const showPerMonth = !isZeroPrice(plan.monthly);
 
-            <div className="mb-6">
-              <h3 className={`text-lg font-bold mb-0.5 ${plan.highlight ? "text-white" : "text-[#0a0a0a]"}`}>
-                {plan.name}
-              </h3>
-              <p className={`text-sm mb-6 min-h-[2.5rem] ${plan.highlight ? "text-white/65" : "text-gray-400"}`}>
-                {plan.description}
-              </p>
-              <div className="flex items-end gap-1">
-                <span
-                  className={`font-extrabold tracking-tight leading-none ${plan.highlight ? "text-white" : "text-[#0a0a0a]"}`}
-                  style={{
-                    fontSize: plan.monthly === "Custom" ? "2rem" : "3rem",
-                    fontFamily: "var(--font-outfit,sans-serif)",
-                  }}
-                >
-                  {annual ? plan.annual : plan.monthly}
-                </span>
-                {plan.monthly !== "Custom" && (
-                  <span className={`text-sm pb-1.5 ${plan.highlight ? "text-white/60" : "text-gray-400"}`}>
-                    /mo
-                    {annual && plan.monthly !== "$0" && (
-                      <span className={`block text-[10px] font-bold ${plan.highlight ? "text-white/50" : "text-gray-300"}`}>
-                        billed annually
-                      </span>
-                    )}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            <ul className="space-y-2.5 flex-1 mb-8">
-              {plan.features.map((feat) => (
-                <li key={feat.text} className="flex items-start gap-2.5">
-                  {feat.included ? <CheckIcon highlight={plan.highlight} /> : <XIcon />}
-                  <span
-                    className={`text-sm leading-snug ${
-                      plan.highlight
-                        ? feat.included ? "text-white/85" : "text-white/30"
-                        : feat.included ? "text-gray-700" : "text-gray-300"
-                    }`}
-                  >
-                    {feat.text}
-                  </span>
-                </li>
-              ))}
-            </ul>
-
-            <a
-              href={plan.href}
-              id={`pricing-${plan.name.toLowerCase()}`}
-              className="block w-full rounded-xl py-3.5 text-center text-sm font-semibold transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
+          return (
+            <div
+              key={plan.name}
+              className={`relative flex flex-col rounded-2xl p-5 transition-all duration-300 sm:rounded-3xl sm:p-7 md:p-8 ${plan.highlight && compact ? "md:scale-[1.02] md:z-[1]" : ""}`}
               style={plan.highlight ? {
-                background: "white",
-                color: "#4259f0",
-                boxShadow: "0 4px 16px rgba(0,0,0,0.14)",
+                background: "linear-gradient(155deg,#7c5af3,#5648ea,#4259f0)",
+                boxShadow: "0 28px 64px rgba(66,89,240,0.38), 0 0 0 1px rgba(124,90,243,0.4)",
               } : {
-                background: "linear-gradient(135deg,#7c5af3,#4259f0)",
-                color: "white",
-                boxShadow: "0 4px 16px rgba(66,89,240,0.24)",
+                background: "white",
+                border: "1px solid rgba(124,90,243,0.12)",
+                boxShadow: "0 2px 20px rgba(124,90,243,0.06)",
               }}
             >
-              {plan.cta}
-            </a>
-          </div>
-        ))}
+              {plan.badge && (
+                <span
+                  className="absolute -top-4 left-1/2 -translate-x-1/2 text-white text-[11px] font-bold px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap"
+                  style={{ background: "linear-gradient(135deg,#f59e0b,#f97316)" }}
+                >
+                  {plan.badge}
+                </span>
+              )}
+
+              <div className="mb-6">
+                <h3 className={`text-lg font-bold mb-0.5 ${plan.highlight ? "text-white" : "text-[#0a0a0a]"}`}>
+                  {plan.name}
+                </h3>
+                <p className={`text-sm mb-6 min-h-[2.5rem] ${plan.highlight ? "text-white/65" : "text-gray-400"}`}>
+                  {plan.description}
+                </p>
+                <div className="flex items-end gap-1">
+                  <span
+                    className={`font-extrabold tracking-tight leading-none ${plan.highlight ? "text-white" : "text-[#0a0a0a]"}`}
+                    style={{
+                      fontSize: isZeroPrice(price) ? "2.5rem" : "2.25rem",
+                      fontFamily: "var(--font-outfit,sans-serif)",
+                    }}
+                  >
+                    {price}
+                  </span>
+                  {showPerMonth && (
+                    <span className={`text-sm pb-1.5 ${plan.highlight ? "text-white/60" : "text-gray-400"}`}>
+                      /mo
+                      {annual && !isZeroPrice(plan.monthly) && (
+                        <span className={`block text-[10px] font-bold ${plan.highlight ? "text-white/50" : "text-gray-300"}`}>
+                          billed annually
+                        </span>
+                      )}
+                    </span>
+                  )}
+                </div>
+                {plan.priceNote && !annual && (
+                  <p className={`mt-2 text-xs font-semibold ${plan.highlight ? "text-white/75" : "text-[#7c5af3]"}`}>
+                    {plan.priceNote}
+                  </p>
+                )}
+              </div>
+
+              <ul className="space-y-2.5 flex-1 mb-8">
+                {plan.features.map((feat) => (
+                  <li key={feat.text} className="flex items-start gap-2.5">
+                    {feat.included ? <CheckIcon highlight={plan.highlight} /> : <XIcon />}
+                    <span
+                      className={`text-sm leading-snug ${
+                        plan.highlight
+                          ? feat.included ? "text-white/85" : "text-white/30"
+                          : feat.included ? "text-gray-700" : "text-gray-300"
+                      }`}
+                    >
+                      {feat.text}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href={plan.href}
+                id={`pricing-${plan.name.toLowerCase()}`}
+                className="block w-full rounded-xl py-3.5 text-center text-sm font-semibold transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
+                style={plan.highlight ? {
+                  background: "white",
+                  color: "#4259f0",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.14)",
+                } : {
+                  background: "linear-gradient(135deg,#7c5af3,#4259f0)",
+                  color: "white",
+                  boxShadow: "0 4px 16px rgba(66,89,240,0.24)",
+                }}
+              >
+                {plan.cta}
+              </a>
+            </div>
+          );
+        })}
       </div>
 
       {/* Perks row */}

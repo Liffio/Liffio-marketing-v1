@@ -7,8 +7,13 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
+import { getPricingPlans } from "@/config/pricing.config";
+import { getPricingRegion } from "@/lib/pricing-region.server";
 
-export default function Home() {
+export default async function Home() {
+  const region = await getPricingRegion();
+  const plans = getPricingPlans(region);
+
   return (
     <>
       <Navbar />
@@ -18,7 +23,7 @@ export default function Home() {
         <FeaturesSection />
         <HowItWorksSection />
         <TestimonialsSection />
-        <PricingSection />
+        <PricingSection plans={plans} region={region} />
         <FAQSection />
       </main>
       <Footer />

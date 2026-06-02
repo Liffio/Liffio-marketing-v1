@@ -66,21 +66,21 @@ export const homeFaqCategories: FaqCategory[] = [
     items: [
       {
         id: "starter-free",
-        question: "Is the Starter plan really free?",
+        question: "Is the Free plan really free?",
         answer:
-          "Yes. Starter is $0/month with no credit card required. You get 1,000 automated DMs per month, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.",
+          "Yes. Free is $0/month (₹0 in India) with no credit card required. You get 1,000 automated DMs per month, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.",
       },
       {
         id: "plans-offered",
         question: "What plans does Liffio offer?",
         answer:
-          "Four tiers: Starter (free), Pro ($11/mo), Business ($79/mo), and Agency (custom). Each unlocks more accounts, DMs, automations, and growth tools.",
+          "Five tiers: Free, Starter, Pro, Business, and Agency. Global pricing is in USD ($0–$299/mo); India pricing is in INR (₹0–₹9,999/mo). Prices are shown automatically based on your location.",
       },
       {
         id: "billing-cycle",
         question: "Can I pay monthly or annually?",
         answer:
-          "Yes. Pro and Business are available monthly or annually. Annual billing saves 20%. Payments are handled via Stripe (global) or Razorpay (India).",
+          "Yes. All paid plans are available monthly or annually. Annual billing saves 20%. Payments are handled via Stripe (global) or Razorpay (India).",
       },
       {
         id: "dm-limit",

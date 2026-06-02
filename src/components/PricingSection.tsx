@@ -4,7 +4,8 @@ import { useState } from "react";
 import AppLink from "@/components/AppLink";
 import PricingPlansGrid from "@/components/PricingPlansGrid";
 import { TechBadge } from "@/components/TechBadge";
-import { pricingPlans, type PricingPlan } from "@/config/pricing.config";
+import type { PricingPlan } from "@/config/pricing.config";
+import type { PricingRegion } from "@/lib/pricing-region";
 
 function CheckIcon({ light }: { light?: boolean }) {
   return (
@@ -25,6 +26,7 @@ function MobilePlanCard({ plan, annual }: { plan: PricingPlan; annual: boolean }
   const price = annual ? plan.annual : plan.monthly;
   const topFeatures = plan.features.filter((f) => f.included).slice(0, 4);
   const light = plan.highlight;
+  const showPerMonth = price !== "$0" && price !== "₹0";
 
   return (
     <article
@@ -54,13 +56,18 @@ function MobilePlanCard({ plan, annual }: { plan: PricingPlan; annual: boolean }
             className={`font-extrabold leading-none tabular-nums ${light ? "text-white" : "text-[#0a0a0a]"}`}
             style={{
               fontFamily: "var(--font-outfit,sans-serif)",
-              fontSize: price === "Custom" ? "1.35rem" : "1.75rem",
+              fontSize: showPerMonth ? "1.75rem" : "1.5rem",
             }}
           >
             {price}
           </p>
-          {price !== "Custom" ? (
+          {showPerMonth ? (
             <p className={`text-[11px] ${light ? "text-white/60" : "text-gray-400"}`}>/mo</p>
+          ) : null}
+          {plan.priceNote && !annual ? (
+            <p className={`mt-1 text-[10px] font-semibold ${light ? "text-white/70" : "text-[#7c5af3]"}`}>
+              {plan.priceNote}
+            </p>
           ) : null}
         </div>
       </div>
@@ -91,7 +98,7 @@ function MobilePlanCard({ plan, annual }: { plan: PricingPlan; annual: boolean }
   );
 }
 
-function PricingMobilePreview() {
+function PricingMobilePreview({ plans }: { plans: PricingPlan[] }) {
   const [annual, setAnnual] = useState(false);
 
   return (
@@ -122,7 +129,7 @@ function PricingMobilePreview() {
         role="region"
         aria-label="Pricing plans preview"
       >
-        {pricingPlans.map((plan) => (
+        {plans.map((plan) => (
           <MobilePlanCard key={plan.name} plan={plan} annual={annual} />
         ))}
       </div>
@@ -145,7 +152,12 @@ function PricingMobilePreview() {
   );
 }
 
-export default function PricingSection() {
+type PricingSectionProps = {
+  plans: PricingPlan[];
+  region: PricingRegion;
+};
+
+export default function PricingSection({ plans, region }: PricingSectionProps) {
   return (
     <section id="pricing" className="section-py relative overflow-hidden bg-white">
       <div
@@ -170,10 +182,10 @@ export default function PricingSection() {
           </div>
         </div>
 
-        <PricingMobilePreview />
+        <PricingMobilePreview plans={plans} />
 
         <div className="hidden lg:block">
-          <PricingPlansGrid compact />
+          <PricingPlansGrid compact plans={plans} region={region} />
         </div>
       </div>
     </section>
