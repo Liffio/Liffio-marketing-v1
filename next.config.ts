@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "api.senddm.ai" },
       { protocol: "https", hostname: "senddm.ai" },
       { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "flagcdn.com" },
     ],
   },
 };

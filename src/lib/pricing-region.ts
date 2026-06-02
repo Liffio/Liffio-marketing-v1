@@ -36,8 +36,7 @@ export function getPricingRegionLabel(region: PricingRegion): string {
 }
 
 export function getPricingLocationLabel(region: PricingRegion, countryCode: string | null): string {
-  const flag = getCountryFlagEmoji(countryCode);
   const country = getCountryName(countryCode);
   const currency = region === "india" ? "INR" : "USD";
-  return `${flag} ${country} · ${currency} pricing`;
+  return `${country} · ${currency} pricing`;
 }

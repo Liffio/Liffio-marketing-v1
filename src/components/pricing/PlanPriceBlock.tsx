@@ -20,7 +20,8 @@ export function PlanPriceBlock({
   align = "left",
 }: PlanPriceBlockProps) {
   const price = annual ? plan.annual : plan.monthly;
-  const showIntro = !annual && plan.introPrice;
+  const showIntro = Boolean(plan.introPrice);
+  const followUpPrice = annual ? plan.annual : plan.monthly;
   const heroSize = compact ? "1.75rem" : isZeroPrice(price) && !showIntro ? "2.5rem" : "2.75rem";
   const regularSize = compact ? "1.35rem" : "2.25rem";
 
@@ -51,7 +52,7 @@ export function PlanPriceBlock({
           >
             {plan.introPrice}
           </span>
-          <span className={`text-sm pb-1.5 font-semibold ${mutedClass}`}>/mo</span>
+          <span className={`pb-1.5 text-sm font-semibold ${mutedClass}`}>/mo</span>
         </div>
         {plan.introPriceLabel ? (
           <p className={`mt-1 text-xs font-bold ${accentClass}`}>{plan.introPriceLabel}</p>
@@ -59,9 +60,16 @@ export function PlanPriceBlock({
         <p className={`mt-2.5 text-sm font-medium ${thenClass}`}>
           then{" "}
           <span className={`font-bold ${highlight ? "text-white" : "text-[#0a0a0a]"}`}>
-            {plan.monthly}
+            {followUpPrice}
           </span>
           /mo
+          {annual ? (
+            <span
+              className={`mt-0.5 block text-[10px] font-bold ${highlight ? "text-white/50" : "text-gray-400"}`}
+            >
+              billed annually
+            </span>
+          ) : null}
         </p>
       </div>
     );
@@ -72,7 +80,7 @@ export function PlanPriceBlock({
   return (
     <div className={`flex items-end gap-1 ${align === "right" ? "justify-end" : ""} ${alignClass}`}>
       <span
-        className={`font-extrabold tracking-tight leading-none ${heroClass}`}
+        className={`font-extrabold leading-none tracking-tight ${heroClass}`}
         style={{
           fontSize: showPerMonth ? regularSize : heroSize,
           fontFamily: "var(--font-outfit,sans-serif)",
@@ -81,7 +89,7 @@ export function PlanPriceBlock({
         {price}
       </span>
       {showPerMonth ? (
-        <span className={`text-sm pb-1.5 ${mutedClass}`}>
+        <span className={`pb-1.5 text-sm ${mutedClass}`}>
           /mo
           {annual && !isZeroPrice(plan.monthly) ? (
             <span className={`block text-[10px] font-bold ${highlight ? "text-white/50" : "text-gray-300"}`}>

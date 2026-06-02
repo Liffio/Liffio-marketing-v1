@@ -13,6 +13,14 @@ export type PricingContext = {
 };
 
 export async function getPricingContext(): Promise<PricingContext> {
+  const envCountry = process.env.PRICING_COUNTRY?.trim().toUpperCase();
+  if (envCountry && /^[A-Z]{2}$/.test(envCountry)) {
+    return {
+      region: resolvePricingRegion(envCountry),
+      countryCode: envCountry,
+    };
+  }
+
   const envOverride = process.env.PRICING_REGION?.toLowerCase();
   if (envOverride === "india" || envOverride === "in") {
     return { region: "india", countryCode: "IN" };
@@ -23,9 +31,11 @@ export async function getPricingContext(): Promise<PricingContext> {
 
   const headerStore = await headers();
   const countryCode = getCountryCodeFromHeaders(headerStore);
+  const region = resolvePricingRegion(countryCode);
+
   return {
-    region: resolvePricingRegion(countryCode),
-    countryCode,
+    region,
+    countryCode: countryCode ?? (region === "india" ? "IN" : null),
   };
 }
 

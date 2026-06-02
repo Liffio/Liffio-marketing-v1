@@ -7,8 +7,9 @@ import {
   PricingPlanCard,
   SwipeHint,
 } from "@/components/pricing/PricingPlanCard";
+import { CountryFlag } from "@/components/pricing/CountryFlag";
 import { pricingPerks, type PricingPlan } from "@/config/pricing.config";
-import { getCountryFlagEmoji, getPricingLocationLabel, type PricingRegion } from "@/lib/pricing-region";
+import { getPricingLocationLabel, type PricingRegion } from "@/lib/pricing-region";
 import { siteConfig } from "@/config/site.config";
 
 type PricingPlansGridProps = {
@@ -54,16 +55,13 @@ export default function PricingPlansGrid({
 }: PricingPlansGridProps) {
   const [annual, setAnnual] = useState(false);
   const locationLabel = getPricingLocationLabel(region, countryCode);
-  const flag = getCountryFlagEmoji(countryCode);
 
   return (
     <>
       <p className="mb-6 text-center text-sm text-gray-500">
-        <span className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 font-medium text-gray-600">
-          <span className="text-base leading-none" aria-hidden>
-            {flag}
-          </span>
-          <span className="truncate">{locationLabel.slice(locationLabel.indexOf(" ") + 1)}</span>
+        <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 font-medium text-gray-600">
+          <CountryFlag countryCode={countryCode} size={18} />
+          <span className="truncate">{locationLabel}</span>
         </span>
       </p>
 
