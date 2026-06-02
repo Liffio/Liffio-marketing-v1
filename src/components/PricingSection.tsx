@@ -138,9 +138,10 @@ function PricingMobilePreview({ plans }: { plans: PricingPlan[] }) {
 type PricingSectionProps = {
   plans: PricingPlan[];
   region: PricingRegion;
+  countryCode?: string | null;
 };
 
-export default function PricingSection({ plans, region }: PricingSectionProps) {
+export default function PricingSection({ plans, region, countryCode = null }: PricingSectionProps) {
   return (
     <section id="pricing" className="section-py relative overflow-hidden bg-white">
       <div
@@ -168,7 +169,7 @@ export default function PricingSection({ plans, region }: PricingSectionProps) {
         <PricingMobilePreview plans={plans} />
 
         <div className="hidden lg:block">
-          <PricingPlansGrid compact plans={plans} region={region} />
+          <PricingPlansGrid compact plans={plans} region={region} countryCode={countryCode} />
         </div>
       </div>
     </section>

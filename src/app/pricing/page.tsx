@@ -3,15 +3,13 @@ import AppLink from "@/components/AppLink";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PricingPlansGrid, { PricingBottomCta } from "@/components/PricingPlansGrid";
+import PricingComparisonSection from "@/components/pricing/PricingComparisonSection";
 import {
-  comparisonPlanNames,
-  featureCategories,
-  getPlanColumnValue,
   getPricingFaqs,
   getPricingPlans,
 } from "@/config/pricing.config";
-import { getPricingRegionLabel } from "@/lib/pricing-region";
-import { getPricingRegion } from "@/lib/pricing-region.server";
+import { getCountryFlagEmoji, getPricingLocationLabel } from "@/lib/pricing-region";
+import { getPricingContext } from "@/lib/pricing-region.server";
 import { siteConfig } from "@/config/site.config";
 import { metaCopy } from "@/config/meta-copy";
 
@@ -21,26 +19,12 @@ export const metadata: Metadata = {
     "Simple, transparent pricing for Instagram DM automation. Free, Starter, Business, and Agency plans. No hidden fees — scale as you grow.",
 };
 
-function CellValue({ value }: { value: boolean | string }) {
-  if (typeof value === "string") {
-    return <span className="text-sm font-semibold text-gray-700">{value}</span>;
-  }
-  return value ? (
-    <svg className="h-5 w-5 text-[#4259f0] mx-auto" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-    </svg>
-  ) : (
-    <svg className="h-5 w-5 text-gray-300 mx-auto" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  );
-}
-
 export default async function PricingPage() {
-  const region = await getPricingRegion();
+  const { region, countryCode } = await getPricingContext();
   const plans = getPricingPlans(region);
   const pricingFaqs = getPricingFaqs(region);
-  const regionLabel = getPricingRegionLabel(region);
+  const locationLabel = getPricingLocationLabel(region, countryCode);
+  const flag = getCountryFlagEmoji(countryCode);
 
   return (
     <>
@@ -60,7 +44,8 @@ export default async function PricingPage() {
               From free comment-to-DM automation to full agency white-label. {metaCopy.pricingHeroApis}
             </p>
             <p className="mt-3 text-sm font-medium text-gray-500">
-              {region === "india" ? "🇮🇳" : "🌍"} {regionLabel} — detected from your location
+              <span className="mr-1 text-base leading-none" aria-hidden>{flag}</span>
+              {locationLabel} — detected from your location
             </p>
             <p className="mt-3 text-sm text-gray-500">
               Pre-launch offer:{" "}
@@ -74,7 +59,7 @@ export default async function PricingPage() {
         {/* Pricing cards */}
         <section className="py-16 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <PricingPlansGrid plans={plans} region={region} />
+            <PricingPlansGrid plans={plans} region={region} countryCode={countryCode} />
           </div>
         </section>
 
@@ -144,47 +129,7 @@ export default async function PricingPage() {
               <p className="mt-3 text-gray-500">See exactly what&apos;s included at every tier.</p>
             </div>
 
-            <div className="space-y-12">
-              {featureCategories.map((category) => (
-                <div key={category.name}>
-                  <div className="mb-4">
-                    <h3 className="text-lg font-bold text-[#0a0a0a]">{category.name}</h3>
-                    <p className="text-sm text-gray-500 mt-1">{category.description}</p>
-                  </div>
-                  <div className="overflow-x-auto rounded-2xl border border-gray-100 shadow-sm">
-                    <table className="w-full min-w-[720px] text-left">
-                      <thead>
-                        <tr className="bg-gray-50 border-b border-gray-100">
-                          <th className="px-5 py-3 text-xs font-bold uppercase tracking-wider text-gray-500 w-[40%]">
-                            Feature
-                          </th>
-                          {comparisonPlanNames.map((plan) => (
-                            <th
-                              key={plan}
-                              className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-gray-500 text-center"
-                            >
-                              {plan}
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {category.features.map((row, i) => (
-                          <tr key={row.name} className={i % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
-                            <td className="px-5 py-3.5 text-sm text-gray-700">{row.name}</td>
-                            {comparisonPlanNames.map((plan) => (
-                              <td key={plan} className="px-4 py-3.5 text-center">
-                                <CellValue value={getPlanColumnValue(row, plan)} />
-                              </td>
-                            ))}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <PricingComparisonSection />
           </div>
         </section>
 
