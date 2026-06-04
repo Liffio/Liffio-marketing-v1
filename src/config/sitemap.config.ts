@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getAllPostSlugs } from "@/lib/blog/posts";
 import { SITE_URL } from "@/config/site.config";
 
 type SitemapEntry = {
@@ -13,6 +14,7 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   { path: "/features", changeFrequency: "weekly", priority: 0.9 },
   { path: "/pricing", changeFrequency: "weekly", priority: 0.9 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/manychat-alternative", changeFrequency: "monthly", priority: 0.85 },
   { path: "/help", changeFrequency: "weekly", priority: 0.7 },
   { path: "/signup", changeFrequency: "monthly", priority: 0.7 },
   { path: "/creators-program", changeFrequency: "monthly", priority: 0.6 },
@@ -27,9 +29,17 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
 ] as const;
 
 export function buildSitemap(): MetadataRoute.Sitemap {
-  return SITEMAP_ENTRIES.map(({ path, changeFrequency, priority }) => ({
+  const staticUrls = SITEMAP_ENTRIES.map(({ path, changeFrequency, priority }) => ({
     url: path ? SITE_URL + path : SITE_URL,
     changeFrequency,
     priority,
   }));
+
+  const blogUrls = getAllPostSlugs().map((slug) => ({
+    url: `${SITE_URL}/blog/${slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticUrls, ...blogUrls];
 }

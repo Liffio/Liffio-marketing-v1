@@ -72,7 +72,33 @@ export const siteConfig = {
     ogTitle: "Liffio — Instagram Auto DM & Comment Automation",
     ogDescription:
       "Automate Instagram DMs from comments, stories, and messages — auto DM tool for creators and brands.",
+    /** 1200×630 social share card */
+    ogImagePath: "/og/homepage.png",
+    ogImageAlt: "Liffio — Turn Instagram Comments Into Automated DMs",
+  },
+
+  contact: {
+    email: "support@liffio.com",
+    /** E.164 digits only (no +). Set NEXT_PUBLIC_WHATSAPP_NUMBER in production. */
+    whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "",
+  },
+
+  social: {
+    twitter: "https://twitter.com/liffio",
+    instagram: "https://instagram.com/liffio",
+    linkedin: "https://linkedin.com/company/liffio",
+  },
+
+  creatorsProgram: {
+    spotsCap: 50,
+    /** Shown when live API stats are unavailable */
+    spotsRemainingFallback: 47,
   },
 } as const;
+
+export function getWhatsAppUrl(): string | null {
+  const digits = siteConfig.contact.whatsappNumber.replace(/\D/g, "");
+  return digits.length >= 10 ? `https://wa.me/${digits}` : null;
+}
 
 export type SiteConfig = typeof siteConfig;

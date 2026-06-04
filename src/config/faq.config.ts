@@ -235,3 +235,147 @@ export const homeFaqCategories = getFaqCategories("global");
 export function getAllFaqs(region: PricingRegion): FaqItem[] {
   return getFaqCategories(region).flatMap((c) => c.items);
 }
+
+const homeOverviewCategory: FaqCategory = {
+  id: "overview",
+  label: "About Liffio",
+  items: [
+    {
+      id: "what-is-liffio",
+      question: "What is Liffio?",
+      answer:
+        "Liffio is an Instagram DM automation tool that sends personalised DMs automatically when someone comments a keyword on your post, reacts to your story, or messages you. No manual inbox work required.",
+    },
+    {
+      id: "is-liffio-free",
+      question: "Is Liffio free to use?",
+      answer:
+        "Yes. Liffio has a free plan with no credit card required. It includes unlimited Instagram accounts, unlimited automated DMs, comment keyword triggers, and basic analytics.",
+    },
+    {
+      id: "is-liffio-safe",
+      question: "Is Liffio safe for my Instagram account?",
+      answer:
+        "Yes. Liffio uses official Meta/Instagram APIs and human-like delays (10–60 seconds) to keep your account fully compliant with Instagram's terms of service.",
+    },
+  ],
+};
+
+export function getHomeFaqCategories(
+  region: PricingRegion,
+  overrides?: MarketingFaqOverrides,
+): FaqCategory[] {
+  const gettingStarted = getFaqCategories(region, overrides).find((c) => c.id === "getting-started");
+  return [
+    homeOverviewCategory,
+    {
+      id: "getting-started",
+      label: "Getting started",
+      items: gettingStarted?.items.slice(0, 2) ?? [],
+    },
+  ];
+}
+
+export function getFeaturesFaqCategories(region: PricingRegion): FaqCategory[] {
+  const all = getFaqCategories(region);
+  const automations = all.find((c) => c.id === "automations");
+  const safety = all.find((c) => c.id === "safety");
+  return [
+    {
+      id: "automations",
+      label: "How automations work",
+      items: [
+        {
+          id: "comment-to-dm-how",
+          question: "How does comment-to-DM automation work?",
+          answer:
+            'You set a keyword (e.g. "LINK"). When someone comments that word on your post or Reel, Liffio automatically sends them a DM after your chosen delay (10–60 seconds) and optionally posts a public reply under their comment.',
+        },
+        {
+          id: "automation-types-features",
+          question: "What types of Instagram automation does Liffio support?",
+          answer:
+            "Liffio supports 8 automation types: comment-to-DM, story reply, live stream DM, inbound DM reply, ask for follow, smart re-engage, data collection, and welcome DM for new followers.",
+        },
+        {
+          id: "manychat-alternative-features",
+          question: "Is Liffio a ManyChat alternative?",
+          answer:
+            "Yes. Liffio offers the same core comment-to-DM, story automation, and keyword trigger features as ManyChat — with unlimited automated DMs on every plan, simpler pricing, and a generous free tier.",
+        },
+        ...(automations?.items.slice(0, 2) ?? []),
+      ],
+    },
+    ...(safety ? [safety] : []),
+  ];
+}
+
+export function getPricingFaqCategories(
+  region: PricingRegion,
+  overrides?: MarketingFaqOverrides,
+): FaqCategory[] {
+  return [
+    plansCategory(region, overrides),
+    {
+      id: "pricing-overview",
+      label: "Pricing",
+      items: [
+        {
+          id: "how-much",
+          question: "How much does Liffio cost?",
+          answer:
+            "Liffio has four plans: Free ($0/mo), Starter ($9/mo), Business ($79/mo), and Agency ($299/mo). All plans include unlimited Instagram accounts and unlimited automated DMs. Annual billing saves 20%.",
+        },
+        {
+          id: "india-pricing",
+          question: "Does Liffio support Indian pricing?",
+          answer:
+            "Yes. Liffio auto-detects your country and shows INR pricing for India, processed via Razorpay. Global plans are billed in USD via Stripe.",
+        },
+      ],
+    },
+  ];
+}
+
+export function getCreatorsFaqCategories(
+  region: PricingRegion,
+  overrides?: MarketingFaqOverrides,
+): FaqCategory[] {
+  const plans = plansCategory(region, overrides);
+  const creatorsItem = plans.items.find((i) => i.id === "creators-program");
+  const cancelItem = plans.items.find((i) => i.id === "cancel");
+  const dmLimitItem = plans.items.find((i) => i.id === "dm-limit");
+  return [
+    {
+      id: "creators",
+      label: "Creators Program",
+      items: [
+        ...(creatorsItem ? [creatorsItem] : []),
+        {
+          id: "who-qualifies",
+          question: "Who qualifies for the Creators Program?",
+          answer:
+            "Instagram creators with consistent comment engagement who are willing to use Liffio actively and share honest feedback. Applications are reviewed manually within 48 hours.",
+        },
+        {
+          id: "what-included",
+          question: "What do accepted creators receive?",
+          answer:
+            "Accepted creators get full Business-plan access at no cost during the launch cohort — including all automation types, analytics, API access, and priority support.",
+        },
+      ],
+    },
+    {
+      id: "plans-billing",
+      label: "After the program",
+      items: [...(cancelItem ? [cancelItem] : []), ...(dmLimitItem ? [dmLimitItem] : [])],
+    },
+  ];
+}
+
+export function getHelpFaqCategories(
+  region: PricingRegion,
+  overrides?: MarketingFaqOverrides,
+): FaqCategory[] {
+  return getFaqCategories(region, overrides);
+}

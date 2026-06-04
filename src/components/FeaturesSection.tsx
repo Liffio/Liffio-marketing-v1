@@ -706,7 +706,7 @@ export default function FeaturesSection() {
   const PhoneComp = f.Phone;
 
   return (
-    <section id="features" className="section-py relative overflow-hidden bg-white">
+    <section id="about" className="section-py relative overflow-hidden bg-white">
       <div
         className="absolute top-0 left-0 right-0 h-px"
         style={{ background: "linear-gradient(90deg,transparent,rgba(124,90,243,0.12),transparent)" }}

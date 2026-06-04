@@ -3,8 +3,11 @@
 import { useState, useEffect } from "react";
 import Logo from "./Logo";
 import { siteConfig } from "@/config/site.config";
-import { isMetaVerified } from "@/lib/meta-verification";
-import { metaCopy } from "@/config/meta-copy";
+const ANNOUNCEMENT_MESSAGES = [
+  "⚡ Liffio sends your first automated DM in under 5 minutes — Get Started Free",
+  "🚀 Join 800+ creators automating their Instagram DMs with Liffio",
+  "✨ New: Post Scheduler now live — schedule Instagram feed posts from Liffio",
+] as const;
 
 const navLinks = [
   { href: "/features", label: "Features" },
@@ -22,11 +25,19 @@ const mobileNavLinkClass =
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [announcementIndex, setAnnouncementIndex] = useState(0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setAnnouncementIndex((i) => (i + 1) % ANNOUNCEMENT_MESSAGES.length);
+    }, 8000);
+    return () => window.clearInterval(id);
   }, []);
 
   return (
@@ -36,28 +47,15 @@ export default function Navbar() {
         style={{ background: "linear-gradient(135deg, #7c5af3 0%, #4259f0 100%)" }}
       >
         <span className="sm:hidden">
-          {isMetaVerified ? (
-            <>
-              <strong>{metaCopy.navbarMobileLead}</strong>
-              {" · "}
-            </>
-          ) : null}
-          <a href={siteConfig.urls.preregister} className="font-bold underline hover:no-underline">
-            {isMetaVerified ? "50% off →" : "Pre-register for 50% off →"}
+          {ANNOUNCEMENT_MESSAGES[announcementIndex]}{" "}
+          <a href={siteConfig.urls.appSignup} className="font-bold underline hover:no-underline">
+            Get Started Free →
           </a>
         </span>
         <span className="hidden sm:inline">
-          🚀{" "}
-          {isMetaVerified ? (
-            <>
-              Liffio is now an <strong>{metaCopy.navbarDesktopLead}</strong>
-              {" — "}
-            </>
-          ) : (
-            <>Join the {metaCopy.navbarDesktopLead} — </>
-          )}
-          <a href={siteConfig.urls.preregister} className="font-bold underline hover:no-underline">
-            Pre-register for 50% off →
+          {ANNOUNCEMENT_MESSAGES[announcementIndex]}{" "}
+          <a href={siteConfig.urls.appSignup} className="font-bold underline hover:no-underline">
+            Get Started Free →
           </a>
         </span>
       </div>

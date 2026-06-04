@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import CreatorsProgramContent from "@/components/CreatorsProgramContent";
 import { SiteFaqSection } from "@/components/faq/SiteFaqSection";
 import { pageSeo } from "@/config/seo.config";
-import { getFaqCategories } from "@/config/faq.config";
+import { getCreatorsFaqCategories } from "@/config/faq.config";
 import { FaqPageJsonLd } from "@/lib/seo/json-ld";
 import { getPricingContext } from "@/lib/pricing-region.server";
 import {
@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function CreatorsProgramPage() {
   const { region } = await getPricingContext();
   const { plans, businessPlanValue: businessValue } = await fetchMarketingPlansContext(region);
-  const faqCategories = getFaqCategories(region, {
+  const faqCategories = getCreatorsFaqCategories(region, {
     freePlanFaqAnswer: buildFreePlanFaqAnswer(region, plans),
     plansOfferedFaqAnswer: buildPlansOfferedFaqAnswer(region, plans),
     creatorsProgramFaqAnswer: buildCreatorsProgramFaqAnswer(businessValue),

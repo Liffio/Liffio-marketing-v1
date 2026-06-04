@@ -3,22 +3,26 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 
 const stats = [
-  { id: "dms", value: 100, suffix: "K+", label: "Auto DMs sent" },
-  { id: "creators", value: 2, suffix: "K+", label: "Creators using auto DM" },
-  { id: "delivery", value: 98, suffix: "%", label: "DM delivery rate" },
-  { id: "uptime", value: 99, suffix: ".9%", label: "Auto DM uptime" },
+  { id: "dms", value: 12, suffix: "K+", label: "DMs automated" },
+  { id: "creators", value: 800, suffix: "+", label: "Active creators" },
+  { id: "delivery", value: 99.4, suffix: "%", label: "Delivery rate", decimals: 1 },
+  { id: "uptime", value: 99.9, suffix: "%", label: "Platform uptime", decimals: 1 },
 ] as const;
 
 function useCountUp(target: number, duration = 1500, start = false) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(target);
   useEffect(() => {
-    if (!start) return;
+    if (!start) {
+      setCount(target);
+      return;
+    }
+    setCount(0);
     let t0: number | null = null;
     const step = (ts: number) => {
       if (!t0) t0 = ts;
       const p = Math.min((ts - t0) / duration, 1);
       const eased = 1 - Math.pow(1 - p, 3);
-      setCount(Math.floor(eased * target));
+      setCount(eased * target);
       if (p < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
@@ -36,7 +40,14 @@ function StatValue({
   delayMs: number;
 }) {
   const count = useCountUp(stat.value, 1500, animate);
-  const display = `${count}${stat.suffix}`;
+  const decimals = "decimals" in stat ? stat.decimals : 0;
+  const formatted =
+    decimals > 0
+      ? count.toFixed(decimals)
+      : stat.suffix === "+"
+        ? Math.round(count).toLocaleString()
+        : String(Math.round(count));
+  const display = `${formatted}${stat.suffix}`;
 
   return (
     <div

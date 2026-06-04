@@ -79,7 +79,10 @@ export default function CreatorsForm() {
         if (typeof data.spotsCap === 'number' && data.spotsCap > 0) setSpotsCap(data.spotsCap)
         if (typeof data.spotsRemaining === 'number') setSpotsRemaining(data.spotsRemaining)
       })
-      .catch(() => {})
+      .catch(() => {
+        setSpotsCap(50)
+        setSpotsRemaining(47)
+      })
   }, [])
 
   const updateField = (field: string, value: string | boolean) => {

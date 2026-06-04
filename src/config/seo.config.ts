@@ -102,23 +102,30 @@ type PageSeoInput = {
   description: string;
   /** App path, e.g. `/features` */
   pathname: string;
-  keywords?: readonly string[];
 };
+
+function ogImageUrl(path: string) {
+  return `${SITE_URL}${path}`;
+}
 
 /** Builds page metadata with canonical URL, Open Graph, and Twitter cards. */
 export function buildPageMetadata({
   title,
   description,
   pathname,
-  keywords = SEO_KEYWORDS,
-}: PageSeoInput): Metadata {
+  ogImagePath,
+  ogImageAlt,
+}: PageSeoInput & { ogImagePath?: string; ogImageAlt?: string }): Metadata {
   const canonicalPath = pathname.startsWith("/") ? pathname : `/${pathname}`;
   const pageUrl = canonicalPath === "/" ? SITE_URL : `${SITE_URL}${canonicalPath}`;
+  const imagePath = ogImagePath ?? siteConfig.brand.logoDark;
+  const imageUrl = ogImageUrl(imagePath);
+  const imageAlt = ogImageAlt ?? `${siteConfig.brand.name} — Instagram auto DM tool`;
+  const isOgCard = imagePath.startsWith("/og/");
 
   return {
     title: { absolute: title },
     description,
-    keywords: [...keywords],
     alternates: { canonical: canonicalPath },
     openGraph: {
       title,
@@ -126,22 +133,26 @@ export function buildPageMetadata({
       url: pageUrl,
       siteName: siteConfig.brand.name,
       type: "website",
-      images: [{ url: logoUrl(), alt: `${siteConfig.brand.name} — Instagram auto DM tool` }],
+      images: isOgCard
+        ? [{ url: imageUrl, width: 1200, height: 630, alt: imageAlt }]
+        : [{ url: imageUrl, alt: imageAlt }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [logoUrl()],
+      images: [imageUrl],
     },
   };
 }
 
 export const rootSeo = buildPageMetadata({
-  title: "Liffio — Auto DM Tool for Instagram | Comment, Story & DM Automation",
+  title: "Liffio — Automate Instagram DMs & Grow Your Engagement Fast",
   description:
-    "Liffio is an Instagram auto DM tool: automate DMs from comments, stories, and messages. Auto comment reply, keyword triggers, and DM flows — a modern alternative to ManyChat, SendDM, and LinkDM. Start free.",
+    "Automate Instagram DMs, auto-reply to comments, stories & messages. The smartest way to grow your Instagram. Get started for free.",
   pathname: "/",
+  ogImagePath: siteConfig.meta.ogImagePath,
+  ogImageAlt: siteConfig.meta.ogImageAlt,
 });
 
 export const pageSeo = {

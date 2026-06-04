@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import CreatorsForm from "@/components/CreatorsForm";
 import { TechBadge } from "@/components/TechBadge";
+import { siteConfig } from "@/config/site.config";
 
 const STATIC_BENEFITS = [
   {
@@ -121,7 +122,10 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
         setSpotsCap(cap);
         setSpotsRemaining(remaining);
       })
-      .catch(() => {});
+      .catch(() => {
+        setSpotsCap(siteConfig.creatorsProgram.spotsCap);
+        setSpotsRemaining(siteConfig.creatorsProgram.spotsRemainingFallback);
+      });
   }, []);
 
   useEffect(() => {

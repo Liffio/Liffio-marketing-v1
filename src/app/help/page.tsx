@@ -1,20 +1,28 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { SiteFaqSection } from "@/components/faq/SiteFaqSection";
-import { siteConfig } from "@/config/site.config";
+import { getWhatsAppUrl, siteConfig } from "@/config/site.config";
 import { pageSeo } from "@/config/seo.config";
-import { getFaqCategories } from "@/config/faq.config";
-import { FaqPageJsonLd } from "@/lib/seo/json-ld";
+import { getHelpFaqCategories } from "@/config/faq.config";
+import { BreadcrumbJsonLd, FaqPageJsonLd } from "@/lib/seo/json-ld";
+import { SITE_URL } from "@/config/site.config";
 import { getPricingContext } from "@/lib/pricing-region.server";
 
 export const metadata = pageSeo.help;
 
 export default async function HelpPage() {
   const { region } = await getPricingContext();
-  const faqCategories = getFaqCategories(region);
+  const faqCategories = getHelpFaqCategories(region);
+  const whatsappUrl = getWhatsAppUrl();
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", item: SITE_URL },
+          { name: "Help", item: `${SITE_URL}/help` },
+        ]}
+      />
       <FaqPageJsonLd categories={faqCategories} />
       <Navbar />
       <main id="main-content" className="flex-1">
@@ -33,8 +41,15 @@ export default async function HelpPage() {
             {/* Contact cards */}
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
               {[
-                { icon: "✉️", label: "Email Us", value: "support@liffio.com", href: "mailto:support@liffio.com" },
-                { icon: "💬", label: "WhatsApp", value: "Chat with us", href: "https://wa.me/1234567890" },
+                {
+                  icon: "✉️",
+                  label: "Email Us",
+                  value: siteConfig.contact.email,
+                  href: `mailto:${siteConfig.contact.email}`,
+                },
+                ...(whatsappUrl
+                  ? [{ icon: "💬", label: "WhatsApp", value: "Chat with us", href: whatsappUrl }]
+                  : []),
                 { icon: "⏱️", label: "Response Time", value: "Under 24 hours", href: null },
               ].map((item) => (
                 <div
@@ -63,7 +78,7 @@ export default async function HelpPage() {
         />
 
         {/* Contact form */}
-        <section className="py-20 bg-gray-50">
+        <section id="contact" className="py-20 bg-gray-50 scroll-mt-24">
           <div className="mx-auto max-w-2xl px-4 sm:px-6">
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
               <h2

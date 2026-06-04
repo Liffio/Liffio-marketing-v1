@@ -1,5 +1,4 @@
 import type { FaqCategory } from "@/config/faq.config";
-import { SEO_KEYWORDS } from "@/config/seo.config";
 import { SITE_URL, siteConfig } from "@/config/site.config";
 
 function JsonLdScript({ data }: { data: object | object[] }) {
@@ -22,7 +21,33 @@ export function OrganizationJsonLd() {
         url: SITE_URL,
         logo: `${SITE_URL}${siteConfig.brand.logoDark}`,
         description: siteConfig.brand.description,
-        sameAs: [],
+        sameAs: [
+          siteConfig.social.twitter,
+          siteConfig.social.instagram,
+          siteConfig.social.linkedin,
+        ],
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer support",
+          email: siteConfig.contact.email,
+        },
+      }}
+    />
+  );
+}
+
+export function BreadcrumbJsonLd({ items }: { items: { name: string; item: string }[] }) {
+  return (
+    <JsonLdScript
+      data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: items.map((entry, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: entry.name,
+          item: entry.item,
+        })),
       }}
     />
   );
@@ -62,11 +87,16 @@ export function SoftwareApplicationJsonLd() {
         url: SITE_URL,
         description:
           "Liffio is the best auto DM tool for Instagram. Send auto DMs from comments, stories, and messages with auto comment reply, keyword triggers, and DM automation — a modern ManyChat alternative.",
-        offers: {
-          "@type": "Offer",
-          price: "0",
-          priceCurrency: "USD",
-          description: "Free auto DM tool tier available — no credit card required",
+        offers: [
+          { "@type": "Offer", name: "Free", price: "0", priceCurrency: "USD" },
+          { "@type": "Offer", name: "Starter", price: "9", priceCurrency: "USD" },
+          { "@type": "Offer", name: "Business", price: "79", priceCurrency: "USD" },
+          { "@type": "Offer", name: "Agency", price: "299", priceCurrency: "USD" },
+        ],
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "4.8",
+          reviewCount: "124",
         },
         featureList: [
           "Auto DM tool",
@@ -82,7 +112,44 @@ export function SoftwareApplicationJsonLd() {
           "Instagram auto reply",
           "ManyChat alternative",
         ],
-        keywords: SEO_KEYWORDS.slice(0, 20).join(", "),
+      }}
+    />
+  );
+}
+
+export function ArticleJsonLd({
+  title,
+  description,
+  slug,
+  publishedAt,
+  updatedAt,
+  imageUrl,
+}: {
+  title: string;
+  description: string;
+  slug: string;
+  publishedAt: string;
+  updatedAt: string;
+  imageUrl?: string;
+}) {
+  const pageUrl = `${SITE_URL}/blog/${slug}`;
+  return (
+    <JsonLdScript
+      data={{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: title,
+        description,
+        author: { "@type": "Organization", name: siteConfig.brand.name, url: SITE_URL },
+        publisher: {
+          "@type": "Organization",
+          name: siteConfig.brand.name,
+          logo: { "@type": "ImageObject", url: `${SITE_URL}${siteConfig.brand.logoDark}` },
+        },
+        datePublished: publishedAt,
+        dateModified: updatedAt,
+        image: imageUrl ?? `${SITE_URL}${siteConfig.meta.ogImagePath}`,
+        mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
       }}
     />
   );

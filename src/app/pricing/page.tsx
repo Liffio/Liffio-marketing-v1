@@ -17,7 +17,8 @@ import {
 import { siteConfig } from "@/config/site.config";
 import { metaCopy } from "@/config/meta-copy";
 import { pageSeo } from "@/config/seo.config";
-import { FaqPageJsonLd } from "@/lib/seo/json-ld";
+import { BreadcrumbJsonLd, FaqPageJsonLd } from "@/lib/seo/json-ld";
+import { SITE_URL } from "@/config/site.config";
 
 export const metadata = pageSeo.pricing;
 
@@ -33,6 +34,12 @@ export default async function PricingPage() {
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", item: SITE_URL },
+          { name: "Pricing", item: `${SITE_URL}/pricing` },
+        ]}
+      />
       <FaqPageJsonLd categories={faqCategories} />
       <Navbar />
       <main id="main-content" className="flex-1">

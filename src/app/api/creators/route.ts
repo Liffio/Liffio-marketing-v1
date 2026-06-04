@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { siteConfig } from '@/config/site.config'
 import { sendCreatorApplicationAlert, sendCreatorsEmail } from '@/lib/email/index'
 import { liffioMarketingFetch, getLiffioMarketingUrl } from '@/lib/liffio-api'
+
+const creatorsStatsFallback = () => ({
+  spotsCap: siteConfig.creatorsProgram.spotsCap,
+  spotsRemaining: siteConfig.creatorsProgram.spotsRemainingFallback,
+})
 
 export async function POST(request: NextRequest) {
   try {
@@ -71,11 +77,22 @@ export async function GET() {
   try {
     const { ok, data } = await liffioMarketingFetch<Record<string, unknown>>('/creators')
     if (!ok) {
-      return NextResponse.json({ error: 'Failed to get stats' }, { status: 500 })
+      return NextResponse.json(creatorsStatsFallback())
     }
-    return NextResponse.json(data)
+    return NextResponse.json({
+      ...creatorsStatsFallback(),
+      ...data,
+      spotsCap:
+        typeof data.spotsCap === 'number' && data.spotsCap > 0
+          ? data.spotsCap
+          : siteConfig.creatorsProgram.spotsCap,
+      spotsRemaining:
+        typeof data.spotsRemaining === 'number'
+          ? data.spotsRemaining
+          : siteConfig.creatorsProgram.spotsRemainingFallback,
+    })
   } catch (error) {
     console.error('Failed to get creator stats:', error)
-    return NextResponse.json({ error: 'Failed to get stats' }, { status: 500 })
+    return NextResponse.json(creatorsStatsFallback())
   }
 }
