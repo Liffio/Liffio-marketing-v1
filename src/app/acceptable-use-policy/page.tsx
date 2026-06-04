@@ -54,5 +54,5 @@ For questions regarding acceptable use: support@reactova.com
 const content = normalizePolicyContent(CONTENT.trim());
 
 export default function AcceptableUsePolicyPage() {
-  return <LegalPage title="Acceptable Use Policy" lastUpdated="April 2026" content={content} />;
+  return <LegalPage title="Acceptable Use Policy" lastUpdated="June 2026" content={content} />;
 }

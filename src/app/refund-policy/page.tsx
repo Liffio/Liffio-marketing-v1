@@ -52,5 +52,5 @@ For refund-related enquiries: support@reactova.com
 const content = normalizePolicyContent(CONTENT.trim());
 
 export default function RefundPolicyPage() {
-  return <LegalPage title="Refund Policy" lastUpdated="April 2026" content={content} />;
+  return <LegalPage title="Refund Policy" lastUpdated="June 2026" content={content} />;
 }

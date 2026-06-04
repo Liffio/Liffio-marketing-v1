@@ -120,5 +120,5 @@ For privacy-related enquiries: support@reactova.com
 const content = normalizePolicyContent(CONTENT.trim());
 
 export default function PrivacyPolicyPage() {
-  return <LegalPage title="Privacy Policy" lastUpdated="April 2026" content={content} />;
+  return <LegalPage title="Privacy Policy" lastUpdated="June 2026" content={content} />;
 }

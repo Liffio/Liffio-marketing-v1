@@ -13,7 +13,7 @@ export default function CreatorsProgramPolicyPage() {
   return (
     <LegalPage
       title="Creators Program Policy"
-      lastUpdated="April 2026"
+      lastUpdated="June 2026"
       content={loadCreatorsPolicyContent()}
     />
   );

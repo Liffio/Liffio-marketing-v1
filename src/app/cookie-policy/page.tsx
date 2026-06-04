@@ -35,5 +35,5 @@ If you have any questions about our use of cookies or other technologies, please
 const content = normalizePolicyContent(CONTENT.trim());
 
 export default function CookiePolicyPage() {
-  return <LegalPage title="Cookie Policy" lastUpdated="April 2026" content={content} />;
+  return <LegalPage title="Cookie Policy" lastUpdated="June 2026" content={content} />;
 }

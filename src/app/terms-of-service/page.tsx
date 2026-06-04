@@ -90,5 +90,5 @@ For questions about these Terms: support@reactova.com
 const content = normalizePolicyContent(CONTENT.trim());
 
 export default function TermsOfServicePage() {
-  return <LegalPage title="Terms of Service" lastUpdated="April 2026" content={content} />;
+  return <LegalPage title="Terms of Service" lastUpdated="June 2026" content={content} />;
 }
