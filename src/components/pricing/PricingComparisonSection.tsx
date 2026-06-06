@@ -12,13 +12,9 @@ function CellValue({ value }: { value: boolean | string }) {
     return <span className="text-sm font-semibold text-gray-700">{value}</span>;
   }
   return value ? (
-    <svg className="mx-auto h-5 w-5 text-[#4259f0]" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-    </svg>
+    <span className="block text-center text-base font-bold text-green-500" aria-label="Included">✓</span>
   ) : (
-    <svg className="mx-auto h-5 w-5 text-gray-300" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-    </svg>
+    <span className="block text-center text-base text-zinc-400" aria-label="Not included">—</span>
   );
 }
 

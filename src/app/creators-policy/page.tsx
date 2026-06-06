@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 
 import LegalPage from "@/components/LegalPage";
-import { siteConfig } from "@/config/site.config";
 import { loadCreatorsPolicyContent } from "@/lib/legal/load-creators-policy";
+import { buildPageMetadata } from "@/config/seo.config";
 
-export const metadata: Metadata = {
-  title: `Creators Program Policy — ${siteConfig.brand.name}`,
-  description: `Rules, eligibility, and obligations for the ${siteConfig.brand.name} Creators Program.`,
-};
+export const metadata: Metadata = buildPageMetadata({
+  title: "Creators Program Policy — Liffio",
+  description: "Rules, eligibility criteria, and obligations for the Liffio Creators Program.",
+  pathname: "/creators-policy",
+  ogImagePath: "/og/homepage.png",
+});
 
 export default function CreatorsProgramPolicyPage() {
   return (

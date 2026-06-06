@@ -5,6 +5,7 @@ export type BlogPost = {
   excerpt: string;
   readTime: string;
   date: string;
+  author: string;
   publishedAt: string;
   updatedAt: string;
   gradient: string;
@@ -21,6 +22,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "A practical walkthrough for comment-to-DM setup: picking keywords, writing messages people actually open, and testing before a post goes viral.",
     readTime: "8 min read",
     date: "May 15, 2026",
+    author: "Liffio Team",
     publishedAt: "2026-05-15",
     updatedAt: "2026-05-15",
     gradient: "from-blue-500 to-indigo-600",
@@ -94,6 +96,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "An honest look at ManyChat, SendDM, Zorcha, and Liffio: pricing models, what Instagram features you actually get, and who each tool fits.",
     readTime: "11 min read",
     date: "June 1, 2026",
+    author: "Liffio Team",
     publishedAt: "2026-06-01",
     updatedAt: "2026-06-01",
     gradient: "from-violet-500 to-purple-600",
@@ -164,6 +167,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "Story replies are high intent. Here is how to auto-respond without burning trust, plus example triggers and message templates.",
     readTime: "9 min read",
     date: "May 10, 2026",
+    author: "Liffio Team",
     publishedAt: "2026-05-10",
     updatedAt: "2026-05-10",
     gradient: "from-purple-500 to-pink-500",
@@ -231,6 +235,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "Real templates for coaches, shops, and creators: the opener, the link handoff, the gentle follow-up, and when not to send another message.",
     readTime: "10 min read",
     date: "May 5, 2026",
+    author: "Liffio Team",
     publishedAt: "2026-05-05",
     updatedAt: "2026-05-05",
     gradient: "from-emerald-500 to-teal-600",
@@ -287,6 +292,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "First-time setup guide: choosing a post, testing triggers, public replies, and the checklist we use before turning an automation live.",
     readTime: "6 min read",
     date: "April 28, 2026",
+    author: "Liffio Team",
     publishedAt: "2026-04-28",
     updatedAt: "2026-04-28",
     gradient: "from-orange-500 to-amber-500",
@@ -346,6 +352,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "A simplified case study from a six-person team: what they posted, which keywords they used, and how DMs fed their Shopify drop without a custom dev build.",
     readTime: "9 min read",
     date: "April 20, 2026",
+    author: "Liffio Team",
     publishedAt: "2026-04-20",
     updatedAt: "2026-04-20",
     gradient: "from-pink-500 to-rose-600",
@@ -401,6 +408,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "Instant DMs, keyword bait, mismatched offers, and set-and-forget flows: fix these before your next Reel goes viral.",
     readTime: "7 min read",
     date: "April 14, 2026",
+    author: "Liffio Team",
     publishedAt: "2026-04-14",
     updatedAt: "2026-04-14",
     gradient: "from-teal-500 to-cyan-600",

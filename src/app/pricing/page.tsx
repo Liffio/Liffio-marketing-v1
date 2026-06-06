@@ -3,10 +3,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PricingPlansGrid, { PricingBottomCta } from "@/components/PricingPlansGrid";
 import PricingComparisonSection from "@/components/pricing/PricingComparisonSection";
-import { CountryFlag } from "@/components/pricing/CountryFlag";
 import { SiteFaqSection } from "@/components/faq/SiteFaqSection";
 import { getFaqCategories } from "@/config/faq.config";
-import { getPricingLocationLabel } from "@/lib/pricing-region";
 import { getPricingContext } from "@/lib/pricing-region.server";
 import {
   fetchMarketingPlansContext,
@@ -30,7 +28,6 @@ export default async function PricingPage() {
     plansOfferedFaqAnswer: buildPlansOfferedFaqAnswer(region, plans),
     creatorsProgramFaqAnswer: buildCreatorsProgramFaqAnswer(businessPlanValue),
   });
-  const locationLabel = getPricingLocationLabel(region, countryCode);
 
   return (
     <>
@@ -56,11 +53,7 @@ export default async function PricingPage() {
             <p className="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
               From free comment-to-DM automation to full agency white-label. {metaCopy.pricingHeroApis}
             </p>
-            <p className="mt-3 flex items-center justify-center gap-2 text-sm font-medium text-gray-500">
-              <CountryFlag countryCode={countryCode} size={18} />
-              <span>{locationLabel} — detected from your location</span>
-            </p>
-            <p className="mt-3 text-sm text-gray-500">
+            <p className="mt-4 text-sm text-gray-500">
               Pre-launch offer:{" "}
               <AppLink href={siteConfig.urls.preregister} className="text-[#7c5af3] font-semibold hover:underline">
                 Pre-register for 50% off your first purchase →

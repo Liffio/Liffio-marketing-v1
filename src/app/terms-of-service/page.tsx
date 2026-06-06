@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
-import { siteConfig } from "@/config/site.config";
 import { normalizePolicyContent } from "@/lib/legal/normalize-policy";
+import { buildPageMetadata } from "@/config/seo.config";
 
-export const metadata: Metadata = {
-  title: `Terms of Service - ${siteConfig.brand.name}`,
-  description: `Read the terms and conditions for using ${siteConfig.brand.name}.`
-}
+export const metadata: Metadata = buildPageMetadata({
+  title: "Terms of Service — Liffio",
+  description: "Read the terms and conditions for using Liffio's Instagram DM automation platform.",
+  pathname: "/terms-of-service",
+  ogImagePath: "/og/homepage.png",
+});
 
 const CONTENT = `
 Please read these Terms and Conditions carefully before using Reactova. By creating an account or using any part of the platform, you agree to be bound by these Terms.

@@ -3,72 +3,33 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 
 const stats = [
-  { id: "dms", value: 12, suffix: "K+", label: "DMs automated" },
-  { id: "creators", value: 800, suffix: "+", label: "Active creators" },
-  { id: "delivery", value: 99.4, suffix: "%", label: "Delivery rate", decimals: 1 },
-  { id: "uptime", value: 99.9, suffix: "%", label: "Platform uptime", decimals: 1 },
+  { id: "api", value: "Official", label: "Instagram API" },
+  { id: "compliant", value: "100%", label: "Meta-compliant" },
+  { id: "delay", value: "10–60s", label: "Human-like DM delay" },
+  { id: "free", value: "Free", label: "No credit card required" },
 ] as const;
 
-function useCountUp(target: number, duration = 1500, start = false) {
-  const [count, setCount] = useState(target);
-  useEffect(() => {
-    if (!start) {
-      setCount(target);
-      return;
-    }
-    setCount(0);
-    let t0: number | null = null;
-    const step = (ts: number) => {
-      if (!t0) t0 = ts;
-      const p = Math.min((ts - t0) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setCount(eased * target);
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [target, duration, start]);
-  return count;
-}
-
-function StatValue({
-  stat,
-  animate,
-  delayMs,
-}: {
-  stat: (typeof stats)[number];
-  animate: boolean;
-  delayMs: number;
-}) {
-  const count = useCountUp(stat.value, 1500, animate);
-  const decimals = "decimals" in stat ? stat.decimals : 0;
-  const formatted =
-    decimals > 0
-      ? count.toFixed(decimals)
-      : stat.suffix === "+"
-        ? Math.round(count).toLocaleString()
-        : String(Math.round(count));
-  const display = `${formatted}${stat.suffix}`;
-
+function StatValue({ stat, visible, delayMs }: { stat: (typeof stats)[number]; visible: boolean; delayMs: number }) {
   return (
     <div
       className="stats-figure relative flex min-w-0 flex-1 flex-col items-center justify-center py-1"
       style={{ transitionDelay: `${delayMs}ms` }}
-      data-visible={animate ? "true" : "false"}
-      aria-label={`${display} ${stat.label}`}
+      data-visible={visible ? "true" : "false"}
+      aria-label={`${stat.value} — ${stat.label}`}
     >
       <span
-        className="stats-figure__ghost pointer-events-none absolute inset-0 flex items-center justify-center select-none whitespace-nowrap text-[clamp(3.25rem,9vw,5.75rem)] font-black leading-none tabular-nums text-brand-500/[0.07]"
+        className="stats-figure__ghost pointer-events-none absolute inset-0 flex items-center justify-center select-none whitespace-nowrap text-[clamp(2.5rem,7vw,4.75rem)] font-black leading-none text-brand-500/[0.07]"
         style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
         aria-hidden
       >
-        {display}
+        {stat.value}
       </span>
       <div className="relative z-[1] flex flex-col items-center gap-2">
         <p
-          className="stats-figure__value whitespace-nowrap text-[clamp(2.25rem,6.5vw,4.25rem)] font-extrabold leading-none tracking-tight tabular-nums gradient-text"
+          className="stats-figure__value whitespace-nowrap text-[clamp(2rem,5.5vw,3.75rem)] font-extrabold leading-none tracking-tight gradient-text"
           style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
         >
-          {display}
+          {stat.value}
         </p>
         <p className="text-center text-xs font-semibold tracking-wide text-gray-600 sm:text-sm">{stat.label}</p>
       </div>
@@ -89,14 +50,14 @@ function StatSeparator() {
 }
 
 export default function StatsSection() {
-  const [animate, setAnimate] = useState(false);
+  const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const io = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
-          setAnimate(true);
+          setVisible(true);
           io.disconnect();
         }
       },
@@ -110,7 +71,7 @@ export default function StatsSection() {
     <section
       ref={ref}
       className="stats-band relative overflow-hidden border-y border-brand-100/50"
-      aria-label="Platform metrics"
+      aria-label="Platform trust signals"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#f3f0ff]/90 via-white to-white"
@@ -131,7 +92,7 @@ export default function StatsSection() {
           {stats.map((s, i) => (
             <Fragment key={s.id}>
               {i > 0 ? <StatSeparator /> : null}
-              <StatValue stat={s} animate={animate} delayMs={i * 120} />
+              <StatValue stat={s} visible={visible} delayMs={i * 120} />
             </Fragment>
           ))}
         </div>

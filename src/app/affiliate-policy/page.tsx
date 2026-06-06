@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 
 import LegalPage from "@/components/LegalPage";
-import { siteConfig } from "@/config/site.config";
 import { normalizePolicyContent } from "@/lib/legal/normalize-policy";
+import { buildPageMetadata } from "@/config/seo.config";
 
-export const metadata: Metadata = {
-  title: `Affiliate Program Policy — ${siteConfig.brand.name}`,
-  description: `Rules, commissions, and payouts for the ${siteConfig.brand.name} Affiliate Program.`,
-};
+export const metadata: Metadata = buildPageMetadata({
+  title: "Affiliate Program Policy — Liffio",
+  description: "Commission rates, payout rules, and prohibited activity for the Liffio Affiliate Program.",
+  pathname: "/affiliate-policy",
+  ogImagePath: "/og/homepage.png",
+});
 
 const CONTENT = `
 This Affiliate Program Policy ("Policy") governs your participation in the Affiliate Program. By joining the program or using an affiliate link, you agree to be bound by this Policy as well as our Terms and Conditions, Privacy Policy, and Acceptable Use Policy.

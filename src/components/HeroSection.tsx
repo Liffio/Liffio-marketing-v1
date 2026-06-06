@@ -148,7 +148,7 @@ export default function HeroSection() {
                     className="relative h-9 w-9 overflow-hidden rounded-full border-2 border-white shadow-md ring-1 ring-black/5"
                     style={{ zIndex: 5 - i }}
                   >
-                    <Image src={src} alt="" fill sizes="36px" className="object-cover" />
+                    <Image src={src} alt="Instagram creator — Liffio beta tester" fill sizes="36px" className="object-cover" />
                   </div>
                 ))}
               </div>

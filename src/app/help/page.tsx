@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { SiteFaqSection } from "@/components/faq/SiteFaqSection";
+import HelpContactForm from "@/components/HelpContactForm";
 import { getWhatsAppUrl, siteConfig } from "@/config/site.config";
 import { pageSeo } from "@/config/seo.config";
 import { getHelpFaqCategories } from "@/config/faq.config";
@@ -80,64 +81,7 @@ export default async function HelpPage() {
         {/* Contact form */}
         <section id="contact" className="py-20 bg-gray-50 scroll-mt-24">
           <div className="mx-auto max-w-2xl px-4 sm:px-6">
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
-              <h2
-                className="text-2xl font-bold text-gray-900 mb-2"
-                style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
-              >
-                Still need help?
-              </h2>
-              <p className="text-sm text-gray-500 mb-6">
-                Send us a message and we&apos;ll get back to you within 24 hours.
-              </p>
-              <form className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="help-name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                    <input
-                      id="help-name"
-                      type="text"
-                      className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4259f0] focus:border-transparent"
-                      placeholder="Your name"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="help-email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <input
-                      id="help-email"
-                      type="email"
-                      className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4259f0] focus:border-transparent"
-                      placeholder="you@example.com"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label htmlFor="help-subject" className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                  <input
-                    id="help-subject"
-                    type="text"
-                    className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4259f0] focus:border-transparent"
-                    placeholder="What do you need help with?"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="help-message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                  <textarea
-                    id="help-message"
-                    rows={4}
-                    className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4259f0] focus:border-transparent resize-none"
-                    placeholder="Describe your issue in detail..."
-                  />
-                </div>
-                <button
-                  type="submit"
-                  id="help-submit"
-                  className="w-full rounded-xl px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition-opacity shadow-md [background:linear-gradient(135deg,#7c5af3,#4259f0)]"
-                >
-                  Send Message
-                </button>
-              </form>
-            </div>
+            <HelpContactForm />
           </div>
         </section>
 

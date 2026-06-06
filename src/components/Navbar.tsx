@@ -46,13 +46,7 @@ export default function Navbar() {
         className="px-3 py-2 text-center text-[11px] font-medium leading-snug text-white sm:px-4 sm:text-sm"
         style={{ background: "linear-gradient(135deg, #7c5af3 0%, #4259f0 100%)" }}
       >
-        <span className="sm:hidden">
-          {ANNOUNCEMENT_MESSAGES[announcementIndex]}{" "}
-          <a href={siteConfig.urls.appSignup} className="font-bold underline hover:no-underline">
-            Get Started Free →
-          </a>
-        </span>
-        <span className="hidden sm:inline">
+        <span>
           {ANNOUNCEMENT_MESSAGES[announcementIndex]}{" "}
           <a href={siteConfig.urls.appSignup} className="font-bold underline hover:no-underline">
             Get Started Free →

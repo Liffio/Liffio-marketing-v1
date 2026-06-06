@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
-import { siteConfig } from "@/config/site.config";
 import { normalizePolicyContent } from "@/lib/legal/normalize-policy";
+import { buildPageMetadata } from "@/config/seo.config";
 
-export const metadata: Metadata = {
-  title: `Refund Policy - ${siteConfig.brand.name}`,
-  description: `Understand the refund and cancellation policies for ${siteConfig.brand.name}.`
-}
+export const metadata: Metadata = buildPageMetadata({
+  title: "Refund Policy — Liffio",
+  description: "Understand Liffio's refund and cancellation policies for paid plans.",
+  pathname: "/refund-policy",
+  ogImagePath: "/og/homepage.png",
+});
 
 const CONTENT = `
 Thank you for choosing Reactova. We strive to provide the best Instagram automation experience. Please read our refund policy carefully before subscribing.

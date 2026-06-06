@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
-import { siteConfig } from "@/config/site.config";
 import { normalizePolicyContent } from "@/lib/legal/normalize-policy";
+import { buildPageMetadata } from "@/config/seo.config";
 
-export const metadata: Metadata = {
-  title: `Privacy Policy - ${siteConfig.brand.name}`,
-  description: `Read the privacy policy for ${siteConfig.brand.name} to understand how we collect and protect your data.`
-}
+export const metadata: Metadata = buildPageMetadata({
+  title: "Privacy Policy — Liffio",
+  description: "Read how Liffio collects, uses, and protects your personal information when you use our Instagram DM automation platform.",
+  pathname: "/privacy-policy",
+  ogImagePath: "/og/homepage.png",
+});
 
 const CONTENT = `
 This Privacy Policy explains how Reactova collects, uses, stores, and shares your personal information. By using Reactova, you agree to the practices described in this policy.

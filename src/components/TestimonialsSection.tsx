@@ -5,52 +5,100 @@ import { TechBadge } from "@/components/TechBadge";
 
 const testimonials = [
   {
-    name: "Sarah Chen",
-    role: "Fashion Influencer, 250K Followers",
+    name: "Om Bhesania",
+    role: "🧪 Beta Tester",
     quote:
-      "Liffio has completely transformed how I handle my DMs. I went from spending 3 hours a day responding to messages to having everything automated. My engagement rate has doubled.",
-    avatar: "SC",
-    gradient: "linear-gradient(135deg,#a855f7,#7c5af3)",
+      "Set it up on a Reel at midnight and woke up to 80 DMs sent automatically. Would've taken hours to do that manually.",
+    avatar: "OB",
+    gradient: "linear-gradient(135deg,#7c5af3,#4259f0)",
   },
   {
-    name: "Marcus Johnson",
-    role: "E-commerce Brand Owner",
+    name: "Ryan Callahan",
+    role: "🧪 Beta Tester",
     quote:
-      "We integrated Liffio with our comment-to-DM campaigns and saw a 340% increase in conversions. The keyword triggers are incredibly powerful for driving sales.",
-    avatar: "MJ",
-    gradient: "linear-gradient(135deg,#4259f0,#7c5af3)",
-  },
-  {
-    name: "Elena Rodriguez",
-    role: "Digital Marketing Agency CEO",
-    quote:
-      "Managing DMs for 15+ client accounts used to be a nightmare. With Liffio, our team saves over 40 hours per week. The analytics make our reports look amazing too.",
-    avatar: "ER",
-    gradient: "linear-gradient(135deg,#ec4899,#a855f7)",
-  },
-  {
-    name: "David Park",
-    role: "Fitness Coach, 180K Followers",
-    quote:
-      "The keyword trigger feature alone has generated over $50K in course sales. Setting up comment-to-DM flows took minutes and the results were immediate.",
-    avatar: "DP",
+      "I get a ton of comments asking for my program link every time I post. Had to set a reminder to reply before bed and still missed loads. Set up the keyword trigger and it just runs now.",
+    avatar: "RC",
     gradient: "linear-gradient(135deg,#10b981,#4259f0)",
   },
   {
-    name: "Lisa Thompson",
-    role: "Beauty Brand Founder",
+    name: "Shivam Thakkar",
+    role: "🧪 Beta Tester",
     quote:
-      "We moved from manual DM outreach to fully automated workflows. Our team saves 30+ hours weekly and response rates have tripled since using Liffio.",
-    avatar: "LT",
+      "Used to wake up every morning and manually reply to everyone who commented overnight. First automation run, all of them got replies automatically while I slept.",
+    avatar: "ST",
+    gradient: "linear-gradient(135deg,#a855f7,#7c5af3)",
+  },
+  {
+    name: "Sophie Mercer",
+    role: "🧪 Beta Tester",
+    quote:
+      "Was sceptical because tools like this always felt spammy. The delay and tone of the DM actually felt like me. First automation went live on a collab post and handled everything overnight.",
+    avatar: "SM",
+    gradient: "linear-gradient(135deg,#ec4899,#a855f7)",
+  },
+  {
+    name: "Vishal Motimani",
+    role: "🧪 Beta Tester",
+    quote:
+      "Connected Instagram in 2 minutes and the first keyword trigger worked on the first try. Haven't touched the inbox for that post since.",
+    avatar: "VM",
+    gradient: "linear-gradient(135deg,#4259f0,#6366f1)",
+  },
+  {
+    name: "Aisha Al-Farsi",
+    role: "🧪 Beta Tester",
+    quote:
+      "Comment-to-DM for product drops is exactly what I needed. Launch posts used to need someone monitoring comments for hours. This handles the link delivery automatically.",
+    avatar: "AF",
     gradient: "linear-gradient(135deg,#f97316,#ec4899)",
   },
   {
-    name: "James Wilson",
-    role: "Real Estate Entrepreneur",
+    name: "Lippi Patel",
+    role: "🧪 Beta Tester",
     quote:
-      "Liffio helped us build a lead pipeline through Instagram that we never thought possible. The contact management features are game-changing for follow-ups.",
-    avatar: "JW",
+      "Was spending 2–3 hours every evening just replying to DMs from comments. This takes care of all of that automatically. Massive time saver.",
+    avatar: "LP",
+    gradient: "linear-gradient(135deg,#a855f7,#ec4899)",
+  },
+  {
+    name: "Jake Thornton",
+    role: "🧪 Beta Tester",
+    quote:
+      "Managing comment automations across five client accounts manually was killing us. Moved the first two to Liffio and it's working cleanly. Will be moving the others this week.",
+    avatar: "JT",
     gradient: "linear-gradient(135deg,#14b8a6,#4259f0)",
+  },
+  {
+    name: "Dhanraj",
+    role: "🧪 Beta Tester",
+    quote:
+      "Set up the LINK trigger and tested it myself — got the DM in under a minute. Simple but actually works.",
+    avatar: "DH",
+    gradient: "linear-gradient(135deg,#6366f1,#7c5af3)",
+  },
+  {
+    name: "Pratham Panchal",
+    role: "🧪 Beta Tester",
+    quote:
+      "The INR pricing alone is a win for Indian creators. Finally something built for us that isn't priced in USD.",
+    avatar: "PP",
+    gradient: "linear-gradient(135deg,#4259f0,#7c5af3)",
+  },
+  {
+    name: "Dhairya Thumar",
+    role: "🧪 Beta Tester",
+    quote:
+      "The delay feature is what sold me — doesn't feel like a bot when the DM arrives 30 seconds later. Followers actually reply back.",
+    avatar: "DT",
+    gradient: "linear-gradient(135deg,#10b981,#6366f1)",
+  },
+  {
+    name: "Shlok Patel",
+    role: "🧪 Beta Tester",
+    quote:
+      "Tested on a small post first and the public reply + DM both landed correctly. Setup took maybe 5 mins. Works exactly as described.",
+    avatar: "SP",
+    gradient: "linear-gradient(135deg,#7c5af3,#a855f7)",
   },
 ] as const;
 

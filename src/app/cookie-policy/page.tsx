@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
-import { siteConfig } from "@/config/site.config";
 import { normalizePolicyContent } from "@/lib/legal/normalize-policy";
+import { buildPageMetadata } from "@/config/seo.config";
 
-export const metadata: Metadata = {
-  title: `Cookie Policy - ${siteConfig.brand.name}`,
-  description: `Learn how ${siteConfig.brand.name} uses cookies to improve your experience.`
-}
+export const metadata: Metadata = buildPageMetadata({
+  title: "Cookie Policy — Liffio",
+  description: "Learn how Liffio uses cookies and tracking technologies to improve your experience.",
+  pathname: "/cookie-policy",
+  ogImagePath: "/og/homepage.png",
+});
 
 const CONTENT = `
 This Cookie Policy explains how Reactova uses cookies and similar technologies to recognise you when you visit our website. It explains what these technologies are and why we use them.

@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
-import { siteConfig } from "@/config/site.config";
 import { normalizePolicyContent } from "@/lib/legal/normalize-policy";
+import { buildPageMetadata } from "@/config/seo.config";
 
-export const metadata: Metadata = {
-  title: `Acceptable Use Policy - ${siteConfig.brand.name}`,
-  description: `Guidelines for acceptable and prohibited use of the ${siteConfig.brand.name} platform.`
-}
+export const metadata: Metadata = buildPageMetadata({
+  title: "Acceptable Use Policy — Liffio",
+  description: "Guidelines for acceptable and prohibited use of Liffio's Instagram DM automation platform.",
+  pathname: "/acceptable-use-policy",
+  ogImagePath: "/og/homepage.png",
+});
 
 const CONTENT = `
 This Acceptable Use Policy ("AUP") outlines the rules and guidelines for using Reactova. Our goal is to ensure a safe, reliable, and compliant platform for all creators.

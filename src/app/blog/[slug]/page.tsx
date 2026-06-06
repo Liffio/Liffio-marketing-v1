@@ -99,7 +99,7 @@ export default async function BlogArticlePage({ params }: Props) {
             </h1>
             <p className="mt-4 text-gray-600">{post.excerpt}</p>
             <p className="mt-3 text-sm text-gray-400">
-              {post.date} · {post.readTime}
+              {post.date} · {post.readTime} · {post.author}
             </p>
           </div>
         </article>

@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AffiliateProgramContent from "@/components/AffiliateProgramContent";
+import AffiliateCalculator from "@/components/AffiliateCalculator";
 import { SiteFaqSection } from "@/components/faq/SiteFaqSection";
 import { pageSeo } from "@/config/seo.config";
 import { getAffiliateFaqCategories } from "@/config/faq.config";
@@ -19,6 +20,7 @@ export default async function AffiliatePage() {
       <Navbar />
       <main id="main-content" className="flex-1">
         <AffiliateProgramContent />
+        <AffiliateCalculator />
         <SiteFaqSection
           categories={faqCategories}
           defaultOpenId="affiliate-commission"

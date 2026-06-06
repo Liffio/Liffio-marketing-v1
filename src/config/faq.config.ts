@@ -342,40 +342,112 @@ export function getCreatorsFaqCategories(
   overrides?: MarketingFaqOverrides,
 ): FaqCategory[] {
   const plans = plansCategory(region, overrides);
-  const creatorsItem = plans.items.find((i) => i.id === "creators-program");
   const cancelItem = plans.items.find((i) => i.id === "cancel");
-  const dmLimitItem = plans.items.find((i) => i.id === "dm-limit");
   return [
     {
       id: "creators",
       label: "Creators Program",
       items: [
-        ...(creatorsItem ? [creatorsItem] : []),
         {
           id: "who-qualifies",
           question: "Who qualifies for the Creators Program?",
           answer:
-            "Instagram creators with consistent comment engagement who are willing to use Liffio actively and share honest feedback. Applications are reviewed manually within 48 hours.",
+            "Creators with 5,000–100,000 Instagram followers, an engagement rate above 3%, and content posted at least once per week. You should already drive comment engagement on posts and actively sell products, courses, or services. Applications are reviewed manually within 48–72 hours.",
         },
         {
-          id: "what-included",
-          question: "What do accepted creators receive?",
+          id: "free-forever",
+          question: "Is it really free forever?",
           answer:
-            "Accepted creators get full Business-plan access at no cost during the launch cohort — including all automation types, analytics, API access, and priority support.",
+            "Yes — for as long as you meet the monthly activity requirements. There is no hidden trial period. Accepted creators keep Business-plan access at no cost while they remain active in the program.",
+        },
+        {
+          id: "activity-requirements",
+          question: "What happens if I don't meet the monthly activity requirements?",
+          answer:
+            "We'll reach out first if your activity drops. Creators who consistently miss the 300 DM/month minimum or drop below 2 active campaigns may be moved off the program with 14 days' notice. You can always upgrade to a paid plan and keep your account.",
+        },
+        {
+          id: "multiple-accounts",
+          question: "Can I have multiple Instagram accounts in one workspace?",
+          answer:
+            "Yes. All Liffio plans — including Creators Program access — support unlimited Instagram accounts per workspace. You can manage multiple profiles from a single dashboard.",
+        },
+        {
+          id: "track-dms",
+          question: "How do I track my 300 DM/month minimum?",
+          answer:
+            "Your workspace analytics dashboard shows automated DM volume in real time. The 300 DM minimum counts unique automated messages sent — not replies within the same thread. You can set up a comment-to-DM flow on a single active post to hit this threshold easily.",
+        },
+        {
+          id: "bio-badge",
+          question: "What does the \"⚡ Powered by @Liffio\" bio link badge look like?",
+          answer:
+            "It's a small footer line on your bio link page (bio.liffio.com/yourusername). It reads \"⚡ Powered by @Liffio\" and links to liffio.com. It's subtle — one line at the bottom of your public link page. Removing or hiding it ends your Creators Program eligibility.",
         },
       ],
     },
     {
       id: "plans-billing",
       label: "After the program",
-      items: [...(cancelItem ? [cancelItem] : []), ...(dmLimitItem ? [dmLimitItem] : [])],
+      items: [
+        ...(cancelItem ? [cancelItem] : []),
+        {
+          id: "after-program",
+          question: "What happens when the Creators Program ends?",
+          answer:
+            "If you leave the program or it concludes, your account stays active — you just move to a paid plan. You'll get advance notice and a discounted rate as a program alumni.",
+        },
+      ],
     },
   ];
 }
+
+const userSupportCategory: FaqCategory = {
+  id: "user-support",
+  label: "Troubleshooting & account",
+  items: [
+    {
+      id: "automations-not-firing",
+      question: "Why aren't my automations firing?",
+      answer:
+        "First, check that the automation is toggled on and the correct post or account is selected. Make sure the trigger keyword matches exactly what commenters type (check case sensitivity settings). If the automation was recently created, it can take up to 60 seconds to activate. If it still isn't working, try disconnecting and reconnecting your Instagram account from Settings.",
+    },
+    {
+      id: "reconnect-instagram",
+      question: "How do I reconnect my Instagram account?",
+      answer:
+        "Go to Settings → Connected Accounts in your Liffio dashboard. Click 'Disconnect' next to your Instagram account, then click 'Connect Instagram' to re-authorise via Meta login. This refreshes your access token and resolves most permission-related issues.",
+    },
+    {
+      id: "meta-permission-error",
+      question: "Why did I receive a Meta permission error?",
+      answer:
+        "Meta permission errors usually mean your access token has expired or a required permission was revoked. Go to Settings → Connected Accounts and reconnect your Instagram account. If the error persists, check that your Instagram account is linked to a Facebook Page and that the account type is set to 'Professional' (Creator or Business) in Instagram settings.",
+    },
+    {
+      id: "cancel-subscription",
+      question: "How do I cancel my subscription?",
+      answer:
+        "Go to Settings → Billing in your dashboard and click 'Cancel Plan'. Your access stays active until the end of the current billing period — there is no immediate loss of features and no cancellation fee. You can reactivate at any time.",
+    },
+    {
+      id: "refund-timeline",
+      question: "How long do refunds take?",
+      answer:
+        "Approved refunds are processed within 5–10 business days back to your original payment method. Stripe refunds (global) typically appear within 5–7 days. Razorpay refunds (India) take 7–10 business days. Email support@liffio.com to request a refund — see our Refund Policy for eligibility.",
+    },
+    {
+      id: "switch-plans",
+      question: "Can I switch plans mid-cycle?",
+      answer:
+        "Yes. Upgrades take effect immediately and you're charged a prorated amount for the remaining days in your billing cycle. Downgrades take effect at the start of your next billing period — you keep your current plan until then.",
+    },
+  ],
+};
 
 export function getHelpFaqCategories(
   region: PricingRegion,
   overrides?: MarketingFaqOverrides,
 ): FaqCategory[] {
-  return getFaqCategories(region, overrides);
+  return [...getFaqCategories(region, overrides), userSupportCategory];
 }

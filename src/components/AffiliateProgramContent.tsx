@@ -259,6 +259,11 @@ export default function AffiliateProgramContent() {
             <p className="mt-4 text-center text-xs text-gray-500">
               Server-side cookie + URL param + session backup — attribution recorded on click
             </p>
+            <p className="mt-3 text-center text-xs font-medium text-[#7c5af3]">
+              <a href={appLogin} className="hover:underline">
+                Log in to see your personalised affiliate link →
+              </a>
+            </p>
           </div>
         </div>
       </section>

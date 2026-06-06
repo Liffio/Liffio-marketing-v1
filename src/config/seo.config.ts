@@ -118,7 +118,7 @@ export function buildPageMetadata({
 }: PageSeoInput & { ogImagePath?: string; ogImageAlt?: string }): Metadata {
   const canonicalPath = pathname.startsWith("/") ? pathname : `/${pathname}`;
   const pageUrl = canonicalPath === "/" ? SITE_URL : `${SITE_URL}${canonicalPath}`;
-  const imagePath = ogImagePath ?? siteConfig.brand.logoDark;
+  const imagePath = ogImagePath ?? siteConfig.meta.ogImagePath;
   const imageUrl = ogImageUrl(imagePath);
   const imageAlt = ogImageAlt ?? `${siteConfig.brand.name} — Instagram auto DM tool`;
   const isOgCard = imagePath.startsWith("/og/");
