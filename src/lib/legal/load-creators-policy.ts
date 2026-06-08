@@ -12,7 +12,7 @@ export function loadCreatorsPolicyContent(): string {
     text = lines.slice(4).join("\n").trim();
   }
 
-  text = text.replace(/\nReactova — June 2026\s*$/i, "").trim();
+  text = text.replace(/\nReactova - June 2026\s*$/i, "").trim();
 
   return normalizePolicyContent(text);
 }

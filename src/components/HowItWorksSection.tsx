@@ -24,7 +24,7 @@ const steps = [
     border: "rgba(168,85,247,0.18)",
     title: "Create Your Free Auto DM Account",
     detail:
-      "Get started with Liffio's auto DM tool in under 60 seconds. No credit card required — start sending auto DMs for free today.",
+      "Get started with Liffio's auto DM tool in under 60 seconds. No credit card required - start sending auto DMs for free today.",
     note: "Free auto DM tool signup",
     icon: (
       <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth="1.6" stroke="currentColor">
@@ -63,7 +63,7 @@ const steps = [
     border: "rgba(66,89,240,0.18)",
     title: "Launch Your Auto DMs",
     detail:
-      "Set your keyword triggers, choose your auto DM type (comment, story, or DM reply), write your template, and go live. Liffio's DM automation handles the rest — 24/7. Most users send their first auto DM within 5 minutes.",
+      "Set your keyword triggers, choose your auto DM type (comment, story, or DM reply), write your template, and go live. Liffio's DM automation handles the rest - 24/7. Most users send their first auto DM within 5 minutes.",
     note: "First auto DM in under 5 minutes",
     icon: (
       <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth="1.6" stroke="currentColor">
@@ -540,7 +540,7 @@ export default function HowItWorksSection() {
       />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header — inline split (mirrors Features, tinted section differentiates) */}
+        {/* Header - inline split (mirrors Features, tinted section differentiates) */}
         <div className="mb-8 flex flex-col gap-6 sm:mb-10 lg:mb-16 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
           <div className="max-w-xl">
             <TechBadge label="How it works" variant="section" className="mb-4 sm:mb-5" />
@@ -552,7 +552,7 @@ export default function HowItWorksSection() {
               <span className="gradient-text">in minutes.</span>
             </h2>
             <p className="mt-3 text-base leading-relaxed text-gray-600 sm:text-lg">
-              No developer, no tech skills, no complicated setup — if you can send a DM, you can automate one.
+              No developer, no tech skills, no complicated setup - if you can send a DM, you can automate one.
             </p>
             <p className="mt-4 text-sm font-medium text-brand-700/80" aria-live="polite">
               {steps.map((step, i) => (
@@ -712,7 +712,7 @@ export default function HowItWorksSection() {
           </div>
         </div>
 
-        {/* Desktop: phone left, steps right — mirrored vs Features */}
+        {/* Desktop: phone left, steps right - mirrored vs Features */}
         <div className="hidden items-center gap-6 lg:grid lg:grid-cols-2 lg:gap-16">
           <div className="flex max-md:justify-center">
             <div className="relative w-full max-w-[440px]">

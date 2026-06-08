@@ -20,7 +20,7 @@ type LiffioLogoMarkProps = {
   className?: string
 }
 
-/** Logo image without navigation — for mockups, avatars, and animations. */
+/** Logo image without navigation - for mockups, avatars, and animations. */
 export function LiffioLogoMark({ theme = 'light', size = 'large', className = '' }: LiffioLogoMarkProps) {
   const src = theme === 'light' ? LIFFIO_LOGO_SRC.light : LIFFIO_LOGO_SRC.dark
   return (

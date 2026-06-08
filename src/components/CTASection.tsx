@@ -88,7 +88,7 @@ export default function CTASection() {
 
             <p className="mt-5 max-w-xl text-base leading-relaxed text-gray-600 sm:text-lg">
               Join creators and brands using Liffio to reply faster, capture leads on autopilot, and measure
-              what actually converts — without living in the DMs.
+              what actually converts - without living in the DMs.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">

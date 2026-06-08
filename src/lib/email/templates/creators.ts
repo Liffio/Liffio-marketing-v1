@@ -81,7 +81,7 @@ Our team will review your application within 48-72 hours.
 
 We'll email you once a decision is made.
 
-Questions? Reply to this email — we read every message.
+Questions? Reply to this email - we read every message.
 
 © ${new Date().getFullYear()} ${brand.name}
 `.trim()

@@ -529,7 +529,7 @@ export function WelcomeFollowersPhone({ animKey }: { animKey: number }) {
             <div className="flex items-end gap-1.5 transition-all duration-500">
               <LiffioAvatar size={5} />
               <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-3 py-2 shadow-sm max-w-[85%]">
-                <p className="text-[9px] text-gray-800">Hey! 👋 Welcome to Liffio — so glad you&apos;re here!</p>
+                <p className="text-[9px] text-gray-800">Hey! 👋 Welcome to Liffio - so glad you&apos;re here!</p>
               </div>
             </div>
           )}
@@ -584,7 +584,7 @@ const features = [
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><rect x="3" y="3" width="18" height="18" rx="3" ry="3" strokeLinecap="round" strokeLinejoin="round"/><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4"/></svg>),
     title: "Story Auto Reply",
     gridLabel: "Story Reply",
-    description: "Your stories get the most engaged viewers. Liffio auto-responds the moment someone reacts, replies to, or mentions your story — capturing leads at their highest point of interest.",
+    description: "Your stories get the most engaged viewers. Liffio auto-responds the moment someone reacts, replies to, or mentions your story - capturing leads at their highest point of interest.",
     bullets: ["Triggers on reactions, replies, and @mentions", "Perfect for flash sales and limited-time offers", "Works 24/7, even mid-sleep"],
     Phone: StoryReplyPhone,
   },
@@ -598,7 +598,7 @@ const features = [
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>),
     title: "Live Auto Reply",
     gridLabel: "Live Reply",
-    description: "Your Instagram Live is a live sales event. Liffio monitors comments in real-time and sends DMs to every viewer who types a keyword — turning a broadcast into a revenue funnel.",
+    description: "Your Instagram Live is a live sales event. Liffio monitors comments in real-time and sends DMs to every viewer who types a keyword - turning a broadcast into a revenue funnel.",
     bullets: ["Monitors keywords during live streams", "Ideal for product launches, Q&As, and webinars", "Sends discount codes, links, and resources automatically"],
     Phone: LiveReplyPhone,
   },
@@ -612,7 +612,7 @@ const features = [
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><line x1="22" y1="2" x2="11" y2="13" strokeLinecap="round" strokeLinejoin="round"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>),
     title: "DM Auto Reply",
     gridLabel: "DM Reply",
-    description: "Build powerful automated flows triggered by incoming DMs. From simple keyword responses to multi-step qualification sequences — Liffio handles every conversation at scale.",
+    description: "Build powerful automated flows triggered by incoming DMs. From simple keyword responses to multi-step qualification sequences - Liffio handles every conversation at scale.",
     bullets: ["Keyword-triggered conversation flows", "Multi-step logic with yes/no branching", "Qualify leads without lifting a finger"],
     Phone: DmReplyPhone,
   },
@@ -626,7 +626,7 @@ const features = [
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>),
     title: "Ask for Follow",
     gridLabel: "Ask Follow",
-    description: "Gate your content behind a follow. Before delivering the promised link or resource, Liffio prompts users to follow your account — dramatically accelerating your follower growth.",
+    description: "Gate your content behind a follow. Before delivering the promised link or resource, Liffio prompts users to follow your account - dramatically accelerating your follower growth.",
     bullets: ["Optional follow gate before content delivery", "Displays your profile card inside DMs", "Tracks follow conversion rates in analytics"],
     Phone: AskFollowPhone,
   },
@@ -640,7 +640,7 @@ const features = [
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>),
     title: "Smart Re-engage",
     gridLabel: "Re-engage",
-    description: "Warm leads go cold fast. Liffio identifies users who've interacted with you before and automatically sends timed follow-ups — converting browsers into buyers on autopilot.",
+    description: "Warm leads go cold fast. Liffio identifies users who've interacted with you before and automatically sends timed follow-ups - converting browsers into buyers on autopilot.",
     bullets: ["Re-engages previous commenters and DM contacts", "Configurable time-based follow-up sequences", "Personalised message templates per segment"],
     Phone: ReengagePhone,
   },
@@ -654,7 +654,7 @@ const features = [
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>),
     title: "Collect User Data",
     gridLabel: "Collect Data",
-    description: "Own your audience. Liffio asks followers for their email, phone number, or any custom field right inside a DM conversation — building your list without any external tools.",
+    description: "Own your audience. Liffio asks followers for their email, phone number, or any custom field right inside a DM conversation - building your list without any external tools.",
     bullets: ["Captures email, phone, and custom data", "Auto-exports to CSV and integrates with CRMs", "Fully GDPR-compliant data handling"],
     Phone: CollectDataPhone,
   },
@@ -668,7 +668,7 @@ const features = [
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>),
     title: "Welcome New Followers",
     gridLabel: "Welcome",
-    description: "First impressions are everything. When someone follows you, Liffio sends a warm, personalised welcome message on your schedule — starting the relationship before they even see your next post.",
+    description: "First impressions are everything. When someone follows you, Liffio sends a warm, personalised welcome message on your schedule - starting the relationship before they even see your next post.",
     bullets: ["Fires automatically after a new follow", "Personalised with @username and first name", "Include links, offers, or a simple warm hello"],
     Phone: WelcomeFollowersPhone,
   },
@@ -724,7 +724,7 @@ export default function FeaturesSection() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header — inline split: title + copy left, chips right */}
+        {/* Header - inline split: title + copy left, chips right */}
         <div className="mb-8 flex flex-col gap-6 sm:mb-10 lg:mb-16 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
           <div className="max-w-xl">
             <TechBadge label="Auto DM Features" variant="section" className="mb-4 sm:mb-5" />
@@ -736,7 +736,7 @@ export default function FeaturesSection() {
               <span className="gradient-text">One Dashboard.</span>
             </h2>
             <p className="mt-3 text-base leading-relaxed text-gray-500 sm:text-lg">
-              Auto DMs from comments, stories, live streams & inbox — Liffio is your complete Instagram auto DM tool.
+              Auto DMs from comments, stories, live streams & inbox - Liffio is your complete Instagram auto DM tool.
             </p>
           </div>
           <div className="flex flex-wrap gap-2 lg:max-w-sm lg:justify-end">

@@ -161,7 +161,7 @@ export default function PricingSection({ plans, region, countryCode = null }: Pr
               <span className="gradient-text">No surprises.</span>
             </h2>
             <p className="mt-2 text-sm text-gray-500 sm:text-base lg:mt-3 lg:text-lg">
-              Start free — upgrade when you&apos;re ready.
+              Start free - upgrade when you&apos;re ready.
             </p>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { normalizePolicyContent } from "@/lib/legal/normalize-policy";
 import { buildPageMetadata } from "@/config/seo.config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Cookie Policy — Liffio",
+  title: "Cookie Policy - Liffio",
   description: "Learn how Liffio uses cookies and tracking technologies to improve your experience.",
   pathname: "/cookie-policy",
   ogImagePath: "/og/homepage.png",

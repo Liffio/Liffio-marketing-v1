@@ -27,9 +27,9 @@ export const FEATURES: readonly FeatureDefinition[] = [
     tag: "Auto DM + Auto Comment",
     title: "Auto Comment Reply",
     gridLabel: "Auto Comment",
-    highlight: "The signature auto DM tool feature — comment to DM automation.",
+    highlight: "The signature auto DM tool feature - comment to DM automation.",
     description:
-      "When a follower comments a keyword on your post or reel, Liffio sends them an auto DM and a public auto comment reply. This comment-to-DM automation is the core feature of any Instagram auto DM tool — with 10–60 second delays for human-like timing.",
+      "When a follower comments a keyword on your post or reel, Liffio sends them an auto DM and a public auto comment reply. This comment-to-DM automation is the core feature of any Instagram auto DM tool - with 10–60 second delays for human-like timing.",
     bullets: [
       "Auto DM + auto comment reply in one workflow",
       "Unlimited keyword triggers per campaign",
@@ -47,7 +47,7 @@ export const FEATURES: readonly FeatureDefinition[] = [
     gridLabel: "Story Auto DM",
     highlight: "Auto DMs from story reactions and mentions.",
     description:
-      "Liffio sends auto DMs the moment someone reacts, replies to, or mentions your story — capturing leads at peak interest. Story auto reply is a must-have feature for any Instagram auto DM tool.",
+      "Liffio sends auto DMs the moment someone reacts, replies to, or mentions your story - capturing leads at peak interest. Story auto reply is a must-have feature for any Instagram auto DM tool.",
     bullets: [
       "Auto DM on reactions, replies, and @mentions",
       "Perfect for flash sales and limited-time offers",
@@ -65,7 +65,7 @@ export const FEATURES: readonly FeatureDefinition[] = [
     gridLabel: "Live Auto DM",
     highlight: "Auto DMs from live stream comments.",
     description:
-      "Monitor live comments in real time and send auto DMs to every viewer who types a keyword — ideal for launches, Q&As, and webinars. Turn your Instagram Live into a lead-gen machine with live auto DM.",
+      "Monitor live comments in real time and send auto DMs to every viewer who types a keyword - ideal for launches, Q&As, and webinars. Turn your Instagram Live into a lead-gen machine with live auto DM.",
     bullets: [
       "Auto DM on keyword triggers during live streams",
       "Send links, discount codes, and resources automatically",
@@ -83,7 +83,7 @@ export const FEATURES: readonly FeatureDefinition[] = [
     gridLabel: "DM Auto Reply",
     highlight: "Auto DM flows for inbound messages.",
     description:
-      "Build automated DM flows triggered by incoming messages — from simple keyword auto replies to multi-step sequences with branching logic. This DM automation tool feature qualifies leads inside the thread.",
+      "Build automated DM flows triggered by incoming messages - from simple keyword auto replies to multi-step sequences with branching logic. This DM automation tool feature qualifies leads inside the thread.",
     bullets: [
       "Keyword-triggered auto DM flows",
       "Multi-step DM automation with branching",
@@ -119,7 +119,7 @@ export const FEATURES: readonly FeatureDefinition[] = [
     gridLabel: "Re-engage",
     highlight: "Win back warm leads automatically.",
     description:
-      "Identify users who've interacted before and send timed follow-ups — converting browsers into buyers on autopilot.",
+      "Identify users who've interacted before and send timed follow-ups - converting browsers into buyers on autopilot.",
     bullets: [
       "Re-engages previous commenters and DM contacts",
       "Configurable time-based follow-up sequences",
@@ -137,7 +137,7 @@ export const FEATURES: readonly FeatureDefinition[] = [
     gridLabel: "Collect Data",
     highlight: "Build your list inside Instagram DMs.",
     description:
-      "Ask followers for email, phone, or custom fields right inside a DM conversation — no external forms required.",
+      "Ask followers for email, phone, or custom fields right inside a DM conversation - no external forms required.",
     bullets: [
       "Captures email, phone, and custom data",
       "Auto-exports to CSV and integrates with CRMs",
@@ -155,7 +155,7 @@ export const FEATURES: readonly FeatureDefinition[] = [
     gridLabel: "Welcome",
     highlight: "Make a great first impression on autopilot.",
     description:
-      "When someone follows you, Liffio sends a warm, personalised welcome message on your schedule — before they see your next post.",
+      "When someone follows you, Liffio sends a warm, personalised welcome message on your schedule - before they see your next post.",
     bullets: [
       "Fires automatically after a new follow",
       "Personalised with @username and first name",

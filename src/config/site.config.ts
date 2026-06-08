@@ -16,7 +16,7 @@ export const siteConfig = {
     name: "Liffio",
     tagline: "The best auto DM tool for Instagram",
     description:
-      "Liffio is an Instagram auto DM tool for creators and brands. Auto DMs from comments, stories, and messages — with auto comment reply, keyword triggers, and DM automation running 24/7.",
+      "Liffio is an Instagram auto DM tool for creators and brands. Auto DMs from comments, stories, and messages - with auto comment reply, keyword triggers, and DM automation running 24/7.",
     logoLight: "/logo/light.png",
     logoDark: "/logo/colored.png",
     defaultLogo: "/logo/light.png",
@@ -66,15 +66,15 @@ export const siteConfig = {
   ] as const,
 
   meta: {
-    title: "Liffio — Auto DM Tool for Instagram",
+    title: "Liffio - Auto DM Tool for Instagram",
     description:
       "Instagram auto DM tool with auto comment reply, comment-to-DM automation, and keyword triggers.",
-    ogTitle: "Liffio — Instagram Auto DM & Comment Automation",
+    ogTitle: "Liffio - Instagram Auto DM & Comment Automation",
     ogDescription:
-      "Automate Instagram DMs from comments, stories, and messages — auto DM tool for creators and brands.",
+      "Automate Instagram DMs from comments, stories, and messages - auto DM tool for creators and brands.",
     /** 1200×630 social share card */
     ogImagePath: "/og/homepage.png",
-    ogImageAlt: "Liffio — Turn Instagram Comments Into Automated DMs",
+    ogImageAlt: "Liffio - Turn Instagram Comments Into Automated DMs",
   },
 
   contact: {

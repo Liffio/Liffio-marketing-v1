@@ -49,13 +49,13 @@ function plansCategory(region: PricingRegion, overrides?: MarketingFaqOverrides)
         id: "dm-limit",
         question: "Are automated DMs unlimited?",
         answer:
-          "Yes. Every plan includes unlimited automated DMs — there is no monthly cap on how many messages you can send.",
+          "Yes. Every plan includes unlimited automated DMs - there is no monthly cap on how many messages you can send.",
       },
       {
         id: "cancel",
         question: "How do I cancel my subscription?",
         answer:
-          "Cancel anytime from account settings. There are no cancellation fees — your plan stays active until the end of the current billing period.",
+          "Cancel anytime from account settings. There are no cancellation fees - your plan stays active until the end of the current billing period.",
       },
       {
         id: "creators-program",
@@ -74,37 +74,37 @@ const seoDiscoveryCategory: FaqCategory = {
       id: "what-is-auto-dm-tool",
       question: "What is an auto DM tool?",
       answer:
-        "An auto DM tool (also called auto DM software or DM automation tool) sends Instagram direct messages automatically when a trigger fires — for example a keyword in a comment, a story reply, or an inbound DM. Liffio is an auto DM tool that lets you set delays (10–60 seconds), personalize messages, and run comment-to-DM flows without manual inbox work.",
+        "An auto DM tool (also called auto DM software or DM automation tool) sends Instagram direct messages automatically when a trigger fires - for example a keyword in a comment, a story reply, or an inbound DM. Liffio is an auto DM tool that lets you set delays (10–60 seconds), personalize messages, and run comment-to-DM flows without manual inbox work.",
     },
     {
       id: "what-are-auto-dms",
       question: "What are auto DMs and how do they work?",
       answer:
-        "Auto DMs are automated direct messages sent by an auto DM tool when someone triggers a specific action — like commenting a keyword on your post, replying to your story, or sending you a DM. With Liffio's auto DMs, you set up the trigger once, and the tool sends your pre-written message automatically 24/7.",
+        "Auto DMs are automated direct messages sent by an auto DM tool when someone triggers a specific action - like commenting a keyword on your post, replying to your story, or sending you a DM. With Liffio's auto DMs, you set up the trigger once, and the tool sends your pre-written message automatically 24/7.",
     },
     {
       id: "auto-comment-tool",
       question: "What is an auto comment tool for Instagram?",
       answer:
-        "An auto comment tool (or auto comment reply tool) replies publicly under your Instagram post and can send a matching private DM. Liffio combines auto comment reply with comment-to-DM automation so one keyword trigger handles both the public reply and the automated DM — the signature workflow of tools like ManyChat.",
+        "An auto comment tool (or auto comment reply tool) replies publicly under your Instagram post and can send a matching private DM. Liffio combines auto comment reply with comment-to-DM automation so one keyword trigger handles both the public reply and the automated DM - the signature workflow of tools like ManyChat.",
     },
     {
       id: "best-auto-dm-tool",
       question: "What is the best auto DM tool for Instagram?",
       answer:
-        "The best auto DM tool depends on your needs. Liffio is ideal for creators and brands who want unlimited auto DMs, simple pricing, and a free tier. We offer the same comment-to-DM, auto comment reply, and story automation features as ManyChat, SendDM, and SuperProfile — without per-message limits.",
+        "The best auto DM tool depends on your needs. Liffio is ideal for creators and brands who want unlimited auto DMs, simple pricing, and a free tier. We offer the same comment-to-DM, auto comment reply, and story automation features as ManyChat, SendDM, and SuperProfile - without per-message limits.",
     },
     {
       id: "free-auto-dm-tool",
       question: "Is there a free auto DM tool for Instagram?",
       answer:
-        "Yes! Liffio offers a free auto DM tool tier that lets you get started with Instagram DM automation without a credit card. The free plan includes comment-to-DM automation, auto comment reply, and basic analytics — enough to test if auto DMs work for your business.",
+        "Yes! Liffio offers a free auto DM tool tier that lets you get started with Instagram DM automation without a credit card. The free plan includes comment-to-DM automation, auto comment reply, and basic analytics - enough to test if auto DMs work for your business.",
     },
     {
       id: "manychat-senddm-linkdm",
       question: "How does Liffio compare to ManyChat, SendDM, or LinkDM?",
       answer:
-        "Like ManyChat, SendDM, LinkDM, and SuperProfile, Liffio supports keyword triggers, comment-to-DM, auto comment reply, story reply automation, and multi-step DM flows for Instagram. Liffio focuses on Instagram DM automation with unlimited auto DMs on every plan, simple pricing, and a generous free tier — making it a top ManyChat alternative.",
+        "Like ManyChat, SendDM, LinkDM, and SuperProfile, Liffio supports keyword triggers, comment-to-DM, auto comment reply, story reply automation, and multi-step DM flows for Instagram. Liffio focuses on Instagram DM automation with unlimited auto DMs on every plan, simple pricing, and a generous free tier - making it a top ManyChat alternative.",
     },
     {
       id: "dm-automation-tool",
@@ -116,13 +116,13 @@ const seoDiscoveryCategory: FaqCategory = {
       id: "comment-to-dm",
       question: "How does comment-to-DM automation work?",
       answer:
-        'Comment-to-DM is the core feature of any auto DM tool. You choose keywords (for example "LINK" or "GUIDE"). When someone comments that word on a post or Reel, Liffio sends your auto DM after your chosen delay and can post a public auto comment reply under their comment — the same pattern used by ManyChat, SendDM, and other Instagram auto DM tools.',
+        'Comment-to-DM is the core feature of any auto DM tool. You choose keywords (for example "LINK" or "GUIDE"). When someone comments that word on a post or Reel, Liffio sends your auto DM after your chosen delay and can post a public auto comment reply under their comment - the same pattern used by ManyChat, SendDM, and other Instagram auto DM tools.',
     },
     {
       id: "instagram-auto-reply",
       question: "What is Instagram auto reply?",
       answer:
-        "Instagram auto reply refers to any automated response sent when someone interacts with your account — via comments, stories, DMs, or live streams. Liffio's auto reply features include auto DMs from comments, story reply automation, DM auto responders, and live comment triggers. All powered by the same auto DM tool technology.",
+        "Instagram auto reply refers to any automated response sent when someone interacts with your account - via comments, stories, DMs, or live streams. Liffio's auto reply features include auto DMs from comments, story reply automation, DM auto responders, and live comment triggers. All powered by the same auto DM tool technology.",
     },
     {
       id: "auto-dm-safe",
@@ -168,7 +168,7 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
           id: "dm-speed",
           question: "How quickly are automated DMs sent?",
           answer:
-            "DMs send after your chosen delay — from 10 to 60 seconds after the trigger (comment, story reply, etc.). You control the timing for more human-like replies while staying on autopilot.",
+            "DMs send after your chosen delay - from 10 to 60 seconds after the trigger (comment, story reply, etc.). You control the timing for more human-like replies while staying on autopilot.",
         },
         {
           id: "what-counts-dm",
@@ -180,7 +180,7 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
           id: "automation-types",
           question: "What can Liffio automate?",
           answer:
-            "Comment-to-DM, story mentions and reactions, live stream comments, welcome DMs for new followers, multi-step flows, follow-up sequences, and more — depending on your plan.",
+            "Comment-to-DM, story mentions and reactions, live stream comments, welcome DMs for new followers, multi-step flows, follow-up sequences, and more - depending on your plan.",
         },
       ],
     },
@@ -301,7 +301,7 @@ export function getFeaturesFaqCategories(region: PricingRegion): FaqCategory[] {
           id: "manychat-alternative-features",
           question: "Is Liffio a ManyChat alternative?",
           answer:
-            "Yes. Liffio offers the same core comment-to-DM, story automation, and keyword trigger features as ManyChat — with unlimited automated DMs on every plan, simpler pricing, and a generous free tier.",
+            "Yes. Liffio offers the same core comment-to-DM, story automation, and keyword trigger features as ManyChat - with unlimited automated DMs on every plan, simpler pricing, and a generous free tier.",
         },
         ...(automations?.items.slice(0, 2) ?? []),
       ],
@@ -358,7 +358,7 @@ export function getCreatorsFaqCategories(
           id: "free-forever",
           question: "Is it really free forever?",
           answer:
-            "Yes — for as long as you meet the monthly activity requirements. There is no hidden trial period. Accepted creators keep Business-plan access at no cost while they remain active in the program.",
+            "Yes - for as long as you meet the monthly activity requirements. There is no hidden trial period. Accepted creators keep Business-plan access at no cost while they remain active in the program.",
         },
         {
           id: "activity-requirements",
@@ -370,19 +370,19 @@ export function getCreatorsFaqCategories(
           id: "multiple-accounts",
           question: "Can I have multiple Instagram accounts in one workspace?",
           answer:
-            "Yes. All Liffio plans — including Creators Program access — support unlimited Instagram accounts per workspace. You can manage multiple profiles from a single dashboard.",
+            "Yes. All Liffio plans - including Creators Program access - support unlimited Instagram accounts per workspace. You can manage multiple profiles from a single dashboard.",
         },
         {
           id: "track-dms",
           question: "How do I track my 300 DM/month minimum?",
           answer:
-            "Your workspace analytics dashboard shows automated DM volume in real time. The 300 DM minimum counts unique automated messages sent — not replies within the same thread. You can set up a comment-to-DM flow on a single active post to hit this threshold easily.",
+            "Your workspace analytics dashboard shows automated DM volume in real time. The 300 DM minimum counts unique automated messages sent - not replies within the same thread. You can set up a comment-to-DM flow on a single active post to hit this threshold easily.",
         },
         {
           id: "bio-badge",
           question: "What does the \"⚡ Powered by @Liffio\" bio link badge look like?",
           answer:
-            "It's a small footer line on your bio link page (bio.liffio.com/yourusername). It reads \"⚡ Powered by @Liffio\" and links to liffio.com. It's subtle — one line at the bottom of your public link page. Removing or hiding it ends your Creators Program eligibility.",
+            "It's a small footer line on your bio link page (bio.liffio.com/yourusername). It reads \"⚡ Powered by @Liffio\" and links to liffio.com. It's subtle - one line at the bottom of your public link page. Removing or hiding it ends your Creators Program eligibility.",
         },
       ],
     },
@@ -395,7 +395,7 @@ export function getCreatorsFaqCategories(
           id: "after-program",
           question: "What happens when the Creators Program ends?",
           answer:
-            "If you leave the program or it concludes, your account stays active — you just move to a paid plan. You'll get advance notice and a discounted rate as a program alumni.",
+            "If you leave the program or it concludes, your account stays active - you just move to a paid plan. You'll get advance notice and a discounted rate as a program alumni.",
         },
       ],
     },
@@ -428,19 +428,19 @@ const userSupportCategory: FaqCategory = {
       id: "cancel-subscription",
       question: "How do I cancel my subscription?",
       answer:
-        "Go to Settings → Billing in your dashboard and click 'Cancel Plan'. Your access stays active until the end of the current billing period — there is no immediate loss of features and no cancellation fee. You can reactivate at any time.",
+        "Go to Settings → Billing in your dashboard and click 'Cancel Plan'. Your access stays active until the end of the current billing period - there is no immediate loss of features and no cancellation fee. You can reactivate at any time.",
     },
     {
       id: "refund-timeline",
       question: "How long do refunds take?",
       answer:
-        "Approved refunds are processed within 5–10 business days back to your original payment method. Stripe refunds (global) typically appear within 5–7 days. Razorpay refunds (India) take 7–10 business days. Email support@liffio.com to request a refund — see our Refund Policy for eligibility.",
+        "Approved refunds are processed within 5–10 business days back to your original payment method. Stripe refunds (global) typically appear within 5–7 days. Razorpay refunds (India) take 7–10 business days. Email support@liffio.com to request a refund - see our Refund Policy for eligibility.",
     },
     {
       id: "switch-plans",
       question: "Can I switch plans mid-cycle?",
       answer:
-        "Yes. Upgrades take effect immediately and you're charged a prorated amount for the remaining days in your billing cycle. Downgrades take effect at the start of your next billing period — you keep your current plan until then.",
+        "Yes. Upgrades take effect immediately and you're charged a prorated amount for the remaining days in your billing cycle. Downgrades take effect at the start of your next billing period - you keep your current plan until then.",
     },
   ],
 };

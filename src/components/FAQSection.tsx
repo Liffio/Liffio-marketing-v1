@@ -33,7 +33,7 @@ export default function FAQSection({ categories }: FAQSectionProps) {
                 <span className="gradient-text">We&apos;ve got answers.</span>
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-gray-600 sm:text-base">
-                Everything you need to know about automating Instagram DMs with Liffio — from setup to billing.
+                Everything you need to know about automating Instagram DMs with Liffio - from setup to billing.
               </p>
               <div className="mt-6 flex flex-col gap-2.5 sm:flex-row lg:flex-col">
                 <a href={siteConfig.urls.appSignup} className="btn-primary inline-flex justify-center text-center">

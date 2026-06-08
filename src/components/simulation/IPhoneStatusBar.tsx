@@ -110,7 +110,7 @@ function BatteryIcon({
 
 /**
  * Status bar on the display (not the bezel): Dynamic Island centered with gap above,
- * time + location left, cellular / Wi‑Fi / battery right — matches iPhone 14/15 Pro.
+ * time + location left, cellular / Wi‑Fi / battery right - matches iPhone 14/15 Pro.
  */
 export function IPhoneStatusBar({
   shellWidth,
@@ -129,7 +129,7 @@ export function IPhoneStatusBar({
       style={{ height: m.statusHeight }}
       aria-hidden
     >
-      {/* Dynamic Island — inset from top of display */}
+      {/* Dynamic Island - inset from top of display */}
       <div
         className="absolute left-1/2 -translate-x-1/2 bg-black"
         style={{

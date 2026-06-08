@@ -4,7 +4,7 @@ import { normalizePolicyContent } from "@/lib/legal/normalize-policy";
 import { buildPageMetadata } from "@/config/seo.config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Refund Policy — Liffio",
+  title: "Refund Policy - Liffio",
   description: "Understand Liffio's refund and cancellation policies for paid plans.",
   pathname: "/refund-policy",
   ogImagePath: "/og/homepage.png",

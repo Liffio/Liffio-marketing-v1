@@ -15,7 +15,7 @@ function StatValue({ stat, visible, delayMs }: { stat: (typeof stats)[number]; v
       className="stats-figure relative flex min-w-0 flex-1 flex-col items-center justify-center py-1"
       style={{ transitionDelay: `${delayMs}ms` }}
       data-visible={visible ? "true" : "false"}
-      aria-label={`${stat.value} — ${stat.label}`}
+      aria-label={`${stat.value} - ${stat.label}`}
     >
       <span
         className="stats-figure__ghost pointer-events-none absolute inset-0 flex items-center justify-center select-none whitespace-nowrap text-[clamp(2.5rem,7vw,4.75rem)] font-black leading-none text-brand-500/[0.07]"

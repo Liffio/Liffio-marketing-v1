@@ -5,7 +5,7 @@ import { normalizePolicyContent } from "@/lib/legal/normalize-policy";
 import { buildPageMetadata } from "@/config/seo.config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Affiliate Program Policy — Liffio",
+  title: "Affiliate Program Policy - Liffio",
   description: "Commission rates, payout rules, and prohibited activity for the Liffio Affiliate Program.",
   pathname: "/affiliate-policy",
   ogImagePath: "/og/homepage.png",
@@ -15,7 +15,7 @@ const CONTENT = `
 This Affiliate Program Policy ("Policy") governs your participation in the Affiliate Program. By joining the program or using an affiliate link, you agree to be bound by this Policy as well as our Terms and Conditions, Privacy Policy, and Acceptable Use Policy.
 
 1. Program Overview
-The Affiliate Program allows all registered users to earn commissions by referring new paying customers to the platform. The program is open to all users including those on the Free plan. There is no separate application process — your affiliate link is available in your account dashboard immediately after registration.
+The Affiliate Program allows all registered users to earn commissions by referring new paying customers to the platform. The program is open to all users including those on the Free plan. There is no separate application process - your affiliate link is available in your account dashboard immediately after registration.
 
 Key features of the program:
 - Open to all registered users
@@ -46,7 +46,7 @@ Users who sign up through a referral link or enter a valid referral code at sign
 Commission applies per workspace independently. If a referred user creates multiple workspaces within the 90-day attribution window, each workspace starts its own independent commission stream. Affiliates benefit from referring power users and agencies who manage multiple workspaces.
 
 2.4 Annual Plan Commission
-For yearly subscriptions, commission is calculated on the full annual payment amount as a single commission event — not split into 12 monthly commissions. Example: if a referred user pays $279 for a Pro annual plan, the affiliate earns $139.50 as one commission. The next commission for that workspace is due on the following annual renewal.
+For yearly subscriptions, commission is calculated on the full annual payment amount as a single commission event - not split into 12 monthly commissions. Example: if a referred user pays $279 for a Pro annual plan, the affiliate earns $139.50 as one commission. The next commission for that workspace is due on the following annual renewal.
 
 2.5 Eligible Plans
 Commissions are earned on Starter, Pro, Business, and Agency plan subscriptions in both USD and INR billing. Free plan signups do not generate commission. Creator Program access does not generate commission as it involves no payment.
@@ -66,7 +66,7 @@ Attribution is tied to the referred user account, not to individual workspaces. 
 This section governs how lifetime recurring commission is maintained, lost, and how workspaces are treated during lapses.
 
 4.1 Continuous Subscription Requirement
-Lifetime recurring commission is earned only while the referred user maintains an unbroken, continuously active subscription on each workspace. Commission is workspace-specific — a lapse on one workspace does not affect commission on other workspaces owned by the same referred user.
+Lifetime recurring commission is earned only while the referred user maintains an unbroken, continuously active subscription on each workspace. Commission is workspace-specific - a lapse on one workspace does not affect commission on other workspaces owned by the same referred user.
 
 4.2 The 15-Day Grace Period
 When a referred user's workspace subscription expires or fails to renew, a 15-day grace period begins immediately from the expiry date.
@@ -76,15 +76,15 @@ When a referred user's workspace subscription expires or fails to renew, a 15-da
 - If the referred user renews on day 16 or later: the subscription gap exceeds the grace period and the affiliate loses all future commission on that workspace permanently
 
 4.3 Workspace Purchases During Grace Period
-Any new workspaces created or subscribed to by the referred user during the 15-day grace period are treated as valid and remain eligible for future commission. The 15-day grace period applies to the lapse on the specific workspace that expired — other workspace commissions continue unaffected.
+Any new workspaces created or subscribed to by the referred user during the 15-day grace period are treated as valid and remain eligible for future commission. The 15-day grace period applies to the lapse on the specific workspace that expired - other workspace commissions continue unaffected.
 
-Example — Referred user has Workspace A (Pro) and Workspace B (Starter). Workspace A expires on June 1. Grace period ends June 16.
+Example - Referred user has Workspace A (Pro) and Workspace B (Starter). Workspace A expires on June 1. Grace period ends June 16.
 
-Scenario 1 — User renews Workspace A on June 10: Within grace period — commission continues on both workspaces.
+Scenario 1 - User renews Workspace A on June 10: Within grace period - commission continues on both workspaces.
 
-Scenario 2 — User renews Workspace A on June 20: Beyond grace period — affiliate loses Workspace A commission permanently. Workspace B commission continues unaffected.
+Scenario 2 - User renews Workspace A on June 20: Beyond grace period - affiliate loses Workspace A commission permanently. Workspace B commission continues unaffected.
 
-Scenario 3 — User creates Workspace C on June 8 (during grace period): Workspace C commission is valid regardless of Workspace A lapse. Workspace A commission still lost if renewed after June 16.
+Scenario 3 - User creates Workspace C on June 8 (during grace period): Workspace C commission is valid regardless of Workspace A lapse. Workspace A commission still lost if renewed after June 16.
 
 4.4 Permanent Loss of Commission
 Once commission is permanently lost on a workspace due to grace period expiry:
@@ -92,7 +92,7 @@ Once commission is permanently lost on a workspace due to grace period expiry:
 - The loss is irreversible, even if the referred user contacts us or appeals
 - Affiliate receives email notification when grace period expires without renewal
 - Commission is permanently removed from all future calculations for that workspace
-- Any commissions already earned and in the hold or available balance from that workspace remain unaffected by the loss — only future commissions are stopped
+- Any commissions already earned and in the hold or available balance from that workspace remain unaffected by the loss - only future commissions are stopped
 
 4.5 Payment Timing and Grace Period
 The grace period clock starts from the subscription expiry date, not from the payment due date or any notice sent. Affiliates are responsible for monitoring their referred users' status through the affiliate dashboard. We will send an email alert one day before a grace period expires where reasonably possible, but this is not guaranteed.
@@ -102,11 +102,11 @@ The grace period clock starts from the subscription expiry date, not from the pa
 5.1 Multi-Layer Tracking
 We use a five-layer tracking system to ensure reliable attribution across all browsers and devices. Attribution is captured if any layer succeeds:
 
-1. Server-side cookie (Primary) — Set immediately when a referral link is clicked. Most reliable. Persists for 90 days.
-2. URL parameter capture (Secondary) — ?ref= parameter captured and stored server-side on landing
-3. Browser cookie (Tertiary) — Client-side cookie set as backup
-4. Session storage (Fallback) — For same-session tracking
-5. localStorage (Fallback) — Backup only. Note: Safari and iOS may clear this aggressively
+1. Server-side cookie (Primary) - Set immediately when a referral link is clicked. Most reliable. Persists for 90 days.
+2. URL parameter capture (Secondary) - ?ref= parameter captured and stored server-side on landing
+3. Browser cookie (Tertiary) - Client-side cookie set as backup
+4. Session storage (Fallback) - For same-session tracking
+5. localStorage (Fallback) - Backup only. Note: Safari and iOS may clear this aggressively
 
 Attribution resolves in the priority order above. The first successful layer is used.
 
@@ -146,11 +146,11 @@ The minimum withdrawal amount is $50 of available balance. The hold amount is no
 A negative available balance (resulting from commission clawbacks) must be cleared to zero before any withdrawal can be processed, regardless of the $50 minimum.
 
 6.4 Payout Status Stages
-- Pending — Commission earned, within 20-day hold period
-- Available — Hold period complete, ready for withdrawal request
-- Withdrawal Requested — You have submitted a withdrawal request
-- Approved — Withdrawal approved, being processed
-- Paid — Funds transferred to your payout method
+- Pending - Commission earned, within 20-day hold period
+- Available - Hold period complete, ready for withdrawal request
+- Withdrawal Requested - You have submitted a withdrawal request
+- Approved - Withdrawal approved, being processed
+- Paid - Funds transferred to your payout method
 
 6.5 Processing Time
 Once a withdrawal is approved, funds are transferred within 5-10 business days. Processing times may vary depending on your payment method and location.
@@ -169,10 +169,10 @@ We track cumulative payouts per affiliate per Indian financial year (April 1 to 
 8.1 Indian Affiliates
 Identity verification requirements for Indian residents are triggered based on cumulative annual payouts:
 
-- Below ₹15,000/year — No verification required
-- Above ₹15,000/year — PAN card required. TDS at 5% applied to non-business individuals.
-- Above ₹50,000/year — PAN card mandatory. Aadhaar may be required.
-- Above ₹1,00,000/year — Full KYC — PAN, Aadhaar, and bank account verification required.
+- Below ₹15,000/year - No verification required
+- Above ₹15,000/year - PAN card required. TDS at 5% applied to non-business individuals.
+- Above ₹50,000/year - PAN card mandatory. Aadhaar may be required.
+- Above ₹1,00,000/year - Full KYC - PAN, Aadhaar, and bank account verification required.
 
 Payouts will be held until required verification documents are submitted. You will be notified via email when your cumulative payouts approach a verification threshold.
 
@@ -187,7 +187,7 @@ You are solely responsible for reporting affiliate income to your relevant tax a
 9.1 Prohibited Activities
 The following activities are strictly prohibited and will result in immediate suspension of your affiliate account and forfeiture of all pending commissions:
 
-- Self-referrals — referring your own accounts or devices
+- Self-referrals - referring your own accounts or devices
 - Paying or incentivising others to sign up through your referral link
 - Creating fake accounts to generate referral commissions
 - Using misleading, deceptive, or false advertising to generate referrals
@@ -201,9 +201,9 @@ We evaluate fraud risk per transaction using signals including device fingerprin
 9.3 Transaction Outcomes
 Based on risk scoring, individual transactions may be:
 
-- Approved — commission enters normal 20-day hold
-- Held for review — commission held beyond 20 days pending manual review
-- Rejected — commission voided, account flagged for further monitoring
+- Approved - commission enters normal 20-day hold
+- Held for review - commission held beyond 20 days pending manual review
+- Rejected - commission voided, account flagged for further monitoring
 
 We reserve the right to withhold, void, or clawback any commission we determine to have been obtained through fraudulent, deceptive, or manipulative means.
 

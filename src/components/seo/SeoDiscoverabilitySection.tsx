@@ -4,12 +4,12 @@ const CAPABILITIES = [
   {
     term: "Auto DM Tool",
     detail:
-      "The best auto DM tool for Instagram — send automated DMs when someone comments, replies to a story, or messages you. Human-like delays (10-60 seconds) keep your account safe.",
+      "The best auto DM tool for Instagram - send automated DMs when someone comments, replies to a story, or messages you. Human-like delays (10-60 seconds) keep your account safe.",
   },
   {
     term: "Auto DMs for Instagram",
     detail:
-      "Set up auto DMs that fire on keyword triggers. Whether someone comments 'LINK' or 'INFO', Liffio sends your pre-written DM automatically — 24/7, even while you sleep.",
+      "Set up auto DMs that fire on keyword triggers. Whether someone comments 'LINK' or 'INFO', Liffio sends your pre-written DM automatically - 24/7, even while you sleep.",
   },
   {
     term: "Auto Comment Reply Tool",
@@ -19,12 +19,12 @@ const CAPABILITIES = [
   {
     term: "Comment-to-DM Automation",
     detail:
-      "The signature workflow of ManyChat, SendDM, and LinkDM — now with unlimited auto DMs on every plan. Turn post and Reel comments into automated DM flows.",
+      "The signature workflow of ManyChat, SendDM, and LinkDM - now with unlimited auto DMs on every plan. Turn post and Reel comments into automated DM flows.",
   },
   {
     term: "DM Automation Software",
     detail:
-      "Multi-step DM sequences, follow gates, re-engagement campaigns, and welcome messages for new followers — all in one DM automation tool dashboard.",
+      "Multi-step DM sequences, follow gates, re-engagement campaigns, and welcome messages for new followers - all in one DM automation tool dashboard.",
   },
   {
     term: "Instagram Auto Reply",
@@ -47,7 +47,7 @@ const USE_CASES = [
   {
     title: "For Coaches & Course Creators",
     description:
-      "Qualify leads inside Instagram DMs with auto reply flows. Collect emails, schedule calls, and nurture prospects — all on autopilot with auto DM software.",
+      "Qualify leads inside Instagram DMs with auto reply flows. Collect emails, schedule calls, and nurture prospects - all on autopilot with auto DM software.",
   },
   {
     title: "For Agencies & Marketing Teams",
@@ -56,7 +56,7 @@ const USE_CASES = [
   },
 ] as const;
 
-/** Indexable, keyword-aligned copy for search — visible on the page, not hidden. */
+/** Indexable, keyword-aligned copy for search - visible on the page, not hidden. */
 export default function SeoDiscoverabilitySection() {
   return (
     <section
@@ -70,7 +70,7 @@ export default function SeoDiscoverabilitySection() {
           className="max-w-4xl text-2xl font-extrabold leading-tight text-[#0a0a0a] sm:text-3xl lg:text-4xl"
           style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
         >
-          The #1 Auto DM Tool for Instagram — Auto DMs, Auto Comment Reply & DM Automation
+          The #1 Auto DM Tool for Instagram - Auto DMs, Auto Comment Reply & DM Automation
         </h2>
         
         {/* Keyword-rich intro paragraph */}
@@ -79,7 +79,7 @@ export default function SeoDiscoverabilitySection() {
           <strong className="font-semibold text-gray-800">Instagram auto DM</strong> software that automates your entire
           DM strategy. Whether you need <strong className="font-semibold text-gray-800">auto DMs</strong> from comments,{" "}
           <strong className="font-semibold text-gray-800">auto comment reply</strong> workflows, or full{" "}
-          <strong className="font-semibold text-gray-800">DM automation</strong> — Liffio handles it all with unlimited
+          <strong className="font-semibold text-gray-800">DM automation</strong> - Liffio handles it all with unlimited
           automated messages on every plan.
         </p>
         
@@ -92,7 +92,7 @@ export default function SeoDiscoverabilitySection() {
             </span>
           ))}{" "}
           or similar <strong className="font-semibold text-gray-800">auto DM tools</strong>, you'll feel right at home.
-          Same powerful comment-to-DM automation, keyword triggers, and story reply features — with simpler pricing and a
+          Same powerful comment-to-DM automation, keyword triggers, and story reply features - with simpler pricing and a
           generous free tier to get started.
         </p>
 
@@ -135,11 +135,11 @@ export default function SeoDiscoverabilitySection() {
           <ul className="mt-5 space-y-3 text-sm text-gray-600">
             <li className="flex items-start gap-3">
               <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-600">✓</span>
-              <span><strong className="font-semibold text-gray-800">Unlimited auto DMs</strong> on every plan — no message caps or throttling</span>
+              <span><strong className="font-semibold text-gray-800">Unlimited auto DMs</strong> on every plan - no message caps or throttling</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-600">✓</span>
-              <span><strong className="font-semibold text-gray-800">Free auto DM tool tier</strong> — start automating without a credit card</span>
+              <span><strong className="font-semibold text-gray-800">Free auto DM tool tier</strong> - start automating without a credit card</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-600">✓</span>
@@ -147,11 +147,11 @@ export default function SeoDiscoverabilitySection() {
             </li>
             <li className="flex items-start gap-3">
               <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-600">✓</span>
-              <span><strong className="font-semibold text-gray-800">Human-like delays (10-60s)</strong> — keeps your Instagram account safe</span>
+              <span><strong className="font-semibold text-gray-800">Human-like delays (10-60s)</strong> - keeps your Instagram account safe</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-600">✓</span>
-              <span><strong className="font-semibold text-gray-800">ManyChat / SendDM alternative</strong> — same features, simpler pricing</span>
+              <span><strong className="font-semibold text-gray-800">ManyChat / SendDM alternative</strong> - same features, simpler pricing</span>
             </li>
           </ul>
         </div>

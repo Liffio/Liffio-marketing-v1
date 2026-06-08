@@ -101,7 +101,7 @@ const globalPricingPlans: PricingPlan[] = [
     name: "Free",
     monthly: usdMonthly(0),
     annual: usdMonthly(0),
-    description: "Get started with comment-to-DM automation — no credit card required.",
+    description: "Get started with comment-to-DM automation - no credit card required.",
     badge: null,
     highlight: false,
     popular: false,
@@ -152,7 +152,7 @@ const indiaPricingPlans: PricingPlan[] = [
     name: "Free",
     monthly: inrMonthly(0),
     annual: inrMonthly(0),
-    description: "Get started with comment-to-DM automation — no credit card required.",
+    description: "Get started with comment-to-DM automation - no credit card required.",
     badge: null,
     highlight: false,
     popular: false,
@@ -222,7 +222,7 @@ export function getFreePlanFaqAnswer(region: PricingRegion): string {
 
 export function getPlansOfferedFaqAnswer(region: PricingRegion): string {
   if (region === "india") {
-    return "Four tiers: Free (₹0), Starter (₹499/mo — ₹49 first month, then ₹499/mo or ₹399/mo billed annually), Business (₹2,499/mo), and Agency (₹9,999/mo). Every plan includes unlimited Instagram accounts and unlimited automated DMs.";
+    return "Four tiers: Free (₹0), Starter (₹499/mo - ₹49 first month, then ₹499/mo or ₹399/mo billed annually), Business (₹2,499/mo), and Agency (₹9,999/mo). Every plan includes unlimited Instagram accounts and unlimited automated DMs.";
   }
   return "Four tiers: Free ($0), Starter ($9/mo), Business ($79/mo), and Agency ($299/mo). Annual billing saves 20%. Every plan includes unlimited Instagram accounts and unlimited automated DMs.";
 }
@@ -252,7 +252,7 @@ export const featureCategories = [
   },
   {
     name: "Growth Toolkit",
-    description: "Bio links, short links, scheduling, and analytics — all in one workspace.",
+    description: "Bio links, short links, scheduling, and analytics - all in one workspace.",
     features: [
       { name: "Bio link pages (bio.liffio.com)", free: true, starter: true, business: true, agency: true },
       { name: "Branded short links (go.liffio.com)", free: false, starter: true, business: true, agency: true },

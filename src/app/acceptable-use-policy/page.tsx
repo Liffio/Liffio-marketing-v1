@@ -4,7 +4,7 @@ import { normalizePolicyContent } from "@/lib/legal/normalize-policy";
 import { buildPageMetadata } from "@/config/seo.config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Acceptable Use Policy — Liffio",
+  title: "Acceptable Use Policy - Liffio",
   description: "Guidelines for acceptable and prohibited use of Liffio's Instagram DM automation platform.",
   pathname: "/acceptable-use-policy",
   ogImagePath: "/og/homepage.png",

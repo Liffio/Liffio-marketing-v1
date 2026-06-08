@@ -8,7 +8,7 @@ type SimulationShellProps = {
   variant?: "default" | "hero";
 };
 
-/** Purple gradient wrapper with live badge — wraps iPhone (or other) demos. */
+/** Purple gradient wrapper with live badge - wraps iPhone (or other) demos. */
 export function SimulationShell({
   label,
   children,

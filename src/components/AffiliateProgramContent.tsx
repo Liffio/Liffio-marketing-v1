@@ -5,7 +5,7 @@ const COMMISSION_MONTHS = [
   { month: "Month 1", rate: "25%", desc: "First payment", color: "#a855f7", width: "100%" },
   { month: "Month 2", rate: "10%", desc: "Second payment", color: "#7c5af3", width: "72%" },
   { month: "Month 3", rate: "10%", desc: "Third payment", color: "#6366f1", width: "72%" },
-  { month: "Month 4+", rate: "—", desc: "No further commission", color: "#e5e7eb", width: "24%" },
+  { month: "Month 4+", rate: "-", desc: "No further commission", color: "#e5e7eb", width: "24%" },
 ];
 
 const KEY_STATS = [
@@ -19,7 +19,7 @@ const HOW_STEPS = [
   {
     num: "01",
     title: "Create your account",
-    desc: "Open to every Liffio user — including Free plan. No separate application.",
+    desc: "Open to every Liffio user - including Free plan. No separate application.",
     icon: "👤",
   },
   {
@@ -58,7 +58,7 @@ const ATTRIBUTION_RULES = [
   },
   {
     title: "First click wins",
-    desc: "Credit goes to the first affiliate link clicked — later clicks from other affiliates don't override.",
+    desc: "Credit goes to the first affiliate link clicked - later clicks from other affiliates don't override.",
     icon: "🎯",
   },
   {
@@ -107,7 +107,7 @@ export default function AffiliateProgramContent() {
           </h1>
           <p className="mx-auto max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">
             Share {brand}, refer paying workspaces, and earn a hybrid commission across each customer&apos;s first three
-            months — with reliable tracking and on-demand payouts.
+            months - with reliable tracking and on-demand payouts.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a href={siteConfig.urls.appSignup} className="btn-primary inline-flex items-center gap-2">
@@ -155,7 +155,7 @@ export default function AffiliateProgramContent() {
               className="text-2xl font-extrabold text-[#0a0a0a] sm:text-3xl"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
             >
-              Hybrid model — first 3 months
+              Hybrid model - first 3 months
             </h2>
             <p className="mt-2 text-sm text-gray-500 sm:text-base">
               Commission applies per referred workspace, independently.
@@ -257,7 +257,7 @@ export default function AffiliateProgramContent() {
               </div>
             </div>
             <p className="mt-4 text-center text-xs text-gray-500">
-              Server-side cookie + URL param + session backup — attribution recorded on click
+              Server-side cookie + URL param + session backup - attribution recorded on click
             </p>
             <p className="mt-3 text-center text-xs font-medium text-[#7c5af3]">
               <a href={appLogin} className="hover:underline">
@@ -280,7 +280,7 @@ export default function AffiliateProgramContent() {
           >
             Payout journey
           </h2>
-          <p className="mb-10 text-center text-sm text-gray-500">On-demand withdrawals — no fixed monthly schedule</p>
+          <p className="mb-10 text-center text-sm text-gray-500">On-demand withdrawals - no fixed monthly schedule</p>
 
           <div className="overflow-x-auto pb-2">
             <div className="relative flex min-w-[640px] items-start justify-between px-2">
@@ -359,7 +359,7 @@ export default function AffiliateProgramContent() {
             className="mb-6 text-center text-xl font-extrabold text-[#0a0a0a] sm:text-2xl"
             style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
           >
-            Play fair — prohibited activity
+            Play fair - prohibited activity
           </h2>
           <ul className="space-y-2.5">
             {PROHIBITED.map((item) => (

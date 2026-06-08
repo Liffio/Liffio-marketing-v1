@@ -8,7 +8,7 @@ import { BreadcrumbJsonLd, FaqPageJsonLd, SoftwareApplicationJsonLd } from "@/li
 import type { FaqCategory } from "@/config/faq.config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Best ManyChat Alternative — Liffio Instagram DM Automation",
+  title: "Best ManyChat Alternative - Liffio Instagram DM Automation",
   description:
     "Looking for a ManyChat alternative with unlimited auto DMs, no per-message fees, and a free plan? Liffio offers the same comment-to-DM automation for less.",
   pathname: "/manychat-alternative",
@@ -25,7 +25,7 @@ const faqCategories: FaqCategory[] = [
         id: "why-switch",
         question: "Why do creators switch from ManyChat to Liffio?",
         answer:
-          "Unlimited automated DMs on every plan, simpler Instagram-only pricing, a usable free tier, and built-in post scheduling and bio links — without per-contact fees.",
+          "Unlimited automated DMs on every plan, simpler Instagram-only pricing, a usable free tier, and built-in post scheduling and bio links - without per-contact fees.",
       },
       {
         id: "feature-parity",
@@ -71,7 +71,7 @@ export default function ManyChatAlternativePage() {
               The Best ManyChat Alternative for Instagram DM Automation
             </h1>
             <p className="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
-              ManyChat popularised comment-to-DM — but growing creators need unlimited messages, simpler pricing, and
+              ManyChat popularised comment-to-DM - but growing creators need unlimited messages, simpler pricing, and
               tools built only for Instagram. Liffio delivers all three.
             </p>
             <a
@@ -85,7 +85,7 @@ export default function ManyChatAlternativePage() {
 
         <section className="py-16 bg-white">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Liffio vs ManyChat — side-by-side comparison</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Liffio vs ManyChat - side-by-side comparison</h2>
             <p className="text-gray-600 mb-8">
               Compare comment-to-DM, pricing model, and platform extras.{" "}
               <a href="/blog/manychat-alternatives" className="text-[#4259f0] font-semibold hover:underline">
@@ -102,7 +102,7 @@ export default function ManyChatAlternativePage() {
             <ul className="space-y-4 text-gray-600">
               <li>
                 <strong className="text-gray-900">Unlimited automated DMs</strong> on Free, Starter, Business, and Agency
-                — no per-contact billing surprises.
+                - no per-contact billing surprises.
               </li>
               <li>
                 <strong className="text-gray-900">Instagram-first workspace</strong> with post scheduler, bio links, and

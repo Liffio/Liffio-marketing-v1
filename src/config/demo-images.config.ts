@@ -1,6 +1,6 @@
 /**
- * Unsplash (free license) — used in marketing simulations only.
- * URLs verified via images.unsplash.com (no auto=format — avoids 404s on removed assets).
+ * Unsplash (free license) - used in marketing simulations only.
+ * URLs verified via images.unsplash.com (no auto=format - avoids 404s on removed assets).
  * @see https://unsplash.com/license
  */
 

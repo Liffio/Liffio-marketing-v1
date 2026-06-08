@@ -17,7 +17,7 @@ import {
 export async function generateMetadata(): Promise<Metadata> {
   const { region } = await getPricingContext();
   const { businessPlanValue: value } = await fetchMarketingPlansContext(region);
-  const description = `Apply to the Liffio Creators Program and get our full Business plan (${value} value) at no cost — Instagram auto DM tool access for creators with 5K+ followers.`;
+  const description = `Apply to the Liffio Creators Program and get our full Business plan (${value} value) at no cost - Instagram auto DM tool access for creators with 5K+ followers.`;
   return {
     ...pageSeo.creatorsProgram,
     description,

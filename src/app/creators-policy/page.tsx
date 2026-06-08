@@ -5,7 +5,7 @@ import { loadCreatorsPolicyContent } from "@/lib/legal/load-creators-policy";
 import { buildPageMetadata } from "@/config/seo.config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Creators Program Policy — Liffio",
+  title: "Creators Program Policy - Liffio",
   description: "Rules, eligibility criteria, and obligations for the Liffio Creators Program.",
   pathname: "/creators-policy",
   ogImagePath: "/og/homepage.png",

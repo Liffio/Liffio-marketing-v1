@@ -72,7 +72,7 @@ const testimonials = [
     name: "Dhanraj",
     role: "🧪 Beta Tester",
     quote:
-      "Set up the LINK trigger and tested it myself — got the DM in under a minute. Simple but actually works.",
+      "Set up the LINK trigger and tested it myself - got the DM in under a minute. Simple but actually works.",
     avatar: "DH",
     gradient: "linear-gradient(135deg,#6366f1,#7c5af3)",
   },
@@ -88,7 +88,7 @@ const testimonials = [
     name: "Dhairya Thumar",
     role: "🧪 Beta Tester",
     quote:
-      "The delay feature is what sold me — doesn't feel like a bot when the DM arrives 30 seconds later. Followers actually reply back.",
+      "The delay feature is what sold me - doesn't feel like a bot when the DM arrives 30 seconds later. Followers actually reply back.",
     avatar: "DT",
     gradient: "linear-gradient(135deg,#10b981,#6366f1)",
   },

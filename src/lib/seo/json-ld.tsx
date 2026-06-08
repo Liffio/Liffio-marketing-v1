@@ -86,7 +86,7 @@ export function SoftwareApplicationJsonLd() {
         operatingSystem: "Web",
         url: SITE_URL,
         description:
-          "Liffio is the best auto DM tool for Instagram. Send auto DMs from comments, stories, and messages with auto comment reply, keyword triggers, and DM automation — a modern ManyChat alternative.",
+          "Liffio is the best auto DM tool for Instagram. Send auto DMs from comments, stories, and messages with auto comment reply, keyword triggers, and DM automation - a modern ManyChat alternative.",
         offers: [
           { "@type": "Offer", name: "Free", price: "0", priceCurrency: "USD" },
           { "@type": "Offer", name: "Starter", price: "9", priceCurrency: "USD" },

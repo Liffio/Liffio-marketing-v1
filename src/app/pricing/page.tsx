@@ -81,7 +81,7 @@ export default async function PricingPage() {
                 More than DM automation
               </h2>
               <p className="mt-3 text-gray-500 max-w-2xl mx-auto">
-                Liffio is a complete Instagram growth toolkit — comment-to-DM engine, post scheduler, bio links,
+                Liffio is a complete Instagram growth toolkit - comment-to-DM engine, post scheduler, bio links,
                 short links, lead capture, analytics, and team collaboration in one workspace.
               </p>
             </div>
@@ -141,7 +141,7 @@ export default async function PricingPage() {
 
         <SiteFaqSection
           categories={faqCategories}
-          subtitle="Pricing and plan details match what you see above — updated for your region."
+          subtitle="Pricing and plan details match what you see above - updated for your region."
           defaultOpenId="starter-free"
         />
 
@@ -151,7 +151,7 @@ export default async function PricingPage() {
             Ready to Grow Your Instagram?
           </h2>
           <p className="text-gray-600 mb-8">
-            Create your free account at app.liffio.com — setup takes under 2 minutes.
+            Create your free account at app.liffio.com - setup takes under 2 minutes.
           </p>
           <PricingBottomCta />
         </section>

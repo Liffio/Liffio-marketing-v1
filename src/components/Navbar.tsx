@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import Logo from "./Logo";
 import { siteConfig } from "@/config/site.config";
 const ANNOUNCEMENT_MESSAGES = [
-  "⚡ Liffio sends your first automated DM in under 5 minutes — Get Started Free",
+  "⚡ Liffio sends your first automated DM in under 5 minutes - Get Started Free",
   "🚀 Join 800+ creators automating their Instagram DMs with Liffio",
-  "✨ New: Post Scheduler now live — schedule Instagram feed posts from Liffio",
+  "✨ New: Post Scheduler now live - schedule Instagram feed posts from Liffio",
 ] as const;
 
 const navLinks = [

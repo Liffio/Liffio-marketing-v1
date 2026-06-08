@@ -17,7 +17,7 @@ function toSlug(text: string) {
   return text
     .trim()
     .toLowerCase()
-    .replace(/[–—]/g, "-")
+    .replace(/[–-]/g, "-")
     .replace(/\s+/g, "_")
     .replace(/[^a-z0-9_+-]/g, "");
 }

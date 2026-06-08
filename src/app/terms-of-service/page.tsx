@@ -4,7 +4,7 @@ import { normalizePolicyContent } from "@/lib/legal/normalize-policy";
 import { buildPageMetadata } from "@/config/seo.config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Terms of Service — Liffio",
+  title: "Terms of Service - Liffio",
   description: "Read the terms and conditions for using Liffio's Instagram DM automation platform.",
   pathname: "/terms-of-service",
   ogImagePath: "/og/homepage.png",

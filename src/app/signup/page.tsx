@@ -38,7 +38,7 @@ const FEATURES = [
     icon: "📊",
     title: "Full Conversion Analytics",
     description:
-      "Track every step: comment → DM → click → sale. Know exactly which posts, keywords, and flows are driving revenue — not just DM volume.",
+      "Track every step: comment → DM → click → sale. Know exactly which posts, keywords, and flows are driving revenue - not just DM volume.",
     tag: "Advanced",
   },
   {
@@ -145,7 +145,7 @@ export default async function SignupPage() {
 
               <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-7 max-w-lg">
                 Liffio turns every Instagram comment, story reply, and DM into an automated
-                conversion. Set it up once — it runs forever.
+                conversion. Set it up once - it runs forever.
               </p>
 
               {/* Why pills */}
@@ -209,7 +209,7 @@ export default async function SignupPage() {
                     Get started for free
                   </h2>
                   <p className="text-sm text-gray-400">
-                    Unlimited automated DMs on every plan — upgrade anytime.
+                    Unlimited automated DMs on every plan - upgrade anytime.
                   </p>
                 </div>
 
@@ -291,7 +291,7 @@ export default async function SignupPage() {
             </h2>
             <p className="text-gray-500 mb-6 max-w-xl mx-auto leading-relaxed">
               Apply to the Liffio Creators Program and get our full Business plan ({businessPlanValue} value) for
-              completely free — in exchange for active usage.
+              completely free - in exchange for active usage.
             </p>
             <AppLink
               href="/creators-program"

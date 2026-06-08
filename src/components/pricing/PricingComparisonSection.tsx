@@ -14,7 +14,7 @@ function CellValue({ value }: { value: boolean | string }) {
   return value ? (
     <span className="block text-center text-base font-bold text-green-500" aria-label="Included">✓</span>
   ) : (
-    <span className="block text-center text-base text-zinc-400" aria-label="Not included">—</span>
+    <span className="block text-center text-base text-zinc-400" aria-label="Not included">-</span>
   );
 }
 
@@ -73,7 +73,7 @@ export default function PricingComparisonSection() {
       ))}
 
       <p className="text-center text-[11px] text-gray-400 lg:hidden">
-        Free · Starter · Business · Agency — scroll horizontally to compare
+        Free · Starter · Business · Agency - scroll horizontally to compare
       </p>
     </div>
   );

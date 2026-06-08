@@ -7,7 +7,7 @@ export const FRAME_WIDTH: Record<IPhoneSize, number> = {
   lg: 300,
 };
 
-/** Default display content area min-heights — keep in sync with shell screen min-heights. */
+/** Default display content area min-heights - keep in sync with shell screen min-heights. */
 export const SCREEN_MIN_HEIGHT: Record<IPhoneSize, number> = {
   xs: 300,
   sm: 380,
@@ -28,7 +28,7 @@ export function getDisplayWidth(shellOuterWidth: number) {
   return shellOuterWidth - BEZEL_PADDING_X;
 }
 
-/** Fluid width for phones on narrow viewports — same aspect ratio everywhere. */
+/** Fluid width for phones on narrow viewports - same aspect ratio everywhere. */
 export function deriveMobileFrameMetrics(viewportWidth: number) {
   const frameWidth = Math.min(300, Math.max(248, Math.round((viewportWidth - 40) * 0.82)));
   const screenMinHeight = Math.round(frameWidth * 1.62);
@@ -48,7 +48,7 @@ export function getHardwareButtonLayout(frameWidth: number) {
   };
 }
 
-/** Layout derived from iPhone 14/15 Pro (393×852 pt) — scaled to display width. */
+/** Layout derived from iPhone 14/15 Pro (393×852 pt) - scaled to display width. */
 export function getIPhoneMetrics(displayWidth: number) {
   const s = displayWidth / 393;
   const islandTop = Math.round(11 * s);

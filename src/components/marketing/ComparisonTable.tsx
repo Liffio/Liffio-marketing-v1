@@ -24,7 +24,7 @@ function CellValue({ value }: { value: boolean | string }) {
     return <span className="text-emerald-600 font-semibold">✓</span>;
   }
   if (value === false) {
-    return <span className="text-gray-300">—</span>;
+    return <span className="text-gray-300">-</span>;
   }
   return <span className="text-sm text-gray-600">{value}</span>;
 }

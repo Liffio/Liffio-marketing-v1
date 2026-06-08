@@ -8,7 +8,7 @@ type SimulationContentProps = {
   className?: string;
 };
 
-/** Inner screen area — consistent min-height across all simulation templates. */
+/** Inner screen area - consistent min-height across all simulation templates. */
 export function SimulationContent({ children, className = "" }: SimulationContentProps) {
   const { contentMinHeight } = useSimulationLayout();
 

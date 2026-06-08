@@ -31,7 +31,7 @@ const STATIC_BENEFITS = [
     icon: "⚡",
     title: "Priority Support",
     description:
-      "Skip the queue. Direct access to our core team for onboarding, strategy calls, and technical help — whenever you need it.",
+      "Skip the queue. Direct access to our core team for onboarding, strategy calls, and technical help - whenever you need it.",
     tag: "Direct team access",
   },
 ];
@@ -41,7 +41,7 @@ function getBenefits(businessPlanValue: string) {
     {
       icon: "💎",
       title: "Free Business Plan",
-      description: `Full, unrestricted access to our ${businessPlanValue} Business plan — at zero cost. Every feature, every workflow, every integration unlocked from day one.`,
+      description: `Full, unrestricted access to our ${businessPlanValue} Business plan - at zero cost. Every feature, every workflow, every integration unlocked from day one.`,
       tag: `Worth ${businessPlanValue}`,
     },
     {
@@ -88,12 +88,12 @@ const HOW_STEPS = [
   {
     num: "2",
     title: "Manual Review",
-    desc: "Our team reviews every application personally — no automated filters. You'll hear back with a decision within 48–72 hours.",
+    desc: "Our team reviews every application personally - no automated filters. You'll hear back with a decision within 48–72 hours.",
   },
   {
     num: "3",
     title: "Start for Free",
-    desc: "Accepted creators get immediate full Business plan access — zero cost, every feature, from day one.",
+    desc: "Accepted creators get immediate full Business plan access - zero cost, every feature, from day one.",
   },
 ];
 
@@ -175,13 +175,13 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
             <span style={{ background: "linear-gradient(130deg,#a855f7,#7c5af3,#4259f0)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               Business Plan
             </span>
-            {" "}access —{" "}
+            {" "}access -{" "}
             <br className="hidden sm:block" />
             completely free.
           </h1>
 
           <p className="text-base sm:text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto mb-7">
-            We&apos;re selecting <strong className="text-[#0a0a0a]">{spotsCap} Instagram creators</strong> who already drive comment engagement to use Liffio&apos;s full Business plan at zero cost — in exchange for real, active usage that helps us grow organically.
+            We&apos;re selecting <strong className="text-[#0a0a0a]">{spotsCap} Instagram creators</strong> who already drive comment engagement to use Liffio&apos;s full Business plan at zero cost - in exchange for real, active usage that helps us grow organically.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-gray-500">
@@ -203,11 +203,11 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
           <div className="grid grid-cols-2 lg:grid-cols-4">
             {[
               {
-                num: spotsRemaining !== null ? String(spotsRemaining) : "—",
+                num: spotsRemaining !== null ? String(spotsRemaining) : "-",
                 label: `Spots remaining out of ${spotsCap}`,
                 color: "#7c5af3",
               },
-              { num: businessPlanValue, label: "Value — completely free", color: "#a855f7" },
+              { num: businessPlanValue, label: "Value - completely free", color: "#a855f7" },
               { num: "48h", label: "Review turnaround", color: "#4259f0" },
               { num: "10+", label: "Countries represented", color: "#6366f1" },
             ].map((s, i) => (
@@ -259,7 +259,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
               Everything Included. No Strings.
             </h2>
             <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base">
-              Accepted creators get the full Business plan — not a trial, not limited access. Every feature, every workflow, from day one.
+              Accepted creators get the full Business plan - not a trial, not limited access. Every feature, every workflow, from day one.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -313,7 +313,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
               What We Ask in Return
             </h3>
             <p className="text-xs text-gray-400 mb-5 leading-relaxed">
-              The program is free — but it&apos;s not passive. We need creators who actively use the platform.
+              The program is free - but it&apos;s not passive. We need creators who actively use the platform.
             </p>
             <ul className="space-y-4">
               {REQUIREMENTS.map((r, i) => (
@@ -354,7 +354,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
                 label={
                   spotsRemaining > 0
                     ? `${spotsRemaining} of ${spotsCap} spots remaining`
-                    : "All spots claimed — join waitlist"
+                    : "All spots claimed - join waitlist"
                 }
                 variant="chip"
                 accent="#10b981"

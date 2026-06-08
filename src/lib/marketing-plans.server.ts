@@ -73,7 +73,7 @@ export function buildPlansOfferedFaqAnswer(region: PricingRegion, plans: Pricing
   const parts = plans.map((p) => {
     const intro =
       region === 'india' && p.introPrice && p.introPriceLabel
-        ? ` — ${p.introPrice} ${p.introPriceLabel}, then ${p.monthly}/mo`
+        ? ` - ${p.introPrice} ${p.introPriceLabel}, then ${p.monthly}/mo`
         : ''
     const annual = p.annual !== p.monthly ? ` or ${p.annual}/mo billed annually` : ''
     return `${p.name} (${p.monthly}/mo${intro}${annual})`

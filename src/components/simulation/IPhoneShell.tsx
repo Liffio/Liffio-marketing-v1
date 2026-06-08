@@ -22,13 +22,13 @@ type IPhoneShellProps = {
   screenMinHeight?: number;
   className?: string;
   screenClassName?: string;
-  /** Status glyphs on the display — use `dark` for live / dark full-screen sims. */
+  /** Status glyphs on the display - use `dark` for live / dark full-screen sims. */
   statusBarTheme?: "light" | "dark";
   statusTime?: string;
   batteryPercent?: number;
 };
 
-/** iPhone 14/15 Pro frame — Dynamic Island on the display with iOS status bar layout. */
+/** iPhone 14/15 Pro frame - Dynamic Island on the display with iOS status bar layout. */
 export function IPhoneShell({
   children,
   size = "md",

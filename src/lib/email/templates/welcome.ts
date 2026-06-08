@@ -46,7 +46,7 @@ Features:
 What happens next?
 ${whatNextText}
 
-Questions? Reply to this email — we read every message.
+Questions? Reply to this email - we read every message.
 
 © ${new Date().getFullYear()} ${brand.name}
 `.trim();

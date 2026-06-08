@@ -47,7 +47,7 @@ export function getCreatorApplicationAlertHtml(data: CreatorApplicationAlertData
 <body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,sans-serif;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;margin:0 auto;background:#fff;border:1px solid #E2E8F0;border-radius:14px;">
     <tr><td style="padding:28px;">
-      <p style="margin:0 0 10px;font-size:12px;color:#4259f0;font-weight:700;letter-spacing:.08em;">ADMIN ALERT — ${brand.name}</p>
+      <p style="margin:0 0 10px;font-size:12px;color:#4259f0;font-weight:700;letter-spacing:.08em;">ADMIN ALERT - ${brand.name}</p>
       <h1 style="margin:0 0 14px;font-size:24px;color:#0F172A;">New creator application submitted</h1>
       <p style="margin:0 0 18px;color:#475569;line-height:1.6;">A new applicant has submitted the Creators Program form.</p>
       <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #E2E8F0;border-radius:10px;">

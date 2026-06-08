@@ -168,7 +168,7 @@ export default function HeroInteractiveDemo() {
         aria-hidden
       />
 
-      {/* Floating stat — response time */}
+      {/* Floating stat - response time */}
       <div
         className="hero-float-card absolute -top-1 -left-40 z-20 hidden lg:flex"
         style={{ animationDelay: "0.2s" }}
@@ -188,7 +188,7 @@ export default function HeroInteractiveDemo() {
         </div>
       </div>
 
-      {/* Floating stat — DMs */}
+      {/* Floating stat - DMs */}
       <div
         className="hero-float-card absolute -right-45 bottom-5 z-20 hidden lg:flex"
         style={{ animationDelay: "0.8s" }}

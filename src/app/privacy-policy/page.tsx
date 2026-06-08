@@ -4,7 +4,7 @@ import { normalizePolicyContent } from "@/lib/legal/normalize-policy";
 import { buildPageMetadata } from "@/config/seo.config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Privacy Policy — Liffio",
+  title: "Privacy Policy - Liffio",
   description: "Read how Liffio collects, uses, and protects your personal information when you use our Instagram DM automation platform.",
   pathname: "/privacy-policy",
   ogImagePath: "/og/homepage.png",
@@ -21,7 +21,7 @@ Reactova is operated as a sole proprietorship based in India. We operate reactov
 - Full name and email address
 - Country of residence
 - Instagram username and profile URL
-- Payment information (processed by Stripe or Razorpay — we do not store card details)
+- Payment information (processed by Stripe or Razorpay - we do not store card details)
 - Content you create including workflows, messages, and bio link pages
 - Communications with our support team
 
@@ -47,19 +47,19 @@ When you connect your Instagram account, we access data through Meta's official 
 - Complying with legal obligations under Indian law
 
 4. Legal Basis for Processing (India DPDP Act 2023 and Rules 2025)
-- Contractual necessity — to fulfil the services you subscribe to
-- Legitimate interests — for platform security, fraud prevention, and analytics
-- Your consent — for marketing communications, which you may withdraw at any time
-- Legal obligation — for tax, accounting, and regulatory compliance
+- Contractual necessity - to fulfil the services you subscribe to
+- Legitimate interests - for platform security, fraud prevention, and analytics
+- Your consent - for marketing communications, which you may withdraw at any time
+- Legal obligation - for tax, accounting, and regulatory compliance
 
 5. Data Sharing
 5.1 Trusted Service Providers
 We only share personal data with trusted service providers necessary to operate the platform. These include:
-- Stripe and Razorpay — payment processing
-- Meta (Instagram) — API integration for automation
-- Email service providers — for transactional and marketing emails
-- Cloud hosting providers — for server infrastructure
-- Analytics tools — for platform usage insights
+- Stripe and Razorpay - payment processing
+- Meta (Instagram) - API integration for automation
+- Email service providers - for transactional and marketing emails
+- Cloud hosting providers - for server infrastructure
+- Analytics tools - for platform usage insights
 All service providers are contractually required to handle your data securely and only for the purposes we specify.
 
 5.2 We Do Not Sell Your Data
@@ -78,19 +78,19 @@ If Reactova is acquired or its assets transferred, your data may be transferred 
 We retain your personal data for as long as necessary to provide our services and fulfil the purposes described in this policy, or as required by applicable law. When data is no longer needed for these purposes, we will delete or anonymise it.
 
 Specific retention periods:
-- Active account data — retained while your account remains open
-- Billing and payment records — retained for 7 years as required by Indian tax law
-- Support communications — retained for up to 3 years for dispute resolution
-- Analytics data — retained in anonymised form for platform improvement
-- Data subject to active legal dispute — retained until resolution
+- Active account data - retained while your account remains open
+- Billing and payment records - retained for 7 years as required by Indian tax law
+- Support communications - retained for up to 3 years for dispute resolution
+- Analytics data - retained in anonymised form for platform improvement
+- Data subject to active legal dispute - retained until resolution
 
 7. Your Rights
-- Access — request a copy of personal data we hold about you
-- Correction — request correction of inaccurate data
-- Deletion — request deletion of your personal data (see Section 8)
-- Portability — receive your data in a machine-readable format
-- Opt out — unsubscribe from marketing emails at any time
-- Lodge a complaint — with India's Data Protection Board
+- Access - request a copy of personal data we hold about you
+- Correction - request correction of inaccurate data
+- Deletion - request deletion of your personal data (see Section 8)
+- Portability - receive your data in a machine-readable format
+- Opt out - unsubscribe from marketing emails at any time
+- Lodge a complaint - with India's Data Protection Board
 To exercise any of these rights, email support@reactova.com. We will respond within 30 days.
 
 8. Data Deletion Process

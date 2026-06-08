@@ -102,7 +102,7 @@ export default function HeroSection() {
               <span className="font-semibold text-gray-800">Auto DMs</span> from comments, stories & messages.
               Liffio is the <span className="font-semibold text-gray-800">Instagram auto DM</span> software with{" "}
               <span className="font-semibold text-gray-800">auto comment reply</span>, keyword triggers, and{" "}
-              <span className="font-semibold text-gray-800">DM automation</span> — running{" "}
+              <span className="font-semibold text-gray-800">DM automation</span> - running{" "}
               <span className="font-semibold text-gray-800">24/7</span> on autopilot.
             </p>
 
@@ -148,7 +148,7 @@ export default function HeroSection() {
                     className="relative h-9 w-9 overflow-hidden rounded-full border-2 border-white shadow-md ring-1 ring-black/5"
                     style={{ zIndex: 5 - i }}
                   >
-                    <Image src={src} alt="Instagram creator — Liffio beta tester" fill sizes="36px" className="object-cover" />
+                    <Image src={src} alt="Instagram creator - Liffio beta tester" fill sizes="36px" className="object-cover" />
                   </div>
                 ))}
               </div>

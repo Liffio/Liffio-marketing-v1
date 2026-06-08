@@ -120,7 +120,7 @@ export function buildPageMetadata({
   const pageUrl = canonicalPath === "/" ? SITE_URL : `${SITE_URL}${canonicalPath}`;
   const imagePath = ogImagePath ?? siteConfig.meta.ogImagePath;
   const imageUrl = ogImageUrl(imagePath);
-  const imageAlt = ogImageAlt ?? `${siteConfig.brand.name} — Instagram auto DM tool`;
+  const imageAlt = ogImageAlt ?? `${siteConfig.brand.name} - Instagram auto DM tool`;
   const isOgCard = imagePath.startsWith("/og/");
 
   return {
@@ -147,7 +147,7 @@ export function buildPageMetadata({
 }
 
 export const rootSeo = buildPageMetadata({
-  title: "Liffio — Automate Instagram DMs & Grow Your Engagement Fast",
+  title: "Liffio - Automate Instagram DMs & Grow Your Engagement Fast",
   description:
     "Automate Instagram DMs, auto-reply to comments, stories & messages. The smartest way to grow your Instagram. Get started for free.",
   pathname: "/",
@@ -157,43 +157,43 @@ export const rootSeo = buildPageMetadata({
 
 export const pageSeo = {
   features: buildPageMetadata({
-    title: "Instagram Auto DM & Auto Comment Tool — Features",
+    title: "Instagram Auto DM & Auto Comment Tool - Features",
     description:
       "Auto comment reply, comment-to-DM, story reply automation, live comments, welcome DMs, and multi-step flows. Full-featured DM automation tool for Instagram creators and brands.",
     pathname: "/features",
   }),
   pricing: buildPageMetadata({
-    title: "Auto DM Tool Pricing — Free & Paid Instagram Automation Plans",
+    title: "Auto DM Tool Pricing - Free & Paid Instagram Automation Plans",
     description:
       "Transparent pricing for an Instagram auto DM and auto comment tool. Free, Starter, Business, and Agency plans with unlimited automated DMs.",
     pathname: "/pricing",
   }),
   signup: buildPageMetadata({
-    title: "Start Free — Instagram Auto DM & Comment Automation",
+    title: "Start Free - Instagram Auto DM & Comment Automation",
     description:
       "Create your free Liffio account in minutes. Set up auto DMs, auto comment replies, and keyword triggers without a credit card.",
     pathname: "/signup",
   }),
   blog: buildPageMetadata({
-    title: "Instagram DM Automation Blog — Auto DM & Growth Guides",
+    title: "Instagram DM Automation Blog - Auto DM & Growth Guides",
     description:
-      "Guides on auto DM tools, comment-to-DM automation, keyword triggers, and Instagram engagement — tips for creators comparing ManyChat, SendDM, and LinkDM.",
+      "Guides on auto DM tools, comment-to-DM automation, keyword triggers, and Instagram engagement - tips for creators comparing ManyChat, SendDM, and LinkDM.",
     pathname: "/blog",
   }),
   help: buildPageMetadata({
-    title: "Help Center — Auto DM Tool Setup & Support",
+    title: "Help Center - Auto DM Tool Setup & Support",
     description:
       "Get help with Liffio’s Instagram auto DM tool: connecting accounts, keyword triggers, auto comment reply, billing, and compliance.",
     pathname: "/help",
   }),
   affiliate: buildPageMetadata({
-    title: "Affiliate Program — Promote an Instagram Auto DM Tool",
+    title: "Affiliate Program - Promote an Instagram Auto DM Tool",
     description:
       "Earn recurring commissions promoting Liffio, the Instagram DM automation and auto comment tool for creators and agencies.",
     pathname: "/affiliate",
   }),
   creatorsProgram: buildPageMetadata({
-    title: "Creators Program — Free Instagram DM Automation for Creators",
+    title: "Creators Program - Free Instagram DM Automation for Creators",
     description:
       "Qualified creators get Business-plan access to Liffio’s auto DM tool: comment-to-DM, story automation, and unlimited keyword triggers.",
     pathname: "/creators-program",
