@@ -8,9 +8,9 @@ import { BreadcrumbJsonLd, FaqPageJsonLd, SoftwareApplicationJsonLd } from "@/li
 import type { FaqCategory } from "@/config/faq.config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Best ManyChat Alternative - Liffio Instagram DM Automation",
+  title: "Best ManyChat Alternative for Instagram (2026) — Liffio",
   description:
-    "Looking for a ManyChat alternative with unlimited auto DMs, no per-message fees, and a free plan? Liffio offers the same comment-to-DM automation for less.",
+    "Compare Liffio vs ManyChat, SendDM, LinkDM, and SuperProfile. Feature table, pricing comparison, migration guide, and FAQ. Free plan, no per-contact fees.",
   pathname: "/manychat-alternative",
   ogImagePath: siteConfig.meta.ogImagePath,
   ogImageAlt: siteConfig.meta.ogImageAlt,

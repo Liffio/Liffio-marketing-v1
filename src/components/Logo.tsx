@@ -3,8 +3,8 @@ type Theme = 'light' | 'dark'
 type Size = 'xs' | 'small' | 'medium' | 'large'
 
 export const LIFFIO_LOGO_SRC = {
-  light: '/logo/inline transparent.png',
-  dark: '/logo/logo-light.png',
+  light: '/logo/inline-transparent.webp',
+  dark: '/logo/logo-light.webp',
 } as const
 
 const SIZE_CLASS: Record<Size, string> = {
@@ -18,22 +18,26 @@ type LiffioLogoMarkProps = {
   theme?: Theme
   size?: Size
   className?: string
+  priority?: boolean
 }
 
 /** Logo image without navigation - for mockups, avatars, and animations. */
-export function LiffioLogoMark({ theme = 'light', size = 'large', className = '' }: LiffioLogoMarkProps) {
+export function LiffioLogoMark({ theme = 'light', size = 'large', className = '', priority = false }: LiffioLogoMarkProps) {
   const src = theme === 'light' ? LIFFIO_LOGO_SRC.light : LIFFIO_LOGO_SRC.dark
   return (
     <img
       src={src}
       alt="Liffio"
+      width={160}
+      height={53}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchPriority={priority ? 'high' : 'auto'}
       className={`w-auto object-contain ${SIZE_CLASS[size]} ${className}`}
     />
   )
 }
 
 type LiffioAvatarProps = {
-  /** Matches simulation avatar scale: size × 4px (e.g. 6 → 24px). */
   size?: number
   className?: string
 }
@@ -55,13 +59,14 @@ type LogoProps = {
   theme?: Theme
   size?: 'small' | 'medium' | 'large'
   className?: string
+  priority?: boolean
 }
 
-const Logo = ({ theme = 'light', size = 'large', className = '' }: LogoProps) => {
+const Logo = ({ theme = 'light', size = 'large', className = '', priority = false }: LogoProps) => {
   const markSize: Size = size === 'small' ? 'small' : size === 'medium' ? 'medium' : 'large'
   return (
     <a href="/" className={`flex w-auto items-start justify-start ${className}`}>
-      <LiffioLogoMark theme={theme} size={markSize} />
+      <LiffioLogoMark theme={theme} size={markSize} priority={priority} />
     </a>
   )
 }

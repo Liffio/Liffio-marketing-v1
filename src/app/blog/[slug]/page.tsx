@@ -138,6 +138,28 @@ export default async function BlogArticlePage({ params }: Props) {
           </section>
         ) : null}
 
+        {post.references && post.references.length > 0 ? (
+          <section className="py-8 border-t border-gray-100">
+            <div className="mx-auto max-w-3xl px-4 sm:px-6">
+              <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Sources</h2>
+              <ul className="space-y-2">
+                {post.references.map((ref) => (
+                  <li key={ref.url} className="text-sm">
+                    <a
+                      href={ref.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#4259f0] hover:underline"
+                    >
+                      {ref.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        ) : null}
+
         <section className="py-16 bg-white text-center border-t border-gray-100">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Get Started Free</h2>
           <p className="text-gray-600 mb-6 max-w-md mx-auto">

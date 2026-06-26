@@ -15,7 +15,7 @@ import {
 import { siteConfig } from "@/config/site.config";
 import { metaCopy } from "@/config/meta-copy";
 import { pageSeo } from "@/config/seo.config";
-import { BreadcrumbJsonLd, FaqPageJsonLd } from "@/lib/seo/json-ld";
+import { BreadcrumbJsonLd, FaqPageJsonLd, SoftwareApplicationJsonLd } from "@/lib/seo/json-ld";
 import { SITE_URL } from "@/config/site.config";
 
 export const metadata = pageSeo.pricing;
@@ -37,6 +37,7 @@ export default async function PricingPage() {
           { name: "Pricing", item: `${SITE_URL}/pricing` },
         ]}
       />
+      <SoftwareApplicationJsonLd />
       <FaqPageJsonLd categories={faqCategories} />
       <Navbar />
       <main id="main-content" className="flex-1">
@@ -48,8 +49,14 @@ export default async function PricingPage() {
               className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900"
               style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
             >
-              Plans That Grow With You
+              Instagram DM Automation Pricing
             </h1>
+            <h2
+              className="mt-2 text-xl sm:text-2xl font-semibold text-gray-500"
+              style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+            >
+              Plans That Grow With You
+            </h2>
             <p className="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
               From free comment-to-DM automation to full agency white-label. {metaCopy.pricingHeroApis}
             </p>

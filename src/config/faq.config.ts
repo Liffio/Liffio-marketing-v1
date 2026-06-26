@@ -66,6 +66,43 @@ function plansCategory(region: PricingRegion, overrides?: MarketingFaqOverrides)
   };
 }
 
+const geoComplianceCategory: FaqCategory = {
+  id: "instagram-dm-automation",
+  label: "Instagram DM automation",
+  items: [
+    {
+      id: "does-instagram-allow-automation",
+      question: "Does Instagram allow DM automation?",
+      answer:
+        "Yes. Instagram permits DM automation through its official Messaging API, which is part of Meta's developer platform. Tools that connect via the official API using OAuth — rather than scraping or using your password — are allowed under Instagram's platform policy. Liffio uses the official API only.",
+    },
+    {
+      id: "what-is-comment-to-dm",
+      question: "What is comment-to-DM automation on Instagram?",
+      answer:
+        "Comment-to-DM automation sends a direct message to someone automatically when they comment a specific keyword on your Instagram post. For example, if someone comments 'PRICE' on your post, they instantly receive a DM with your pricing info. It works 24/7 without manual action on your part.",
+    },
+    {
+      id: "will-instagram-ban",
+      question: "Will Instagram ban my account for using DM automation?",
+      answer:
+        "Not if you use a tool that connects through Instagram's official API. Instagram bans accounts that use bots or tools that log in with your password on your behalf. Liffio connects via Instagram's official OAuth flow — you authorize it through Meta directly, the same way you connect any official third-party app. No password is stored or shared.",
+    },
+    {
+      id: "can-you-automate-dm-replies",
+      question: "Can you automate Instagram DM replies?",
+      answer:
+        "Yes. With keyword-trigger tools like Liffio, you can set up automated replies to incoming DMs, story replies, and live chat comments. When a message contains a keyword you've set, Liffio sends a pre-written reply within 10–60 seconds — with a human-like delay so it doesn't feel instant and robotic.",
+    },
+    {
+      id: "cheapest-manychat-alternative",
+      question: "What is the cheapest ManyChat alternative for Instagram?",
+      answer:
+        "Liffio has a free plan with no credit card required. Paid plans start at $9/month. ManyChat's paid plans start at $15/month. Liffio is built specifically for Instagram, which keeps the feature set focused and the price lower than multi-channel tools like ManyChat.",
+    },
+  ],
+};
+
 const seoDiscoveryCategory: FaqCategory = {
   id: "auto-dm-tools",
   label: "Auto DM tools",
@@ -136,6 +173,7 @@ const seoDiscoveryCategory: FaqCategory = {
 /** Region-aware FAQ used across the marketing site */
 export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaqOverrides): FaqCategory[] {
   return [
+    geoComplianceCategory,
     seoDiscoveryCategory,
     {
       id: "getting-started",
@@ -281,6 +319,7 @@ export function getFeaturesFaqCategories(region: PricingRegion): FaqCategory[] {
   const automations = all.find((c) => c.id === "automations");
   const safety = all.find((c) => c.id === "safety");
   return [
+    geoComplianceCategory,
     {
       id: "automations",
       label: "How automations work",

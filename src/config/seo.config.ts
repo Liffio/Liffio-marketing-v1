@@ -147,9 +147,9 @@ export function buildPageMetadata({
 }
 
 export const rootSeo = buildPageMetadata({
-  title: "Liffio - Automate Instagram DMs & Grow Your Engagement Fast",
+  title: "Liffio — Instagram DM Automation for Creators and Brands",
   description:
-    "Automate Instagram DMs, auto-reply to comments, stories & messages. The smartest way to grow your Instagram. Get started for free.",
+    "Auto-reply to Instagram comments, story mentions, and DMs using keyword triggers. Liffio runs 24/7 via the official Instagram API. Free plan, no card required.",
   pathname: "/",
   ogImagePath: siteConfig.meta.ogImagePath,
   ogImageAlt: siteConfig.meta.ogImageAlt,
@@ -157,15 +157,15 @@ export const rootSeo = buildPageMetadata({
 
 export const pageSeo = {
   features: buildPageMetadata({
-    title: "Instagram Auto DM & Auto Comment Tool - Features",
+    title: "Instagram DM Automation Features — 8 Automations in One Dashboard | Liffio",
     description:
-      "Auto comment reply, comment-to-DM, story reply automation, live comments, welcome DMs, and multi-step flows. Full-featured DM automation tool for Instagram creators and brands.",
+      "Comment-to-DM, story reply, live reply, DM sequences, follow gating, and more. All 8 automation types in one place. Built on Instagram’s official API.",
     pathname: "/features",
   }),
   pricing: buildPageMetadata({
-    title: "Auto DM Tool Pricing - Free & Paid Instagram Automation Plans",
+    title: "Instagram DM Automation Pricing — Free to $299/mo | Liffio",
     description:
-      "Transparent pricing for an Instagram auto DM and auto comment tool. Free, Starter, Business, and Agency plans with unlimited automated DMs.",
+      "Free plan with no credit card. Paid plans from $9/month. All plans include unlimited automated DMs and unlimited Instagram accounts. Cancel anytime.",
     pathname: "/pricing",
   }),
   signup: buildPageMetadata({
@@ -175,9 +175,9 @@ export const pageSeo = {
     pathname: "/signup",
   }),
   blog: buildPageMetadata({
-    title: "Instagram DM Automation Blog - Auto DM & Growth Guides",
+    title: "Instagram DM Automation Blog — Guides, Scripts, and Tutorials | Liffio",
     description:
-      "Guides on auto DM tools, comment-to-DM automation, keyword triggers, and Instagram engagement - tips for creators comparing ManyChat, SendDM, and LinkDM.",
+      "How-to guides on comment-to-DM setup, story automation, DM scripts that convert, and common automation mistakes to avoid.",
     pathname: "/blog",
   }),
   help: buildPageMetadata({
@@ -193,9 +193,9 @@ export const pageSeo = {
     pathname: "/affiliate",
   }),
   creatorsProgram: buildPageMetadata({
-    title: "Creators Program - Free Instagram DM Automation for Creators",
+    title: "Liffio Creators Program — Free Business Plan for Instagram Creators",
     description:
-      "Qualified creators get Business-plan access to Liffio’s auto DM tool: comment-to-DM, story automation, and unlimited keyword triggers.",
+      "Qualifying creators with 5K–100K followers get Liffio’s Business plan free. Apply in 2 minutes. No credit card. Up to 50 spots available.",
     pathname: "/creators-program",
   }),
 } as const;

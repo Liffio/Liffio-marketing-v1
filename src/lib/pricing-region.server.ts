@@ -30,6 +30,13 @@ export async function getPricingContext(): Promise<PricingContext> {
   }
 
   const headerStore = await headers();
+
+  const middlewareRegion = headerStore.get("x-pricing-region") as PricingRegion | null;
+  if (middlewareRegion === "india" || middlewareRegion === "global") {
+    const countryCode = middlewareRegion === "india" ? "IN" : null;
+    return { region: middlewareRegion, countryCode };
+  }
+
   const countryCode = getCountryCodeFromHeaders(headerStore);
   const region = resolvePricingRegion(countryCode);
 

@@ -11,6 +11,7 @@ export type BlogPost = {
   gradient: string;
   sections: { heading: string; paragraphs: string[] }[];
   faq?: { question: string; answer: string }[];
+  references?: { label: string; url: string }[];
 };
 
 export const BLOG_POSTS: BlogPost[] = [
@@ -87,6 +88,16 @@ export const BLOG_POSTS: BlogPost[] = [
           "You can run separate automations per keyword, or use multi-step flows on paid plans if you want different messages for LINK vs PRICE on one post.",
       },
     ],
+    references: [
+      {
+        label: "Instagram Messaging API — Meta for Developers",
+        url: "https://developers.facebook.com/docs/messenger-platform/instagram",
+      },
+      {
+        label: "Instagram Platform Policy — Meta",
+        url: "https://developers.facebook.com/docs/instagram-platform/overview",
+      },
+    ],
   },
   {
     slug: "manychat-alternatives",
@@ -156,6 +167,12 @@ export const BLOG_POSTS: BlogPost[] = [
         question: "Do agencies use Liffio?",
         answer:
           "The Agency plan includes client workspaces and white-label options so one team can manage multiple brands without sharing passwords.",
+      },
+    ],
+    references: [
+      {
+        label: "Instagram Messaging API — Meta for Developers",
+        url: "https://developers.facebook.com/docs/messenger-platform/instagram",
       },
     ],
   },
@@ -343,6 +360,16 @@ export const BLOG_POSTS: BlogPost[] = [
         answer: "Yes. Update the automation, then edit the pinned comment and the spoken CTA in the video caption so everything matches.",
       },
     ],
+    references: [
+      {
+        label: "Instagram Messaging API — Meta for Developers",
+        url: "https://developers.facebook.com/docs/messenger-platform/instagram",
+      },
+      {
+        label: "Instagram Platform Policy — Meta",
+        url: "https://developers.facebook.com/docs/instagram-platform/overview",
+      },
+    ],
   },
   {
     slug: "fashion-brand-dm-automation-case-study",
@@ -457,6 +484,16 @@ export const BLOG_POSTS: BlogPost[] = [
         question: "Should I automate welcome DMs to new followers?",
         answer:
           "Only if the message is genuinely useful and infrequent. Generic \"thanks for following\" pitches annoy people who never asked to hear from you.",
+      },
+    ],
+    references: [
+      {
+        label: "Instagram Platform Policy — Meta",
+        url: "https://developers.facebook.com/docs/instagram-platform/overview",
+      },
+      {
+        label: "Meta's Messaging Policy — Messenger Platform",
+        url: "https://developers.facebook.com/docs/messenger-platform/policy",
       },
     ],
   },

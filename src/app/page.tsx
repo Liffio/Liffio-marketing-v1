@@ -39,6 +39,27 @@ export default async function Home() {
       <Navbar />
       <main id="main-content" className="flex-1">
         <HeroSection />
+        <section aria-label="About Liffio" className="bg-[#faf8ff] border-y border-[#ede9fd] py-10 sm:py-14">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6">
+            <div className="rounded-2xl border border-[#ede9fd] bg-white px-6 py-7 sm:px-8 sm:py-8 shadow-sm space-y-4 text-gray-600 leading-relaxed text-base">
+              <p>
+                Liffio is an Instagram DM automation tool built for creators, coaches, and agencies
+                who want to respond to audience interactions without doing it manually. When someone
+                comments on a post, replies to a story, sends a DM containing a specific keyword,
+                or follows an account, Liffio sends a pre-written direct message automatically within
+                10 to 60 seconds.
+              </p>
+              <p>
+                The tool connects through Instagram&apos;s official OAuth API — no account password is
+                stored or shared. All automations run inside Meta&apos;s permitted use guidelines. Liffio
+                supports eight workflow types: comment-to-DM, story reply, live reply, DM reply,
+                follow gating, re-engagement, data collection, and welcome messages. Pricing starts
+                at $0 and scales to $299 per month for agencies managing multiple accounts. Liffio
+                is built in Vadodara, India, and used by more than 2,000 creators across 40+ countries.
+              </p>
+            </div>
+          </div>
+        </section>
         <StatsSection />
         <FeaturesSection />
         <HowItWorksSection />

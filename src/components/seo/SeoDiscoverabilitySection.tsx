@@ -1,166 +1,149 @@
-import { SEO_KEYWORDS, COMPETITORS } from "@/config/seo.config";
-
-const CAPABILITIES = [
+const AUTOMATION_TYPES = [
   {
-    term: "Auto DM Tool",
-    detail:
-      "The best auto DM tool for Instagram - send automated DMs when someone comments, replies to a story, or messages you. Human-like delays (10-60 seconds) keep your account safe.",
+    name: "Comment-to-DM",
+    description:
+      "Sends a DM when someone comments a keyword on a post or Reel. The trigger fires after a configurable 10–60 second delay. A public reply can also post under the comment at the same time.",
   },
   {
-    term: "Auto DMs for Instagram",
-    detail:
-      "Set up auto DMs that fire on keyword triggers. Whether someone comments 'LINK' or 'INFO', Liffio sends your pre-written DM automatically - 24/7, even while you sleep.",
+    name: "Story reply",
+    description:
+      "Auto-responds when someone replies to your Instagram story or reacts to it. Useful for story-based lead collection and product drops.",
   },
   {
-    term: "Auto Comment Reply Tool",
-    detail:
-      "Public comment reply plus a private auto DM from the same keyword trigger. Every comment becomes a conversation with your auto comment tool.",
+    name: "Live reply",
+    description:
+      "Responds to keyword comments during an Instagram live stream. Runs in real time without interrupting the broadcast.",
   },
   {
-    term: "Comment-to-DM Automation",
-    detail:
-      "The signature workflow of ManyChat, SendDM, and LinkDM - now with unlimited auto DMs on every plan. Turn post and Reel comments into automated DM flows.",
+    name: "DM reply",
+    description:
+      "Sends a pre-written reply when an incoming DM contains a keyword. Works for any DM sent to your account.",
   },
   {
-    term: "DM Automation Software",
-    detail:
-      "Multi-step DM sequences, follow gates, re-engagement campaigns, and welcome messages for new followers - all in one DM automation tool dashboard.",
+    name: "Ask Follow",
+    description:
+      "Delivers content (link, code, file) only after the user follows you. The follow is verified before the DM sends.",
   },
   {
-    term: "Instagram Auto Reply",
-    detail:
-      "Auto-reply to story mentions, reactions, live comments, and inbound DMs. Never miss a lead with Instagram auto reply automation.",
+    name: "Smart Re-engage",
+    description:
+      "Sends a win-back message to contacts who engaged in the past but have gone quiet. Time gap and message are configurable.",
+  },
+  {
+    name: "Collect Data",
+    description:
+      "Captures lead information — name, email, phone, or custom fields — through a guided DM conversation.",
+  },
+  {
+    name: "Welcome New Followers",
+    description:
+      "Sends an automatic DM to each new follower within the configured delay. Runs 24/7 without manual action.",
   },
 ] as const;
 
-const USE_CASES = [
+const COMPLIANCE_FACTS = [
   {
-    title: "For Creators & Influencers",
-    description:
-      "Use auto DM tools to deliver lead magnets, discount codes, and exclusive content to your followers. Comment 'LINK' workflows convert passive scrollers into email subscribers.",
+    heading: "Instagram allows DM automation through its official API",
+    body:
+      "Meta publishes the Instagram Messaging API as part of its developer platform. Tools that authenticate via OAuth — rather than logging in with a password or using browser automation — are permitted under Instagram's platform policy. Liffio uses only the official API.",
   },
   {
-    title: "For E-commerce & DTC Brands",
-    description:
-      "Auto DMs turn every Instagram comment into a sales opportunity. Send product links, promo codes, and cart recovery messages with DM automation.",
+    heading: "Account safety depends on how the tool connects",
+    body:
+      "Instagram restricts tools that simulate a logged-in user in a browser (often called 'bots'). It does not restrict tools that connect through the official OAuth flow. The distinction is authorization method, not action type. Liffio authorizes through Meta's developer OAuth — the same method used by any official third-party app.",
   },
   {
-    title: "For Coaches & Course Creators",
-    description:
-      "Qualify leads inside Instagram DMs with auto reply flows. Collect emails, schedule calls, and nurture prospects - all on autopilot with auto DM software.",
-  },
-  {
-    title: "For Agencies & Marketing Teams",
-    description:
-      "Manage multiple Instagram accounts with white-label DM automation. Scale auto comment reply and auto DM campaigns across all your client brands.",
+    heading: "Send delays reduce the risk of rate limiting",
+    body:
+      "Liffio sends DMs after a 10–60 second delay (configurable). Instant bulk sends are more likely to trigger Instagram's rate limits. A short, human-like delay distributes sends over time and matches how a person would respond.",
   },
 ] as const;
 
-/** Indexable, keyword-aligned copy for search - visible on the page, not hidden. */
 export default function SeoDiscoverabilitySection() {
   return (
     <section
-      aria-labelledby="seo-discoverability-heading"
-      className="border-t border-brand-100/60 bg-white py-14 sm:py-20"
+      aria-labelledby="seo-section-heading"
+      className="border-t border-gray-100 bg-white py-14 sm:py-20"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Main heading with primary keywords */}
-        <h2
-          id="seo-discoverability-heading"
-          className="max-w-4xl text-2xl font-extrabold leading-tight text-[#0a0a0a] sm:text-3xl lg:text-4xl"
-          style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
-        >
-          The #1 Auto DM Tool for Instagram - Auto DMs, Auto Comment Reply & DM Automation
-        </h2>
-        
-        {/* Keyword-rich intro paragraph */}
-        <p className="mt-5 max-w-3xl text-sm leading-relaxed text-gray-600 sm:text-base">
-          Looking for an <strong className="font-semibold text-gray-800">auto DM tool</strong>? Liffio is the{" "}
-          <strong className="font-semibold text-gray-800">Instagram auto DM</strong> software that automates your entire
-          DM strategy. Whether you need <strong className="font-semibold text-gray-800">auto DMs</strong> from comments,{" "}
-          <strong className="font-semibold text-gray-800">auto comment reply</strong> workflows, or full{" "}
-          <strong className="font-semibold text-gray-800">DM automation</strong> - Liffio handles it all with unlimited
-          automated messages on every plan.
-        </p>
-        
-        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-gray-600 sm:text-base">
-          If you've used{" "}
-          {COMPETITORS.map((c, i) => (
-            <span key={c}>
-              <strong className="font-semibold text-gray-800">{c}</strong>
-              {i < COMPETITORS.length - 1 ? ", " : ""}
-            </span>
-          ))}{" "}
-          or similar <strong className="font-semibold text-gray-800">auto DM tools</strong>, you'll feel right at home.
-          Same powerful comment-to-DM automation, keyword triggers, and story reply features - with simpler pricing and a
-          generous free tier to get started.
-        </p>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-16">
 
-        {/* Capability cards */}
-        <dl className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {CAPABILITIES.map(({ term, detail }) => (
-            <div key={term} className="rounded-2xl border border-brand-100/80 bg-[#faf9ff]/60 p-5">
-              <dt className="text-sm font-bold text-[#0a0a0a]">{term}</dt>
-              <dd className="mt-2 text-sm leading-relaxed text-gray-600">{detail}</dd>
-            </div>
-          ))}
-        </dl>
-
-        {/* Use cases section */}
-        <div className="mt-16">
-          <h3
-            className="text-xl font-extrabold text-[#0a0a0a] sm:text-2xl"
+        <div>
+          <h2
+            id="seo-section-heading"
+            className="text-2xl font-extrabold text-[#0a0a0a] sm:text-3xl"
             style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
           >
-            Who Uses Auto DM Tools?
-          </h3>
-          <div className="mt-6 grid gap-6 sm:grid-cols-2">
-            {USE_CASES.map(({ title, description }) => (
-              <div key={title} className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
-                <h4 className="text-sm font-bold text-[#0a0a0a]">{title}</h4>
-                <p className="mt-2 text-sm leading-relaxed text-gray-600">{description}</p>
+            The 8 automation types Liffio supports
+          </h2>
+          <p className="mt-3 text-gray-600 max-w-2xl">
+            Each automation runs independently. You can have multiple active at the same time on the same account.
+          </p>
+          <dl className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {AUTOMATION_TYPES.map(({ name, description }) => (
+              <div key={name} className="rounded-2xl border border-gray-100 bg-[#faf9ff] p-5">
+                <dt className="text-sm font-bold text-[#0a0a0a]">{name}</dt>
+                <dd className="mt-2 text-sm leading-relaxed text-gray-600">{description}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div>
+          <h2
+            className="text-2xl font-extrabold text-[#0a0a0a] sm:text-3xl"
+            style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
+          >
+            Instagram DM automation and platform compliance
+          </h2>
+          <div className="mt-8 grid gap-6 sm:grid-cols-3">
+            {COMPLIANCE_FACTS.map(({ heading, body }) => (
+              <div key={heading} className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+                <h3 className="text-sm font-bold text-[#0a0a0a] leading-snug">{heading}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-gray-600">{body}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Why Liffio section */}
-        <div className="mt-16 rounded-2xl bg-gradient-to-br from-[#faf8ff] to-white p-6 sm:p-8">
-          <h3
-            className="text-xl font-extrabold text-[#0a0a0a] sm:text-2xl"
+        <div>
+          <h2
+            className="text-2xl font-extrabold text-[#0a0a0a] sm:text-3xl"
             style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
           >
-            Why Choose Liffio as Your Auto DM Software?
-          </h3>
-          <ul className="mt-5 space-y-3 text-sm text-gray-600">
-            <li className="flex items-start gap-3">
-              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-600">✓</span>
-              <span><strong className="font-semibold text-gray-800">Unlimited auto DMs</strong> on every plan - no message caps or throttling</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-600">✓</span>
-              <span><strong className="font-semibold text-gray-800">Free auto DM tool tier</strong> - start automating without a credit card</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-600">✓</span>
-              <span><strong className="font-semibold text-gray-800">Comment-to-DM + auto comment reply</strong> in one workflow</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-600">✓</span>
-              <span><strong className="font-semibold text-gray-800">Human-like delays (10-60s)</strong> - keeps your Instagram account safe</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-600">✓</span>
-              <span><strong className="font-semibold text-gray-800">ManyChat / SendDM alternative</strong> - same features, simpler pricing</span>
-            </li>
-          </ul>
+            Who uses Instagram DM automation
+          </h2>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2">
+            <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+              <h3 className="text-sm font-bold text-[#0a0a0a]">Creators and influencers (5K–500K followers)</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                Comment-to-DM for lead magnets, digital products, discount codes, and giveaway entries.
+                The automation handles the inbox volume so creators can spend time on content, not replies.
+              </p>
+            </div>
+            <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+              <h3 className="text-sm font-bold text-[#0a0a0a]">DTC brands and e-commerce</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                Product launch automation: a Reel drop, a comment keyword, and a DM with the buy link.
+                Story replies for flash sales. Welcome DMs for new followers with a first-order code.
+              </p>
+            </div>
+            <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+              <h3 className="text-sm font-bold text-[#0a0a0a]">Coaches and course creators</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                DM sequences that qualify leads before a sales call. Collect email addresses via the
+                Collect Data automation. Follow-up flows for prospects who engaged but haven't booked.
+              </p>
+            </div>
+            <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+              <h3 className="text-sm font-bold text-[#0a0a0a]">Agencies managing multiple accounts</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                One Liffio workspace for unlimited client Instagram accounts. White-label workspaces on the
+                Agency plan. Separate analytics per account with team access controls.
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Popular searches footer */}
-        <p className="mt-10 text-xs leading-relaxed text-gray-500">
-          <strong className="font-semibold text-gray-600">Popular searches:</strong>{" "}
-          {SEO_KEYWORDS.slice(0, 15).join(" · ")}.
-        </p>
       </div>
     </section>
   );

@@ -1,0 +1,49 @@
+# Liffio
+
+> Liffio is Instagram DM automation software that lets creators and businesses automatically send direct messages triggered by comment replies, story interactions, DM keywords, and follower events. It connects via Instagram's official OAuth API and is fully Meta-compliant.
+
+Liffio was founded in 2026 and is based in Vadodara, India. It serves creators, coaches, and agencies worldwide.
+
+## Product
+
+- [Homepage](https://www.liffio.com/)
+- [Features](https://www.liffio.com/features)
+- [Pricing](https://www.liffio.com/pricing)
+- [Blog](https://www.liffio.com/blog)
+- [ManyChat Alternative](https://www.liffio.com/manychat-alternative)
+- [Creators Program](https://www.liffio.com/creators-program)
+
+## Automation Types
+
+Liffio supports 8 automation workflows:
+1. Comment-to-DM: sends a DM when someone comments a keyword on your post or reel
+2. Story reply: auto-responds when someone replies to your Instagram story
+3. Live reply: responds to keyword comments during Instagram live streams
+4. DM reply: automated keyword-triggered responses to incoming DMs
+5. Ask Follow: sends content only after the user follows you
+6. Smart Re-engage: win-back sequences for inactive contacts
+7. Collect Data: captures lead info (email, phone, custom fields) via DM conversation
+8. Welcome New Followers: sends an automatic DM to new followers
+
+## Key Facts
+
+- Connects via Meta's official Instagram OAuth — no password required or stored
+- Send delays: 10–60 seconds (configurable, to avoid instant-bot behavior)
+- Pricing: Free ($0/mo), Starter ($9/mo or $7/mo annual), Business ($79/mo or $63/mo annual), Agency ($299/mo or $239/mo annual)
+- All plans include unlimited automated DMs and unlimited Instagram accounts
+- Used by 2,000+ creators and brands
+- Average DM response time: 1.2 seconds
+
+## Blog Articles
+
+- [How to Turn Instagram Comments Into DMs Automatically](https://www.liffio.com/blog/how-to-turn-instagram-comments-into-dms)
+- [ManyChat Alternatives for Instagram (2026)](https://www.liffio.com/blog/manychat-alternatives)
+- [Instagram Story Automation Guide](https://www.liffio.com/blog/instagram-story-automation-guide)
+- [Instagram DM Scripts That Convert](https://www.liffio.com/blog/instagram-dm-scripts-that-convert)
+- [Your First Comment Keyword Trigger](https://www.liffio.com/blog/first-comment-keyword-trigger)
+- [D2C Fashion Brand Case Study](https://www.liffio.com/blog/fashion-brand-dm-automation-case-study)
+- [Instagram Automation Mistakes to Avoid](https://www.liffio.com/blog/instagram-automation-mistakes)
+
+## Licensing
+
+Content on this site may be cited for informational and research purposes with attribution to Liffio (www.liffio.com).

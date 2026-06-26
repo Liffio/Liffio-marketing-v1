@@ -5,7 +5,8 @@ import CreatorsProgramContent from "@/components/CreatorsProgramContent";
 import { SiteFaqSection } from "@/components/faq/SiteFaqSection";
 import { pageSeo } from "@/config/seo.config";
 import { getCreatorsFaqCategories } from "@/config/faq.config";
-import { FaqPageJsonLd } from "@/lib/seo/json-ld";
+import { BreadcrumbJsonLd, FaqPageJsonLd } from "@/lib/seo/json-ld";
+import { SITE_URL } from "@/config/site.config";
 import { getPricingContext } from "@/lib/pricing-region.server";
 import {
   fetchMarketingPlansContext,
@@ -37,6 +38,12 @@ export default async function CreatorsProgramPage() {
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", item: SITE_URL },
+          { name: "Creators Program", item: `${SITE_URL}/creators-program` },
+        ]}
+      />
       <FaqPageJsonLd categories={faqCategories} />
       <Navbar />
       <main id="main-content" className="flex-1">

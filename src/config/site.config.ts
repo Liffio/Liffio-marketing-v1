@@ -1,4 +1,4 @@
-const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://liffio.com";
+const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.liffio.com";
 
 /** Canonical marketing site origin (no trailing slash). */
 export const SITE_URL = rawSiteUrl.endsWith("/") ? rawSiteUrl.slice(0, -1) : rawSiteUrl;

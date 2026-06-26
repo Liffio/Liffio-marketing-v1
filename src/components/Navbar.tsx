@@ -63,7 +63,7 @@ export default function Navbar() {
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between gap-8 py-3">
-            <Logo />
+            <Logo priority />
 
             <nav className="hidden lg:flex flex-1 items-center justify-center gap-0.5">
               {navLinks.map((item) => (
