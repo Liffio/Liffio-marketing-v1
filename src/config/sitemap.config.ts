@@ -15,6 +15,8 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   { path: "/pricing", changeFrequency: "weekly", priority: 0.9 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.8 },
   { path: "/manychat-alternative", changeFrequency: "monthly", priority: 0.85 },
+  { path: "/senddm-alternative", changeFrequency: "monthly", priority: 0.85 },
+  { path: "/chatfuel-alternative", changeFrequency: "monthly", priority: 0.85 },
   { path: "/about", changeFrequency: "monthly", priority: 0.7 },
   { path: "/help", changeFrequency: "weekly", priority: 0.7 },
   { path: "/creators-program", changeFrequency: "monthly", priority: 0.6 },

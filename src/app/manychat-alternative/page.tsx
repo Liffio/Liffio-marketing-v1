@@ -173,6 +173,12 @@ export default function ManyChatAlternativePage() {
                 Read the full alternatives guide →
               </a>
             </p>
+            <p className="text-sm text-gray-500 mb-6">
+              Also comparing:{" "}
+              <a href="/senddm-alternative" className="text-[#4259f0] hover:underline">Liffio vs SendDM</a>
+              {" · "}
+              <a href="/chatfuel-alternative" className="text-[#4259f0] hover:underline">Liffio vs Chatfuel</a>
+            </p>
             <ComparisonTable competitorName="ManyChat" />
           </div>
         </section>
