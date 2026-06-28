@@ -8,11 +8,11 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 export const metadata: Metadata = {
   title: "About Liffio — Built in India, Made for Creators Worldwide",
   description:
-    "Liffio is a small team from Vadodara, India building Instagram DM automation for creators, coaches, and agencies worldwide.",
+    "Liffio is a small team from India building Instagram DM automation for creators, coaches, and agencies worldwide.",
   alternates: { canonical: "/about" },
   openGraph: {
     title: "About Liffio",
-    description: "A small team from Vadodara, India building Instagram DM automation for creators worldwide.",
+    description: "A small team from India building Instagram DM automation for creators worldwide.",
     url: `${SITE_URL}/about`,
     siteName: siteConfig.brand.name,
     images: [{ url: `${SITE_URL}${siteConfig.meta.ogImagePath}`, width: 1200, height: 630 }],
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "About Liffio",
-    description: "A small team from Vadodara, India building Instagram DM automation for creators worldwide.",
+    description: "A small team from India building Instagram DM automation for creators worldwide.",
     images: [`${SITE_URL}${siteConfig.meta.ogImagePath}`],
   },
 };
@@ -36,8 +36,6 @@ const organizationSchema = {
     "@type": "Place",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Vadodara",
-      addressRegion: "Gujarat",
       addressCountry: "IN",
     },
   },
@@ -71,7 +69,7 @@ export default function AboutPage() {
               About Liffio
             </h1>
             <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-              Built in Vadodara, India. Made for creators worldwide.
+              Built in India. Made for creators worldwide.
             </p>
           </div>
         </section>
@@ -97,7 +95,7 @@ export default function AboutPage() {
                 scaled. None of them were Instagram-only and priced for it.
               </p>
               <p>
-                We started building Liffio in early 2026 in Vadodara. The idea was straightforward: connect
+                We started building Liffio in early 2026. The idea was straightforward: connect
                 via Instagram&apos;s official OAuth API, build keyword triggers for comments, stories, and DMs,
                 and price it flat — not per-contact. We launched in June 2026 and now have more than 2,000
                 creators using it across 40+ countries.
@@ -141,7 +139,7 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                We&apos;re based in Vadodara, Gujarat, India. The team is small — we&apos;re building Liffio the way
+                We&apos;re based in India. The team is small — we&apos;re building Liffio the way
                 we wished existing tools were built: focused on one platform, easy to set up, priced honestly.
               </p>
               <p>

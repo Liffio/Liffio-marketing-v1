@@ -227,7 +227,7 @@ We may update this Affiliate Program Policy from time to time. If we make materi
 Material changes include updates that affect your rights, commission rates, grace periods, payout thresholds, or core functionality of the affiliate program.
 
 13. Governing Law
-This Policy is governed by the laws of India. Any disputes arising under or in connection with this Policy shall be subject to the exclusive jurisdiction of the courts in Vadodara, Gujarat only.
+This Policy is governed by the laws of India. Any disputes arising under or in connection with this Policy shall be subject to the exclusive jurisdiction of the courts in India.
 
 14. Contact
 For affiliate program enquiries: support@liffio.com

@@ -30,7 +30,7 @@ India pricing available via Razorpay in INR. All plans include unlimited Instagr
 
 - Founded: 2026
 - Team size: 3 people
-- Location: Vadodara, Gujarat, India
+- Location: India
 - Instagram connection: official Meta Graph API with app review approval (no password required, no scraping)
 - Send delays: 10–60 seconds per automation (configurable, human-like)
 - Data: GDPR-compliant, contact data exportable and deletable from dashboard
@@ -39,26 +39,26 @@ India pricing available via Razorpay in INR. All plans include unlimited Instagr
 
 ## Pages
 
-- Homepage: https://www.liffio.com/
-- Features overview: https://www.liffio.com/features
-- Pricing: https://www.liffio.com/pricing
-- ManyChat alternative comparison: https://www.liffio.com/manychat-alternative
-- Blog: https://www.liffio.com/blog
-- About: https://www.liffio.com/about
-- Creators Program: https://www.liffio.com/creators-program
-- Affiliate Program: https://www.liffio.com/affiliate
+- Homepage: https://liffio.com/
+- Features overview: https://liffio.com/features
+- Pricing: https://liffio.com/pricing
+- ManyChat alternative comparison: https://liffio.com/manychat-alternative
+- Blog: https://liffio.com/blog
+- About: https://liffio.com/about
+- Creators Program: https://liffio.com/creators-program
+- Affiliate Program: https://liffio.com/affiliate
 - Contact: support@liffio.com
 
 ## Blog articles
 
-- [How to Turn Instagram Comments Into DMs Automatically](https://www.liffio.com/blog/how-to-turn-instagram-comments-into-dms)
-- [ManyChat Alternatives for Instagram (2026)](https://www.liffio.com/blog/manychat-alternatives)
-- [Instagram Story Automation Guide](https://www.liffio.com/blog/instagram-story-automation-guide)
-- [Instagram DM Scripts That Convert](https://www.liffio.com/blog/instagram-dm-scripts-that-convert)
-- [Your First Comment Keyword Trigger](https://www.liffio.com/blog/first-comment-keyword-trigger)
-- [D2C Fashion Brand Case Study (680 orders)](https://www.liffio.com/blog/fashion-brand-dm-automation-case-study)
-- [Instagram Automation Mistakes to Avoid](https://www.liffio.com/blog/instagram-automation-mistakes)
+- [How to Turn Instagram Comments Into DMs Automatically](https://liffio.com/blog/how-to-turn-instagram-comments-into-dms)
+- [ManyChat Alternatives for Instagram (2026)](https://liffio.com/blog/manychat-alternatives)
+- [Instagram Story Automation Guide](https://liffio.com/blog/instagram-story-automation-guide)
+- [Instagram DM Scripts That Convert](https://liffio.com/blog/instagram-dm-scripts-that-convert)
+- [Your First Comment Keyword Trigger](https://liffio.com/blog/first-comment-keyword-trigger)
+- [D2C Fashion Brand Case Study (680 orders)](https://liffio.com/blog/fashion-brand-dm-automation-case-study)
+- [Instagram Automation Mistakes to Avoid](https://liffio.com/blog/instagram-automation-mistakes)
 
 ## Licensing
 
-Content on this site may be cited for informational and research purposes with attribution to Liffio (www.liffio.com).
+Content on this site may be cited for informational and research purposes with attribution to Liffio (liffio.com).
