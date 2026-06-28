@@ -208,7 +208,7 @@ export default async function SignupPage() {
                   >
                     Get started for free
                   </h2>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-gray-500">
                     Unlimited automated DMs on every plan - upgrade anytime.
                   </p>
                 </div>
@@ -221,7 +221,7 @@ export default async function SignupPage() {
                   style={{ borderTop: "1px solid rgba(124,90,243,0.08)" }}
                 >
                   {getSignupTrustRow().map((t) => (
-                    <span key={t} className="flex items-center gap-1 text-[11px] text-gray-400">
+                    <span key={t} className="flex items-center gap-1 text-[11px] text-gray-500">
                       <svg className="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                         <path
                           fillRule="evenodd"

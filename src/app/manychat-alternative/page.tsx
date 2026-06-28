@@ -429,7 +429,7 @@ export default function ManyChatAlternativePage() {
             >
               Get Started Free
             </a>
-            <p className="mt-3 text-xs text-gray-400">
+            <p className="mt-3 text-xs text-gray-500">
               Free plan includes unlimited DMs · No credit card required · Setup takes under 5 minutes
             </p>
           </div>

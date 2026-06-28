@@ -837,7 +837,7 @@ export default function FeaturesSection() {
             >
               <div className="mb-2 flex flex-wrap items-center gap-2">
                 <TechBadge label={f.tag} variant="inline" format="label" accent={f.color} />
-                <span className="text-[10px] font-bold text-gray-400">{f.num} / 08</span>
+                <span className="text-[10px] font-bold text-gray-500">{f.num} / 08</span>
               </div>
               <div className="flex items-start gap-3">
                 <div
@@ -871,7 +871,7 @@ export default function FeaturesSection() {
               </div>
             </article>
 
-            <p className="mt-3 text-center text-xs text-gray-400">8 automations · one dashboard</p>
+            <p className="mt-3 text-center text-xs text-gray-500">8 automations · one dashboard</p>
 
             <a
               href={siteConfig.urls.appSignup}

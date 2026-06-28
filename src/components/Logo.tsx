@@ -1,4 +1,6 @@
 
+import Image from 'next/image'
+
 type Theme = 'light' | 'dark'
 type Size = 'xs' | 'small' | 'medium' | 'large'
 
@@ -25,13 +27,12 @@ type LiffioLogoMarkProps = {
 export function LiffioLogoMark({ theme = 'light', size = 'large', className = '', priority = false }: LiffioLogoMarkProps) {
   const src = theme === 'light' ? LIFFIO_LOGO_SRC.light : LIFFIO_LOGO_SRC.dark
   return (
-    <img
+    <Image
       src={src}
       alt="Liffio"
       width={160}
       height={53}
-      loading={priority ? 'eager' : 'lazy'}
-      fetchPriority={priority ? 'high' : 'auto'}
+      priority={priority}
       className={`w-auto object-contain ${SIZE_CLASS[size]} ${className}`}
     />
   )

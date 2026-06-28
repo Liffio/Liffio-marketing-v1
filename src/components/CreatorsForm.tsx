@@ -339,7 +339,7 @@ export default function CreatorsForm() {
         {loading ? 'Submitting...' : 'Apply to Creators Program →'}
       </button>
 
-      <p className="text-xs text-gray-400 text-center">
+      <p className="text-xs text-gray-500 text-center">
         All applications are reviewed manually. Accepted creators are notified within 48–72 hours.
       </p>
     </form>

@@ -27,7 +27,7 @@ export default function AboutSection() {
           <img
             src="https://flagcdn.com/w40/in.png"
             alt="India"
-            className="inline-block w-4 h-4"
+            className="inline-block h-3.5 w-auto"
           />{" "}
           , made for creators worldwide.
         </p>

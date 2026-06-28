@@ -187,7 +187,7 @@ export const pageSeo = {
     pathname: "/help",
   }),
   affiliate: buildPageMetadata({
-    title: "Affiliate Program - Promote an Instagram Auto DM Tool",
+    title: "Liffio Affiliate Program — Earn Commission on Instagram DM Tool Referrals",
     description:
       "Earn recurring commissions promoting Liffio, the Instagram DM automation and auto comment tool for creators and agencies.",
     pathname: "/affiliate",

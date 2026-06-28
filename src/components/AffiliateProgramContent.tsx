@@ -308,15 +308,15 @@ export default function AffiliateProgramContent() {
 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-center">
             <div className="rounded-xl border border-brand-100 bg-white px-5 py-3 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">Hold period</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Hold period</p>
               <p className="text-lg font-bold text-[#0a0a0a]">20 days</p>
             </div>
             <div className="rounded-xl border border-brand-100 bg-white px-5 py-3 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">Min. withdrawal</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Min. withdrawal</p>
               <p className="text-lg font-bold text-[#0a0a0a]">$50</p>
             </div>
             <div className="rounded-xl border border-brand-100 bg-white px-5 py-3 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">Processing</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Processing</p>
               <p className="text-lg font-bold text-[#0a0a0a]">5–10 business days</p>
             </div>
           </div>
