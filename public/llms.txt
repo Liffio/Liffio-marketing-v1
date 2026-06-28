@@ -43,6 +43,8 @@ India pricing available via Razorpay in INR. All plans include unlimited Instagr
 - Features overview: https://liffio.com/features
 - Pricing: https://liffio.com/pricing
 - ManyChat alternative comparison: https://liffio.com/manychat-alternative
+- SendDM alternative comparison: https://liffio.com/senddm-alternative
+- Chatfuel alternative comparison: https://liffio.com/chatfuel-alternative
 - Blog: https://liffio.com/blog
 - About: https://liffio.com/about
 - Creators Program: https://liffio.com/creators-program
