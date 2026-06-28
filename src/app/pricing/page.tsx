@@ -16,6 +16,7 @@ import { siteConfig } from "@/config/site.config";
 import { metaCopy } from "@/config/meta-copy";
 import { pageSeo } from "@/config/seo.config";
 import { BreadcrumbJsonLd, FaqPageJsonLd, SoftwareApplicationJsonLd } from "@/lib/seo/json-ld";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { SITE_URL } from "@/config/site.config";
 
 export const metadata = pageSeo.pricing;
@@ -44,6 +45,13 @@ export default async function PricingPage() {
         {/* Header */}
         <section className="hero-gradient py-20 sm:py-28">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
+            <Breadcrumb
+              className="justify-center mb-6"
+              items={[
+                { label: "Home", href: "/" },
+                { label: "Pricing", href: "/pricing" },
+              ]}
+            />
             <span className="text-sm font-semibold text-[#4259f0] uppercase tracking-wider">Pricing</span>
             <h1
               className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900"

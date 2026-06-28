@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { SITE_URL, siteConfig } from "@/config/site.config";
 import { getAllPostSlugs, getPostBySlug } from "@/lib/blog/posts";
 import { ArticleJsonLd, BreadcrumbJsonLd, FaqPageJsonLd } from "@/lib/seo/json-ld";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import type { FaqCategory } from "@/config/faq.config";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -87,6 +88,14 @@ export default async function BlogArticlePage({ params }: Props) {
       <main id="main-content" className="flex-1">
         <article className="hero-gradient py-16 sm:py-20">
           <div className="mx-auto max-w-3xl px-4 sm:px-6">
+            <Breadcrumb
+              className="mb-6"
+              items={[
+                { label: "Home", href: "/" },
+                { label: "Blog", href: "/blog" },
+                { label: post.title, href: `/blog/${slug}` },
+              ]}
+            />
             <Link href="/blog" className="text-sm font-semibold text-[#4259f0] hover:underline">
               ← Back to Blog
             </Link>

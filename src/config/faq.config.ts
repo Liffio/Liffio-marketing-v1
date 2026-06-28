@@ -74,31 +74,31 @@ const geoComplianceCategory: FaqCategory = {
       id: "does-instagram-allow-automation",
       question: "Does Instagram allow DM automation?",
       answer:
-        "Yes. Instagram permits DM automation through its official Messaging API, which is part of Meta's developer platform. Tools that connect via the official API using OAuth — rather than scraping or using your password — are allowed under Instagram's platform policy. Liffio uses the official API only.",
+        "Yes. Instagram permits DM automation through its official Messaging API, which is part of Meta's developer platform. Tools that connect via the official API using OAuth — rather than scraping or using your password — are explicitly allowed under Instagram's platform policy. The Instagram Messaging API lets authorized tools send direct messages on behalf of a connected account, respond to story replies, react to live comment events, and trigger welcome messages to new followers. To use it, the tool must go through Meta's App Review process and receive specific messaging permissions. Liffio holds all required permissions and uses the official API only. The distinction matters practically: accounts that use automation tools built on official API access do not face action from Instagram. Accounts that use tools operating outside the official API — browser automation, credential scraping, or unofficial endpoints — risk suspension regardless of volume.",
     },
     {
       id: "what-is-comment-to-dm",
       question: "What is comment-to-DM automation on Instagram?",
       answer:
-        "Comment-to-DM automation sends a direct message to someone automatically when they comment a specific keyword on your Instagram post. For example, if someone comments 'PRICE' on your post, they instantly receive a DM with your pricing info. It works 24/7 without manual action on your part.",
+        "Comment-to-DM automation sends a direct message to someone automatically when they comment a specific keyword on your Instagram post or Reel. Here is how it works: you connect your Instagram account via the official API, choose a post, set a trigger keyword (such as LINK, PRICE, or GUIDE), and write a DM template. When any commenter types that keyword, the automation fires and sends your pre-written DM — after a short configurable delay of 10 to 60 seconds — without you doing anything manually. For example: you post a Reel about a digital product and tell viewers to comment FREE to get the download link. Every person who comments that word receives the link in their inbox automatically, even if you are asleep or offline. One limitation: comment-to-DM only fires on posts you explicitly enable it for. It does not apply to all posts on your account automatically.",
     },
     {
       id: "will-instagram-ban",
       question: "Will Instagram ban my account for using DM automation?",
       answer:
-        "Not if you use a tool that connects through Instagram's official API. Instagram bans accounts that use bots or tools that log in with your password on your behalf. Liffio connects via Instagram's official OAuth flow — you authorize it through Meta directly, the same way you connect any official third-party app. No password is stored or shared.",
+        "No, not if you use a tool that connects through Instagram's official API. Instagram acts against accounts that use bots or tools that access your account by logging in with your password, simulating browser behavior, or using unofficial endpoints. The official Instagram Messaging API works differently. You authorize Liffio through Meta's own OAuth screen — the same login flow used by major apps like Hootsuite or Later. Your password is never entered into Liffio at any point, and Liffio never stores credentials. Meta issues an access token directly to Liffio, which you can revoke at any time from your Instagram settings under Apps and Websites. Beyond authentication method, send frequency matters. Liffio adds a 10–60 second configurable delay between trigger and send, which distributes DM volume over time and avoids the burst patterns associated with spam accounts. Running at normal usage volumes with a compliant tool carries no meaningful ban risk.",
     },
     {
       id: "can-you-automate-dm-replies",
       question: "Can you automate Instagram DM replies?",
       answer:
-        "Yes. With keyword-trigger tools like Liffio, you can set up automated replies to incoming DMs, story replies, and live chat comments. When a message contains a keyword you've set, Liffio sends a pre-written reply within 10–60 seconds — with a human-like delay so it doesn't feel instant and robotic.",
+        "Yes. With keyword-trigger tools like Liffio, you can automate replies to five types of incoming Instagram interactions: comments on posts and Reels, story replies, live stream messages, inbound DMs, and new follower events. Each automation type works through the same mechanism: you define a trigger condition (a keyword, any reply, or a follower event), write the message, and set a delay. When the trigger fires, Liffio sends the message automatically via Instagram's official API. For example: if you run a coaching business, you could set up a DM trigger so that anyone who sends you the word APPLY in a DM receives your application form link instantly — without you checking your inbox. The delay is configurable between 10 and 60 seconds per automation. Instant zero-delay replies can trigger spam detection patterns; a short delay makes sends feel like a human responded quickly. That distinction matters for account safety at high volumes.",
     },
     {
       id: "cheapest-manychat-alternative",
       question: "What is the cheapest ManyChat alternative for Instagram?",
       answer:
-        "Liffio has a free plan with no credit card required. Paid plans start at $9/month. ManyChat's paid plans start at $15/month. Liffio is built specifically for Instagram, which keeps the feature set focused and the price lower than multi-channel tools like ManyChat.",
+        "Liffio. It has a free plan with no credit card required that runs comment-to-DM automation in production — not just as a demo. Paid plans start at $9/month. For comparison: ManyChat's free tier is heavily limited, and paid plans start at $15/month and scale with contact count as your audience grows. SendDM and LinkDM are simpler tools with focused feature sets; pricing varies. SuperProfile bundles bio-link storefronts with automation and prices accordingly. What makes Liffio structurally cheaper for Instagram-focused creators is that there are no per-contact fees. You pay the same $9/month whether you automate DMs to 100 people or 10,000 people. ManyChat charges based on total contact count, which means a single viral Reel can push you into a higher tier unexpectedly. The free plan includes unlimited Instagram accounts, unlimited automated DMs, comment keyword triggers, and basic analytics — enough to validate whether automation works for your use case before paying anything.",
     },
   ],
 };

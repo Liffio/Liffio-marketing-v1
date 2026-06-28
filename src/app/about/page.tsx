@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { SITE_URL, siteConfig } from "@/config/site.config";
 import { BreadcrumbJsonLd } from "@/lib/seo/json-ld";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export const metadata: Metadata = {
   title: "About Liffio — Built in India, Made for Creators Worldwide",
@@ -59,6 +60,10 @@ export default function AboutPage() {
       <main id="main-content" className="flex-1">
         <section className="hero-gradient py-20 sm:py-28">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
+            <Breadcrumb
+              className="justify-center mb-6"
+              items={[{ label: "Home", href: "/" }, { label: "About", href: "/about" }]}
+            />
             <h1
               className="text-4xl sm:text-5xl font-extrabold text-gray-900"
               style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
