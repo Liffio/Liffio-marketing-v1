@@ -128,7 +128,7 @@ export default function CTASection() {
 
           <div className="lg:col-span-5">
             <div className="card-base rounded-2xl p-6 sm:p-8">
-              <p className="mb-6 text-xs font-semibold uppercase tracking-wider text-gray-400">
+              <p className="mb-6 text-xs font-semibold uppercase tracking-wider text-gray-500">
                 What you get
               </p>
               <ul className="space-y-5">

@@ -58,14 +58,14 @@ export default function BlogPostGrid({ posts }: { posts: BlogPost[] }) {
                       <span className="text-xs font-semibold text-[#b20d8f] bg-[#fff1f2] px-2.5 py-1 rounded-full">
                         {article.category}
                       </span>
-                      <span className="text-xs text-gray-400">{article.readTime}</span>
+                      <span className="text-xs text-gray-500">{article.readTime}</span>
                     </div>
                     <h2 className="text-base font-bold text-gray-900 mb-2 leading-snug flex-1">{article.title}</h2>
                     <p className="text-sm text-gray-500 leading-relaxed mb-4">{article.excerpt}</p>
                     <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
                       <div className="flex flex-col gap-0.5">
-                        <span className="text-xs text-gray-400">{article.date}</span>
-                        <span className="text-xs text-gray-400">{article.author}</span>
+                        <span className="text-xs text-gray-500">{article.date}</span>
+                        <span className="text-xs text-gray-500">{article.author}</span>
                       </div>
                       <Link
                         href={`/blog/${article.slug}`}

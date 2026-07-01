@@ -15,17 +15,12 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   { path: "/pricing", changeFrequency: "weekly", priority: 0.9 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.8 },
   { path: "/manychat-alternative", changeFrequency: "monthly", priority: 0.85 },
+  { path: "/senddm-alternative", changeFrequency: "monthly", priority: 0.85 },
+  { path: "/chatfuel-alternative", changeFrequency: "monthly", priority: 0.85 },
+  { path: "/about", changeFrequency: "monthly", priority: 0.7 },
   { path: "/help", changeFrequency: "weekly", priority: 0.7 },
-  { path: "/signup", changeFrequency: "monthly", priority: 0.7 },
   { path: "/creators-program", changeFrequency: "monthly", priority: 0.6 },
   { path: "/affiliate", changeFrequency: "monthly", priority: 0.6 },
-  { path: "/privacy-policy", changeFrequency: "yearly", priority: 0.3 },
-  { path: "/terms-of-service", changeFrequency: "yearly", priority: 0.3 },
-  { path: "/cookie-policy", changeFrequency: "yearly", priority: 0.3 },
-  { path: "/refund-policy", changeFrequency: "yearly", priority: 0.3 },
-  { path: "/acceptable-use-policy", changeFrequency: "yearly", priority: 0.2 },
-  { path: "/affiliate-policy", changeFrequency: "yearly", priority: 0.2 },
-  { path: "/creators-policy", changeFrequency: "yearly", priority: 0.2 },
 ] as const;
 
 export function buildSitemap(): MetadataRoute.Sitemap {

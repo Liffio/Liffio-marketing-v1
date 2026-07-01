@@ -23,8 +23,6 @@ export function OrganizationJsonLd() {
         foundingDate: "2026",
         address: {
           "@type": "PostalAddress",
-          addressLocality: "Vadodara",
-          addressRegion: "Gujarat",
           addressCountry: "IN",
         },
         sameAs: [

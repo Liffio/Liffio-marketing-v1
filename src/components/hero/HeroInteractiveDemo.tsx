@@ -180,7 +180,7 @@ export default function HeroInteractiveDemo() {
             </svg>
           </div>
           <div>
-            <p className="text-[10px] font-medium text-gray-400">Avg. response time</p>
+            <p className="text-[10px] font-medium text-gray-500">Avg. response time</p>
             <p className="text-lg font-bold tabular-nums text-[#0a0a0a]">
               1.2<span className="text-sm font-semibold text-gray-500">s</span>
             </p>
@@ -200,7 +200,7 @@ export default function HeroInteractiveDemo() {
             </svg>
           </div>
           <div>
-            <p className="text-[10px] font-medium text-gray-400">DMs sent today</p>
+            <p className="text-[10px] font-medium text-gray-500">DMs sent today</p>
             <div className="flex items-baseline gap-2">
               <p className="text-lg font-bold tabular-nums text-[#0a0a0a]">+247</p>
               <span className="rounded-full bg-emerald-50 px-1.5 py-0.5 text-[10px] font-bold text-emerald-600">
@@ -414,7 +414,7 @@ export default function HeroInteractiveDemo() {
             onClick={() => setForceScreen("dm")}
           />
         </div>
-        <p className="hidden text-[10px] text-gray-400 sm:block">Tap steps to explore</p>
+        <p className="hidden text-[10px] text-gray-500 sm:block">Tap steps to explore</p>
       </div>
     </div>
   );

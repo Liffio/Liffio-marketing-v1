@@ -5,6 +5,7 @@ import { SiteFaqSection } from "@/components/faq/SiteFaqSection";
 import { pageSeo } from "@/config/seo.config";
 import { getFeaturesFaqCategories } from "@/config/faq.config";
 import { BreadcrumbJsonLd, FaqPageJsonLd, SoftwareApplicationJsonLd } from "@/lib/seo/json-ld";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { SITE_URL } from "@/config/site.config";
 import { getPricingContext } from "@/lib/pricing-region.server";
 
@@ -26,6 +27,9 @@ export default async function FeaturesPage() {
       <FaqPageJsonLd categories={faqCategories} />
       <Navbar />
       <main id="main-content" className="flex-1">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 pt-6">
+          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Features", href: "/features" }]} />
+        </div>
         <FeaturesPageContent />
         <section aria-label="How Instagram DM automation works" className="bg-white border-y border-gray-100 py-10 sm:py-14">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 space-y-4 text-gray-600 leading-relaxed text-base">

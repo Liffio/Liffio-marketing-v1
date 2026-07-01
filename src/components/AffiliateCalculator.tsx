@@ -53,7 +53,7 @@ export default function AffiliateCalculator() {
                 onChange={(e) => setReferrals(Number(e.target.value))}
                 className="w-full accent-[#f5184c]"
               />
-              <div className="flex justify-between text-xs text-gray-400 mt-1">
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
                 <span>1</span>
                 <span>25</span>
                 <span>50</span>
@@ -110,7 +110,7 @@ export default function AffiliateCalculator() {
             ))}
           </div>
 
-          <p className="mt-4 text-center text-[11px] text-gray-400">
+          <p className="mt-4 text-center text-[11px] text-gray-500">
             Based on {referrals} referral{referrals !== 1 ? "s" : ""} × {selectedPlan.name} ${price}/mo.
             Commission rates: 25% month 1, 10% months 2 & 3. Per workspace, within 90-day window.
           </p>

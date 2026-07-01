@@ -174,6 +174,10 @@ export const BLOG_POSTS: BlogPost[] = [
         label: "Instagram Messaging API — Meta for Developers",
         url: "https://developers.facebook.com/docs/messenger-platform/instagram",
       },
+      {
+        label: "Liffio vs ManyChat — full feature and pricing comparison",
+        url: "/manychat-alternative",
+      },
     ],
   },
   {

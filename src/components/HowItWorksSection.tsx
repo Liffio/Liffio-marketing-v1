@@ -130,7 +130,7 @@ function SignupSim({ animKey }: { animKey: number }) {
               <LiffioLogoMark theme="light" size="small" className="!h-8" />
             </div>
             <p className="text-[11px] font-bold text-gray-900">Create your free account</p>
-            <p className="text-[9px] text-gray-400 mt-0.5">No credit card required</p>
+            <p className="text-[9px] text-gray-500 mt-0.5">No credit card required</p>
           </div>
 
           <div className="space-y-2.5 flex-1">

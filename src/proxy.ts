@@ -1,25 +1,23 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import {
-  getCountryCodeFromHeaders,
-  PRICING_REGION_COOKIE,
-  resolvePricingRegion,
-} from "@/lib/pricing-region";
+import { getCountryCodeFromHeaders, resolvePricingRegion } from "@/lib/pricing-region";
 
 export function proxy(request: NextRequest) {
   const country = getCountryCodeFromHeaders(request.headers);
   const region = resolvePricingRegion(country);
-  const response = NextResponse.next();
 
-  response.cookies.set(PRICING_REGION_COOKIE, region, {
-    path: "/",
-    maxAge: 60 * 60 * 24,
-    sameSite: "lax",
+  // Pass pricing region to server components via request headers (not response cookies).
+  // This keeps responses cacheable — no Set-Cookie means Vercel edge cache can serve them.
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-pricing-region", region);
+
+  return NextResponse.next({
+    request: { headers: requestHeaders },
   });
-
-  return response;
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|txt|ico)$).*)",
+  ],
 };

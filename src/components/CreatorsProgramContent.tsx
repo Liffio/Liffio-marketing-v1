@@ -312,7 +312,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
                 style={{ background: "rgba(124,90,243,0.08)" }}>📋</span>
               What We Ask in Return
             </h3>
-            <p className="text-xs text-gray-400 mb-5 leading-relaxed">
+            <p className="text-xs text-gray-500 mb-5 leading-relaxed">
               The program is free - but it&apos;s not passive. We need creators who actively use the platform.
             </p>
             <ul className="space-y-4">
