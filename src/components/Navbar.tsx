@@ -20,7 +20,7 @@ const navLinkClass =
   "px-4 py-2 text-sm font-medium text-gray-500 rounded-lg transition-all duration-150 hover:text-[#0a0a0a] hover:bg-[#faf8ff]";
 
 const mobileNavLinkClass =
-  "px-4 py-3 text-sm font-medium text-gray-600 rounded-xl hover:bg-[#faf8ff] hover:text-[#7c5af3] transition-colors";
+  "px-4 py-3 text-sm font-medium text-gray-600 rounded-xl hover:bg-[#faf8ff] hover:text-[#f5184c] transition-colors";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,7 +44,7 @@ export default function Navbar() {
     <div className="sticky top-0 z-50">
       <div
         className="px-3 py-2 text-center text-[11px] font-medium leading-snug text-white sm:px-4 sm:text-sm"
-        style={{ background: "linear-gradient(135deg, #7c5af3 0%, #4259f0 100%)" }}
+        style={{ background: "linear-gradient(135deg, #f5184c 0%, #b20d8f 100%)" }}
       >
         <span>
           {ANNOUNCEMENT_MESSAGES[announcementIndex]}{" "}
@@ -84,7 +84,7 @@ export default function Navbar() {
                 href={siteConfig.urls.appSignup}
                 className="rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg active:scale-[0.98]"
                 style={{
-                  background: "linear-gradient(135deg, #7c5af3, #4259f0)",
+                  background: "linear-gradient(135deg, #f5184c, #b20d8f)",
                   boxShadow: "0 2px 12px rgba(66,89,240,0.28)",
                 }}
               >
@@ -96,7 +96,7 @@ export default function Navbar() {
               <a
                 href={siteConfig.urls.appSignup}
                 className="hidden min-[400px]:inline-flex rounded-lg px-3 py-2 text-xs font-semibold text-white sm:text-sm"
-                style={{ background: "linear-gradient(135deg, #7c5af3, #4259f0)" }}
+                style={{ background: "linear-gradient(135deg, #f5184c, #b20d8f)" }}
               >
                 Sign up
               </a>
@@ -144,7 +144,7 @@ export default function Navbar() {
             <a
               href={siteConfig.urls.appSignup}
               className="block w-full rounded-xl py-3.5 text-center text-sm font-semibold text-white"
-              style={{ background: "linear-gradient(135deg, #7c5af3, #4259f0)" }}
+              style={{ background: "linear-gradient(135deg, #f5184c, #b20d8f)" }}
             >
               Get Started Free →
             </a>

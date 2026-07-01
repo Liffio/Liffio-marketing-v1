@@ -100,7 +100,7 @@ function Bubble({
             <p className="text-[9px] font-bold text-gray-900">{name}</p>
             <p className="text-[9px] text-gray-700 mt-0.5 leading-snug">{msg}</p>
             {cta && (
-              <div className="mt-1 rounded-md px-2 py-0.5 bg-[#4259f0] text-center">
+              <div className="mt-1 rounded-md px-2 py-0.5 bg-[#b20d8f] text-center">
                 <p className="text-[8px] text-white font-bold">{cta}</p>
               </div>
             )}
@@ -266,7 +266,7 @@ export function LiveReplyPhone({ animKey }: { animKey: number }) {
         {/* Input */}
         <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2">
           <div className="flex-1 bg-white/20 backdrop-blur rounded-full px-3 py-1.5 text-[9px] text-white/60">Add a comment...</div>
-          <div className="w-6 h-6 rounded-full flex items-center justify-center bg-[#4259f0]/80">
+          <div className="w-6 h-6 rounded-full flex items-center justify-center bg-[#b20d8f]/80">
             <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
           </div>
         </div>
@@ -300,7 +300,7 @@ export function DmReplyPhone({ animKey }: { animKey: number }) {
           <p className="text-[8px] text-gray-400 text-center">Today 2:41 PM</p>
           {visible.includes(0) && (
             <div className="flex justify-end transition-all duration-500" style={{ opacity: 1, transform: "translateY(0)" }}>
-              <div className="bg-[#4259f0] rounded-2xl rounded-br-sm px-3 py-1.5">
+              <div className="bg-[#b20d8f] rounded-2xl rounded-br-sm px-3 py-1.5">
                 <p className="text-[10px] text-white font-semibold">MENU</p>
               </div>
             </div>
@@ -312,7 +312,7 @@ export function DmReplyPhone({ animKey }: { animKey: number }) {
                 <Av label="PS" gradient={botGrad} size={5} />
                 <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-3 py-2 shadow-sm">
                   <p className="text-[9px] text-gray-800">Hey! Here&apos;s our menu and order link.</p>
-                  <div className="mt-1.5 bg-[#4259f0] rounded-lg px-2 py-1 text-center">
+                  <div className="mt-1.5 bg-[#b20d8f] rounded-lg px-2 py-1 text-center">
                     <p className="text-[9px] text-white font-bold">View Menu</p>
                   </div>
                 </div>
@@ -378,7 +378,7 @@ export function AskFollowPhone({ animKey }: { animKey: number }) {
                   <p className="text-[9px] font-bold text-gray-900">art_apparel</p>
                   <p className="text-[8px] text-gray-500">120K followers</p>
                 </div>
-                <div className="bg-[#4259f0] rounded-md px-2 py-0.5">
+                <div className="bg-[#b20d8f] rounded-md px-2 py-0.5">
                   <p className="text-[8px] text-white font-bold">Following</p>
                 </div>
               </div>
@@ -419,7 +419,7 @@ export function ReengagePhone({ animKey }: { animKey: number }) {
               <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[8px] font-bold flex-shrink-0" style={{ background: c.grad }}>{c.init}</div>
               <p className="text-[9px] text-gray-700 flex-1 leading-tight"><span className="font-bold">{c.name}</span> {c.msg}</p>
               {c.action ? (
-                <div className={`rounded-md px-2 py-0.5 flex-shrink-0 ${c.highlight ? "bg-[#4259f0]" : "border border-gray-300"}`}>
+                <div className={`rounded-md px-2 py-0.5 flex-shrink-0 ${c.highlight ? "bg-[#b20d8f]" : "border border-gray-300"}`}>
                   <p className={`text-[8px] font-bold ${c.highlight ? "text-white" : "text-gray-700"}`}>{c.action}</p>
                 </div>
               ) : <div className="w-7 h-7 rounded-md bg-gray-100 flex-shrink-0" />}
@@ -483,10 +483,10 @@ export function CollectDataPhone({ animKey }: { animKey: number }) {
                 {m.left ? (
                   <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-3 py-2 shadow-sm max-w-[80%]">
                     <p className="text-[9px] text-gray-800">{m.msg}</p>
-                    {m.cta && <div className="mt-1.5 bg-[#4259f0] rounded-lg px-2 py-1 text-center"><p className="text-[9px] text-white font-bold">{m.cta}</p></div>}
+                    {m.cta && <div className="mt-1.5 bg-[#b20d8f] rounded-lg px-2 py-1 text-center"><p className="text-[9px] text-white font-bold">{m.cta}</p></div>}
                   </div>
                 ) : (
-                  <div className="bg-[#4259f0] rounded-2xl rounded-br-sm px-3 py-1.5 max-w-[70%]">
+                  <div className="bg-[#b20d8f] rounded-2xl rounded-br-sm px-3 py-1.5 max-w-[70%]">
                     <p className="text-[9px] text-white">{m.msg}</p>
                   </div>
                 )}
@@ -538,13 +538,13 @@ export function WelcomeFollowersPhone({ animKey }: { animKey: number }) {
               <LiffioAvatar size={5} />
               <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-3 py-2 shadow-sm max-w-[85%]">
                 <p className="text-[9px] text-gray-800">🎁 As a new follower, here's an exclusive 20% off code just for you:</p>
-                <div className="mt-1.5 bg-[#4259f0] rounded-lg px-2 py-1 text-center"><p className="text-[9px] text-white font-bold">Get Discount</p></div>
+                <div className="mt-1.5 bg-[#b20d8f] rounded-lg px-2 py-1 text-center"><p className="text-[9px] text-white font-bold">Get Discount</p></div>
               </div>
             </div>
           )}
           {visible.includes(2) && (
             <div className="flex justify-end transition-all duration-500">
-              <div className="bg-[#4259f0] rounded-2xl rounded-br-sm px-3 py-1.5"><p className="text-[9px] text-white">Omg thank you! 🙏</p></div>
+              <div className="bg-[#b20d8f] rounded-2xl rounded-br-sm px-3 py-1.5"><p className="text-[9px] text-white">Omg thank you! 🙏</p></div>
             </div>
           )}
         </div>
@@ -563,7 +563,7 @@ const features = [
   {
     id: "auto-comment-reply",
     num: "01",
-    color: "#a855f7",
+    color: "#ff7c49",
     bg: "rgba(168,85,247,0.07)",
     border: "rgba(168,85,247,0.18)",
     tag: "Comments → DMs",
@@ -591,7 +591,7 @@ const features = [
   {
     id: "live-auto-reply",
     num: "03",
-    color: "#7c5af3",
+    color: "#f5184c",
     bg: "rgba(124,90,243,0.07)",
     border: "rgba(124,90,243,0.18)",
     tag: "Live stream DMs",
@@ -619,7 +619,7 @@ const features = [
   {
     id: "ask-for-follow",
     num: "05",
-    color: "#4259f0",
+    color: "#b20d8f",
     bg: "rgba(66,89,240,0.07)",
     border: "rgba(66,89,240,0.18)",
     tag: "Follow gate",
@@ -741,9 +741,9 @@ export default function FeaturesSection() {
           </div>
           <div className="flex flex-wrap gap-2 lg:max-w-sm lg:justify-end">
             {[
-              { label: "Auto DM + Auto Comment", color: "#a855f7" },
-              { label: "10–60s human-like delay", color: "#7c5af3" },
-              { label: "Unlimited auto DMs", color: "#4259f0" },
+              { label: "Auto DM + Auto Comment", color: "#ff7c49" },
+              { label: "10–60s human-like delay", color: "#f5184c" },
+              { label: "Unlimited auto DMs", color: "#b20d8f" },
             ].map((chip) => (
               <TechBadge key={chip.label} label={chip.label} variant="chip" accent={chip.color} />
             ))}
@@ -878,7 +878,7 @@ export default function FeaturesSection() {
               id="features-cta"
               className="btn-primary mt-4 flex w-full items-center justify-center gap-2 px-5 py-3.5 text-sm active:scale-[0.98]"
               style={{
-                background: `linear-gradient(135deg,${f.color},#4259f0)`,
+                background: `linear-gradient(135deg,${f.color},#b20d8f)`,
                 boxShadow: `0 4px 20px ${f.color}40`,
               }}
             >
@@ -901,7 +901,7 @@ export default function FeaturesSection() {
                     height: 5,
                     background:
                       i === activeFeature
-                        ? `linear-gradient(90deg,${feat.color},#4259f0)`
+                        ? `linear-gradient(90deg,${feat.color},#b20d8f)`
                         : "#e5e7eb",
                   }}
                 />
@@ -1017,7 +1017,7 @@ export default function FeaturesSection() {
                             id={i === 0 ? "features-cta" : undefined}
                             className="mt-4 inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-xs font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
                             style={{
-                              background: `linear-gradient(135deg,${feat.color},#4259f0)`,
+                              background: `linear-gradient(135deg,${feat.color},#b20d8f)`,
                               boxShadow: `0 4px 14px ${feat.color}40`,
                             }}
                             onClick={(e) => e.stopPropagation()}
@@ -1047,7 +1047,7 @@ export default function FeaturesSection() {
                   style={{
                     width: i === activeFeature ? 18 : 5,
                     height: 5,
-                    background: i === activeFeature ? `linear-gradient(90deg,${feat.color},#4259f0)` : "#e5e7eb",
+                    background: i === activeFeature ? `linear-gradient(90deg,${feat.color},#b20d8f)` : "#e5e7eb",
                   }}
                 />
               ))}

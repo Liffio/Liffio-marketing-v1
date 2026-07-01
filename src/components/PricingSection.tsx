@@ -14,7 +14,7 @@ function CheckIcon({ light }: { light?: boolean }) {
       <circle cx="8" cy="8" r="8" fill={light ? "rgba(255,255,255,0.2)" : "rgba(124,90,243,0.12)"} />
       <path
         d="M4.5 8.5l2 2 4.5-5"
-        stroke={light ? "white" : "#7c5af3"}
+        stroke={light ? "white" : "#f5184c"}
         strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -34,7 +34,7 @@ function MobilePlanCard({ plan, annual }: { plan: PricingPlan; annual: boolean }
       }`}
       style={
         light
-          ? { background: "linear-gradient(155deg,#7c5af3,#5648ea,#4259f0)" }
+          ? { background: "linear-gradient(155deg,#f5184c,#5648ea,#b20d8f)" }
           : undefined
       }
     >
@@ -71,8 +71,8 @@ function MobilePlanCard({ plan, annual }: { plan: PricingPlan; annual: boolean }
         className="block w-full rounded-xl py-2.5 text-center text-sm font-semibold transition-all active:scale-[0.98]"
         style={
           light
-            ? { background: "white", color: "#4259f0" }
-            : { background: "linear-gradient(135deg,#7c5af3,#4259f0)", color: "white" }
+            ? { background: "white", color: "#b20d8f" }
+            : { background: "linear-gradient(135deg,#f5184c,#b20d8f)", color: "white" }
         }
       >
         {plan.cta}
@@ -92,7 +92,7 @@ function PricingMobilePreview({ plans }: { plans: PricingPlan[] }) {
           type="button"
           onClick={() => setAnnual(!annual)}
           className="relative h-6 w-11 rounded-full transition-colors duration-300"
-          style={{ background: annual ? "linear-gradient(135deg,#7c5af3,#4259f0)" : "#e4e4e7" }}
+          style={{ background: annual ? "linear-gradient(135deg,#f5184c,#b20d8f)" : "#e4e4e7" }}
           aria-label="Toggle annual billing"
         >
           <span

@@ -26,7 +26,7 @@ export default function BlogPostGrid({ posts }: { posts: BlogPost[] }) {
                 onClick={() => setActive(cat)}
                 className={`shrink-0 rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
                   active === cat
-                    ? "text-white [background:linear-gradient(135deg,#7c5af3,#4259f0)]"
+                    ? "text-white [background:linear-gradient(135deg,#f5184c,#b20d8f)]"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
               >
@@ -55,7 +55,7 @@ export default function BlogPostGrid({ posts }: { posts: BlogPost[] }) {
                   </div>
                   <div className="p-6 flex-1 flex flex-col">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="text-xs font-semibold text-[#4259f0] bg-[#f3f0ff] px-2.5 py-1 rounded-full">
+                      <span className="text-xs font-semibold text-[#b20d8f] bg-[#fff1f2] px-2.5 py-1 rounded-full">
                         {article.category}
                       </span>
                       <span className="text-xs text-gray-400">{article.readTime}</span>
@@ -69,7 +69,7 @@ export default function BlogPostGrid({ posts }: { posts: BlogPost[] }) {
                       </div>
                       <Link
                         href={`/blog/${article.slug}`}
-                        className="text-xs font-semibold text-[#4259f0] hover:text-[#3245d8] flex items-center gap-1"
+                        className="text-xs font-semibold text-[#b20d8f] hover:text-[#dc0f42] flex items-center gap-1"
                       >
                         Read more
                         <svg

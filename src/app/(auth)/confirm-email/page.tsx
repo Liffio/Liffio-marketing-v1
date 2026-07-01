@@ -120,7 +120,7 @@ function ConfirmEmailPageInner() {
     <div className="w-full max-w-md">
       <AuthCard>
         <header className="mb-6 border-b border-gray-100 pb-5">
-          <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-purple-100">
+          <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-rose-100">
             <MailIcon />
           </div>
           <h1 className="font-display text-xl font-semibold tracking-tight text-gray-900">Verify your email</h1>

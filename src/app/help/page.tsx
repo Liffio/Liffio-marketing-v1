@@ -60,7 +60,7 @@ export default async function HelpPage() {
                   <div className="text-2xl mb-2">{item.icon}</div>
                   <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">{item.label}</p>
                   {item.href ? (
-                    <a href={item.href} className="text-sm font-semibold text-[#4259f0] hover:underline mt-1 block">
+                    <a href={item.href} className="text-sm font-semibold text-[#b20d8f] hover:underline mt-1 block">
                       {item.value}
                     </a>
                   ) : (
@@ -91,7 +91,7 @@ export default async function HelpPage() {
             Ready to get started?
           </h2>
           <div className="flex justify-center gap-4 flex-wrap">
-            <a href={siteConfig.urls.appSignup} id="help-cta" className="rounded-xl px-8 py-3.5 text-sm font-semibold text-white hover:opacity-90 transition-opacity shadow-lg [background:linear-gradient(135deg,#7c5af3,#4259f0)]">
+            <a href={siteConfig.urls.appSignup} id="help-cta" className="rounded-xl px-8 py-3.5 text-sm font-semibold text-white hover:opacity-90 transition-opacity shadow-lg [background:linear-gradient(135deg,#f5184c,#b20d8f)]">
               Get Started Free
             </a>
             <a href="/pricing" className="rounded-xl border border-gray-200 px-8 py-3.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">

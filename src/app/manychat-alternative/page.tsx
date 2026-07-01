@@ -76,7 +76,7 @@ export default function ManyChatAlternativePage() {
             </p>
             <a
               href={siteConfig.urls.appSignup}
-              className="mt-8 inline-flex rounded-xl px-8 py-3.5 text-sm font-semibold text-white shadow-lg [background:linear-gradient(135deg,#7c5af3,#4259f0)]"
+              className="mt-8 inline-flex rounded-xl px-8 py-3.5 text-sm font-semibold text-white shadow-lg [background:linear-gradient(135deg,#f5184c,#b20d8f)]"
             >
               Get Started Free
             </a>
@@ -88,7 +88,7 @@ export default function ManyChatAlternativePage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Liffio vs ManyChat - side-by-side comparison</h2>
             <p className="text-gray-600 mb-8">
               Compare comment-to-DM, pricing model, and platform extras.{" "}
-              <a href="/blog/manychat-alternatives" className="text-[#4259f0] font-semibold hover:underline">
+              <a href="/blog/manychat-alternatives" className="text-[#b20d8f] font-semibold hover:underline">
                 Read the full alternatives guide →
               </a>
             </p>

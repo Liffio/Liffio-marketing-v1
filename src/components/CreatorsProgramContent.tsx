@@ -101,7 +101,7 @@ function Check({ green }: { green?: boolean }) {
   return (
     <svg viewBox="0 0 16 16" className="h-4 w-4 flex-shrink-0 mt-0.5" fill="none">
       <circle cx="8" cy="8" r="8" fill={green ? "rgba(16,185,129,0.1)" : "rgba(124,90,243,0.1)"} />
-      <path d="M4.5 8.5l2 2 4.5-5" stroke={green ? "#10b981" : "#7c5af3"} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4.5 8.5l2 2 4.5-5" stroke={green ? "#10b981" : "#f5184c"} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -154,7 +154,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
         <button
           onClick={() => document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })}
           className="flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-white shadow-xl transition-all duration-200 hover:opacity-90"
-          style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)", boxShadow: "0 10px 40px rgba(66,89,240,0.45)" }}>
+          style={{ background: "linear-gradient(135deg,#f5184c,#b20d8f)", boxShadow: "0 10px 40px rgba(66,89,240,0.45)" }}>
           Apply Now ↓
         </button>
       </div>
@@ -172,7 +172,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
           <h1 className="font-extrabold text-[#0a0a0a] leading-tight mb-5"
             style={{ fontFamily: "var(--font-outfit,sans-serif)", fontSize: "clamp(2.2rem,5vw,3.75rem)" }}>
             Get{" "}
-            <span style={{ background: "linear-gradient(130deg,#a855f7,#7c5af3,#4259f0)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            <span style={{ background: "linear-gradient(130deg,#ff7c49,#f5184c,#b20d8f)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               Business Plan
             </span>
             {" "}access -{" "}
@@ -205,10 +205,10 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
               {
                 num: spotsRemaining !== null ? String(spotsRemaining) : "-",
                 label: `Spots remaining out of ${spotsCap}`,
-                color: "#7c5af3",
+                color: "#f5184c",
               },
-              { num: businessPlanValue, label: "Value - completely free", color: "#a855f7" },
-              { num: "48h", label: "Review turnaround", color: "#4259f0" },
+              { num: businessPlanValue, label: "Value - completely free", color: "#ff7c49" },
+              { num: "48h", label: "Review turnaround", color: "#b20d8f" },
               { num: "10+", label: "Countries represented", color: "#6366f1" },
             ].map((s, i) => (
               <div key={s.label}
@@ -228,7 +228,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
       <section className="py-16 sm:py-20 px-4 bg-white">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-10">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#7c5af3] mb-2">Getting started</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-2">Getting started</p>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0a0a0a]"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}>How It Works</h2>
           </div>
@@ -238,7 +238,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
                 className="rounded-2xl p-6 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
                 style={{ border: "1px solid rgba(124,90,243,0.12)", boxShadow: "0 2px 12px rgba(124,90,243,0.05)" }}>
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-lg mb-4"
-                  style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)" }}>
+                  style={{ background: "linear-gradient(135deg,#f5184c,#b20d8f)" }}>
                   {step.num}
                 </div>
                 <h3 className="text-base font-bold text-[#0a0a0a] mb-2">{step.title}</h3>
@@ -253,7 +253,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
       <section className="py-16 sm:py-20 px-4" style={{ background: "#faf8ff" }}>
         <div className="mx-auto max-w-5xl">
           <div className="text-center mb-10">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#7c5af3] mb-2">What you get</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-2">What you get</p>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0a0a0a] mb-3"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}>
               Everything Included. No Strings.
@@ -271,7 +271,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <h3 className="text-base font-bold text-[#0a0a0a]">{b.title}</h3>
                   <span className="flex-shrink-0 text-[10px] font-bold rounded-full px-2.5 py-1"
-                    style={{ background: "rgba(124,90,243,0.08)", color: "#7c5af3", border: "1px solid rgba(124,90,243,0.15)" }}>
+                    style={{ background: "rgba(124,90,243,0.08)", color: "#f5184c", border: "1px solid rgba(124,90,243,0.15)" }}>
                     {b.tag}
                   </span>
                 </div>
@@ -319,11 +319,11 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
               {REQUIREMENTS.map((r, i) => (
                 <li key={r.label} className="flex items-start gap-3">
                   <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-                    style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)" }}>
+                    style={{ background: "linear-gradient(135deg,#f5184c,#b20d8f)" }}>
                     {i + 1}
                   </span>
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#7c5af3] block mb-0.5">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#f5184c] block mb-0.5">
                       {r.label}
                     </span>
                     <span className="text-sm text-gray-600">{r.text}</span>
@@ -340,7 +340,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
         style={{ background: "linear-gradient(155deg,#f8f5ff,#f0ebff 60%,#faf5ff)" }}>
         <div className="mx-auto max-w-2xl">
           <div className="text-center mb-8">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#7c5af3] mb-2">Application</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-2">Application</p>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0a0a0a] mb-3"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}>
               Apply to the Creators Program

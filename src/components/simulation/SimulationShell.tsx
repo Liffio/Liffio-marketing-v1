@@ -30,7 +30,7 @@ export function SimulationShell({
                 "0 24px 80px rgba(66,89,240,0.18), 0 8px 32px rgba(124,90,243,0.1), inset 0 1px 0 rgba(255,255,255,0.8)",
             }
           : {
-              background: "linear-gradient(145deg,#f5f0ff,#ede8fe 55%,#f8f5ff)",
+              background: "linear-gradient(145deg,#f5f0ff,#ffe4e6 55%,#f8f5ff)",
               border: "1px solid rgba(124,90,243,0.16)",
               boxShadow: "0 20px 60px rgba(66,89,240,0.13), 0 4px 16px rgba(124,90,243,0.08)",
             }
@@ -61,7 +61,7 @@ export function SimulationShell({
 
       <div
         className={`absolute left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full bg-white/95 px-3.5 py-1.5 backdrop-blur-md ${
-          isHero ? "top-5 shadow-lg ring-1 ring-[#7c5af3]/15" : "top-4 shadow-sm"
+          isHero ? "top-5 shadow-lg ring-1 ring-[#f5184c]/15" : "top-4 shadow-sm"
         }`}
         style={{ border: "1px solid rgba(124,90,243,0.12)" }}
       >

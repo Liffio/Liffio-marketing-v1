@@ -26,7 +26,7 @@ const MetaLogo = () => (
 const VALUE_PROPS = [
   {
     icon: (
-      <svg className="h-4 w-4 text-[#7c5af3]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
+      <svg className="h-4 w-4 text-[#f5184c]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
       </svg>
     ),
@@ -42,7 +42,7 @@ const VALUE_PROPS = [
   },
   {
     icon: (
-      <svg className="h-4 w-4 text-[#4259f0]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
+      <svg className="h-4 w-4 text-[#b20d8f]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
       </svg>
     ),
@@ -119,7 +119,7 @@ export default function HeroSection() {
                 href={siteConfig.urls.appSignup}
                 className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.98] sm:w-auto"
                 style={{
-                  background: "linear-gradient(135deg,#7c5af3,#4259f0)",
+                  background: "linear-gradient(135deg,#f5184c,#b20d8f)",
                   boxShadow: "0 8px 28px rgba(66,89,240,0.4)",
                 }}
               >
@@ -131,9 +131,9 @@ export default function HeroSection() {
               </a>
               <a
                 href="#how-it-works"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#e5e0f8] bg-white/80 px-7 py-3.5 text-sm font-semibold text-gray-700 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-[#c4b8f5] hover:text-[#7c5af3] hover:shadow-md sm:w-auto"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#e5e0f8] bg-white/80 px-7 py-3.5 text-sm font-semibold text-gray-700 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-[#c4b8f5] hover:text-[#f5184c] hover:shadow-md sm:w-auto"
               >
-                <svg className="h-4 w-4 text-[#7c5af3]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
+                <svg className="h-4 w-4 text-[#f5184c]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
                 </svg>
                 See How It Works

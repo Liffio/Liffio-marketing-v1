@@ -19,7 +19,7 @@ const steps = [
   {
     num: "01",
     shortTitle: "Sign up",
-    color: "#a855f7",
+    color: "#ff7c49",
     bg: "rgba(168,85,247,0.07)",
     border: "rgba(168,85,247,0.18)",
     title: "Create Your Free Auto DM Account",
@@ -39,7 +39,7 @@ const steps = [
   {
     num: "02",
     shortTitle: "Connect",
-    color: "#7c5af3",
+    color: "#f5184c",
     bg: "rgba(124,90,243,0.07)",
     border: "rgba(124,90,243,0.18)",
     title: "Connect Instagram for Auto DM",
@@ -58,7 +58,7 @@ const steps = [
   {
     num: "03",
     shortTitle: "Go live",
-    color: "#4259f0",
+    color: "#b20d8f",
     bg: "rgba(66,89,240,0.07)",
     border: "rgba(66,89,240,0.18)",
     title: "Launch Your Auto DMs",
@@ -138,10 +138,10 @@ function SignupSim({ animKey }: { animKey: number }) {
             <label className="text-[9px] font-semibold text-gray-500 uppercase tracking-wide">Email</label>
             <div
               className="mt-1 rounded-lg border px-3 py-2 text-[11px] text-gray-800 flex items-center gap-1 transition-all duration-300"
-              style={{ borderColor: phase >= 1 ? "#7c5af3" : "#e5e7eb", background: phase >= 1 ? "rgba(124,90,243,0.03)" : "#fafafa" }}
+              style={{ borderColor: phase >= 1 ? "#f5184c" : "#e5e7eb", background: phase >= 1 ? "rgba(124,90,243,0.03)" : "#fafafa" }}
             >
               {typedEmail || <span className="text-gray-300">you@email.com</span>}
-              {phase === 1 && <span className="w-0.5 h-3.5 bg-[#7c5af3] animate-pulse ml-0.5" />}
+              {phase === 1 && <span className="w-0.5 h-3.5 bg-[#f5184c] animate-pulse ml-0.5" />}
             </div>
           </div>
 
@@ -152,7 +152,7 @@ function SignupSim({ animKey }: { animKey: number }) {
             <label className="text-[9px] font-semibold text-gray-500 uppercase tracking-wide">Password</label>
             <div
               className="mt-1 rounded-lg border px-3 py-2 text-[11px] tracking-widest text-gray-600"
-              style={{ borderColor: showPassword ? "#7c5af3" : "#e5e7eb", background: showPassword ? "rgba(124,90,243,0.03)" : "#fafafa" }}
+              style={{ borderColor: showPassword ? "#f5184c" : "#e5e7eb", background: showPassword ? "rgba(124,90,243,0.03)" : "#fafafa" }}
             >
               {showPassword ? "••••••••" : ""}
             </div>
@@ -161,7 +161,7 @@ function SignupSim({ animKey }: { animKey: number }) {
           <button
             className="w-full rounded-xl py-2.5 text-[11px] font-bold text-white transition-all duration-300"
             style={{
-              background: buttonActive ? "linear-gradient(135deg,#7c5af3,#4259f0)" : "#e5e7eb",
+              background: buttonActive ? "linear-gradient(135deg,#f5184c,#b20d8f)" : "#e5e7eb",
               color: buttonActive ? "white" : "#9ca3af",
               boxShadow: buttonActive ? "0 4px 16px rgba(66,89,240,0.35)" : "none",
               transform: phase === 3 ? "scale(0.97)" : "scale(1)",
@@ -349,11 +349,11 @@ function LaunchSim({ animKey }: { animKey: number }) {
 
             <label className="text-[8px] font-semibold text-gray-400 uppercase">Trigger keyword</label>
             <div
-              className="mt-1 rounded-lg border px-2.5 py-1.5 text-[10px] font-bold text-[#7c5af3] mb-2 transition-all duration-300"
-              style={{ borderColor: phase >= 1 ? "#7c5af3" : "#e5e7eb", background: "rgba(124,90,243,0.04)" }}
+              className="mt-1 rounded-lg border px-2.5 py-1.5 text-[10px] font-bold text-[#f5184c] mb-2 transition-all duration-300"
+              style={{ borderColor: phase >= 1 ? "#f5184c" : "#e5e7eb", background: "rgba(124,90,243,0.04)" }}
             >
               {keyword || <span className="text-gray-300 font-normal">Enter keyword…</span>}
-              {phase === 1 && <span className="inline-block w-0.5 h-3 bg-[#7c5af3] animate-pulse ml-0.5 align-middle" />}
+              {phase === 1 && <span className="inline-block w-0.5 h-3 bg-[#f5184c] animate-pulse ml-0.5 align-middle" />}
             </div>
 
             <label className="text-[8px] font-semibold text-gray-400 uppercase">DM message</label>
@@ -426,9 +426,9 @@ function LaunchSim({ animKey }: { animKey: number }) {
               className="flex items-center justify-center gap-1 py-0.5 transition-all duration-300"
               style={{ opacity: dmVisible ? 1 : 0 }}
             >
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#7c5af3]/30" />
-              <span className="text-[7px] font-bold text-[#7c5af3] uppercase tracking-wider">Auto DM · 1.2s</span>
-              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#7c5af3]/30" />
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#f5184c]/30" />
+              <span className="text-[7px] font-bold text-[#f5184c] uppercase tracking-wider">Auto DM · 1.2s</span>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#f5184c]/30" />
             </div>
 
             {/* DM thread */}
@@ -456,7 +456,7 @@ function LaunchSim({ animKey }: { animKey: number }) {
                 <Av label="AA" gradient="linear-gradient(135deg,#f06292,#e91e63)" size={5} />
                 <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-2.5 py-1.5 shadow-sm max-w-[80%]">
                   <p className="text-[9px] text-gray-800">Hey John! Here&apos;s your link 👇</p>
-                  <div className="mt-1 rounded-md px-2 py-0.5 text-center" style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)" }}>
+                  <div className="mt-1 rounded-md px-2 py-0.5 text-center" style={{ background: "linear-gradient(135deg,#f5184c,#b20d8f)" }}>
                     <span className="text-[8px] text-white font-bold">Open Link</span>
                   </div>
                 </div>
@@ -474,7 +474,7 @@ function LaunchSim({ animKey }: { animKey: number }) {
               }}
             >
               <p className="text-[8px] text-gray-500">First automated DM</p>
-              <p className="text-sm font-black text-[#4259f0]" style={{ fontFamily: "var(--font-outfit,sans-serif)" }}>
+              <p className="text-sm font-black text-[#b20d8f]" style={{ fontFamily: "var(--font-outfit,sans-serif)" }}>
                 4 min 12 sec
               </p>
             </div>
@@ -680,7 +680,7 @@ export default function HowItWorksSection() {
               href={siteConfig.urls.appSignup}
               className="btn-primary mt-4 flex w-full items-center justify-center gap-2 px-5 py-3.5 text-sm active:scale-[0.98]"
               style={{
-                background: `linear-gradient(135deg,${step.color},#4259f0)`,
+                background: `linear-gradient(135deg,${step.color},#b20d8f)`,
                 boxShadow: `0 4px 20px ${step.color}40`,
               }}
             >
@@ -703,7 +703,7 @@ export default function HowItWorksSection() {
                     height: 5,
                     background:
                       i === activeStep
-                        ? `linear-gradient(90deg,${s.color},#4259f0)`
+                        ? `linear-gradient(90deg,${s.color},#b20d8f)`
                         : "#e5e7eb",
                   }}
                 />
@@ -802,7 +802,7 @@ export default function HowItWorksSection() {
                   style={{
                     width: i === activeStep ? 20 : 6,
                     height: 6,
-                    background: i === activeStep ? "linear-gradient(90deg,#7c5af3,#4259f0)" : "#d4d0e8",
+                    background: i === activeStep ? "linear-gradient(90deg,#f5184c,#b20d8f)" : "#d4d0e8",
                   }}
                 />
               ))}

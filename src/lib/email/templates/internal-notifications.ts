@@ -47,7 +47,7 @@ export function getCreatorApplicationAlertHtml(data: CreatorApplicationAlertData
 <body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,sans-serif;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;margin:0 auto;background:#fff;border:1px solid #E2E8F0;border-radius:14px;">
     <tr><td style="padding:28px;">
-      <p style="margin:0 0 10px;font-size:12px;color:#4259f0;font-weight:700;letter-spacing:.08em;">ADMIN ALERT - ${brand.name}</p>
+      <p style="margin:0 0 10px;font-size:12px;color:#b20d8f;font-weight:700;letter-spacing:.08em;">ADMIN ALERT - ${brand.name}</p>
       <h1 style="margin:0 0 14px;font-size:24px;color:#0F172A;">New creator application submitted</h1>
       <p style="margin:0 0 18px;color:#475569;line-height:1.6;">A new applicant has submitted the Creators Program form.</p>
       <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #E2E8F0;border-radius:10px;">
@@ -58,7 +58,7 @@ export function getCreatorApplicationAlertHtml(data: CreatorApplicationAlertData
         <tr><td style="padding:12px 14px;"><strong>Niche:</strong> ${data.contentNiche}</td></tr>
       </table>
       <p style="margin:22px 0 0;">
-        <a href="${approvalsUrl}" style="display:inline-block;background:#4259f0;color:#fff;text-decoration:none;padding:12px 18px;border-radius:10px;font-weight:700;">Open approvals dashboard</a>
+        <a href="${approvalsUrl}" style="display:inline-block;background:#b20d8f;color:#fff;text-decoration:none;padding:12px 18px;border-radius:10px;font-weight:700;">Open approvals dashboard</a>
       </p>
     </td></tr>
   </table>
@@ -92,7 +92,7 @@ export function getPreRegistrationAlertHtml(data: PreRegistrationAlertData): str
 <body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,sans-serif;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;margin:0 auto;background:#fff;border:1px solid #E2E8F0;border-radius:14px;">
     <tr><td style="padding:28px;">
-      <p style="margin:0 0 10px;font-size:12px;color:#7c5af3;font-weight:700;letter-spacing:.08em;">ADMIN ALERT</p>
+      <p style="margin:0 0 10px;font-size:12px;color:#f5184c;font-weight:700;letter-spacing:.08em;">ADMIN ALERT</p>
       <h1 style="margin:0 0 14px;font-size:24px;color:#0F172A;">New preregistration submitted</h1>
       <p style="margin:0 0 18px;color:#475569;line-height:1.6;">A new user has joined the waitlist.</p>
       <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #E2E8F0;border-radius:10px;">
@@ -102,7 +102,7 @@ export function getPreRegistrationAlertHtml(data: PreRegistrationAlertData): str
         <tr><td style="padding:12px 14px;"><strong>Offer tier:</strong> ${data.tier}</td></tr>
       </table>
       <p style="margin:22px 0 0;">
-        <a href="${registrationsUrl}" style="display:inline-block;background:#7c5af3;color:#fff;text-decoration:none;padding:12px 18px;border-radius:10px;font-weight:700;">Open registrations dashboard</a>
+        <a href="${registrationsUrl}" style="display:inline-block;background:#f5184c;color:#fff;text-decoration:none;padding:12px 18px;border-radius:10px;font-weight:700;">Open registrations dashboard</a>
       </p>
     </td></tr>
   </table>

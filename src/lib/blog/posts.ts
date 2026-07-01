@@ -26,7 +26,7 @@ export const BLOG_POSTS: BlogPost[] = [
     author: "Liffio Team",
     publishedAt: "2026-05-15",
     updatedAt: "2026-05-15",
-    gradient: "from-blue-500 to-indigo-600",
+    gradient: "from-blue-500 to-rose-600",
     sections: [
       {
         heading: "What comment-to-DM actually does",
@@ -110,7 +110,7 @@ export const BLOG_POSTS: BlogPost[] = [
     author: "Liffio Team",
     publishedAt: "2026-06-01",
     updatedAt: "2026-06-01",
-    gradient: "from-violet-500 to-purple-600",
+    gradient: "from-rose-500 to-rose-600",
     sections: [
       {
         heading: "Why people leave ManyChat for something else",
@@ -187,7 +187,7 @@ export const BLOG_POSTS: BlogPost[] = [
     author: "Liffio Team",
     publishedAt: "2026-05-10",
     updatedAt: "2026-05-10",
-    gradient: "from-purple-500 to-pink-500",
+    gradient: "from-rose-500 to-pink-500",
     sections: [
       {
         heading: "Why story replies are different from comment floods",

@@ -70,7 +70,7 @@ function MetaOAuthCompleteInner() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-3 p-6" style={{ background: 'linear-gradient(135deg, #f3f0ff 0%, #ede8fe 40%, #fce8ff 70%, #fff0f8 100%)' }}>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-3 p-6" style={{ background: 'linear-gradient(135deg, #fff1f2 0%, #ffe4e6 40%, #ffe0f0 70%, #fff0f5 100%)' }}>
       <div className="text-brand-500 animate-pulse">
         <InstagramIcon size={32} />
       </div>

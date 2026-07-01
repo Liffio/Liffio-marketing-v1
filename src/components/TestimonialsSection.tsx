@@ -10,7 +10,7 @@ const testimonials = [
     quote:
       "Set it up on a Reel at midnight and woke up to 80 DMs sent automatically. Would've taken hours to do that manually.",
     avatar: "OB",
-    gradient: "linear-gradient(135deg,#7c5af3,#4259f0)",
+    gradient: "linear-gradient(135deg,#f5184c,#b20d8f)",
   },
   {
     name: "Ryan Callahan",
@@ -18,7 +18,7 @@ const testimonials = [
     quote:
       "I get a ton of comments asking for my program link every time I post. Had to set a reminder to reply before bed and still missed loads. Set up the keyword trigger and it just runs now.",
     avatar: "RC",
-    gradient: "linear-gradient(135deg,#10b981,#4259f0)",
+    gradient: "linear-gradient(135deg,#10b981,#b20d8f)",
   },
   {
     name: "Shivam Thakkar",
@@ -26,7 +26,7 @@ const testimonials = [
     quote:
       "Used to wake up every morning and manually reply to everyone who commented overnight. First automation run, all of them got replies automatically while I slept.",
     avatar: "ST",
-    gradient: "linear-gradient(135deg,#a855f7,#7c5af3)",
+    gradient: "linear-gradient(135deg,#ff7c49,#f5184c)",
   },
   {
     name: "Sophie Mercer",
@@ -34,7 +34,7 @@ const testimonials = [
     quote:
       "Was sceptical because tools like this always felt spammy. The delay and tone of the DM actually felt like me. First automation went live on a collab post and handled everything overnight.",
     avatar: "SM",
-    gradient: "linear-gradient(135deg,#ec4899,#a855f7)",
+    gradient: "linear-gradient(135deg,#ec4899,#ff7c49)",
   },
   {
     name: "Vishal Motimani",
@@ -42,7 +42,7 @@ const testimonials = [
     quote:
       "Connected Instagram in 2 minutes and the first keyword trigger worked on the first try. Haven't touched the inbox for that post since.",
     avatar: "VM",
-    gradient: "linear-gradient(135deg,#4259f0,#6366f1)",
+    gradient: "linear-gradient(135deg,#b20d8f,#6366f1)",
   },
   {
     name: "Aisha Al-Farsi",
@@ -58,7 +58,7 @@ const testimonials = [
     quote:
       "Was spending 2–3 hours every evening just replying to DMs from comments. This takes care of all of that automatically. Massive time saver.",
     avatar: "LP",
-    gradient: "linear-gradient(135deg,#a855f7,#ec4899)",
+    gradient: "linear-gradient(135deg,#ff7c49,#ec4899)",
   },
   {
     name: "Jake Thornton",
@@ -66,7 +66,7 @@ const testimonials = [
     quote:
       "Managing comment automations across five client accounts manually was killing us. Moved the first two to Liffio and it's working cleanly. Will be moving the others this week.",
     avatar: "JT",
-    gradient: "linear-gradient(135deg,#14b8a6,#4259f0)",
+    gradient: "linear-gradient(135deg,#14b8a6,#b20d8f)",
   },
   {
     name: "Dhanraj",
@@ -74,7 +74,7 @@ const testimonials = [
     quote:
       "Set up the LINK trigger and tested it myself - got the DM in under a minute. Simple but actually works.",
     avatar: "DH",
-    gradient: "linear-gradient(135deg,#6366f1,#7c5af3)",
+    gradient: "linear-gradient(135deg,#6366f1,#f5184c)",
   },
   {
     name: "Pratham Panchal",
@@ -82,7 +82,7 @@ const testimonials = [
     quote:
       "The INR pricing alone is a win for Indian creators. Finally something built for us that isn't priced in USD.",
     avatar: "PP",
-    gradient: "linear-gradient(135deg,#4259f0,#7c5af3)",
+    gradient: "linear-gradient(135deg,#b20d8f,#f5184c)",
   },
   {
     name: "Dhairya Thumar",
@@ -98,7 +98,7 @@ const testimonials = [
     quote:
       "Tested on a small post first and the public reply + DM both landed correctly. Setup took maybe 5 mins. Works exactly as described.",
     avatar: "SP",
-    gradient: "linear-gradient(135deg,#7c5af3,#a855f7)",
+    gradient: "linear-gradient(135deg,#f5184c,#ff7c49)",
   },
 ] as const;
 

@@ -300,7 +300,7 @@ function AutomationWizard({
           {wizardData?.profile.profilePictureUrl ? (
             <img src={wizardData.profile.profilePictureUrl} alt="" className="h-7 w-7 rounded-full object-cover" />
           ) : (
-            <div className="h-7 w-7 rounded-full" style={{ background: 'linear-gradient(135deg, #7c5af3, #4259f0)' }} />
+            <div className="h-7 w-7 rounded-full" style={{ background: 'linear-gradient(135deg, #f5184c, #b20d8f)' }} />
           )}
           <span className="text-sm font-medium text-gray-700">@{wizardData?.profile.username ?? 'yourbrand'}</span>
           <div className="ml-auto flex items-center gap-1">
@@ -323,8 +323,8 @@ function AutomationWizard({
                 <p className="mt-0.5 text-xs text-gray-500">Choose when comments on your Instagram should trigger a DM.</p>
               </div>
               <Segmented value={postMode} onChange={(v) => setPostMode(v as 'specific' | 'any' | 'next')} options={[{ v: 'any', l: 'All posts' }, { v: 'next', l: 'Next post only' }, { v: 'specific', l: 'Pick a post' }]} />
-              {postMode === 'any' && <div className="rounded-lg border border-purple-100 bg-purple-50 p-3 text-xs text-purple-700">One automation covers every post and reel on your account — past and future.</div>}
-              {postMode === 'next' && <div className="rounded-lg border border-purple-100 bg-purple-50 p-3 text-xs text-purple-700">This automation activates only on your next published post.</div>}
+              {postMode === 'any' && <div className="rounded-lg border border-rose-100 bg-rose-50 p-3 text-xs text-rose-700">One automation covers every post and reel on your account — past and future.</div>}
+              {postMode === 'next' && <div className="rounded-lg border border-rose-100 bg-rose-50 p-3 text-xs text-rose-700">This automation activates only on your next published post.</div>}
               {postMode === 'specific' && (
                 <>
                   <div className="grid grid-cols-3 gap-2">
@@ -366,9 +366,9 @@ function AutomationWizard({
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {keywords.map((k) => (
-                      <span key={k} className="inline-flex items-center gap-1 rounded-full bg-purple-100 px-2.5 py-1 text-xs font-medium text-purple-700">
+                      <span key={k} className="inline-flex items-center gap-1 rounded-full bg-rose-100 px-2.5 py-1 text-xs font-medium text-rose-700">
                         {k}
-                        <button type="button" onClick={() => setKeywords((kw) => kw.filter((x) => x !== k))} className="text-purple-400 hover:text-red-500"><XIcon size={10} /></button>
+                        <button type="button" onClick={() => setKeywords((kw) => kw.filter((x) => x !== k))} className="text-rose-400 hover:text-red-500"><XIcon size={10} /></button>
                       </span>
                     ))}
                   </div>
@@ -467,7 +467,7 @@ function AutomationWizard({
                 <ReviewRow title="Keyword">
                   {keywordMode === 'any' ? 'Any comment' : (
                     <div className="mt-1 flex flex-wrap gap-1">
-                      {keywords.map((k) => <span key={k} className="rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-700">{k}</span>)}
+                      {keywords.map((k) => <span key={k} className="rounded-full bg-rose-100 px-2 py-0.5 text-xs text-rose-700">{k}</span>)}
                     </div>
                   )}
                 </ReviewRow>
@@ -670,7 +670,7 @@ function OnboardingPageInner() {
   if (!mounted) return null;
 
   return (
-    <div className="relative flex min-h-screen flex-col" style={{ background: 'linear-gradient(135deg, #f3f0ff 0%, #ede8fe 40%, #fce8ff 70%, #fff0f8 100%)' }}>
+    <div className="relative flex min-h-screen flex-col" style={{ background: 'linear-gradient(135deg, #fff1f2 0%, #ffe4e6 40%, #ffe0f0 70%, #fff0f5 100%)' }}>
       <header className="relative z-10 flex items-center justify-between px-6 py-4">
         <Logo size="small" />
       </header>
@@ -679,7 +679,7 @@ function OnboardingPageInner() {
         <StepProgress step={step} />
 
         <div className="w-full max-w-lg">
-          <div className="w-full rounded-2xl border border-purple-100/60 bg-white p-8 shadow-lg">
+          <div className="w-full rounded-2xl border border-rose-100/60 bg-white p-8 shadow-lg">
 
             {/* ── Step 1: Brand ───────────────────────────────── */}
             {step === 1 && (
@@ -771,11 +771,11 @@ function OnboardingPageInner() {
 
                 {automationCreated ? (
                   <div className="space-y-4">
-                    <div className="space-y-1.5 rounded-xl border border-purple-200 bg-purple-50 p-4">
-                      <div className="flex items-center gap-2 text-sm font-medium text-purple-800">
+                    <div className="space-y-1.5 rounded-xl border border-rose-200 bg-rose-50 p-4">
+                      <div className="flex items-center gap-2 text-sm font-medium text-rose-800">
                         <CheckIcon size={14} /> Your automation is active
                       </div>
-                      <p className="pl-6 text-xs text-purple-600">New comments that match your keyword will receive a DM automatically.</p>
+                      <p className="pl-6 text-xs text-rose-600">New comments that match your keyword will receive a DM automatically.</p>
                     </div>
                     <Button className="w-full" onClick={finishOnboarding} loading={finishing}>
                       {finishing ? 'Opening dashboard…' : 'Go to dashboard'} <ArrowRightIcon size={14} />

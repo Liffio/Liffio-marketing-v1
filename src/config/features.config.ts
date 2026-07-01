@@ -21,7 +21,7 @@ export const FEATURES: readonly FeatureDefinition[] = [
   {
     id: "auto-comment-reply",
     num: "01",
-    color: "#a855f7",
+    color: "#ff7c49",
     bg: "rgba(168,85,247,0.07)",
     border: "rgba(168,85,247,0.18)",
     tag: "Auto DM + Auto Comment",
@@ -57,7 +57,7 @@ export const FEATURES: readonly FeatureDefinition[] = [
   {
     id: "live-auto-reply",
     num: "03",
-    color: "#7c5af3",
+    color: "#f5184c",
     bg: "rgba(124,90,243,0.07)",
     border: "rgba(124,90,243,0.18)",
     tag: "Live Stream Auto DM",
@@ -93,7 +93,7 @@ export const FEATURES: readonly FeatureDefinition[] = [
   {
     id: "ask-for-follow",
     num: "05",
-    color: "#4259f0",
+    color: "#b20d8f",
     bg: "rgba(66,89,240,0.07)",
     border: "rgba(66,89,240,0.18)",
     tag: "Follow gate",

@@ -74,7 +74,7 @@ export default function StatsSection() {
       aria-label="Platform trust signals"
     >
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#f3f0ff]/90 via-white to-white"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#fff1f2]/90 via-white to-white"
         aria-hidden
       />
       <div

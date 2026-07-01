@@ -159,7 +159,7 @@ export function getCreatorsEmailHtml({ name, instagramUsername, status, reason }
           <td align="center" style="padding-bottom: 40px;">
             <table role="presentation" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td style="background: linear-gradient(135deg, #7c5af3 0%, #4259f0 100%); width: 40px; height: 40px; border-radius: 12px; text-align: center; vertical-align: middle;">
+                <td style="background: linear-gradient(135deg, #f5184c 0%, #b20d8f 100%); width: 40px; height: 40px; border-radius: 12px; text-align: center; vertical-align: middle;">
                   <span style="color: #ffffff; font-size: 18px; font-weight: 800; font-family: sans-serif;">L</span>
                 </td>
                 <td style="padding-left: 12px; font-family: sans-serif; font-size: 22px; font-weight: 800; color: #111827; letter-spacing: -0.02em;">${brand.name}</td>
@@ -171,7 +171,7 @@ export function getCreatorsEmailHtml({ name, instagramUsername, status, reason }
           <td style="background-color: #ffffff; border: 1px solid #E5E7EB; border-radius: 24px; padding: 60px 48px;">
             <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr><td align="center" style="padding-bottom: 24px;">
-                <span style="display: inline-block; background-color: #f3f0ff; color: #4259f0; font-family: sans-serif; font-size: 11px; font-weight: 700; padding: 8px 20px; border-radius: 100px; letter-spacing: 0.08em; border: 1px solid #bfb0fb;">🎯 APPLICATION RECEIVED</span>
+                <span style="display: inline-block; background-color: #fff1f2; color: #b20d8f; font-family: sans-serif; font-size: 11px; font-weight: 700; padding: 8px 20px; border-radius: 100px; letter-spacing: 0.08em; border: 1px solid #fda4af;">🎯 APPLICATION RECEIVED</span>
               </td></tr>
             </table>
             <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -179,12 +179,12 @@ export function getCreatorsEmailHtml({ name, instagramUsername, status, reason }
                 <h1 style="margin: 0; font-family: sans-serif; font-size: 36px; font-weight: 800; color: #111827; line-height: 1.1; letter-spacing: -0.03em;">Hey ${name}! 👋</h1>
               </td></tr>
               <tr><td align="center" style="padding-bottom: 32px;">
-                <p style="margin: 0; font-family: sans-serif; font-size: 17px; color: #4B5563; line-height: 1.6;">We've received your application for <strong style="color: #4259f0;">@${instagramUsername}</strong> and our team is excited to review your profile.</p>
+                <p style="margin: 0; font-family: sans-serif; font-size: 17px; color: #4B5563; line-height: 1.6;">We've received your application for <strong style="color: #b20d8f;">@${instagramUsername}</strong> and our team is excited to review your profile.</p>
               </td></tr>
             </table>
             <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #F8FAFC; border: 1px solid #F1F5F9; border-radius: 20px; padding: 32px;">
               <tr><td style="padding-bottom: 20px;">
-                <p style="margin: 0; font-family: sans-serif; font-size: 12px; color: #4259f0; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">WHAT YOU GET (IF APPROVED)</p>
+                <p style="margin: 0; font-family: sans-serif; font-size: 12px; color: #b20d8f; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">WHAT YOU GET (IF APPROVED)</p>
               </td></tr>
               <tr><td>
                 <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">

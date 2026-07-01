@@ -2,16 +2,16 @@ import { TechBadge } from "@/components/TechBadge";
 import { siteConfig } from "@/config/site.config";
 
 const COMMISSION_MONTHS = [
-  { month: "Month 1", rate: "25%", desc: "First payment", color: "#a855f7", width: "100%" },
-  { month: "Month 2", rate: "10%", desc: "Second payment", color: "#7c5af3", width: "72%" },
+  { month: "Month 1", rate: "25%", desc: "First payment", color: "#ff7c49", width: "100%" },
+  { month: "Month 2", rate: "10%", desc: "Second payment", color: "#f5184c", width: "72%" },
   { month: "Month 3", rate: "10%", desc: "Third payment", color: "#6366f1", width: "72%" },
   { month: "Month 4+", rate: "-", desc: "No further commission", color: "#e5e7eb", width: "24%" },
 ];
 
 const KEY_STATS = [
-  { value: "25%", label: "Month 1 commission", accent: "#a855f7" },
-  { value: "90d", label: "Attribution window", accent: "#7c5af3" },
-  { value: "$50", label: "Minimum withdrawal", accent: "#4259f0" },
+  { value: "25%", label: "Month 1 commission", accent: "#ff7c49" },
+  { value: "90d", label: "Attribution window", accent: "#f5184c" },
+  { value: "$50", label: "Minimum withdrawal", accent: "#b20d8f" },
   { value: "20", label: "Day hold before payout", accent: "#6366f1" },
 ];
 
@@ -150,7 +150,7 @@ export default function AffiliateProgramContent() {
       <section className="section-py bg-white px-4 sm:px-6">
         <div className="mx-auto max-w-4xl">
           <div className="mb-10 text-center">
-            <TechBadge label="Commission structure" variant="chip" accent="#7c5af3" className="mb-4" />
+            <TechBadge label="Commission structure" variant="chip" accent="#f5184c" className="mb-4" />
             <h2
               className="text-2xl font-extrabold text-[#0a0a0a] sm:text-3xl"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
@@ -259,7 +259,7 @@ export default function AffiliateProgramContent() {
             <p className="mt-4 text-center text-xs text-gray-500">
               Server-side cookie + URL param + session backup - attribution recorded on click
             </p>
-            <p className="mt-3 text-center text-xs font-medium text-[#7c5af3]">
+            <p className="mt-3 text-center text-xs font-medium text-[#f5184c]">
               <a href={appLogin} className="hover:underline">
                 Log in to see your personalised affiliate link →
               </a>

@@ -1,16 +1,18 @@
 @import "tailwindcss";
 
+/* Brand ramp anchored on the Liffio primary (#F5184C, hue ~346) — see
+   G:\REACTOVA\Website\v2\Client-v2\BRANDKIT.md for the source of truth. */
 @theme {
-  --color-brand-50: #f3f0ff;
-  --color-brand-100: #ede8fe;
-  --color-brand-200: #dbd4fd;
-  --color-brand-300: #bfb0fb;
-  --color-brand-400: #9e87f8;
-  --color-brand-500: #7c5af3;
-  --color-brand-600: #4259f0;
-  --color-brand-700: #3245d8;
-  --color-brand-800: #2b37b0;
-  --color-brand-900: #22278a;
+  --color-brand-50: #fff1f2;
+  --color-brand-100: #ffe4e6;
+  --color-brand-200: #fecdd3;
+  --color-brand-300: #fda4af;
+  --color-brand-400: #fb7185;
+  --color-brand-500: #f5184c;
+  --color-brand-600: #e00e40;
+  --color-brand-700: #b30f37;
+  --color-brand-800: #8a0e2d;
+  --color-brand-900: #6b0d25;
   --font-display: "Outfit", "Outfit Fallback", sans-serif;
 }
 
@@ -23,15 +25,15 @@
     --card-foreground: 240 22% 15%;
     --popover: 240 14% 88%;
     --popover-foreground: 240 22% 15%;
-    --primary: 248 85% 60%;
+    --primary: 346 85% 53%;
     --primary-foreground: 0 0% 100%;
     --secondary: 240 12% 84%;
     --secondary-foreground: 240 22% 15%;
-    --accent: 25 90% 50%;
+    --accent: 172 66% 42%;
     --accent-foreground: 0 0% 100%;
     --success: 142 65% 40%;
     --success-foreground: 0 0% 100%;
-    --warning: 48 90% 45%;
+    --warning: 40 90% 50%;
     --warning-foreground: 0 0% 100%;
     --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 100%;
@@ -39,18 +41,18 @@
     --muted-foreground: 240 8% 38%;
     --border: 240 12% 80%;
     --input: 240 14% 90%;
-    --ring: 248 85% 60%;
+    --ring: 346 85% 53%;
     --radius: 0.75rem;
     --info: 199 85% 50%;
-    --violet: 271 85% 60%;
+    --violet: 346 85% 53%;
     --sidebar-background: 240 14% 90%;
     --sidebar-foreground: 240 22% 15%;
-    --sidebar-primary: 248 85% 60%;
+    --sidebar-primary: 346 85% 53%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 12% 85%;
     --sidebar-accent-foreground: 240 22% 15%;
     --sidebar-border: 240 12% 78%;
-    --sidebar-ring: 248 85% 60%;
+    --sidebar-ring: 346 85% 53%;
   }
 
   html { scroll-behavior: smooth; }
@@ -67,7 +69,7 @@
 
 @layer utilities {
   .hero-gradient {
-    background: linear-gradient(135deg, #f3f0ff 0%, #ede8fe 40%, #fce8ff 70%, #fff0f8 100%);
+    background: linear-gradient(135deg, #fff4ec 0%, #ffe4e6 40%, #ffe0f0 70%, #fff0f5 100%);
   }
   .font-display { font-family: var(--font-display); }
 
@@ -94,7 +96,7 @@
   }
 
   .gradient-text {
-    background: linear-gradient(130deg, #a855f7 0%, #7c5af3 45%, #4259f0 100%);
+    background: linear-gradient(130deg, #ff7c49 0%, #f5184c 45%, #b20d8f 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -102,26 +104,26 @@
 
   .card-base {
     background: #ffffff;
-    border: 1px solid rgba(124, 90, 243, 0.1);
+    border: 1px solid rgba(245, 24, 76, 0.1);
     border-radius: 16px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04), 0 4px 24px rgba(124, 90, 243, 0.05);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04), 0 4px 24px rgba(245, 24, 76, 0.05);
   }
 
   .btn-primary {
-    background: linear-gradient(135deg, #7c5af3, #4259f0);
+    background: linear-gradient(135deg, #ff7c49, #f5184c);
     color: white;
     font-weight: 600;
     border-radius: 12px;
     padding: 14px 28px;
     font-size: 15px;
-    box-shadow: 0 4px 20px rgba(66, 89, 240, 0.3);
+    box-shadow: 0 4px 20px rgba(245, 24, 76, 0.3);
     transition: all 0.2s;
   }
-  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 8px 28px rgba(66, 89, 240, 0.38); }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 8px 28px rgba(245, 24, 76, 0.38); }
 
   /* Terminal-style labels (section headers, chips, meta) */
   .tech-badge {
-    --tech-accent: #6d5ce8;
+    --tech-accent: #f5184c;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
@@ -134,8 +136,8 @@
     line-height: 1.2;
     letter-spacing: 0.04em;
     color: var(--tech-accent);
-    background: linear-gradient(180deg, #fcfbff 0%, #f4f2ff 100%);
-    border: 1px solid color-mix(in srgb, var(--tech-accent) 22%, #e8e4f8);
+    background: linear-gradient(180deg, #fffbfa 0%, #fff2f3 100%);
+    border: 1px solid color-mix(in srgb, var(--tech-accent) 22%, #f8e4e8);
     box-shadow:
       0 0 0 1px rgba(255, 255, 255, 0.85) inset,
       0 1px 0 rgba(66, 89, 240, 0.04);
@@ -190,7 +192,7 @@
     font-size: 0.75rem;
     letter-spacing: 0.02em;
     text-transform: lowercase;
-    background: linear-gradient(180deg, #ffffff 0%, #f8f7ff 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #fff7f7 100%);
   }
 
   .tech-badge--meta {
@@ -206,7 +208,7 @@
     padding: 0.3rem 0.55rem;
     font-size: 0.6875rem;
     letter-spacing: 0.03em;
-    background: #f8f7ff;
+    background: #fff7f7;
   }
 
   /* Back-compat alias */
@@ -267,7 +269,7 @@
 /* Hero section */
 .hero-mesh-bg {
   background:
-    linear-gradient(180deg, #ffffff 0%, #faf8ff 40%, #f5f0ff 100%);
+    linear-gradient(180deg, #ffffff 0%, #fff8f6 40%, #fff0eb 100%);
 }
 
 .hero-stagger {
@@ -352,8 +354,8 @@
   animation: heroKeywordPulse 2.5s ease-in-out infinite;
 }
 @keyframes heroKeywordPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(124, 90, 243, 0); }
-  50% { box-shadow: 0 0 0 6px rgba(124, 90, 243, 0.25); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 24, 76, 0); }
+  50% { box-shadow: 0 0 0 6px rgba(245, 24, 76, 0.25); }
 }
 
 .hero-dm-flash {

@@ -8,7 +8,7 @@ function CheckIcon({ highlight }: { highlight?: boolean }) {
       <circle cx="8" cy="8" r="8" fill={highlight ? "rgba(255,255,255,0.2)" : "rgba(124,90,243,0.1)"} />
       <path
         d="M4.5 8.5l2 2 4.5-5"
-        stroke={highlight ? "white" : "#7c5af3"}
+        stroke={highlight ? "white" : "#f5184c"}
         strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -40,7 +40,7 @@ export function PricingPlanCard({ plan, annual, compact = false, className = "" 
       style={
         plan.highlight
           ? {
-              background: "linear-gradient(155deg,#7c5af3,#5648ea,#4259f0)",
+              background: "linear-gradient(155deg,#f5184c,#5648ea,#b20d8f)",
               boxShadow: "0 28px 64px rgba(66,89,240,0.38), 0 0 0 1px rgba(124,90,243,0.4)",
             }
           : {
@@ -98,11 +98,11 @@ export function PricingPlanCard({ plan, annual, compact = false, className = "" 
           plan.highlight
             ? {
                 background: "white",
-                color: "#4259f0",
+                color: "#b20d8f",
                 boxShadow: "0 4px 16px rgba(0,0,0,0.14)",
               }
             : {
-                background: "linear-gradient(135deg,#7c5af3,#4259f0)",
+                background: "linear-gradient(135deg,#f5184c,#b20d8f)",
                 color: "white",
                 boxShadow: "0 4px 16px rgba(66,89,240,0.24)",
               }

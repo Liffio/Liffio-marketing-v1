@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import PricingPlansGrid, { PricingBottomCta } from "@/components/PricingPlansGrid";
 import PricingComparisonSection from "@/components/pricing/PricingComparisonSection";
 import { SiteFaqSection } from "@/components/faq/SiteFaqSection";
-import { getFaqCategories } from "@/config/faq.config";
+import { getPricingDetailedFaqCategories } from "@/config/faq.config";
 import { getPricingContext } from "@/lib/pricing-region.server";
 import {
   fetchMarketingPlansContext,
@@ -23,7 +23,7 @@ export const metadata = pageSeo.pricing;
 export default async function PricingPage() {
   const { region, countryCode } = await getPricingContext();
   const { plans, businessPlanValue } = await fetchMarketingPlansContext(region);
-  const faqCategories = getFaqCategories(region, {
+  const faqCategories = getPricingDetailedFaqCategories(region, {
     freePlanFaqAnswer: buildFreePlanFaqAnswer(region, plans),
     plansOfferedFaqAnswer: buildPlansOfferedFaqAnswer(region, plans),
     creatorsProgramFaqAnswer: buildCreatorsProgramFaqAnswer(businessPlanValue),
@@ -44,7 +44,7 @@ export default async function PricingPage() {
         {/* Header */}
         <section className="hero-gradient py-20 sm:py-28">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
-            <span className="text-sm font-semibold text-[#4259f0] uppercase tracking-wider">Pricing</span>
+            <span className="text-sm font-semibold text-[#b20d8f] uppercase tracking-wider">Pricing</span>
             <h1
               className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900"
               style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
@@ -62,7 +62,7 @@ export default async function PricingPage() {
             </p>
             <p className="mt-4 text-sm text-gray-500">
               Pre-launch offer:{" "}
-              <AppLink href={siteConfig.urls.preregister} className="text-[#7c5af3] font-semibold hover:underline">
+              <AppLink href={siteConfig.urls.preregister} className="text-[#f5184c] font-semibold hover:underline">
                 Pre-register for 50% off your first purchase →
               </AppLink>
             </p>
@@ -80,7 +80,7 @@ export default async function PricingPage() {
         <section className="py-16 bg-[#faf8ff] border-y border-[#ede9fd]">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#7c5af3] mb-2">Full platform</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-2">Full platform</p>
               <h2
                 className="text-3xl sm:text-4xl font-extrabold text-[#0a0a0a]"
                 style={{ fontFamily: "var(--font-outfit,sans-serif)" }}

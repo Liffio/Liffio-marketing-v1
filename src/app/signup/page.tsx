@@ -72,7 +72,7 @@ function Check() {
   return (
     <svg viewBox="0 0 16 16" className="h-4 w-4 flex-shrink-0 mt-0.5" fill="none">
       <circle cx="8" cy="8" r="8" fill="rgba(124,90,243,0.12)" />
-      <path d="M4.5 8.5l2 2 4.5-5" stroke="#7c5af3" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4.5 8.5l2 2 4.5-5" stroke="#f5184c" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -134,7 +134,7 @@ export default async function SignupPage() {
                 <span
                   style={{
                     background:
-                      "linear-gradient(130deg,#a855f7 0%,#7c5af3 45%,#4259f0 100%)",
+                      "linear-gradient(130deg,#ff7c49 0%,#f5184c 45%,#b20d8f 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                   }}
@@ -241,7 +241,7 @@ export default async function SignupPage() {
         {/* ── Features strip ──────────────────────────────────────── */}
         <section className="py-16 px-4 bg-white">
           <div className="mx-auto max-w-6xl">
-            <p className="text-center text-xs font-bold uppercase tracking-widest text-[#7c5af3] mb-8">
+            <p className="text-center text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-8">
               What&apos;s included on every plan
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -258,7 +258,7 @@ export default async function SignupPage() {
                   <h3 className="text-base font-bold text-[#0a0a0a] mb-2">{f.title}</h3>
                   <p className="text-sm text-gray-500 leading-relaxed mb-4">{f.description}</p>
                   <span
-                    className="inline-flex items-center gap-1 text-xs font-bold text-[#7c5af3] rounded-full px-3 py-1"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-[#f5184c] rounded-full px-3 py-1"
                     style={{
                       background: "rgba(124,90,243,0.07)",
                       border: "1px solid rgba(124,90,243,0.15)",
@@ -297,7 +297,7 @@ export default async function SignupPage() {
               href="/creators-program"
               className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90"
               style={{
-                background: "linear-gradient(135deg,#7c5af3,#4259f0)",
+                background: "linear-gradient(135deg,#f5184c,#b20d8f)",
                 boxShadow: "0 4px 20px rgba(66,89,240,0.28)",
               }}
             >

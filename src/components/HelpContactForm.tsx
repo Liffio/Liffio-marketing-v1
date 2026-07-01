@@ -75,7 +75,7 @@ export default function HelpContactForm() {
               type="text"
               required
               disabled={state === "loading"}
-              className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4259f0] focus:border-transparent disabled:opacity-60"
+              className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#b20d8f] focus:border-transparent disabled:opacity-60"
               placeholder="Your name"
             />
           </div>
@@ -87,7 +87,7 @@ export default function HelpContactForm() {
               type="email"
               required
               disabled={state === "loading"}
-              className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4259f0] focus:border-transparent disabled:opacity-60"
+              className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#b20d8f] focus:border-transparent disabled:opacity-60"
               placeholder="you@example.com"
             />
           </div>
@@ -100,7 +100,7 @@ export default function HelpContactForm() {
             type="text"
             required
             disabled={state === "loading"}
-            className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4259f0] focus:border-transparent disabled:opacity-60"
+            className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#b20d8f] focus:border-transparent disabled:opacity-60"
             placeholder="What do you need help with?"
           />
         </div>
@@ -112,7 +112,7 @@ export default function HelpContactForm() {
             rows={4}
             required
             disabled={state === "loading"}
-            className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4259f0] focus:border-transparent resize-none disabled:opacity-60"
+            className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#b20d8f] focus:border-transparent resize-none disabled:opacity-60"
             placeholder="Describe your issue in detail..."
           />
         </div>
@@ -120,7 +120,7 @@ export default function HelpContactForm() {
           type="submit"
           id="help-submit"
           disabled={state === "loading"}
-          className="w-full rounded-xl px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition-opacity shadow-md [background:linear-gradient(135deg,#7c5af3,#4259f0)] disabled:opacity-60 flex items-center justify-center gap-2"
+          className="w-full rounded-xl px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition-opacity shadow-md [background:linear-gradient(135deg,#f5184c,#b20d8f)] disabled:opacity-60 flex items-center justify-center gap-2"
         >
           {state === "loading" ? (
             <>

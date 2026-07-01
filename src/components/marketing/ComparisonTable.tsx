@@ -42,7 +42,7 @@ export default function ComparisonTable({
         <thead>
           <tr className="bg-[#faf8ff] border-b border-gray-100">
             <th className="px-5 py-4 font-semibold text-gray-900">Feature</th>
-            <th className="px-5 py-4 font-semibold text-[#4259f0]">Liffio</th>
+            <th className="px-5 py-4 font-semibold text-[#b20d8f]">Liffio</th>
             <th className="px-5 py-4 font-semibold text-gray-700">{competitorName}</th>
           </tr>
         </thead>

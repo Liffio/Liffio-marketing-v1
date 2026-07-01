@@ -7,7 +7,7 @@ import { useRef, type ReactNode } from 'react';
 export function AuthCard({ children, wide }: { children: ReactNode; wide?: boolean }) {
   return (
     <div
-      className={`w-full bg-white rounded-2xl shadow-lg border border-purple-100/60 p-8 ${wide ? 'max-w-lg' : 'max-w-md'}`}
+      className={`w-full bg-white rounded-2xl shadow-lg border border-rose-100/60 p-8 ${wide ? 'max-w-lg' : 'max-w-md'}`}
     >
       {children}
     </div>
