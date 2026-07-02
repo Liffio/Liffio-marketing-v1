@@ -30,9 +30,9 @@ export function SimulationShell({
                 "0 24px 80px rgba(178, 13, 143,0.18), 0 8px 32px rgba(245, 24, 76,0.1), inset 0 1px 0 rgba(255,255,255,0.8)",
             }
           : {
-              background: "linear-gradient(145deg,#fff1f2,#ffe4e6 55%,#fff1f2)",
-              border: "1px solid rgba(245, 24, 76,0.16)",
-              boxShadow: "0 20px 60px rgba(178, 13, 143,0.13), 0 4px 16px rgba(245, 24, 76,0.08)",
+              background: "linear-gradient(145deg,#f8f8fa,#f1f1f3 55%,#f8f8fa)",
+              border: "1px solid rgba(20, 20, 30,0.08)",
+              boxShadow: "0 20px 60px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04)",
             }
       }
     >

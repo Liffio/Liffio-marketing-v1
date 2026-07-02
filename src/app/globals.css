@@ -69,7 +69,7 @@
 
 @layer utilities {
   .hero-gradient {
-    background: linear-gradient(135deg, #fff4ec 0%, #ffe4e6 40%, #ffe0f0 70%, #fff0f5 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #fbfbfc 60%, #f8f8fa 100%);
   }
   .font-display { font-family: var(--font-display); }
 
@@ -104,9 +104,9 @@
 
   .card-base {
     background: #ffffff;
-    border: 1px solid rgba(245, 24, 76, 0.1);
+    border: 1px solid rgba(20, 20, 30, 0.08);
     border-radius: 16px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04), 0 4px 24px rgba(245, 24, 76, 0.05);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04), 0 4px 24px rgba(0, 0, 0, 0.05);
   }
 
   .btn-primary {
@@ -250,7 +250,7 @@
   }
 
   .bg-soft-gradient {
-    background: linear-gradient(180deg, #fff8f6 0%, #fff0eb 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #f7f7f8 100%);
   }
 
   .shadow-soft {
@@ -277,7 +277,7 @@
 /* Hero section */
 .hero-mesh-bg {
   background:
-    linear-gradient(180deg, #ffffff 0%, #fff8f6 40%, #fff0eb 100%);
+    linear-gradient(180deg, #ffffff 0%, #fbfbfc 55%, #f7f7f9 100%);
 }
 
 .hero-stagger {

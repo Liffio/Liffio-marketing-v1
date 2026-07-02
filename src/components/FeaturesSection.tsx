@@ -715,11 +715,11 @@ export default function FeaturesSection() {
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
         <div
           className="absolute -top-32 left-1/2 h-72 w-[min(900px,90vw)] -translate-x-1/2 rounded-full"
-          style={{ background: "radial-gradient(ellipse, rgba(245, 24, 76,0.06) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(ellipse, rgba(245, 24, 76,0.035) 0%, transparent 70%)" }}
         />
         <div
           className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(255, 124, 73,0.04) 0%, transparent 60%)" }}
+          style={{ background: "radial-gradient(circle, rgba(20, 20, 30,0.03) 0%, transparent 60%)" }}
         />
       </div>
 
@@ -733,7 +733,7 @@ export default function FeaturesSection() {
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
             >
               8 Auto DM Automations.{" "}
-              <span className="gradient-text">One Dashboard.</span>
+              <span className="text-foreground">One Dashboard.</span>
             </h2>
             <p className="mt-3 text-base leading-relaxed text-gray-500 sm:text-lg">
               Auto DMs from comments, stories, live streams & inbox - Liffio is your complete Instagram auto DM tool.
@@ -755,7 +755,7 @@ export default function FeaturesSection() {
           <div
             className="card-base p-4 sm:p-5"
             style={{
-              background: "linear-gradient(155deg, #fff7f7 0%, #ffffff 55%, #fff1f2 100%)",
+              background: "linear-gradient(155deg, #ffffff 0%, #ffffff 55%, #fafafa 100%)",
             }}
           >
             <p
@@ -763,7 +763,7 @@ export default function FeaturesSection() {
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
             >
               Tap a feature to{" "}
-              <span className="gradient-text">explore</span>
+              <span className="text-brand-600">explore</span>
             </p>
 
             <div className="grid grid-cols-4 gap-1 sm:gap-1.5">
@@ -825,7 +825,7 @@ export default function FeaturesSection() {
           <div
             className="card-base p-4 sm:p-5"
             style={{
-              background: "linear-gradient(155deg, #fff7f7 0%, #ffffff 55%, #fff1f2 100%)",
+              background: "linear-gradient(155deg, #ffffff 0%, #ffffff 55%, #fafafa 100%)",
             }}
           >
             <article

@@ -42,7 +42,7 @@ const VALUE_PROPS = [
   },
   {
     icon: (
-      <svg className="h-4 w-4 text-[#b20d8f]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
+      <svg className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
       </svg>
     ),
@@ -57,18 +57,18 @@ export default function HeroSection() {
       <div className="pointer-events-none absolute inset-0 hero-mesh-bg" aria-hidden />
       <div
         className="pointer-events-none absolute -right-32 top-0 h-[500px] w-[500px] rounded-full opacity-70 blur-3xl hero-orb-a"
-        style={{ background: "radial-gradient(circle, rgba(255, 124, 73,0.12) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(245, 24, 76,0.06) 0%, transparent 70%)" }}
         aria-hidden
       />
       <div
         className="pointer-events-none absolute -bottom-24 -left-24 h-[420px] w-[420px] rounded-full opacity-60 blur-3xl hero-orb-b"
-        style={{ background: "radial-gradient(circle, rgba(178, 13, 143,0.1) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(20, 20, 30,0.04) 0%, transparent 70%)" }}
         aria-hidden
       />
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.4]"
         style={{
-          backgroundImage: `radial-gradient(rgba(245, 24, 76,0.08) 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(rgba(20, 20, 30,0.05) 1px, transparent 1px)`,
           backgroundSize: "28px 28px",
         }}
         aria-hidden
@@ -175,7 +175,7 @@ export default function HeroSection() {
 
       <div
         className="mx-auto h-px max-w-5xl"
-        style={{ background: "linear-gradient(90deg,transparent,rgba(245, 24, 76,0.2),transparent)" }}
+        style={{ background: "linear-gradient(90deg,transparent,rgba(20, 20, 30,0.12),transparent)" }}
       />
     </section>
   );

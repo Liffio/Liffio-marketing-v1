@@ -30,7 +30,7 @@ function MobilePlanCard({ plan, annual }: { plan: PricingPlan; annual: boolean }
   return (
     <article
       className={`flex h-full min-h-[300px] w-[min(calc(100vw-2rem),300px)] shrink-0 snap-center flex-col rounded-2xl p-4 sm:w-[300px] ${
-        light ? "shadow-[0_16px_48px_rgba(178, 13, 143,0.28)]" : "border border-brand-100/90 bg-white shadow-sm"
+        light ? "shadow-[0_16px_48px_rgba(178, 13, 143,0.28)]" : "border border-border bg-white shadow-sm"
       }`}
       style={
         light
@@ -117,13 +117,13 @@ function PricingMobilePreview({ plans }: { plans: PricingPlan[] }) {
         ))}
       </div>
 
-      <div className="mt-5 rounded-xl border border-brand-100/80 bg-brand-50/40 px-4 py-3 text-center">
+      <div className="mt-5 rounded-xl border border-border bg-muted/30 px-4 py-3 text-center">
         <p className="text-xs leading-relaxed text-gray-600">
           Compare all features, annual billing, and the full plan matrix on the pricing page.
         </p>
         <AppLink
           href="/pricing"
-          className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-brand-200 bg-white py-3 text-sm font-semibold text-brand-700 shadow-sm transition-colors hover:bg-brand-50"
+          className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-white py-3 text-sm font-semibold text-brand-700 shadow-sm transition-colors hover:bg-brand-50"
         >
           View full pricing & features
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" aria-hidden>

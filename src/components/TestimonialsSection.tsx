@@ -106,7 +106,7 @@ const track = [...testimonials, ...testimonials];
 
 function TestimonialCard({ t }: { t: (typeof testimonials)[number] }) {
   return (
-    <article className="flex w-[min(100vw-2rem,340px)] shrink-0 flex-col rounded-2xl border border-brand-100/80 bg-white p-5 shadow-[0_2px_12px_rgba(245, 24, 76,0.06)] sm:w-[340px]">
+    <article className="flex w-[min(100vw-2rem,340px)] shrink-0 flex-col rounded-2xl border border-border bg-white p-5 shadow-sm sm:w-[340px]">
       <blockquote className="text-sm leading-relaxed text-gray-600">&ldquo;{t.quote}&rdquo;</blockquote>
       <footer className="mt-4 flex items-center gap-3">
         <div

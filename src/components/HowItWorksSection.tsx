@@ -518,24 +518,24 @@ export default function HowItWorksSection() {
   return (
     <section
       id="how-it-works"
-      className="section-py relative overflow-hidden border-y border-brand-100/80 bg-gradient-to-b from-brand-50 via-[#fff2f3] to-white"
+      className="section-py relative overflow-hidden border-y border-border bg-muted/20"
     >
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.45]"
+        className="pointer-events-none absolute inset-0 opacity-30"
         style={{
-          backgroundImage: "radial-gradient(rgba(245, 24, 76,0.09) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(rgba(20, 20, 30,0.05) 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
         aria-hidden
       />
       <div
         className="pointer-events-none absolute -left-32 top-20 h-[420px] w-[420px] rounded-full"
-        style={{ background: "radial-gradient(circle, rgba(255, 124, 73,0.12) 0%, transparent 68%)" }}
+        style={{ background: "radial-gradient(circle, rgba(255, 124, 73,0.05) 0%, transparent 68%)" }}
         aria-hidden
       />
       <div
         className="pointer-events-none absolute -right-24 bottom-0 h-[360px] w-[360px] rounded-full"
-        style={{ background: "radial-gradient(circle, rgba(178, 13, 143,0.1) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(178, 13, 143,0.04) 0%, transparent 70%)" }}
         aria-hidden
       />
 
@@ -549,15 +549,15 @@ export default function HowItWorksSection() {
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
             >
               From zero to fully automated{" "}
-              <span className="gradient-text">in minutes.</span>
+              <span className="text-foreground">in minutes.</span>
             </h2>
             <p className="mt-3 text-base leading-relaxed text-gray-600 sm:text-lg">
               No developer, no tech skills, no complicated setup - if you can send a DM, you can automate one.
             </p>
-            <p className="mt-4 text-sm font-medium text-brand-700/80" aria-live="polite">
+            <p className="mt-4 text-sm font-medium text-gray-500" aria-live="polite">
               {steps.map((step, i) => (
                 <span key={step.num}>
-                  {i > 0 && <span className="text-brand-300/80"> · </span>}
+                  {i > 0 && <span className="text-gray-300"> · </span>}
                   <span style={{ color: i === activeStep ? step.color : "#9ca3af" }}>
                     {step.num} {step.shortTitle}
                   </span>
@@ -577,7 +577,7 @@ export default function HowItWorksSection() {
           <div
             className="card-base p-4 sm:p-5"
             style={{
-              background: "linear-gradient(155deg, #fff4f2 0%, #ffffff 55%, #fff1f2 100%)",
+              background: "linear-gradient(155deg, #ffffff 0%, #ffffff 55%, #fafafa 100%)",
             }}
           >
             <p
@@ -645,7 +645,7 @@ export default function HowItWorksSection() {
           <div
             className="card-base p-4 sm:p-5"
             style={{
-              background: "linear-gradient(155deg, #fff4f2 0%, #ffffff 55%, #fff1f2 100%)",
+              background: "linear-gradient(155deg, #ffffff 0%, #ffffff 55%, #fafafa 100%)",
             }}
           >
             <article
@@ -719,7 +719,7 @@ export default function HowItWorksSection() {
               <div
                 className="pointer-events-none absolute inset-0 -z-10 scale-110"
                 style={{
-                  background: "radial-gradient(ellipse, rgba(245, 24, 76,0.12) 0%, transparent 70%)",
+                  background: "radial-gradient(ellipse, rgba(245, 24, 76,0.06) 0%, transparent 70%)",
                   filter: "blur(32px)",
                 }}
                 aria-hidden
@@ -802,7 +802,7 @@ export default function HowItWorksSection() {
                   style={{
                     width: i === activeStep ? 20 : 6,
                     height: 6,
-                    background: i === activeStep ? "linear-gradient(90deg,#f5184c,#b20d8f)" : "#f3dde1",
+                    background: i === activeStep ? "linear-gradient(90deg,#f5184c,#b20d8f)" : "#e5e7eb",
                   }}
                 />
               ))}

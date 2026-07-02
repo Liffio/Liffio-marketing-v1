@@ -18,7 +18,7 @@ function StatValue({ stat, visible, delayMs }: { stat: (typeof stats)[number]; v
       aria-label={`${stat.value} - ${stat.label}`}
     >
       <span
-        className="stats-figure__ghost pointer-events-none absolute inset-0 flex items-center justify-center select-none whitespace-nowrap text-[clamp(2.5rem,7vw,4.75rem)] font-black leading-none text-brand-500/[0.07]"
+        className="stats-figure__ghost pointer-events-none absolute inset-0 flex items-center justify-center select-none whitespace-nowrap text-[clamp(2.5rem,7vw,4.75rem)] font-black leading-none text-foreground/[0.04]"
         style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
         aria-hidden
       >
@@ -26,7 +26,7 @@ function StatValue({ stat, visible, delayMs }: { stat: (typeof stats)[number]; v
       </span>
       <div className="relative z-[1] flex flex-col items-center gap-2">
         <p
-          className="stats-figure__value whitespace-nowrap text-[clamp(2rem,5.5vw,3.75rem)] font-extrabold leading-none tracking-tight gradient-text"
+          className="stats-figure__value whitespace-nowrap text-[clamp(2rem,5.5vw,3.75rem)] font-extrabold leading-none tracking-tight text-foreground"
           style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
         >
           {stat.value}
@@ -42,7 +42,7 @@ function StatSeparator() {
     <div
       className="hidden h-10 w-px shrink-0 sm:block"
       style={{
-        background: "linear-gradient(180deg, transparent, rgba(245, 24, 76,0.35), transparent)",
+        background: "linear-gradient(180deg, transparent, rgba(20, 20, 30,0.14), transparent)",
       }}
       aria-hidden
     />
@@ -70,18 +70,18 @@ export default function StatsSection() {
   return (
     <section
       ref={ref}
-      className="stats-band relative overflow-hidden border-y border-brand-100/50"
+      className="stats-band relative overflow-hidden border-y border-border"
       aria-label="Platform trust signals"
     >
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#fff1f2]/90 via-white to-white"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-muted/40 via-white to-white"
         aria-hidden
       />
       <div
         className="pointer-events-none absolute inset-0 opacity-40"
         style={{
           backgroundImage:
-            "linear-gradient(90deg, rgba(245, 24, 76,0.04) 1px, transparent 1px), linear-gradient(rgba(245, 24, 76,0.04) 1px, transparent 1px)",
+            "linear-gradient(90deg, rgba(20, 20, 30,0.035) 1px, transparent 1px), linear-gradient(rgba(20, 20, 30,0.035) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }}
         aria-hidden
@@ -100,7 +100,7 @@ export default function StatsSection() {
         <div
           className="pointer-events-none absolute bottom-0 left-1/2 h-px w-[min(640px,80%)] -translate-x-1/2"
           style={{
-            background: "linear-gradient(90deg, transparent, rgba(245, 24, 76,0.25), transparent)",
+            background: "linear-gradient(90deg, transparent, rgba(20, 20, 30,0.12), transparent)",
           }}
           aria-hidden
         />

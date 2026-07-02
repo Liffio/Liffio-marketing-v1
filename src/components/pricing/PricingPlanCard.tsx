@@ -45,8 +45,8 @@ export function PricingPlanCard({ plan, annual, compact = false, className = "" 
             }
           : {
               background: "white",
-              border: "1px solid rgba(245, 24, 76,0.12)",
-              boxShadow: "0 2px 20px rgba(245, 24, 76,0.06)",
+              border: "1px solid rgba(20, 20, 30,0.08)",
+              boxShadow: "0 2px 20px rgba(0, 0, 0, 0.05)",
             }
       }
     >
@@ -102,9 +102,9 @@ export function PricingPlanCard({ plan, annual, compact = false, className = "" 
                 boxShadow: "0 4px 16px rgba(0,0,0,0.14)",
               }
             : {
-                background: "linear-gradient(135deg,#f5184c,#b20d8f)",
-                color: "white",
-                boxShadow: "0 4px 16px rgba(178, 13, 143,0.24)",
+                background: "rgba(245, 24, 76,0.08)",
+                color: "#e00e40",
+                boxShadow: "none",
               }
         }
       >
