@@ -12,7 +12,7 @@ export default function FAQSection({ categories }: FAQSectionProps) {
   return (
     <section
       id="faq"
-      className="section-py relative overflow-hidden border-t border-border bg-white"
+      className="section-py relative overflow-hidden bg-white"
     >
       <div
         className="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full opacity-50"

@@ -53,7 +53,7 @@ export default function CTASection() {
   return (
     <section
       id="get-started"
-      className="relative overflow-hidden border-t border-border bg-white"
+      className="relative overflow-hidden bg-white"
     >
       <div className="pointer-events-none absolute inset-0" aria-hidden>
         <div

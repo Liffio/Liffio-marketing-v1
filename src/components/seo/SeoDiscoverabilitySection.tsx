@@ -63,7 +63,7 @@ export default function SeoDiscoverabilitySection() {
   return (
     <section
       aria-labelledby="seo-section-heading"
-      className="border-t border-gray-100 bg-white py-14 sm:py-20"
+      className="bg-white py-14 sm:py-20"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-16">
 

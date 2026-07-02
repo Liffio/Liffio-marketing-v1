@@ -120,7 +120,7 @@ export default function AffiliateProgramContent() {
       </section>
 
       {/* Key stats */}
-      <section className="border-y border-brand-100/80 bg-white">
+      <section className="bg-white">
         <div className="mx-auto grid max-w-5xl grid-cols-2 lg:grid-cols-4">
           {KEY_STATS.map((s, i) => (
             <div
@@ -340,7 +340,7 @@ export default function AffiliateProgramContent() {
       </section>
 
       {/* Rules */}
-      <section className="border-t border-brand-100/80 bg-[#faf9ff] px-4 py-14 sm:px-6 sm:py-16">
+      <section className="bg-[#faf9ff] px-4 py-14 sm:px-6 sm:py-16">
         <div className="mx-auto max-w-3xl">
           <h2
             className="mb-6 text-center text-xl font-extrabold text-[#0a0a0a] sm:text-2xl"

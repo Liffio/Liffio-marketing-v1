@@ -518,7 +518,7 @@ export default function HowItWorksSection() {
   return (
     <section
       id="how-it-works"
-      className="section-py relative overflow-hidden border-y border-border bg-muted/20"
+      className="section-py relative overflow-hidden bg-muted/20"
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-30"

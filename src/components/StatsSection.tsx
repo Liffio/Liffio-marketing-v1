@@ -63,7 +63,7 @@ export default function StatsSection() {
   return (
     <section
       ref={ref}
-      className="stats-band relative overflow-hidden border-y border-border"
+      className="stats-band relative overflow-hidden"
       aria-label="Platform trust signals"
     >
       <div

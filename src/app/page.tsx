@@ -47,7 +47,7 @@ export default async function Home() {
         <SeoDiscoverabilitySection />
         <FAQSection categories={faqCategories} />
         <AboutSection />
-        <section aria-label="About Liffio" className="border-t border-border py-10 sm:py-12">
+        <section aria-label="About Liffio" className="py-10 sm:py-12">
           <div className="mx-auto max-w-3xl px-4 sm:px-6">
             <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
               <p>

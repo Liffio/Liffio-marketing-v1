@@ -114,7 +114,7 @@ export default function FeaturesPageContent() {
         </div>
       </section>
 
-      <section className="border-y border-brand-100/80 bg-white">
+      <section className="bg-white">
         <div className="mx-auto grid max-w-5xl grid-cols-2 lg:grid-cols-4">
           {HIGHLIGHTS.map((item, i) => (
             <div
@@ -154,7 +154,7 @@ export default function FeaturesPageContent() {
       </div>
 
       {FEATURE_CATEGORIES.map((category) => (
-        <section key={category.id} className="section-py border-b border-brand-50 bg-white last:border-0">
+        <section key={category.id} className="section-py bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-10 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
