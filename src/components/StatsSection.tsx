@@ -17,13 +17,6 @@ function StatValue({ stat, visible, delayMs }: { stat: (typeof stats)[number]; v
       data-visible={visible ? "true" : "false"}
       aria-label={`${stat.value} - ${stat.label}`}
     >
-      <span
-        className="stats-figure__ghost pointer-events-none absolute inset-0 flex items-center justify-center select-none whitespace-nowrap text-[clamp(2.5rem,7vw,4.75rem)] font-black leading-none text-foreground/[0.04]"
-        style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
-        aria-hidden
-      >
-        {stat.value}
-      </span>
       <div className="relative z-[1] flex flex-col items-center gap-2">
         <p
           className="stats-figure__value whitespace-nowrap text-[clamp(2rem,5.5vw,3.75rem)] font-extrabold leading-none tracking-tight text-foreground"

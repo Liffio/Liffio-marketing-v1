@@ -16,6 +16,48 @@
   --font-display: "Outfit", "Outfit Fallback", sans-serif;
 }
 
+/* Registers the semantic tokens below with Tailwind's theme so utilities like
+   bg-background, text-foreground, border-border (incl. opacity modifiers like
+   bg-muted/40) actually compile. Without this block Tailwind v4 silently drops
+   any utility referencing an unregistered color name. */
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-surface: hsl(var(--surface));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-success: hsl(var(--success));
+  --color-success-foreground: hsl(var(--success-foreground));
+  --color-warning: hsl(var(--warning));
+  --color-warning-foreground: hsl(var(--warning-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-info: hsl(var(--info));
+  --color-violet: hsl(var(--violet));
+  --color-sidebar-background: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+  --radius-DEFAULT: var(--radius);
+}
+
 @layer base {
   :root {
     --background: 240 14% 92%;
@@ -406,22 +448,6 @@
     transform: translateY(0) scale(1);
   }
 
-  .stats-figure[data-visible="true"] .stats-figure__ghost {
-    animation: stats-ghost-pulse 4s ease-in-out infinite;
-  }
-
-  @keyframes stats-ghost-pulse {
-    0%,
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.65;
-      transform: scale(1.03);
-    }
-  }
-
 @media (prefers-reduced-motion: reduce) {
   .hero-stagger,
   .hero-float-card,
@@ -434,8 +460,7 @@
   .hero-dm-flash,
   .hero-sent-flash,
   .testimonials-marquee,
-  .stats-figure,
-  .stats-figure__ghost {
+  .stats-figure {
     animation: none !important;
     transition: none !important;
   }
