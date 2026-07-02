@@ -74,12 +74,12 @@ export default function FeaturesPageContent() {
     <>
       <section
         className="relative overflow-hidden px-4 py-16 sm:py-24"
-        style={{ background: "linear-gradient(155deg,#f8f5ff 0%,#f0ebff 45%,#faf5ff 100%)" }}
+        style={{ background: "linear-gradient(155deg,#fff1f2 0%,#ffe4e6 45%,#fff4f2 100%)" }}
       >
         <div
           className="pointer-events-none absolute inset-0 opacity-40"
           style={{
-            backgroundImage: "radial-gradient(rgba(124,90,243,0.08) 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(rgba(245, 24, 76,0.08) 1px, transparent 1px)",
             backgroundSize: "28px 28px",
           }}
           aria-hidden

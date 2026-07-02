@@ -7,7 +7,7 @@ import { useRef, type ReactNode } from 'react';
 export function AuthCard({ children, wide }: { children: ReactNode; wide?: boolean }) {
   return (
     <div
-      className={`w-full bg-white rounded-2xl shadow-lg border border-rose-100/60 p-8 ${wide ? 'max-w-lg' : 'max-w-md'}`}
+      className={`w-full bg-card rounded-2xl shadow-soft border p-8 ${wide ? 'max-w-lg' : 'max-w-md'}`}
     >
       {children}
     </div>
@@ -18,7 +18,7 @@ export function AuthCard({ children, wide }: { children: ReactNode; wide?: boole
 
 export function Label({ htmlFor, children }: { htmlFor?: string; children: ReactNode }) {
   return (
-    <label htmlFor={htmlFor} className="block text-sm font-medium text-gray-700 mb-1">
+    <label htmlFor={htmlFor} className="block text-sm font-medium text-foreground mb-1">
       {children}
     </label>
   );
@@ -30,7 +30,7 @@ export function Input({ error, className = '', ...props }: InputProps) {
   return (
     <input
       {...props}
-      className={`w-full px-3 py-2.5 text-sm border rounded-xl bg-white text-gray-900 placeholder-gray-400 outline-none transition focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 ${error ? 'border-red-400' : 'border-gray-200'} ${className}`}
+      className={`w-full px-3 py-2.5 text-sm border rounded-xl bg-background text-foreground placeholder:text-muted-foreground outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary ${error ? 'border-destructive' : 'border-input'} ${className}`}
     />
   );
 }
@@ -39,7 +39,7 @@ export function Textarea({ className = '', ...props }: React.TextareaHTMLAttribu
   return (
     <textarea
       {...props}
-      className={`w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-white text-gray-900 placeholder-gray-400 outline-none transition focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 resize-none ${className}`}
+      className={`w-full px-3 py-2.5 text-sm border border-input rounded-xl bg-background text-foreground placeholder:text-muted-foreground outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary resize-none ${className}`}
     />
   );
 }
@@ -51,8 +51,8 @@ export function Button({ variant = 'primary', loading, children, className = '',
   const base = 'inline-flex items-center justify-center gap-2 font-semibold text-sm rounded-xl px-4 py-2.5 transition disabled:opacity-50 disabled:cursor-not-allowed';
   const variants: Record<ButtonVariant, string> = {
     primary: 'bg-gradient-to-r from-brand-500 to-brand-600 text-white shadow-md hover:opacity-90',
-    outline: 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-50',
-    ghost: 'bg-transparent text-gray-500 hover:text-gray-700',
+    outline: 'border border-input bg-background text-foreground hover:bg-muted',
+    ghost: 'bg-transparent text-muted-foreground hover:text-foreground',
   };
   return (
     <button {...props} disabled={disabled || loading} className={`${base} ${variants[variant]} ${className}`}>
@@ -133,7 +133,7 @@ export function OtpInput({
           onKeyDown={(e) => handleKeyDown(i, e)}
           onPaste={handlePaste}
           disabled={disabled}
-          className="w-11 h-13 text-center text-xl font-bold border-2 border-gray-200 rounded-xl bg-white text-gray-900 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 transition disabled:opacity-50"
+          className="w-11 h-13 text-center text-xl font-bold border-2 border-input rounded-xl bg-background text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition disabled:opacity-50"
           style={{ lineHeight: '52px', height: 52 }}
         />
       ))}
@@ -289,10 +289,10 @@ export function OrDivider() {
   return (
     <div className="relative my-5">
       <div className="absolute inset-0 flex items-center">
-        <span className="w-full border-t border-gray-200" />
+        <span className="w-full border-t border-border" />
       </div>
       <div className="relative flex justify-center text-xs">
-        <span className="bg-white px-3 py-0.5 rounded-full text-gray-400">or email</span>
+        <span className="bg-card px-3 py-0.5 rounded-full text-muted-foreground">or email</span>
       </div>
     </div>
   );
@@ -302,5 +302,5 @@ export function OrDivider() {
 
 export function ErrorMsg({ message }: { message?: string | null }) {
   if (!message) return null;
-  return <p className="text-xs text-red-500 mt-1">{message}</p>;
+  return <p className="text-xs text-destructive mt-1">{message}</p>;
 }

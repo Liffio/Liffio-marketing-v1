@@ -98,7 +98,6 @@ export default function PricingPlansGrid({
       <div className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-3">
         {pricingPerks.map((p) => (
           <div key={p.label} className="flex items-center gap-1.5 text-sm text-gray-500">
-            <span>{p.icon}</span>
             <span>{p.label}</span>
           </div>
         ))}

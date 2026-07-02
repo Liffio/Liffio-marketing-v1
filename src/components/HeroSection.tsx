@@ -57,18 +57,18 @@ export default function HeroSection() {
       <div className="pointer-events-none absolute inset-0 hero-mesh-bg" aria-hidden />
       <div
         className="pointer-events-none absolute -right-32 top-0 h-[500px] w-[500px] rounded-full opacity-70 blur-3xl hero-orb-a"
-        style={{ background: "radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(255, 124, 73,0.12) 0%, transparent 70%)" }}
         aria-hidden
       />
       <div
         className="pointer-events-none absolute -bottom-24 -left-24 h-[420px] w-[420px] rounded-full opacity-60 blur-3xl hero-orb-b"
-        style={{ background: "radial-gradient(circle, rgba(66,89,240,0.1) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(178, 13, 143,0.1) 0%, transparent 70%)" }}
         aria-hidden
       />
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.4]"
         style={{
-          backgroundImage: `radial-gradient(rgba(124,90,243,0.08) 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(rgba(245, 24, 76,0.08) 1px, transparent 1px)`,
           backgroundSize: "28px 28px",
         }}
         aria-hidden
@@ -120,7 +120,7 @@ export default function HeroSection() {
                 className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.98] sm:w-auto"
                 style={{
                   background: "linear-gradient(135deg,#f5184c,#b20d8f)",
-                  boxShadow: "0 8px 28px rgba(66,89,240,0.4)",
+                  boxShadow: "0 8px 28px rgba(178, 13, 143,0.4)",
                 }}
               >
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
@@ -131,7 +131,7 @@ export default function HeroSection() {
               </a>
               <a
                 href="#how-it-works"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#e5e0f8] bg-white/80 px-7 py-3.5 text-sm font-semibold text-gray-700 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-[#c4b8f5] hover:text-[#f5184c] hover:shadow-md sm:w-auto"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#ffe4e6] bg-white/80 px-7 py-3.5 text-sm font-semibold text-gray-700 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-[#fecdd3] hover:text-[#f5184c] hover:shadow-md sm:w-auto"
               >
                 <svg className="h-4 w-4 text-[#f5184c]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
@@ -175,7 +175,7 @@ export default function HeroSection() {
 
       <div
         className="mx-auto h-px max-w-5xl"
-        style={{ background: "linear-gradient(90deg,transparent,rgba(124,90,243,0.2),transparent)" }}
+        style={{ background: "linear-gradient(90deg,transparent,rgba(245, 24, 76,0.2),transparent)" }}
       />
     </section>
   );

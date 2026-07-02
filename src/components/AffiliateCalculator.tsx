@@ -92,7 +92,7 @@ export default function AffiliateCalculator() {
                 key={row.label}
                 className={`rounded-xl p-4 text-center ${
                   row.highlight
-                    ? "border border-[#ede9fd] bg-[#faf8ff]"
+                    ? "border border-[#ffe4e6] bg-[#fff7f7]"
                     : "border border-gray-100 bg-gray-50"
                 }`}
               >

@@ -42,7 +42,7 @@ function StatSeparator() {
     <div
       className="hidden h-10 w-px shrink-0 sm:block"
       style={{
-        background: "linear-gradient(180deg, transparent, rgba(124,90,243,0.35), transparent)",
+        background: "linear-gradient(180deg, transparent, rgba(245, 24, 76,0.35), transparent)",
       }}
       aria-hidden
     />
@@ -81,7 +81,7 @@ export default function StatsSection() {
         className="pointer-events-none absolute inset-0 opacity-40"
         style={{
           backgroundImage:
-            "linear-gradient(90deg, rgba(124,90,243,0.04) 1px, transparent 1px), linear-gradient(rgba(124,90,243,0.04) 1px, transparent 1px)",
+            "linear-gradient(90deg, rgba(245, 24, 76,0.04) 1px, transparent 1px), linear-gradient(rgba(245, 24, 76,0.04) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }}
         aria-hidden
@@ -100,7 +100,7 @@ export default function StatsSection() {
         <div
           className="pointer-events-none absolute bottom-0 left-1/2 h-px w-[min(640px,80%)] -translate-x-1/2"
           style={{
-            background: "linear-gradient(90deg, transparent, rgba(124,90,243,0.25), transparent)",
+            background: "linear-gradient(90deg, transparent, rgba(245, 24, 76,0.25), transparent)",
           }}
           aria-hidden
         />

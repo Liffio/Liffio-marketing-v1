@@ -13,9 +13,9 @@ function normalizeStatus(status: CreatorsEmailData['status']): 'received' | 'app
 
 export function getCreatorsEmailSubject({ name, status }: CreatorsEmailData): string {
   const resolvedStatus = normalizeStatus(status)
-  if (resolvedStatus === 'approved') return `🎉 ${name}, welcome to the ${siteConfig.brand.name} Creators Program`
+  if (resolvedStatus === 'approved') return `${name}, welcome to the ${siteConfig.brand.name} Creators Program`
   if (resolvedStatus === 'rejected') return `${siteConfig.brand.name} Creators Program application update`
-  return `🎯 ${name}, your Creators Program application is received!`
+  return `${name}, your Creators Program application is received!`
 }
 
 export function getCreatorsEmailText({ name, instagramUsername, status, reason }: CreatorsEmailData): string {
@@ -102,7 +102,7 @@ export function getCreatorsEmailHtml({ name, instagramUsername, status, reason }
       <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background:#ffffff;border:1px solid #E5E7EB;border-radius:16px;">
         <tr><td style="padding:32px;">
           <p style="margin:0 0 12px 0;font-size:12px;letter-spacing:.08em;color:#16A34A;font-weight:700;">CREATORS PROGRAM</p>
-          <h1 style="margin:0 0 16px 0;font-size:28px;color:#111827;">Welcome aboard, ${name}! ✅</h1>
+          <h1 style="margin:0 0 16px 0;font-size:28px;color:#111827;">Welcome aboard, ${name}!</h1>
           <p style="margin:0 0 12px 0;color:#374151;line-height:1.6;">Your application for <strong>@${instagramUsername}</strong> has been approved.</p>
           <div style="margin:18px 0 0;padding:14px;border:1px solid #DCFCE7;background:#F0FDF4;border-radius:10px;">
             <p style="margin:0 0 8px 0;font-size:12px;color:#166534;font-weight:700;letter-spacing:.06em;">WHAT HAPPENS NEXT</p>
@@ -171,12 +171,12 @@ export function getCreatorsEmailHtml({ name, instagramUsername, status, reason }
           <td style="background-color: #ffffff; border: 1px solid #E5E7EB; border-radius: 24px; padding: 60px 48px;">
             <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr><td align="center" style="padding-bottom: 24px;">
-                <span style="display: inline-block; background-color: #fff1f2; color: #b20d8f; font-family: sans-serif; font-size: 11px; font-weight: 700; padding: 8px 20px; border-radius: 100px; letter-spacing: 0.08em; border: 1px solid #fda4af;">🎯 APPLICATION RECEIVED</span>
+                <span style="display: inline-block; background-color: #fff1f2; color: #b20d8f; font-family: sans-serif; font-size: 11px; font-weight: 700; padding: 8px 20px; border-radius: 100px; letter-spacing: 0.08em; border: 1px solid #fda4af;">APPLICATION RECEIVED</span>
               </td></tr>
             </table>
             <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr><td align="center" style="padding-bottom: 20px;">
-                <h1 style="margin: 0; font-family: sans-serif; font-size: 36px; font-weight: 800; color: #111827; line-height: 1.1; letter-spacing: -0.03em;">Hey ${name}! 👋</h1>
+                <h1 style="margin: 0; font-family: sans-serif; font-size: 36px; font-weight: 800; color: #111827; line-height: 1.1; letter-spacing: -0.03em;">Hey ${name}!</h1>
               </td></tr>
               <tr><td align="center" style="padding-bottom: 32px;">
                 <p style="margin: 0; font-family: sans-serif; font-size: 17px; color: #4B5563; line-height: 1.6;">We've received your application for <strong style="color: #b20d8f;">@${instagramUsername}</strong> and our team is excited to review your profile.</p>

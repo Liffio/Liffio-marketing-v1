@@ -26,7 +26,7 @@ export const BLOG_POSTS: BlogPost[] = [
     author: "Liffio Team",
     publishedAt: "2026-05-15",
     updatedAt: "2026-05-15",
-    gradient: "from-blue-500 to-rose-600",
+    gradient: "from-orange-500 to-rose-600",
     sections: [
       {
         heading: "What comment-to-DM actually does",

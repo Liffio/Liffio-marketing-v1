@@ -11,7 +11,7 @@ import type { PricingRegion } from "@/lib/pricing-region";
 function CheckIcon({ light }: { light?: boolean }) {
   return (
     <svg viewBox="0 0 16 16" className="mt-0.5 h-3.5 w-3.5 shrink-0" fill="none" aria-hidden>
-      <circle cx="8" cy="8" r="8" fill={light ? "rgba(255,255,255,0.2)" : "rgba(124,90,243,0.12)"} />
+      <circle cx="8" cy="8" r="8" fill={light ? "rgba(255,255,255,0.2)" : "rgba(245, 24, 76,0.12)"} />
       <path
         d="M4.5 8.5l2 2 4.5-5"
         stroke={light ? "white" : "#f5184c"}
@@ -30,11 +30,11 @@ function MobilePlanCard({ plan, annual }: { plan: PricingPlan; annual: boolean }
   return (
     <article
       className={`flex h-full min-h-[300px] w-[min(calc(100vw-2rem),300px)] shrink-0 snap-center flex-col rounded-2xl p-4 sm:w-[300px] ${
-        light ? "shadow-[0_16px_48px_rgba(66,89,240,0.28)]" : "border border-brand-100/90 bg-white shadow-sm"
+        light ? "shadow-[0_16px_48px_rgba(178, 13, 143,0.28)]" : "border border-brand-100/90 bg-white shadow-sm"
       }`}
       style={
         light
-          ? { background: "linear-gradient(155deg,#f5184c,#5648ea,#b20d8f)" }
+          ? { background: "linear-gradient(155deg,#ff7c49,#f5184c,#b20d8f)" }
           : undefined
       }
     >
@@ -146,7 +146,7 @@ export default function PricingSection({ plans, region, countryCode = null }: Pr
     <section id="pricing" className="section-py relative overflow-hidden bg-white">
       <div
         className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: "linear-gradient(90deg,transparent,rgba(124,90,243,0.12),transparent)" }}
+        style={{ background: "linear-gradient(90deg,transparent,rgba(245, 24, 76,0.12),transparent)" }}
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -16,7 +16,7 @@ export default function FAQSection({ categories }: FAQSectionProps) {
     >
       <div
         className="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full opacity-50"
-        style={{ background: "radial-gradient(circle, rgba(124,90,243,0.1) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(245, 24, 76,0.1) 0%, transparent 70%)" }}
         aria-hidden
       />
 

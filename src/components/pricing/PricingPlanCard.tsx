@@ -5,7 +5,7 @@ import type { PricingPlan } from "@/config/pricing.config";
 function CheckIcon({ highlight }: { highlight?: boolean }) {
   return (
     <svg viewBox="0 0 16 16" className="mt-0.5 h-4 w-4 shrink-0" fill="none" aria-hidden>
-      <circle cx="8" cy="8" r="8" fill={highlight ? "rgba(255,255,255,0.2)" : "rgba(124,90,243,0.1)"} />
+      <circle cx="8" cy="8" r="8" fill={highlight ? "rgba(255,255,255,0.2)" : "rgba(245, 24, 76,0.1)"} />
       <path
         d="M4.5 8.5l2 2 4.5-5"
         stroke={highlight ? "white" : "#f5184c"}
@@ -40,13 +40,13 @@ export function PricingPlanCard({ plan, annual, compact = false, className = "" 
       style={
         plan.highlight
           ? {
-              background: "linear-gradient(155deg,#f5184c,#5648ea,#b20d8f)",
-              boxShadow: "0 28px 64px rgba(66,89,240,0.38), 0 0 0 1px rgba(124,90,243,0.4)",
+              background: "linear-gradient(155deg,#ff7c49,#f5184c,#b20d8f)",
+              boxShadow: "0 28px 64px rgba(178, 13, 143,0.38), 0 0 0 1px rgba(245, 24, 76,0.4)",
             }
           : {
               background: "white",
-              border: "1px solid rgba(124,90,243,0.12)",
-              boxShadow: "0 2px 20px rgba(124,90,243,0.06)",
+              border: "1px solid rgba(245, 24, 76,0.12)",
+              boxShadow: "0 2px 20px rgba(245, 24, 76,0.06)",
             }
       }
     >
@@ -104,7 +104,7 @@ export function PricingPlanCard({ plan, annual, compact = false, className = "" 
             : {
                 background: "linear-gradient(135deg,#f5184c,#b20d8f)",
                 color: "white",
-                boxShadow: "0 4px 16px rgba(66,89,240,0.24)",
+                boxShadow: "0 4px 16px rgba(178, 13, 143,0.24)",
               }
         }
       >

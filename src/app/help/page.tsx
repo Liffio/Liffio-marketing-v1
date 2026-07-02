@@ -43,21 +43,19 @@ export default async function HelpPage() {
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
               {[
                 {
-                  icon: "✉️",
                   label: "Email Us",
                   value: siteConfig.contact.email,
                   href: `mailto:${siteConfig.contact.email}`,
                 },
                 ...(whatsappUrl
-                  ? [{ icon: "💬", label: "WhatsApp", value: "Chat with us", href: whatsappUrl }]
+                  ? [{ label: "WhatsApp", value: "Chat with us", href: whatsappUrl }]
                   : []),
-                { icon: "⏱️", label: "Response Time", value: "Under 24 hours", href: null },
+                { label: "Response Time", value: "Under 24 hours", href: null },
               ].map((item) => (
                 <div
                   key={item.label}
                   className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center"
                 >
-                  <div className="text-2xl mb-2">{item.icon}</div>
                   <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">{item.label}</p>
                   {item.href ? (
                     <a href={item.href} className="text-sm font-semibold text-[#b20d8f] hover:underline mt-1 block">

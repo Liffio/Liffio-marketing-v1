@@ -10,9 +10,9 @@ interface WelcomeEmailData {
 
 export function getWelcomeEmailSubject({ name, discount, hasDiscount }: WelcomeEmailData): string {
   if (hasDiscount) {
-    return `🎉 You're in, ${name}! Your ${discount}% off code is inside`;
+    return `You're in, ${name}! Your ${discount}% off code is inside`;
   }
-  return `🎉 Welcome aboard, ${name}! You're on the early access list`;
+  return `Welcome aboard, ${name}! You're on the early access list`;
 }
 
 export function getWelcomeEmailText({
@@ -85,7 +85,7 @@ export function getWelcomeEmailHtml({
       <tr>
         <td style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 16px; padding: 32px; text-align: center;">
           <p style="margin: 0 0 8px 0; font-size: 12px; color: #b20d8f; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">RESERVATION STATUS</p>
-          <p style="margin: 0; font-size: 24px; font-weight: 800; color: #0F172A;">You're on the list! 🎯</p>
+          <p style="margin: 0; font-size: 24px; font-weight: 800; color: #0F172A;">You're on the list!</p>
           <p style="margin: 12px 0 0 0; font-size: 13px; color: #64748B;">Estimated Launch: ${launch.badgeText.replace("Launching ", "")}</p>
         </td>
       </tr>
@@ -130,7 +130,7 @@ export function getWelcomeEmailHtml({
               <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td align="center" style="padding-bottom: 20px;">
-                    <h1 style="margin: 0; font-family: sans-serif; font-size: 36px; font-weight: 800; color: #111827; line-height: 1.1; letter-spacing: -0.03em;">You're on the list, ${name}! 🎉</h1>
+                    <h1 style="margin: 0; font-family: sans-serif; font-size: 36px; font-weight: 800; color: #111827; line-height: 1.1; letter-spacing: -0.03em;">You're on the list, ${name}!</h1>
                   </td>
                 </tr>
                 <tr>

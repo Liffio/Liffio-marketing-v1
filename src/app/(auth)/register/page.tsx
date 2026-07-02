@@ -68,7 +68,7 @@ function RegisterPageInner() {
   }, [referralCode]);
 
   const s = useMemo(() => strengthScore(pw), [pw]);
-  const strengthColor = s <= 1 ? 'bg-red-400' : s === 2 ? 'bg-yellow-400' : s === 3 ? 'bg-brand-500' : 'bg-green-500';
+  const strengthColor = s <= 1 ? 'bg-destructive' : s === 2 ? 'bg-warning' : s === 3 ? 'bg-primary' : 'bg-success';
 
   const gUrl = mounted ? googleAuthUrl(redirectPath || '/dashboard', window.location.origin) : '#';
 
@@ -104,12 +104,12 @@ function RegisterPageInner() {
   return (
     <div className="w-full max-w-lg">
       <AuthCard wide>
-        <header className="mb-6 border-b border-gray-100 pb-5">
-          <h1 className="font-display text-xl font-semibold tracking-tight text-gray-900">Create your workspace</h1>
-          <p className="mt-1.5 text-sm text-gray-500">Free forever · Connect Instagram in minutes · No card required</p>
+        <header className="mb-6 border-b border-border pb-5">
+          <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">Create your workspace</h1>
+          <p className="mt-1.5 text-sm text-muted-foreground">Free forever · Connect Instagram in minutes · No card required</p>
         </header>
 
-        <a href={gUrl} className="flex h-11 w-full items-center justify-center gap-2.5 rounded-xl border border-gray-200 bg-white px-4 text-sm font-medium text-gray-700 transition hover:bg-gray-50">
+        <a href={gUrl} className="flex h-11 w-full items-center justify-center gap-2.5 rounded-xl border border-input bg-background px-4 text-sm font-medium text-foreground transition hover:bg-muted">
           <GoogleIcon />
           Continue with Google
         </a>
@@ -134,7 +134,7 @@ function RegisterPageInner() {
               id="country"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
-              className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-white text-gray-900 outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 transition"
+              className="w-full px-3 py-2.5 text-sm border border-input rounded-xl bg-background text-foreground outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition"
             >
               <option value="">Select your country…</option>
               {COUNTRIES.map(([code, label]) => (
@@ -147,14 +147,14 @@ function RegisterPageInner() {
             <Label htmlFor="pw">Password</Label>
             <div className="relative">
               <Input id="pw" type={showPw ? 'text' : 'password'} value={pw} onChange={(e) => setPw(e.target.value)} required autoComplete="new-password" className="pr-10" placeholder="At least 8 characters" />
-              <button type="button" onClick={() => setShowPw((v) => !v)} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+              <button type="button" onClick={() => setShowPw((v) => !v)} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                 <EyeIcon open={showPw} />
               </button>
             </div>
             {pw.length > 0 && (
               <div className="flex gap-1 mt-1.5">
                 {[0, 1, 2, 3].map((i) => (
-                  <div key={i} className={`h-1 flex-1 rounded-full transition-colors ${i < s ? strengthColor : 'bg-gray-200'}`} />
+                  <div key={i} className={`h-1 flex-1 rounded-full transition-colors ${i < s ? strengthColor : 'bg-muted'}`} />
                 ))}
               </div>
             )}
@@ -163,30 +163,30 @@ function RegisterPageInner() {
           <div className="space-y-1.5">
             <Label htmlFor="cpw">Confirm password</Label>
             <Input id="cpw" value={cpw} onChange={(e) => setCpw(e.target.value)} type={showPw ? 'text' : 'password'} required autoComplete="new-password" />
-            {pw !== cpw && cpw.length > 0 && <p className="text-xs text-red-500">Passwords do not match</p>}
+            {pw !== cpw && cpw.length > 0 && <p className="text-xs text-destructive">Passwords do not match</p>}
           </div>
 
           <div className="space-y-1.5">
             <Label htmlFor="referral">
-              Referral code <span className="font-normal text-gray-400">(optional)</span>
+              Referral code <span className="font-normal text-muted-foreground">(optional)</span>
             </Label>
             <Input id="referral" value={referralCode} onChange={(e) => setReferralCode(e.target.value)} placeholder="Friend's code" />
-            {refValid === true && <p className="text-xs text-green-600">✓ Valid referral — 10% off your first payment</p>}
-            {refValid === false && <p className="text-xs text-red-500">Referral code not found</p>}
+            {refValid === true && <p className="text-xs text-success">✓ Valid referral — 10% off your first payment</p>}
+            {refValid === false && <p className="text-xs text-destructive">Referral code not found</p>}
           </div>
 
-          <label className="flex cursor-pointer items-start gap-2.5 text-xs text-gray-500">
+          <label className="flex cursor-pointer items-start gap-2.5 text-xs text-muted-foreground">
             <div
               onClick={() => setAgreed((a) => !a)}
-              className={`mt-0.5 h-4 w-4 shrink-0 rounded border-2 flex items-center justify-center cursor-pointer transition-colors ${agreed ? 'bg-brand-500 border-brand-500' : 'border-gray-300 bg-white'}`}
+              className={`mt-0.5 h-4 w-4 shrink-0 rounded border-2 flex items-center justify-center cursor-pointer transition-colors ${agreed ? 'bg-primary border-primary' : 'border-input bg-background'}`}
             >
               {agreed && <CheckIcon size={10} />}
             </div>
             <span>
               I agree to the{' '}
-              <Link href="/terms-of-service" className="text-brand-500 hover:underline">Terms of Service</Link>,{' '}
-              <Link href="/privacy-policy" className="text-brand-500 hover:underline">Privacy Policy</Link>, and{' '}
-              <Link href="/creators-policy" className="text-brand-500 hover:underline">Creators Program Policy</Link>
+              <Link href="/terms-of-service" className="text-primary hover:underline">Terms of Service</Link>,{' '}
+              <Link href="/privacy-policy" className="text-primary hover:underline">Privacy Policy</Link>, and{' '}
+              <Link href="/creators-policy" className="text-primary hover:underline">Creators Program Policy</Link>
             </span>
           </label>
 
@@ -197,7 +197,7 @@ function RegisterPageInner() {
           </Button>
         </form>
 
-        <p className="mt-6 border-t border-gray-100 pt-5 text-center text-sm text-gray-500">
+        <p className="mt-6 border-t border-border pt-5 text-center text-sm text-muted-foreground">
           Already have an account?{' '}
           <Link href={`/login${redirectPath ? `?redirect=${encodeURIComponent(redirectPath)}` : ''}`} className="font-semibold gradient-text hover:opacity-90">
             Sign in

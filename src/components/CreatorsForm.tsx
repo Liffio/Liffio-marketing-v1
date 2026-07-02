@@ -147,7 +147,6 @@ export default function CreatorsForm() {
   if (submitted) {
     return (
       <div className="text-center py-16 px-8">
-        <div className="text-6xl mb-6">🎉</div>
         <h3 className="text-2xl font-bold text-gray-900 mb-3">Application Submitted!</h3>
         <p className="text-gray-600 max-w-md mx-auto leading-relaxed">
           We've sent a confirmation to <strong>{formData.email}</strong>. Our team reviews all applications manually and will get back to you within 48–72 hours.

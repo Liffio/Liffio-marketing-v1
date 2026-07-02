@@ -39,9 +39,9 @@ export default async function Home() {
       <Navbar />
       <main id="main-content" className="flex-1">
         <HeroSection />
-        <section aria-label="About Liffio" className="bg-[#faf8ff] border-y border-[#ede9fd] py-10 sm:py-14">
+        <section aria-label="About Liffio" className="bg-[#fff7f7] border-y border-[#ffe4e6] py-10 sm:py-14">
           <div className="mx-auto max-w-3xl px-4 sm:px-6">
-            <div className="rounded-2xl border border-[#ede9fd] bg-white px-6 py-7 sm:px-8 sm:py-8 shadow-sm space-y-4 text-gray-600 leading-relaxed text-base">
+            <div className="rounded-2xl border border-[#ffe4e6] bg-white px-6 py-7 sm:px-8 sm:py-8 shadow-sm space-y-4 text-gray-600 leading-relaxed text-base">
               <p>
                 Liffio is an Instagram DM automation tool built for creators, coaches, and agencies
                 who want to respond to audience interactions without doing it manually. When someone

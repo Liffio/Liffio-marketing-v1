@@ -118,13 +118,13 @@ export default function ChatfuelAlternativePage() {
             <div className="mt-8 flex flex-wrap gap-4 justify-center">
               <a
                 href={siteConfig.urls.appSignup}
-                className="inline-flex rounded-xl px-8 py-3.5 text-sm font-semibold text-white shadow-lg [background:linear-gradient(135deg,#7c5af3,#4259f0)]"
+                className="inline-flex rounded-xl px-8 py-3.5 text-sm font-semibold text-white shadow-lg [background:linear-gradient(135deg,#f5184c,#b20d8f)]"
               >
                 Get Started Free
               </a>
               <a
                 href="#comparison"
-                className="inline-flex rounded-xl border border-gray-200 px-8 py-3.5 text-sm font-semibold text-gray-700 bg-white hover:border-[#7c5af3] hover:text-[#7c5af3] transition-colors"
+                className="inline-flex rounded-xl border border-gray-200 px-8 py-3.5 text-sm font-semibold text-gray-700 bg-white hover:border-[#f5184c] hover:text-[#f5184c] transition-colors"
               >
                 See full comparison ↓
               </a>
@@ -163,15 +163,15 @@ export default function ChatfuelAlternativePage() {
               </p>
               <ul className="mt-4 space-y-2 list-none">
                 <li className="flex gap-3">
-                  <span className="text-[#7c5af3] font-bold mt-0.5">→</span>
+                  <span className="text-[#f5184c] font-bold mt-0.5">→</span>
                   <span><strong className="text-gray-900">Per-conversation billing:</strong> Every bot interaction on Instagram counts against your monthly quota. A viral Reel can exhaust a month&apos;s worth of conversations in hours. Liffio charges flat — no per-DM, per-contact, or per-conversation fees.</span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-[#7c5af3] font-bold mt-0.5">→</span>
+                  <span className="text-[#f5184c] font-bold mt-0.5">→</span>
                   <span><strong className="text-gray-900">Multi-platform overhead:</strong> Chatfuel&apos;s flow builder is designed for Messenger, WhatsApp, and Instagram simultaneously. If you are only automating Instagram, you are navigating a tool built for something broader than your actual use case.</span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-[#7c5af3] font-bold mt-0.5">→</span>
+                  <span className="text-[#f5184c] font-bold mt-0.5">→</span>
                   <span><strong className="text-gray-900">No permanent free plan:</strong> Chatfuel offers a 7-day trial. Liffio has a permanent free plan that runs real automations in production — unlimited DMs, comment triggers, and a bio link page — with no expiry date.</span>
                 </li>
               </ul>
@@ -180,14 +180,14 @@ export default function ChatfuelAlternativePage() {
         </section>
 
         {/* Feature comparison table */}
-        <section id="comparison" className="py-16 bg-[#faf8ff] border-y border-[#ede9fd]">
+        <section id="comparison" className="py-16 bg-[#fff7f7] border-y border-[#ffe4e6]">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
               Liffio vs Chatfuel — side-by-side comparison
             </h2>
             <p className="text-gray-600 mb-8">
               Instagram-specific feature comparison.{" "}
-              <a href="/blog/manychat-alternatives" className="text-[#4259f0] font-semibold hover:underline">
+              <a href="/blog/manychat-alternatives" className="text-[#b20d8f] font-semibold hover:underline">
                 See the full Instagram automation alternatives guide →
               </a>
             </p>
@@ -214,9 +214,9 @@ export default function ChatfuelAlternativePage() {
                 </thead>
                 <tbody>
                   {competitorPricing.map((tool, i) => (
-                    <tr key={tool.name} className={`border-b border-gray-100 ${i === 0 ? "bg-[#faf8ff]" : ""}`}>
+                    <tr key={tool.name} className={`border-b border-gray-100 ${i === 0 ? "bg-[#fff7f7]" : ""}`}>
                       <td className="py-3 px-4 font-semibold text-gray-900">
-                        {i === 0 ? <span className="text-[#7c5af3]">{tool.name} ★</span> : tool.name}
+                        {i === 0 ? <span className="text-[#f5184c]">{tool.name} ★</span> : tool.name}
                       </td>
                       <td className="py-3 px-4 text-gray-600">{tool.free ? "✓ Yes" : "✗ No"}</td>
                       <td className="py-3 px-4 text-gray-600">{tool.paidFrom}</td>
@@ -254,7 +254,7 @@ export default function ChatfuelAlternativePage() {
         </section>
 
         {/* Use cases */}
-        <section className="py-16 bg-[#faf8ff] border-y border-[#ede9fd]">
+        <section className="py-16 bg-[#fff7f7] border-y border-[#ffe4e6]">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-10" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
               Who uses Liffio as a Chatfuel alternative
@@ -346,7 +346,7 @@ export default function ChatfuelAlternativePage() {
         </section>
 
         {/* Migration guide */}
-        <section className="py-16 bg-[#faf8ff] border-y border-[#ede9fd]">
+        <section className="py-16 bg-[#fff7f7] border-y border-[#ffe4e6]">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
               How to migrate from Chatfuel to Liffio
@@ -380,7 +380,7 @@ export default function ChatfuelAlternativePage() {
                 },
               ].map((item) => (
                 <div key={item.step} className="flex gap-5">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#7c5af3] text-white flex items-center justify-center text-sm font-bold">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#f5184c] text-white flex items-center justify-center text-sm font-bold">
                     {item.step}
                   </div>
                   <div>
@@ -415,7 +415,7 @@ export default function ChatfuelAlternativePage() {
         </section>
 
         {/* CTA */}
-        <section className="py-16 bg-[#faf8ff] border-t border-[#ede9fd] text-center">
+        <section className="py-16 bg-[#fff7f7] border-t border-[#ffe4e6] text-center">
           <div className="mx-auto max-w-2xl px-4 sm:px-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
               Start free — no conversations to count
@@ -426,7 +426,7 @@ export default function ChatfuelAlternativePage() {
             </p>
             <a
               href={siteConfig.urls.appSignup}
-              className="inline-flex rounded-xl px-10 py-4 text-base font-semibold text-white shadow-lg [background:linear-gradient(135deg,#7c5af3,#4259f0)]"
+              className="inline-flex rounded-xl px-10 py-4 text-base font-semibold text-white shadow-lg [background:linear-gradient(135deg,#f5184c,#b20d8f)]"
             >
               Get Started Free
             </a>

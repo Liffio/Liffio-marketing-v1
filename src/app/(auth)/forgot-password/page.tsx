@@ -58,14 +58,14 @@ export default function ForgotPasswordPage() {
   return (
     <div className="w-full max-w-md">
       <AuthCard>
-        <header className="mb-6 border-b border-gray-100 pb-5">
-          <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-rose-100">
+        <header className="mb-6 border-b border-border pb-5">
+          <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary/10">
             {step === 'email' ? <MailIcon /> : <KeyRoundIcon />}
           </div>
-          <h1 className="font-display text-xl font-semibold tracking-tight text-gray-900">
+          <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">
             {step === 'email' ? 'Reset your password' : 'Enter the code'}
           </h1>
-          <p className="mt-1.5 text-sm text-gray-500">
+          <p className="mt-1.5 text-sm text-muted-foreground">
             {step === 'email'
               ? "We'll email you a 6-digit code to reset your password."
               : `Code sent to ${email}. It expires in 5 minutes.`}
@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
         </header>
 
         {success && step === 'reset' && (
-          <div className="mb-4 rounded-xl border border-green-200 bg-green-50 px-3 py-2.5 text-xs text-green-700">
+          <div className="mb-4 rounded-xl border border-success/30 bg-success/10 px-3 py-2.5 text-xs text-success">
             {success}
           </div>
         )}
@@ -103,7 +103,7 @@ export default function ForgotPasswordPage() {
               <Label htmlFor="pw">New password</Label>
               <div className="relative">
                 <Input id="pw" type={showPw ? 'text' : 'password'} required autoComplete="new-password" className="pr-10" placeholder="At least 8 characters" value={pw} onChange={(e) => setPw(e.target.value)} />
-                <button type="button" onClick={() => setShowPw((v) => !v)} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                <button type="button" onClick={() => setShowPw((v) => !v)} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                   <EyeIcon open={showPw} />
                 </button>
               </div>
@@ -112,7 +112,7 @@ export default function ForgotPasswordPage() {
             <div className="space-y-1.5">
               <Label htmlFor="cpw">Confirm new password</Label>
               <Input id="cpw" type={showPw ? 'text' : 'password'} required autoComplete="new-password" value={cpw} onChange={(e) => setCpw(e.target.value)} />
-              {pw !== cpw && cpw.length > 0 && <p className="text-xs text-red-500">Passwords do not match</p>}
+              {pw !== cpw && cpw.length > 0 && <p className="text-xs text-destructive">Passwords do not match</p>}
             </div>
 
             <ErrorMsg message={error} />
@@ -123,7 +123,7 @@ export default function ForgotPasswordPage() {
           </form>
         )}
 
-        <p className="mt-6 border-t border-gray-100 pt-5 text-center text-sm text-gray-500">
+        <p className="mt-6 border-t border-border pt-5 text-center text-sm text-muted-foreground">
           Remembered it?{' '}
           <Link href="/login" className="font-semibold gradient-text hover:opacity-90">Sign in</Link>
         </p>

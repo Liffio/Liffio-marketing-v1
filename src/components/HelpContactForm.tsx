@@ -38,7 +38,6 @@ export default function HelpContactForm() {
   if (state === "success") {
     return (
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center">
-        <div className="text-4xl mb-4">✉️</div>
         <h3 className="text-xl font-bold text-gray-900 mb-2">Message sent!</h3>
         <p className="text-sm text-gray-600">
           We&apos;ll reply within 24 hours to <strong>{email}</strong>. Check your spam folder if you don&apos;t hear back.

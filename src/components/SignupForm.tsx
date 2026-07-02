@@ -93,7 +93,7 @@ export default function SignupForm() {
 
   const inputClass = (hasErr: boolean) =>
     `w-full rounded-xl border px-4 py-3 text-sm text-[#0a0a0a] placeholder-gray-400 outline-none transition-all duration-150 focus:ring-2 focus:ring-[#f5184c]/25 focus:border-[#f5184c] ${
-      hasErr ? 'border-red-400 bg-red-50' : 'border-[#e8e3f5] bg-[#faf8ff]'
+      hasErr ? 'border-red-400 bg-red-50' : 'border-[#ffe4e6] bg-[#fff7f7]'
     }`
 
   return (
@@ -132,7 +132,7 @@ export default function SignupForm() {
         type="submit"
         disabled={loading}
         className="w-full rounded-xl py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-[0.98] disabled:opacity-60"
-        style={{ background: loading ? '#9ca3af' : 'linear-gradient(135deg,#f5184c,#b20d8f)', boxShadow: loading ? 'none' : '0 4px 20px rgba(66,89,240,0.28)' }}
+        style={{ background: loading ? '#9ca3af' : 'linear-gradient(135deg,#f5184c,#b20d8f)', boxShadow: loading ? 'none' : '0 4px 20px rgba(178, 13, 143,0.28)' }}
       >
         {loading ? 'Creating your account…' : 'Get Started Free →'}
       </button>

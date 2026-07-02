@@ -34,7 +34,7 @@ export default function AboutSection() {
         <div className="flex flex-wrap justify-center gap-4">
           <a
             href="/creators-program"
-            className="rounded-xl border border-[#ede9fd] bg-[#faf8ff] px-6 py-3 text-sm font-semibold text-[#f5184c] transition-colors hover:bg-[#ede9fd]"
+            className="rounded-xl border border-[#ffe4e6] bg-[#fff7f7] px-6 py-3 text-sm font-semibold text-[#f5184c] transition-colors hover:bg-[#ffe4e6]"
           >
             Creators Program →
           </a>

@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import Logo from "./Logo";
 import { siteConfig } from "@/config/site.config";
 const ANNOUNCEMENT_MESSAGES = [
-  "⚡ Liffio sends your first automated DM in under 5 minutes - Get Started Free",
-  "🚀 Join 800+ creators automating their Instagram DMs with Liffio",
-  "✨ New: Post Scheduler now live - schedule Instagram feed posts from Liffio",
+  "Liffio sends your first automated DM in under 5 minutes - Get Started Free",
+  "Join 800+ creators automating their Instagram DMs with Liffio",
+  "New: Post Scheduler now live - schedule Instagram feed posts from Liffio",
 ] as const;
 
 const navLinks = [
@@ -17,10 +17,10 @@ const navLinks = [
 ];
 
 const navLinkClass =
-  "px-4 py-2 text-sm font-medium text-gray-500 rounded-lg transition-all duration-150 hover:text-[#0a0a0a] hover:bg-[#faf8ff]";
+  "px-4 py-2 text-sm font-medium text-gray-500 rounded-lg transition-all duration-150 hover:text-[#0a0a0a] hover:bg-[#fff7f7]";
 
 const mobileNavLinkClass =
-  "px-4 py-3 text-sm font-medium text-gray-600 rounded-xl hover:bg-[#faf8ff] hover:text-[#f5184c] transition-colors";
+  "px-4 py-3 text-sm font-medium text-gray-600 rounded-xl hover:bg-[#fff7f7] hover:text-[#f5184c] transition-colors";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -57,7 +57,7 @@ export default function Navbar() {
       <header
         className="bg-white/95 backdrop-blur-md transition-all duration-200"
         style={{
-          borderBottom: scrolled ? "1px solid rgba(124,90,243,0.12)" : "1px solid rgba(124,90,243,0.06)",
+          borderBottom: scrolled ? "1px solid rgba(245, 24, 76,0.12)" : "1px solid rgba(245, 24, 76,0.06)",
           boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.06)" : "none",
         }}
       >
@@ -85,7 +85,7 @@ export default function Navbar() {
                 className="rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg active:scale-[0.98]"
                 style={{
                   background: "linear-gradient(135deg, #f5184c, #b20d8f)",
-                  boxShadow: "0 2px 12px rgba(66,89,240,0.28)",
+                  boxShadow: "0 2px 12px rgba(178, 13, 143,0.28)",
                 }}
               >
                 Get Started Free
@@ -128,7 +128,7 @@ export default function Navbar() {
         </div>
 
         {menuOpen ? (
-          <div className="border-t bg-white px-4 py-4 lg:hidden" style={{ borderColor: "rgba(124,90,243,0.08)" }}>
+          <div className="border-t bg-white px-4 py-4 lg:hidden" style={{ borderColor: "rgba(245, 24, 76,0.08)" }}>
             <nav className="mb-4 flex flex-col gap-0.5">
               {navLinks.map((item) => (
                 <a

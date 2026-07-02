@@ -549,9 +549,9 @@ export function getCreatorsFaqCategories(
         },
         {
           id: "bio-badge",
-          question: "What does the \"⚡ Powered by @Liffio\" bio link badge look like?",
+          question: "What does the \"Powered by @Liffio\" bio link badge look like?",
           answer:
-            "It's a small footer line on your bio link page (bio.liffio.com/yourusername). It reads \"⚡ Powered by @Liffio\" and links to liffio.com. It's subtle - one line at the bottom of your public link page. Removing or hiding it ends your Creators Program eligibility.",
+            "It's a small footer line on your bio link page (bio.liffio.com/yourusername). It reads \"Powered by @Liffio\" and links to liffio.com. It's subtle - one line at the bottom of your public link page. Removing or hiding it ends your Creators Program eligibility.",
         },
         {
           id: "monthly-requirements",

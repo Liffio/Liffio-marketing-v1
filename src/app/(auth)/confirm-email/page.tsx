@@ -119,14 +119,14 @@ function ConfirmEmailPageInner() {
   return (
     <div className="w-full max-w-md">
       <AuthCard>
-        <header className="mb-6 border-b border-gray-100 pb-5">
-          <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-rose-100">
+        <header className="mb-6 border-b border-border pb-5">
+          <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary/10">
             <MailIcon />
           </div>
-          <h1 className="font-display text-xl font-semibold tracking-tight text-gray-900">Verify your email</h1>
-          <p className="mt-1.5 text-sm leading-relaxed text-gray-500">
+          <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">Verify your email</h1>
+          <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
             Code sent to{' '}
-            <span className="font-semibold text-gray-700">{user?.email ?? 'your inbox'}</span>
+            <span className="font-semibold text-foreground">{user?.email ?? 'your inbox'}</span>
           </p>
         </header>
 
@@ -134,11 +134,11 @@ function ConfirmEmailPageInner() {
           <OtpInput value={otp} onChange={setOtp} disabled={loading} />
         </div>
 
-        {loading && <p className="mb-4 text-center text-xs text-gray-400">Verifying…</p>}
+        {loading && <p className="mb-4 text-center text-xs text-muted-foreground">Verifying…</p>}
 
         <ErrorMsg message={error} />
         {deliveryError && (
-          <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-xs text-red-600">
+          <div className="mb-4 rounded-xl border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-xs text-destructive">
             {deliveryError}
           </div>
         )}
@@ -153,7 +153,7 @@ function ConfirmEmailPageInner() {
           >
             {resendIn > 0 ? `Resend in ${resendIn}s` : 'Resend code'}
           </Button>
-          <p className="text-center text-xs text-gray-500">
+          <p className="text-center text-xs text-muted-foreground">
             Wrong address?{' '}
             <Link href="/login" className="font-semibold gradient-text hover:opacity-90">Sign in</Link>
           </p>
