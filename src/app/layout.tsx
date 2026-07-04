@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono, Outfit } from "next/font/google";
 import { rootSeo } from "@/config/seo.config";
 import { SITE_URL } from "@/config/site.config";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/lib/seo/json-ld";
+import { ReferralCapture } from "@/components/ReferralCapture";
 import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
@@ -43,6 +44,7 @@ export default function RootLayout({
       >
         <OrganizationJsonLd />
         <WebSiteJsonLd />
+        <ReferralCapture />
         {children}
         <GoogleAnalytics gaId="G-TPNX0042QC" />
       </body>

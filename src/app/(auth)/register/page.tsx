@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { authStore } from '@/lib/auth/store';
 import { register, getAuthMe, googleAuthUrl, validateAffiliateCode } from '@/lib/auth/api';
-import { getStoredReferralCode, getReferralPayloadForRegister, clearStoredReferralCode } from '@/lib/auth/referral';
+import { captureReferralFromUrl, getStoredReferralCode, getReferralPayloadForRegister, clearStoredReferralCode } from '@/lib/auth/referral';
 import { AuthCard, Button, CheckIcon, ErrorMsg, EyeIcon, GoogleIcon, Input, Label, OrDivider } from '@/lib/auth/ui';
 
 const COUNTRIES = [
@@ -52,7 +52,9 @@ function RegisterPageInner() {
   useEffect(() => {
     setMounted(true);
     if (pendingPlanParam) localStorage.setItem('pending_plan', pendingPlanParam);
-    const stored = getStoredReferralCode();
+    const urlRef = params.get('ref');
+    const captured = urlRef ? captureReferralFromUrl(`?ref=${encodeURIComponent(urlRef)}`) : null;
+    const stored = captured ?? getStoredReferralCode();
     if (stored) setReferralCode(stored);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -102,14 +104,34 @@ function RegisterPageInner() {
   }
 
   return (
-    <div className="w-full max-w-lg">
+    <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-center gap-8 lg:flex-row lg:items-center lg:gap-16">
+      <div className="hidden max-w-sm shrink-0 lg:block">
+        <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight text-foreground">
+          Grow your Instagram with <span className="gradient-text">smart automations</span>.
+        </h2>
+        <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
+          {[
+            'Free forever — no card required to start',
+            'Connect Instagram and go live in minutes',
+            'Turn followers into paying customers',
+          ].map((item) => (
+            <li key={item} className="flex items-start gap-2.5">
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <CheckIcon size={12} />
+              </span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <AuthCard wide>
         <header className="mb-6 border-b border-border pb-5">
           <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">Create your workspace</h1>
-          <p className="mt-1.5 text-sm text-muted-foreground">Free forever · Connect Instagram in minutes · No card required</p>
+          <p className="mt-1.5 text-sm text-muted-foreground">Join in seconds and start automating your Instagram DMs — free forever, no card required.</p>
         </header>
 
-        <a href={gUrl} className="flex h-11 w-full items-center justify-center gap-2.5 rounded-xl border border-input bg-background px-4 text-sm font-medium text-foreground transition hover:bg-muted">
+        <a href={gUrl} className="flex h-11 w-full items-center justify-center gap-2.5 rounded-xl border border-input bg-background px-4 text-sm font-medium text-foreground transition-colors duration-150 hover:border-primary hover:bg-primary/5">
           <GoogleIcon />
           Continue with Google
         </a>

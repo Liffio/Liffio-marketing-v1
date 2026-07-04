@@ -16,6 +16,7 @@ import {
 import {
   AuthCard,
   Button,
+  CheckIcon,
   ErrorMsg,
   EyeIcon,
   GoogleIcon,
@@ -134,12 +135,26 @@ function LoginPageInner() {
   const gUrl = mounted ? googleAuthUrl(redirectPath, window.location.origin) : '#';
 
   return (
-    <div className="w-full max-w-md">
-      <div className="hidden lg:block max-w-sm mb-8 lg:mb-0 lg:mr-16 lg:absolute lg:left-[calc(50%-400px)]">
+    <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-center gap-8 lg:flex-row lg:items-center lg:gap-16">
+      <div className="hidden max-w-sm shrink-0 lg:block">
         <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight text-foreground">
           Turn Instagram comments into{' '}
           <span className="gradient-text">customers</span> — on autopilot.
         </h2>
+        <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
+          {[
+            'Auto-reply to comments and DMs in seconds',
+            'Qualify leads while you sleep',
+            'No coding, no complicated setup',
+          ].map((item) => (
+            <li key={item} className="flex items-start gap-2.5">
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <CheckIcon size={12} />
+              </span>
+              {item}
+            </li>
+          ))}
+        </ul>
       </div>
 
       <AuthCard>
@@ -150,7 +165,7 @@ function LoginPageInner() {
           <p className="mt-1.5 text-sm text-muted-foreground">
             {mfaPreAuthToken
               ? 'Enter your authenticator or email code.'
-              : 'Sign in to manage your Instagram automations.'}
+              : 'Sign in to manage your Instagram automations and keep every conversation moving.'}
           </p>
         </header>
 
@@ -204,7 +219,7 @@ function LoginPageInner() {
           <>
             <a
               href={gUrl}
-              className="flex h-11 w-full items-center justify-center gap-2.5 rounded-xl border border-input bg-background px-4 text-sm font-medium text-foreground transition hover:bg-muted"
+              className="flex h-11 w-full items-center justify-center gap-2.5 rounded-xl border border-input bg-background px-4 text-sm font-medium text-foreground transition-colors duration-150 hover:border-primary hover:bg-primary/5"
             >
               <GoogleIcon />
               Continue with Google
