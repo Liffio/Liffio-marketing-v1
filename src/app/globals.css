@@ -13,7 +13,7 @@
   --color-brand-700: #b30f37;
   --color-brand-800: #8a0e2d;
   --color-brand-900: #6b0d25;
-  --font-display: "Outfit", "Outfit Fallback", sans-serif;
+  --font-display: "Space Grotesk", "Space Grotesk Fallback", sans-serif;
 }
 
 /* Registers the semantic tokens below with Tailwind's theme so utilities like

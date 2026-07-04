@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Outfit } from "next/font/google";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { rootSeo } from "@/config/seo.config";
 import { SITE_URL } from "@/config/site.config";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/lib/seo/json-ld";
@@ -13,9 +13,12 @@ const inter = Inter({
   display: "swap",
 });
 
-const outfit = Outfit({
+// CSS var kept as --font-outfit (not renamed) since ~90 call sites across the
+// marketing pages reference it directly via inline style={{ fontFamily: "var(--font-outfit,...)" }}.
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-outfit",
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
@@ -40,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} antialiased min-h-screen flex flex-col bg-white overflow-x-hidden text-base [text-size-adjust:100%]`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased min-h-screen flex flex-col bg-white overflow-x-hidden text-base [text-size-adjust:100%]`}
       >
         <OrganizationJsonLd />
         <WebSiteJsonLd />
