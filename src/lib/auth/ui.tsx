@@ -7,7 +7,7 @@ import { useEffect, useRef, useState, type ReactNode, type ReactElement } from '
 export function AuthCard({ children, wide }: { children: ReactNode; wide?: boolean }) {
   return (
     <div
-      className={`w-full bg-card rounded-2xl shadow-soft border p-8 ${wide ? 'max-w-lg' : 'max-w-md'}`}
+      className={`w-full bg-card rounded-2xl shadow-soft border p-5 sm:p-8 ${wide ? 'max-w-lg' : 'max-w-md'}`}
     >
       {children}
     </div>
@@ -30,7 +30,7 @@ export function Input({ error, className = '', ...props }: InputProps) {
   return (
     <input
       {...props}
-      className={`w-full px-3 py-2.5 text-sm border rounded-xl bg-background text-foreground placeholder:text-muted-foreground outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary ${error ? 'border-destructive' : 'border-input'} ${className}`}
+      className={`w-full px-3 py-2.5 text-base border rounded-xl bg-background text-foreground placeholder:text-muted-foreground outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary ${error ? 'border-destructive' : 'border-input'} ${className}`}
     />
   );
 }
@@ -113,12 +113,12 @@ export function OtpInput({
   // LOADING: per-cell spinning conic-gradient border, display-only divs
   if (state === 'loading') {
     return (
-      <div className="flex gap-2 justify-center">
+      <div className="flex gap-1.5 sm:gap-2 justify-center">
         {Array.from({ length: LEN }).map((_, i) => (
           <div
             key={i}
-            className="relative rounded-xl overflow-hidden flex-shrink-0"
-            style={{ padding: 2, width: 48, height: 56 }}
+            className="relative rounded-xl overflow-hidden flex-shrink-0 w-[42px] h-[50px] sm:w-[48px] sm:h-[56px]"
+            style={{ padding: 2 }}
           >
             <div
               className="absolute animate-spin pointer-events-none"
@@ -130,7 +130,7 @@ export function OtpInput({
                 animationTimingFunction: 'linear',
               }}
             />
-            <div className="relative w-full h-full rounded-[10px] bg-background flex items-center justify-center text-xl font-bold text-foreground select-none">
+            <div className="relative w-full h-full rounded-[10px] bg-background flex items-center justify-center text-base sm:text-xl font-bold text-foreground select-none">
               {digits[i]?.trim() || ''}
             </div>
           </div>
@@ -147,7 +147,7 @@ export function OtpInput({
     <div
       role="group"
       aria-label="Verification code"
-      className={`relative flex gap-2 justify-center cursor-text ${state === 'error' ? 'animate-otp-shake' : ''}`}
+      className={`relative flex gap-1.5 sm:gap-2 justify-center cursor-text ${state === 'error' ? 'animate-otp-shake' : ''}`}
       onClick={() => !disabled && inputRef.current?.focus()}
     >
       {/* Single off-screen input — captures keyboard, invisible to pointer */}
@@ -185,10 +185,10 @@ export function OtpInput({
         return (
           <div
             key={i}
-            className={`w-11 h-[52px] flex items-center justify-center text-xl font-bold border-2 rounded-xl select-none transition-all duration-150 ${cellClass}`}
+            className={`w-10 h-11 sm:w-11 sm:h-[52px] flex items-center justify-center text-lg sm:text-xl font-bold border-2 rounded-xl select-none transition-all duration-150 ${cellClass}`}
           >
             {digit || (isActive
-              ? <span className="w-px h-5 bg-primary rounded-full animate-pulse" />
+              ? <span className="w-px h-4 sm:h-5 bg-primary rounded-full animate-pulse" />
               : null
             )}
           </div>

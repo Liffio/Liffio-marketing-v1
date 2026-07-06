@@ -84,7 +84,7 @@ function CountrySelect({ value, onChange }: { value: string; onChange: (v: strin
         </svg>
       </button>
       {open && (
-        <div className="absolute z-50 mt-1 w-full max-h-60 overflow-y-auto rounded-xl border border-input bg-background shadow-lg">
+        <div className="absolute z-50 mt-1 w-full max-h-48 sm:max-h-60 overflow-y-auto rounded-xl border border-input bg-background shadow-lg">
           {COUNTRIES.map(([code, label]) => (
             <button
               key={code}
@@ -222,7 +222,7 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
         <OrDivider />
 
         <form className="space-y-4" onSubmit={onSubmit}>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             <div className="space-y-1.5">
               <Label htmlFor="firstName">First name</Label>
               <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required autoComplete="given-name" placeholder="Alex" />
