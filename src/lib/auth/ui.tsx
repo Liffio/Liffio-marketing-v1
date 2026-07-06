@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, type ReactNode, type ReactElement } from 'react';
+import { useEffect, useRef, useState, type ReactNode, type ReactElement } from 'react';
 
 // ── Card ──────────────────────────────────────────────────────────────────
 
@@ -86,42 +86,16 @@ export function OtpInput({
   disabled?: boolean;
   state?: OtpState;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const digits = value.padEnd(6, ' ').slice(0, 6).split('');
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [focused, setFocused] = useState(false);
+  const LEN = 6;
+  const digits = value.padEnd(LEN, ' ').slice(0, LEN).split('');
+  const filled = value.replace(/\s/g, '').length;
+  // cursor sits on the next empty slot, or the last slot if full
+  const cursorAt = Math.min(filled, LEN - 1);
 
-  function focusIndex(i: number) {
-    const inputs = containerRef.current?.querySelectorAll<HTMLInputElement>('input');
-    inputs?.[i]?.focus();
-  }
-
-  function handleChange(i: number, raw: string) {
-    const d = raw.replace(/\D/g, '').slice(-1);
-    const next = [...digits];
-    next[i] = d || ' ';
-    const newVal = next.join('').trimEnd();
-    onChange(newVal);
-    if (d && i < 5) setTimeout(() => focusIndex(i + 1), 0);
-  }
-
-  function handleKeyDown(i: number, e: React.KeyboardEvent) {
-    if (e.key === 'Backspace') {
-      if (!digits[i]?.trim() && i > 0) {
-        const next = [...digits];
-        next[i - 1] = ' ';
-        onChange(next.join('').trimEnd());
-        setTimeout(() => focusIndex(i - 1), 0);
-      }
-    }
-  }
-
-  function handlePaste(e: React.ClipboardEvent) {
-    e.preventDefault();
-    const text = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
-    if (text) {
-      onChange(text);
-      setTimeout(() => focusIndex(Math.min(text.length, 5)), 0);
-    }
-  }
+  // Auto-focus on mount so the user can start typing immediately
+  useEffect(() => { inputRef.current?.focus(); }, []);
 
   // SUCCESS: cells merge into one big square with a checkmark (Flutter-style)
   if (state === 'success') {
@@ -136,11 +110,11 @@ export function OtpInput({
     );
   }
 
-  // LOADING: spinning conic-gradient border on each individual cell
+  // LOADING: per-cell spinning conic-gradient border, display-only divs
   if (state === 'loading') {
     return (
-      <div ref={containerRef} className="flex gap-2 justify-center">
-        {Array.from({ length: 6 }).map((_, i) => (
+      <div className="flex gap-2 justify-center">
+        {Array.from({ length: LEN }).map((_, i) => (
           <div
             key={i}
             className="relative rounded-xl overflow-hidden flex-shrink-0"
@@ -156,48 +130,70 @@ export function OtpInput({
                 animationTimingFunction: 'linear',
               }}
             />
-            <input
-              type="text"
-              inputMode="numeric"
-              maxLength={1}
-              value={digits[i]?.trim() || ''}
-              onChange={(e) => handleChange(i, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(i, e)}
-              onPaste={handlePaste}
-              disabled
-              className="relative w-full h-full block text-center text-xl font-bold rounded-[10px] bg-background text-foreground outline-none border-0"
-            />
+            <div className="relative w-full h-full rounded-[10px] bg-background flex items-center justify-center text-xl font-bold text-foreground select-none">
+              {digits[i]?.trim() || ''}
+            </div>
           </div>
         ))}
       </div>
     );
   }
 
-  const cellBase = 'w-11 text-center text-xl font-bold border-2 rounded-xl bg-background text-foreground outline-none transition-all duration-150 disabled:opacity-50';
-  const cellColor =
-    state === 'error' ? 'border-destructive bg-destructive/5 text-destructive' :
-                        'border-input focus:border-primary focus:ring-2 focus:ring-primary/20';
-
+  // IDLE / ERROR: single hidden input + display cells.
+  // One real <input> is off-screen (sr-only) and captures all keyboard events.
+  // The display cells are plain divs — no multiple-input cursor bleed,
+  // no stray I-beam across the card.
   return (
     <div
-      ref={containerRef}
-      className={`flex gap-2 justify-center ${state === 'error' ? 'animate-otp-shake' : ''}`}
+      role="group"
+      aria-label="Verification code"
+      className={`relative flex gap-2 justify-center cursor-text ${state === 'error' ? 'animate-otp-shake' : ''}`}
+      onClick={() => !disabled && inputRef.current?.focus()}
     >
-      {Array.from({ length: 6 }).map((_, i) => (
-        <input
-          key={i}
-          type="text"
-          inputMode="numeric"
-          maxLength={1}
-          value={digits[i]?.trim() || ''}
-          onChange={(e) => handleChange(i, e.target.value)}
-          onKeyDown={(e) => handleKeyDown(i, e)}
-          onPaste={handlePaste}
-          disabled={disabled}
-          className={`${cellBase} ${cellColor}`}
-          style={{ lineHeight: '52px', height: 52 }}
-        />
-      ))}
+      {/* Single off-screen input — captures keyboard, invisible to pointer */}
+      <input
+        ref={inputRef}
+        type="text"
+        inputMode="numeric"
+        maxLength={LEN}
+        value={value.replace(/\s/g, '')}
+        onChange={(e) => onChange(e.target.value.replace(/\D/g, '').slice(0, LEN))}
+        onPaste={(e) => {
+          e.preventDefault();
+          const text = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, LEN);
+          if (text) onChange(text);
+        }}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        disabled={disabled}
+        autoComplete="one-time-code"
+        aria-label="Enter verification code"
+        className="sr-only"
+      />
+      {/* Display cells */}
+      {Array.from({ length: LEN }).map((_, i) => {
+        const digit = digits[i]?.trim() || '';
+        const isActive = focused && i === cursorAt;
+        const cellClass =
+          state === 'error'
+            ? 'border-destructive bg-destructive/5 text-destructive'
+            : isActive
+              ? 'border-primary ring-2 ring-primary/20 bg-background'
+              : digit
+                ? 'border-border bg-muted/40 text-foreground'
+                : 'border-input bg-background text-foreground';
+        return (
+          <div
+            key={i}
+            className={`w-11 h-[52px] flex items-center justify-center text-xl font-bold border-2 rounded-xl select-none transition-all duration-150 ${cellClass}`}
+          >
+            {digit || (isActive
+              ? <span className="w-px h-5 bg-primary rounded-full animate-pulse" />
+              : null
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
