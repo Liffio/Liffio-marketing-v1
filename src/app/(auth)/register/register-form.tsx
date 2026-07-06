@@ -117,7 +117,8 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
   const redirectPath = params.get('redirect') ?? '';
   const pendingPlanParam = params.get('plan')?.toUpperCase() ?? null;
 
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   // Pre-fill from server-detected geo, only if the code exists in our list
   const [country, setCountry] = useState(KNOWN_CODES.has(defaultCountry) ? defaultCountry : '');
@@ -164,7 +165,7 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
     try {
       const refPayload = getReferralPayloadForRegister();
       const result = await register({
-        name,
+        name: `${firstName} ${lastName}`.trim(),
         email,
         password: pw,
         country: country || undefined,
@@ -221,15 +222,20 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
         <OrDivider />
 
         <form className="space-y-4" onSubmit={onSubmit}>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <Label htmlFor="name">Full name</Label>
-              <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required autoComplete="name" placeholder="Alex Morgan" />
+              <Label htmlFor="firstName">First name</Label>
+              <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required autoComplete="given-name" placeholder="Alex" />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="email">Email address</Label>
-              <Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" required autoComplete="email" placeholder="you@brand.com" />
+              <Label htmlFor="lastName">Last name</Label>
+              <Input id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} required autoComplete="family-name" placeholder="Morgan" />
             </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="email">Email address</Label>
+            <Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" required autoComplete="email" placeholder="you@brand.com" />
           </div>
 
           <div className="space-y-1.5">
