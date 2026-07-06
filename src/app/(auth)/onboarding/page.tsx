@@ -82,28 +82,69 @@ const IG_ERRORS: Record<string, { title: string; summary: string; steps: string[
 
 // ── Sub-components ─────────────────────────────────────────────────────────
 
+// step prop is 1 (Your Brand) | 2 (Connect) | 3 (Automate)
+// "Sign up" is always index 0 and always shown as completed — gives users
+// the 20% momentum hit the moment they land on onboarding.
+const PROGRESS_STEPS = ['Sign up', 'Your Brand', 'Connect', 'Automate'] as const;
+const PROGRESS_PCT: Record<number, number> = { 1: 20, 2: 52, 3: 80 };
+
 function StepProgress({ step }: { step: number }) {
-  const steps = ['Your Brand', 'Connect', 'Automate'];
+  const pct = PROGRESS_PCT[step] ?? 20;
+  // step 1 → activeIndex 1, step 2 → 2, step 3 → 3; index 0 always done
+  const activeIndex = step;
+
   return (
-    <div className="mb-8 flex w-full max-w-lg items-start">
-      {steps.map((label, i) => {
-        const num = i + 1;
-        const done = num < step;
-        const active = num === step;
-        return (
-          <div key={label} className="flex flex-1 items-start">
-            <div className="flex flex-col items-center gap-1.5 w-24 shrink-0">
-              <div className={`flex h-8 w-8 items-center justify-center rounded-full border-2 text-sm font-semibold transition-all ${done ? 'border-primary bg-primary text-primary-foreground' : active ? 'border-primary text-primary' : 'border-input text-muted-foreground'}`}>
-                {done ? <CheckIcon size={14} /> : num}
+    <div className="mb-6 w-full max-w-lg">
+      <div className="mb-4">
+        <h2 className="text-xl font-bold text-foreground">You&apos;re doing great! 🎉</h2>
+        <p className="mt-0.5 text-sm text-muted-foreground">Just a few more details to complete your account setup</p>
+      </div>
+
+      <div className="rounded-2xl border bg-card p-5 shadow-soft">
+        {/* Label + percentage */}
+        <div className="mb-3 flex items-center justify-between">
+          <span className="text-sm font-semibold text-primary">Your Progress</span>
+          <span className="text-sm font-bold text-primary">{pct}% 🔥</span>
+        </div>
+
+        {/* Progress bar */}
+        <div className="mb-5 h-2 overflow-hidden rounded-full bg-muted">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-primary to-brand-400 transition-all duration-700 ease-out"
+            style={{ width: `${pct}%` }}
+          />
+        </div>
+
+        {/* Step dots */}
+        <div className="flex items-start justify-between">
+          {PROGRESS_STEPS.map((label, i) => {
+            const done = i < activeIndex;
+            const active = i === activeIndex;
+            return (
+              <div key={label} className="flex flex-1 flex-col items-center gap-1.5">
+                <div className={`flex h-9 w-9 items-center justify-center rounded-full transition-all duration-300 ${
+                  done
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : active
+                    ? 'border-2 border-primary bg-primary/5'
+                    : 'border-2 border-muted bg-background'
+                }`}>
+                  {done ? (
+                    <CheckIcon size={15} />
+                  ) : active ? (
+                    <div className="h-2.5 w-2.5 rounded-full bg-primary" />
+                  ) : null}
+                </div>
+                <span className={`text-center text-[11px] leading-tight ${
+                  active ? 'font-bold text-foreground' : done ? 'font-medium text-foreground' : 'text-muted-foreground'
+                }`}>
+                  {label}
+                </span>
               </div>
-              <span className={`text-center text-xs font-medium leading-tight ${active ? 'text-foreground' : 'text-muted-foreground'}`}>{label}</span>
-            </div>
-            {i < steps.length - 1 && (
-              <div className={`mt-4 h-0.5 flex-1 transition-all duration-500 ${done ? 'bg-primary' : 'bg-muted'}`} />
-            )}
-          </div>
-        );
-      })}
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
@@ -684,9 +725,9 @@ function OnboardingPageInner() {
 
             {/* ── Step 1: Brand ───────────────────────────────── */}
             {step === 1 && (
-              <div className="space-y-7">
+              <div className="space-y-6">
                 <div>
-                  <h1 className="font-display text-2xl font-bold tracking-tight text-foreground">Welcome to Liffio</h1>
+                  <h1 className="font-display text-xl font-bold tracking-tight text-foreground">Welcome to Liffio</h1>
                   <p className="mt-1 text-sm text-muted-foreground">Connect your Instagram and start sending automated DMs in minutes.</p>
                 </div>
                 <div className="space-y-4">
