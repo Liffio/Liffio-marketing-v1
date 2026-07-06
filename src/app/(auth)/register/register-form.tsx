@@ -280,7 +280,7 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
               I agree to the{' '}
               <Link href="/terms-of-service" className="text-primary hover:underline">Terms of Service</Link>,{' '}
               <Link href="/privacy-policy" className="text-primary hover:underline">Privacy Policy</Link>, and{' '}
-              <Link href="/creators-policy" className="text-primary hover:underline">Creators Program Policy</Link>
+              <Link href="/creators-policy" className="text-primary hover:underline whitespace-nowrap">Creators Program Policy</Link>
             </span>
           </label>
 
