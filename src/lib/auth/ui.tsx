@@ -123,13 +123,62 @@ export function OtpInput({
     }
   }
 
+  // SUCCESS: cells merge into one big square with a checkmark (Flutter-style)
+  if (state === 'success') {
+    return (
+      <div className="flex justify-center">
+        <div className="animate-otp-success-pop relative w-16 h-16 rounded-2xl border-2 border-success bg-success/10 flex items-center justify-center">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-success">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
+  // LOADING: spinning conic-gradient border on each individual cell
+  if (state === 'loading') {
+    return (
+      <div ref={containerRef} className="flex gap-2 justify-center">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div
+            key={i}
+            className="relative rounded-xl overflow-hidden flex-shrink-0"
+            style={{ padding: 2, width: 48, height: 56 }}
+          >
+            <div
+              className="absolute animate-spin pointer-events-none"
+              style={{
+                width: '300%', height: '300%',
+                top: '-100%', left: '-100%',
+                background: 'conic-gradient(transparent 0deg, hsl(var(--primary)) 90deg, transparent 180deg)',
+                animationDuration: '1.2s',
+                animationTimingFunction: 'linear',
+              }}
+            />
+            <input
+              type="text"
+              inputMode="numeric"
+              maxLength={1}
+              value={digits[i]?.trim() || ''}
+              onChange={(e) => handleChange(i, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(i, e)}
+              onPaste={handlePaste}
+              disabled
+              className="relative w-full h-full block text-center text-xl font-bold rounded-[10px] bg-background text-foreground outline-none border-0"
+            />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   const cellBase = 'w-11 text-center text-xl font-bold border-2 rounded-xl bg-background text-foreground outline-none transition-all duration-150 disabled:opacity-50';
   const cellColor =
-    state === 'error'   ? 'border-destructive bg-destructive/5 text-destructive' :
-    state === 'success' ? 'border-success bg-success/5 text-success' :
-                          'border-input focus:border-primary focus:ring-2 focus:ring-primary/20';
+    state === 'error' ? 'border-destructive bg-destructive/5 text-destructive' :
+                        'border-input focus:border-primary focus:ring-2 focus:ring-primary/20';
 
-  const inputs = (
+  return (
     <div
       ref={containerRef}
       className={`flex gap-2 justify-center ${state === 'error' ? 'animate-otp-shake' : ''}`}
@@ -144,37 +193,13 @@ export function OtpInput({
           onChange={(e) => handleChange(i, e.target.value)}
           onKeyDown={(e) => handleKeyDown(i, e)}
           onPaste={handlePaste}
-          disabled={disabled || state === 'loading' || state === 'success'}
+          disabled={disabled}
           className={`${cellBase} ${cellColor}`}
           style={{ lineHeight: '52px', height: 52 }}
         />
       ))}
     </div>
   );
-
-  // Spinning border wrapper shown during loading — rotating conic-gradient
-  // around the group, same technique as the Flutter repo's _LoadingBorderPainter
-  if (state === 'loading') {
-    return (
-      <div className="relative rounded-2xl overflow-hidden" style={{ padding: 2 }}>
-        <div
-          className="absolute animate-spin pointer-events-none"
-          style={{
-            width: '300%', height: '300%',
-            top: '-100%', left: '-100%',
-            background: 'conic-gradient(transparent 0deg, hsl(var(--primary)) 90deg, transparent 180deg)',
-            animationDuration: '1.2s',
-            animationTimingFunction: 'linear',
-          }}
-        />
-        <div className="relative bg-background rounded-[13px] py-1">
-          {inputs}
-        </div>
-      </div>
-    );
-  }
-
-  return inputs;
 }
 
 // ── Icons ─────────────────────────────────────────────────────────────────
