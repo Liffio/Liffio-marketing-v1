@@ -418,6 +418,28 @@
 .animate-otp-success-pop  { animation: otp-success-pop 0.45s cubic-bezier(0.34,1.4,0.64,1) both; }
 .animate-otp-progress     { animation: otp-progress-fill 1.8s linear forwards; }
 
+/* SVG border draw + checkmark draw (perimeter of 60×60 rx=14 rect ≈ 216) */
+@keyframes otp-border-draw {
+  from { stroke-dashoffset: 216; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes otp-checkmark-draw {
+  from { stroke-dashoffset: 42; opacity: 0; }
+  15%  { opacity: 1; }
+  to   { stroke-dashoffset: 0; opacity: 1; }
+}
+/* Cells collapse into square before border draws */
+@keyframes otp-cells-out {
+  0%   { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.6); }
+}
+@keyframes otp-square-in {
+  0%   { opacity: 0; transform: scale(0.55); }
+  70%  { opacity: 1; transform: scale(1.04); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.animate-otp-square-in { animation: otp-square-in 0.28s cubic-bezier(0.34,1.4,0.64,1) forwards; }
+
 @keyframes heroTypingBounce {
   0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
   30% { transform: translateY(-3px); opacity: 1; }

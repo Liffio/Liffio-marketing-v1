@@ -97,44 +97,59 @@ export function OtpInput({
   // Auto-focus on mount so the user can start typing immediately
   useEffect(() => { inputRef.current?.focus(); }, []);
 
-  // SUCCESS: cells merge into one big square with a checkmark (Flutter-style)
-  if (state === 'success') {
+  // LOADING: cells collapse → single square, primary SVG border draws clockwise
+  if (state === 'loading') {
     return (
       <div className="flex justify-center">
-        <div className="animate-otp-success-pop relative w-16 h-16 rounded-2xl border-2 border-success bg-success/10 flex items-center justify-center">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-success">
-            <polyline points="20 6 9 17 4 12" />
+        <div className="animate-otp-square-in relative w-16 h-16">
+          <div className="absolute inset-0 rounded-2xl bg-primary/5" />
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 64 64" fill="none">
+            <rect
+              x="2" y="2" width="60" height="60" rx="14"
+              stroke="hsl(var(--primary))"
+              strokeWidth="2.5"
+              strokeDasharray="216"
+              style={{
+                strokeDashoffset: 216,
+                animation: 'otp-border-draw 0.6s cubic-bezier(0.4,0,0.2,1) 0.08s forwards',
+              }}
+            />
           </svg>
         </div>
       </div>
     );
   }
 
-  // LOADING: per-cell spinning conic-gradient border, display-only divs
-  if (state === 'loading') {
+  // SUCCESS: green border complete + checkmark draws in
+  if (state === 'success') {
     return (
-      <div className="flex gap-1.5 sm:gap-2 justify-center">
-        {Array.from({ length: LEN }).map((_, i) => (
-          <div
-            key={i}
-            className="relative rounded-xl overflow-hidden flex-shrink-0 w-[42px] h-[50px] sm:w-[48px] sm:h-[56px]"
-            style={{ padding: 2 }}
-          >
-            <div
-              className="absolute animate-spin pointer-events-none"
+      <div className="flex justify-center">
+        <div className="relative w-16 h-16">
+          <div className="absolute inset-0 rounded-2xl bg-success/10" />
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 64 64" fill="none">
+            {/* Border already complete */}
+            <rect
+              x="2" y="2" width="60" height="60" rx="14"
+              stroke="hsl(var(--success))"
+              strokeWidth="2.5"
+              strokeDasharray="216"
+              strokeDashoffset="0"
+            />
+            {/* Checkmark draws in — path length ≈ 42 */}
+            <polyline
+              points="18,34 28,44 46,24"
+              stroke="hsl(var(--success))"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray="42"
               style={{
-                width: '300%', height: '300%',
-                top: '-100%', left: '-100%',
-                background: 'conic-gradient(transparent 0deg, hsl(var(--primary)) 90deg, transparent 180deg)',
-                animationDuration: '1.2s',
-                animationTimingFunction: 'linear',
+                strokeDashoffset: 42,
+                animation: 'otp-checkmark-draw 0.38s ease-out 0.05s forwards',
               }}
             />
-            <div className="relative w-full h-full rounded-[10px] bg-background flex items-center justify-center text-base sm:text-xl font-bold text-foreground select-none">
-              {digits[i]?.trim() || ''}
-            </div>
-          </div>
-        ))}
+          </svg>
+        </div>
       </div>
     );
   }
@@ -180,7 +195,7 @@ export function OtpInput({
             : isActive
               ? 'border-primary ring-2 ring-primary/20 bg-background'
               : digit
-                ? 'border-border bg-muted/40 text-foreground'
+                ? 'border-primary/60 bg-background text-foreground'
                 : 'border-input bg-background text-foreground';
         return (
           <div
