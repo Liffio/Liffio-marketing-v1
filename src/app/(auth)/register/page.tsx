@@ -19,6 +19,11 @@ const COUNTRIES: [string, string][] = [
   ['VN', 'Vietnam'], ['MY', 'Malaysia'], ['AR', 'Argentina'], ['CO', 'Colombia'],
   ['CL', 'Chile'], ['PE', 'Peru'], ['NZ', 'New Zealand'], ['IE', 'Ireland'],
   ['PT', 'Portugal'], ['GH', 'Ghana'], ['ET', 'Ethiopia'], ['TZ', 'Tanzania'],
+  ['AF', 'Afghanistan'], ['RU', 'Russia'], ['BE', 'Belgium'], ['CH', 'Switzerland'],
+  ['AT', 'Austria'], ['DK', 'Denmark'], ['FI', 'Finland'], ['PL', 'Poland'],
+  ['CZ', 'Czech Republic'], ['RO', 'Romania'], ['HU', 'Hungary'], ['GR', 'Greece'],
+  ['IL', 'Israel'], ['UA', 'Ukraine'], ['HK', 'Hong Kong'], ['TW', 'Taiwan'],
+  ['BD', 'Bangladesh'], ['LK', 'Sri Lanka'], ['NP', 'Nepal'], ['RS', 'Serbia'],
 ];
 
 function FlagImg({ code }: { code: string }) {
