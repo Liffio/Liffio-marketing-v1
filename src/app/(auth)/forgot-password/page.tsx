@@ -151,12 +151,10 @@ export default function ForgotPasswordPage() {
               </form>
             )}
 
-            {step !== 'done' && (
-              <p className="mt-6 border-t border-border pt-5 text-center text-sm text-muted-foreground">
-                Remembered it?{' '}
-                <Link href="/login" className="font-semibold gradient-text hover:opacity-90">Sign in</Link>
-              </p>
-            )}
+            <p className="mt-6 border-t border-border pt-5 text-center text-sm text-muted-foreground">
+              Remembered it?{' '}
+              <Link href="/login" className="font-semibold gradient-text hover:opacity-90">Sign in</Link>
+            </p>
           </>
         )}
       </AuthCard>
