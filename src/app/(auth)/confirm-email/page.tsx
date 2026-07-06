@@ -38,6 +38,7 @@ function ConfirmEmailPageInner() {
   const [deliveryError, setDeliveryError] = useState('');
   const [phase, setPhase] = useState<'input' | 'success'>('input');
   const initialSendDone = useRef(false);
+  const userTriggeredResend = useRef(false);
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -94,7 +95,7 @@ function ConfirmEmailPageInner() {
     window.location.href = appHandoffUrl(accessToken, redirectPath);
   }
 
-  async function sendCode() {
+  async function sendCode(userTriggered = false) {
     setDeliveryError('');
     try {
       const data = await resendEmailVerification() as { emailVerified?: boolean; retryAfterSec?: number };
@@ -102,7 +103,9 @@ function ConfirmEmailPageInner() {
       setResendIn(60);
     } catch (err) {
       const msg = (err as Error).message;
-      setDeliveryError(msg);
+      // Only surface delivery errors if the user explicitly clicked Resend —
+      // auto-send on mount hitting a rate limit should be silent
+      if (userTriggered) setDeliveryError(msg);
       const match = msg.match(/(\d+)\s*seconds?/i);
       if (match) setResendIn(Number(match[1]));
     }
@@ -128,9 +131,9 @@ function ConfirmEmailPageInner() {
       })
       .catch((err) => {
         setError((err as Error).message);
+        setDeliveryError('');
         setOtpState('error');
         setOtp('');
-        // Reset back to idle after shake animation finishes
         setTimeout(() => setOtpState('idle'), 650);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -180,13 +183,13 @@ function ConfirmEmailPageInner() {
                 className="w-full"
                 disabled={resendIn > 0 || otpState === 'loading'}
                 loading={false}
-                onClick={() => { setOtp(''); setOtpState('idle'); sendCode(); }}
+                onClick={() => { setOtp(''); setOtpState('idle'); sendCode(true); }}
               >
                 {resendIn > 0 ? `Resend in ${resendIn}s` : 'Resend code'}
               </Button>
               <p className="text-center text-xs text-muted-foreground">
                 Wrong address?{' '}
-                <Link href="/login" className="font-semibold gradient-text hover:opacity-90">Sign in</Link>
+                <Link href="/register" className="font-semibold gradient-text hover:opacity-90">Sign up again</Link>
               </p>
             </div>
           </>
