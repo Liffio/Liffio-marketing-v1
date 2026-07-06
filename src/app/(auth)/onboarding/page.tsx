@@ -86,7 +86,7 @@ const IG_ERRORS: Record<string, { title: string; summary: string; steps: string[
 // "Sign up" is always index 0 and always shown as completed — gives users
 // the 20% momentum hit the moment they land on onboarding.
 const PROGRESS_STEPS = ['Sign up', 'Your Brand', 'Connect', 'Automate'] as const;
-const PROGRESS_PCT: Record<number, number> = { 1: 20, 2: 52, 3: 80 };
+const PROGRESS_PCT: Record<number, number> = { 1: 25, 2: 50, 3: 75 };
 
 function StepProgress({ step }: { step: number }) {
   const pct = PROGRESS_PCT[step] ?? 20;
@@ -96,7 +96,7 @@ function StepProgress({ step }: { step: number }) {
   return (
     <div className="mb-6 w-full max-w-lg">
       <div className="mb-4">
-        <h2 className="text-xl font-bold text-foreground">You&apos;re doing great! 🎉</h2>
+        <h2 className="text-xl font-bold text-foreground">You&apos;re doing great! <span className="animate-confetti">🎉</span></h2>
         <p className="mt-0.5 text-sm text-muted-foreground">Just a few more details to complete your account setup</p>
       </div>
 
@@ -104,7 +104,7 @@ function StepProgress({ step }: { step: number }) {
         {/* Label + percentage */}
         <div className="mb-3 flex items-center justify-between">
           <span className="text-sm font-semibold text-primary">Your Progress</span>
-          <span className="text-sm font-bold text-primary">{pct}% 🔥</span>
+          <span className="text-sm font-bold text-primary">{pct}% <span className="animate-flame">🔥</span></span>
         </div>
 
         {/* Progress bar */}
@@ -712,7 +712,7 @@ function OnboardingPageInner() {
 
   return (
     <div className="relative flex min-h-screen flex-col bg-background">
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-soft-gradient opacity-80" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-soft-gradient opacity-60" />
       <header className="relative z-10 flex items-center justify-between px-6 py-4">
         <Logo size="small" />
       </header>
