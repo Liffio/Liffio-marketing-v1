@@ -126,8 +126,8 @@ function ConfirmEmailPageInner() {
         }
         // Show success screen, then redirect after progress bar completes
         setOtpState('success');
-        // Let the checkmark draw for 650ms before the SuccessScreen replaces the OTP area
-        setTimeout(() => setPhase('success'), 650);
+        // 420ms blob dissolve + 300ms square pop-in + 380ms checkmark = ~1100ms before SuccessScreen
+        setTimeout(() => setPhase('success'), 900);
         setTimeout(() => handleVerified(), 1800);
       })
       .catch((err) => {
@@ -146,7 +146,7 @@ function ConfirmEmailPageInner() {
 
   return (
     <div className="w-full max-w-md">
-      <AuthCard>
+      <AuthCard otpState={otpState}>
         {phase === 'success' ? (
           <SuccessScreen />
         ) : (

@@ -4,10 +4,16 @@ import { useEffect, useRef, useState, type ReactNode, type ReactElement } from '
 
 // ── Card ──────────────────────────────────────────────────────────────────
 
-export function AuthCard({ children, wide }: { children: ReactNode; wide?: boolean }) {
+export function AuthCard({ children, wide, otpState }: { children: ReactNode; wide?: boolean; otpState?: OtpState }) {
+  const glow =
+    otpState === 'error'
+      ? 'shadow-[0_0_0_1px_hsl(var(--destructive)/0.18),0_0_48px_hsl(var(--destructive)/0.16)] !border-destructive/20'
+      : otpState === 'success'
+      ? 'shadow-[0_0_0_1px_hsl(var(--success)/0.18),0_0_48px_hsl(var(--success)/0.16)] !border-success/20'
+      : 'shadow-soft';
   return (
     <div
-      className={`w-full bg-card rounded-2xl shadow-soft border p-5 sm:p-8 ${wide ? 'max-w-lg' : 'max-w-md'}`}
+      className={`w-full bg-card rounded-2xl border p-5 sm:p-8 transition-[box-shadow,border-color] duration-300 ${wide ? 'max-w-lg' : 'max-w-md'} ${glow}`}
     >
       {children}
     </div>
@@ -75,10 +81,6 @@ export function Spinner({ size = 20 }: { size?: number }) {
 
 export type OtpState = 'idle' | 'loading' | 'error' | 'success';
 
-// Offset (px) each cell travels toward container center during the merge animation.
-// Positive = move right, negative = move left. Sized for 40px cells + 6px gap (270px total).
-const MERGE_OFFSETS = [115, 69, 23, -23, -69, -115] as const;
-
 export function OtpInput({
   value,
   onChange,
@@ -92,9 +94,10 @@ export function OtpInput({
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [focused, setFocused] = useState(false);
-  // Internal flag: while state === 'loading', show cells collapsing first (mergePhase = 'cells'),
-  // then the single square with border drawing (mergePhase = 'square').
-  const [mergePhase, setMergePhase] = useState<'cells' | 'square'>('cells');
+  // Track whether we're playing the blur-out dissolve before showing the success square.
+  // Triggers when state changes from 'loading' → 'success'.
+  const [blobPhase, setBlobPhase] = useState(false);
+  const prevStateRef = useRef<OtpState>('idle');
 
   const LEN = 6;
   const digits = value.padEnd(LEN, ' ').slice(0, LEN).split('');
@@ -104,28 +107,40 @@ export function OtpInput({
   useEffect(() => { inputRef.current?.focus(); }, []);
 
   useEffect(() => {
-    if (state === 'loading') {
-      setMergePhase('cells');
-      const t = setTimeout(() => setMergePhase('square'), 360);
+    if (state === 'success' && prevStateRef.current === 'loading') {
+      // Play the blur-dissolve for 420ms then show the success square
+      setBlobPhase(true);
+      const t = setTimeout(() => setBlobPhase(false), 420);
+      prevStateRef.current = state;
       return () => clearTimeout(t);
-    } else {
-      setMergePhase('cells');
     }
+    prevStateRef.current = state;
   }, [state]);
 
-  // LOADING phase 1: cells slide inward and vanish (collapse animation)
-  if (state === 'loading' && mergePhase === 'cells') {
+  // LOADING: cells stay in place, each gets a rotating conic-gradient arc border.
+  // SUCCESS + blobPhase: same cells layout but with blur-dissolve keyframe applied.
+  if (state === 'loading' || (state === 'success' && blobPhase)) {
+    const dissolving = state === 'success' && blobPhase;
     return (
-      <div className="flex gap-1.5 sm:gap-2 justify-center overflow-hidden">
+      <div className={`flex gap-1.5 sm:gap-2 justify-center ${dissolving ? 'animate-otp-cells-blur' : ''}`}>
         {Array.from({ length: LEN }).map((_, i) => {
           const digit = digits[i]?.trim() || '';
           return (
-            <div
-              key={i}
-              style={{ '--tx': `${MERGE_OFFSETS[i]}px` } as React.CSSProperties}
-              className="w-10 h-11 sm:w-11 sm:h-[52px] flex-shrink-0 flex items-center justify-center text-lg sm:text-xl font-bold border-2 border-primary/60 bg-background text-foreground rounded-xl select-none animate-otp-cell-collapse"
-            >
-              {digit}
+            <div key={i} className="relative flex-shrink-0 w-10 h-11 sm:w-11 sm:h-[52px]">
+              {/* Rotating conic-gradient creates the sweeping arc border effect */}
+              <div className="absolute inset-0 rounded-xl overflow-hidden">
+                <div
+                  className="absolute inset-0 animate-otp-cell-spin"
+                  style={{
+                    background:
+                      'conic-gradient(from 0deg, transparent 0%, transparent 68%, hsl(var(--primary)/0.7) 80%, hsl(var(--primary)) 87%, hsl(var(--primary)/0.7) 94%, transparent 100%)',
+                  }}
+                />
+              </div>
+              {/* Inner face sits 2px inset so only the ring is visible */}
+              <div className="absolute inset-[2px] rounded-[10px] bg-card flex items-center justify-center text-lg sm:text-xl font-bold text-foreground select-none">
+                {digit}
+              </div>
             </div>
           );
         })}
@@ -133,30 +148,7 @@ export function OtpInput({
     );
   }
 
-  // LOADING phase 2: single square with green SVG border drawing clockwise
-  if (state === 'loading' && mergePhase === 'square') {
-    return (
-      <div className="flex justify-center">
-        <div className="animate-otp-square-in relative w-16 h-16">
-          <div className="absolute inset-0 rounded-2xl bg-success/5" />
-          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 64 64" fill="none">
-            <rect
-              x="2" y="2" width="60" height="60" rx="14"
-              stroke="hsl(var(--success))"
-              strokeWidth="2.5"
-              strokeDasharray="216"
-              style={{
-                strokeDashoffset: 216,
-                animation: 'otp-border-draw 0.7s cubic-bezier(0.4,0,0.2,1) forwards',
-              }}
-            />
-          </svg>
-        </div>
-      </div>
-    );
-  }
-
-  // SUCCESS: green border fully drawn + checkmark draws in
+  // SUCCESS (after blur-dissolve completes): green bordered square + checkmark draws in
   if (state === 'success') {
     return (
       <div className="flex justify-center">
@@ -179,7 +171,7 @@ export function OtpInput({
               strokeDasharray="42"
               style={{
                 strokeDashoffset: 42,
-                animation: 'otp-checkmark-draw 0.4s ease-out 0.08s forwards',
+                animation: 'otp-checkmark-draw 0.4s ease-out 0.06s forwards',
               }}
             />
           </svg>
@@ -220,7 +212,7 @@ export function OtpInput({
         const isActive = focused && i === cursorAt;
         const cellClass =
           state === 'error'
-            ? 'border-destructive bg-destructive/5 text-destructive animate-otp-error-cell'
+            ? 'border-destructive bg-destructive/5 text-destructive'
             : isActive
               ? 'border-primary ring-2 ring-primary/20 bg-background'
               : digit

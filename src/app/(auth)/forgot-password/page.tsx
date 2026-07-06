@@ -67,7 +67,7 @@ export default function ForgotPasswordPage() {
     try {
       await resetPassword({ email, code, newPassword: pw });
       setOtpState('success');
-      setTimeout(() => setStep('done'), 650);
+      setTimeout(() => setStep('done'), 900);
       setTimeout(() => router.push('/login'), 1800);
     } catch (err) {
       setError((err as Error).message);
@@ -81,7 +81,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="w-full max-w-md">
-      <AuthCard>
+      <AuthCard otpState={step === 'reset' ? otpState : undefined}>
         {step === 'done' ? (
           <SuccessScreen />
         ) : (
