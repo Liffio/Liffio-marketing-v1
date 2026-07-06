@@ -9,21 +9,29 @@ import { captureReferralFromUrl, getStoredReferralCode, getReferralPayloadForReg
 import { AuthCard, Button, CheckIcon, ErrorMsg, EyeIcon, GoogleIcon, Input, Label, OrDivider } from '@/lib/auth/ui';
 
 const COUNTRIES: [string, string][] = [
+  // Core English markets
   ['US', 'United States'], ['GB', 'United Kingdom'], ['IN', 'India'], ['CA', 'Canada'],
-  ['AU', 'Australia'], ['DE', 'Germany'], ['FR', 'France'], ['BR', 'Brazil'],
-  ['MX', 'Mexico'], ['NG', 'Nigeria'], ['PH', 'Philippines'], ['PK', 'Pakistan'],
-  ['ID', 'Indonesia'], ['AE', 'UAE'], ['SA', 'Saudi Arabia'], ['SG', 'Singapore'],
-  ['ZA', 'South Africa'], ['KE', 'Kenya'], ['EG', 'Egypt'], ['TR', 'Turkey'],
-  ['IT', 'Italy'], ['ES', 'Spain'], ['NL', 'Netherlands'], ['SE', 'Sweden'],
-  ['NO', 'Norway'], ['JP', 'Japan'], ['KR', 'South Korea'], ['TH', 'Thailand'],
-  ['VN', 'Vietnam'], ['MY', 'Malaysia'], ['AR', 'Argentina'], ['CO', 'Colombia'],
-  ['CL', 'Chile'], ['PE', 'Peru'], ['NZ', 'New Zealand'], ['IE', 'Ireland'],
-  ['PT', 'Portugal'], ['GH', 'Ghana'], ['ET', 'Ethiopia'], ['TZ', 'Tanzania'],
-  ['AF', 'Afghanistan'], ['RU', 'Russia'], ['BE', 'Belgium'], ['CH', 'Switzerland'],
-  ['AT', 'Austria'], ['DK', 'Denmark'], ['FI', 'Finland'], ['PL', 'Poland'],
-  ['CZ', 'Czech Republic'], ['RO', 'Romania'], ['HU', 'Hungary'], ['GR', 'Greece'],
-  ['IL', 'Israel'], ['UA', 'Ukraine'], ['HK', 'Hong Kong'], ['TW', 'Taiwan'],
-  ['BD', 'Bangladesh'], ['LK', 'Sri Lanka'], ['NP', 'Nepal'], ['RS', 'Serbia'],
+  ['AU', 'Australia'], ['NZ', 'New Zealand'], ['IE', 'Ireland'],
+  // Western & Northern Europe
+  ['DE', 'Germany'], ['FR', 'France'], ['IT', 'Italy'], ['ES', 'Spain'],
+  ['NL', 'Netherlands'], ['BE', 'Belgium'], ['CH', 'Switzerland'], ['AT', 'Austria'],
+  ['SE', 'Sweden'], ['NO', 'Norway'], ['DK', 'Denmark'], ['FI', 'Finland'], ['PT', 'Portugal'],
+  // Middle East
+  ['AE', 'UAE'], ['SA', 'Saudi Arabia'], ['IL', 'Israel'], ['EG', 'Egypt'], ['TR', 'Turkey'],
+  // High income Asia
+  ['SG', 'Singapore'], ['HK', 'Hong Kong'], ['JP', 'Japan'], ['KR', 'South Korea'], ['TW', 'Taiwan'],
+  // South & Southeast Asia
+  ['PK', 'Pakistan'], ['BD', 'Bangladesh'], ['LK', 'Sri Lanka'], ['NP', 'Nepal'],
+  ['ID', 'Indonesia'], ['PH', 'Philippines'], ['TH', 'Thailand'], ['VN', 'Vietnam'], ['MY', 'Malaysia'],
+  // Latin America
+  ['BR', 'Brazil'], ['MX', 'Mexico'], ['AR', 'Argentina'], ['CO', 'Colombia'], ['CL', 'Chile'], ['PE', 'Peru'],
+  // Eastern Europe
+  ['RU', 'Russia'], ['PL', 'Poland'], ['UA', 'Ukraine'], ['CZ', 'Czech Republic'],
+  ['RO', 'Romania'], ['HU', 'Hungary'], ['GR', 'Greece'], ['RS', 'Serbia'],
+  // Africa
+  ['NG', 'Nigeria'], ['ZA', 'South Africa'], ['KE', 'Kenya'], ['GH', 'Ghana'], ['ET', 'Ethiopia'], ['TZ', 'Tanzania'],
+  // Other
+  ['AF', 'Afghanistan'],
 ];
 
 function FlagImg({ code }: { code: string }) {
