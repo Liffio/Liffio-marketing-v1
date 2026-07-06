@@ -126,7 +126,8 @@ function ConfirmEmailPageInner() {
         }
         // Show success screen, then redirect after progress bar completes
         setOtpState('success');
-        setPhase('success');
+        // Let the checkmark draw for 650ms before the SuccessScreen replaces the OTP area
+        setTimeout(() => setPhase('success'), 650);
         setTimeout(() => handleVerified(), 1800);
       })
       .catch((err) => {

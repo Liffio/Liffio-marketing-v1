@@ -75,6 +75,10 @@ export function Spinner({ size = 20 }: { size?: number }) {
 
 export type OtpState = 'idle' | 'loading' | 'error' | 'success';
 
+// Offset (px) each cell travels toward container center during the merge animation.
+// Positive = move right, negative = move left. Sized for 40px cells + 6px gap (270px total).
+const MERGE_OFFSETS = [115, 69, 23, -23, -69, -115] as const;
+
 export function OtpInput({
   value,
   onChange,
@@ -88,30 +92,62 @@ export function OtpInput({
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [focused, setFocused] = useState(false);
+  // Internal flag: while state === 'loading', show cells collapsing first (mergePhase = 'cells'),
+  // then the single square with border drawing (mergePhase = 'square').
+  const [mergePhase, setMergePhase] = useState<'cells' | 'square'>('cells');
+
   const LEN = 6;
   const digits = value.padEnd(LEN, ' ').slice(0, LEN).split('');
   const filled = value.replace(/\s/g, '').length;
-  // cursor sits on the next empty slot, or the last slot if full
   const cursorAt = Math.min(filled, LEN - 1);
 
-  // Auto-focus on mount so the user can start typing immediately
   useEffect(() => { inputRef.current?.focus(); }, []);
 
-  // LOADING: cells collapse → single square, primary SVG border draws clockwise
-  if (state === 'loading') {
+  useEffect(() => {
+    if (state === 'loading') {
+      setMergePhase('cells');
+      const t = setTimeout(() => setMergePhase('square'), 360);
+      return () => clearTimeout(t);
+    } else {
+      setMergePhase('cells');
+    }
+  }, [state]);
+
+  // LOADING phase 1: cells slide inward and vanish (collapse animation)
+  if (state === 'loading' && mergePhase === 'cells') {
+    return (
+      <div className="flex gap-1.5 sm:gap-2 justify-center overflow-hidden">
+        {Array.from({ length: LEN }).map((_, i) => {
+          const digit = digits[i]?.trim() || '';
+          return (
+            <div
+              key={i}
+              style={{ '--tx': `${MERGE_OFFSETS[i]}px` } as React.CSSProperties}
+              className="w-10 h-11 sm:w-11 sm:h-[52px] flex-shrink-0 flex items-center justify-center text-lg sm:text-xl font-bold border-2 border-primary/60 bg-background text-foreground rounded-xl select-none animate-otp-cell-collapse"
+            >
+              {digit}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  // LOADING phase 2: single square with green SVG border drawing clockwise
+  if (state === 'loading' && mergePhase === 'square') {
     return (
       <div className="flex justify-center">
         <div className="animate-otp-square-in relative w-16 h-16">
-          <div className="absolute inset-0 rounded-2xl bg-primary/5" />
+          <div className="absolute inset-0 rounded-2xl bg-success/5" />
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 64 64" fill="none">
             <rect
               x="2" y="2" width="60" height="60" rx="14"
-              stroke="hsl(var(--primary))"
+              stroke="hsl(var(--success))"
               strokeWidth="2.5"
               strokeDasharray="216"
               style={{
                 strokeDashoffset: 216,
-                animation: 'otp-border-draw 0.6s cubic-bezier(0.4,0,0.2,1) 0.08s forwards',
+                animation: 'otp-border-draw 0.7s cubic-bezier(0.4,0,0.2,1) forwards',
               }}
             />
           </svg>
@@ -120,14 +156,13 @@ export function OtpInput({
     );
   }
 
-  // SUCCESS: green border complete + checkmark draws in
+  // SUCCESS: green border fully drawn + checkmark draws in
   if (state === 'success') {
     return (
       <div className="flex justify-center">
-        <div className="relative w-16 h-16">
+        <div className="animate-otp-square-in relative w-16 h-16">
           <div className="absolute inset-0 rounded-2xl bg-success/10" />
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 64 64" fill="none">
-            {/* Border already complete */}
             <rect
               x="2" y="2" width="60" height="60" rx="14"
               stroke="hsl(var(--success))"
@@ -135,7 +170,6 @@ export function OtpInput({
               strokeDasharray="216"
               strokeDashoffset="0"
             />
-            {/* Checkmark draws in — path length ≈ 42 */}
             <polyline
               points="18,34 28,44 46,24"
               stroke="hsl(var(--success))"
@@ -145,7 +179,7 @@ export function OtpInput({
               strokeDasharray="42"
               style={{
                 strokeDashoffset: 42,
-                animation: 'otp-checkmark-draw 0.38s ease-out 0.05s forwards',
+                animation: 'otp-checkmark-draw 0.4s ease-out 0.08s forwards',
               }}
             />
           </svg>
@@ -154,10 +188,7 @@ export function OtpInput({
     );
   }
 
-  // IDLE / ERROR: single hidden input + display cells.
-  // One real <input> is off-screen (sr-only) and captures all keyboard events.
-  // The display cells are plain divs — no multiple-input cursor bleed,
-  // no stray I-beam across the card.
+  // IDLE / ERROR: single hidden input + 6 display cells
   return (
     <div
       role="group"
@@ -165,7 +196,6 @@ export function OtpInput({
       className={`relative flex gap-1.5 sm:gap-2 justify-center cursor-text ${state === 'error' ? 'animate-otp-shake' : ''}`}
       onClick={() => !disabled && inputRef.current?.focus()}
     >
-      {/* Single off-screen input — captures keyboard, invisible to pointer */}
       <input
         ref={inputRef}
         type="text"
@@ -185,13 +215,12 @@ export function OtpInput({
         aria-label="Enter verification code"
         className="sr-only"
       />
-      {/* Display cells */}
       {Array.from({ length: LEN }).map((_, i) => {
         const digit = digits[i]?.trim() || '';
         const isActive = focused && i === cursorAt;
         const cellClass =
           state === 'error'
-            ? 'border-destructive bg-destructive/5 text-destructive'
+            ? 'border-destructive bg-destructive/5 text-destructive animate-otp-error-cell'
             : isActive
               ? 'border-primary ring-2 ring-primary/20 bg-background'
               : digit

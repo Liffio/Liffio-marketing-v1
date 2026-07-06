@@ -67,7 +67,7 @@ export default function ForgotPasswordPage() {
     try {
       await resetPassword({ email, code, newPassword: pw });
       setOtpState('success');
-      setStep('done');
+      setTimeout(() => setStep('done'), 650);
       setTimeout(() => router.push('/login'), 1800);
     } catch (err) {
       setError((err as Error).message);

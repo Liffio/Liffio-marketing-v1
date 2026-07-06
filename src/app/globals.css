@@ -428,17 +428,31 @@
   15%  { opacity: 1; }
   to   { stroke-dashoffset: 0; opacity: 1; }
 }
-/* Cells collapse into square before border draws */
-@keyframes otp-cells-out {
-  0%   { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(0.6); }
+/* Each cell slides toward container center then vanishes */
+@keyframes otp-cell-collapse {
+  0%   { transform: translateX(0) scale(1);    opacity: 1; }
+  55%  { transform: translateX(var(--tx)) scale(0.65); opacity: 0.6; }
+  100% { transform: translateX(var(--tx)) scale(0);    opacity: 0; }
 }
+.animate-otp-cell-collapse {
+  animation: otp-cell-collapse 0.33s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+/* Square pops in after cells collapse */
 @keyframes otp-square-in {
-  0%   { opacity: 0; transform: scale(0.55); }
-  70%  { opacity: 1; transform: scale(1.04); }
+  0%   { opacity: 0; transform: scale(0.5); }
+  70%  { opacity: 1; transform: scale(1.06); }
   100% { opacity: 1; transform: scale(1); }
 }
-.animate-otp-square-in { animation: otp-square-in 0.28s cubic-bezier(0.34,1.4,0.64,1) forwards; }
+.animate-otp-square-in { animation: otp-square-in 0.3s cubic-bezier(0.34,1.4,0.64,1) forwards; }
+/* Red glow pulse on each error cell */
+@keyframes otp-error-glow {
+  0%   { box-shadow: 0 0 0 0 hsl(var(--destructive) / 0); }
+  30%  { box-shadow: 0 0 0 3px hsl(var(--destructive) / 0.25), 0 0 14px hsl(var(--destructive) / 0.18); }
+  100% { box-shadow: 0 0 0 0 hsl(var(--destructive) / 0); }
+}
+.animate-otp-error-cell {
+  animation: otp-error-glow 0.55s ease-out both;
+}
 
 @keyframes heroTypingBounce {
   0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
