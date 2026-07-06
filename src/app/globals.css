@@ -395,6 +395,29 @@
 }
 .hero-typing-dot-2 { animation-delay: 0.15s; }
 .hero-typing-dot-3 { animation-delay: 0.3s; }
+/* ── OTP animations ───────────────────────────────────────────────────────── */
+@keyframes otp-shake {
+  0%, 100% { transform: translateX(0); }
+  15%       { transform: translateX(-8px); }
+  30%       { transform: translateX(8px); }
+  45%       { transform: translateX(-6px); }
+  60%       { transform: translateX(6px); }
+  75%       { transform: translateX(-3px); }
+  90%       { transform: translateX(3px); }
+}
+@keyframes otp-success-pop {
+  0%   { transform: scale(0.8);  opacity: 0; }
+  65%  { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+@keyframes otp-progress-fill {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+.animate-otp-shake        { animation: otp-shake 0.55s cubic-bezier(0.36,0.07,0.19,0.97) both; }
+.animate-otp-success-pop  { animation: otp-success-pop 0.45s cubic-bezier(0.34,1.4,0.64,1) both; }
+.animate-otp-progress     { animation: otp-progress-fill 1.8s linear forwards; }
+
 @keyframes heroTypingBounce {
   0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
   30% { transform: translateY(-3px); opacity: 1; }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, type ReactNode } from 'react';
+import { useRef, type ReactNode, type ReactElement } from 'react';
 
 // ── Card ──────────────────────────────────────────────────────────────────
 
@@ -73,17 +73,20 @@ export function Spinner({ size = 20 }: { size?: number }) {
 
 // ── 6-digit OTP Input ─────────────────────────────────────────────────────
 
+export type OtpState = 'idle' | 'loading' | 'error' | 'success';
+
 export function OtpInput({
   value,
   onChange,
   disabled,
+  state = 'idle',
 }: {
   value: string;
   onChange: (v: string) => void;
   disabled?: boolean;
+  state?: OtpState;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
-
   const digits = value.padEnd(6, ' ').slice(0, 6).split('');
 
   function focusIndex(i: number) {
@@ -120,8 +123,17 @@ export function OtpInput({
     }
   }
 
-  return (
-    <div ref={containerRef} className="flex gap-2 justify-center">
+  const cellBase = 'w-11 text-center text-xl font-bold border-2 rounded-xl bg-background text-foreground outline-none transition-all duration-150 disabled:opacity-50';
+  const cellColor =
+    state === 'error'   ? 'border-destructive bg-destructive/5 text-destructive' :
+    state === 'success' ? 'border-success bg-success/5 text-success' :
+                          'border-input focus:border-primary focus:ring-2 focus:ring-primary/20';
+
+  const inputs = (
+    <div
+      ref={containerRef}
+      className={`flex gap-2 justify-center ${state === 'error' ? 'animate-otp-shake' : ''}`}
+    >
       {Array.from({ length: 6 }).map((_, i) => (
         <input
           key={i}
@@ -132,13 +144,37 @@ export function OtpInput({
           onChange={(e) => handleChange(i, e.target.value)}
           onKeyDown={(e) => handleKeyDown(i, e)}
           onPaste={handlePaste}
-          disabled={disabled}
-          className="w-11 h-13 text-center text-xl font-bold border-2 border-input rounded-xl bg-background text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition disabled:opacity-50"
+          disabled={disabled || state === 'loading' || state === 'success'}
+          className={`${cellBase} ${cellColor}`}
           style={{ lineHeight: '52px', height: 52 }}
         />
       ))}
     </div>
   );
+
+  // Spinning border wrapper shown during loading — rotating conic-gradient
+  // around the group, same technique as the Flutter repo's _LoadingBorderPainter
+  if (state === 'loading') {
+    return (
+      <div className="relative rounded-2xl overflow-hidden" style={{ padding: 2 }}>
+        <div
+          className="absolute animate-spin pointer-events-none"
+          style={{
+            width: '300%', height: '300%',
+            top: '-100%', left: '-100%',
+            background: 'conic-gradient(transparent 0deg, hsl(var(--primary)) 90deg, transparent 180deg)',
+            animationDuration: '1.2s',
+            animationTimingFunction: 'linear',
+          }}
+        />
+        <div className="relative bg-background rounded-[13px] py-1">
+          {inputs}
+        </div>
+      </div>
+    );
+  }
+
+  return inputs;
 }
 
 // ── Icons ─────────────────────────────────────────────────────────────────
