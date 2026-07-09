@@ -17,10 +17,20 @@ export function OrganizationJsonLd() {
       data={{
         "@context": "https://schema.org",
         "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
         name: siteConfig.brand.name,
+        legalName: "Liffio",
         url: SITE_URL,
-        logo: `${SITE_URL}/logo/inline-transparent.webp`,
+        logo: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/logo/inline-transparent.webp`,
+          width: 200,
+          height: 60,
+        },
+        description:
+          "Liffio is an Instagram DM automation tool for creators, coaches, and agencies. Auto-reply to comments, stories, and DMs using keyword triggers — no password required, built on Meta's official API.",
         foundingDate: "2026",
+        areaServed: "Worldwide",
         address: {
           "@type": "PostalAddress",
           addressCountry: "IN",
@@ -34,6 +44,7 @@ export function OrganizationJsonLd() {
           "@type": "ContactPoint",
           contactType: "customer support",
           email: siteConfig.contact.email,
+          availableLanguage: "English",
         },
       }}
     />
@@ -63,11 +74,21 @@ export function WebSiteJsonLd() {
       data={{
         "@context": "https://schema.org",
         "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
         name: siteConfig.brand.name,
         url: SITE_URL,
         description:
           "Instagram auto DM tool with auto comment reply, comment-to-DM, and story reply automation.",
         inLanguage: "en",
+        publisher: { "@id": `${SITE_URL}/#organization` },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${SITE_URL}/blog?q={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
       }}
     />
   );
