@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { rootSeo } from "@/config/seo.config";
 import { SITE_URL } from "@/config/site.config";
@@ -51,11 +50,13 @@ export default function RootLayout({
         <ReferralCapture />
         {children}
         <GoogleAnalytics gaId="G-TPNX0042QC" />
-        <Script
+        {/* Plain <script> (not next/script) — Umami reads document.currentScript for
+            its config, which is null when Next.js's Script component injects the tag
+            dynamically after hydration. A parser-inserted tag preserves currentScript. */}
+        <script
           defer
           src="https://umami-analytics-rkhr.srv1772252.hstgr.cloud/script.js"
           data-website-id="a165b0eb-ac11-422f-85cf-68b32d97ae95"
-          strategy="afterInteractive"
         />
       </body>
     </html>
