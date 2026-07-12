@@ -58,6 +58,11 @@ export default function RootLayout({
           src="https://umami-analytics-rkhr.srv1772252.hstgr.cloud/script.js"
           data-website-id="a165b0eb-ac11-422f-85cf-68b32d97ae95"
         />
+        <script
+          defer
+          src="https://umami-analytics-rkhr.srv1772252.hstgr.cloud/recorder.js"
+          data-website-id="a165b0eb-ac11-422f-85cf-68b32d97ae95"
+        />
       </body>
     </html>
   );
