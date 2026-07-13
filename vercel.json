@@ -29,7 +29,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://app.posthog.com https://umami-analytics-rkhr.srv1772252.hstgr.cloud; worker-src 'self' blob:; img-src * data: blob:; connect-src * https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-ancestors 'none';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://app.posthog.com https://umami-analytics-rkhr.srv1772252.hstgr.cloud; worker-src 'self' blob:; img-src * data: blob:; connect-src * https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-ancestors 'self' https://umami-analytics-rkhr.srv1772252.hstgr.cloud;"
         }
       ]
     }
