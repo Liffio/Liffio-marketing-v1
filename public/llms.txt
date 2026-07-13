@@ -35,7 +35,7 @@ India pricing available via Razorpay in INR. All plans include unlimited Instagr
 - Send delays: 10–60 seconds per automation (configurable, human-like)
 - Data: GDPR-compliant, contact data exportable and deletable from dashboard
 - Payment: Stripe (USD global) and Razorpay (INR India)
-- Competing tools: ManyChat, SendDM, LinkDM, SuperProfile, InstaChamp, Zorcha
+- Competing tools: ManyChat, SendDM, Chatfuel, ReplyRush, LinkDM, SuperProfile, InstaChamp, Zorcha
 
 ## Pages
 
@@ -45,6 +45,12 @@ India pricing available via Razorpay in INR. All plans include unlimited Instagr
 - ManyChat alternative comparison: https://liffio.com/manychat-alternative
 - SendDM alternative comparison: https://liffio.com/senddm-alternative
 - Chatfuel alternative comparison: https://liffio.com/chatfuel-alternative
+- All comparisons hub: https://liffio.com/compare
+- Liffio vs ReplyRush: https://liffio.com/vs/replyrush
+- Liffio vs LinkDM: https://liffio.com/vs/linkdm
+- Liffio vs SuperProfile: https://liffio.com/vs/superprofile
+- Liffio vs Zorcha: https://liffio.com/vs/zorcha
+- Liffio vs InstaChamp: https://liffio.com/vs/instachamp
 - Blog: https://liffio.com/blog
 - About: https://liffio.com/about
 - Creators Program: https://liffio.com/creators-program
