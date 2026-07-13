@@ -68,6 +68,8 @@ function MobilePlanCard({ plan, annual }: { plan: PricingPlan; annual: boolean }
 
       <a
         href={plan.href}
+        data-cta={plan.name === "Free" ? "pricing_start_free" : "pricing_upgrade"}
+        data-signup-cta="true"
         className="block w-full rounded-xl py-2.5 text-center text-sm font-semibold transition-all active:scale-[0.98]"
         style={
           light

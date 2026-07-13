@@ -158,7 +158,7 @@ function ConfirmEmailPageInner() {
               <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">Verify your email</h1>
               <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
                 We sent a 6-digit code to{' '}
-                <span className="font-semibold text-foreground">{user?.email ?? 'your inbox'}</span>
+                <span className="rr-mask font-semibold text-foreground">{user?.email ?? 'your inbox'}</span>
               </p>
             </header>
 

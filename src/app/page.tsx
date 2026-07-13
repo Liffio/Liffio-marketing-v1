@@ -12,6 +12,8 @@ import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
 import AboutSection from "@/components/AboutSection";
 import Footer from "@/components/Footer";
+import { TrackSection } from "@/lib/analytics/TrackSection";
+import { LandingStepTracker } from "@/lib/analytics/LandingStepTracker";
 import { getHomepageFaqCategories } from "@/config/faq.config";
 import { getPricingContext } from "@/lib/pricing-region.server";
 import {
@@ -37,15 +39,28 @@ export default async function Home() {
       <SoftwareApplicationJsonLd />
       <FaqPageJsonLd categories={faqCategories} />
       <Navbar />
+      <LandingStepTracker />
       <main id="main-content" className="flex-1">
-        <HeroSection />
+        <TrackSection name="hero">
+          <HeroSection />
+        </TrackSection>
         <StatsSection />
-        <FeaturesSection />
-        <HowItWorksSection />
-        <TestimonialsSection />
-        <PricingSection plans={plans} region={region} countryCode={countryCode} />
+        <TrackSection name="features">
+          <FeaturesSection />
+        </TrackSection>
+        <TrackSection name="how_it_works">
+          <HowItWorksSection />
+        </TrackSection>
+        <TrackSection name="testimonials">
+          <TestimonialsSection />
+        </TrackSection>
+        <TrackSection name="pricing">
+          <PricingSection plans={plans} region={region} countryCode={countryCode} />
+        </TrackSection>
         <SeoDiscoverabilitySection />
-        <FAQSection categories={faqCategories} />
+        <TrackSection name="faq">
+          <FAQSection categories={faqCategories} />
+        </TrackSection>
         <AboutSection />
         <section aria-label="About Liffio" className="py-10 sm:py-12">
           <div className="mx-auto max-w-3xl px-4 sm:px-6">

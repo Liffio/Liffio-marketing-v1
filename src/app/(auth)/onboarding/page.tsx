@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Logo from '@/components/Logo';
 import { authStore } from '@/lib/auth/store';
@@ -33,6 +33,7 @@ import {
   XIcon,
   ZapIcon,
 } from '@/lib/auth/ui';
+import { trackSignupStep } from '@/lib/analytics/analytics';
 
 // ── Error copy ─────────────────────────────────────────────────────────────
 
@@ -569,6 +570,15 @@ function OnboardingPageInner() {
   const [finishing, setFinishing] = useState(false);
   const [mounted, setMounted] = useState(false);
 
+  // Guards signup_step('instagram_connected') against the 3 separate success
+  // paths (popup result, URL redirect, BroadcastChannel) all firing once.
+  const igConnectedTrackedRef = useRef(false);
+  function markInstagramConnected() {
+    if (igConnectedTrackedRef.current) return;
+    igConnectedTrackedRef.current = true;
+    trackSignupStep('instagram_connected');
+  }
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -581,6 +591,7 @@ function OnboardingPageInner() {
       setIgConnected(true);
       setIgError(null);
       setStep((s) => Math.max(s, 3));
+      markInstagramConnected();
     } else if (meta === 'error') {
       const reason = decodeURIComponent(params.get('reason') ?? '');
       if (reason !== 'user_canceled') {
@@ -608,6 +619,7 @@ function OnboardingPageInner() {
         setIgConnected(true);
         setIgError(null);
         setStep((s) => Math.max(s, 3));
+        markInstagramConnected();
       } else if (result.meta === 'error' && result.reason !== 'user_canceled') {
         setIgError(result.reason ?? 'token_exchange_failed');
         setStep((s) => (s < 2 ? 2 : s));
@@ -656,6 +668,7 @@ function OnboardingPageInner() {
         ...(displayName.trim() ? { displayName: displayName.trim() } : {}),
         onboarding: { handle: handle.trim() ? `@${handle.replace(/^@/, '')}` : undefined, step: 1 },
       });
+      trackSignupStep('workspace_created');
     } catch { /* non-fatal */ }
     setSaving(false);
     setStep(2);
@@ -681,6 +694,7 @@ function OnboardingPageInner() {
         setIgConnected(true);
         setIgError(null);
         setStep(3);
+        markInstagramConnected();
       } else if (result.reason !== 'user_canceled') {
         setIgError(result.reason ?? 'token_exchange_failed');
       }
@@ -767,7 +781,7 @@ function OnboardingPageInner() {
                       </div>
                       <div>
                         <div className="text-sm font-semibold text-foreground">Instagram connected</div>
-                        {handle && <div className="text-xs text-muted-foreground">@{handle.replace(/^@/, '')}</div>}
+                        {handle && <div className="rr-mask text-xs text-muted-foreground">@{handle.replace(/^@/, '')}</div>}
                       </div>
                     </div>
                     <Button className="w-full" onClick={() => setStep(3)}>Continue <ArrowRightIcon size={14} /></Button>

@@ -94,9 +94,11 @@ export default function ForgotPasswordPage() {
                 {step === 'email' ? 'Reset your password' : 'Enter the code'}
               </h1>
               <p className="mt-1.5 text-sm text-muted-foreground">
-                {step === 'email'
-                  ? "We'll email you a 6-digit code to reset your password."
-                  : `Code sent to ${email}. It expires in 5 minutes.`}
+                {step === 'email' ? (
+                  "We'll email you a 6-digit code to reset your password."
+                ) : (
+                  <>Code sent to <span className="rr-mask">{email}</span>. It expires in 5 minutes.</>
+                )}
               </p>
             </header>
 

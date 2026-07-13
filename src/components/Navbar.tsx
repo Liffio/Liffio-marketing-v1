@@ -9,9 +9,9 @@ const ANNOUNCEMENT_MESSAGES = [
   "New: Post Scheduler now live - schedule Instagram feed posts from Liffio",
 ] as const;
 
-const navLinks = [
-  { href: "/features", label: "Features" },
-  { href: "/pricing", label: "Pricing" },
+const navLinks: { href: string; label: string; navKey?: "features" | "pricing" }[] = [
+  { href: "/features", label: "Features", navKey: "features" },
+  { href: "/pricing", label: "Pricing", navKey: "pricing" },
   { href: "/creators-program", label: "Creators" },
   { href: "/help", label: "Support" },
 ];
@@ -48,7 +48,12 @@ export default function Navbar() {
       >
         <span>
           {ANNOUNCEMENT_MESSAGES[announcementIndex]}{" "}
-          <a href={siteConfig.urls.appSignup} className="font-bold underline hover:no-underline">
+          <a
+            href={siteConfig.urls.appSignup}
+            data-cta="navbar_signup"
+            data-signup-cta="true"
+            className="font-bold underline hover:no-underline"
+          >
             Get Started Free →
           </a>
         </span>
@@ -67,7 +72,12 @@ export default function Navbar() {
 
             <nav className="hidden lg:flex flex-1 items-center justify-center gap-0.5">
               {navLinks.map((item) => (
-                <a key={item.href} href={item.href} className={navLinkClass}>
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className={navLinkClass}
+                  {...(item.navKey ? { "data-nav": item.navKey } : {})}
+                >
                   {item.label}
                 </a>
               ))}
@@ -76,12 +86,15 @@ export default function Navbar() {
             <div className="hidden flex-shrink-0 items-center gap-2 lg:flex">
               <a
                 href={siteConfig.urls.appLogin}
+                data-cta="navbar_login"
                 className="rounded-lg px-4 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-[#0a0a0a]"
               >
                 Log in
               </a>
               <a
                 href={siteConfig.urls.appSignup}
+                data-cta="navbar_signup"
+                data-signup-cta="true"
                 className="rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg active:scale-[0.98]"
                 style={{
                   background: "linear-gradient(135deg, #f5184c, #b20d8f)",
@@ -95,6 +108,8 @@ export default function Navbar() {
             <div className="flex items-center gap-0.5 sm:gap-1 lg:hidden">
               <a
                 href={siteConfig.urls.appSignup}
+                data-cta="navbar_signup"
+                data-signup-cta="true"
                 className="hidden min-[400px]:inline-flex rounded-lg px-3 py-2 text-xs font-semibold text-white sm:text-sm"
                 style={{ background: "linear-gradient(135deg, #f5184c, #b20d8f)" }}
               >
@@ -102,6 +117,7 @@ export default function Navbar() {
               </a>
               <a
                 href={siteConfig.urls.appLogin}
+                data-cta="navbar_login"
                 className="px-2 py-2 text-xs font-medium text-gray-500 hover:text-gray-900 sm:px-3 sm:text-sm"
               >
                 Log in
@@ -136,6 +152,7 @@ export default function Navbar() {
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
                   className={mobileNavLinkClass}
+                  {...(item.navKey ? { "data-nav": item.navKey } : {})}
                 >
                   {item.label}
                 </a>
@@ -143,6 +160,8 @@ export default function Navbar() {
             </nav>
             <a
               href={siteConfig.urls.appSignup}
+              data-cta="navbar_signup"
+              data-signup-cta="true"
               className="block w-full rounded-xl py-3.5 text-center text-sm font-semibold text-white"
               style={{ background: "linear-gradient(135deg, #f5184c, #b20d8f)" }}
             >

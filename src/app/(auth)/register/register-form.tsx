@@ -7,6 +7,7 @@ import { authStore } from '@/lib/auth/store';
 import { register, getAuthMe, googleAuthUrl, validateAffiliateCode } from '@/lib/auth/api';
 import { captureReferralFromUrl, getStoredReferralCode, getReferralPayloadForRegister, clearStoredReferralCode } from '@/lib/auth/referral';
 import { AuthCard, Button, CheckIcon, ErrorMsg, EyeIcon, GoogleIcon, Input, Label, OrDivider } from '@/lib/auth/ui';
+import { trackFormStart, trackFormError, trackFormSubmit, trackFormAbandon, trackSignupStep, identifyUser } from '@/lib/analytics/analytics';
 
 const COUNTRIES: [string, string][] = [
   // Core English markets
@@ -132,6 +133,16 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
   const [error, setError] = useState('');
   const [mounted, setMounted] = useState(false);
 
+  const formStartedRef = useRef(false);
+  const formSubmittedRef = useRef(false);
+
+  function markFormStarted() {
+    if (formStartedRef.current) return;
+    formStartedRef.current = true;
+    trackFormStart('signup');
+    trackSignupStep('signup_started');
+  }
+
   useEffect(() => {
     setMounted(true);
     if (pendingPlanParam) localStorage.setItem('pending_plan', pendingPlanParam);
@@ -140,6 +151,17 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
     const stored = captured ?? getStoredReferralCode();
     if (stored) setReferralCode(stored);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // form_abandon: form was started but the user left before submitting.
+  useEffect(() => {
+    function onPageHide() {
+      if (formStartedRef.current && !formSubmittedRef.current) {
+        trackFormAbandon('signup');
+      }
+    }
+    window.addEventListener('pagehide', onPageHide);
+    return () => window.removeEventListener('pagehide', onPageHide);
   }, []);
 
   useEffect(() => {
@@ -159,7 +181,10 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (pw !== cpw || !agreed) return;
+    if (pw !== cpw || !agreed) {
+      trackFormError('signup');
+      return;
+    }
     setError('');
     setLoading(true);
     try {
@@ -178,8 +203,13 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
       authStore.setSession({ accessToken: result.accessToken });
       const authMe = await getAuthMe({ token: result.accessToken });
       authStore.setAuthMe(authMe);
+      formSubmittedRef.current = true;
+      trackFormSubmit('signup');
+      trackSignupStep('account_created');
+      identifyUser(authMe.user.id);
       router.replace(`/confirm-email${redirectPath ? `?redirect=${encodeURIComponent(redirectPath)}` : ''}`);
     } catch (err) {
+      trackFormError('signup');
       setError((err as Error).message);
     } finally {
       setLoading(false);
@@ -225,28 +255,28 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
             <div className="space-y-1.5">
               <Label htmlFor="firstName">First name</Label>
-              <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required autoComplete="given-name" placeholder="Alex" />
+              <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} onFocus={markFormStarted} required autoComplete="given-name" placeholder="Alex" />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="lastName">Last name</Label>
-              <Input id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} required autoComplete="family-name" placeholder="Morgan" />
+              <Input id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} onFocus={markFormStarted} required autoComplete="family-name" placeholder="Morgan" />
             </div>
           </div>
 
           <div className="space-y-1.5">
             <Label htmlFor="email">Email address</Label>
-            <Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" required autoComplete="email" placeholder="you@brand.com" />
+            <Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} onFocus={markFormStarted} type="email" required autoComplete="email" placeholder="you@brand.com" />
           </div>
 
           <div className="space-y-1.5">
             <Label htmlFor="country">Country</Label>
-            <CountrySelect value={country} onChange={setCountry} />
+            <CountrySelect value={country} onChange={(v) => { markFormStarted(); setCountry(v); }} />
           </div>
 
           <div className="space-y-1.5">
             <Label htmlFor="pw">Password</Label>
             <div className="relative">
-              <Input id="pw" type={showPw ? 'text' : 'password'} value={pw} onChange={(e) => setPw(e.target.value)} required autoComplete="new-password" className="pr-10" placeholder="At least 8 characters" />
+              <Input id="pw" type={showPw ? 'text' : 'password'} value={pw} onChange={(e) => setPw(e.target.value)} onFocus={markFormStarted} required autoComplete="new-password" className="pr-10" placeholder="At least 8 characters" />
               <button type="button" onClick={() => setShowPw((v) => !v)} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                 <EyeIcon open={showPw} />
               </button>
@@ -262,7 +292,7 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
 
           <div className="space-y-1.5">
             <Label htmlFor="cpw">Confirm password</Label>
-            <Input id="cpw" value={cpw} onChange={(e) => setCpw(e.target.value)} type={showPw ? 'text' : 'password'} required autoComplete="new-password" />
+            <Input id="cpw" value={cpw} onChange={(e) => setCpw(e.target.value)} onFocus={markFormStarted} type={showPw ? 'text' : 'password'} required autoComplete="new-password" />
             {pw !== cpw && cpw.length > 0 && <p className="text-xs text-destructive">Passwords do not match</p>}
           </div>
 
@@ -270,7 +300,7 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
             <Label htmlFor="referral">
               Referral code <span className="font-normal text-muted-foreground">(optional)</span>
             </Label>
-            <Input id="referral" value={referralCode} onChange={(e) => setReferralCode(e.target.value)} placeholder="Friend's code" />
+            <Input id="referral" value={referralCode} onChange={(e) => setReferralCode(e.target.value)} onFocus={markFormStarted} placeholder="Friend's code" />
             {refValid === true && <p className="text-xs text-success">✓ Valid referral — 10% off your first payment</p>}
             {refValid === false && <p className="text-xs text-destructive">Referral code not found</p>}
           </div>

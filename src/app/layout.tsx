@@ -4,6 +4,8 @@ import { rootSeo } from "@/config/seo.config";
 import { SITE_URL } from "@/config/site.config";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/lib/seo/json-ld";
 import { ReferralCapture } from "@/components/ReferralCapture";
+import { DelegatedClicks } from "@/lib/analytics/DelegatedClicks";
+import { ScrollDepthTracker } from "@/lib/analytics/ScrollDepthTracker";
 import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
@@ -48,6 +50,8 @@ export default function RootLayout({
         <OrganizationJsonLd />
         <WebSiteJsonLd />
         <ReferralCapture />
+        <DelegatedClicks />
+        <ScrollDepthTracker />
         {children}
         <GoogleAnalytics gaId="G-TPNX0042QC" />
         {/* Plain <script> (not next/script) — Umami reads document.currentScript for

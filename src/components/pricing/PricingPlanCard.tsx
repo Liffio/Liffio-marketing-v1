@@ -93,6 +93,8 @@ export function PricingPlanCard({ plan, annual, compact = false, className = "" 
       <a
         href={plan.href}
         id={`pricing-${plan.name.toLowerCase()}`}
+        data-cta={plan.name === "Free" ? "pricing_start_free" : "pricing_upgrade"}
+        data-signup-cta="true"
         className="block w-full rounded-xl py-3.5 text-center text-sm font-semibold transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
         style={
           plan.highlight

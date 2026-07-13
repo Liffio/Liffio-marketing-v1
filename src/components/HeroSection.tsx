@@ -117,6 +117,8 @@ export default function HeroSection() {
             <div className="hero-stagger hero-stagger-5 mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
               <a
                 href={siteConfig.urls.appSignup}
+                data-cta="hero_start_free"
+                data-signup-cta="true"
                 className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.98] sm:w-auto"
                 style={{
                   background: "linear-gradient(135deg,#f5184c,#b20d8f)",

@@ -136,6 +136,7 @@ export function PricingBottomCta() {
       </a>
       <a
         href="mailto:support@liffio.com"
+        data-cta="contact_sales"
         className="rounded-xl border border-gray-200 px-8 py-3.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
       >
         Contact Sales

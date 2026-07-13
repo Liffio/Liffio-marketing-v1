@@ -147,6 +147,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
       <div className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${showFab ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0 pointer-events-none"}`}>
         <button
           onClick={() => document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })}
+          data-cta="creator_program"
           className="flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-white shadow-xl transition-all duration-200 hover:opacity-90"
           style={{ background: "linear-gradient(135deg,#f5184c,#b20d8f)", boxShadow: "0 10px 40px rgba(178, 13, 143,0.45)" }}>
           Apply Now ↓
