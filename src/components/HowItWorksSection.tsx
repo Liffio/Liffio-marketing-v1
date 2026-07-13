@@ -19,9 +19,9 @@ const steps = [
   {
     num: "01",
     shortTitle: "Sign up",
-    color: "#a855f7",
-    bg: "rgba(168,85,247,0.07)",
-    border: "rgba(168,85,247,0.18)",
+    color: "#ff7c49",
+    bg: "rgba(255, 124, 73,0.07)",
+    border: "rgba(255, 124, 73,0.18)",
     title: "Create Your Free Auto DM Account",
     detail:
       "Get started with Liffio's auto DM tool in under 60 seconds. No credit card required - start sending auto DMs for free today.",
@@ -39,9 +39,9 @@ const steps = [
   {
     num: "02",
     shortTitle: "Connect",
-    color: "#7c5af3",
-    bg: "rgba(124,90,243,0.07)",
-    border: "rgba(124,90,243,0.18)",
+    color: "#f5184c",
+    bg: "rgba(245, 24, 76,0.07)",
+    border: "rgba(245, 24, 76,0.18)",
     title: "Connect Instagram for Auto DM",
     detail: metaCopy.connectStepDetail,
     note: metaCopy.connectStepNote,
@@ -58,9 +58,9 @@ const steps = [
   {
     num: "03",
     shortTitle: "Go live",
-    color: "#4259f0",
-    bg: "rgba(66,89,240,0.07)",
-    border: "rgba(66,89,240,0.18)",
+    color: "#b20d8f",
+    bg: "rgba(178, 13, 143,0.07)",
+    border: "rgba(178, 13, 143,0.18)",
     title: "Launch Your Auto DMs",
     detail:
       "Set your keyword triggers, choose your auto DM type (comment, story, or DM reply), write your template, and go live. Liffio's DM automation handles the rest - 24/7. Most users send their first auto DM within 5 minutes.",
@@ -138,10 +138,10 @@ function SignupSim({ animKey }: { animKey: number }) {
             <label className="text-[9px] font-semibold text-gray-500 uppercase tracking-wide">Email</label>
             <div
               className="mt-1 rounded-lg border px-3 py-2 text-[11px] text-gray-800 flex items-center gap-1 transition-all duration-300"
-              style={{ borderColor: phase >= 1 ? "#7c5af3" : "#e5e7eb", background: phase >= 1 ? "rgba(124,90,243,0.03)" : "#fafafa" }}
+              style={{ borderColor: phase >= 1 ? "#f5184c" : "#e5e7eb", background: phase >= 1 ? "rgba(245, 24, 76,0.03)" : "#fafafa" }}
             >
               {typedEmail || <span className="text-gray-300">you@email.com</span>}
-              {phase === 1 && <span className="w-0.5 h-3.5 bg-[#7c5af3] animate-pulse ml-0.5" />}
+              {phase === 1 && <span className="w-0.5 h-3.5 bg-[#f5184c] animate-pulse ml-0.5" />}
             </div>
           </div>
 
@@ -152,7 +152,7 @@ function SignupSim({ animKey }: { animKey: number }) {
             <label className="text-[9px] font-semibold text-gray-500 uppercase tracking-wide">Password</label>
             <div
               className="mt-1 rounded-lg border px-3 py-2 text-[11px] tracking-widest text-gray-600"
-              style={{ borderColor: showPassword ? "#7c5af3" : "#e5e7eb", background: showPassword ? "rgba(124,90,243,0.03)" : "#fafafa" }}
+              style={{ borderColor: showPassword ? "#f5184c" : "#e5e7eb", background: showPassword ? "rgba(245, 24, 76,0.03)" : "#fafafa" }}
             >
               {showPassword ? "••••••••" : ""}
             </div>
@@ -161,9 +161,9 @@ function SignupSim({ animKey }: { animKey: number }) {
           <button
             className="w-full rounded-xl py-2.5 text-[11px] font-bold text-white transition-all duration-300"
             style={{
-              background: buttonActive ? "linear-gradient(135deg,#7c5af3,#4259f0)" : "#e5e7eb",
+              background: buttonActive ? "linear-gradient(135deg,#f5184c,#b20d8f)" : "#e5e7eb",
               color: buttonActive ? "white" : "#9ca3af",
-              boxShadow: buttonActive ? "0 4px 16px rgba(66,89,240,0.35)" : "none",
+              boxShadow: buttonActive ? "0 4px 16px rgba(178, 13, 143,0.35)" : "none",
               transform: phase === 3 ? "scale(0.97)" : "scale(1)",
             }}
           >
@@ -229,8 +229,8 @@ function ConnectSim({ animKey }: { animKey: number }) {
         <div
           className="rounded-xl border p-4 transition-all duration-500"
           style={{
-            borderColor: connected ? "rgba(16,185,129,0.25)" : "rgba(124,90,243,0.15)",
-            background: connected ? "rgba(16,185,129,0.04)" : "rgba(124,90,243,0.03)",
+            borderColor: connected ? "rgba(16,185,129,0.25)" : "rgba(245, 24, 76,0.15)",
+            background: connected ? "rgba(16,185,129,0.04)" : "rgba(245, 24, 76,0.03)",
           }}
         >
           <div className="flex items-center gap-3">
@@ -349,16 +349,16 @@ function LaunchSim({ animKey }: { animKey: number }) {
 
             <label className="text-[8px] font-semibold text-gray-400 uppercase">Trigger keyword</label>
             <div
-              className="mt-1 rounded-lg border px-2.5 py-1.5 text-[10px] font-bold text-[#7c5af3] mb-2 transition-all duration-300"
-              style={{ borderColor: phase >= 1 ? "#7c5af3" : "#e5e7eb", background: "rgba(124,90,243,0.04)" }}
+              className="mt-1 rounded-lg border px-2.5 py-1.5 text-[10px] font-bold text-[#f5184c] mb-2 transition-all duration-300"
+              style={{ borderColor: phase >= 1 ? "#f5184c" : "#e5e7eb", background: "rgba(245, 24, 76,0.04)" }}
             >
               {keyword || <span className="text-gray-300 font-normal">Enter keyword…</span>}
-              {phase === 1 && <span className="inline-block w-0.5 h-3 bg-[#7c5af3] animate-pulse ml-0.5 align-middle" />}
+              {phase === 1 && <span className="inline-block w-0.5 h-3 bg-[#f5184c] animate-pulse ml-0.5 align-middle" />}
             </div>
 
             <label className="text-[8px] font-semibold text-gray-400 uppercase">DM message</label>
             <div className="mt-1 rounded-lg border border-gray-200 px-2.5 py-1.5 text-[9px] text-gray-600 leading-snug mb-2 bg-gray-50">
-              Hey! Here&apos;s your exclusive link 👇
+              Hey! Here&apos;s your exclusive link
             </div>
 
             <div className="flex items-center justify-between rounded-lg px-2.5 py-2" style={{ background: live ? "rgba(16,185,129,0.06)" : "#f9fafb" }}>
@@ -426,9 +426,9 @@ function LaunchSim({ animKey }: { animKey: number }) {
               className="flex items-center justify-center gap-1 py-0.5 transition-all duration-300"
               style={{ opacity: dmVisible ? 1 : 0 }}
             >
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#7c5af3]/30" />
-              <span className="text-[7px] font-bold text-[#7c5af3] uppercase tracking-wider">Auto DM · 1.2s</span>
-              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#7c5af3]/30" />
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#f5184c]/30" />
+              <span className="text-[7px] font-bold text-[#f5184c] uppercase tracking-wider">Auto DM · 1.2s</span>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#f5184c]/30" />
             </div>
 
             {/* DM thread */}
@@ -449,14 +449,14 @@ function LaunchSim({ animKey }: { animKey: number }) {
             >
               <div className="flex justify-end">
                 <div className="bg-gray-100 rounded-2xl rounded-br-sm px-2.5 py-1.5 max-w-[75%]">
-                  <p className="text-[9px] text-gray-800">Fashion 🔥</p>
+                  <p className="text-[9px] text-gray-800">Fashion</p>
                 </div>
               </div>
               <div className="flex items-end gap-1">
                 <Av label="AA" gradient="linear-gradient(135deg,#f06292,#e91e63)" size={5} />
                 <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-2.5 py-1.5 shadow-sm max-w-[80%]">
-                  <p className="text-[9px] text-gray-800">Hey John! Here&apos;s your link 👇</p>
-                  <div className="mt-1 rounded-md px-2 py-0.5 text-center" style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)" }}>
+                  <p className="text-[9px] text-gray-800">Hey John! Here&apos;s your link</p>
+                  <div className="mt-1 rounded-md px-2 py-0.5 text-center" style={{ background: "linear-gradient(135deg,#f5184c,#b20d8f)" }}>
                     <span className="text-[8px] text-white font-bold">Open Link</span>
                   </div>
                 </div>
@@ -469,12 +469,12 @@ function LaunchSim({ animKey }: { animKey: number }) {
               style={{
                 opacity: statsVisible ? 1 : 0,
                 transform: statsVisible ? "scale(1)" : "scale(0.95)",
-                background: "rgba(66,89,240,0.06)",
-                border: "1px solid rgba(66,89,240,0.12)",
+                background: "rgba(178, 13, 143,0.06)",
+                border: "1px solid rgba(178, 13, 143,0.12)",
               }}
             >
               <p className="text-[8px] text-gray-500">First automated DM</p>
-              <p className="text-sm font-black text-[#4259f0]" style={{ fontFamily: "var(--font-outfit,sans-serif)" }}>
+              <p className="text-sm font-black text-[#b20d8f]" style={{ fontFamily: "var(--font-outfit,sans-serif)" }}>
                 4 min 12 sec
               </p>
             </div>
@@ -518,24 +518,24 @@ export default function HowItWorksSection() {
   return (
     <section
       id="how-it-works"
-      className="section-py relative overflow-hidden border-y border-brand-100/80 bg-gradient-to-b from-brand-50 via-[#f4f0ff] to-white"
+      className="section-py relative overflow-hidden bg-muted/20"
     >
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.45]"
+        className="pointer-events-none absolute inset-0 opacity-30"
         style={{
-          backgroundImage: "radial-gradient(rgba(124,90,243,0.09) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(rgba(20, 20, 30,0.05) 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
         aria-hidden
       />
       <div
         className="pointer-events-none absolute -left-32 top-20 h-[420px] w-[420px] rounded-full"
-        style={{ background: "radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 68%)" }}
+        style={{ background: "radial-gradient(circle, rgba(255, 124, 73,0.05) 0%, transparent 68%)" }}
         aria-hidden
       />
       <div
         className="pointer-events-none absolute -right-24 bottom-0 h-[360px] w-[360px] rounded-full"
-        style={{ background: "radial-gradient(circle, rgba(66,89,240,0.1) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(178, 13, 143,0.04) 0%, transparent 70%)" }}
         aria-hidden
       />
 
@@ -549,15 +549,15 @@ export default function HowItWorksSection() {
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
             >
               From zero to fully automated{" "}
-              <span className="gradient-text">in minutes.</span>
+              <span className="text-foreground">in minutes.</span>
             </h2>
             <p className="mt-3 text-base leading-relaxed text-gray-600 sm:text-lg">
               No developer, no tech skills, no complicated setup - if you can send a DM, you can automate one.
             </p>
-            <p className="mt-4 text-sm font-medium text-brand-700/80" aria-live="polite">
+            <p className="mt-4 text-sm font-medium text-gray-500" aria-live="polite">
               {steps.map((step, i) => (
                 <span key={step.num}>
-                  {i > 0 && <span className="text-brand-300/80"> · </span>}
+                  {i > 0 && <span className="text-gray-300"> · </span>}
                   <span style={{ color: i === activeStep ? step.color : "#9ca3af" }}>
                     {step.num} {step.shortTitle}
                   </span>
@@ -577,7 +577,7 @@ export default function HowItWorksSection() {
           <div
             className="card-base p-4 sm:p-5"
             style={{
-              background: "linear-gradient(155deg, #faf8ff 0%, #ffffff 55%, #f8f5ff 100%)",
+              background: "linear-gradient(155deg, #ffffff 0%, #ffffff 55%, #fafafa 100%)",
             }}
           >
             <p
@@ -645,7 +645,7 @@ export default function HowItWorksSection() {
           <div
             className="card-base p-4 sm:p-5"
             style={{
-              background: "linear-gradient(155deg, #faf8ff 0%, #ffffff 55%, #f8f5ff 100%)",
+              background: "linear-gradient(155deg, #ffffff 0%, #ffffff 55%, #fafafa 100%)",
             }}
           >
             <article
@@ -680,7 +680,7 @@ export default function HowItWorksSection() {
               href={siteConfig.urls.appSignup}
               className="btn-primary mt-4 flex w-full items-center justify-center gap-2 px-5 py-3.5 text-sm active:scale-[0.98]"
               style={{
-                background: `linear-gradient(135deg,${step.color},#4259f0)`,
+                background: `linear-gradient(135deg,${step.color},#b20d8f)`,
                 boxShadow: `0 4px 20px ${step.color}40`,
               }}
             >
@@ -703,7 +703,7 @@ export default function HowItWorksSection() {
                     height: 5,
                     background:
                       i === activeStep
-                        ? `linear-gradient(90deg,${s.color},#4259f0)`
+                        ? `linear-gradient(90deg,${s.color},#b20d8f)`
                         : "#e5e7eb",
                   }}
                 />
@@ -719,7 +719,7 @@ export default function HowItWorksSection() {
               <div
                 className="pointer-events-none absolute inset-0 -z-10 scale-110"
                 style={{
-                  background: "radial-gradient(ellipse, rgba(124,90,243,0.12) 0%, transparent 70%)",
+                  background: "radial-gradient(ellipse, rgba(245, 24, 76,0.06) 0%, transparent 70%)",
                   filter: "blur(32px)",
                 }}
                 aria-hidden
@@ -741,7 +741,7 @@ export default function HowItWorksSection() {
               className="absolute left-[27px] top-8 bottom-8 hidden w-px sm:block"
               style={{
                 background:
-                  "linear-gradient(180deg,rgba(168,85,247,0.3),rgba(124,90,243,0.3),rgba(66,89,240,0.1))",
+                  "linear-gradient(180deg,rgba(255, 124, 73,0.3),rgba(245, 24, 76,0.3),rgba(178, 13, 143,0.1))",
               }}
             />
 
@@ -755,7 +755,7 @@ export default function HowItWorksSection() {
                   className="group relative flex w-full items-start gap-5 rounded-2xl bg-white/90 p-6 text-left backdrop-blur-sm transition-all duration-300"
                   style={{
                     border: `1px solid ${isActive ? step.color : step.border}`,
-                    boxShadow: isActive ? `0 8px 32px ${step.bg}` : "0 2px 16px rgba(124,90,243,0.05)",
+                    boxShadow: isActive ? `0 8px 32px ${step.bg}` : "0 2px 16px rgba(245, 24, 76,0.05)",
                     transform: isActive ? "translateY(-2px)" : "none",
                   }}
                 >
@@ -802,7 +802,7 @@ export default function HowItWorksSection() {
                   style={{
                     width: i === activeStep ? 20 : 6,
                     height: 6,
-                    background: i === activeStep ? "linear-gradient(90deg,#7c5af3,#4259f0)" : "#d4d0e8",
+                    background: i === activeStep ? "linear-gradient(90deg,#f5184c,#b20d8f)" : "#e5e7eb",
                   }}
                 />
               ))}

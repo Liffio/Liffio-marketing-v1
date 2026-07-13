@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import PricingPlansGrid, { PricingBottomCta } from "@/components/PricingPlansGrid";
 import PricingComparisonSection from "@/components/pricing/PricingComparisonSection";
 import { SiteFaqSection } from "@/components/faq/SiteFaqSection";
-import { getFaqCategories } from "@/config/faq.config";
+import { getPricingDetailedFaqCategories } from "@/config/faq.config";
 import { getPricingContext } from "@/lib/pricing-region.server";
 import {
   fetchMarketingPlansContext,
@@ -24,7 +24,7 @@ export const metadata = pageSeo.pricing;
 export default async function PricingPage() {
   const { region, countryCode } = await getPricingContext();
   const { plans, businessPlanValue } = await fetchMarketingPlansContext(region);
-  const faqCategories = getFaqCategories(region, {
+  const faqCategories = getPricingDetailedFaqCategories(region, {
     freePlanFaqAnswer: buildFreePlanFaqAnswer(region, plans),
     plansOfferedFaqAnswer: buildPlansOfferedFaqAnswer(region, plans),
     creatorsProgramFaqAnswer: buildCreatorsProgramFaqAnswer(businessPlanValue),
@@ -52,7 +52,7 @@ export default async function PricingPage() {
                 { label: "Pricing", href: "/pricing" },
               ]}
             />
-            <span className="text-sm font-semibold text-[#4259f0] uppercase tracking-wider">Pricing</span>
+            <span className="text-sm font-semibold text-[#b20d8f] uppercase tracking-wider">Pricing</span>
             <h1
               className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900"
               style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
@@ -70,7 +70,7 @@ export default async function PricingPage() {
             </p>
             <p className="mt-4 text-sm text-gray-500">
               Pre-launch offer:{" "}
-              <AppLink href={siteConfig.urls.preregister} className="text-[#7c5af3] font-semibold hover:underline">
+              <AppLink href={siteConfig.urls.preregister} className="text-[#f5184c] font-semibold hover:underline">
                 Pre-register for 50% off your first purchase →
               </AppLink>
             </p>
@@ -85,10 +85,10 @@ export default async function PricingPage() {
         </section>
 
         {/* Platform overview */}
-        <section className="py-16 bg-[#faf8ff] border-y border-[#ede9fd]">
+        <section className="py-16 bg-[#fff7f7] border-y border-[#ffe4e6]">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#7c5af3] mb-2">Full platform</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-2">Full platform</p>
               <h2
                 className="text-3xl sm:text-4xl font-extrabold text-[#0a0a0a]"
                 style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
@@ -103,22 +103,18 @@ export default async function PricingPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {[
                 {
-                  icon: "💬",
                   title: "Comment-to-DM Engine",
                   desc: "Keyword triggers send rapid automated DMs with a custom 10–60s delay from comment. Public auto-replies, follow-ups, and multi-step flows included on paid plans.",
                 },
                 {
-                  icon: "📅",
                   title: "Post Scheduler",
                   desc: "Schedule Instagram feed posts from a calendar UI with caption templates and publish tracking.",
                 },
                 {
-                  icon: "🔗",
                   title: "Bio Link & Short Links",
                   desc: "Public pages at bio.liffio.com and branded redirects at go.liffio.com with click and referrer analytics.",
                 },
                 {
-                  icon: "📊",
                   title: "Lead Capture & Analytics",
                   desc: "Track comment → DM → click → sale. Capture leads from automations and link clicks, workspace-scoped.",
                 },
@@ -126,9 +122,8 @@ export default async function PricingPage() {
                 <div
                   key={item.title}
                   className="rounded-2xl bg-white p-6"
-                  style={{ border: "1px solid rgba(124,90,243,0.1)", boxShadow: "0 2px 12px rgba(124,90,243,0.05)" }}
+                  style={{ border: "1px solid rgba(245, 24, 76,0.1)", boxShadow: "0 2px 12px rgba(245, 24, 76,0.05)" }}
                 >
-                  <div className="text-2xl mb-3">{item.icon}</div>
                   <h3 className="text-base font-bold text-[#0a0a0a] mb-2">{item.title}</h3>
                   <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
                 </div>

@@ -12,25 +12,25 @@ export default function FAQSection({ categories }: FAQSectionProps) {
   return (
     <section
       id="faq"
-      className="section-py relative overflow-hidden border-t border-brand-100/60 bg-gradient-to-b from-[#faf9ff] to-white"
+      className="section-py relative overflow-hidden bg-white"
     >
       <div
         className="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full opacity-50"
-        style={{ background: "radial-gradient(circle, rgba(124,90,243,0.1) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(245, 24, 76,0.05) 0%, transparent 70%)" }}
         aria-hidden
       />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="card-base overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(260px,300px)_1fr]">
-            <div className="border-b border-brand-100/80 bg-gradient-to-br from-brand-50/40 to-white p-6 sm:p-8 lg:border-b-0 lg:border-r">
+            <div className="border-b border-border bg-muted/20 p-6 sm:p-8 lg:border-b-0 lg:border-r">
               <TechBadge label="FAQ" variant="section" className="mb-4" />
               <h2
                 className="text-2xl font-extrabold leading-tight text-[#0a0a0a] sm:text-3xl"
                 style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
               >
                 Questions?{" "}
-                <span className="gradient-text">We&apos;ve got answers.</span>
+                <span className="text-foreground">We&apos;ve got answers.</span>
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-gray-600 sm:text-base">
                 Everything you need to know about automating Instagram DMs with Liffio - from setup to billing.

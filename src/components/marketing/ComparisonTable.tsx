@@ -40,9 +40,9 @@ export default function ComparisonTable({
     <div className="overflow-x-auto rounded-2xl border border-gray-100 shadow-sm">
       <table className="w-full min-w-[520px] text-left text-sm">
         <thead>
-          <tr className="bg-[#faf8ff] border-b border-gray-100">
+          <tr className="bg-[#fff7f7] border-b border-gray-100">
             <th className="px-5 py-4 font-semibold text-gray-900">Feature</th>
-            <th className="px-5 py-4 font-semibold text-[#4259f0]">Liffio</th>
+            <th className="px-5 py-4 font-semibold text-[#b20d8f]">Liffio</th>
             <th className="px-5 py-4 font-semibold text-gray-700">{competitorName}</th>
           </tr>
         </thead>

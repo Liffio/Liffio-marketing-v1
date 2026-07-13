@@ -29,7 +29,7 @@ function BillingToggle({ annual, onToggle }: { annual: boolean; onToggle: () => 
         type="button"
         onClick={onToggle}
         className="relative h-6 w-12 shrink-0 rounded-full transition-all duration-300 focus:outline-none"
-        style={{ background: annual ? "linear-gradient(135deg,#7c5af3,#4259f0)" : "#e4e4e7" }}
+        style={{ background: annual ? "linear-gradient(135deg,#f5184c,#b20d8f)" : "#e4e4e7" }}
         aria-label="Toggle billing period"
       >
         <span
@@ -98,7 +98,6 @@ export default function PricingPlansGrid({
       <div className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-3">
         {pricingPerks.map((p) => (
           <div key={p.label} className="flex items-center gap-1.5 text-sm text-gray-500">
-            <span>{p.icon}</span>
             <span>{p.label}</span>
           </div>
         ))}
@@ -107,7 +106,7 @@ export default function PricingPlansGrid({
       {!compact && (
         <p className="mt-5 text-center text-sm text-gray-400">
           Content creator with 5K+ followers?{" "}
-          <AppLink href="/creators-program" className="font-medium text-[#7c5af3] hover:underline">
+          <AppLink href="/creators-program" className="font-medium text-[#f5184c] hover:underline">
             Apply to the Creators Program →
           </AppLink>
         </p>
@@ -116,7 +115,7 @@ export default function PricingPlansGrid({
       {compact && (
         <p className="mt-5 text-center text-sm text-gray-400">
           Need volume pricing?{" "}
-          <AppLink href="/help" className="font-medium text-[#7c5af3] hover:underline">
+          <AppLink href="/help" className="font-medium text-[#f5184c] hover:underline">
             Talk to us →
           </AppLink>
         </p>
@@ -131,12 +130,13 @@ export function PricingBottomCta() {
       <a
         href={siteConfig.urls.appSignup}
         id="pricing-bottom-cta"
-        className="rounded-xl px-8 py-3.5 text-sm font-semibold text-white shadow-lg transition-opacity hover:opacity-90 [background:linear-gradient(135deg,#7c5af3,#4259f0)]"
+        className="rounded-xl px-8 py-3.5 text-sm font-semibold text-white shadow-lg transition-opacity hover:opacity-90 [background:linear-gradient(135deg,#f5184c,#b20d8f)]"
       >
         Get Started Free
       </a>
       <a
         href="mailto:support@liffio.com"
+        data-cta="contact_sales"
         className="rounded-xl border border-gray-200 px-8 py-3.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
       >
         Contact Sales

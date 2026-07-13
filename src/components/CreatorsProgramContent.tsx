@@ -7,28 +7,24 @@ import { siteConfig } from "@/config/site.config";
 
 const STATIC_BENEFITS = [
   {
-    icon: "📊",
     title: "Advanced Analytics",
     description:
       "Full conversion tracking: comment → DM → click → sale. See exactly what's driving your revenue at every step of the funnel.",
     tag: "Full attribution",
   },
   {
-    icon: "🔗",
     title: "Smart Link System",
     description:
       "Branded short links with click tracking and UTM attribution built in. Every link delivered inside your DMs is tracked end-to-end.",
     tag: "Click-level tracking",
   },
   {
-    icon: "👥",
     title: "Team Members",
     description:
       "Invite your VA, manager, or team to collaborate on your workspace. Full role-based access included at no extra cost.",
     tag: "Up to 5 seats",
   },
   {
-    icon: "⚡",
     title: "Priority Support",
     description:
       "Skip the queue. Direct access to our core team for onboarding, strategy calls, and technical help - whenever you need it.",
@@ -39,13 +35,11 @@ const STATIC_BENEFITS = [
 function getBenefits(businessPlanValue: string) {
   return [
     {
-      icon: "💎",
       title: "Free Business Plan",
       description: `Full, unrestricted access to our ${businessPlanValue} Business plan - at zero cost. Every feature, every workflow, every integration unlocked from day one.`,
       tag: `Worth ${businessPlanValue}`,
     },
     {
-      icon: "♾️",
       title: "Unlimited Automations",
       description:
         "Create unlimited comment-to-DM workflows across all your posts. No caps, no throttling, no hidden limits on campaigns or keywords.",
@@ -75,7 +69,7 @@ const REQUIREMENTS = [
   },
   {
     label: "Branding",
-    text: 'Keep the "⚡ Powered by @Liffio" tag in your bio link page footer',
+    text: 'Keep the "Powered by @Liffio" tag in your bio link page footer',
   },
 ];
 
@@ -100,8 +94,8 @@ const HOW_STEPS = [
 function Check({ green }: { green?: boolean }) {
   return (
     <svg viewBox="0 0 16 16" className="h-4 w-4 flex-shrink-0 mt-0.5" fill="none">
-      <circle cx="8" cy="8" r="8" fill={green ? "rgba(16,185,129,0.1)" : "rgba(124,90,243,0.1)"} />
-      <path d="M4.5 8.5l2 2 4.5-5" stroke={green ? "#10b981" : "#7c5af3"} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="8" cy="8" r="8" fill={green ? "rgba(16,185,129,0.1)" : "rgba(245, 24, 76,0.1)"} />
+      <path d="M4.5 8.5l2 2 4.5-5" stroke={green ? "#10b981" : "#f5184c"} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -153,15 +147,16 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
       <div className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${showFab ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0 pointer-events-none"}`}>
         <button
           onClick={() => document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })}
+          data-cta="creator_program"
           className="flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-white shadow-xl transition-all duration-200 hover:opacity-90"
-          style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)", boxShadow: "0 10px 40px rgba(66,89,240,0.45)" }}>
+          style={{ background: "linear-gradient(135deg,#f5184c,#b20d8f)", boxShadow: "0 10px 40px rgba(178, 13, 143,0.45)" }}>
           Apply Now ↓
         </button>
       </div>
 
       {/* Hero */}
       <section className="py-14 sm:py-20 px-4 text-center"
-        style={{ background: "linear-gradient(155deg,#f8f5ff 0%,#f0ebff 50%,#faf5ff 100%)" }}>
+        style={{ background: "linear-gradient(155deg,#fff1f2 0%,#ffe4e6 50%,#fff4f2 100%)" }}>
         <div className="mx-auto max-w-3xl">
           <TechBadge
             className="mb-6"
@@ -172,7 +167,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
           <h1 className="font-extrabold text-[#0a0a0a] leading-tight mb-5"
             style={{ fontFamily: "var(--font-outfit,sans-serif)", fontSize: "clamp(2.2rem,5vw,3.75rem)" }}>
             Get{" "}
-            <span style={{ background: "linear-gradient(130deg,#a855f7,#7c5af3,#4259f0)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            <span style={{ background: "linear-gradient(130deg,#ff7c49,#f5184c,#b20d8f)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               Business Plan
             </span>
             {" "}access -{" "}
@@ -198,21 +193,21 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
       </section>
 
       {/* Stats bar */}
-      <section style={{ background: "white", borderTop: "1px solid rgba(124,90,243,0.08)", borderBottom: "1px solid rgba(124,90,243,0.08)" }}>
+      <section style={{ background: "white", borderTop: "1px solid rgba(245, 24, 76,0.08)", borderBottom: "1px solid rgba(245, 24, 76,0.08)" }}>
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-0">
           <div className="grid grid-cols-2 lg:grid-cols-4">
             {[
               {
                 num: spotsRemaining !== null ? String(spotsRemaining) : "-",
                 label: `Spots remaining out of ${spotsCap}`,
-                color: "#7c5af3",
+                color: "#f5184c",
               },
-              { num: businessPlanValue, label: "Value - completely free", color: "#a855f7" },
-              { num: "48h", label: "Review turnaround", color: "#4259f0" },
-              { num: "10+", label: "Countries represented", color: "#6366f1" },
+              { num: businessPlanValue, label: "Value - completely free", color: "#ff7c49" },
+              { num: "48h", label: "Review turnaround", color: "#b20d8f" },
+              { num: "10+", label: "Countries represented", color: "#2ea957" },
             ].map((s, i) => (
               <div key={s.label}
-                className={`px-6 py-7 text-center ${i < 3 ? "border-r border-[#ede9fd]" : ""}`}>
+                className={`px-6 py-7 text-center ${i < 3 ? "border-r border-[#ffe4e6]" : ""}`}>
                 <div className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-1"
                   style={{ fontFamily: "var(--font-outfit,sans-serif)", color: s.color }}>
                   {s.num}
@@ -228,7 +223,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
       <section className="py-16 sm:py-20 px-4 bg-white">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-10">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#7c5af3] mb-2">Getting started</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-2">Getting started</p>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0a0a0a]"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}>How It Works</h2>
           </div>
@@ -236,9 +231,9 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
             {HOW_STEPS.map(step => (
               <div key={step.num}
                 className="rounded-2xl p-6 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
-                style={{ border: "1px solid rgba(124,90,243,0.12)", boxShadow: "0 2px 12px rgba(124,90,243,0.05)" }}>
+                style={{ border: "1px solid rgba(245, 24, 76,0.12)", boxShadow: "0 2px 12px rgba(245, 24, 76,0.05)" }}>
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-lg mb-4"
-                  style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)" }}>
+                  style={{ background: "linear-gradient(135deg,#f5184c,#b20d8f)" }}>
                   {step.num}
                 </div>
                 <h3 className="text-base font-bold text-[#0a0a0a] mb-2">{step.title}</h3>
@@ -250,10 +245,10 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
       </section>
 
       {/* Benefits grid */}
-      <section className="py-16 sm:py-20 px-4" style={{ background: "#faf8ff" }}>
+      <section className="py-16 sm:py-20 px-4" style={{ background: "#fff7f7" }}>
         <div className="mx-auto max-w-5xl">
           <div className="text-center mb-10">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#7c5af3] mb-2">What you get</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-2">What you get</p>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0a0a0a] mb-3"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}>
               Everything Included. No Strings.
@@ -266,12 +261,11 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
             {benefits.map(b => (
               <div key={b.title}
                 className="group rounded-2xl bg-white p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
-                style={{ border: "1px solid rgba(124,90,243,0.1)", boxShadow: "0 2px 12px rgba(124,90,243,0.05)" }}>
-                <div className="text-3xl mb-4">{b.icon}</div>
+                style={{ border: "1px solid rgba(245, 24, 76,0.1)", boxShadow: "0 2px 12px rgba(245, 24, 76,0.05)" }}>
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <h3 className="text-base font-bold text-[#0a0a0a]">{b.title}</h3>
                   <span className="flex-shrink-0 text-[10px] font-bold rounded-full px-2.5 py-1"
-                    style={{ background: "rgba(124,90,243,0.08)", color: "#7c5af3", border: "1px solid rgba(124,90,243,0.15)" }}>
+                    style={{ background: "rgba(245, 24, 76,0.08)", color: "#f5184c", border: "1px solid rgba(245, 24, 76,0.15)" }}>
                     {b.tag}
                   </span>
                 </div>
@@ -284,7 +278,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
 
       {/* Divider */}
       <div className="mx-6 sm:mx-12 h-px"
-        style={{ background: "linear-gradient(90deg,transparent,rgba(124,90,243,0.15),transparent)" }} />
+        style={{ background: "linear-gradient(90deg,transparent,rgba(245, 24, 76,0.15),transparent)" }} />
 
       {/* Who qualifies + Requirements */}
       <section className="py-16 sm:py-20 px-4 bg-white">
@@ -293,7 +287,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
           <div className="rounded-2xl p-7 bg-white"
             style={{ border: "1px solid rgba(16,185,129,0.18)", boxShadow: "0 2px 16px rgba(16,185,129,0.05)" }}>
             <h3 className="flex items-center gap-2 text-lg font-bold text-[#0a0a0a] mb-5">
-              <span className="w-8 h-8 rounded-xl bg-green-50 flex items-center justify-center text-base">✅</span>
+              <span className="w-8 h-8 rounded-xl bg-green-50 flex items-center justify-center text-base"><Check green /></span>
               Who Qualifies
             </h3>
             <ul className="space-y-3">
@@ -306,10 +300,10 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
           </div>
 
           <div className="rounded-2xl p-7 bg-white"
-            style={{ border: "1px solid rgba(124,90,243,0.18)", boxShadow: "0 2px 16px rgba(124,90,243,0.06)" }}>
+            style={{ border: "1px solid rgba(245, 24, 76,0.18)", boxShadow: "0 2px 16px rgba(245, 24, 76,0.06)" }}>
             <h3 className="flex items-center gap-2 text-lg font-bold text-[#0a0a0a] mb-2">
               <span className="w-8 h-8 rounded-xl flex items-center justify-center text-base"
-                style={{ background: "rgba(124,90,243,0.08)" }}>📋</span>
+                style={{ background: "rgba(245, 24, 76,0.08)" }}><Check /></span>
               What We Ask in Return
             </h3>
             <p className="text-xs text-gray-500 mb-5 leading-relaxed">
@@ -319,11 +313,11 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
               {REQUIREMENTS.map((r, i) => (
                 <li key={r.label} className="flex items-start gap-3">
                   <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-                    style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)" }}>
+                    style={{ background: "linear-gradient(135deg,#f5184c,#b20d8f)" }}>
                     {i + 1}
                   </span>
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#7c5af3] block mb-0.5">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#f5184c] block mb-0.5">
                       {r.label}
                     </span>
                     <span className="text-sm text-gray-600">{r.text}</span>
@@ -337,10 +331,10 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
 
       {/* Application form */}
       <section id="apply" className="py-16 sm:py-20 px-4"
-        style={{ background: "linear-gradient(155deg,#f8f5ff,#f0ebff 60%,#faf5ff)" }}>
+        style={{ background: "linear-gradient(155deg,#fff1f2,#ffe4e6 60%,#fff4f2)" }}>
         <div className="mx-auto max-w-2xl">
           <div className="text-center mb-8">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#7c5af3] mb-2">Application</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-2">Application</p>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0a0a0a] mb-3"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}>
               Apply to the Creators Program
@@ -364,7 +358,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
           </div>
 
           <div className="rounded-3xl bg-white p-7 sm:p-9"
-            style={{ border: "1px solid rgba(124,90,243,0.14)", boxShadow: "0 8px 40px rgba(124,90,243,0.12)" }}>
+            style={{ border: "1px solid rgba(245, 24, 76,0.14)", boxShadow: "0 8px 40px rgba(245, 24, 76,0.12)" }}>
             <CreatorsForm />
           </div>
         </div>

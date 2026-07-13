@@ -74,12 +74,12 @@ export default function FeaturesPageContent() {
     <>
       <section
         className="relative overflow-hidden px-4 py-16 sm:py-24"
-        style={{ background: "linear-gradient(155deg,#f8f5ff 0%,#f0ebff 45%,#faf5ff 100%)" }}
+        style={{ background: "linear-gradient(155deg,#fff1f2 0%,#ffe4e6 45%,#fff4f2 100%)" }}
       >
         <div
           className="pointer-events-none absolute inset-0 opacity-40"
           style={{
-            backgroundImage: "radial-gradient(rgba(124,90,243,0.08) 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(rgba(245, 24, 76,0.08) 1px, transparent 1px)",
             backgroundSize: "28px 28px",
           }}
           aria-hidden
@@ -114,7 +114,7 @@ export default function FeaturesPageContent() {
         </div>
       </section>
 
-      <section className="border-y border-brand-100/80 bg-white">
+      <section className="bg-white">
         <div className="mx-auto grid max-w-5xl grid-cols-2 lg:grid-cols-4">
           {HIGHLIGHTS.map((item, i) => (
             <div
@@ -154,11 +154,11 @@ export default function FeaturesPageContent() {
       </div>
 
       {FEATURE_CATEGORIES.map((category) => (
-        <section key={category.id} className="section-py border-b border-brand-50 bg-white last:border-0">
+        <section key={category.id} className="section-py bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-10 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <TechBadge label={category.label} variant="chip" accent="#7c5af3" />
+                <TechBadge label={category.label} variant="chip" accent="#f5184c" />
                 <h2
                   className="mt-3 text-2xl font-extrabold text-[#0a0a0a] sm:text-3xl"
                   style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
@@ -225,7 +225,7 @@ export default function FeaturesPageContent() {
                           href={siteConfig.urls.appSignup}
                           className="mt-6 inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
                           style={{
-                            background: `linear-gradient(135deg,${feat.color},#4259f0)`,
+                            background: `linear-gradient(135deg,${feat.color},#b20d8f)`,
                             boxShadow: `0 4px 16px ${feat.color}35`,
                           }}
                         >
@@ -254,7 +254,7 @@ export default function FeaturesPageContent() {
       >
         <div className="mx-auto max-w-6xl">
           <div className="mb-10 text-center">
-            <TechBadge label="Platform" variant="chip" accent="#4259f0" className="mb-4" />
+            <TechBadge label="Platform" variant="chip" accent="#b20d8f" className="mb-4" />
             <h2
               className="text-2xl font-extrabold text-[#0a0a0a] sm:text-3xl"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}

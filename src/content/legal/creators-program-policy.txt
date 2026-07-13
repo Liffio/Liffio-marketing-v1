@@ -50,7 +50,7 @@ Run at least 2 active automation campaigns every 30 days
 Actively use the platform to send automated replies to your followers
 We monitor compliance automatically. If you fall below the 300 DM threshold, you will receive an automated alert on Day 25 of the month reminding you to run a campaign before the month ends. Failure to meet requirements by end of month constitutes a violation.
 6.2 Branding Requirement
-As a condition of receiving free access, you must retain the "⚡︎ Powered by @Reactova" tag in all automated DM messages sent through the platform. This tag must remain visible and unaltered in every automated DM you send. You must not attempt to hide, remove, modify, or work around this branding tag.
+As a condition of receiving free access, you must retain the "Powered by @Reactova" tag in all automated DM messages sent through the platform. This tag must remain visible and unaltered in every automated DM you send. You must not attempt to hide, remove, modify, or work around this branding tag.
 This branding tag is how Reactova grows organically through your campaigns and is the primary exchange for your free access. Removing or tampering with this tag is a serious violation of this Policy.
 6.3 Competitor Restriction
 While participating in the Creators Program, you must not actively promote, recommend, endorse, or create sponsored content for any competing Instagram DM automation tool or platform. This restriction applies to direct promotion including sponsored posts, affiliate promotions, tutorials, reviews, and direct recommendations.

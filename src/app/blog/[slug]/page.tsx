@@ -96,10 +96,10 @@ export default async function BlogArticlePage({ params }: Props) {
                 { label: post.title, href: `/blog/${slug}` },
               ]}
             />
-            <Link href="/blog" className="text-sm font-semibold text-[#4259f0] hover:underline">
+            <Link href="/blog" className="text-sm font-semibold text-[#b20d8f] hover:underline">
               ← Back to Blog
             </Link>
-            <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-[#4259f0]">{post.category}</p>
+            <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-[#b20d8f]">{post.category}</p>
             <h1
               className="mt-3 text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight"
               style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
@@ -158,7 +158,7 @@ export default async function BlogArticlePage({ params }: Props) {
                       href={ref.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#4259f0] hover:underline"
+                      className="text-[#b20d8f] hover:underline"
                     >
                       {ref.label}
                     </a>
@@ -176,7 +176,7 @@ export default async function BlogArticlePage({ params }: Props) {
           </p>
           <a
             href={siteConfig.urls.appSignup}
-            className="inline-flex rounded-xl px-8 py-3.5 text-sm font-semibold text-white shadow-lg [background:linear-gradient(135deg,#7c5af3,#4259f0)]"
+            className="inline-flex rounded-xl px-8 py-3.5 text-sm font-semibold text-white shadow-lg [background:linear-gradient(135deg,#f5184c,#b20d8f)]"
           >
             Start Free
           </a>

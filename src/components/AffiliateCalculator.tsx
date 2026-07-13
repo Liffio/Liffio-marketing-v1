@@ -43,7 +43,7 @@ export default function AffiliateCalculator() {
           <div className="space-y-5 mb-8">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Referrals per month: <span className="text-[#7c5af3]">{referrals}</span>
+                Referrals per month: <span className="text-[#f5184c]">{referrals}</span>
               </label>
               <input
                 type="range"
@@ -51,7 +51,7 @@ export default function AffiliateCalculator() {
                 max={50}
                 value={referrals}
                 onChange={(e) => setReferrals(Number(e.target.value))}
-                className="w-full accent-[#7c5af3]"
+                className="w-full accent-[#f5184c]"
               />
               <div className="flex justify-between text-xs text-gray-500 mt-1">
                 <span>1</span>
@@ -70,8 +70,8 @@ export default function AffiliateCalculator() {
                     onClick={() => setPlan(p.name)}
                     className={`rounded-xl border px-4 py-2 text-sm font-semibold transition-all ${
                       plan === p.name
-                        ? "border-[#7c5af3] bg-[#7c5af3] text-white shadow-sm"
-                        : "border-gray-200 bg-white text-gray-700 hover:border-[#7c5af3]/50"
+                        ? "border-[#f5184c] bg-[#f5184c] text-white shadow-sm"
+                        : "border-gray-200 bg-white text-gray-700 hover:border-[#f5184c]/50"
                     }`}
                   >
                     {p.name} (${p.price}/mo)
@@ -92,7 +92,7 @@ export default function AffiliateCalculator() {
                 key={row.label}
                 className={`rounded-xl p-4 text-center ${
                   row.highlight
-                    ? "border border-[#ede9fd] bg-[#faf8ff]"
+                    ? "border border-[#ffe4e6] bg-[#fff7f7]"
                     : "border border-gray-100 bg-gray-50"
                 }`}
               >
@@ -101,7 +101,7 @@ export default function AffiliateCalculator() {
                   className="text-xl font-extrabold"
                   style={{
                     fontFamily: "var(--font-outfit,sans-serif)",
-                    color: row.highlight ? "#7c5af3" : "#374151",
+                    color: row.highlight ? "#f5184c" : "#374151",
                   }}
                 >
                   {formatUsd(row.value)}

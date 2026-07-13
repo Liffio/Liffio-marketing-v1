@@ -78,7 +78,7 @@ export default function SignupForm() {
     return (
       <div className="text-center py-10 px-6">
         <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5"
-          style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)" }}>
+          style={{ background: "linear-gradient(135deg,#f5184c,#b20d8f)" }}>
           <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
           </svg>
@@ -92,8 +92,8 @@ export default function SignupForm() {
   }
 
   const inputClass = (hasErr: boolean) =>
-    `w-full rounded-xl border px-4 py-3 text-sm text-[#0a0a0a] placeholder-gray-400 outline-none transition-all duration-150 focus:ring-2 focus:ring-[#7c5af3]/25 focus:border-[#7c5af3] ${
-      hasErr ? 'border-red-400 bg-red-50' : 'border-[#e8e3f5] bg-[#faf8ff]'
+    `w-full rounded-xl border px-4 py-3 text-sm text-[#0a0a0a] placeholder-gray-400 outline-none transition-all duration-150 focus:ring-2 focus:ring-[#f5184c]/25 focus:border-[#f5184c] ${
+      hasErr ? 'border-red-400 bg-red-50' : 'border-[#ffe4e6] bg-[#fff7f7]'
     }`
 
   return (
@@ -132,21 +132,21 @@ export default function SignupForm() {
         type="submit"
         disabled={loading}
         className="w-full rounded-xl py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-[0.98] disabled:opacity-60"
-        style={{ background: loading ? '#9ca3af' : 'linear-gradient(135deg,#7c5af3,#4259f0)', boxShadow: loading ? 'none' : '0 4px 20px rgba(66,89,240,0.28)' }}
+        style={{ background: loading ? '#9ca3af' : 'linear-gradient(135deg,#f5184c,#b20d8f)', boxShadow: loading ? 'none' : '0 4px 20px rgba(178, 13, 143,0.28)' }}
       >
         {loading ? 'Creating your account…' : 'Get Started Free →'}
       </button>
 
       <AppLink href="/creators-program"
-        className="block text-center text-xs text-[#7c5af3] hover:underline mt-1">
+        className="block text-center text-xs text-[#f5184c] hover:underline mt-1">
         Content creator with 5K+ followers? Apply for the free Creators Program →
       </AppLink>
 
       <p className="text-[11px] text-gray-400 text-center leading-relaxed pt-1">
         By signing up, you agree to our{' '}
-        <AppLink href="/terms-of-service" className="underline hover:text-[#7c5af3] transition-colors">Terms</AppLink>
+        <AppLink href="/terms-of-service" className="underline hover:text-[#f5184c] transition-colors">Terms</AppLink>
         {' '}and{' '}
-        <AppLink href="/privacy-policy" className="underline hover:text-[#7c5af3] transition-colors">Privacy Policy</AppLink>.
+        <AppLink href="/privacy-policy" className="underline hover:text-[#f5184c] transition-colors">Privacy Policy</AppLink>.
         No credit card required.
       </p>
     </form>

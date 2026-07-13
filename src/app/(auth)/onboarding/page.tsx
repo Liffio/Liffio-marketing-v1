@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Logo from '@/components/Logo';
 import { authStore } from '@/lib/auth/store';
@@ -33,6 +33,7 @@ import {
   XIcon,
   ZapIcon,
 } from '@/lib/auth/ui';
+import { trackSignupStep } from '@/lib/analytics/analytics';
 
 // ── Error copy ─────────────────────────────────────────────────────────────
 
@@ -82,36 +83,77 @@ const IG_ERRORS: Record<string, { title: string; summary: string; steps: string[
 
 // ── Sub-components ─────────────────────────────────────────────────────────
 
+// step prop is 1 (Your Brand) | 2 (Connect) | 3 (Automate)
+// "Sign up" is always index 0 and always shown as completed — gives users
+// the 20% momentum hit the moment they land on onboarding.
+const PROGRESS_STEPS = ['Sign up', 'Your Brand', 'Connect', 'Automate'] as const;
+const PROGRESS_PCT: Record<number, number> = { 1: 25, 2: 50, 3: 75 };
+
 function StepProgress({ step }: { step: number }) {
-  const steps = ['Your Brand', 'Connect', 'Automate'];
+  const pct = PROGRESS_PCT[step] ?? 20;
+  // step 1 → activeIndex 1, step 2 → 2, step 3 → 3; index 0 always done
+  const activeIndex = step;
+
   return (
-    <div className="mb-8 flex w-full max-w-lg items-start">
-      {steps.map((label, i) => {
-        const num = i + 1;
-        const done = num < step;
-        const active = num === step;
-        return (
-          <div key={label} className="flex flex-1 items-start">
-            <div className="flex flex-col items-center gap-1.5 w-24 shrink-0">
-              <div className={`flex h-8 w-8 items-center justify-center rounded-full border-2 text-sm font-semibold transition-all ${done ? 'border-brand-500 bg-brand-500 text-white' : active ? 'border-brand-500 text-brand-500' : 'border-gray-300 text-gray-400'}`}>
-                {done ? <CheckIcon size={14} /> : num}
+    <div className="mb-6 w-full max-w-lg">
+      <div className="mb-4">
+        <h2 className="text-xl font-bold text-foreground">You&apos;re doing great! <span className="animate-confetti">🎉</span></h2>
+        <p className="mt-0.5 text-sm text-muted-foreground">Just a few more details to complete your account setup</p>
+      </div>
+
+      <div className="rounded-2xl border bg-card p-5 shadow-soft">
+        {/* Label + percentage */}
+        <div className="mb-3 flex items-center justify-between">
+          <span className="text-sm font-semibold text-primary">Your Progress</span>
+          <span className="text-sm font-bold text-primary">{pct}% <span className="animate-flame">🔥</span></span>
+        </div>
+
+        {/* Progress bar */}
+        <div className="mb-5 h-2 overflow-hidden rounded-full bg-muted">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-primary to-brand-400 transition-all duration-700 ease-out"
+            style={{ width: `${pct}%` }}
+          />
+        </div>
+
+        {/* Step dots */}
+        <div className="flex items-start justify-between">
+          {PROGRESS_STEPS.map((label, i) => {
+            const done = i < activeIndex;
+            const active = i === activeIndex;
+            return (
+              <div key={label} className="flex flex-1 flex-col items-center gap-1.5">
+                <div className={`flex h-9 w-9 items-center justify-center rounded-full transition-all duration-300 ${
+                  done
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : active
+                    ? 'border-2 border-primary bg-primary/5'
+                    : 'border-2 border-muted bg-background'
+                }`}>
+                  {done ? (
+                    <CheckIcon size={15} />
+                  ) : active ? (
+                    <div className="h-2.5 w-2.5 rounded-full bg-primary" />
+                  ) : null}
+                </div>
+                <span className={`text-center text-[11px] leading-tight ${
+                  active ? 'font-bold text-foreground' : done ? 'font-medium text-foreground' : 'text-muted-foreground'
+                }`}>
+                  {label}
+                </span>
               </div>
-              <span className={`text-center text-xs font-medium leading-tight ${active ? 'text-gray-900' : 'text-gray-400'}`}>{label}</span>
-            </div>
-            {i < steps.length - 1 && (
-              <div className={`mt-4 h-0.5 flex-1 transition-all duration-500 ${done ? 'bg-brand-500' : 'bg-gray-200'}`} />
-            )}
-          </div>
-        );
-      })}
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
 
 function Requirement({ text }: { text: string }) {
   return (
-    <div className="flex items-center gap-2.5 text-sm text-gray-700">
-      <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full" style={{ background: 'rgba(124,90,243,0.15)' }}>
+    <div className="flex items-center gap-2.5 text-sm text-foreground">
+      <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/15">
         <CheckIcon size={10} />
       </div>
       {text}
@@ -122,10 +164,10 @@ function Requirement({ text }: { text: string }) {
 function ValueProp({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
   return (
     <div className="flex items-start gap-3 p-3.5">
-      <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100">{icon}</div>
+      <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-muted">{icon}</div>
       <div>
-        <div className="text-sm font-medium text-gray-900">{title}</div>
-        <div className="mt-0.5 text-xs text-gray-500">{desc}</div>
+        <div className="text-sm font-medium text-foreground">{title}</div>
+        <div className="mt-0.5 text-xs text-muted-foreground">{desc}</div>
       </div>
     </div>
   );
@@ -136,30 +178,30 @@ function IgErrorPanel({ reason }: { reason: string }) {
   const info = IG_ERRORS[reason];
   if (!info) {
     return (
-      <div className="flex items-start gap-2.5 rounded-xl border border-red-200 bg-red-50 p-3.5 text-sm text-red-600">
+      <div className="flex items-start gap-2.5 rounded-xl border border-destructive/30 bg-destructive/10 p-3.5 text-sm text-destructive">
         <AlertCircleIcon size={14} />
         <span>{reason || 'Instagram connect failed. Please try again.'}</span>
       </div>
     );
   }
   return (
-    <div className="overflow-hidden rounded-xl border border-yellow-200 bg-yellow-50">
+    <div className="overflow-hidden rounded-xl border border-warning/30 bg-warning/10">
       <div className="space-y-1 p-4">
-        <div className="flex items-center gap-2 text-sm font-semibold text-yellow-800">
+        <div className="flex items-center gap-2 text-sm font-semibold text-warning">
           <AlertCircleIcon size={14} />
           {info.title}
         </div>
-        <p className="pl-6 text-xs text-yellow-700">{info.summary}</p>
+        <p className="pl-6 text-xs text-warning">{info.summary}</p>
       </div>
-      <button type="button" className="flex w-full items-center justify-between border-t border-yellow-200 px-4 py-2.5 text-xs text-gray-500 hover:bg-yellow-100/50 transition-colors" onClick={() => setExpanded((e) => !e)}>
+      <button type="button" className="flex w-full items-center justify-between border-t border-warning/30 px-4 py-2.5 text-xs text-muted-foreground hover:bg-warning/10 transition-colors" onClick={() => setExpanded((e) => !e)}>
         How to fix this
         {expanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
       </button>
       {expanded && (
-        <div className="space-y-2.5 border-t border-yellow-100 px-4 pb-4 pt-2">
+        <div className="space-y-2.5 border-t border-warning/20 px-4 pb-4 pt-2">
           {info.steps.map((s, i) => (
-            <div key={i} className="flex items-start gap-2 text-xs text-gray-600">
-              <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-yellow-200 text-[10px] font-bold text-yellow-800">{i + 1}</span>
+            <div key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+              <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-warning/20 text-[10px] font-bold text-warning">{i + 1}</span>
               <span>{s}</span>
             </div>
           ))}
@@ -171,20 +213,20 @@ function IgErrorPanel({ reason }: { reason: string }) {
 
 function LockedCard({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-2.5 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-400">
+    <div className="flex items-center gap-2.5 rounded-xl border bg-muted px-4 py-3 text-sm text-muted-foreground">
       <LockIcon size={14} />
       {label}
-      <span className="ml-auto text-xs bg-gray-200 text-gray-500 px-2 py-0.5 rounded-full">Pro</span>
+      <span className="ml-auto text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded-full">Pro</span>
     </div>
   );
 }
 
 function Segmented({ value, onChange, options }: { value: string; onChange: (v: string) => void; options: { v: string; l: string }[] }) {
   return (
-    <div className="inline-flex w-full rounded-lg border border-gray-200 bg-gray-50 p-1">
+    <div className="inline-flex w-full rounded-lg border bg-muted p-1">
       {options.map((o) => (
         <button key={o.v} type="button" onClick={() => onChange(o.v)}
-          className={`flex-1 rounded-md px-2 py-1.5 text-xs font-medium transition-colors ${value === o.v ? 'bg-white text-brand-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>
+          className={`flex-1 rounded-md px-2 py-1.5 text-xs font-medium transition-colors ${value === o.v ? 'bg-card text-primary shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}>
           {o.l}
         </button>
       ))}
@@ -194,9 +236,9 @@ function Segmented({ value, onChange, options }: { value: string; onChange: (v: 
 
 function ReviewRow({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-3.5">
-      <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">{title}</div>
-      <div className="text-sm text-gray-700">{children}</div>
+    <div className="rounded-xl border bg-card p-3.5">
+      <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{title}</div>
+      <div className="text-sm text-foreground">{children}</div>
     </div>
   );
 }
@@ -219,9 +261,9 @@ function AutomationWizard({
   const [keywords, setKeywords] = useState<string[]>(['GUIDE']);
   const [kwInput, setKwInput] = useState('');
   const [autoReply, setAutoReply] = useState(true);
-  const [replies, setReplies] = useState(['Sent! Check your DMs 💌', 'On its way to your inbox ✨', 'Just DM\'d you the link 🔥']);
+  const [replies, setReplies] = useState(['Sent! Check your DMs', 'On its way to your inbox', 'Just DM\'d you the link']);
   const [dmType, setDmType] = useState('text-button');
-  const [dmText, setDmText] = useState('Hi there! Appreciate your comment 🙌 Here\'s the link you asked for ⬇️');
+  const [dmText, setDmText] = useState('Hi there! Appreciate your comment. Here\'s the link you asked for');
   const [hasButton, setHasButton] = useState(true);
   const [btnLabel, setBtnLabel] = useState('Get Your Free Guide');
   const [btnUrl, setBtnUrl] = useState('https://');
@@ -278,73 +320,73 @@ function AutomationWizard({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
-      <div className="flex max-h-[90vh] w-full max-w-xl flex-col rounded-2xl border border-gray-200 bg-white shadow-2xl">
+      <div className="flex max-h-[90vh] w-full max-w-xl flex-col rounded-2xl border bg-card shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4">
+        <div className="flex items-center justify-between border-b border-border px-5 py-4">
           <div className="flex min-w-0 items-center gap-2.5">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg" style={{ background: 'rgba(124,90,243,0.12)' }}>
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10">
               <MessageSquareIcon size={14} />
             </div>
             <div>
-              <div className="text-sm font-semibold text-gray-900">New automation</div>
-              <div className="text-xs text-gray-400">Comment → auto DM</div>
+              <div className="text-sm font-semibold text-foreground">New automation</div>
+              <div className="text-xs text-muted-foreground">Comment → auto DM</div>
             </div>
           </div>
-          <button onClick={onClose} className="rounded-md p-1.5 text-gray-400 hover:text-gray-700 transition-colors">
+          <button onClick={onClose} className="rounded-md p-1.5 text-muted-foreground hover:text-foreground transition-colors">
             <XIcon size={16} />
           </button>
         </div>
 
         {/* Profile bar */}
-        <div className="flex items-center gap-2 border-b border-gray-100 px-5 py-2.5">
+        <div className="flex items-center gap-2 border-b border-border px-5 py-2.5">
           {wizardData?.profile.profilePictureUrl ? (
             <img src={wizardData.profile.profilePictureUrl} alt="" className="h-7 w-7 rounded-full object-cover" />
           ) : (
-            <div className="h-7 w-7 rounded-full" style={{ background: 'linear-gradient(135deg, #7c5af3, #4259f0)' }} />
+            <div className="h-7 w-7 rounded-full bg-gradient-to-br from-brand-500 to-brand-700" />
           )}
-          <span className="text-sm font-medium text-gray-700">@{wizardData?.profile.username ?? 'yourbrand'}</span>
+          <span className="text-sm font-medium text-foreground">@{wizardData?.profile.username ?? 'yourbrand'}</span>
           <div className="ml-auto flex items-center gap-1">
             {SUBSTEP_LABELS.map((_, i) => (
-              <div key={i} className={`h-1.5 w-6 rounded-full transition-all ${i + 1 <= Math.min(sub, 3) ? 'bg-brand-500' : 'bg-gray-200'}`} />
+              <div key={i} className={`h-1.5 w-6 rounded-full transition-all ${i + 1 <= Math.min(sub, 3) ? 'bg-primary' : 'bg-muted'}`} />
             ))}
           </div>
         </div>
 
         {/* Body */}
         <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
-          {wizardLoading && <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm text-gray-500">Loading your Instagram profile…</div>}
-          {wizardError && <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600">{wizardError}</div>}
+          {wizardLoading && <div className="rounded-lg border bg-muted p-3 text-sm text-muted-foreground">Loading your Instagram profile…</div>}
+          {wizardError && <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">{wizardError}</div>}
 
           {/* Sub-step 1: Trigger */}
           {sub === 1 && (
             <>
               <div>
                 <Label>Which post triggers this automation?</Label>
-                <p className="mt-0.5 text-xs text-gray-500">Choose when comments on your Instagram should trigger a DM.</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">Choose when comments on your Instagram should trigger a DM.</p>
               </div>
               <Segmented value={postMode} onChange={(v) => setPostMode(v as 'specific' | 'any' | 'next')} options={[{ v: 'any', l: 'All posts' }, { v: 'next', l: 'Next post only' }, { v: 'specific', l: 'Pick a post' }]} />
-              {postMode === 'any' && <div className="rounded-lg border border-purple-100 bg-purple-50 p-3 text-xs text-purple-700">One automation covers every post and reel on your account — past and future.</div>}
-              {postMode === 'next' && <div className="rounded-lg border border-purple-100 bg-purple-50 p-3 text-xs text-purple-700">This automation activates only on your next published post.</div>}
+              {postMode === 'any' && <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-xs text-primary">One automation covers every post and reel on your account — past and future.</div>}
+              {postMode === 'next' && <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-xs text-primary">This automation activates only on your next published post.</div>}
               {postMode === 'specific' && (
                 <>
                   <div className="grid grid-cols-3 gap-2">
                     {(wizardData?.media ?? []).map((item) => (
                       <button key={item.id} type="button" onClick={() => setSelectedPost(item.id)}
-                        className={`relative aspect-square overflow-hidden rounded-lg border-2 bg-gray-100 transition-all ${selectedPost === item.id ? 'border-brand-500' : 'border-gray-200 hover:border-gray-400'}`}>
+                        className={`relative aspect-square overflow-hidden rounded-lg border-2 bg-muted transition-all ${selectedPost === item.id ? 'border-primary' : 'border-border hover:border-muted-foreground'}`}>
                         {item.thumbnailUrl ? (
                           <img src={item.thumbnailUrl} alt={item.caption || ''} className="absolute inset-0 h-full w-full object-cover" />
                         ) : (
-                          <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(124,90,243,0.1), rgba(66,89,240,0.1))' }} />
+                          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
                         )}
                         {selectedPost === item.id && (
-                          <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'rgba(124,90,243,0.25)' }}>
-                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-500"><CheckIcon size={14} /></div>
+                          <div className="absolute inset-0 flex items-center justify-center bg-primary/25">
+                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary"><CheckIcon size={14} /></div>
                           </div>
                         )}
                       </button>
                     ))}
                   </div>
-                  {(wizardData?.media?.length ?? 0) === 0 && !wizardLoading && <p className="text-xs text-gray-500">No posts found on this account yet.</p>}
+                  {(wizardData?.media?.length ?? 0) === 0 && !wizardLoading && <p className="text-xs text-muted-foreground">No posts found on this account yet.</p>}
                 </>
               )}
             </>
@@ -355,7 +397,7 @@ function AutomationWizard({
             <>
               <div>
                 <Label>What triggers the automation?</Label>
-                <p className="mt-0.5 text-xs text-gray-500">Send a DM when someone comments a specific keyword, or on any comment.</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">Send a DM when someone comments a specific keyword, or on any comment.</p>
               </div>
               <Segmented value={keywordMode} onChange={(v) => setKeywordMode(v as 'specific' | 'any')} options={[{ v: 'specific', l: 'Specific keyword' }, { v: 'any', l: 'Any comment' }]} />
               {keywordMode === 'specific' && (
@@ -366,26 +408,26 @@ function AutomationWizard({
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {keywords.map((k) => (
-                      <span key={k} className="inline-flex items-center gap-1 rounded-full bg-purple-100 px-2.5 py-1 text-xs font-medium text-purple-700">
+                      <span key={k} className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
                         {k}
-                        <button type="button" onClick={() => setKeywords((kw) => kw.filter((x) => x !== k))} className="text-purple-400 hover:text-red-500"><XIcon size={10} /></button>
+                        <button type="button" onClick={() => setKeywords((kw) => kw.filter((x) => x !== k))} className="text-primary/70 hover:text-destructive"><XIcon size={10} /></button>
                       </span>
                     ))}
                   </div>
-                  <p className="text-xs text-gray-400">Not case-sensitive. The comment must contain the keyword.</p>
+                  <p className="text-xs text-muted-foreground">Not case-sensitive. The comment must contain the keyword.</p>
                 </>
               )}
 
-              <div className="h-px bg-gray-100" />
+              <div className="h-px bg-border" />
 
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-sm font-medium text-gray-900">Auto-reply on the post</div>
-                  <p className="mt-0.5 text-xs text-gray-500">Reply publicly to their comment — rotates between variations</p>
+                  <div className="text-sm font-medium text-foreground">Auto-reply on the post</div>
+                  <p className="mt-0.5 text-xs text-muted-foreground">Reply publicly to their comment — rotates between variations</p>
                 </div>
                 <button type="button" onClick={() => setAutoReply((v) => !v)}
-                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none ${autoReply ? 'bg-brand-500' : 'bg-gray-200'}`}>
-                  <span className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform transition-transform ${autoReply ? 'translate-x-5' : 'translate-x-0'}`} />
+                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none ${autoReply ? 'bg-primary' : 'bg-muted'}`}>
+                  <span className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-card shadow transform transition-transform ${autoReply ? 'translate-x-5' : 'translate-x-0'}`} />
                 </button>
               </div>
 
@@ -395,7 +437,7 @@ function AutomationWizard({
                     <div key={i}>
                       <Label>Reply variation {i + 1}</Label>
                       <Textarea value={r} onChange={(e) => { const next = [...replies]; next[i] = e.target.value.slice(0, 140); setReplies(next); }} rows={2} />
-                      <div className="mt-0.5 text-right text-[10px] text-gray-400">{r.length}/140</div>
+                      <div className="mt-0.5 text-right text-[10px] text-muted-foreground">{r.length}/140</div>
                     </div>
                   ))}
                 </div>
@@ -408,7 +450,7 @@ function AutomationWizard({
             <>
               <div>
                 <Label>What DM do you want to send?</Label>
-                <p className="mt-0.5 text-xs text-gray-500">Write the message that gets sent automatically when someone comments.</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">Write the message that gets sent automatically when someone comments.</p>
               </div>
 
               <div className="space-y-1.5">
@@ -420,8 +462,8 @@ function AutomationWizard({
                 <Label>Message</Label>
                 <Textarea value={dmText} onChange={(e) => setDmText(e.target.value.slice(0, 900))} rows={4} placeholder="Hi there! Here's the resource you asked for…" className="mt-1" />
                 <div className="mt-1 flex items-center justify-between">
-                  <span className="text-[11px] text-gray-400">Use {'{{name}}'} {'{{username}}'} {'{{keyword}}'} as variables</span>
-                  <span className="text-[10px] text-gray-400">{dmText.length}/900</span>
+                  <span className="text-[11px] text-muted-foreground">Use {'{{name}}'} {'{{username}}'} {'{{keyword}}'} as variables</span>
+                  <span className="text-[10px] text-muted-foreground">{dmText.length}/900</span>
                 </div>
               </div>
 
@@ -432,10 +474,10 @@ function AutomationWizard({
 
               {dmType === 'text-button' && (
                 hasButton ? (
-                  <div className="space-y-2.5 rounded-xl border border-gray-200 bg-gray-50 p-3.5">
+                  <div className="space-y-2.5 rounded-xl border border-input bg-muted p-3.5">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold text-gray-700">Button</span>
-                      <button type="button" onClick={() => setHasButton(false)} className="rounded p-1 text-gray-400 hover:text-red-500"><XIcon size={14} /></button>
+                      <span className="text-xs font-semibold text-foreground">Button</span>
+                      <button type="button" onClick={() => setHasButton(false)} className="rounded p-1 text-muted-foreground hover:text-destructive"><XIcon size={14} /></button>
                     </div>
                     <Input value={btnLabel} onChange={(e) => setBtnLabel(e.target.value)} placeholder="Button label" />
                     <Input value={btnUrl} onChange={(e) => setBtnUrl(e.target.value)} placeholder="https://yourlink.com" />
@@ -451,8 +493,8 @@ function AutomationWizard({
           {sub === 4 && (
             <>
               <div>
-                <h3 className="font-display text-base font-bold text-gray-900">Review your automation</h3>
-                <p className="mt-0.5 text-xs text-gray-500">Confirm the details before launching.</p>
+                <h3 className="font-display text-base font-bold text-foreground">Review your automation</h3>
+                <p className="mt-0.5 text-xs text-muted-foreground">Confirm the details before launching.</p>
               </div>
               <div className="space-y-3">
                 <ReviewRow title="Trigger">
@@ -460,40 +502,40 @@ function AutomationWizard({
                   {postMode === 'specific' && selectedMedia && (
                     <div className="mt-1.5 flex items-center gap-2">
                       {selectedMedia.thumbnailUrl && <img src={selectedMedia.thumbnailUrl} alt="" className="h-10 w-10 shrink-0 rounded-md object-cover" />}
-                      <span className="line-clamp-2 text-xs text-gray-500">{selectedMedia.caption || 'Selected post'}</span>
+                      <span className="line-clamp-2 text-xs text-muted-foreground">{selectedMedia.caption || 'Selected post'}</span>
                     </div>
                   )}
                 </ReviewRow>
                 <ReviewRow title="Keyword">
                   {keywordMode === 'any' ? 'Any comment' : (
                     <div className="mt-1 flex flex-wrap gap-1">
-                      {keywords.map((k) => <span key={k} className="rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-700">{k}</span>)}
+                      {keywords.map((k) => <span key={k} className="rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">{k}</span>)}
                     </div>
                   )}
                 </ReviewRow>
                 {autoReply && (
                   <ReviewRow title="Public reply">
-                    <span className="italic text-gray-500">"{replies[0]}"</span>
-                    {replies.length > 1 && <span className="text-xs text-gray-400"> +{replies.length - 1} variations</span>}
+                    <span className="italic text-muted-foreground">"{replies[0]}"</span>
+                    {replies.length > 1 && <span className="text-xs text-muted-foreground"> +{replies.length - 1} variations</span>}
                   </ReviewRow>
                 )}
                 <ReviewRow title="DM message">
-                  <div className="mt-1 max-w-[85%] rounded-xl rounded-tl-sm border border-gray-200 bg-gray-50 p-3">
-                    <p className="text-sm text-gray-700">{dmText}</p>
+                  <div className="mt-1 max-w-[85%] rounded-xl rounded-tl-sm border bg-muted p-3">
+                    <p className="text-sm text-foreground">{dmText}</p>
                     {dmType === 'text-button' && hasButton && btnLabel && (
-                      <div className="mt-2 rounded-md bg-brand-500 px-3 py-1.5 text-center text-xs font-medium text-white">{btnLabel}</div>
+                      <div className="mt-2 rounded-md bg-primary px-3 py-1.5 text-center text-xs font-medium text-primary-foreground">{btnLabel}</div>
                     )}
                   </div>
                 </ReviewRow>
               </div>
-              {launchError && <p className="text-xs text-red-500 mt-1">{launchError}</p>}
+              {launchError && <p className="text-xs text-destructive mt-1">{launchError}</p>}
             </>
           )}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t border-gray-100 px-5 py-4">
-          <span className="text-xs text-gray-400">{sub <= 3 ? `Step ${sub} of 3` : 'Review'}</span>
+        <div className="flex items-center justify-between border-t border-border px-5 py-4">
+          <span className="text-xs text-muted-foreground">{sub <= 3 ? `Step ${sub} of 3` : 'Review'}</span>
           <div className="flex gap-2">
             {sub > 1 && <Button variant="outline" onClick={() => setSub((s) => (s - 1) as 1 | 2 | 3 | 4)}>Back</Button>}
             {sub < 3 && <Button onClick={() => setSub((s) => (s + 1) as 1 | 2 | 3 | 4)}>Next</Button>}
@@ -528,6 +570,15 @@ function OnboardingPageInner() {
   const [finishing, setFinishing] = useState(false);
   const [mounted, setMounted] = useState(false);
 
+  // Guards signup_step('instagram_connected') against the 3 separate success
+  // paths (popup result, URL redirect, BroadcastChannel) all firing once.
+  const igConnectedTrackedRef = useRef(false);
+  function markInstagramConnected() {
+    if (igConnectedTrackedRef.current) return;
+    igConnectedTrackedRef.current = true;
+    trackSignupStep('instagram_connected');
+  }
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -540,6 +591,7 @@ function OnboardingPageInner() {
       setIgConnected(true);
       setIgError(null);
       setStep((s) => Math.max(s, 3));
+      markInstagramConnected();
     } else if (meta === 'error') {
       const reason = decodeURIComponent(params.get('reason') ?? '');
       if (reason !== 'user_canceled') {
@@ -567,6 +619,7 @@ function OnboardingPageInner() {
         setIgConnected(true);
         setIgError(null);
         setStep((s) => Math.max(s, 3));
+        markInstagramConnected();
       } else if (result.meta === 'error' && result.reason !== 'user_canceled') {
         setIgError(result.reason ?? 'token_exchange_failed');
         setStep((s) => (s < 2 ? 2 : s));
@@ -615,6 +668,7 @@ function OnboardingPageInner() {
         ...(displayName.trim() ? { displayName: displayName.trim() } : {}),
         onboarding: { handle: handle.trim() ? `@${handle.replace(/^@/, '')}` : undefined, step: 1 },
       });
+      trackSignupStep('workspace_created');
     } catch { /* non-fatal */ }
     setSaving(false);
     setStep(2);
@@ -640,6 +694,7 @@ function OnboardingPageInner() {
         setIgConnected(true);
         setIgError(null);
         setStep(3);
+        markInstagramConnected();
       } else if (result.reason !== 'user_canceled') {
         setIgError(result.reason ?? 'token_exchange_failed');
       }
@@ -670,7 +725,8 @@ function OnboardingPageInner() {
   if (!mounted) return null;
 
   return (
-    <div className="relative flex min-h-screen flex-col" style={{ background: 'linear-gradient(135deg, #f3f0ff 0%, #ede8fe 40%, #fce8ff 70%, #fff0f8 100%)' }}>
+    <div className="relative flex min-h-screen flex-col bg-background">
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-soft-gradient opacity-60" />
       <header className="relative z-10 flex items-center justify-between px-6 py-4">
         <Logo size="small" />
       </header>
@@ -679,28 +735,28 @@ function OnboardingPageInner() {
         <StepProgress step={step} />
 
         <div className="w-full max-w-lg">
-          <div className="w-full rounded-2xl border border-purple-100/60 bg-white p-8 shadow-lg">
+          <div className="w-full rounded-2xl border bg-card p-8 shadow-soft">
 
             {/* ── Step 1: Brand ───────────────────────────────── */}
             {step === 1 && (
-              <div className="space-y-7">
+              <div className="space-y-6">
                 <div>
-                  <h1 className="font-display text-2xl font-bold tracking-tight text-gray-900">Welcome to Liffio</h1>
-                  <p className="mt-1 text-sm text-gray-500">Connect your Instagram and start sending automated DMs in minutes.</p>
+                  <h1 className="font-display text-xl font-bold tracking-tight text-foreground">Welcome to Liffio</h1>
+                  <p className="mt-1 text-sm text-muted-foreground">Connect your Instagram and start sending automated DMs in minutes.</p>
                 </div>
                 <div className="space-y-4">
                   <div className="space-y-1.5">
                     <Label htmlFor="ws-name">Workspace name</Label>
                     <Input id="ws-name" value={displayName} onChange={(e) => setDisplayName(e.target.value.slice(0, 80))} placeholder="My Brand, Studio Name…" />
-                    <p className="text-xs text-gray-400">Used as your workspace label inside Liffio.</p>
+                    <p className="text-xs text-muted-foreground">Used as your workspace label inside Liffio.</p>
                   </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="ig-handle">Instagram handle <span className="font-normal text-gray-400">(optional)</span></Label>
+                    <Label htmlFor="ig-handle">Instagram handle <span className="font-normal text-muted-foreground">(optional)</span></Label>
                     <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">@</span>
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">@</span>
                       <Input id="ig-handle" value={handle} onChange={(e) => setHandle(e.target.value.replace(/^@/, '').replace(/\s/g, ''))} placeholder="yourbrand" className="pl-7" />
                     </div>
-                    <p className="text-xs text-gray-400">We'll verify it when you connect your account.</p>
+                    <p className="text-xs text-muted-foreground">We'll verify it when you connect your account.</p>
                   </div>
                 </div>
                 <Button className="w-full" onClick={handleStep1Continue} loading={saving}>
@@ -713,27 +769,27 @@ function OnboardingPageInner() {
             {step === 2 && (
               <div className="space-y-6">
                 <div>
-                  <h1 className="font-display text-2xl font-bold tracking-tight text-gray-900">Connect your Instagram</h1>
-                  <p className="mt-1 text-sm text-gray-500">Liffio connects via Instagram Business Login — your password is never shared.</p>
+                  <h1 className="font-display text-2xl font-bold tracking-tight text-foreground">Connect your Instagram</h1>
+                  <p className="mt-1 text-sm text-muted-foreground">Liffio connects via Instagram Business Login — your password is never shared.</p>
                 </div>
 
                 {igConnected ? (
                   <div className="space-y-5">
-                    <div className="flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 p-4">
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-100">
+                    <div className="flex items-center gap-3 rounded-xl border border-success/30 bg-success/10 p-4">
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-success/20">
                         <CheckIcon size={18} />
                       </div>
                       <div>
-                        <div className="text-sm font-semibold text-gray-900">Instagram connected</div>
-                        {handle && <div className="text-xs text-gray-500">@{handle.replace(/^@/, '')}</div>}
+                        <div className="text-sm font-semibold text-foreground">Instagram connected</div>
+                        {handle && <div className="rr-mask text-xs text-muted-foreground">@{handle.replace(/^@/, '')}</div>}
                       </div>
                     </div>
                     <Button className="w-full" onClick={() => setStep(3)}>Continue <ArrowRightIcon size={14} /></Button>
                   </div>
                 ) : (
                   <>
-                    <div className="space-y-3 rounded-xl border border-gray-200 bg-gray-50 p-4">
-                      <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">Requirements</p>
+                    <div className="space-y-3 rounded-xl border bg-muted p-4">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Requirements</p>
                       <Requirement text="Professional account (Creator or Business)" />
                       <Requirement text="Instagram linked to a Facebook Page" />
                       <Requirement text="Admin access on that Facebook Page" />
@@ -746,7 +802,7 @@ function OnboardingPageInner() {
                         <InstagramIcon size={16} />
                         {igError ? 'Retry Instagram connect' : 'Connect with Instagram'}
                       </Button>
-                      <Button variant="ghost" className="w-full text-sm text-gray-500" onClick={() => setStep(3)}>
+                      <Button variant="ghost" className="w-full text-sm text-muted-foreground" onClick={() => setStep(3)}>
                         Skip for now — I'll connect later
                       </Button>
                     </div>
@@ -759,10 +815,10 @@ function OnboardingPageInner() {
             {step === 3 && (
               <div className="space-y-6">
                 <div>
-                  <h1 className="font-display text-2xl font-bold tracking-tight text-gray-900">
-                    {automationCreated ? 'Automation is live 🚀' : 'Create your first automation'}
+                  <h1 className="font-display text-2xl font-bold tracking-tight text-foreground">
+                    {automationCreated ? 'Automation is live' : 'Create your first automation'}
                   </h1>
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm text-muted-foreground">
                     {automationCreated
                       ? 'Liffio is now monitoring your comments 24/7 and sending DMs automatically.'
                       : 'When someone comments a keyword on your post, Liffio sends them a DM instantly.'}
@@ -771,11 +827,11 @@ function OnboardingPageInner() {
 
                 {automationCreated ? (
                   <div className="space-y-4">
-                    <div className="space-y-1.5 rounded-xl border border-purple-200 bg-purple-50 p-4">
-                      <div className="flex items-center gap-2 text-sm font-medium text-purple-800">
+                    <div className="space-y-1.5 rounded-xl border border-success/30 bg-success/10 p-4">
+                      <div className="flex items-center gap-2 text-sm font-medium text-success">
                         <CheckIcon size={14} /> Your automation is active
                       </div>
-                      <p className="pl-6 text-xs text-purple-600">New comments that match your keyword will receive a DM automatically.</p>
+                      <p className="pl-6 text-xs text-success">New comments that match your keyword will receive a DM automatically.</p>
                     </div>
                     <Button className="w-full" onClick={finishOnboarding} loading={finishing}>
                       {finishing ? 'Opening dashboard…' : 'Go to dashboard'} <ArrowRightIcon size={14} />
@@ -783,7 +839,7 @@ function OnboardingPageInner() {
                   </div>
                 ) : (
                   <>
-                    <div className="divide-y divide-gray-100 overflow-hidden rounded-xl border border-gray-200 bg-white">
+                    <div className="divide-y divide-border overflow-hidden rounded-xl border bg-card">
                       <ValueProp icon={<MessageSquareIcon size={14} />} title="Comment triggers DM" desc="Someone comments your keyword → they receive a personal DM instantly" />
                       <ValueProp icon={<ZapIcon size={14} />} title="Auto-reply on the post" desc="Reply publicly to boost engagement and post reach" />
                       <ValueProp icon={<ArrowRightIcon size={14} />} title="Link button in DM" desc="Send a button to your link, product, or free resource" />
@@ -792,8 +848,8 @@ function OnboardingPageInner() {
                       <Button className="w-full" onClick={() => setShowWizard(true)} disabled={!igConnected}>
                         <ZapIcon size={14} /> Set up automation
                       </Button>
-                      {!igConnected && <p className="text-center text-xs text-gray-400">Connect Instagram first to enable automations</p>}
-                      <Button variant="ghost" className="w-full text-sm text-gray-500" onClick={finishOnboarding} loading={finishing}>
+                      {!igConnected && <p className="text-center text-xs text-muted-foreground">Connect Instagram first to enable automations</p>}
+                      <Button variant="ghost" className="w-full text-sm text-muted-foreground" onClick={finishOnboarding} loading={finishing}>
                         Skip — I'll set up later
                       </Button>
                     </div>
@@ -805,7 +861,7 @@ function OnboardingPageInner() {
         </div>
 
         {step > 1 && (
-          <button className="mt-5 text-sm text-gray-400 transition-colors hover:text-gray-700" onClick={() => setStep((s) => s - 1)}>
+          <button className="mt-5 text-sm text-muted-foreground transition-colors hover:text-foreground" onClick={() => setStep((s) => s - 1)}>
             ← Back
           </button>
         )}

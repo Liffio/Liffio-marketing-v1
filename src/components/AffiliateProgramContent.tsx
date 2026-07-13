@@ -2,17 +2,17 @@ import { TechBadge } from "@/components/TechBadge";
 import { siteConfig } from "@/config/site.config";
 
 const COMMISSION_MONTHS = [
-  { month: "Month 1", rate: "25%", desc: "First payment", color: "#a855f7", width: "100%" },
-  { month: "Month 2", rate: "10%", desc: "Second payment", color: "#7c5af3", width: "72%" },
-  { month: "Month 3", rate: "10%", desc: "Third payment", color: "#6366f1", width: "72%" },
+  { month: "Month 1", rate: "25%", desc: "First payment", color: "#ff7c49", width: "100%" },
+  { month: "Month 2", rate: "10%", desc: "Second payment", color: "#f5184c", width: "72%" },
+  { month: "Month 3", rate: "10%", desc: "Third payment", color: "#2ea957", width: "72%" },
   { month: "Month 4+", rate: "-", desc: "No further commission", color: "#e5e7eb", width: "24%" },
 ];
 
 const KEY_STATS = [
-  { value: "25%", label: "Month 1 commission", accent: "#a855f7" },
-  { value: "90d", label: "Attribution window", accent: "#7c5af3" },
-  { value: "$50", label: "Minimum withdrawal", accent: "#4259f0" },
-  { value: "20", label: "Day hold before payout", accent: "#6366f1" },
+  { value: "25%", label: "Month 1 commission", accent: "#ff7c49" },
+  { value: "90d", label: "Attribution window", accent: "#f5184c" },
+  { value: "$50", label: "Minimum withdrawal", accent: "#b20d8f" },
+  { value: "20", label: "Day hold before payout", accent: "#2ea957" },
 ];
 
 const HOW_STEPS = [
@@ -20,25 +20,21 @@ const HOW_STEPS = [
     num: "01",
     title: "Create your account",
     desc: "Open to every Liffio user - including Free plan. No separate application.",
-    icon: "👤",
   },
   {
     num: "02",
     title: "Copy your affiliate link",
     desc: "Find your unique link in the dashboard. Share it anywhere you promote Liffio.",
-    icon: "🔗",
   },
   {
     num: "03",
     title: "Refer paying customers",
     desc: "When someone signs up through your link and subscribes within 90 days, you earn.",
-    icon: "📈",
   },
   {
     num: "04",
     title: "Withdraw on demand",
     desc: "Request a payout once cleared balance hits $50. No fixed monthly payout schedule.",
-    icon: "💸",
   },
 ];
 
@@ -54,17 +50,14 @@ const ATTRIBUTION_RULES = [
   {
     title: "90-day window",
     desc: "Earn on any workspace subscription purchased within 90 days of the referred user's signup.",
-    icon: "📅",
   },
   {
     title: "First click wins",
     desc: "Credit goes to the first affiliate link clicked - later clicks from other affiliates don't override.",
-    icon: "🎯",
   },
   {
     title: "Per workspace",
     desc: "Each new workspace starts its own 3-month commission cycle inside the attribution window.",
-    icon: "🗂️",
   },
 ];
 
@@ -93,7 +86,7 @@ export default function AffiliateProgramContent() {
       {/* Hero */}
       <section
         className="px-4 py-14 text-center sm:py-20"
-        style={{ background: "linear-gradient(155deg,#f8f5ff 0%,#f0ebff 50%,#faf5ff 100%)" }}
+        style={{ background: "linear-gradient(155deg,#fff1f2 0%,#ffe4e6 50%,#fff4f2 100%)" }}
       >
         <div className="mx-auto max-w-3xl">
           <TechBadge label="Affiliate program" variant="section" className="mb-5" />
@@ -127,7 +120,7 @@ export default function AffiliateProgramContent() {
       </section>
 
       {/* Key stats */}
-      <section className="border-y border-brand-100/80 bg-white">
+      <section className="bg-white">
         <div className="mx-auto grid max-w-5xl grid-cols-2 lg:grid-cols-4">
           {KEY_STATS.map((s, i) => (
             <div
@@ -150,7 +143,7 @@ export default function AffiliateProgramContent() {
       <section className="section-py bg-white px-4 sm:px-6">
         <div className="mx-auto max-w-4xl">
           <div className="mb-10 text-center">
-            <TechBadge label="Commission structure" variant="chip" accent="#7c5af3" className="mb-4" />
+            <TechBadge label="Commission structure" variant="chip" accent="#f5184c" className="mb-4" />
             <h2
               className="text-2xl font-extrabold text-[#0a0a0a] sm:text-3xl"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
@@ -207,10 +200,7 @@ export default function AffiliateProgramContent() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {HOW_STEPS.map((step) => (
               <div key={step.num} className="card-base relative p-5 sm:p-6">
-                <span className="text-2xl" aria-hidden>
-                  {step.icon}
-                </span>
-                <span className="mt-3 block text-[10px] font-black tracking-wider text-brand-500">{step.num}</span>
+                <span className="block text-[10px] font-black tracking-wider text-brand-500">{step.num}</span>
                 <h3 className="mt-1 text-base font-bold text-[#0a0a0a]">{step.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-gray-500">{step.desc}</p>
               </div>
@@ -236,9 +226,6 @@ export default function AffiliateProgramContent() {
                 key={rule.title}
                 className="rounded-2xl border border-brand-100 bg-gradient-to-br from-brand-50/50 to-white p-6 text-center"
               >
-                <span className="text-3xl" aria-hidden>
-                  {rule.icon}
-                </span>
                 <h3 className="mt-3 font-bold text-[#0a0a0a]">{rule.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-gray-600">{rule.desc}</p>
               </div>
@@ -259,7 +246,7 @@ export default function AffiliateProgramContent() {
             <p className="mt-4 text-center text-xs text-gray-500">
               Server-side cookie + URL param + session backup - attribution recorded on click
             </p>
-            <p className="mt-3 text-center text-xs font-medium text-[#7c5af3]">
+            <p className="mt-3 text-center text-xs font-medium text-[#f5184c]">
               <a href={appLogin} className="hover:underline">
                 Log in to see your personalised affiliate link →
               </a>
@@ -271,7 +258,7 @@ export default function AffiliateProgramContent() {
       {/* Payout flow */}
       <section
         className="section-py px-4 sm:px-6"
-        style={{ background: "linear-gradient(155deg,#f8f5ff 0%,#ffffff 100%)" }}
+        style={{ background: "linear-gradient(155deg,#fff1f2 0%,#ffffff 100%)" }}
       >
         <div className="mx-auto max-w-4xl">
           <h2
@@ -293,7 +280,7 @@ export default function AffiliateProgramContent() {
                   <div
                     className={`flex h-12 w-12 items-center justify-center rounded-full border-2 text-xs font-bold ${
                       item.active
-                        ? "border-brand-500 bg-brand-500 text-white shadow-[0_4px_16px_rgba(124,90,243,0.35)]"
+                        ? "border-brand-500 bg-brand-500 text-white shadow-[0_4px_16px_rgba(245, 24, 76,0.35)]"
                         : "border-brand-200 bg-white text-brand-600"
                     }`}
                   >
@@ -353,7 +340,7 @@ export default function AffiliateProgramContent() {
       </section>
 
       {/* Rules */}
-      <section className="border-t border-brand-100/80 bg-[#faf9ff] px-4 py-14 sm:px-6 sm:py-16">
+      <section className="bg-[#faf9ff] px-4 py-14 sm:px-6 sm:py-16">
         <div className="mx-auto max-w-3xl">
           <h2
             className="mb-6 text-center text-xl font-extrabold text-[#0a0a0a] sm:text-2xl"

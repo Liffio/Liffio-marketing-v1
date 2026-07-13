@@ -102,13 +102,13 @@ export default function ManyChatAlternativePage() {
             <div className="mt-8 flex flex-wrap gap-4 justify-center">
               <a
                 href={siteConfig.urls.appSignup}
-                className="inline-flex rounded-xl px-8 py-3.5 text-sm font-semibold text-white shadow-lg [background:linear-gradient(135deg,#7c5af3,#4259f0)]"
+                className="inline-flex rounded-xl px-8 py-3.5 text-sm font-semibold text-white shadow-lg [background:linear-gradient(135deg,#f5184c,#b20d8f)]"
               >
                 Get Started Free
               </a>
               <a
                 href="#comparison"
-                className="inline-flex rounded-xl border border-gray-200 px-8 py-3.5 text-sm font-semibold text-gray-700 bg-white hover:border-[#7c5af3] hover:text-[#7c5af3] transition-colors"
+                className="inline-flex rounded-xl border border-gray-200 px-8 py-3.5 text-sm font-semibold text-gray-700 bg-white hover:border-[#f5184c] hover:text-[#f5184c] transition-colors"
               >
                 See full comparison ↓
               </a>
@@ -145,15 +145,15 @@ export default function ManyChatAlternativePage() {
               </p>
               <ul className="mt-4 space-y-2 list-none">
                 <li className="flex gap-3">
-                  <span className="text-[#7c5af3] font-bold mt-0.5">→</span>
+                  <span className="text-[#f5184c] font-bold mt-0.5">→</span>
                   <span><strong className="text-gray-900">Per-contact pricing:</strong> ManyChat charges based on your total contact count. A single viral Reel can push you into a higher tier before you have time to review the bill.</span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-[#7c5af3] font-bold mt-0.5">→</span>
+                  <span className="text-[#f5184c] font-bold mt-0.5">→</span>
                   <span><strong className="text-gray-900">Multi-channel complexity:</strong> ManyChat's flow builder is optimized for Messenger bots. Instagram-only workflows require navigating features designed for different platforms.</span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-[#7c5af3] font-bold mt-0.5">→</span>
+                  <span className="text-[#f5184c] font-bold mt-0.5">→</span>
                   <span><strong className="text-gray-900">No INR billing:</strong> Indian creators pay in USD via international processing fees. Liffio offers native INR billing through Razorpay with GST-friendly invoices.</span>
                 </li>
               </ul>
@@ -162,16 +162,22 @@ export default function ManyChatAlternativePage() {
         </section>
 
         {/* Feature comparison table */}
-        <section id="comparison" className="py-16 bg-[#faf8ff] border-y border-[#ede9fd]">
+        <section id="comparison" className="py-16 bg-[#fff7f7] border-y border-[#ffe4e6]">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
               Liffio vs ManyChat — side-by-side comparison
             </h2>
             <p className="text-gray-600 mb-8">
               Compare comment-to-DM, pricing model, and platform extras.{" "}
-              <a href="/blog/manychat-alternatives" className="text-[#4259f0] font-semibold hover:underline">
+              <a href="/blog/manychat-alternatives" className="text-[#b20d8f] font-semibold hover:underline">
                 Read the full alternatives guide →
               </a>
+            </p>
+            <p className="text-sm text-gray-500 mb-6">
+              Also comparing:{" "}
+              <a href="/senddm-alternative" className="text-[#b20d8f] hover:underline">Liffio vs SendDM</a>
+              {" · "}
+              <a href="/chatfuel-alternative" className="text-[#b20d8f] hover:underline">Liffio vs Chatfuel</a>
             </p>
             <ComparisonTable competitorName="ManyChat" />
           </div>
@@ -196,9 +202,9 @@ export default function ManyChatAlternativePage() {
                 </thead>
                 <tbody>
                   {competitorPricing.map((tool, i) => (
-                    <tr key={tool.name} className={`border-b border-gray-100 ${i === 0 ? "bg-[#faf8ff]" : ""}`}>
+                    <tr key={tool.name} className={`border-b border-gray-100 ${i === 0 ? "bg-[#fff7f7]" : ""}`}>
                       <td className="py-3 px-4 font-semibold text-gray-900">
-                        {i === 0 ? <span className="text-[#7c5af3]">{tool.name} ★</span> : tool.name}
+                        {i === 0 ? <span className="text-[#f5184c]">{tool.name} ★</span> : tool.name}
                       </td>
                       <td className="py-3 px-4 text-gray-600">{tool.free ? "✓ Yes" : "✗ No"}</td>
                       <td className="py-3 px-4 text-gray-600">{tool.paidFrom}</td>
@@ -234,7 +240,7 @@ export default function ManyChatAlternativePage() {
         </section>
 
         {/* Use cases */}
-        <section className="py-16 bg-[#faf8ff] border-y border-[#ede9fd]">
+        <section className="py-16 bg-[#fff7f7] border-y border-[#ffe4e6]">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-10" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
               Who uses Liffio as a ManyChat alternative
@@ -345,7 +351,7 @@ export default function ManyChatAlternativePage() {
         </section>
 
         {/* Migration guide */}
-        <section className="py-16 bg-[#faf8ff] border-y border-[#ede9fd]">
+        <section className="py-16 bg-[#fff7f7] border-y border-[#ffe4e6]">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
               How to migrate from ManyChat to Liffio (about 2 hours)
@@ -379,7 +385,7 @@ export default function ManyChatAlternativePage() {
                 },
               ].map((item) => (
                 <div key={item.step} className="flex gap-5">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#7c5af3] text-white flex items-center justify-center text-sm font-bold">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#f5184c] text-white flex items-center justify-center text-sm font-bold">
                     {item.step}
                   </div>
                   <div>
@@ -414,7 +420,7 @@ export default function ManyChatAlternativePage() {
         </section>
 
         {/* CTA */}
-        <section className="py-16 bg-[#faf8ff] border-t border-[#ede9fd] text-center">
+        <section className="py-16 bg-[#fff7f7] border-t border-[#ffe4e6] text-center">
           <div className="mx-auto max-w-2xl px-4 sm:px-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
               Start free — no card required
@@ -425,7 +431,7 @@ export default function ManyChatAlternativePage() {
             </p>
             <a
               href={siteConfig.urls.appSignup}
-              className="inline-flex rounded-xl px-10 py-4 text-base font-semibold text-white shadow-lg [background:linear-gradient(135deg,#7c5af3,#4259f0)]"
+              className="inline-flex rounded-xl px-10 py-4 text-base font-semibold text-white shadow-lg [background:linear-gradient(135deg,#f5184c,#b20d8f)]"
             >
               Get Started Free
             </a>

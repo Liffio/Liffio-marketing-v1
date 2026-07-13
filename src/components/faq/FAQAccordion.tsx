@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import type { FaqCategory, FaqItem } from "@/config/faq.config";
+import { trackFaqOpen } from "@/lib/analytics/analytics";
 
 function Chevron({ open }: { open: boolean }) {
   return (
@@ -85,6 +86,7 @@ export function FAQAccordion({
   );
 
   const toggle = (id: string) => {
+    if (!openIds.has(id)) trackFaqOpen(id);
     setOpenIds((prev) => {
       const next = new Set(prev);
       if (next.has(id)) {

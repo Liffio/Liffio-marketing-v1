@@ -53,16 +53,16 @@ export default function CTASection() {
   return (
     <section
       id="get-started"
-      className="relative overflow-hidden border-t border-brand-100 bg-white"
+      className="relative overflow-hidden bg-white"
     >
       <div className="pointer-events-none absolute inset-0" aria-hidden>
         <div
           className="absolute -right-20 top-0 h-72 w-72 rounded-full opacity-40 blur-3xl"
-          style={{ background: "radial-gradient(circle, rgba(124,90,243,0.14) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, rgba(245, 24, 76,0.06) 0%, transparent 70%)" }}
         />
         <div
           className="absolute -left-16 bottom-0 h-56 w-56 rounded-full opacity-30 blur-3xl"
-          style={{ background: "radial-gradient(circle, rgba(66,89,240,0.1) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, rgba(20, 20, 30,0.04) 0%, transparent 70%)" }}
         />
       </div>
 

@@ -134,20 +134,19 @@ export default function CreatorsForm() {
   }
 
   const inputClass = (field: string) =>
-    `w-full rounded-xl border px-4 py-3 text-sm text-gray-900 placeholder-gray-400 outline-none transition-colors focus:border-[#4259f0] focus:ring-2 focus:ring-[#4259f0]/20 ${fieldErrors[field] ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-gray-50'}`
+    `w-full rounded-xl border px-4 py-3 text-sm text-gray-900 placeholder-gray-400 outline-none transition-colors focus:border-[#b20d8f] focus:ring-2 focus:ring-[#b20d8f]/20 ${fieldErrors[field] ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-gray-50'}`
 
   const chipClass = (active: boolean, hasError?: boolean) =>
     `rounded-xl border px-3 py-2 text-sm font-medium transition-all cursor-pointer ${active
-      ? 'bg-[#4259f0] border-[#4259f0] text-white shadow-sm'
+      ? 'bg-[#b20d8f] border-[#b20d8f] text-white shadow-sm'
       : hasError
-        ? 'border-red-300 text-gray-700 hover:border-[#4259f0]/50'
-        : 'border-gray-200 text-gray-700 hover:border-[#4259f0]/50 bg-white'
+        ? 'border-red-300 text-gray-700 hover:border-[#b20d8f]/50'
+        : 'border-gray-200 text-gray-700 hover:border-[#b20d8f]/50 bg-white'
     }`
 
   if (submitted) {
     return (
       <div className="text-center py-16 px-8">
-        <div className="text-6xl mb-6">🎉</div>
         <h3 className="text-2xl font-bold text-gray-900 mb-3">Application Submitted!</h3>
         <p className="text-gray-600 max-w-md mx-auto leading-relaxed">
           We've sent a confirmation to <strong>{formData.email}</strong>. Our team reviews all applications manually and will get back to you within 48–72 hours.
@@ -158,7 +157,7 @@ export default function CreatorsForm() {
             href="https://instagram.com/liffio"
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-[#4259f0] hover:underline text-sm"
+            className="block text-[#b20d8f] hover:underline text-sm"
           >
             → Follow us on Instagram @liffio
           </a>
@@ -166,7 +165,7 @@ export default function CreatorsForm() {
             href={`https://instagram.com/${formData.instagramUsername}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-[#4259f0] hover:underline text-sm"
+            className="block text-[#b20d8f] hover:underline text-sm"
           >
             → View your submitted profile @{formData.instagramUsername}
           </a>
@@ -195,7 +194,7 @@ export default function CreatorsForm() {
       {/* Section 1 */}
       <div className="space-y-4">
         <h3 className="text-base font-bold text-gray-900 flex items-center gap-2">
-          <span className="w-6 h-6 rounded-full bg-[#4259f0] text-white text-xs flex items-center justify-center font-bold">1</span>
+          <span className="w-6 h-6 rounded-full bg-[#b20d8f] text-white text-xs flex items-center justify-center font-bold">1</span>
           Your Details
         </h3>
 
@@ -221,13 +220,13 @@ export default function CreatorsForm() {
       {/* Section 2 */}
       <div className="space-y-5">
         <h3 className="text-base font-bold text-gray-900 flex items-center gap-2">
-          <span className="w-6 h-6 rounded-full bg-[#4259f0] text-white text-xs flex items-center justify-center font-bold">2</span>
+          <span className="w-6 h-6 rounded-full bg-[#b20d8f] text-white text-xs flex items-center justify-center font-bold">2</span>
           Instagram Profile
         </h3>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1.5">Instagram Username <span className="text-red-500">*</span></label>
-          <div className={`flex items-center rounded-xl border transition-colors focus-within:border-[#4259f0] focus-within:ring-2 focus-within:ring-[#4259f0]/20 ${fieldErrors.instagramUsername ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-gray-50'}`}>
+          <div className={`flex items-center rounded-xl border transition-colors focus-within:border-[#b20d8f] focus-within:ring-2 focus-within:ring-[#b20d8f]/20 ${fieldErrors.instagramUsername ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-gray-50'}`}>
             <span className="px-3 text-gray-400 text-sm font-medium select-none">@</span>
             <input
               type="text"
@@ -276,7 +275,7 @@ export default function CreatorsForm() {
         <label className="flex items-start gap-3 cursor-pointer group">
           <div
             onClick={() => !loading && updateField('asksForComments', !formData.asksForComments)}
-            className={`mt-0.5 w-5 h-5 rounded flex-shrink-0 border-2 flex items-center justify-center transition-colors cursor-pointer ${formData.asksForComments ? 'bg-[#4259f0] border-[#4259f0]' : 'border-gray-300 bg-white'}`}
+            className={`mt-0.5 w-5 h-5 rounded flex-shrink-0 border-2 flex items-center justify-center transition-colors cursor-pointer ${formData.asksForComments ? 'bg-[#b20d8f] border-[#b20d8f]' : 'border-gray-300 bg-white'}`}
           >
             {formData.asksForComments && (
               <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
@@ -293,7 +292,7 @@ export default function CreatorsForm() {
       {/* Section 3 */}
       <div className="space-y-4">
         <h3 className="text-base font-bold text-gray-900 flex items-center gap-2">
-          <span className="w-6 h-6 rounded-full bg-[#4259f0] text-white text-xs flex items-center justify-center font-bold">3</span>
+          <span className="w-6 h-6 rounded-full bg-[#b20d8f] text-white text-xs flex items-center justify-center font-bold">3</span>
           Tell Us About Yourself
         </h3>
         <div>
@@ -304,7 +303,7 @@ export default function CreatorsForm() {
             onChange={e => updateField('whyJoin', e.target.value)}
             disabled={loading}
             rows={4}
-            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 outline-none resize-none transition-colors focus:border-[#4259f0] focus:ring-2 focus:ring-[#4259f0]/20"
+            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 outline-none resize-none transition-colors focus:border-[#b20d8f] focus:ring-2 focus:ring-[#b20d8f]/20"
           />
         </div>
       </div>
@@ -313,7 +312,7 @@ export default function CreatorsForm() {
       <label className="flex items-start gap-3 cursor-pointer">
         <div
           onClick={() => !loading && updateField('termsAndConditions', !formData.termsAndConditions)}
-          className={`mt-0.5 w-5 h-5 rounded flex-shrink-0 border-2 flex items-center justify-center transition-colors cursor-pointer ${formData.termsAndConditions ? 'bg-[#4259f0] border-[#4259f0]' : fieldErrors.termsAndConditions ? 'border-red-400 bg-red-50' : 'border-gray-300 bg-white'}`}
+          className={`mt-0.5 w-5 h-5 rounded flex-shrink-0 border-2 flex items-center justify-center transition-colors cursor-pointer ${formData.termsAndConditions ? 'bg-[#b20d8f] border-[#b20d8f]' : fieldErrors.termsAndConditions ? 'border-red-400 bg-red-50' : 'border-gray-300 bg-white'}`}
         >
           {formData.termsAndConditions && (
             <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor">
@@ -323,9 +322,9 @@ export default function CreatorsForm() {
         </div>
         <span className="text-sm text-gray-600 leading-relaxed">
           I agree to the{' '}
-          <a href="/terms-of-service" className="text-[#4259f0] hover:underline">Terms of Service</a>,{' '}
-          <a href="/privacy-policy" className="text-[#4259f0] hover:underline">Privacy Policy</a>, and{' '}
-          <a href="/creators-policy" className="text-[#4259f0] hover:underline">Creators Program Policy</a> *
+          <a href="/terms-of-service" className="text-[#b20d8f] hover:underline">Terms of Service</a>,{' '}
+          <a href="/privacy-policy" className="text-[#b20d8f] hover:underline">Privacy Policy</a>, and{' '}
+          <a href="/creators-policy" className="text-[#b20d8f] hover:underline">Creators Program Policy</a> *
         </span>
       </label>
       {fieldErrors.termsAndConditions && <p className="text-xs text-red-500">You must agree to the terms</p>}
@@ -334,7 +333,7 @@ export default function CreatorsForm() {
         type="submit"
         disabled={loading}
         className="w-full rounded-xl py-4 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:opacity-90 active:scale-[0.98] disabled:opacity-60"
-        style={{ background: loading ? '#9ca3af' : 'linear-gradient(135deg, #7c5af3, #4259f0)' }}
+        style={{ background: loading ? '#9ca3af' : 'linear-gradient(135deg, #f5184c, #b20d8f)' }}
       >
         {loading ? 'Submitting...' : 'Apply to Creators Program →'}
       </button>

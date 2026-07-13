@@ -162,7 +162,7 @@ export default function AboutPage() {
             </p>
             <a
               href={siteConfig.urls.appSignup}
-              className="inline-flex rounded-xl px-8 py-3.5 text-sm font-semibold text-white shadow-lg [background:linear-gradient(135deg,#7c5af3,#4259f0)]"
+              className="inline-flex rounded-xl px-8 py-3.5 text-sm font-semibold text-white shadow-lg [background:linear-gradient(135deg,#f5184c,#b20d8f)]"
             >
               Get Started Free
             </a>

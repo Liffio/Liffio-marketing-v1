@@ -20,29 +20,26 @@ import { FaqPageJsonLd } from "@/lib/seo/json-ld";
 export const metadata = pageSeo.signup;
 
 const WHY_PILLS = [
-  { icon: "⚡", text: "Rapid fast replies" },
-  { icon: "🔒", text: metaCopy.signupCompliancePill },
-  { icon: "🚀", text: "No coding, no setup complexity" },
-  { icon: "🎯", text: "Works 24/7 on complete autopilot" },
+  { text: "Rapid fast replies" },
+  { text: metaCopy.signupCompliancePill },
+  { text: "No coding, no setup complexity" },
+  { text: "Works 24/7 on complete autopilot" },
 ];
 
 const FEATURES = [
   {
-    icon: "💬",
     title: "Comment → DM Automation",
     description:
       "Someone comments a keyword on your post → Liffio sends them a personalised DM on your schedule. Set a custom delay from 10–60 seconds for more human-like replies, around the clock.",
     tag: "Core engine",
   },
   {
-    icon: "📊",
     title: "Full Conversion Analytics",
     description:
       "Track every step: comment → DM → click → sale. Know exactly which posts, keywords, and flows are driving revenue - not just DM volume.",
     tag: "Advanced",
   },
   {
-    icon: "🔗",
     title: "Smart Link Delivery",
     description:
       "Branded short links with click tracking and UTM attribution built into every automated DM. Every URL delivered is fully measurable end-to-end.",
@@ -71,8 +68,8 @@ const BENEFITS = [
 function Check() {
   return (
     <svg viewBox="0 0 16 16" className="h-4 w-4 flex-shrink-0 mt-0.5" fill="none">
-      <circle cx="8" cy="8" r="8" fill="rgba(124,90,243,0.12)" />
-      <path d="M4.5 8.5l2 2 4.5-5" stroke="#7c5af3" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="8" cy="8" r="8" fill="rgba(245, 24, 76,0.12)" />
+      <path d="M4.5 8.5l2 2 4.5-5" stroke="#f5184c" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -94,7 +91,7 @@ export default async function SignupPage() {
         {/* ── Hero: 2-col split ──────────────────────────────────── */}
         <section
           className="py-14 sm:py-20 px-4"
-          style={{ background: "linear-gradient(155deg,#f8f5ff 0%,#f0ebff 50%,#faf5ff 100%)" }}
+          style={{ background: "linear-gradient(155deg,#fff1f2 0%,#ffe4e6 50%,#fff4f2 100%)" }}
         >
           <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
@@ -134,7 +131,7 @@ export default async function SignupPage() {
                 <span
                   style={{
                     background:
-                      "linear-gradient(130deg,#a855f7 0%,#7c5af3 45%,#4259f0 100%)",
+                      "linear-gradient(130deg,#ff7c49 0%,#f5184c 45%,#b20d8f 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                   }}
@@ -156,7 +153,6 @@ export default async function SignupPage() {
                     label={p.text}
                     variant="chip"
                     format="label"
-                    icon={<span className="text-[0.85em] leading-none">{p.icon}</span>}
                   />
                 ))}
               </div>
@@ -167,7 +163,7 @@ export default async function SignupPage() {
                   <div
                     key={s.label}
                     className="rounded-2xl px-3 py-3 text-center"
-                    style={{ background: "white", border: "1px solid rgba(124,90,243,0.1)" }}
+                    style={{ background: "white", border: "1px solid rgba(245, 24, 76,0.1)" }}
                   >
                     <div
                       className="text-lg font-extrabold text-[#0a0a0a]"
@@ -196,9 +192,9 @@ export default async function SignupPage() {
               <div
                 className="rounded-3xl p-7 sm:p-8 bg-white"
                 style={{
-                  border: "1px solid rgba(124,90,243,0.14)",
+                  border: "1px solid rgba(245, 24, 76,0.14)",
                   boxShadow:
-                    "0 8px 40px rgba(124,90,243,0.12), 0 2px 8px rgba(0,0,0,0.04)",
+                    "0 8px 40px rgba(245, 24, 76,0.12), 0 2px 8px rgba(0,0,0,0.04)",
                 }}
               >
                 <div className="mb-6">
@@ -218,7 +214,7 @@ export default async function SignupPage() {
                 {/* Trust row */}
                 <div
                   className="mt-5 pt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5"
-                  style={{ borderTop: "1px solid rgba(124,90,243,0.08)" }}
+                  style={{ borderTop: "1px solid rgba(245, 24, 76,0.08)" }}
                 >
                   {getSignupTrustRow().map((t) => (
                     <span key={t} className="flex items-center gap-1 text-[11px] text-gray-500">
@@ -241,7 +237,7 @@ export default async function SignupPage() {
         {/* ── Features strip ──────────────────────────────────────── */}
         <section className="py-16 px-4 bg-white">
           <div className="mx-auto max-w-6xl">
-            <p className="text-center text-xs font-bold uppercase tracking-widest text-[#7c5af3] mb-8">
+            <p className="text-center text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-8">
               What&apos;s included on every plan
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -250,18 +246,17 @@ export default async function SignupPage() {
                   key={f.title}
                   className="group rounded-2xl p-6 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
                   style={{
-                    border: "1px solid rgba(124,90,243,0.1)",
-                    boxShadow: "0 2px 12px rgba(124,90,243,0.05)",
+                    border: "1px solid rgba(245, 24, 76,0.1)",
+                    boxShadow: "0 2px 12px rgba(245, 24, 76,0.05)",
                   }}
                 >
-                  <div className="text-2xl mb-4">{f.icon}</div>
                   <h3 className="text-base font-bold text-[#0a0a0a] mb-2">{f.title}</h3>
                   <p className="text-sm text-gray-500 leading-relaxed mb-4">{f.description}</p>
                   <span
-                    className="inline-flex items-center gap-1 text-xs font-bold text-[#7c5af3] rounded-full px-3 py-1"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-[#f5184c] rounded-full px-3 py-1"
                     style={{
-                      background: "rgba(124,90,243,0.07)",
-                      border: "1px solid rgba(124,90,243,0.15)",
+                      background: "rgba(245, 24, 76,0.07)",
+                      border: "1px solid rgba(245, 24, 76,0.15)",
                     }}
                   >
                     {f.tag} →
@@ -273,16 +268,15 @@ export default async function SignupPage() {
         </section>
 
         {/* ── Creators Program CTA ──────────────────────────────── */}
-        <section className="py-12 px-4" style={{ background: "#faf8ff" }}>
+        <section className="py-12 px-4" style={{ background: "#fff7f7" }}>
           <div
             className="mx-auto max-w-3xl rounded-3xl p-8 sm:p-10 text-center"
             style={{
               background: "white",
-              border: "1px solid rgba(124,90,243,0.14)",
-              boxShadow: "0 4px 24px rgba(124,90,243,0.08)",
+              border: "1px solid rgba(245, 24, 76,0.14)",
+              boxShadow: "0 4px 24px rgba(245, 24, 76,0.08)",
             }}
           >
-            <div className="text-3xl mb-4">🎯</div>
             <h2
               className="text-2xl sm:text-3xl font-bold text-[#0a0a0a] mb-3"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
@@ -297,8 +291,8 @@ export default async function SignupPage() {
               href="/creators-program"
               className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90"
               style={{
-                background: "linear-gradient(135deg,#7c5af3,#4259f0)",
-                boxShadow: "0 4px 20px rgba(66,89,240,0.28)",
+                background: "linear-gradient(135deg,#f5184c,#b20d8f)",
+                boxShadow: "0 4px 20px rgba(178, 13, 143,0.28)",
               }}
             >
               Apply to Creators Program →

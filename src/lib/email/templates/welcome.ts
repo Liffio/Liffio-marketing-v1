@@ -10,9 +10,9 @@ interface WelcomeEmailData {
 
 export function getWelcomeEmailSubject({ name, discount, hasDiscount }: WelcomeEmailData): string {
   if (hasDiscount) {
-    return `🎉 You're in, ${name}! Your ${discount}% off code is inside`;
+    return `You're in, ${name}! Your ${discount}% off code is inside`;
   }
-  return `🎉 Welcome aboard, ${name}! You're on the early access list`;
+  return `Welcome aboard, ${name}! You're on the early access list`;
 }
 
 export function getWelcomeEmailText({
@@ -60,8 +60,8 @@ export function getWelcomeEmailHtml({
   const welcomeBadgeText = hasDiscount ? `✓ ${discount}% DISCOUNT SECURED` : "✓ EARLY ACCESS CONFIRMED";
 
   const greetingText = hasDiscount
-    ? `You've secured <strong style="color: #4259f0;">spot #${spotNumber}</strong> on our exclusive early access list. As a thank you, we've locked in a <strong style="color: #7c5af3;">${discount}% discount</strong> for you.`
-    : `You've secured <strong style="color: #4259f0;">spot #${spotNumber}</strong> on our early access list. You'll be among the first to experience ${brand.name} when we launch!`;
+    ? `You've secured <strong style="color: #b20d8f;">spot #${spotNumber}</strong> on our exclusive early access list. As a thank you, we've locked in a <strong style="color: #f5184c;">${discount}% discount</strong> for you.`
+    : `You've secured <strong style="color: #b20d8f;">spot #${spotNumber}</strong> on our early access list. You'll be among the first to experience ${brand.name} when we launch!`;
 
   const whatNextText = hasDiscount
     ? `We'll reach out on launch day with your exclusive invite. Your ${discount}% discount will be automatically linked to your account, or you can use the code below.`
@@ -71,8 +71,8 @@ export function getWelcomeEmailHtml({
     ? `
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top: 32px;">
       <tr>
-        <td style="background-color: #f3f0ff; border: 2px dashed #bfb0fb; border-radius: 16px; padding: 32px; text-align: center;">
-          <p style="margin: 0 0 12px 0; font-size: 12px; color: #4259f0; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">YOUR PERSONAL DISCOUNT CODE</p>
+        <td style="background-color: #fff1f2; border: 2px dashed #fda4af; border-radius: 16px; padding: 32px; text-align: center;">
+          <p style="margin: 0 0 12px 0; font-size: 12px; color: #b20d8f; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">YOUR PERSONAL DISCOUNT CODE</p>
           <div style="display: inline-block; background-color: #ffffff; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px 32px; margin-bottom: 16px;">
             <span style="font-family: 'Courier New', Courier, monospace; font-size: 32px; font-weight: 800; color: #111827; letter-spacing: 0.15em;">${discountCode}</span>
           </div>
@@ -84,8 +84,8 @@ export function getWelcomeEmailHtml({
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top: 32px;">
       <tr>
         <td style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 16px; padding: 32px; text-align: center;">
-          <p style="margin: 0 0 8px 0; font-size: 12px; color: #4259f0; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">RESERVATION STATUS</p>
-          <p style="margin: 0; font-size: 24px; font-weight: 800; color: #0F172A;">You're on the list! 🎯</p>
+          <p style="margin: 0 0 8px 0; font-size: 12px; color: #b20d8f; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">RESERVATION STATUS</p>
+          <p style="margin: 0; font-size: 24px; font-weight: 800; color: #0F172A;">You're on the list!</p>
           <p style="margin: 12px 0 0 0; font-size: 13px; color: #64748B;">Estimated Launch: ${launch.badgeText.replace("Launching ", "")}</p>
         </td>
       </tr>
@@ -108,7 +108,7 @@ export function getWelcomeEmailHtml({
             <td align="center" style="padding-bottom: 40px;">
               <table role="presentation" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td style="background: linear-gradient(135deg, #7c5af3 0%, #4259f0 100%); width: 40px; height: 40px; border-radius: 12px; text-align: center; vertical-align: middle;">
+                  <td style="background: linear-gradient(135deg, #f5184c 0%, #b20d8f 100%); width: 40px; height: 40px; border-radius: 12px; text-align: center; vertical-align: middle;">
                     <span style="color: #ffffff; font-size: 18px; font-weight: 800; font-family: sans-serif;">L</span>
                   </td>
                   <td style="padding-left: 12px; font-family: sans-serif; font-size: 22px; font-weight: 800; color: #111827; letter-spacing: -0.02em;">${brand.name}</td>
@@ -121,7 +121,7 @@ export function getWelcomeEmailHtml({
               <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td align="center" style="padding-bottom: 24px;">
-                    <span style="display: inline-block; background-color: #f3f0ff; color: #4259f0; font-family: sans-serif; font-size: 11px; font-weight: 700; padding: 8px 20px; border-radius: 100px; letter-spacing: 0.08em; border: 1px solid #bfb0fb;">
+                    <span style="display: inline-block; background-color: #fff1f2; color: #b20d8f; font-family: sans-serif; font-size: 11px; font-weight: 700; padding: 8px 20px; border-radius: 100px; letter-spacing: 0.08em; border: 1px solid #fda4af;">
                       ${welcomeBadgeText}
                     </span>
                   </td>
@@ -130,7 +130,7 @@ export function getWelcomeEmailHtml({
               <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td align="center" style="padding-bottom: 20px;">
-                    <h1 style="margin: 0; font-family: sans-serif; font-size: 36px; font-weight: 800; color: #111827; line-height: 1.1; letter-spacing: -0.03em;">You're on the list, ${name}! 🎉</h1>
+                    <h1 style="margin: 0; font-family: sans-serif; font-size: 36px; font-weight: 800; color: #111827; line-height: 1.1; letter-spacing: -0.03em;">You're on the list, ${name}!</h1>
                   </td>
                 </tr>
                 <tr>

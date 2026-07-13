@@ -44,15 +44,15 @@ function FlowStep({
       onClick={onClick}
       className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-[10px] font-semibold transition-all duration-300 ${
         active
-          ? "bg-white text-[#7c5af3] shadow-md ring-1 ring-[#7c5af3]/25"
+          ? "bg-white text-[#f5184c] shadow-md ring-1 ring-[#f5184c]/25"
           : done
-            ? "bg-white/60 text-[#7c5af3]/80"
+            ? "bg-white/60 text-[#f5184c]/80"
             : "bg-white/40 text-gray-500 hover:bg-white/70"
       }`}
     >
       <span
         className={`flex h-4 w-4 items-center justify-center rounded-full text-[8px] font-bold ${
-          done ? "bg-[#7c5af3] text-white" : active ? "bg-[#7c5af3]/15 text-[#7c5af3]" : "bg-gray-200 text-gray-500"
+          done ? "bg-[#f5184c] text-white" : active ? "bg-[#f5184c]/15 text-[#f5184c]" : "bg-gray-200 text-gray-500"
         }`}
       >
         {done ? "✓" : label[0]}
@@ -174,8 +174,8 @@ export default function HeroInteractiveDemo() {
         style={{ animationDelay: "0.2s" }}
       >
         <div className="flex items-center gap-3 rounded-2xl border border-white/80 bg-white/90 px-4 py-3 shadow-lg backdrop-blur-md">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#7c5af3]/15 to-[#4259f0]/10">
-            <svg className="h-5 w-5 text-[#4259f0]" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" aria-hidden>
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#f5184c]/15 to-[#b20d8f]/10">
+            <svg className="h-5 w-5 text-[#b20d8f]" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" aria-hidden>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
             </svg>
           </div>
@@ -194,8 +194,8 @@ export default function HeroInteractiveDemo() {
         style={{ animationDelay: "0.8s" }}
       >
         <div className="flex items-center gap-3 rounded-2xl border border-white/80 bg-white/90 px-4 py-3 shadow-lg backdrop-blur-md">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#a855f7]/15 to-[#ec4899]/10">
-            <svg className="h-5 w-5 text-[#7c5af3]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#ff7c49]/15 to-[#f5184c]/10">
+            <svg className="h-5 w-5 text-[#f5184c]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden>
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
             </svg>
           </div>
@@ -214,12 +214,12 @@ export default function HeroInteractiveDemo() {
       {/* Auto-DM flash connector */}
       {dmFlash && (
         <div className="pointer-events-none absolute left-1/2 top-[38%] z-30 -translate-x-1/2 -translate-y-1/2">
-          <div className="hero-dm-flash flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-xl ring-2 ring-[#7c5af3]/30">
+          <div className="hero-dm-flash flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-xl ring-2 ring-[#f5184c]/30">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#7c5af3] opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#7c5af3]" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#f5184c] opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#f5184c]" />
             </span>
-            <span className="text-[11px] font-bold text-[#7c5af3]">Auto DM · 1.2s</span>
+            <span className="text-[11px] font-bold text-[#f5184c]">Auto DM · 1.2s</span>
           </div>
         </div>
       )}
@@ -305,7 +305,7 @@ export default function HeroInteractiveDemo() {
                       {i === activeSlide && (
                         <span
                           className="absolute inset-y-0 left-0 rounded-full transition-all duration-100"
-                          style={{ width: `${progress}%`, background: `linear-gradient(90deg,${d.accent},#7c5af3)` }}
+                          style={{ width: `${progress}%`, background: `linear-gradient(90deg,${d.accent},#f5184c)` }}
                         />
                       )}
                     </button>
@@ -356,7 +356,7 @@ export default function HeroInteractiveDemo() {
                           )}
                           <div
                             className={`max-w-[84%] rounded-2xl px-3 py-2 shadow-sm ${
-                              isOut ? "rounded-br-md bg-[#4259f0] text-white" : "rounded-bl-md border border-gray-100 bg-white"
+                              isOut ? "rounded-br-md bg-[#b20d8f] text-white" : "rounded-bl-md border border-gray-100 bg-white"
                             }`}
                           >
                             <p className={`text-[10px] leading-snug ${isOut ? "text-white" : "text-gray-800"}`}>{step.msg}</p>
@@ -364,7 +364,7 @@ export default function HeroInteractiveDemo() {
                               <button
                                 type="button"
                                 className="mt-1.5 w-full rounded-lg px-2 py-1.5 text-center transition-transform hover:scale-[1.02] active:scale-[0.98]"
-                                style={{ background: "linear-gradient(135deg,#7c5af3,#4259f0)" }}
+                                style={{ background: "linear-gradient(135deg,#f5184c,#b20d8f)" }}
                               >
                                 <span className="text-[9px] font-bold text-white">{step.cta}</span>
                               </button>
@@ -397,14 +397,14 @@ export default function HeroInteractiveDemo() {
 
       {/* Interactive flow controls */}
       <div className="mt-4 flex flex-col items-center gap-2 sm:mt-5 sm:gap-3">
-        <div className="flex max-w-full flex-wrap items-center justify-center gap-1.5 rounded-full border border-[#7c5af3]/15 bg-white/70 p-1 shadow-sm backdrop-blur-sm sm:gap-2">
+        <div className="flex max-w-full flex-wrap items-center justify-center gap-1.5 rounded-full border border-[#f5184c]/15 bg-white/70 p-1 shadow-sm backdrop-blur-sm sm:gap-2">
           <FlowStep
             active={showPost}
             done={autoShowDm}
             label="Post & comment"
             onClick={() => setForceScreen("post")}
           />
-          <svg className="h-3.5 w-3.5 text-[#7c5af3]/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
+          <svg className="h-3.5 w-3.5 text-[#f5184c]/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
             <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
           </svg>
           <FlowStep

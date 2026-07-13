@@ -208,11 +208,11 @@ export function getPricingPlans(region: PricingRegion): PricingPlan[] {
 }
 
 export const pricingPerks = [
-  { icon: "🔒", label: "No contracts" },
-  { icon: "↩️", label: "Cancel anytime" },
-  { icon: "💳", label: "No credit card required" },
-  { icon: "⚡", label: "Instant setup" },
-  { icon: "🌍", label: "Stripe + Razorpay billing" },
+  { label: "No contracts" },
+  { label: "Cancel anytime" },
+  { label: "No credit card required" },
+  { label: "Instant setup" },
+  { label: "Stripe + Razorpay billing" },
 ];
 
 export function getFreePlanFaqAnswer(region: PricingRegion): string {

@@ -9,10 +9,17 @@ const footerLinks = {
     { label: "Help Center", href: "/help" },
   ],
   Company: [
-    { label: "About", href: "/#about" },
+    { label: "About", href: "/about" },
     { label: "Creators Program", href: "/creators-program" },
     { label: "Affiliate Program", href: "/affiliate" },
     { label: "Contact", href: "/help#contact" },
+  ],
+  Compare: [
+    { label: "Liffio vs ManyChat", href: "/manychat-alternative" },
+    { label: "Liffio vs ReplyRush", href: "/vs/replyrush" },
+    { label: "Liffio vs LinkDM", href: "/vs/linkdm" },
+    { label: "Liffio vs SuperProfile", href: "/vs/superprofile" },
+    { label: "See all comparisons", href: "/compare" },
   ],
   Legal: [
     { label: "Privacy Policy", href: "/privacy-policy" },
@@ -59,7 +66,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-950 text-gray-400">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-12">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6 lg:gap-12">
           <div className="col-span-2 lg:col-span-2">
             <Logo theme="dark" />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-gray-400">

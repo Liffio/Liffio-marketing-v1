@@ -12,7 +12,9 @@ import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
 import AboutSection from "@/components/AboutSection";
 import Footer from "@/components/Footer";
-import { getFaqCategories } from "@/config/faq.config";
+import { TrackSection } from "@/lib/analytics/TrackSection";
+import { LandingStepTracker } from "@/lib/analytics/LandingStepTracker";
+import { getHomepageFaqCategories } from "@/config/faq.config";
 import { getPricingContext } from "@/lib/pricing-region.server";
 import {
   fetchMarketingPlansContext,
@@ -26,7 +28,7 @@ export const metadata: Metadata = rootSeo;
 export default async function Home() {
   const { region, countryCode } = await getPricingContext();
   const { plans, businessPlanValue } = await fetchMarketingPlansContext(region);
-  const faqCategories = getFaqCategories(region, {
+  const faqCategories = getHomepageFaqCategories(region, {
     freePlanFaqAnswer: buildFreePlanFaqAnswer(region, plans),
     plansOfferedFaqAnswer: buildPlansOfferedFaqAnswer(region, plans),
     creatorsProgramFaqAnswer: buildCreatorsProgramFaqAnswer(businessPlanValue),
@@ -37,11 +39,32 @@ export default async function Home() {
       <SoftwareApplicationJsonLd />
       <FaqPageJsonLd categories={faqCategories} />
       <Navbar />
+      <LandingStepTracker />
       <main id="main-content" className="flex-1">
-        <HeroSection />
-        <section aria-label="About Liffio" className="bg-[#faf8ff] border-y border-[#ede9fd] py-10 sm:py-14">
+        <TrackSection name="hero">
+          <HeroSection />
+        </TrackSection>
+        <StatsSection />
+        <TrackSection name="features">
+          <FeaturesSection />
+        </TrackSection>
+        <TrackSection name="how_it_works">
+          <HowItWorksSection />
+        </TrackSection>
+        <TrackSection name="testimonials">
+          <TestimonialsSection />
+        </TrackSection>
+        <TrackSection name="pricing">
+          <PricingSection plans={plans} region={region} countryCode={countryCode} />
+        </TrackSection>
+        <SeoDiscoverabilitySection />
+        <TrackSection name="faq">
+          <FAQSection categories={faqCategories} />
+        </TrackSection>
+        <AboutSection />
+        <section aria-label="About Liffio" className="py-10 sm:py-12">
           <div className="mx-auto max-w-3xl px-4 sm:px-6">
-            <div className="rounded-2xl border border-[#ede9fd] bg-white px-6 py-7 sm:px-8 sm:py-8 shadow-sm space-y-4 text-gray-600 leading-relaxed text-base">
+            <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
               <p>
                 Liffio is an Instagram DM automation tool built for creators, coaches, and agencies
                 who want to respond to audience interactions without doing it manually. When someone
@@ -55,19 +78,12 @@ export default async function Home() {
                 supports eight workflow types: comment-to-DM, story reply, live reply, DM reply,
                 follow gating, re-engagement, data collection, and welcome messages. Pricing starts
                 at $0 and scales to $299 per month for agencies managing multiple accounts. Liffio
-                is built in India, and used by more than 2,000 creators across 40+ countries.
+                is built in India, and used by more than 2,000 creators across 40+ countries.{' '}
+                <a href="/about" className="underline underline-offset-2 hover:text-foreground transition-colors">Learn more about Liffio.</a>
               </p>
             </div>
           </div>
         </section>
-        <StatsSection />
-        <FeaturesSection />
-        <HowItWorksSection />
-        <TestimonialsSection />
-        <PricingSection plans={plans} region={region} countryCode={countryCode} />
-        <SeoDiscoverabilitySection />
-        <FAQSection categories={faqCategories} />
-        <AboutSection />
       </main>
       <Footer />
     </>

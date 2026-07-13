@@ -11,10 +11,10 @@ import type { PricingRegion } from "@/lib/pricing-region";
 function CheckIcon({ light }: { light?: boolean }) {
   return (
     <svg viewBox="0 0 16 16" className="mt-0.5 h-3.5 w-3.5 shrink-0" fill="none" aria-hidden>
-      <circle cx="8" cy="8" r="8" fill={light ? "rgba(255,255,255,0.2)" : "rgba(124,90,243,0.12)"} />
+      <circle cx="8" cy="8" r="8" fill={light ? "rgba(255,255,255,0.2)" : "rgba(245, 24, 76,0.12)"} />
       <path
         d="M4.5 8.5l2 2 4.5-5"
-        stroke={light ? "white" : "#7c5af3"}
+        stroke={light ? "white" : "#f5184c"}
         strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -30,11 +30,11 @@ function MobilePlanCard({ plan, annual }: { plan: PricingPlan; annual: boolean }
   return (
     <article
       className={`flex h-full min-h-[300px] w-[min(calc(100vw-2rem),300px)] shrink-0 snap-center flex-col rounded-2xl p-4 sm:w-[300px] ${
-        light ? "shadow-[0_16px_48px_rgba(66,89,240,0.28)]" : "border border-brand-100/90 bg-white shadow-sm"
+        light ? "shadow-[0_16px_48px_rgba(178, 13, 143,0.28)]" : "border border-border bg-white shadow-sm"
       }`}
       style={
         light
-          ? { background: "linear-gradient(155deg,#7c5af3,#5648ea,#4259f0)" }
+          ? { background: "linear-gradient(155deg,#ff7c49,#f5184c,#b20d8f)" }
           : undefined
       }
     >
@@ -68,11 +68,13 @@ function MobilePlanCard({ plan, annual }: { plan: PricingPlan; annual: boolean }
 
       <a
         href={plan.href}
+        data-cta={plan.name === "Free" ? "pricing_start_free" : "pricing_upgrade"}
+        data-signup-cta="true"
         className="block w-full rounded-xl py-2.5 text-center text-sm font-semibold transition-all active:scale-[0.98]"
         style={
           light
-            ? { background: "white", color: "#4259f0" }
-            : { background: "linear-gradient(135deg,#7c5af3,#4259f0)", color: "white" }
+            ? { background: "white", color: "#b20d8f" }
+            : { background: "linear-gradient(135deg,#f5184c,#b20d8f)", color: "white" }
         }
       >
         {plan.cta}
@@ -92,7 +94,7 @@ function PricingMobilePreview({ plans }: { plans: PricingPlan[] }) {
           type="button"
           onClick={() => setAnnual(!annual)}
           className="relative h-6 w-11 rounded-full transition-colors duration-300"
-          style={{ background: annual ? "linear-gradient(135deg,#7c5af3,#4259f0)" : "#e4e4e7" }}
+          style={{ background: annual ? "linear-gradient(135deg,#f5184c,#b20d8f)" : "#e4e4e7" }}
           aria-label="Toggle annual billing"
         >
           <span
@@ -117,13 +119,13 @@ function PricingMobilePreview({ plans }: { plans: PricingPlan[] }) {
         ))}
       </div>
 
-      <div className="mt-5 rounded-xl border border-brand-100/80 bg-brand-50/40 px-4 py-3 text-center">
+      <div className="mt-5 rounded-xl border border-border bg-muted/30 px-4 py-3 text-center">
         <p className="text-xs leading-relaxed text-gray-600">
           Compare all features, annual billing, and the full plan matrix on the pricing page.
         </p>
         <AppLink
           href="/pricing"
-          className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-brand-200 bg-white py-3 text-sm font-semibold text-brand-700 shadow-sm transition-colors hover:bg-brand-50"
+          className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-white py-3 text-sm font-semibold text-brand-700 shadow-sm transition-colors hover:bg-brand-50"
         >
           View full pricing & features
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" aria-hidden>
@@ -146,7 +148,7 @@ export default function PricingSection({ plans, region, countryCode = null }: Pr
     <section id="pricing" className="section-py relative overflow-hidden bg-white">
       <div
         className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: "linear-gradient(90deg,transparent,rgba(124,90,243,0.12),transparent)" }}
+        style={{ background: "linear-gradient(90deg,transparent,rgba(245, 24, 76,0.12),transparent)" }}
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

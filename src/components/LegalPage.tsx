@@ -24,7 +24,7 @@ export default async function LegalPage({ title, lastUpdated, content }: LegalPa
     <>
       <Navbar />
       <main id="main-content" className="flex-1">
-        <section className="hero-gradient border-b border-brand-100/60 py-14 sm:py-18">
+        <section className="hero-gradient py-14 sm:py-18">
           <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
             <h1
               className="text-3xl font-extrabold text-[#0a0a0a] sm:text-4xl"

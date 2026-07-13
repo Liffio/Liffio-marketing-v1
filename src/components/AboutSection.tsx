@@ -2,10 +2,10 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="scroll-mt-20 border-t border-gray-100 bg-white py-20 sm:py-24"
+      className="scroll-mt-20 bg-white py-20 sm:py-24"
     >
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-        <p className="text-xs font-bold uppercase tracking-widest text-[#7c5af3] mb-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-3">
           About Liffio
         </p>
         <h2
@@ -34,7 +34,7 @@ export default function AboutSection() {
         <div className="flex flex-wrap justify-center gap-4">
           <a
             href="/creators-program"
-            className="rounded-xl border border-[#ede9fd] bg-[#faf8ff] px-6 py-3 text-sm font-semibold text-[#7c5af3] transition-colors hover:bg-[#ede9fd]"
+            className="rounded-xl border border-[#ffe4e6] bg-[#fff7f7] px-6 py-3 text-sm font-semibold text-[#f5184c] transition-colors hover:bg-[#ffe4e6]"
           >
             Creators Program →
           </a>

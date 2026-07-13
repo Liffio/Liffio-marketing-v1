@@ -24,15 +24,15 @@ export function SimulationShell({
         isHero
           ? {
               background:
-                "linear-gradient(145deg, rgba(245,240,255,0.95) 0%, rgba(237,232,254,0.9) 45%, rgba(248,245,255,0.95) 100%)",
-              border: "1px solid rgba(124,90,243,0.2)",
+                "linear-gradient(145deg, rgba(255,241,242,0.95) 0%, rgba(255,228,230,0.9) 45%, rgba(255,244,242,0.95) 100%)",
+              border: "1px solid rgba(245, 24, 76,0.2)",
               boxShadow:
-                "0 24px 80px rgba(66,89,240,0.18), 0 8px 32px rgba(124,90,243,0.1), inset 0 1px 0 rgba(255,255,255,0.8)",
+                "0 24px 80px rgba(178, 13, 143,0.18), 0 8px 32px rgba(245, 24, 76,0.1), inset 0 1px 0 rgba(255,255,255,0.8)",
             }
           : {
-              background: "linear-gradient(145deg,#f5f0ff,#ede8fe 55%,#f8f5ff)",
-              border: "1px solid rgba(124,90,243,0.16)",
-              boxShadow: "0 20px 60px rgba(66,89,240,0.13), 0 4px 16px rgba(124,90,243,0.08)",
+              background: "linear-gradient(145deg,#f8f8fa,#f1f1f3 55%,#f8f8fa)",
+              border: "1px solid rgba(20, 20, 30,0.08)",
+              boxShadow: "0 20px 60px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04)",
             }
       }
     >
@@ -40,12 +40,12 @@ export function SimulationShell({
         <>
           <div
             className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-60 blur-3xl hero-orb-a"
-            style={{ background: "rgba(168,85,247,0.25)" }}
+            style={{ background: "rgba(255, 124, 73,0.25)" }}
             aria-hidden
           />
           <div
             className="pointer-events-none absolute -bottom-12 -left-12 h-40 w-40 rounded-full opacity-50 blur-3xl hero-orb-b"
-            style={{ background: "rgba(66,89,240,0.2)" }}
+            style={{ background: "rgba(178, 13, 143,0.2)" }}
             aria-hidden
           />
           <div
@@ -61,9 +61,9 @@ export function SimulationShell({
 
       <div
         className={`absolute left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full bg-white/95 px-3.5 py-1.5 backdrop-blur-md ${
-          isHero ? "top-5 shadow-lg ring-1 ring-[#7c5af3]/15" : "top-4 shadow-sm"
+          isHero ? "top-5 shadow-lg ring-1 ring-[#f5184c]/15" : "top-4 shadow-sm"
         }`}
-        style={{ border: "1px solid rgba(124,90,243,0.12)" }}
+        style={{ border: "1px solid rgba(245, 24, 76,0.12)" }}
       >
         <LiffioLogoMark theme="light" size="xs" className="!h-3.5" />
         

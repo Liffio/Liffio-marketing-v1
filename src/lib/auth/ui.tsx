@@ -1,13 +1,19 @@
 'use client';
 
-import { useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode, type ReactElement } from 'react';
 
 // ── Card ──────────────────────────────────────────────────────────────────
 
-export function AuthCard({ children, wide }: { children: ReactNode; wide?: boolean }) {
+export function AuthCard({ children, wide, otpState }: { children: ReactNode; wide?: boolean; otpState?: OtpState }) {
+  const glow =
+    otpState === 'error'
+      ? 'shadow-[0_0_0_1px_hsl(var(--destructive)/0.18),0_0_48px_hsl(var(--destructive)/0.16)] !border-destructive/20'
+      : otpState === 'success'
+      ? 'shadow-[0_0_0_1px_hsl(var(--success)/0.18),0_0_48px_hsl(var(--success)/0.16)] !border-success/20'
+      : 'shadow-soft';
   return (
     <div
-      className={`w-full bg-white rounded-2xl shadow-lg border border-purple-100/60 p-8 ${wide ? 'max-w-lg' : 'max-w-md'}`}
+      className={`w-full bg-card rounded-2xl border p-5 sm:p-8 transition-[box-shadow,border-color] duration-300 ${wide ? 'max-w-lg' : 'max-w-md'} ${glow}`}
     >
       {children}
     </div>
@@ -18,7 +24,7 @@ export function AuthCard({ children, wide }: { children: ReactNode; wide?: boole
 
 export function Label({ htmlFor, children }: { htmlFor?: string; children: ReactNode }) {
   return (
-    <label htmlFor={htmlFor} className="block text-sm font-medium text-gray-700 mb-1">
+    <label htmlFor={htmlFor} className="block text-sm font-medium text-foreground mb-1">
       {children}
     </label>
   );
@@ -30,7 +36,7 @@ export function Input({ error, className = '', ...props }: InputProps) {
   return (
     <input
       {...props}
-      className={`w-full px-3 py-2.5 text-sm border rounded-xl bg-white text-gray-900 placeholder-gray-400 outline-none transition focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 ${error ? 'border-red-400' : 'border-gray-200'} ${className}`}
+      className={`w-full px-3 py-2.5 text-base border rounded-xl bg-background text-foreground placeholder:text-muted-foreground outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary ${error ? 'border-destructive' : 'border-input'} ${className}`}
     />
   );
 }
@@ -39,7 +45,7 @@ export function Textarea({ className = '', ...props }: React.TextareaHTMLAttribu
   return (
     <textarea
       {...props}
-      className={`w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-white text-gray-900 placeholder-gray-400 outline-none transition focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 resize-none ${className}`}
+      className={`w-full px-3 py-2.5 text-sm border border-input rounded-xl bg-background text-foreground placeholder:text-muted-foreground outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary resize-none ${className}`}
     />
   );
 }
@@ -51,8 +57,8 @@ export function Button({ variant = 'primary', loading, children, className = '',
   const base = 'inline-flex items-center justify-center gap-2 font-semibold text-sm rounded-xl px-4 py-2.5 transition disabled:opacity-50 disabled:cursor-not-allowed';
   const variants: Record<ButtonVariant, string> = {
     primary: 'bg-gradient-to-r from-brand-500 to-brand-600 text-white shadow-md hover:opacity-90',
-    outline: 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-50',
-    ghost: 'bg-transparent text-gray-500 hover:text-gray-700',
+    outline: 'border border-input bg-background text-foreground hover:bg-muted',
+    ghost: 'bg-transparent text-muted-foreground hover:text-foreground',
   };
   return (
     <button {...props} disabled={disabled || loading} className={`${base} ${variants[variant]} ${className}`}>
@@ -73,70 +79,157 @@ export function Spinner({ size = 20 }: { size?: number }) {
 
 // ── 6-digit OTP Input ─────────────────────────────────────────────────────
 
+export type OtpState = 'idle' | 'loading' | 'error' | 'success';
+
 export function OtpInput({
   value,
   onChange,
   disabled,
+  state = 'idle',
 }: {
   value: string;
   onChange: (v: string) => void;
   disabled?: boolean;
+  state?: OtpState;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [focused, setFocused] = useState(false);
+  // Track whether we're playing the blur-out dissolve before showing the success square.
+  // Triggers when state changes from 'loading' → 'success'.
+  const [blobPhase, setBlobPhase] = useState(false);
+  const prevStateRef = useRef<OtpState>('idle');
 
-  const digits = value.padEnd(6, ' ').slice(0, 6).split('');
+  const LEN = 6;
+  const digits = value.padEnd(LEN, ' ').slice(0, LEN).split('');
+  const filled = value.replace(/\s/g, '').length;
+  const cursorAt = Math.min(filled, LEN - 1);
 
-  function focusIndex(i: number) {
-    const inputs = containerRef.current?.querySelectorAll<HTMLInputElement>('input');
-    inputs?.[i]?.focus();
-  }
+  useEffect(() => { inputRef.current?.focus(); }, []);
 
-  function handleChange(i: number, raw: string) {
-    const d = raw.replace(/\D/g, '').slice(-1);
-    const next = [...digits];
-    next[i] = d || ' ';
-    const newVal = next.join('').trimEnd();
-    onChange(newVal);
-    if (d && i < 5) setTimeout(() => focusIndex(i + 1), 0);
-  }
-
-  function handleKeyDown(i: number, e: React.KeyboardEvent) {
-    if (e.key === 'Backspace') {
-      if (!digits[i]?.trim() && i > 0) {
-        const next = [...digits];
-        next[i - 1] = ' ';
-        onChange(next.join('').trimEnd());
-        setTimeout(() => focusIndex(i - 1), 0);
-      }
+  useEffect(() => {
+    if (state === 'success' && prevStateRef.current === 'loading') {
+      // Play the blur-dissolve for 420ms then show the success square
+      setBlobPhase(true);
+      const t = setTimeout(() => setBlobPhase(false), 420);
+      prevStateRef.current = state;
+      return () => clearTimeout(t);
     }
+    prevStateRef.current = state;
+  }, [state]);
+
+  // LOADING: cells stay in place, each gets a rotating conic-gradient arc border.
+  // SUCCESS + blobPhase: same cells layout but with blur-dissolve keyframe applied.
+  if (state === 'loading' || (state === 'success' && blobPhase)) {
+    const dissolving = state === 'success' && blobPhase;
+    return (
+      <div className={`flex gap-1.5 sm:gap-2 justify-center ${dissolving ? 'animate-otp-cells-blur' : ''}`}>
+        {Array.from({ length: LEN }).map((_, i) => {
+          const digit = digits[i]?.trim() || '';
+          return (
+            <div key={i} className="relative flex-shrink-0 w-10 h-11 sm:w-11 sm:h-[52px]">
+              {/* Rotating conic-gradient creates the sweeping arc border effect */}
+              <div className="absolute inset-0 rounded-xl overflow-hidden">
+                <div
+                  className="absolute inset-0 animate-otp-cell-spin"
+                  style={{
+                    background:
+                      'conic-gradient(from 0deg, transparent 0%, transparent 68%, hsl(var(--primary)/0.7) 80%, hsl(var(--primary)) 87%, hsl(var(--primary)/0.7) 94%, transparent 100%)',
+                  }}
+                />
+              </div>
+              {/* Inner face sits 2px inset so only the ring is visible */}
+              <div className="absolute inset-[2px] rounded-[10px] bg-card flex items-center justify-center text-lg sm:text-xl font-bold text-foreground select-none">
+                {digit}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 
-  function handlePaste(e: React.ClipboardEvent) {
-    e.preventDefault();
-    const text = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
-    if (text) {
-      onChange(text);
-      setTimeout(() => focusIndex(Math.min(text.length, 5)), 0);
-    }
+  // SUCCESS (after blur-dissolve completes): green bordered square + checkmark draws in
+  if (state === 'success') {
+    return (
+      <div className="flex justify-center">
+        <div className="animate-otp-square-in relative w-16 h-16">
+          <div className="absolute inset-0 rounded-2xl bg-success/10" />
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 64 64" fill="none">
+            <rect
+              x="2" y="2" width="60" height="60" rx="14"
+              stroke="hsl(var(--success))"
+              strokeWidth="2.5"
+              strokeDasharray="216"
+              strokeDashoffset="0"
+            />
+            <polyline
+              points="18,34 28,44 46,24"
+              stroke="hsl(var(--success))"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray="42"
+              style={{
+                strokeDashoffset: 42,
+                animation: 'otp-checkmark-draw 0.4s ease-out 0.06s forwards',
+              }}
+            />
+          </svg>
+        </div>
+      </div>
+    );
   }
 
+  // IDLE / ERROR: single hidden input + 6 display cells
   return (
-    <div ref={containerRef} className="flex gap-2 justify-center">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <input
-          key={i}
-          type="text"
-          inputMode="numeric"
-          maxLength={1}
-          value={digits[i]?.trim() || ''}
-          onChange={(e) => handleChange(i, e.target.value)}
-          onKeyDown={(e) => handleKeyDown(i, e)}
-          onPaste={handlePaste}
-          disabled={disabled}
-          className="w-11 h-13 text-center text-xl font-bold border-2 border-gray-200 rounded-xl bg-white text-gray-900 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 transition disabled:opacity-50"
-          style={{ lineHeight: '52px', height: 52 }}
-        />
-      ))}
+    <div
+      role="group"
+      aria-label="Verification code"
+      className={`relative flex gap-1.5 sm:gap-2 justify-center cursor-text ${state === 'error' ? 'animate-otp-shake' : ''}`}
+      onClick={() => !disabled && inputRef.current?.focus()}
+    >
+      <input
+        ref={inputRef}
+        type="text"
+        inputMode="numeric"
+        maxLength={LEN}
+        value={value.replace(/\s/g, '')}
+        onChange={(e) => onChange(e.target.value.replace(/\D/g, '').slice(0, LEN))}
+        onPaste={(e) => {
+          e.preventDefault();
+          const text = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, LEN);
+          if (text) onChange(text);
+        }}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        disabled={disabled}
+        autoComplete="one-time-code"
+        aria-label="Enter verification code"
+        className="sr-only"
+      />
+      {Array.from({ length: LEN }).map((_, i) => {
+        const digit = digits[i]?.trim() || '';
+        const isActive = focused && i === cursorAt;
+        const cellClass =
+          state === 'error'
+            ? 'border-destructive bg-destructive/5 text-destructive'
+            : isActive
+              ? 'border-primary ring-2 ring-primary/20 bg-background'
+              : digit
+                ? 'border-primary/60 bg-background text-foreground'
+                : 'border-input bg-background text-foreground';
+        return (
+          <div
+            key={i}
+            className={`w-10 h-11 sm:w-11 sm:h-[52px] flex items-center justify-center text-lg sm:text-xl font-bold border-2 rounded-xl select-none transition-all duration-150 ${cellClass}`}
+          >
+            {digit || (isActive
+              ? <span className="w-px h-4 sm:h-5 bg-primary rounded-full animate-pulse" />
+              : null
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -289,10 +382,10 @@ export function OrDivider() {
   return (
     <div className="relative my-5">
       <div className="absolute inset-0 flex items-center">
-        <span className="w-full border-t border-gray-200" />
+        <span className="w-full border-t border-border" />
       </div>
       <div className="relative flex justify-center text-xs">
-        <span className="bg-white px-3 py-0.5 rounded-full text-gray-400">or email</span>
+        <span className="bg-card px-3 py-0.5 rounded-full text-muted-foreground">or email</span>
       </div>
     </div>
   );
@@ -302,5 +395,5 @@ export function OrDivider() {
 
 export function ErrorMsg({ message }: { message?: string | null }) {
   if (!message) return null;
-  return <p className="text-xs text-red-500 mt-1">{message}</p>;
+  return <p className="text-xs text-destructive mt-1">{message}</p>;
 }
