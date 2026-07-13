@@ -25,6 +25,7 @@ import {
   OrDivider,
   OtpInput,
 } from '@/lib/auth/ui';
+import { identifyUser } from '@/lib/analytics/analytics';
 
 function LoginPageInner() {
   const router = useRouter();
@@ -93,6 +94,7 @@ function LoginPageInner() {
       authStore.setSession({ accessToken: loginSuccess.accessToken });
       const authMe = await getAuthMe({ token: loginSuccess.accessToken });
       authStore.setAuthMe(authMe);
+      identifyUser(authMe.user.id);
       await navigatePostAuth();
     } catch (err) {
       setError((err as Error).message);
@@ -110,6 +112,7 @@ function LoginPageInner() {
       authStore.setSession({ accessToken: result.accessToken });
       const authMe = await getAuthMe({ token: result.accessToken });
       authStore.setAuthMe(authMe);
+      identifyUser(authMe.user.id);
       await navigatePostAuth();
     } catch (err) {
       setMfaError((err as Error).message);
