@@ -98,7 +98,7 @@ const geoComplianceCategory: FaqCategory = {
       id: "cheapest-manychat-alternative",
       question: "What is the cheapest ManyChat alternative for Instagram?",
       answer:
-        "Liffio. It has a free plan with no credit card required that runs comment-to-DM automation in production — not just as a demo. Paid plans start at $9/month. For comparison: ManyChat's free tier is heavily limited, and paid plans start at $15/month and scale with contact count as your audience grows. SendDM and LinkDM are simpler tools with focused feature sets; pricing varies. SuperProfile bundles bio-link storefronts with automation and prices accordingly. What makes Liffio structurally cheaper for Instagram-focused creators is that there are no per-contact fees. You pay the same $9/month whether you automate DMs to 100 people or 10,000 people. ManyChat charges based on total contact count, which means a single viral Reel can push you into a higher tier unexpectedly. The free plan includes unlimited Instagram accounts, unlimited automated DMs, comment keyword triggers, and basic analytics — enough to validate whether automation works for your use case before paying anything.",
+        "Liffio. It has a free plan with no credit card required that runs comment-to-DM automation in production — not just as a demo. Paid plans start at $9/month. For comparison: since ManyChat's March 2026 pricing change, its free tier is capped at 25 Active Contacts per month, and paid plans start at $14/month for 250 contacts with per-contact overage fees as your audience grows. SendDM and LinkDM are simpler tools with focused feature sets; pricing varies. SuperProfile bundles bio-link storefronts with automation and prices accordingly. What makes Liffio structurally cheaper for Instagram-focused creators is that there are no per-contact fees. You pay the same $9/month whether you automate DMs to 100 people or 10,000 people. ManyChat charges based on how many people you interact with each month, which means a single viral Reel can trigger overage charges unexpectedly. The free plan includes unlimited Instagram accounts, unlimited automated DMs, comment keyword triggers, and basic analytics — enough to validate whether automation works for your use case before paying anything.",
     },
   ],
 };
@@ -308,19 +308,19 @@ const pricingDetailCategory: FaqCategory = {
   items: [
     {
       id: "starter-features",
-      question: "What features require Starter ($9/mo)?",
+      question: "What features require Starter ($9/mo, ₹499/mo in India)?",
       answer:
         "Starter includes all 8 automation trigger types (story reply, live stream DM, welcome DM, inbound DM reply, ask for follow, smart re-engage, collect user data), unlimited DM message templates, multi-step DM flows with branching logic, short links (go.liffio.com) with click and referrer tracking, lead capture from DMs and link clicks, post scheduler (Instagram feed), advanced analytics dashboard, conversion analytics (comment to DM to click to sale), up to 3 team member seats, priority email support, and external API access.",
     },
     {
       id: "business-features",
-      question: "What features require Business ($79/mo)?",
+      question: "What features require Business ($79/mo, ₹2,499/mo in India)?",
       answer:
         "Business includes everything in Starter, plus follow-up DM sequences, full conversion analytics with Instagram account-level insights, external API keys for developer integrations, up to 5 team member seats with role-based access, branded short links with UTM attribution, and priority support plus an onboarding call. Built for brands, e-commerce teams, and coaches who need attribution tracking across the full funnel.",
     },
     {
       id: "agency-features",
-      question: "What features require Agency ($299/mo)?",
+      question: "What features require Agency ($299/mo, ₹9,999/mo in India)?",
       answer:
         "Agency includes everything in Business, plus agency white-label workspaces, client sub-workspaces with CLIENT role access, a dedicated account manager, full API access and webhooks, custom integrations and CRM sync, SLA-backed priority support, and volume and multi-workspace pricing. Built for marketing agencies running Instagram automation across multiple client brands from a single account.",
     },
@@ -328,7 +328,7 @@ const pricingDetailCategory: FaqCategory = {
       id: "best-for-agencies",
       question: "Which plan is best for agencies?",
       answer:
-        "The Agency plan ($299/mo) is purpose-built for agencies. It includes white-label workspaces, client sub-workspaces with restricted CLIENT role access, a dedicated account manager, full API access, CRM sync, and SLA-backed priority support. If you manage Instagram automation for multiple brands and need to keep client accounts separate and white-labelled, Agency is the only plan that supports this at scale.",
+        "The Agency plan ($299/mo, ₹9,999/mo in India) is purpose-built for agencies. It includes white-label workspaces, client sub-workspaces with restricted CLIENT role access, a dedicated account manager, full API access, CRM sync, and SLA-backed priority support. If you manage Instagram automation for multiple brands and need to keep client accounts separate and white-labelled, Agency is the only plan that supports this at scale.",
     },
     {
       id: "hidden-fees",

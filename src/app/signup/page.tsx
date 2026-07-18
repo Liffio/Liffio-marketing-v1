@@ -48,10 +48,10 @@ const FEATURES = [
 ];
 
 const QUICK_STATS = [
-  { num: "2K+", label: "Active creators" },
-  { num: "100K+", label: "DMs / month" },
+  { num: "8", label: "Automation types" },
+  { num: "24/7", label: "Runs on autopilot" },
   { num: "Free", label: "Starter plan" },
-  { num: "<2s", label: "Response time" },
+  { num: "10–60s", label: "Human-like delay" },
 ];
 
 const BENEFITS = [

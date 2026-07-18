@@ -5,9 +5,9 @@ import { MetaVerifiedOnly } from "@/components/MetaVerifiedOnly";
 import { metaCopy } from "@/config/meta-copy";
 
 const metrics = [
-  { value: "2,000+", label: "Active workspaces" },
+  { value: "8", label: "Automation types in one dashboard" },
   { value: "10–60s", label: "Custom reply delay" },
-  { value: "100K+", label: "DMs automated monthly" },
+  { value: "$0", label: "Free plan — no credit card" },
 ];
 
 const capabilities = [

@@ -16,9 +16,13 @@ const footerLinks = {
   ],
   Compare: [
     { label: "Liffio vs ManyChat", href: "/manychat-alternative" },
+    { label: "Liffio vs SendDM", href: "/senddm-alternative" },
+    { label: "Liffio vs Chatfuel", href: "/chatfuel-alternative" },
     { label: "Liffio vs ReplyRush", href: "/vs/replyrush" },
     { label: "Liffio vs LinkDM", href: "/vs/linkdm" },
     { label: "Liffio vs SuperProfile", href: "/vs/superprofile" },
+    { label: "Liffio vs Zorcha", href: "/vs/zorcha" },
+    { label: "Liffio vs InstaChamp", href: "/vs/instachamp" },
     { label: "See all comparisons", href: "/compare" },
   ],
   Legal: [

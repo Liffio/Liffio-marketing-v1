@@ -30,11 +30,19 @@ export function OrganizationJsonLd() {
         description:
           "Liffio is an Instagram DM automation tool for creators, coaches, and agencies. Auto-reply to comments, stories, and DMs using keyword triggers — no password required, built on Meta's official API.",
         foundingDate: "2026",
+        founder: [
+          { "@type": "Person", name: "Shivam", jobTitle: "Co-founder & CEO" },
+          { "@type": "Person", name: "Om", jobTitle: "Co-founder & CTO" },
+          { "@type": "Person", name: "Vishal", jobTitle: "Co-founder & CMO" },
+          { "@type": "Person", name: "Shlok", jobTitle: "Co-founder & CFO" },
+          { "@type": "Person", name: "Pratham", jobTitle: "Co-founder & CRO" },
+        ],
         areaServed: "Worldwide",
         address: {
           "@type": "PostalAddress",
           addressCountry: "IN",
         },
+        makesOffer: { "@id": `${SITE_URL}/#software` },
         sameAs: [
           siteConfig.social.twitter,
           siteConfig.social.instagram,
@@ -100,10 +108,12 @@ export function SoftwareApplicationJsonLd() {
       data={{
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
+        "@id": `${SITE_URL}/#software`,
         name: siteConfig.brand.name,
         applicationCategory: "BusinessApplication",
         operatingSystem: "Web",
         url: SITE_URL,
+        publisher: { "@id": `${SITE_URL}/#organization` },
         description:
           "Liffio is an Instagram DM automation tool. It sends automatic replies to comments, story mentions, live messages, and DMs using keyword triggers. It connects through Instagram's official OAuth API — no password or third-party login required.",
         offers: [
@@ -120,7 +130,7 @@ export function SoftwareApplicationJsonLd() {
             name: "Starter",
             price: "9.00",
             priceCurrency: "USD",
-            description: "Starter plan. $9/month, or $7/month billed annually.",
+            description: "Starter plan. $9/month, or $7/month billed annually. Flat rate — unlimited DMs and contacts.",
             url: `${SITE_URL}/pricing`,
           },
           {
@@ -128,7 +138,7 @@ export function SoftwareApplicationJsonLd() {
             name: "Business",
             price: "79.00",
             priceCurrency: "USD",
-            description: "Business plan. $79/month, or $63/month billed annually.",
+            description: "Business plan. $79/month, or $63/month billed annually. Flat rate — unlimited DMs and contacts.",
             url: `${SITE_URL}/pricing`,
           },
           {
@@ -136,7 +146,7 @@ export function SoftwareApplicationJsonLd() {
             name: "Agency",
             price: "299.00",
             priceCurrency: "USD",
-            description: "Agency plan. $299/month, or $239/month billed annually.",
+            description: "Agency plan. $299/month, or $239/month billed annually. White-label, unlimited workspaces.",
             url: `${SITE_URL}/pricing`,
           },
         ],
@@ -178,12 +188,8 @@ export function ArticleJsonLd({
         "@type": "BlogPosting",
         headline: title,
         description,
-        author: { "@type": "Organization", name: siteConfig.brand.name, url: SITE_URL },
-        publisher: {
-          "@type": "Organization",
-          name: siteConfig.brand.name,
-          logo: { "@type": "ImageObject", url: `${SITE_URL}/logo/inline-transparent.webp` },
-        },
+        author: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: siteConfig.brand.name, url: SITE_URL },
+        publisher: { "@id": `${SITE_URL}/#organization` },
         datePublished: publishedAt,
         dateModified: updatedAt,
         image: {

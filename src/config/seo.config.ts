@@ -168,12 +168,15 @@ export const pageSeo = {
       "Free plan with no credit card. Paid plans from $9/month. All plans include unlimited automated DMs and unlimited Instagram accounts. Cancel anytime.",
     pathname: "/pricing",
   }),
-  signup: buildPageMetadata({
-    title: "Start Free - Instagram Auto DM & Comment Automation",
-    description:
-      "Create your free Liffio account in minutes. Set up auto DMs, auto comment replies, and keyword triggers without a credit card.",
-    pathname: "/signup",
-  }),
+  signup: {
+    ...buildPageMetadata({
+      title: "Start Free - Instagram Auto DM & Comment Automation",
+      description:
+        "Create your free Liffio account in minutes. Set up auto DMs, auto comment replies, and keyword triggers without a credit card.",
+      pathname: "/signup",
+    }),
+    robots: { index: false, follow: true },
+  },
   blog: buildPageMetadata({
     title: "Instagram DM Automation Blog — Guides, Scripts, and Tutorials | Liffio",
     description:

@@ -23,6 +23,13 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   { path: "/help", changeFrequency: "weekly", priority: 0.7 },
   { path: "/creators-program", changeFrequency: "monthly", priority: 0.6 },
   { path: "/affiliate", changeFrequency: "monthly", priority: 0.6 },
+  { path: "/privacy-policy", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/terms-of-service", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/cookie-policy", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/refund-policy", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/acceptable-use-policy", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/creators-policy", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/affiliate-policy", changeFrequency: "yearly", priority: 0.3 },
 ] as const;
 
 export function buildSitemap(): MetadataRoute.Sitemap {

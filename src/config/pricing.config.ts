@@ -222,13 +222,13 @@ export function getFreePlanFaqAnswer(region: PricingRegion): string {
 
 export function getPlansOfferedFaqAnswer(region: PricingRegion): string {
   if (region === "india") {
-    return "Four tiers: Free (₹0), Starter (₹499/mo - ₹49 first month, then ₹499/mo or ₹399/mo billed annually), Business (₹2,499/mo), and Agency (₹9,999/mo). Every plan includes unlimited Instagram accounts and unlimited automated DMs.";
+    return "Four tiers: Free (₹0, $0), Starter (₹499/mo - ₹49 first month, then ₹499/mo or ₹399/mo billed annually; $9/mo in USD), Business (₹2,499/mo; $79/mo in USD), and Agency (₹9,999/mo; $299/mo in USD). Every plan includes unlimited Instagram accounts and unlimited automated DMs.";
   }
-  return "Four tiers: Free ($0), Starter ($9/mo), Business ($79/mo), and Agency ($299/mo). Annual billing saves 20%. Every plan includes unlimited Instagram accounts and unlimited automated DMs.";
+  return "Four tiers: Free ($0), Starter ($9/mo; ₹499/mo in India), Business ($79/mo; ₹2,499/mo in India), and Agency ($299/mo; ₹9,999/mo in India). Annual billing saves 20%. Every plan includes unlimited Instagram accounts and unlimited automated DMs.";
 }
 
 export function getBusinessPlanValueLabel(region: PricingRegion): string {
-  return region === "india" ? "₹2,499/mo" : "$79/mo";
+  return region === "india" ? "₹2,499/mo ($79/mo)" : "$79/mo (₹2,499/mo in India)";
 }
 
 export function getCreatorsProgramFaqAnswer(region: PricingRegion): string {

@@ -78,7 +78,7 @@ export default async function Home() {
                 supports eight workflow types: comment-to-DM, story reply, live reply, DM reply,
                 follow gating, re-engagement, data collection, and welcome messages. Pricing starts
                 at $0 and scales to $299 per month for agencies managing multiple accounts. Liffio
-                is built in India, and used by more than 2,000 creators across 40+ countries.{' '}
+                is built in India and works with Instagram accounts worldwide.{' '}
                 <a href="/about" className="underline underline-offset-2 hover:text-foreground transition-colors">Learn more about Liffio.</a>
               </p>
             </div>

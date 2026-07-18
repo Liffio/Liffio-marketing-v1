@@ -8,8 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: [
         "/api/",
-        "/_next/",
-        "/signup",
         "/login",
         "/register",
         "/dashboard",
@@ -21,6 +19,5 @@ export default function robots(): MetadataRoute.Robots {
       ],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
-    host: SITE_URL,
   };
 }

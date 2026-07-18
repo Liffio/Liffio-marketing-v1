@@ -1,12 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { siteConfig } from "@/config/site.config";
 import HeroInteractiveDemo from "@/components/hero/HeroInteractiveDemo";
 import { TechBadge } from "@/components/TechBadge";
 import { MetaVerifiedOnly } from "@/components/MetaVerifiedOnly";
 import { metaCopy } from "@/config/meta-copy";
-import { CREATOR_AVATAR_PHOTOS } from "@/components/hero/hero-demo-data";
 
 const MetaLogo = () => (
   <svg viewBox="0 0 512 512" className="h-4 w-4 shrink-0" aria-hidden>
@@ -88,12 +86,14 @@ export default function HeroSection() {
               />
             </MetaVerifiedOnly>
 
+            {/* No entrance animation on the H1: it is the LCP element and the opacity
+                gate added ~1s of render delay on mobile. */}
             <h1
-              className="hero-stagger hero-stagger-2 font-extrabold leading-[1.05] tracking-tight text-[#0a0a0a]"
+              className="font-extrabold leading-[1.05] tracking-tight text-[#0a0a0a]"
               style={{ fontFamily: "var(--font-outfit,sans-serif)", fontSize: "clamp(2.75rem,5.5vw,4.75rem)" }}
             >
               The Best{" "}
-              <span className="gradient-text">Auto DM Tool</span>
+              <span className="gradient-text">Auto DM Tool</span>{" "}
               <br />
               for Instagram
             </h1>
@@ -143,29 +143,10 @@ export default function HeroSection() {
             </div>
 
             <div className="hero-stagger hero-stagger-6 mt-8 flex items-center gap-4">
-              <div className="flex -space-x-2.5">
-                {CREATOR_AVATAR_PHOTOS.map((src, i) => (
-                  <div
-                    key={src}
-                    className="relative h-9 w-9 overflow-hidden rounded-full border-2 border-white shadow-md ring-1 ring-black/5"
-                    style={{ zIndex: 5 - i }}
-                  >
-                    <Image src={src} alt="Instagram creator - Liffio beta tester" fill sizes="36px" className="object-cover" />
-                  </div>
-                ))}
-              </div>
-              <div>
-                <div className="mb-0.5 flex items-center gap-0.5">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <svg key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" viewBox="0 0 20 20" aria-hidden>
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-sm text-gray-600">
-                  <strong className="font-semibold text-gray-900">2,000+</strong> creators on autopilot
-                </p>
-              </div>
+              <p className="text-sm text-gray-600">
+                <strong className="font-semibold text-gray-900">Free plan included</strong> — no credit card required.
+                Built on Instagram&apos;s official API.
+              </p>
             </div>
           </div>
 

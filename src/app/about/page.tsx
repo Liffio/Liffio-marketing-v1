@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": `${SITE_URL}/#organization`,
   name: "Liffio",
   url: SITE_URL,
   foundingDate: "2026",
@@ -97,8 +98,8 @@ export default function AboutPage() {
               <p>
                 We started building Liffio in early 2026. The idea was straightforward: connect
                 via Instagram&apos;s official OAuth API, build keyword triggers for comments, stories, and DMs,
-                and price it flat — not per-contact. We launched in June 2026 and now have more than 2,000
-                creators using it across 40+ countries.
+                and price it flat — not per-contact. We launched in June 2026 and are onboarding our
+                first creators and agencies now.
               </p>
             </div>
           </section>
@@ -143,9 +144,9 @@ export default function AboutPage() {
                 we wished existing tools were built: focused on one platform, easy to set up, priced honestly.
               </p>
               <p>
-                2,000+ creators across 40+ countries have used Liffio since we launched. Most are creators
-                with 5K–500K followers using comment-to-DM for lead magnets, digital products, and giveaways.
-                A growing share are small agencies managing 3–10 Instagram accounts for clients.
+                Liffio launched in June 2026 and is in its early-access phase. The creators we&apos;re
+                building with use comment-to-DM for lead magnets, digital products, and giveaways, and
+                small agencies use Liffio to manage multiple Instagram accounts for clients.
               </p>
             </div>
           </section>

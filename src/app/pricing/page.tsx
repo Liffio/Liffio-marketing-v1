@@ -1,4 +1,3 @@
-import AppLink from "@/components/AppLink";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PricingPlansGrid, { PricingBottomCta } from "@/components/PricingPlansGrid";
@@ -12,7 +11,6 @@ import {
   buildFreePlanFaqAnswer,
   buildPlansOfferedFaqAnswer,
 } from "@/lib/marketing-plans.server";
-import { siteConfig } from "@/config/site.config";
 import { metaCopy } from "@/config/meta-copy";
 import { pageSeo } from "@/config/seo.config";
 import { BreadcrumbJsonLd, FaqPageJsonLd, SoftwareApplicationJsonLd } from "@/lib/seo/json-ld";
@@ -69,10 +67,7 @@ export default async function PricingPage() {
               From free comment-to-DM automation to full agency white-label. {metaCopy.pricingHeroApis}
             </p>
             <p className="mt-4 text-sm text-gray-500">
-              Pre-launch offer:{" "}
-              <AppLink href={siteConfig.urls.preregister} className="text-[#f5184c] font-semibold hover:underline">
-                Pre-register for 50% off your first purchase →
-              </AppLink>
+              Free plan included — no credit card required.
             </p>
           </div>
         </section>

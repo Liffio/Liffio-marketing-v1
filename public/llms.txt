@@ -29,7 +29,7 @@ India pricing available via Razorpay in INR. All plans include unlimited Instagr
 ## Key facts
 
 - Founded: 2026
-- Team size: 3 people
+- Team: 5 co-founders — Shivam (CEO), Om (CTO), Vishal (CMO), Shlok (CFO), Pratham (CRO)
 - Location: India
 - Instagram connection: official Meta Graph API with app review approval (no password required, no scraping)
 - Send delays: 10–60 seconds per automation (configurable, human-like)

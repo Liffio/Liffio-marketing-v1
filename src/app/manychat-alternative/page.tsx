@@ -58,8 +58,8 @@ const faqCategories: FaqCategory[] = [
 
 const competitorPricing = [
   { name: "Liffio", free: true, startingPrice: "$0/month", paidFrom: "$9/month", perContact: false, instagramOnly: true },
-  { name: "ManyChat", free: true, startingPrice: "Free tier limited", paidFrom: "$15/month", perContact: true, instagramOnly: false },
-  { name: "SendDM", free: false, startingPrice: "No free plan", paidFrom: "Pricing on request", perContact: false, instagramOnly: true },
+  { name: "ManyChat", free: true, startingPrice: "Free capped at 25 contacts/mo", paidFrom: "$14/month + per-contact fees", perContact: true, instagramOnly: false },
+  { name: "SendDM", free: true, startingPrice: "Free tier (DM-capped)", paidFrom: "₹399/month (India)", perContact: false, instagramOnly: true },
   { name: "LinkDM", free: false, startingPrice: "No free plan", paidFrom: "From ~$19/month", perContact: false, instagramOnly: true },
   { name: "SuperProfile", free: true, startingPrice: "Free tier available", paidFrom: "From ~$15/month", perContact: false, instagramOnly: false },
 ];
