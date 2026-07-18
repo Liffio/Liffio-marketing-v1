@@ -29,7 +29,7 @@ function getSmtpFromAddress(): string | undefined {
 function getAdminNotificationRecipients(): string {
   const raw = process.env.SMTP_ADMIN_TO?.trim()
   if (raw) return raw
-  return 'reactovacore@gmail.com'
+  return 'liffiocore@gmail.com'
 }
 
 export type OfferTier = 'tier1' | 'tier2' | 'tier3'

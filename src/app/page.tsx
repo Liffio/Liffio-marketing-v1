@@ -16,23 +16,14 @@ import { TrackSection } from "@/lib/analytics/TrackSection";
 import { LandingStepTracker } from "@/lib/analytics/LandingStepTracker";
 import { getHomepageFaqCategories } from "@/config/faq.config";
 import { getPricingContext } from "@/lib/pricing-region.server";
-import {
-  fetchMarketingPlansContext,
-  buildCreatorsProgramFaqAnswer,
-  buildFreePlanFaqAnswer,
-  buildPlansOfferedFaqAnswer,
-} from "@/lib/marketing-plans.server";
+import { fetchMarketingPlansContext } from "@/lib/marketing-plans.server";
 
 export const metadata: Metadata = rootSeo;
 
 export default async function Home() {
   const { region, countryCode } = await getPricingContext();
-  const { plans, businessPlanValue } = await fetchMarketingPlansContext(region);
-  const faqCategories = getHomepageFaqCategories(region, {
-    freePlanFaqAnswer: buildFreePlanFaqAnswer(region, plans),
-    plansOfferedFaqAnswer: buildPlansOfferedFaqAnswer(region, plans),
-    creatorsProgramFaqAnswer: buildCreatorsProgramFaqAnswer(businessPlanValue),
-  });
+  const { plans } = await fetchMarketingPlansContext(region);
+  const faqCategories = getHomepageFaqCategories();
 
   return (
     <>
@@ -80,6 +71,15 @@ export default async function Home() {
                 at $0 and scales to $299 per month for agencies managing multiple accounts. Liffio
                 is built in India and works with Instagram accounts worldwide.{' '}
                 <a href="/about" className="underline underline-offset-2 hover:text-foreground transition-colors">Learn more about Liffio.</a>
+              </p>
+              <p>
+                New to DM automation? Start with our guides on{' '}
+                <a href="/blog/how-to-turn-instagram-comments-into-dms" className="underline underline-offset-2 hover:text-foreground transition-colors">turning Instagram comments into DMs</a>,{' '}
+                <a href="/blog/instagram-dm-scripts-that-convert" className="underline underline-offset-2 hover:text-foreground transition-colors">DM scripts that convert</a>,{' '}
+                <a href="/blog/first-comment-keyword-trigger" className="underline underline-offset-2 hover:text-foreground transition-colors">setting up your first keyword trigger</a>, and{' '}
+                <a href="/blog/instagram-automation-mistakes" className="underline underline-offset-2 hover:text-foreground transition-colors">common automation mistakes to avoid</a>.
+                Automating stories too? See the{' '}
+                <a href="/blog/instagram-story-automation-guide" className="underline underline-offset-2 hover:text-foreground transition-colors">story automation guide</a>.
               </p>
             </div>
           </div>

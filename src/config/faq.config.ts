@@ -718,9 +718,10 @@ export function getPricingDetailedFaqCategories(
   return [...getFaqCategories(region, overrides), pricingDetailCategory];
 }
 
-export function getHomepageFaqCategories(
-  region: PricingRegion,
-  overrides?: MarketingFaqOverrides,
-): FaqCategory[] {
-  return [...getFaqCategories(region, overrides), homepageSeoCategory];
+export function getHomepageFaqCategories(): FaqCategory[] {
+  // Lean home set: /pricing owns the full plans/billing/setup FAQ. The home
+  // page keeps only its unique questions plus the decision-critical
+  // compliance set, so the two pages no longer duplicate ~29 Q&A pairs in
+  // visible content and FAQPage JSON-LD.
+  return [homeOverviewCategory, geoComplianceCategory, homepageSeoCategory];
 }

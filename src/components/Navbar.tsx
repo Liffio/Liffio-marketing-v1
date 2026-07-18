@@ -125,16 +125,16 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100"
+                className="rounded-lg p-2.5 text-gray-500 transition-colors hover:bg-gray-100"
                 aria-label="Toggle menu"
                 aria-expanded={menuOpen}
               >
                 {menuOpen ? (
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 ) : (
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
                   </svg>
                 )}

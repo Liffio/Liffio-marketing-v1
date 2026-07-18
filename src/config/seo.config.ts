@@ -149,7 +149,7 @@ export function buildPageMetadata({
 export const rootSeo = buildPageMetadata({
   title: "Liffio — Instagram DM Automation for Creators and Brands",
   description:
-    "Auto-reply to Instagram comments, story mentions, and DMs using keyword triggers. Liffio runs 24/7 via the official Instagram API. Free plan, no card required.",
+    "Auto-reply to Instagram comments, story mentions, and DMs with keyword triggers. Runs 24/7 on the official Instagram API. Free plan, no card needed.",
   pathname: "/",
   ogImagePath: siteConfig.meta.ogImagePath,
   ogImageAlt: siteConfig.meta.ogImageAlt,

@@ -21,7 +21,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "How to Turn Instagram Comments Into DMs Automatically",
     excerpt:
       "A practical walkthrough for comment-to-DM setup: picking keywords, writing messages people actually open, and testing before a post goes viral.",
-    readTime: "8 min read",
+    readTime: "4 min read",
     date: "May 15, 2026",
     author: "Liffio Team",
     publishedAt: "2026-05-15",
@@ -105,7 +105,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "ManyChat Alternatives for Instagram DM Automation (2026)",
     excerpt:
       "An honest look at ManyChat, SendDM, Zorcha, and Liffio: pricing models, what Instagram features you actually get, and who each tool fits.",
-    readTime: "11 min read",
+    readTime: "3 min read",
     date: "June 1, 2026",
     author: "Liffio Team",
     publishedAt: "2026-06-01",
@@ -186,7 +186,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Instagram Story Automation That Does Not Feel Spammy",
     excerpt:
       "Story replies are high intent. Here is how to auto-respond without burning trust, plus example triggers and message templates.",
-    readTime: "9 min read",
+    readTime: "2 min read",
     date: "May 10, 2026",
     author: "Liffio Team",
     publishedAt: "2026-05-10",
@@ -254,7 +254,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "10 Instagram DM Scripts That Actually Get Replies",
     excerpt:
       "Real templates for coaches, shops, and creators: the opener, the link handoff, the gentle follow-up, and when not to send another message.",
-    readTime: "10 min read",
+    readTime: "2 min read",
     date: "May 5, 2026",
     author: "Liffio Team",
     publishedAt: "2026-05-05",
@@ -311,7 +311,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Your First Comment Keyword Trigger on Instagram",
     excerpt:
       "First-time setup guide: choosing a post, testing triggers, public replies, and the checklist we use before turning an automation live.",
-    readTime: "6 min read",
+    readTime: "2 min read",
     date: "April 28, 2026",
     author: "Liffio Team",
     publishedAt: "2026-04-28",
@@ -381,7 +381,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "How a D2C Fashion Brand Used Comment-to-DM for Launch Week",
     excerpt:
       "A simplified case study from a six-person team: what they posted, which keywords they used, and how DMs fed their Shopify drop without a custom dev build.",
-    readTime: "9 min read",
+    readTime: "2 min read",
     date: "April 20, 2026",
     author: "Liffio Team",
     publishedAt: "2026-04-20",
@@ -437,7 +437,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "5 Instagram Automation Mistakes That Cost You Followers",
     excerpt:
       "Instant DMs, keyword bait, mismatched offers, and set-and-forget flows: fix these before your next Reel goes viral.",
-    readTime: "7 min read",
+    readTime: "2 min read",
     date: "April 14, 2026",
     author: "Liffio Team",
     publishedAt: "2026-04-14",
