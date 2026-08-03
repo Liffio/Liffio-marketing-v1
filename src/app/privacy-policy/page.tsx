@@ -14,7 +14,7 @@ const CONTENT = `
 This Privacy Policy explains how Reactova collects, uses, stores, and shares your personal information. By using Reactova, you agree to the practices described in this policy.
 
 1. Who We Are
-Reactova is operated as a sole proprietorship based in India. We operate reactova.com and the Reactova SaaS platform. Contact us at support@reactova.com for privacy-related matters.
+Reactova is operated by Liffio Private Limited (CIN: U58200GJ2026PTC181271), a private limited company incorporated under the Companies Act, 2013, with its registered office at First Floor, Shreeji General Store, Sultanpura Naka Laheri Pura New Road, Vadodara - 390001, Gujarat, India. We operate reactova.com and the Reactova SaaS platform, and Liffio Private Limited is the data fiduciary responsible for your personal data under this policy. Contact us at support@reactova.com for privacy-related matters.
 
 2. Information We Collect
 2.1 Information You Provide
@@ -122,5 +122,5 @@ For privacy-related enquiries: support@reactova.com
 const content = normalizePolicyContent(CONTENT.trim());
 
 export default function PrivacyPolicyPage() {
-  return <LegalPage title="Privacy Policy" lastUpdated="June 2026" content={content} />;
+  return <LegalPage title="Privacy Policy" lastUpdated="August 2026" content={content} />;
 }

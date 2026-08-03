@@ -31,8 +31,17 @@ const organizationSchema = {
   "@type": "Organization",
   "@id": `${SITE_URL}/#organization`,
   name: "Liffio",
+  legalName: "Liffio Private Limited",
   url: SITE_URL,
   foundingDate: "2026",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "First Floor, Shreeji General Store, Sultanpura Naka Laheri Pura New Road",
+    addressLocality: "Vadodara",
+    postalCode: "390001",
+    addressRegion: "Gujarat",
+    addressCountry: "IN",
+  },
   foundingLocation: {
     "@type": "Place",
     address: {
@@ -140,7 +149,8 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                We&apos;re based in India. The team is small — we&apos;re building Liffio the way
+                We&apos;re based in Vadodara, Gujarat, India. Liffio is operated by Liffio Private Limited, a
+                company registered in India. The team is small — we&apos;re building Liffio the way
                 we wished existing tools were built: focused on one platform, easy to set up, priced honestly.
               </p>
               <p>

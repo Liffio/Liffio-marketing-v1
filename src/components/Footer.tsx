@@ -112,9 +112,17 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-800 pt-8 sm:flex-row">
-          <p className="text-xs text-gray-500">© {new Date().getFullYear()} Liffio. All rights reserved.</p>
-          <p className="text-xs text-gray-600">Made with care for Instagram creators worldwide.</p>
+        <div className="mt-12 border-t border-gray-800 pt-8">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p className="text-xs text-gray-500">
+              © {new Date().getFullYear()} Liffio Private Limited. All rights reserved. · CIN: U58200GJ2026PTC181271
+            </p>
+            <p className="text-xs text-gray-600">Made with care for Instagram creators worldwide.</p>
+          </div>
+          <p className="mt-3 text-center text-xs text-gray-600 sm:text-left">
+            Regd. Office: First Floor, Shreeji General Store, Sultanpura Naka Laheri Pura New Road, Vadodara - 390001,
+            Gujarat, India
+          </p>
         </div>
       </div>
     </footer>

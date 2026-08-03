@@ -95,7 +95,7 @@ export default function FeaturesPageContent() {
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">
             From comment-to-DM to welcome messages - every Instagram touchpoint automated with human-like delays,
-            full analytics, and Meta-compliant APIs.
+            full analytics, and official Instagram APIs.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a href={siteConfig.urls.appSignup} className="btn-primary inline-flex items-center gap-2">

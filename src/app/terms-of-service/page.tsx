@@ -14,7 +14,7 @@ const CONTENT = `
 Please read these Terms and Conditions carefully before using Reactova. By creating an account or using any part of the platform, you agree to be bound by these Terms.
 
 1. Acceptance of Terms
-By creating an account or accessing any feature of Reactova ("Platform", "we", "us", "our"), you agree to these Terms and Conditions. Reactova is operated as a sole proprietorship and is not a registered company at this time. We may require you to explicitly accept updated Terms before continuing to use the service.
+By creating an account or accessing any feature of Reactova ("Platform", "we", "us", "our"), you agree to these Terms and Conditions. The Platform is owned and operated by Liffio Private Limited (CIN: U58200GJ2026PTC181271), a private limited company incorporated under the Companies Act, 2013, with its registered office at First Floor, Shreeji General Store, Sultanpura Naka Laheri Pura New Road, Vadodara - 390001, Gujarat, India. We may require you to explicitly accept updated Terms before continuing to use the service.
 
 2. Eligibility
 You must be at least 18 years of age to use Reactova. By using this platform, you represent and warrant that you are 18 years or older. We reserve the right to terminate any account we believe is operated by a person under 18.
@@ -59,7 +59,7 @@ Commissions are 25% one-time per referred paying customer, subject to a 14-30 da
 Agency plan users may white label the platform. You acknowledge that the Instagram OAuth screen may display our platform name during account connection.
 
 11. Intellectual Property
-All content, features, functionality, trademarks, and technology of Reactova are the exclusive property of Reactova (sole proprietorship).
+All content, features, functionality, trademarks, and technology of Reactova are the exclusive property of Liffio Private Limited.
 
 12. Third Party Integrations
 Reactova integrates with third party services including Meta (Instagram), Stripe, and Razorpay. We are not responsible for the terms or actions of any third party service.
@@ -68,13 +68,13 @@ Reactova integrates with third party services including Meta (Instagram), Stripe
 We strive to provide a reliable service but do not guarantee uninterrupted or error-free operation.
 
 14. Limitation of Liability
-Reactova (sole proprietorship) shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the platform.
+Liffio Private Limited shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the platform.
 
 15. Disclaimer of Warranties
 The platform is provided "as is" and "as available" without warranties of any kind. We do not guarantee any specific results including follower growth or leads.
 
 16. Indemnification
-You agree to indemnify and hold harmless Reactova and its proprietor from claims arising from your use of the platform or violation of these Terms.
+You agree to indemnify and hold harmless Liffio Private Limited and its directors, officers, and employees from claims arising from your use of the platform or violation of these Terms.
 
 17. Termination
 We reserve the right to suspend or terminate your account at any time, with or without notice, for violation of these Terms.
@@ -92,5 +92,5 @@ For questions about these Terms: support@reactova.com
 const content = normalizePolicyContent(CONTENT.trim());
 
 export default function TermsOfServicePage() {
-  return <LegalPage title="Terms of Service" lastUpdated="June 2026" content={content} />;
+  return <LegalPage title="Terms of Service" lastUpdated="August 2026" content={content} />;
 }
