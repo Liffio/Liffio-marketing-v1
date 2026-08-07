@@ -7,7 +7,6 @@ type ComparisonRow = {
 const DEFAULT_ROWS: ComparisonRow[] = [
   { name: "Comment-to-DM", liffio: true, competitor: true },
   { name: "Story auto reply", liffio: true, competitor: true },
-  { name: "Live stream DMs", liffio: true, competitor: "paid only" },
   { name: "Unlimited DMs", liffio: true, competitor: false },
   { name: "Free plan", liffio: true, competitor: "limited" },
   { name: "Unlimited accounts", liffio: true, competitor: false },

@@ -53,7 +53,7 @@ export const siteConfig = {
     totalSpots: 15,
     initialClaimed: 3,
     formTitle: "Get started free",
-    formHint: "Join thousands growing on autopilot",
+    formHint: "Grow your Instagram on autopilot",
     ctaText: "Get Started Free",
     successMessage:
       "You're in! We'll email you with your early access details.",

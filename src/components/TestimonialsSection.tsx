@@ -3,49 +3,22 @@
 import { useCallback, useRef, useState } from "react";
 import { TechBadge } from "@/components/TechBadge";
 
-const testimonials = [
-  {
-    name: "Om Bhesania",
-    role: "Beta Tester",
-    quote:
-      "Set it up on a Reel at midnight and woke up to 80 DMs sent automatically. Would've taken hours to do that manually.",
-    avatar: "OB",
-    gradient: "linear-gradient(135deg,#f5184c,#b20d8f)",
-  },
-  {
-    name: "Ryan Callahan",
+const testimonials = [  {
+    name: "R. C.",
     role: "Beta Tester",
     quote:
       "I get a ton of comments asking for my program link every time I post. Had to set a reminder to reply before bed and still missed loads. Set up the keyword trigger and it just runs now.",
     avatar: "RC",
     gradient: "linear-gradient(135deg,#10b981,#b20d8f)",
-  },
-  {
-    name: "Shivam Thakkar",
+  },  {
+    name: "S. M.",
     role: "Beta Tester",
     quote:
-      "Used to wake up every morning and manually reply to everyone who commented overnight. First automation run, all of them got replies automatically while I slept.",
-    avatar: "ST",
-    gradient: "linear-gradient(135deg,#ff7c49,#f5184c)",
-  },
-  {
-    name: "Sophie Mercer",
-    role: "Beta Tester",
-    quote:
-      "Was sceptical because tools like this always felt spammy. The delay and tone of the DM actually felt like me. First automation went live on a collab post and handled everything overnight.",
+      "Was sceptical because tools like this always felt spammy. The delay and tone of the DM matched my brand voice. First automation went live on a collab post and handled everything overnight.",
     avatar: "SM",
     gradient: "linear-gradient(135deg,#b20d8f,#ff7c49)",
-  },
-  {
-    name: "Vishal Motimani",
-    role: "Beta Tester",
-    quote:
-      "Connected Instagram in 2 minutes and the first keyword trigger worked on the first try. Haven't touched the inbox for that post since.",
-    avatar: "VM",
-    gradient: "linear-gradient(135deg,#b20d8f,#f97316)",
-  },
-  {
-    name: "Aisha Al-Farsi",
+  },  {
+    name: "A. A.",
     role: "Beta Tester",
     quote:
       "Comment-to-DM for product drops is exactly what I needed. Launch posts used to need someone monitoring comments for hours. This handles the link delivery automatically.",
@@ -53,7 +26,7 @@ const testimonials = [
     gradient: "linear-gradient(135deg,#f97316,#b20d8f)",
   },
   {
-    name: "Lippi Patel",
+    name: "L. P.",
     role: "Beta Tester",
     quote:
       "Was spending 2–3 hours every evening just replying to DMs from comments. This takes care of all of that automatically. Massive time saver.",
@@ -61,7 +34,7 @@ const testimonials = [
     gradient: "linear-gradient(135deg,#ff7c49,#b20d8f)",
   },
   {
-    name: "Jake Thornton",
+    name: "J. T.",
     role: "Beta Tester",
     quote:
       "Managing comment automations across five client accounts manually was killing us. Moved the first two to Liffio and it's working cleanly. Will be moving the others this week.",
@@ -69,38 +42,20 @@ const testimonials = [
     gradient: "linear-gradient(135deg,#14b8a6,#b20d8f)",
   },
   {
-    name: "Dhanraj",
+    name: "D.",
     role: "Beta Tester",
     quote:
       "Set up the LINK trigger and tested it myself - got the DM in under a minute. Simple but actually works.",
     avatar: "DH",
     gradient: "linear-gradient(135deg,#f97316,#f5184c)",
-  },
-  {
-    name: "Pratham Panchal",
+  },  {
+    name: "D. T.",
     role: "Beta Tester",
     quote:
-      "The INR pricing alone is a win for Indian creators. Finally something built for us that isn't priced in USD.",
-    avatar: "PP",
-    gradient: "linear-gradient(135deg,#b20d8f,#f5184c)",
-  },
-  {
-    name: "Dhairya Thumar",
-    role: "Beta Tester",
-    quote:
-      "The delay feature is what sold me - doesn't feel like a bot when the DM arrives 30 seconds later. Followers actually reply back.",
+      "The delay feature is what sold me - the 30-second pause makes the conversation feel natural. Followers actually reply back.",
     avatar: "DT",
     gradient: "linear-gradient(135deg,#10b981,#f97316)",
-  },
-  {
-    name: "Shlok Patel",
-    role: "Beta Tester",
-    quote:
-      "Tested on a small post first and the public reply + DM both landed correctly. Setup took maybe 5 mins. Works exactly as described.",
-    avatar: "SP",
-    gradient: "linear-gradient(135deg,#f5184c,#ff7c49)",
-  },
-] as const;
+  },] as const;
 
 const track = [...testimonials, ...testimonials];
 
@@ -143,7 +98,7 @@ export default function TestimonialsSection() {
             className="text-2xl font-extrabold text-[#0a0a0a] sm:text-3xl lg:text-4xl"
             style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
           >
-            Loved by Creators and Brands
+            What Our Beta Testers Say
           </h2>
         </div>
       </div>

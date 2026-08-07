@@ -115,7 +115,7 @@ export function SoftwareApplicationJsonLd() {
         url: SITE_URL,
         publisher: { "@id": `${SITE_URL}/#organization` },
         description:
-          "Liffio is an Instagram DM automation tool. It sends automatic replies to comments, story mentions, live messages, and DMs using keyword triggers. It connects through Instagram's official OAuth API — no password or third-party login required.",
+          "Liffio is an Instagram DM automation tool. It sends automatic replies to comments, story mentions, and DMs using keyword triggers. It connects through Instagram's official OAuth API — no password or third-party login required.",
         offers: [
           {
             "@type": "Offer",
@@ -153,10 +153,9 @@ export function SoftwareApplicationJsonLd() {
         featureList: [
           "Comment-to-DM automation",
           "Story reply automation",
-          "Live reply automation",
           "DM reply automation",
           "Ask Follow (follow gating)",
-          "Smart Re-engage (win-back sequences)",
+          "Follow-up DM sequences",
           "Collect Data (lead capture)",
           "Welcome New Followers",
         ],

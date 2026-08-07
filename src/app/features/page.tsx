@@ -40,11 +40,11 @@ export default async function FeaturesPage() {
               direct message to the person who triggered the event.
             </p>
             <p>
-              Liffio supports eight trigger types: comment-to-DM, story reply, live reply, DM keyword
-              reply, follow gating, re-engagement, lead data collection, and welcome messages. Each
+              Liffio&apos;s trigger types include comment-to-DM, story reply, DM keyword
+              reply, follow gating, follow-up sequences, lead data collection, and welcome messages. Each
               automation runs independently on its own schedule. DMs are sent after a 10–60 second
-              delay — configurable per automation — which distributes sends over time and avoids
-              patterns associated with spam accounts. All sends go through Instagram&apos;s official
+              delay — configurable per automation — so each reply reaches the recipient at a
+              natural conversational pace. All sends go through Instagram&apos;s official
               API endpoints; no browser automation or password access is involved.
             </p>
             <p>

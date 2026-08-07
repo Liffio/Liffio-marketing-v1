@@ -246,9 +246,9 @@ export default async function VsPage({ params }: Props) {
                 Liffio.
               </p>
               <p>
-                Liffio requests only the messaging permissions Meta requires for automation and adds a
-                configurable 10–60 second delay between trigger and send, so DM volume distributes naturally
-                and stays within Meta&apos;s permitted use guidelines — even during a viral Reel with thousands
+                Liffio uses the permissions you approve on Meta&apos;s consent screen and adds a
+                configurable 10–60 second delay between trigger and send, so each reply reaches the
+                recipient at a natural conversational pace — even during a viral Reel with thousands
                 of comments.
               </p>
             </div>

@@ -44,7 +44,7 @@ const faqCategories: FaqCategory[] = [
         id: "senddm-instagram-api",
         question: "Does Liffio use official Instagram APIs like SendDM?",
         answer:
-          "Yes. Liffio connects to Instagram through Meta's official OAuth flow and uses the same Instagram Messaging API that compliant tools are required to use. Your Instagram password is never entered into Liffio at any point. Liffio went through Meta's App Review process to receive the required permissions — instagram_manage_messages, pages_messaging, and the standard read permissions for comments and stories. The send behavior also follows Instagram's guidelines: Liffio introduces a 10–60 second configurable delay between trigger and send, which avoids the burst-send patterns that trigger spam detection.",
+          "Yes. Liffio connects to Instagram through Meta's official OAuth flow and sends messages through Instagram's official API. Your Instagram password is never entered into Liffio at any point — you approve the permissions on Meta's consent screen when you connect, and you can revoke access anytime from your Instagram settings. Liffio also spaces automated sends with a configurable 10–60 second delay, which keeps the reply pacing natural for the person receiving it.",
       },
       {
         id: "senddm-agency",
@@ -59,7 +59,6 @@ const faqCategories: FaqCategory[] = [
 const sendDmRows = [
   { name: "Comment-to-DM", liffio: true, competitor: true },
   { name: "Story auto reply", liffio: true, competitor: true },
-  { name: "Live stream DMs", liffio: true, competitor: false },
   { name: "Unlimited DMs on free plan", liffio: true, competitor: false },
   { name: "Free plan", liffio: true, competitor: true },
   { name: "Unlimited accounts", liffio: true, competitor: false },
@@ -323,19 +322,14 @@ export default function SendDMAlternativePage() {
                 Your Instagram password is never shared with Liffio at any point.
               </p>
               <p>
-                The permissions required are{" "}
-                <code className="text-sm bg-gray-100 px-1.5 py-0.5 rounded">instagram_manage_messages</code>,{" "}
-                <code className="text-sm bg-gray-100 px-1.5 py-0.5 rounded">pages_messaging</code>,
-                and the standard read permissions for comments and stories. Liffio went through
-                Meta&apos;s App Review process to receive these — the same process every legitimate
-                Instagram automation tool must pass.
+                The permissions Liffio uses are the ones you approve on Meta&apos;s consent screen
+                when you connect. Every permission is visible before you approve, and you can
+                revoke access at any time from your Instagram settings.
               </p>
               <p>
                 On the send-behavior side, Liffio uses a configurable 10–60 second delay between
-                trigger and send. This distributes automated DMs naturally over time and avoids
-                the burst-send patterns that trigger Instagram&apos;s spam detection. At normal
-                creator usage — even during a Reel with several thousand comments — the send
-                pattern does not flag the account.
+                trigger and send. The pause gives each automated reply a natural conversation
+                pace for the recipient — whether a Reel gets fifty comments or several thousand.
               </p>
               <p>
                 The risk profile with unofficial tools — ones that use browser automation,

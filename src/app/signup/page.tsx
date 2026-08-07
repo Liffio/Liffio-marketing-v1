@@ -30,7 +30,7 @@ const FEATURES = [
   {
     title: "Comment → DM Automation",
     description:
-      "Someone comments a keyword on your post → Liffio sends them a personalised DM on your schedule. Set a custom delay from 10–60 seconds for more human-like replies, around the clock.",
+      "Someone comments a keyword on your post → Liffio sends them a personalised DM on your schedule. Set a custom delay from 10–60 seconds so replies arrive at a natural pace, around the clock.",
     tag: "Core engine",
   },
   {
@@ -48,20 +48,19 @@ const FEATURES = [
 ];
 
 const QUICK_STATS = [
-  { num: "8", label: "Automation types" },
+  { num: "24/7", label: "On autopilot" },
   { num: "24/7", label: "Runs on autopilot" },
   { num: "Free", label: "Starter plan" },
-  { num: "10–60s", label: "Human-like delay" },
+  { num: "10–60s", label: "Custom send delay" },
 ];
 
 const BENEFITS = [
   "Auto-reply to every comment with a keyword trigger",
   "Story mentions & reactions handled automatically",
-  "Live stream comment-to-DM flows",
   "Multi-step DM sequences with conditional logic",
   "Welcome new followers with a personalised message",
   "Collect emails and data directly inside DM chats",
-  "Smart re-engagement for warm leads",
+  "Timed follow-ups within active conversations",
   "Full analytics: comment → DM → click → sale",
 ];
 

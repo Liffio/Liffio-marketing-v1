@@ -204,7 +204,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
               },
               { num: businessPlanValue, label: "Value - completely free", color: "#ff7c49" },
               { num: "48h", label: "Review turnaround", color: "#b20d8f" },
-              { num: "10+", label: "Countries represented", color: "#2ea957" },
+              { num: "5K–100K", label: "Follower range", color: "#2ea957" },
             ].map((s, i) => (
               <div key={s.label}
                 className={`px-6 py-7 text-center ${i < 3 ? "border-r border-[#ffe4e6]" : ""}`}>

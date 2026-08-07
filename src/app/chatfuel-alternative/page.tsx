@@ -26,7 +26,7 @@ const faqCategories: FaqCategory[] = [
         id: "liffio-vs-chatfuel",
         question: "How does Liffio compare to Chatfuel for Instagram?",
         answer:
-          "Chatfuel is a multi-platform chatbot builder that supports Instagram, Facebook Messenger, WhatsApp, and Telegram. Liffio is built specifically for Instagram. The difference shows up in two places: feature depth and pricing structure. Because Chatfuel spreads its feature set across multiple platforms, Instagram-specific features like comment-to-DM on Reels, story reply automation, and Instagram Live DMs are less developed than in a dedicated tool. On pricing (as of July 2026), Chatfuel offers a free Light plan and a single paid AI PRO plan at $49/month with fair-use limits on AI usage. Liffio's paid plans start at $9/month flat, with unlimited automated DMs on every tier including Free.",
+          "Chatfuel is a multi-platform chatbot builder that supports Instagram, Facebook Messenger, WhatsApp, and Telegram. Liffio is built specifically for Instagram. The difference shows up in two places: feature depth and pricing structure. Because Chatfuel spreads its feature set across multiple platforms, Instagram-specific features like comment-to-DM on Reels and story reply automation are less developed than in a dedicated tool. On pricing (as of July 2026), Chatfuel offers a free Light plan and a single paid AI PRO plan at $49/month with fair-use limits on AI usage. Liffio's paid plans start at $9/month flat, with unlimited automated DMs on every tier including Free.",
       },
       {
         id: "chatfuel-instagram-dms",
@@ -59,7 +59,6 @@ const faqCategories: FaqCategory[] = [
 const chatfuelRows = [
   { name: "Comment-to-DM", liffio: true, competitor: true },
   { name: "Story auto reply", liffio: true, competitor: "limited" },
-  { name: "Live stream DMs", liffio: true, competitor: false },
   { name: "Unlimited DMs (flat rate)", liffio: true, competitor: false },
   { name: "Free plan (permanent)", liffio: true, competitor: true },
   { name: "Unlimited Instagram accounts", liffio: true, competitor: false },
@@ -324,19 +323,16 @@ export default function ChatfuelAlternativePage() {
                 to Liffio, and your Instagram password is never shared with Liffio at any point.
               </p>
               <p>
-                The permissions Liffio uses —{" "}
-                <code className="text-sm bg-gray-100 px-1.5 py-0.5 rounded">instagram_manage_messages</code>,{" "}
-                <code className="text-sm bg-gray-100 px-1.5 py-0.5 rounded">pages_messaging</code>,
-                and the standard read permissions for comments and stories — were approved through
-                Meta&apos;s App Review process. Both Chatfuel and Liffio go through this process, which
-                is the correct path for any compliant Instagram automation tool.
+                The permissions Liffio uses are the ones you approve on Meta&apos;s consent screen
+                when you connect your account. OAuth consent through Meta is the correct
+                connection path for any compliant Instagram automation tool, and you can revoke
+                access at any time from your Instagram settings.
               </p>
               <p>
                 Send timing is also handled carefully. Liffio sends automated DMs with a
-                configurable 10–60 second delay after the trigger event — a comment, a story
-                reply, a new follower. This distributes messages naturally over time and avoids
-                the burst-send patterns that Instagram&apos;s spam detection flags. Even at high comment
-                volumes during a viral Reel, the send pattern stays within normal behavior.
+                configurable 10–60 second delay after the trigger event. The pause creates a
+                natural conversation pace for the person receiving the reply — even at high
+                comment volumes during a viral Reel.
               </p>
             </div>
           </div>

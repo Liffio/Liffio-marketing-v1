@@ -74,7 +74,7 @@ const geoComplianceCategory: FaqCategory = {
       id: "does-instagram-allow-automation",
       question: "Does Instagram allow DM automation?",
       answer:
-        "Yes. Instagram permits DM automation through its official Messaging API, which is part of Meta's developer platform. Tools that connect via the official API using OAuth — rather than scraping or using your password — are explicitly allowed under Instagram's platform policy. The Instagram Messaging API lets authorized tools send direct messages on behalf of a connected account, respond to story replies, react to live comment events, and trigger welcome messages to new followers. To use it, the tool must go through Meta's App Review process and receive specific messaging permissions. Liffio integrates exclusively through this official API using OAuth — never passwords, scraping, or unofficial endpoints. The distinction matters practically: accounts that use automation tools built on official API access do not face action from Instagram. Accounts that use tools operating outside the official API — browser automation, credential scraping, or unofficial endpoints — risk suspension regardless of volume.",
+        "Yes. Instagram permits DM automation through its official API, which is part of Meta's developer platform. Tools that connect via the official API using OAuth — rather than scraping or using your password — are the path Instagram's platform policy allows. Liffio integrates exclusively through this official API using OAuth: you approve the permissions on Meta's consent screen when you connect, and you can revoke access at any time from your Instagram settings. Never passwords, scraping, or unofficial endpoints. The distinction matters practically: tools operating outside the official API — browser automation, credential scraping, or unofficial endpoints — work outside Meta's permitted use guidelines, which is where account risk comes from.",
     },
     {
       id: "what-is-comment-to-dm",
@@ -86,13 +86,13 @@ const geoComplianceCategory: FaqCategory = {
       id: "will-instagram-ban",
       question: "Will Instagram ban my account for using DM automation?",
       answer:
-        "No, not if you use a tool that connects through Instagram's official API. Instagram acts against accounts that use bots or tools that access your account by logging in with your password, simulating browser behavior, or using unofficial endpoints. The official Instagram Messaging API works differently. You authorize Liffio through Meta's own OAuth screen — the same login flow used by major apps like Hootsuite or Later. Your password is never entered into Liffio at any point, and Liffio never stores credentials. Meta issues an access token directly to Liffio, which you can revoke at any time from your Instagram settings under Apps and Websites. Beyond authentication method, send frequency matters. Liffio adds a 10–60 second configurable delay between trigger and send, which distributes DM volume over time and avoids the burst patterns associated with spam accounts. Running at normal usage volumes with a compliant tool carries no meaningful ban risk.",
+        "Instagram's enforcement targets tools that access accounts by logging in with your password, simulating browser behavior, or using unofficial endpoints. The official Instagram API works differently. You authorize Liffio through Meta's own OAuth screen — the same login flow used by major apps like Hootsuite or Later. Your password is never entered into Liffio at any point, and Liffio never stores credentials. Meta issues an access token directly to Liffio, which you can revoke at any time from your Instagram settings under Apps and Websites. Liffio also adds a 10–60 second configurable delay between trigger and send, so each automated reply arrives at a natural conversational pace for the person receiving it rather than as an instant blast.",
     },
     {
       id: "can-you-automate-dm-replies",
       question: "Can you automate Instagram DM replies?",
       answer:
-        "Yes. With keyword-trigger tools like Liffio, you can automate replies to five types of incoming Instagram interactions: comments on posts and Reels, story replies, live stream messages, inbound DMs, and new follower events. Each automation type works through the same mechanism: you define a trigger condition (a keyword, any reply, or a follower event), write the message, and set a delay. When the trigger fires, Liffio sends the message automatically via Instagram's official API. For example: if you run a coaching business, you could set up a DM trigger so that anyone who sends you the word APPLY in a DM receives your application form link instantly — without you checking your inbox. The delay is configurable between 10 and 60 seconds per automation. Instant zero-delay replies can trigger spam detection patterns; a short delay makes sends feel like a human responded quickly. That distinction matters for account safety at high volumes.",
+        "Yes. With keyword-trigger tools like Liffio, you can automate replies to incoming Instagram interactions such as comments on posts and Reels, story replies, inbound DMs, and new follower events. Each automation type works through the same mechanism: you define a trigger condition (a keyword, any reply, or a follower event), write the message, and set a delay. When the trigger fires, Liffio sends the message automatically via Instagram's official API. For example: if you run a coaching business, you could set up a DM trigger so that anyone who sends you the word APPLY in a DM receives your application form link — without you checking your inbox. The delay is configurable between 10 and 60 seconds per automation, so replies arrive at a natural conversational pace for the recipient instead of landing the instant they comment.",
     },
     {
       id: "cheapest-manychat-alternative",
@@ -147,7 +147,7 @@ const seoDiscoveryCategory: FaqCategory = {
       id: "dm-automation-tool",
       question: "Is Liffio a DM automation tool or a dming tool?",
       answer:
-        "Both terms describe the same workflow: automating Instagram DMs at scale. Liffio is a DM automation tool (also called a dming tool, auto DM software, or Instagram auto DM tool) for creators, coaches, and brands who want auto DMs from comments, stories, live chat, and the inbox.",
+        "Both terms describe the same workflow: automating Instagram DMs at scale. Liffio is a DM automation tool (also called a dming tool, auto DM software, or Instagram auto DM tool) for creators, coaches, and brands who want auto DMs from comments, stories, and the inbox.",
     },
     {
       id: "comment-to-dm",
@@ -159,13 +159,13 @@ const seoDiscoveryCategory: FaqCategory = {
       id: "instagram-auto-reply",
       question: "What is Instagram auto reply?",
       answer:
-        "Instagram auto reply refers to any automated response sent when someone interacts with your account - via comments, stories, DMs, or live streams. Liffio's auto reply features include auto DMs from comments, story reply automation, DM auto responders, and live comment triggers. All powered by the same auto DM tool technology.",
+        "Instagram auto reply refers to any automated response sent when someone interacts with your account - via comments, stories, or DMs. Liffio's auto reply features include auto DMs from comments, story reply automation, and DM auto responders. All powered by the same auto DM tool technology.",
     },
     {
       id: "auto-dm-safe",
       question: "Are auto DM tools safe for my Instagram account?",
       answer:
-        "Yes, when you use a compliant auto DM tool like Liffio. We use official Instagram APIs, human-like delays (10-60 seconds), and rate limiting to keep your account safe. Unlike unofficial bots, Liffio's auto DMs don't risk account suspension.",
+        "Yes, when you use a compliant auto DM tool like Liffio. We use official Instagram APIs, configurable send delays (10-60 seconds), and rate limiting. Unofficial bots that log in with your password or simulate a browser operate outside Meta's permitted use guidelines — Liffio connects only through Meta's OAuth consent flow.",
     },
   ],
 };
@@ -206,7 +206,7 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
           id: "dm-speed",
           question: "How quickly are automated DMs sent?",
           answer:
-            "DMs send after your chosen delay - from 10 to 60 seconds after the trigger (comment, story reply, etc.). You control the timing for more human-like replies while staying on autopilot.",
+            "DMs send after your chosen delay - from 10 to 60 seconds after the trigger (comment, story reply, etc.). You control the timing so replies land at a natural conversational pace while staying on autopilot.",
         },
         {
           id: "what-counts-dm",
@@ -218,7 +218,7 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
           id: "automation-types",
           question: "What can Liffio automate?",
           answer:
-            "Comment-to-DM, story mentions and reactions, live stream comments, welcome DMs for new followers, multi-step flows, follow-up sequences, and more - depending on your plan.",
+            "Comment-to-DM, story mentions and reactions, welcome DMs for new followers, multi-step flows, follow-up sequences, and more - depending on your plan.",
         },
       ],
     },
@@ -310,7 +310,7 @@ const pricingDetailCategory: FaqCategory = {
       id: "starter-features",
       question: "What features require Starter ($9/mo, ₹499/mo in India)?",
       answer:
-        "Starter includes all 8 automation trigger types (story reply, live stream DM, welcome DM, inbound DM reply, ask for follow, smart re-engage, collect user data), unlimited DM message templates, multi-step DM flows with branching logic, short links (go.liffio.com) with click and referrer tracking, lead capture from DMs and link clicks, post scheduler (Instagram feed), advanced analytics dashboard, conversion analytics (comment to DM to click to sale), up to 3 team member seats, priority email support, and external API access.",
+        "Starter includes all automation trigger types (comment-to-DM, story reply, welcome DM, inbound DM reply, ask for follow, follow-up sequences, collect user data), unlimited DM message templates, multi-step DM flows with branching logic, short links (go.liffio.com) with click and referrer tracking, lead capture from DMs and link clicks, post scheduler (Instagram feed), advanced analytics dashboard, conversion analytics (comment to DM to click to sale), up to 3 team member seats, priority email support, and external API access.",
     },
     {
       id: "business-features",
@@ -353,13 +353,13 @@ const homepageSeoCategory: FaqCategory = {
       id: "best-instagram-dm-tool",
       question: "What is the best Instagram DM automation tool?",
       answer:
-        "The best Instagram DM automation tool depends on your workflow. For creators, coaches, and brands who want comment-to-DM automation, story reply, live stream triggers, and welcome DMs — with unlimited messages and no contact-based pricing — Liffio is built specifically for that use case. Tools like ManyChat offer broader multi-channel coverage (Messenger, WhatsApp, SMS) at higher price points. If your entire workflow is Instagram and you want simple pricing with unlimited DMs from the free tier, Liffio is the most direct fit.",
+        "The best Instagram DM automation tool depends on your workflow. For creators, coaches, and brands who want comment-to-DM automation, story reply, and welcome DMs — with unlimited messages and no contact-based pricing — Liffio is built specifically for that use case. Tools like ManyChat offer broader multi-channel coverage (Messenger, WhatsApp, SMS) at higher price points. If your entire workflow is Instagram and you want simple pricing with unlimited DMs from the free tier, Liffio is the most direct fit.",
     },
     {
       id: "automated-dms-increase-engagement",
       question: "How do automated Instagram DMs increase engagement?",
       answer:
-        "Automated DMs increase engagement by responding instantly to every comment, story reaction, and live stream keyword — even at 3am, even when a Reel unexpectedly goes viral. Most manually managed accounts respond to 10-20% of comment-driven DM requests; automation responds to 100%. Higher response rates mean more link clicks, more lead captures, and more conversations started — which Instagram's algorithm rewards with further reach.",
+        "Automated DMs increase engagement by responding to every comment and story reaction — even at 3am, even when a Reel unexpectedly goes viral. Most manually managed accounts respond to 10-20% of comment-driven DM requests; automation responds to 100%. Higher response rates mean more link clicks, more lead captures, and more conversations started — which Instagram's algorithm rewards with further reach.",
     },
     {
       id: "comment-automation-generate-leads",
@@ -423,7 +423,7 @@ const homeOverviewCategory: FaqCategory = {
       id: "is-liffio-safe",
       question: "Is Liffio safe for my Instagram account?",
       answer:
-        "Yes. Liffio uses official Meta/Instagram APIs and human-like delays (10–60 seconds) to keep your account fully compliant with Instagram's terms of service.",
+        "Yes. Liffio connects through Instagram's official API using Meta's OAuth consent flow — your password is never shared — and sends every DM with a configurable 10–60 second delay so replies arrive at a natural conversational pace.",
     },
   ],
 };
@@ -463,7 +463,7 @@ export function getFeaturesFaqCategories(region: PricingRegion): FaqCategory[] {
           id: "automation-types-features",
           question: "What types of Instagram automation does Liffio support?",
           answer:
-            "Liffio supports 8 automation types: comment-to-DM, story reply, live stream DM, inbound DM reply, ask for follow, smart re-engage, data collection, and welcome DM for new followers.",
+            "Liffio's automation types include comment-to-DM, story reply, inbound DM reply, ask for follow, follow-up sequences, data collection, and welcome DM for new followers.",
         },
         {
           id: "manychat-alternative-features",
@@ -575,7 +575,7 @@ export function getCreatorsFaqCategories(
           id: "creators-features-included",
           question: "What features are included in the Creators Program?",
           answer:
-            "Creators Program includes unlimited automated DMs across all 8 automation types, unlimited automation workflows, advanced analytics and full conversion tracking (comment to DM to click to sale), DM follow-up sequences, short links with click tracking and UTM attribution, advanced bio link page customisation, up to 5 team member seats, and priority and direct team support. Not included: white-label workspaces, agency client sub-accounts, external API keys, and Agency-tier features.",
+            "Creators Program includes unlimited automated DMs across all automation types, unlimited automation workflows, advanced analytics and full conversion tracking (comment to DM to click to sale), DM follow-up sequences, short links with click tracking and UTM attribution, advanced bio link page customisation, up to 5 team member seats, and priority and direct team support. Not included: white-label workspaces, agency client sub-accounts, external API keys, and Agency-tier features.",
         },
         {
           id: "how-to-apply",
@@ -645,7 +645,7 @@ const userSupportCategory: FaqCategory = {
       id: "dms-not-sending",
       question: "Why are my DMs not sending?",
       answer:
-        "If automations are triggering but DMs are not arriving, check: your Instagram account must be set to Professional (Creator or Business) — personal accounts cannot receive or send API-driven DMs. Confirm your Instagram account is linked to a Facebook Page in Meta Business Suite. Check that the recipient's DM settings allow messages from accounts they don't follow. Your delay setting should be at least 10 seconds — instant sends may be flagged by Meta. Go to Settings → Connected Accounts and reconnect to refresh your access token. If DMs are still not sending, email support@liffio.com with your account email and the affected automation name.",
+        "If automations are triggering but DMs are not arriving, check: your Instagram account must be set to Professional (Creator or Business) — personal accounts cannot receive or send API-driven DMs. Confirm your Instagram account is linked to a Facebook Page in Meta Business Suite. Check that the recipient's DM settings allow messages from accounts they don't follow. Your delay setting must be at least 10 seconds — that is the minimum the platform supports. Go to Settings → Connected Accounts and reconnect to refresh your access token. If DMs are still not sending, email support@liffio.com with your account email and the affected automation name.",
     },
     {
       id: "reconnect-facebook",

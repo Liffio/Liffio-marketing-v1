@@ -32,7 +32,7 @@ const faqCategories: FaqCategory[] = [
         id: "does-liffio-work-with-reels",
         question: "Does Liffio work with Instagram Reels?",
         answer:
-          "Yes. Comment-to-DM automation works on both feed posts and Reels. When someone comments a keyword on your Reel, Liffio sends the automated DM after your chosen delay — whether that Reel gets 50 comments or 50,000. Story reply automation works when someone replies to a Story you have published, including Stories that promote a Reel. Live reply automation works during active Instagram Live sessions. All three are available on paid plans. Comment-to-DM on feed posts and Reels is available on the free plan.",
+          "Yes. Comment-to-DM automation works on both feed posts and Reels. When someone comments a keyword on your Reel, Liffio sends the automated DM after your chosen delay — whether that Reel gets 50 comments or 50,000. Story reply automation works when someone replies to a Story you have published, including Stories that promote a Reel, and is available on paid plans. Comment-to-DM on feed posts and Reels is available on the free plan.",
       },
       {
         id: "run-both",
@@ -324,21 +324,16 @@ export default function ManyChatAlternativePage() {
                 Liffio. Your Instagram password is never entered into Liffio at any point.
               </p>
               <p>
-                The permissions Liffio requests are the same ones Meta requires for messaging
-                automation: <code className="text-sm bg-gray-100 px-1.5 py-0.5 rounded">instagram_manage_messages</code>,{" "}
-                <code className="text-sm bg-gray-100 px-1.5 py-0.5 rounded">pages_messaging</code>, and the standard
-                read permissions for comments and stories. Liffio went through Meta&apos;s App Review
-                process to receive these permissions — the same process that every compliant
-                Instagram automation tool must pass.
+                The permissions Liffio requests are the ones you approve on Meta&apos;s consent
+                screen when you connect your account. You can review each permission before
+                approving, and you can revoke Liffio&apos;s access at any time from your Instagram
+                settings under Apps and Websites.
               </p>
               <p>
-                The other safety factor is send behavior. Instagram&apos;s spam detection looks for
-                patterns — identical messages sent at exactly the same timestamp, very high burst
-                volume from a single account in a short window, and zero variation in send timing.
-                Liffio introduces a configurable 10–60 second delay between trigger and send, which
-                distributes DM volume naturally over time. At normal creator usage levels — even
-                during a viral Reel with thousands of comments — the send pattern does not trigger
-                spam detection.
+                The other factor is send behavior. Liffio spaces automated sends with a
+                configurable 10–60 second delay between trigger and send. That pause creates a
+                natural conversation rhythm for the person on the receiving end — a reply that
+                lands a moment after their comment rather than a wall of instant messages.
               </p>
               <p>
                 The contrast is with tools that use unofficial access methods: browser automation,

@@ -13,7 +13,7 @@ export type FeatureDefinition = {
 };
 
 export const FEATURE_CATEGORIES = [
-  { id: "engage", label: "Engage & capture", featureIds: ["auto-comment-reply", "story-auto-reply", "live-auto-reply", "dm-auto-reply"] },
+  { id: "engage", label: "Engage & capture", featureIds: ["auto-comment-reply", "story-auto-reply", "dm-auto-reply"] },
   { id: "grow", label: "Grow & convert", featureIds: ["ask-for-follow", "smart-reengage", "collect-user-data", "welcome-new-followers"] },
 ] as const;
 
@@ -29,7 +29,7 @@ export const FEATURES: readonly FeatureDefinition[] = [
     gridLabel: "Auto Comment",
     highlight: "The signature auto DM tool feature - comment to DM automation.",
     description:
-      "When a follower comments a keyword on your post or reel, Liffio sends them an auto DM and a public auto comment reply. This comment-to-DM automation is the core feature of any Instagram auto DM tool - with 10–60 second delays for human-like timing.",
+      "When a follower comments a keyword on your post or reel, Liffio sends them an auto DM and a public auto comment reply. This comment-to-DM automation is the core feature of any Instagram auto DM tool - with configurable 10–60 second reply delays.",
     bullets: [
       "Auto DM + auto comment reply in one workflow",
       "Unlimited keyword triggers per campaign",
@@ -55,26 +55,8 @@ export const FEATURES: readonly FeatureDefinition[] = [
     ],
   },
   {
-    id: "live-auto-reply",
-    num: "03",
-    color: "#f5184c",
-    bg: "rgba(245, 24, 76,0.07)",
-    border: "rgba(245, 24, 76,0.18)",
-    tag: "Live Stream Auto DM",
-    title: "Live Auto Reply",
-    gridLabel: "Live Auto DM",
-    highlight: "Auto DMs from live stream comments.",
-    description:
-      "Monitor live comments in real time and send auto DMs to every viewer who types a keyword - ideal for launches, Q&As, and webinars. Turn your Instagram Live into a lead-gen machine with live auto DM.",
-    bullets: [
-      "Auto DM on keyword triggers during live streams",
-      "Send links, discount codes, and resources automatically",
-      "DM automation for product launches and flash offers",
-    ],
-  },
-  {
     id: "dm-auto-reply",
-    num: "04",
+    num: "03",
     color: "#2ea957",
     bg: "rgba(46,169,87,0.07)",
     border: "rgba(46,169,87,0.18)",
@@ -92,7 +74,7 @@ export const FEATURES: readonly FeatureDefinition[] = [
   },
   {
     id: "ask-for-follow",
-    num: "05",
+    num: "04",
     color: "#b20d8f",
     bg: "rgba(178, 13, 143,0.07)",
     border: "rgba(178, 13, 143,0.18)",
@@ -110,25 +92,25 @@ export const FEATURES: readonly FeatureDefinition[] = [
   },
   {
     id: "smart-reengage",
-    num: "06",
+    num: "05",
     color: "#14b8a6",
     bg: "rgba(20,184,166,0.07)",
     border: "rgba(20,184,166,0.18)",
-    tag: "Win-back sequences",
-    title: "Smart Re-engage",
-    gridLabel: "Re-engage",
-    highlight: "Win back warm leads automatically.",
+    tag: "Follow-up sequences",
+    title: "Follow-up Sequences",
+    gridLabel: "Follow-ups",
+    highlight: "Timed follow-ups inside active conversations.",
     description:
-      "Identify users who've interacted before and send timed follow-ups - converting browsers into buyers on autopilot.",
+      "Send timed follow-up messages inside an active DM conversation - a reminder, a second link, or the next step in your flow.",
     bullets: [
-      "Re-engages previous commenters and DM contacts",
-      "Configurable time-based follow-up sequences",
-      "Personalised message templates per segment",
+      "Timed follow-ups within an active DM conversation",
+      "Configurable delay per step",
+      "Personalised message templates per flow",
     ],
   },
   {
     id: "collect-user-data",
-    num: "07",
+    num: "06",
     color: "#ee7a1f",
     bg: "rgba(238,122,31,0.07)",
     border: "rgba(238,122,31,0.18)",
@@ -146,7 +128,7 @@ export const FEATURES: readonly FeatureDefinition[] = [
   },
   {
     id: "welcome-new-followers",
-    num: "08",
+    num: "07",
     color: "#ad36a7",
     bg: "rgba(173,54,167,0.07)",
     border: "rgba(173,54,167,0.18)",

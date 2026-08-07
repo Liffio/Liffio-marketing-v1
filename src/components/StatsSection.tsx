@@ -8,7 +8,7 @@ const stats = [
   isMetaVerified
     ? { id: "compliant", value: "100%", label: "Meta-compliant" }
     : { id: "oauth", value: "OAuth", label: "Secure Meta login" },
-  { id: "delay", value: "10–60s", label: "Human-like DM delay" },
+  { id: "delay", value: "10–60s", label: "Custom DM delay" },
   { id: "free", value: "Free", label: "No credit card required" },
 ] as const;
 

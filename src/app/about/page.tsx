@@ -128,10 +128,11 @@ export default function AboutPage() {
                 your story, or sends you a DM with a keyword, Liffio sends a pre-written reply automatically.
               </p>
               <p>
-                Replies go out within 10 to 60 seconds — with a configurable human-like delay so it doesn&apos;t
-                feel instant and robotic. The tool supports eight workflow types: comment-to-DM, story reply,
-                live reply, DM reply, follow gating, re-engagement sequences, lead data collection, and
-                welcome messages for new followers. It runs 24/7 without any action from you.
+                Replies go out within 10 to 60 seconds — with a configurable delay so each reply
+                reaches the recipient at a natural conversational pace. The tool supports workflow
+                types like comment-to-DM, story reply, DM reply, follow gating, follow-up sequences,
+                lead data collection, and welcome messages for new followers. It runs 24/7 without
+                any action from you.
               </p>
               <p>
                 Liffio is built specifically for Instagram. We don&apos;t support Facebook, WhatsApp, or email

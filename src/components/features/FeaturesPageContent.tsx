@@ -10,7 +10,7 @@ import { TechBadge } from "@/components/TechBadge";
 import { siteConfig } from "@/config/site.config";
 
 const HIGHLIGHTS = [
-  { value: "8", label: "Automation types" },
+  { value: "7", label: "Automation types" },
   { value: "10–60s", label: "Custom DM delay" },
   { value: "24/7", label: "Autopilot mode" },
   { value: "1", label: "Dashboard for all" },
@@ -94,7 +94,7 @@ export default function FeaturesPageContent() {
             <span className="gradient-text">One Dashboard.</span>
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">
-            From comment-to-DM to welcome messages - every Instagram touchpoint automated with human-like delays,
+            From comment-to-DM to welcome messages - every Instagram touchpoint automated with configurable delays,
             full analytics, and official Instagram APIs.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

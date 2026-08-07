@@ -66,8 +66,8 @@ export default async function Home() {
               <p>
                 The tool connects through Instagram&apos;s official OAuth API — no account password is
                 stored or shared. All automations run inside Meta&apos;s permitted use guidelines. Liffio
-                supports eight workflow types: comment-to-DM, story reply, live reply, DM reply,
-                follow gating, re-engagement, data collection, and welcome messages. Pricing starts
+                supports workflow types like comment-to-DM, story reply, DM reply,
+                follow gating, follow-up sequences, data collection, and welcome messages. Pricing starts
                 at $0 and scales to $299 per month for agencies managing multiple accounts. Liffio
                 is built in India and works with Instagram accounts worldwide.{' '}
                 <a href="/about" className="underline underline-offset-2 hover:text-foreground transition-colors">Learn more about Liffio.</a>

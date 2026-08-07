@@ -52,16 +52,16 @@ const freeFeatures: PlanFeature[] = [
   { text: "3 DM message templates", included: true },
   { text: "Bio link page (bio.liffio.com)", included: true },
   { text: "Basic analytics", included: true },
-  { text: "Story, Live & multi-step flows", included: false },
+  { text: "Story & multi-step flows", included: false },
   { text: "Short links & lead capture", included: false },
   { text: "External API access", included: false },
 ];
 
 const starterFeatures: PlanFeature[] = [
   ...unlimitedCore,
-  { text: "All 8 automation trigger types", included: true },
+  { text: "All automation trigger types", included: true },
   { text: "Unlimited templates & multi-step flows", included: true },
-  { text: "Story, Live & welcome DM automations", included: true },
+  { text: "Story & welcome DM automations", included: true },
   { text: "Advanced analytics dashboard", included: true },
   { text: "Short links (go.liffio.com) + click tracking", included: true },
   { text: "Lead capture from DMs & link clicks", included: true },
@@ -244,7 +244,6 @@ export const featureCategories = [
       { name: "Keyword comment triggers", free: true, starter: true, business: true, agency: true },
       { name: "Public comment auto-replies", free: true, starter: true, business: true, agency: true },
       { name: "Story mention & reaction triggers", free: false, starter: true, business: true, agency: true },
-      { name: "Live stream comment-to-DM", free: false, starter: true, business: true, agency: true },
       { name: "Welcome DM for new followers", free: false, starter: true, business: true, agency: true },
       { name: "Multi-step DM flows with logic", free: false, starter: true, business: true, agency: true },
       { name: "Follow-up DM sequences", free: false, starter: false, business: true, agency: true },

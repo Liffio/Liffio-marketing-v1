@@ -71,7 +71,6 @@ export const SEO_KEYWORDS = [
   "instagram lead generation tool",
   "instagram automation tool",
   // Meta/compliance
-  "meta approved dm automation",
   "instagram api dm tool",
 ] as const;
 
@@ -157,9 +156,9 @@ export const rootSeo = buildPageMetadata({
 
 export const pageSeo = {
   features: buildPageMetadata({
-    title: "Instagram DM Automation Features — 8 Automations in One Dashboard | Liffio",
+    title: "Instagram DM Automation Features — All Automations in One Dashboard | Liffio",
     description:
-      "Comment-to-DM, story reply, live reply, DM sequences, follow gating, and more. All 8 automation types in one place. Built on Instagram’s official API.",
+      "Comment-to-DM, story reply, DM sequences, follow gating, and more. Every automation type in one place. Built on Instagram’s official API.",
     pathname: "/features",
   }),
   pricing: buildPageMetadata({
