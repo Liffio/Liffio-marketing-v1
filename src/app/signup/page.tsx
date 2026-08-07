@@ -1,4 +1,5 @@
 import AppLink from "@/components/AppLink";
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SignupForm from "@/components/SignupForm";
@@ -58,7 +59,7 @@ const BENEFITS = [
   "Auto-reply to every comment with a keyword trigger",
   "Story mentions & reactions handled automatically",
   "Multi-step DM sequences with conditional logic",
-  "Welcome new followers with a personalised message",
+  ...(FEATURE_WELCOME_DM ? ["Welcome new followers with a personalised message"] : []),
   "Collect emails and data directly inside DM chats",
   "Timed follow-ups within active conversations",
   "Full analytics: comment → DM → click → sale",

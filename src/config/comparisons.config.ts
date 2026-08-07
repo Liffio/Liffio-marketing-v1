@@ -7,6 +7,8 @@
 // Instagram-only focus). Each page carries a "verify current pricing" note since
 // competitor plans change.
 
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
+
 export type ComparisonRow = {
   feature: string;
   liffio: boolean | string;
@@ -98,7 +100,7 @@ export const COMPARISONS: Comparison[] = [
       },
       {
         title: "Instagram-first automation stack",
-        body: "Comment-to-DM, story reply, DM reply, follow gating, follow-up sequences, lead capture, and welcome messages — all in one Instagram-focused dashboard.",
+        body: `Comment-to-DM, story reply, DM reply, follow gating, follow-up sequences, ${FEATURE_WELCOME_DM ? "lead capture, and welcome messages" : "and lead capture"} — all in one Instagram-focused dashboard.`,
       },
     ],
     tableRows: rows({ free: "yes", unlimitedDm: "limited", flat: "tiered", inr: true, igOnly: "IG + FB" }),
@@ -130,7 +132,7 @@ export const COMPARISONS: Comparison[] = [
     metaDescription:
       "Liffio vs LinkDM for Instagram comment-to-DM automation. Compare features, pricing, free plans, and multi-account support. Flat pricing, unlimited DMs.",
     heroSubtitle:
-      "LinkDM focuses on link-in-DM delivery. Liffio covers the full automation stack — from comment-to-DM to welcome messages — with unlimited accounts and a production-ready free plan.",
+      `LinkDM focuses on link-in-DM delivery. Liffio covers the full automation stack — from comment-to-DM to ${FEATURE_WELCOME_DM ? "welcome messages" : "follow-up sequences"} — with unlimited accounts and a production-ready free plan.`,
     hubBlurb: "Full automation stack and unlimited accounts vs LinkDM's link-delivery focus.",
     whyIntro: [
       "LinkDM is a clean, focused Instagram tool built around delivering links via DM when someone comments a keyword. It does that one job well and is a Meta Business Partner.",
@@ -139,7 +141,7 @@ export const COMPARISONS: Comparison[] = [
     whyPoints: [
       {
         title: "A full automation stack, not just links",
-        body: "Beyond comment-to-DM link delivery, Liffio handles story replies, DM sequences, follow gating, follow-up sequences, lead capture, and welcome messages.",
+        body: `Beyond comment-to-DM link delivery, Liffio handles story replies, DM sequences, follow gating, follow-up sequences, ${FEATURE_WELCOME_DM ? "lead capture, and welcome messages" : "and lead capture"}.`,
       },
       {
         title: "Unlimited accounts and DMs",
@@ -237,7 +239,7 @@ export const COMPARISONS: Comparison[] = [
     whyPoints: [
       {
         title: "A full automation stack in one place",
-        body: "Comment-to-DM, story reply, DM reply, follow gating, follow-up sequences, lead capture, and welcome messages — a complete stack rather than a subset.",
+        body: `Comment-to-DM, story reply, DM reply, follow gating, follow-up sequences, ${FEATURE_WELCOME_DM ? "lead capture, and welcome messages" : "and lead capture"} — a complete stack rather than a subset.`,
       },
       {
         title: "Unlimited accounts and DMs",

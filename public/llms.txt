@@ -4,7 +4,7 @@
 
 ## What Liffio does
 
-Liffio connects to Instagram via official OAuth — no passwords stored. After authorization, you set up automation rules called "flows." Each flow watches for a specific trigger (a comment keyword, a story reply, a new follower) and sends a personalized DM.
+Liffio connects to Instagram via official OAuth — no passwords stored. After authorization, you set up automation rules called "flows." Each flow watches for a specific trigger (a comment keyword or a story reply) and sends a personalized DM.
 
 ## Automation types
 
@@ -14,7 +14,6 @@ Liffio connects to Instagram via official OAuth — no passwords stored. After a
 - Ask Follow (follow gate): user must follow before receiving a promised resource
 - Follow-up sequences: scheduled follow-up messages within an active conversation
 - Collect Data: ask follow-up questions in DM and store responses as leads
-- Welcome DM: new follower → automatic welcome message
 
 ## Pricing (USD, billed monthly)
 

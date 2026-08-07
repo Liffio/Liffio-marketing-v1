@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { siteConfig } from "@/config/site.config";
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import { LiffioAvatar } from "@/components/Logo";
 import { IPhoneShell } from "@/components/simulation/IPhoneShell";
 import { SimulationContent } from "@/components/simulation/SimulationContent";
@@ -559,7 +560,7 @@ export function WelcomeFollowersPhone({ animKey }: { animKey: number }) {
 
 // ─── Feature list ─────────────────────────────────────────────────────────────
 
-const features = [
+const allFeatures = [
   {
     id: "auto-comment-reply",
     num: "01",
@@ -659,6 +660,8 @@ const features = [
     Phone: WelcomeFollowersPhone,
   },
 ] as const;
+
+const features = allFeatures.filter((f) => f.id !== "welcome-new-followers" || FEATURE_WELCOME_DM);
 
 // ─── Simulation shell (matches How It Works) ──────────────────────────────────
 
@@ -823,7 +826,7 @@ export default function FeaturesSection() {
             >
               <div className="mb-2 flex flex-wrap items-center gap-2">
                 <TechBadge label={f.tag} variant="inline" format="label" accent={f.color} />
-                <span className="text-[10px] font-bold text-gray-500">{f.num} / 07</span>
+                <span className="text-[10px] font-bold text-gray-500">{f.num} / {String(features.length).padStart(2, "0")}</span>
               </div>
               <div className="flex items-start gap-3">
                 <div

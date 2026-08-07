@@ -3,26 +3,31 @@
 import { useCallback, useRef, useState } from "react";
 import { TechBadge } from "@/components/TechBadge";
 
+function initialsOf(name: string): string {
+  return name
+    .split(/[\s.]+/)
+    .filter(Boolean)
+    .map((part) => part[0].toUpperCase())
+    .join("");
+}
+
 const testimonials = [  {
     name: "R. C.",
     role: "Beta Tester",
     quote:
       "I get a ton of comments asking for my program link every time I post. Had to set a reminder to reply before bed and still missed loads. Set up the keyword trigger and it just runs now.",
-    avatar: "RC",
     gradient: "linear-gradient(135deg,#10b981,#b20d8f)",
   },  {
     name: "S. M.",
     role: "Beta Tester",
     quote:
       "Was sceptical because tools like this always felt spammy. The delay and tone of the DM matched my brand voice. First automation went live on a collab post and handled everything overnight.",
-    avatar: "SM",
     gradient: "linear-gradient(135deg,#b20d8f,#ff7c49)",
   },  {
     name: "A. A.",
     role: "Beta Tester",
     quote:
       "Comment-to-DM for product drops is exactly what I needed. Launch posts used to need someone monitoring comments for hours. This handles the link delivery automatically.",
-    avatar: "AF",
     gradient: "linear-gradient(135deg,#f97316,#b20d8f)",
   },
   {
@@ -30,7 +35,6 @@ const testimonials = [  {
     role: "Beta Tester",
     quote:
       "Was spending 2–3 hours every evening just replying to DMs from comments. This takes care of all of that automatically. Massive time saver.",
-    avatar: "LP",
     gradient: "linear-gradient(135deg,#ff7c49,#b20d8f)",
   },
   {
@@ -38,7 +42,6 @@ const testimonials = [  {
     role: "Beta Tester",
     quote:
       "Managing comment automations across five client accounts manually was killing us. Moved the first two to Liffio and it's working cleanly. Will be moving the others this week.",
-    avatar: "JT",
     gradient: "linear-gradient(135deg,#14b8a6,#b20d8f)",
   },
   {
@@ -46,14 +49,12 @@ const testimonials = [  {
     role: "Beta Tester",
     quote:
       "Set up the LINK trigger and tested it myself - got the DM in under a minute. Simple but actually works.",
-    avatar: "DH",
     gradient: "linear-gradient(135deg,#f97316,#f5184c)",
   },  {
     name: "D. T.",
     role: "Beta Tester",
     quote:
       "The delay feature is what sold me - the 30-second pause makes the conversation feel natural. Followers actually reply back.",
-    avatar: "DT",
     gradient: "linear-gradient(135deg,#10b981,#f97316)",
   },] as const;
 
@@ -68,7 +69,7 @@ function TestimonialCard({ t }: { t: (typeof testimonials)[number] }) {
           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
           style={{ background: t.gradient }}
         >
-          {t.avatar}
+          {initialsOf(t.name)}
         </div>
         <div className="min-w-0">
           <p className="text-sm font-bold text-[#0a0a0a]">{t.name}</p>

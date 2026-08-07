@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ComparisonTable from "@/components/marketing/ComparisonTable";
@@ -261,8 +262,7 @@ export default function ManyChatAlternativePage() {
                 </p>
                 <p className="mt-3 text-gray-600 leading-relaxed">
                   Common automations in this segment: comment-to-DM for lead magnets and freebie
-                  downloads, story reply sequences for limited-time offers, and welcome DMs for
-                  new followers linked to an onboarding sequence.
+                  downloads{FEATURE_WELCOME_DM ? ", story reply sequences for limited-time offers, and welcome DMs for new followers linked to an onboarding sequence" : ", and story reply sequences for limited-time offers"}.
                 </p>
               </div>
 

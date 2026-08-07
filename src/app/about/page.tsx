@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { SITE_URL, siteConfig } from "@/config/site.config";
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import { BreadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { Breadcrumb } from "@/components/Breadcrumb";
 
@@ -130,8 +131,8 @@ export default function AboutPage() {
               <p>
                 Replies go out within 10 to 60 seconds — with a configurable delay so each reply
                 reaches the recipient at a natural conversational pace. The tool supports workflow
-                types like comment-to-DM, story reply, DM reply, follow gating, follow-up sequences,
-                lead data collection, and welcome messages for new followers. It runs 24/7 without
+                types like comment-to-DM, story reply, DM reply, follow gating, follow-up sequences,{" "}
+                {FEATURE_WELCOME_DM ? "lead data collection, and welcome messages for new followers" : "and lead data collection"}. It runs 24/7 without
                 any action from you.
               </p>
               <p>

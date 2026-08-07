@@ -1,3 +1,5 @@
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
+
 export type BlogPost = {
   slug: string;
   category: string;
@@ -125,7 +127,7 @@ export const BLOG_POSTS: BlogPost[] = [
         paragraphs: [
           "Check whether automated Instagram DMs are capped per month or per contact. Some tools look cheap until a Reel blows up and you hit an overage.",
           "See if multiple Instagram accounts are included or billed separately. Agencies and creator managers care about this on day one.",
-          "Ask whether story replies and welcome DMs are native or add-ons.",
+          `Ask whether story replies${FEATURE_WELCOME_DM ? " and welcome DMs" : ""} are native or add-ons.`,
           "If you sell in India, confirm INR checkout and GST-friendly invoices. USD-only billing is a real friction point for Indian creators.",
         ],
       },
@@ -427,11 +429,11 @@ export const BLOG_POSTS: BlogPost[] = [
         answer:
           "For cold commenters, one follow-up within 24 hours is plenty. More than that and block rates climb on fashion and coaching accounts we have seen.",
       },
-      {
+      ...(FEATURE_WELCOME_DM ? [{
         question: "Should I automate welcome DMs to new followers?",
         answer:
           "Only if the message is genuinely useful and infrequent. Generic \"thanks for following\" pitches annoy people who never asked to hear from you.",
-      },
+      }] : []),
     ],
     references: [
       {

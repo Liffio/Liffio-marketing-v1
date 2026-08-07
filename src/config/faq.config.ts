@@ -1,4 +1,5 @@
 import { metaCopy } from "@/config/meta-copy";
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import {
   getCreatorsProgramFaqAnswer,
   getFreePlanFaqAnswer,
@@ -92,7 +93,7 @@ const geoComplianceCategory: FaqCategory = {
       id: "can-you-automate-dm-replies",
       question: "Can you automate Instagram DM replies?",
       answer:
-        "Yes. With keyword-trigger tools like Liffio, you can automate replies to incoming Instagram interactions such as comments on posts and Reels, story replies, inbound DMs, and new follower events. Each automation type works through the same mechanism: you define a trigger condition (a keyword, any reply, or a follower event), write the message, and set a delay. When the trigger fires, Liffio sends the message automatically via Instagram's official API. For example: if you run a coaching business, you could set up a DM trigger so that anyone who sends you the word APPLY in a DM receives your application form link — without you checking your inbox. The delay is configurable between 10 and 60 seconds per automation, so replies arrive at a natural conversational pace for the recipient instead of landing the instant they comment.",
+        `Yes. With keyword-trigger tools like Liffio, you can automate replies to incoming Instagram interactions such as comments on posts and Reels, story replies, ${FEATURE_WELCOME_DM ? "inbound DMs, and new follower events" : "and inbound DMs"}. Each automation type works through the same mechanism: you define a trigger condition (a keyword or a reply), write the message, and set a delay. When the trigger fires, Liffio sends the message automatically via Instagram's official API. For example: if you run a coaching business, you could set up a DM trigger so that anyone who sends you the word APPLY in a DM receives your application form link — without you checking your inbox. The delay is configurable between 10 and 60 seconds per automation, so replies arrive at a natural conversational pace for the recipient instead of landing the instant they comment.`,
     },
     {
       id: "cheapest-manychat-alternative",
@@ -218,7 +219,7 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
           id: "automation-types",
           question: "What can Liffio automate?",
           answer:
-            "Comment-to-DM, story mentions and reactions, welcome DMs for new followers, multi-step flows, follow-up sequences, and more - depending on your plan.",
+            `Comment-to-DM, story mentions and reactions, ${FEATURE_WELCOME_DM ? "welcome DMs for new followers, " : ""}multi-step flows, follow-up sequences, and more - depending on your plan.`,
         },
       ],
     },
@@ -310,7 +311,7 @@ const pricingDetailCategory: FaqCategory = {
       id: "starter-features",
       question: "What features require Starter ($9/mo, ₹499/mo in India)?",
       answer:
-        "Starter includes all automation trigger types (comment-to-DM, story reply, welcome DM, inbound DM reply, ask for follow, follow-up sequences, collect user data), unlimited DM message templates, multi-step DM flows with branching logic, short links (go.liffio.com) with click and referrer tracking, lead capture from DMs and link clicks, post scheduler (Instagram feed), advanced analytics dashboard, conversion analytics (comment to DM to click to sale), up to 3 team member seats, priority email support, and external API access.",
+        `Starter includes all automation trigger types (comment-to-DM, story reply, ${FEATURE_WELCOME_DM ? "welcome DM, " : ""}inbound DM reply, ask for follow, follow-up sequences, collect user data), unlimited DM message templates, multi-step DM flows with branching logic, short links (go.liffio.com) with click and referrer tracking, lead capture from DMs and link clicks, post scheduler (Instagram feed), advanced analytics dashboard, conversion analytics (comment to DM to click to sale), up to 3 team member seats, priority email support, and external API access.`,
     },
     {
       id: "business-features",
@@ -353,7 +354,7 @@ const homepageSeoCategory: FaqCategory = {
       id: "best-instagram-dm-tool",
       question: "What is the best Instagram DM automation tool?",
       answer:
-        "The best Instagram DM automation tool depends on your workflow. For creators, coaches, and brands who want comment-to-DM automation, story reply, and welcome DMs — with unlimited messages and no contact-based pricing — Liffio is built specifically for that use case. Tools like ManyChat offer broader multi-channel coverage (Messenger, WhatsApp, SMS) at higher price points. If your entire workflow is Instagram and you want simple pricing with unlimited DMs from the free tier, Liffio is the most direct fit.",
+        `The best Instagram DM automation tool depends on your workflow. For creators, coaches, and brands who want comment-to-DM automation${FEATURE_WELCOME_DM ? ", story reply, and welcome DMs" : " and story reply"} — with unlimited messages and no contact-based pricing — Liffio is built specifically for that use case. Tools like ManyChat offer broader multi-channel coverage (Messenger, WhatsApp, SMS) at higher price points. If your entire workflow is Instagram and you want simple pricing with unlimited DMs from the free tier, Liffio is the most direct fit.`,
     },
     {
       id: "automated-dms-increase-engagement",
@@ -463,7 +464,7 @@ export function getFeaturesFaqCategories(region: PricingRegion): FaqCategory[] {
           id: "automation-types-features",
           question: "What types of Instagram automation does Liffio support?",
           answer:
-            "Liffio's automation types include comment-to-DM, story reply, inbound DM reply, ask for follow, follow-up sequences, data collection, and welcome DM for new followers.",
+            `Liffio's automation types include comment-to-DM, story reply, inbound DM reply, ask for follow, follow-up sequences, ${FEATURE_WELCOME_DM ? "data collection, and welcome DM for new followers" : "and data collection"}.`,
         },
         {
           id: "manychat-alternative-features",

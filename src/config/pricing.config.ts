@@ -1,4 +1,5 @@
 import { metaCopy } from "@/config/meta-copy";
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import type { PricingRegion } from "@/lib/pricing-region";
 import { siteConfig } from "./site.config";
 
@@ -61,7 +62,7 @@ const starterFeatures: PlanFeature[] = [
   ...unlimitedCore,
   { text: "All automation trigger types", included: true },
   { text: "Unlimited templates & multi-step flows", included: true },
-  { text: "Story & welcome DM automations", included: true },
+  { text: FEATURE_WELCOME_DM ? "Story & welcome DM automations" : "Story automations", included: true },
   { text: "Advanced analytics dashboard", included: true },
   { text: "Short links (go.liffio.com) + click tracking", included: true },
   { text: "Lead capture from DMs & link clicks", included: true },
@@ -244,7 +245,7 @@ export const featureCategories = [
       { name: "Keyword comment triggers", free: true, starter: true, business: true, agency: true },
       { name: "Public comment auto-replies", free: true, starter: true, business: true, agency: true },
       { name: "Story mention & reaction triggers", free: false, starter: true, business: true, agency: true },
-      { name: "Welcome DM for new followers", free: false, starter: true, business: true, agency: true },
+      ...(FEATURE_WELCOME_DM ? [{ name: "Welcome DM for new followers", free: false, starter: true, business: true, agency: true }] : []),
       { name: "Multi-step DM flows with logic", free: false, starter: true, business: true, agency: true },
       { name: "Follow-up DM sequences", free: false, starter: false, business: true, agency: true },
     ],

@@ -1,5 +1,6 @@
 import type { FaqCategory } from "@/config/faq.config";
 import { SITE_URL, siteConfig } from "@/config/site.config";
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
 
 function JsonLdScript({ data }: { data: object | object[] }) {
   const payload = Array.isArray(data) ? data : [data];
@@ -157,7 +158,7 @@ export function SoftwareApplicationJsonLd() {
           "Ask Follow (follow gating)",
           "Follow-up DM sequences",
           "Collect Data (lead capture)",
-          "Welcome New Followers",
+          ...(FEATURE_WELCOME_DM ? ["Welcome New Followers"] : []),
         ],
       }}
     />

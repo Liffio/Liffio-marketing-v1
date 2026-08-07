@@ -12,12 +12,14 @@ export type FeatureDefinition = {
   highlight: string;
 };
 
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
+
 export const FEATURE_CATEGORIES = [
   { id: "engage", label: "Engage & capture", featureIds: ["auto-comment-reply", "story-auto-reply", "dm-auto-reply"] },
-  { id: "grow", label: "Grow & convert", featureIds: ["ask-for-follow", "smart-reengage", "collect-user-data", "welcome-new-followers"] },
+  { id: "grow", label: "Grow & convert", featureIds: ["ask-for-follow", "smart-reengage", "collect-user-data", ...(FEATURE_WELCOME_DM ? ["welcome-new-followers"] : [])] },
 ] as const;
 
-export const FEATURES: readonly FeatureDefinition[] = [
+const ALL_FEATURES: readonly FeatureDefinition[] = [
   {
     id: "auto-comment-reply",
     num: "01",
@@ -145,6 +147,10 @@ export const FEATURES: readonly FeatureDefinition[] = [
     ],
   },
 ];
+
+export const FEATURES: readonly FeatureDefinition[] = ALL_FEATURES.filter(
+  (f) => f.id !== "welcome-new-followers" || FEATURE_WELCOME_DM,
+);
 
 export const PLATFORM_EXTRAS = [
   { title: "Bio link pages", desc: "Branded pages with click tracking at bio.liffio.com." },

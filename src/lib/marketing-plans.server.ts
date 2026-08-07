@@ -2,6 +2,7 @@ import type { PricingPlan } from '@/config/pricing.config'
 import type { PricingRegion } from '@/lib/pricing-region'
 import { getPricingPlans as getFallbackPricingPlans } from '@/config/pricing.config'
 import { getLiffioMarketingUrl } from '@/lib/liffio-api'
+import { FEATURE_WELCOME_DM } from '@/config/feature-flags'
 
 type ApiMarketingPlan = {
   plan: string
@@ -25,6 +26,39 @@ type PlansApiResponse = {
   businessPlanValue: string
 }
 
+
+/**
+ * Compliance guard for plan feature strings sourced from the backend
+ * plan_catalog table. The DB drifts independently of this repo, so this
+ * fails CLOSED: strings are normalized first, and anything still carrying
+ * a non-compliant claim (Live automation in any phrasing, welcome DMs
+ * while the partner-beta flag is off) is dropped and logged rather than
+ * rendered.
+ */
+function sanitizeFeatures(
+  features: Array<{ text: string; included: boolean }>,
+): Array<{ text: string; included: boolean }> {
+  return features
+    .map((f) => {
+      let text = f.text
+        .replace(/Story,\s*Live\s*&\s*/gi, 'Story & ')
+        .replace(/All\s+\d+\s+(automation\s+)?trigger types/gi, 'All automation trigger types')
+      if (!FEATURE_WELCOME_DM) {
+        text = text.replace(/Story\s*&\s*welcome DM automations/gi, 'Story automations')
+      }
+      return { ...f, text: text.trim() }
+    })
+    .filter((f) => {
+      const liveLeak = /\bLive\b/i.test(f.text)
+      const welcomeLeak = !FEATURE_WELCOME_DM && /welcome/i.test(f.text)
+      if (liveLeak || welcomeLeak) {
+        console.warn('[marketing-plans] dropped non-compliant plan feature:', f.text)
+        return false
+      }
+      return true
+    })
+}
+
 export async function fetchMarketingPlansContext(region: PricingRegion): Promise<{
   plans: PricingPlan[]
   businessPlanValue: string
@@ -44,7 +78,7 @@ export async function fetchMarketingPlansContext(region: PricingRegion): Promise
       badge: p.badge,
       highlight: p.highlight,
       popular: p.popular,
-      features: p.features,
+      features: sanitizeFeatures(p.features),
       cta: p.cta,
       href: p.href,
     }))
@@ -54,7 +88,7 @@ export async function fetchMarketingPlansContext(region: PricingRegion): Promise
     }
   } catch (error) {
     console.error('[marketing-plans] fallback to static config', error)
-    const plans = getFallbackPricingPlans(region)
+    const plans = getFallbackPricingPlans(region).map((p) => ({ ...p, features: sanitizeFeatures(p.features) }))
     const business = plans.find((p) => p.name === 'Business')
     return {
       plans,

@@ -1,4 +1,6 @@
-const AUTOMATION_TYPES = [
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
+
+const ALL_AUTOMATION_TYPES = [
   {
     name: "Comment-to-DM",
     description:
@@ -35,6 +37,10 @@ const AUTOMATION_TYPES = [
       "Sends an automatic DM to each new follower within the configured delay. Runs 24/7 without manual action.",
   },
 ] as const;
+
+const AUTOMATION_TYPES_LIST = ALL_AUTOMATION_TYPES.filter(
+  (t) => t.name !== "Welcome New Followers" || FEATURE_WELCOME_DM,
+);
 
 const COMPLIANCE_FACTS = [
   {
@@ -74,7 +80,7 @@ export default function SeoDiscoverabilitySection() {
             Each automation runs independently. You can have multiple active at the same time on the same account.
           </p>
           <dl className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {AUTOMATION_TYPES.map(({ name, description }) => (
+            {AUTOMATION_TYPES_LIST.map(({ name, description }) => (
               <div key={name} className="rounded-2xl border border-gray-100 bg-[#faf9ff] p-5">
                 <dt className="text-sm font-bold text-[#0a0a0a]">{name}</dt>
                 <dd className="mt-2 text-sm leading-relaxed text-gray-600">{description}</dd>
@@ -119,7 +125,7 @@ export default function SeoDiscoverabilitySection() {
               <h3 className="text-sm font-bold text-[#0a0a0a]">DTC brands and e-commerce</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
                 Product launch automation: a Reel drop, a comment keyword, and a DM with the buy link.
-                Story replies for flash sales. Welcome DMs for new followers with a first-order code.
+                Story replies for flash sales.{FEATURE_WELCOME_DM ? " Welcome DMs for new followers with a first-order code." : ""}
               </p>
             </div>
             <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">

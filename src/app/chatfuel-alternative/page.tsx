@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ComparisonTable from "@/components/marketing/ComparisonTable";
@@ -278,7 +279,7 @@ export default function ChatfuelAlternativePage() {
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   If your automation needs are entirely on Instagram — comment triggers on
-                  Reels and feed posts, story reply flows, welcome DMs for new followers —
+                  Reels and feed posts, story reply flows{FEATURE_WELCOME_DM ? ", welcome DMs for new followers" : ""} —
                   there is no reason to pay for a multi-platform chatbot builder. Liffio
                   does exactly those things, built around Instagram&apos;s specific triggers and
                   message types, without the overhead of Messenger and WhatsApp infrastructure
@@ -349,7 +350,7 @@ export default function ChatfuelAlternativePage() {
                 {
                   step: "1",
                   title: "Map your active Instagram automations in Chatfuel",
-                  body: "List every active Chatfuel flow that touches your Instagram account: the trigger (comment keyword, story reply, new follower), the DM text, any conditional logic, and any public comment replies. Multi-step sequences should be documented step by step. This takes 20–45 minutes depending on how many flows are running. Do not skip it — having a written list makes the Liffio setup much faster.",
+                  body: "List every active Chatfuel flow that touches your Instagram account: the trigger (comment keyword, story reply), the DM text, any conditional logic, and any public comment replies. Multi-step sequences should be documented step by step. This takes 20–45 minutes depending on how many flows are running. Do not skip it — having a written list makes the Liffio setup much faster.",
                 },
                 {
                   step: "2",
