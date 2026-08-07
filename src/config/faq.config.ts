@@ -379,7 +379,7 @@ const featuresSeoCategory: FaqCategory = {
       id: "automation-grow-followers",
       question: "Can Instagram automation help grow followers?",
       answer:
-        "Yes, through the Ask for Follow feature. When someone comments a keyword and is about to receive the promised link or resource, Liffio first prompts them to follow your account — displaying your profile card inside the DM conversation. Liffio tracks follow conversion rates in analytics so you can see exactly how many new followers each campaign generated.",
+        "Yes, through the Ask for Follow feature. When someone comments a keyword and is about to receive the promised link or resource, Liffio first prompts them to follow your account — displaying your profile card inside the DM conversation. Liffio tracks follow conversion rates in analytics so you can see exactly how many follows each campaign generated.",
     },
     {
       id: "automated-messages-no-coding",
