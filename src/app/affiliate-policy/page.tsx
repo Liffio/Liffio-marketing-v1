@@ -46,10 +46,10 @@ Users who sign up through a referral link or enter a valid referral code at sign
 Commission applies per workspace independently. If a referred user creates multiple workspaces within the 90-day attribution window, each workspace starts its own independent commission stream. Affiliates benefit from referring power users and agencies who manage multiple workspaces.
 
 2.4 Annual Plan Commission
-For yearly subscriptions, commission is calculated on the full annual payment amount as a single commission event - not split into 12 monthly commissions. Example: if a referred user pays $279 for a Pro annual plan, the affiliate earns $139.50 as one commission. The next commission for that workspace is due on the following annual renewal.
+For yearly subscriptions, commission is calculated on the full annual payment amount as a single commission event - not split into 12 monthly commissions. Example: if a referred user buys a Business annual plan, the affiliate earns 50% of that full annual payment as one commission. The next commission for that workspace is due on the following annual renewal.
 
 2.5 Eligible Plans
-Commissions are earned on Starter, Pro, Business, and Agency plan subscriptions in both USD and INR billing. Free plan signups do not generate commission. Creator Program access does not generate commission as it involves no payment.
+Commissions are earned on all paid plan subscriptions in both USD and INR billing. Free plan signups do not generate commission. Creator Program access does not generate commission as it involves no payment.
 
 3. Attribution Rules
 

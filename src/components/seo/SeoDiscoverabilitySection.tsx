@@ -1,4 +1,4 @@
-import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
+import { FEATURE_COLLECT_DATA_PROMPTS, FEATURE_WELCOME_DM } from "@/config/feature-flags";
 
 const ALL_AUTOMATION_TYPES = [
   {
@@ -29,7 +29,9 @@ const ALL_AUTOMATION_TYPES = [
   {
     name: "Collect Data",
     description:
-      "Captures lead information — name, email, phone, or custom fields — through a guided DM conversation.",
+      FEATURE_COLLECT_DATA_PROMPTS
+        ? "Captures lead information — name, email, phone, or custom fields — through a guided DM conversation."
+        : "Captures email addresses shared during a DM conversation and stores them as leads.",
   },
   {
     name: "Welcome New Followers",

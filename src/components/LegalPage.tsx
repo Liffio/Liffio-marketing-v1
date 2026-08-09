@@ -1,8 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { SiteFaqSection } from "@/components/faq/SiteFaqSection";
-import { getFaqCategories } from "@/config/faq.config";
-import { getPricingContext } from "@/lib/pricing-region.server";
+import { getRegionFreeFaqCategories } from "@/config/faq.config";
 
 type LegalPageProps = {
   title: string;
@@ -15,9 +14,11 @@ function isSectionHeading(paragraph: string): boolean {
   return /^\d+(\.\d+)?\.\s/.test(trimmed) || (/^[A-Z]/.test(trimmed) && trimmed.length < 72 && !trimmed.endsWith("."));
 }
 
-export default async function LegalPage({ title, lastUpdated, content }: LegalPageProps) {
-  const { region } = await getPricingContext();
-  const faqCategories = getFaqCategories(region);
+// Deliberately NOT async and does not read the pricing region: legal pages
+// carry no region-specific pricing, so keeping them free of headers() lets
+// all seven render statically (CDN-cacheable).
+export default function LegalPage({ title, lastUpdated, content }: LegalPageProps) {
+  const faqCategories = getRegionFreeFaqCategories();
   const paragraphs = content.split("\n").filter((p) => p.trim() !== "");
 
   return (

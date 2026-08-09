@@ -1,5 +1,12 @@
 import { metaCopy } from "@/config/meta-copy";
-import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
+import {
+  FEATURE_BRANCHING_LOGIC,
+  FEATURE_COLLECT_DATA_PROMPTS,
+  FEATURE_CRM_INTEGRATION,
+  FEATURE_SALE_TRACKING,
+  FEATURE_STORY_REACTIONS,
+  FEATURE_WELCOME_DM,
+} from "@/config/feature-flags";
 import {
   getCreatorsProgramFaqAnswer,
   getFreePlanFaqAnswer,
@@ -172,6 +179,17 @@ const seoDiscoveryCategory: FaqCategory = {
 };
 
 /** Region-aware FAQ used across the marketing site */
+/**
+ * FAQ set for pages that must NOT depend on the visitor's pricing region.
+ * Identical to getFaqCategories() minus the "Plans & billing" category —
+ * the only region-dependent block (INR vs USD amounts). Letting legal pages
+ * use this keeps them statically renderable: no getPricingContext(), so no
+ * headers() call, so no forced dynamic render.
+ */
+export function getRegionFreeFaqCategories(): FaqCategory[] {
+  return getFaqCategories("global").filter((category) => category.id !== "plans");
+}
+
 export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaqOverrides): FaqCategory[] {
   return [
     geoComplianceCategory,
@@ -219,7 +237,7 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
           id: "automation-types",
           question: "What can Liffio automate?",
           answer:
-            `Comment-to-DM, story mentions and reactions, ${FEATURE_WELCOME_DM ? "welcome DMs for new followers, " : ""}multi-step flows, follow-up sequences, and more - depending on your plan.`,
+            `Comment-to-DM, ${FEATURE_STORY_REACTIONS ? "story mentions and reactions" : "story replies and story mentions"}, ${FEATURE_WELCOME_DM ? "welcome DMs for new followers, " : ""}multi-step flows, follow-up sequences, and more - depending on your plan.`,
         },
       ],
     },
@@ -311,7 +329,7 @@ const pricingDetailCategory: FaqCategory = {
       id: "starter-features",
       question: "What features require Starter ($9/mo, ₹499/mo in India)?",
       answer:
-        `Starter includes all automation trigger types (comment-to-DM, story reply, ${FEATURE_WELCOME_DM ? "welcome DM, " : ""}inbound DM reply, ask for follow, follow-up sequences, collect user data), unlimited DM message templates, multi-step DM flows with branching logic, short links (go.liffio.com) with click and referrer tracking, lead capture from DMs and link clicks, post scheduler (Instagram feed), advanced analytics dashboard, conversion analytics (comment to DM to click to sale), up to 3 team member seats, priority email support, and external API access.`,
+        `Starter includes all automation trigger types (comment-to-DM, story reply, ${FEATURE_WELCOME_DM ? "welcome DM, " : ""}inbound DM reply, ask for follow, follow-up sequences, collect user data), unlimited DM message templates, ${FEATURE_BRANCHING_LOGIC ? "multi-step DM flows with branching logic" : "multi-step DM follow-up flows"}, short links (go.liffio.com) with click and referrer tracking, lead capture from DMs and link clicks, post scheduler (Instagram feed), advanced analytics dashboard, conversion analytics (${FEATURE_SALE_TRACKING ? "comment to DM to click to sale" : "comment to DM to click"}), up to 3 team member seats, priority email support, and external API access.`,
     },
     {
       id: "business-features",
@@ -323,13 +341,13 @@ const pricingDetailCategory: FaqCategory = {
       id: "agency-features",
       question: "What features require Agency ($299/mo, ₹9,999/mo in India)?",
       answer:
-        "Agency includes everything in Business, plus agency white-label workspaces, client sub-workspaces with CLIENT role access, a dedicated account manager, full API access and webhooks, custom integrations and CRM sync, SLA-backed priority support, and volume and multi-workspace pricing. Built for marketing agencies running Instagram automation across multiple client brands from a single account.",
+        `Agency includes everything in Business, plus agency white-label workspaces, client sub-workspaces with CLIENT role access, a dedicated account manager, full API access${FEATURE_CRM_INTEGRATION ? ", custom integrations and CRM sync" : ""}, SLA-backed priority support, and volume and multi-workspace pricing. Built for marketing agencies running Instagram automation across multiple client brands from a single account.`,
     },
     {
       id: "best-for-agencies",
       question: "Which plan is best for agencies?",
       answer:
-        "The Agency plan ($299/mo, ₹9,999/mo in India) is purpose-built for agencies. It includes white-label workspaces, client sub-workspaces with restricted CLIENT role access, a dedicated account manager, full API access, CRM sync, and SLA-backed priority support. If you manage Instagram automation for multiple brands and need to keep client accounts separate and white-labelled, Agency is the only plan that supports this at scale.",
+        `The Agency plan ($299/mo, ₹9,999/mo in India) is purpose-built for agencies. It includes white-label workspaces, client sub-workspaces with restricted CLIENT role access, a dedicated account manager, full API access${FEATURE_CRM_INTEGRATION ? ", CRM sync" : ""}, and SLA-backed priority support. If you manage Instagram automation for multiple brands and need to keep client accounts separate and white-labelled, Agency is the only plan that supports this at scale.`,
     },
     {
       id: "hidden-fees",
@@ -360,13 +378,13 @@ const homepageSeoCategory: FaqCategory = {
       id: "automated-dms-increase-engagement",
       question: "How do automated Instagram DMs increase engagement?",
       answer:
-        "Automated DMs increase engagement by responding to every comment and story reaction — even at 3am, even when a Reel unexpectedly goes viral. Most manually managed accounts respond to 10-20% of comment-driven DM requests; automation responds to 100%. Higher response rates mean more link clicks, more lead captures, and more conversations started — which Instagram's algorithm rewards with further reach.",
+        `Automated DMs increase engagement by responding to every comment and ${FEATURE_STORY_REACTIONS ? "story reaction" : "story reply"} — even at 3am, even when a Reel unexpectedly goes viral. Most manually managed accounts respond to 10-20% of comment-driven DM requests; automation responds to 100%. Higher response rates mean more link clicks, more lead captures, and more conversations started — which Instagram's algorithm rewards with further reach.`,
     },
     {
       id: "comment-automation-generate-leads",
       question: "Can Instagram comment automation generate leads?",
       answer:
-        "Yes — this is the primary commercial use case. Comment automation captures leads at the moment of highest intent: when someone raises their hand on your content. Liffio's comment-to-DM flow can ask for an email address or phone number inside the DM conversation, capture it automatically, and export it to CSV or a CRM. Creators and brands use this to build email lists, qualify prospects, and route buyers — all without leaving Instagram.",
+        `Yes — this is the primary commercial use case. Comment automation captures leads at the moment of highest intent: when someone raises their hand on your content. ${FEATURE_COLLECT_DATA_PROMPTS ? "Liffio's comment-to-DM flow can ask for an email address or phone number inside the DM conversation, capture it automatically" : "Liffio captures email addresses shared in the DM conversation automatically"}, and export${FEATURE_CRM_INTEGRATION ? "s them to CSV or a CRM" : "s them to CSV"}. Creators and brands use this to build email lists, qualify prospects, and route buyers — all without leaving Instagram.`,
     },
   ],
 };
@@ -576,7 +594,7 @@ export function getCreatorsFaqCategories(
           id: "creators-features-included",
           question: "What features are included in the Creators Program?",
           answer:
-            "Creators Program includes unlimited automated DMs across all automation types, unlimited automation workflows, advanced analytics and full conversion tracking (comment to DM to click to sale), DM follow-up sequences, short links with click tracking and UTM attribution, advanced bio link page customisation, up to 5 team member seats, and priority and direct team support. Not included: white-label workspaces, agency client sub-accounts, external API keys, and Agency-tier features.",
+            `Creators Program includes unlimited automated DMs across all automation types, unlimited automation workflows, advanced analytics and full conversion tracking (${FEATURE_SALE_TRACKING ? "comment to DM to click to sale" : "comment to DM to click"}), DM follow-up sequences, short links with click tracking and UTM attribution, advanced bio link page customisation, up to 5 team member seats, and priority and direct team support. Not included: white-label workspaces, agency client sub-accounts, external API keys, and Agency-tier features.`,
         },
         {
           id: "how-to-apply",
@@ -664,7 +682,7 @@ const userSupportCategory: FaqCategory = {
       id: "export-leads",
       question: "How do I export leads?",
       answer:
-        "Leads captured through the Collect User Data automation are stored in your workspace analytics. Go to Analytics → Leads in your Liffio dashboard, select the date range or campaign, and click Export CSV — the file includes all captured fields with timestamps and source campaign. CSV export is available on Starter and above. Free plan users can view leads in the dashboard but cannot export. For CRM integration (Business and Agency plans), connect your CRM from Settings → Integrations.",
+        `Leads captured through the Collect User Data automation are stored in your workspace analytics. Go to Analytics → Leads in your Liffio dashboard, select the date range or campaign, and click Export CSV — the file includes all captured fields with timestamps and source campaign. CSV export is available on Starter and above. Free plan users can view leads in the dashboard but cannot export.${FEATURE_CRM_INTEGRATION ? " For CRM integration (Business and Agency plans), connect your CRM from Settings → Integrations." : ""}`,
     },
     {
       id: "reset-password",

@@ -1,4 +1,4 @@
-import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
+import { FEATURE_STORY_REACTIONS, FEATURE_WELCOME_DM } from "@/config/feature-flags";
 
 export type BlogPost = {
   slug: string;
@@ -208,7 +208,9 @@ export const BLOG_POSTS: BlogPost[] = [
         paragraphs: [
           "Any reply: good for launch weeks when every story is a CTA and you want one thank-you DM with the link.",
           "Keyword in the reply: useful when you ask \"reply STORY for the checklist\" on a sticker poll.",
-          "Emoji reactions: treat carefully. A fire emoji might mean hype, not \"send me the sales page.\" Many creators only auto-DM on text replies for that reason.",
+          ...(FEATURE_STORY_REACTIONS
+            ? ["Emoji reactions: treat carefully. A fire emoji might mean hype, not \"send me the sales page.\" Many creators only auto-DM on text replies for that reason."]
+            : []),
         ],
       },
       {

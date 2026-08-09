@@ -1,5 +1,5 @@
 import AppLink from "@/components/AppLink";
-import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
+import { FEATURE_BRANCHING_LOGIC, FEATURE_COLLECT_DATA_PROMPTS, FEATURE_SALE_TRACKING, FEATURE_STORY_REACTIONS, FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SignupForm from "@/components/SignupForm";
@@ -37,7 +37,9 @@ const FEATURES = [
   {
     title: "Full Conversion Analytics",
     description:
-      "Track every step: comment → DM → click → sale. Know exactly which posts, keywords, and flows are driving revenue - not just DM volume.",
+      FEATURE_SALE_TRACKING
+        ? "Track every step: comment → DM → click → sale. Know exactly which posts, keywords, and flows are driving revenue - not just DM volume."
+        : "Track every step: comment → DM → click. Know exactly which posts, keywords, and flows are driving action - not just DM volume.",
     tag: "Advanced",
   },
   {
@@ -57,12 +59,12 @@ const QUICK_STATS = [
 
 const BENEFITS = [
   "Auto-reply to every comment with a keyword trigger",
-  "Story mentions & reactions handled automatically",
-  "Multi-step DM sequences with conditional logic",
+  FEATURE_STORY_REACTIONS ? "Story mentions & reactions handled automatically" : "Story replies & mentions handled automatically",
+  FEATURE_BRANCHING_LOGIC ? "Multi-step DM sequences with conditional logic" : "Multi-step DM follow-up sequences",
   ...(FEATURE_WELCOME_DM ? ["Welcome new followers with a personalised message"] : []),
-  "Collect emails and data directly inside DM chats",
+  FEATURE_COLLECT_DATA_PROMPTS ? "Collect emails and data directly inside DM chats" : "Capture emails shared inside DM chats",
   "Timed follow-ups within active conversations",
-  "Full analytics: comment → DM → click → sale",
+  FEATURE_SALE_TRACKING ? "Full analytics: comment → DM → click → sale" : "Full analytics: comment → DM → click",
 ];
 
 function Check() {

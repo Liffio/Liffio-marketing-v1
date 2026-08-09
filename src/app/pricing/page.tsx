@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import { FEATURE_SALE_TRACKING } from "@/config/feature-flags";
 import Footer from "@/components/Footer";
 import PricingPlansGrid, { PricingBottomCta } from "@/components/PricingPlansGrid";
 import PricingComparisonSection from "@/components/pricing/PricingComparisonSection";
@@ -111,7 +112,9 @@ export default async function PricingPage() {
                 },
                 {
                   title: "Lead Capture & Analytics",
-                  desc: "Track comment → DM → click → sale. Capture leads from automations and link clicks, workspace-scoped.",
+                  desc: FEATURE_SALE_TRACKING
+                    ? "Track comment → DM → click → sale. Capture leads from automations and link clicks, workspace-scoped."
+                    : "Track comment → DM → click. Capture leads from automations and link clicks, workspace-scoped.",
                 },
               ].map((item) => (
                 <div

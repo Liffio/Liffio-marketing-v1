@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { FEATURE_SALE_TRACKING } from "@/config/feature-flags";
 import CreatorsForm from "@/components/CreatorsForm";
 import { TechBadge } from "@/components/TechBadge";
 import { siteConfig } from "@/config/site.config";
@@ -9,7 +10,9 @@ const STATIC_BENEFITS = [
   {
     title: "Advanced Analytics",
     description:
-      "Full conversion tracking: comment → DM → click → sale. See exactly what's driving your revenue at every step of the funnel.",
+      FEATURE_SALE_TRACKING
+        ? "Full conversion tracking: comment → DM → click → sale. See exactly what's driving your revenue at every step of the funnel."
+        : "Full conversion tracking: comment → DM → click. See exactly what's driving results at every step of the funnel.",
     tag: "Full attribution",
   },
   {

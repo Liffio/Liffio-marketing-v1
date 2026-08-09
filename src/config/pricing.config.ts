@@ -1,5 +1,5 @@
 import { metaCopy } from "@/config/meta-copy";
-import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
+import { FEATURE_BRANCHING_LOGIC, FEATURE_CRM_INTEGRATION, FEATURE_SALE_TRACKING, FEATURE_STORY_REACTIONS, FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import type { PricingRegion } from "@/lib/pricing-region";
 import { siteConfig } from "./site.config";
 
@@ -68,13 +68,16 @@ const starterFeatures: PlanFeature[] = [
   { text: "Lead capture from DMs & link clicks", included: true },
   { text: "Post scheduler (Instagram feed)", included: true },
   { text: "Priority email support", included: true },
-  { text: "External API access", included: false },
+  // Starter is the entry rung of the API ladder (2 keys / 100 req per day):
+  // billing.config BILLING_PLANS.STARTER.features.apiEnabled = true and every
+  // plan declares gates: { api: Plan.STARTER }. Marketing previously said false.
+  { text: "External API access", included: true },
 ];
 
 const businessFeatures: PlanFeature[] = [
   ...unlimitedCore,
   { text: "Everything in Starter", included: true },
-  { text: "Full conversion analytics (comment → sale)", included: true },
+  { text: FEATURE_SALE_TRACKING ? "Full conversion analytics (comment → sale)" : "Full conversion analytics (comment → DM → click)", included: true },
   { text: "Instagram account-level insights", included: true },
   { text: "External API keys (plan-gated)", included: true },
   { text: "Team members (up to 5 seats)", included: true },
@@ -89,7 +92,7 @@ const agencyFeatures: PlanFeature[] = [
   { text: "Client sub-workspaces (CLIENT role)", included: true },
   { text: "Dedicated account manager", included: true },
   { text: "Full API access & webhooks", included: true },
-  { text: "Custom integrations & CRM sync", included: true },
+  ...(FEATURE_CRM_INTEGRATION ? [{ text: "Custom integrations & CRM sync", included: true }] : []),
   { text: "Affiliate program management", included: true },
   { text: "SLA-backed priority support", included: true },
   { text: "Volume & multi-workspace pricing", included: true },
@@ -244,7 +247,7 @@ export const featureCategories = [
     features: [
       { name: "Keyword comment triggers", free: true, starter: true, business: true, agency: true },
       { name: "Public comment auto-replies", free: true, starter: true, business: true, agency: true },
-      { name: "Story mention & reaction triggers", free: false, starter: true, business: true, agency: true },
+      { name: FEATURE_STORY_REACTIONS ? "Story mention & reaction triggers" : "Story mention & reply triggers", free: false, starter: true, business: true, agency: true },
       ...(FEATURE_WELCOME_DM ? [{ name: "Welcome DM for new followers", free: false, starter: true, business: true, agency: true }] : []),
       { name: "Multi-step DM flows with logic", free: false, starter: true, business: true, agency: true },
       { name: "Follow-up DM sequences", free: false, starter: false, business: true, agency: true },
@@ -259,7 +262,7 @@ export const featureCategories = [
       { name: "Click & referrer tracking", free: false, starter: true, business: true, agency: true },
       { name: "Lead capture from DMs & clicks", free: false, starter: true, business: true, agency: true },
       { name: "Post scheduler (Instagram feed)", free: false, starter: true, business: true, agency: true },
-      { name: "Conversion analytics (comment → sale)", free: false, starter: true, business: true, agency: true },
+      { name: FEATURE_SALE_TRACKING ? "Conversion analytics (comment → sale)" : "Conversion analytics (comment → DM → click)", free: false, starter: true, business: true, agency: true },
       { name: "Instagram account insights", free: false, starter: false, business: true, agency: true },
     ],
   },
@@ -269,7 +272,7 @@ export const featureCategories = [
     features: [
       { name: "Team members", free: "1", starter: "3", business: "5", agency: "Unlimited" },
       { name: "Role-based access (RBAC)", free: false, starter: true, business: true, agency: true },
-      { name: "External API keys", free: false, starter: false, business: true, agency: true },
+      { name: "External API keys", free: false, starter: true, business: true, agency: true },
       { name: "Agency white-label workspaces", free: false, starter: false, business: false, agency: true },
       { name: "Client sub-workspaces", free: false, starter: false, business: false, agency: true },
       { name: "Affiliate program (50% commission)", free: false, starter: true, business: true, agency: true },

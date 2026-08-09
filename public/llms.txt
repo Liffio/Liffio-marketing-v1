@@ -9,11 +9,11 @@ Liffio connects to Instagram via official OAuth — no passwords stored. After a
 ## Automation types
 
 - Comment-to-DM: someone comments a keyword on a post or Reel → they receive a DM automatically
-- Story reply automation: someone replies to a story → they receive a DM
+- Story reply automation: someone replies to or mentions a story → they receive a DM
 - DM reply automation: someone sends a DM keyword → they receive a reply
 - Ask Follow (follow gate): user must follow before receiving a promised resource
 - Follow-up sequences: scheduled follow-up messages within an active conversation
-- Collect Data: ask follow-up questions in DM and store responses as leads
+- Collect Data: capture email addresses shared in DM conversations and store them as leads
 
 ## Pricing (USD, billed monthly)
 

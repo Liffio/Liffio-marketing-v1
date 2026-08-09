@@ -12,7 +12,7 @@ export type FeatureDefinition = {
   highlight: string;
 };
 
-import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
+import { FEATURE_BRANCHING_LOGIC, FEATURE_COLLECT_DATA_PROMPTS, FEATURE_CRM_INTEGRATION, FEATURE_SALE_TRACKING, FEATURE_STORY_REACTIONS, FEATURE_WELCOME_DM } from "@/config/feature-flags";
 
 export const FEATURE_CATEGORIES = [
   { id: "engage", label: "Engage & capture", featureIds: ["auto-comment-reply", "story-auto-reply", "dm-auto-reply"] },
@@ -47,11 +47,15 @@ const ALL_FEATURES: readonly FeatureDefinition[] = [
     tag: "Story Auto DM",
     title: "Story Auto Reply",
     gridLabel: "Story Auto DM",
-    highlight: "Auto DMs from story reactions and mentions.",
+    highlight: FEATURE_STORY_REACTIONS
+      ? "Auto DMs from story reactions and mentions."
+      : "Auto DMs from story replies and mentions.",
     description:
-      "Liffio sends auto DMs the moment someone reacts, replies to, or mentions your story - capturing leads at peak interest. Story auto reply is a must-have feature for any Instagram auto DM tool.",
+      FEATURE_STORY_REACTIONS
+        ? "Liffio sends auto DMs the moment someone reacts, replies to, or mentions your story - capturing leads at peak interest. Story auto reply is a must-have feature for any Instagram auto DM tool."
+        : "Liffio sends auto DMs the moment someone replies to or mentions your story - capturing leads at peak interest. Story auto reply is a must-have feature for any Instagram auto DM tool.",
     bullets: [
-      "Auto DM on reactions, replies, and @mentions",
+      FEATURE_STORY_REACTIONS ? "Auto DM on reactions, replies, and story mentions" : "Auto DM on story replies and story mentions",
       "Perfect for flash sales and limited-time offers",
       "Auto DMs work 24/7, even while you sleep",
     ],
@@ -67,10 +71,12 @@ const ALL_FEATURES: readonly FeatureDefinition[] = [
     gridLabel: "DM Auto Reply",
     highlight: "Auto DM flows for inbound messages.",
     description:
-      "Build automated DM flows triggered by incoming messages - from simple keyword auto replies to multi-step sequences with branching logic. This DM automation tool feature qualifies leads inside the thread.",
+      FEATURE_BRANCHING_LOGIC
+        ? "Build automated DM flows triggered by incoming messages - from simple keyword auto replies to multi-step sequences with branching logic. This DM automation tool feature qualifies leads inside the thread."
+        : "Build automated DM flows triggered by incoming messages - from simple keyword auto replies to multi-step follow-up sequences. This DM automation tool feature qualifies leads inside the thread.",
     bullets: [
       "Keyword-triggered auto DM flows",
-      "Multi-step DM automation with branching",
+      FEATURE_BRANCHING_LOGIC ? "Multi-step DM automation with branching" : "Multi-step DM automation",
       "Qualify leads without lifting a finger",
     ],
   },
@@ -121,10 +127,12 @@ const ALL_FEATURES: readonly FeatureDefinition[] = [
     gridLabel: "Collect Data",
     highlight: "Build your list inside Instagram DMs.",
     description:
-      "Ask followers for email, phone, or custom fields right inside a DM conversation - no external forms required.",
+      FEATURE_COLLECT_DATA_PROMPTS
+        ? "Ask followers for email, phone, or custom fields right inside a DM conversation - no external forms required."
+        : "Capture email addresses from DM conversations automatically - no external forms required.",
     bullets: [
-      "Captures email, phone, and custom data",
-      "Auto-exports to CSV and integrates with CRMs",
+      FEATURE_COLLECT_DATA_PROMPTS ? "Captures email, phone, and custom data" : "Captures email addresses from DM replies",
+      FEATURE_CRM_INTEGRATION ? "Export to CSV and integrate with CRMs" : "Export captured leads to CSV",
       "GDPR-compliant data handling",
     ],
   },
@@ -155,6 +163,6 @@ export const FEATURES: readonly FeatureDefinition[] = ALL_FEATURES.filter(
 export const PLATFORM_EXTRAS = [
   { title: "Bio link pages", desc: "Branded pages with click tracking at bio.liffio.com." },
   { title: "Smart short links", desc: "Track every link delivered in DMs with UTM attribution." },
-  { title: "Conversion analytics", desc: "Comment → DM → click → sale in one dashboard." },
+  { title: "Conversion analytics", desc: FEATURE_SALE_TRACKING ? "Comment → DM → click → sale in one dashboard." : "Comment → DM → click in one dashboard." },
   { title: "Team workspaces", desc: "Collaborate with VAs and managers on Starter and above." },
 ] as const;

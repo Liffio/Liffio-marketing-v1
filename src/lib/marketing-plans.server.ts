@@ -2,7 +2,14 @@ import type { PricingPlan } from '@/config/pricing.config'
 import type { PricingRegion } from '@/lib/pricing-region'
 import { getPricingPlans as getFallbackPricingPlans } from '@/config/pricing.config'
 import { getLiffioMarketingUrl } from '@/lib/liffio-api'
-import { FEATURE_WELCOME_DM } from '@/config/feature-flags'
+import {
+  FEATURE_BRANCHING_LOGIC,
+  FEATURE_COLLECT_DATA_PROMPTS,
+  FEATURE_CRM_INTEGRATION,
+  FEATURE_SALE_TRACKING,
+  FEATURE_STORY_REACTIONS,
+  FEATURE_WELCOME_DM,
+} from '@/config/feature-flags'
 
 type ApiMarketingPlan = {
   plan: string
@@ -46,12 +53,31 @@ function sanitizeFeatures(
       if (!FEATURE_WELCOME_DM) {
         text = text.replace(/Story\s*&\s*welcome DM automations/gi, 'Story automations')
       }
+      if (!FEATURE_SALE_TRACKING) {
+        // "(comment → sale)" / "(comment to DM to click to sale)" -> click-terminal
+        text = text
+          .replace(/\(\s*comment\s*(→|->|to)\s*sale\s*\)/gi, '(comment → DM → click)')
+          .replace(/\s*(→|->|to)\s*sale/gi, '')
+      }
+      if (!FEATURE_STORY_REACTIONS) {
+        text = text.replace(/Story mention\s*&\s*reaction triggers/gi, 'Story mention & reply triggers')
+      }
       return { ...f, text: text.trim() }
     })
     .filter((f) => {
       const liveLeak = /\bLive\b/i.test(f.text)
       const welcomeLeak = !FEATURE_WELCOME_DM && /welcome/i.test(f.text)
-      if (liveLeak || welcomeLeak) {
+      const crmLeak = !FEATURE_CRM_INTEGRATION && /\bCRM\b|HubSpot|Zapier|Salesforce/i.test(f.text)
+      // Narrow on purpose: bare /sale|revenue|phone/ would swallow benign plan
+      // features like "Priority phone support" or "Revenue dashboard".
+      const saleLeak =
+        !FEATURE_SALE_TRACKING && /revenue\s+(tracking|attribution)|→\s*sale\b|\bto sale\b/i.test(f.text)
+      const reactionLeak = !FEATURE_STORY_REACTIONS && /reaction/i.test(f.text)
+      const promptLeak =
+        !FEATURE_COLLECT_DATA_PROMPTS &&
+        /custom field|phone\s+(number|field)|auto-export/i.test(f.text)
+      const branchLeak = !FEATURE_BRANCHING_LOGIC && /branching|conditional/i.test(f.text)
+      if (liveLeak || welcomeLeak || crmLeak || saleLeak || reactionLeak || promptLeak || branchLeak) {
         console.warn('[marketing-plans] dropped non-compliant plan feature:', f.text)
         return false
       }

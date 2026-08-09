@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { siteConfig } from "@/config/site.config";
-import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
+import { FEATURE_BRANCHING_LOGIC, FEATURE_COLLECT_DATA_PROMPTS, FEATURE_CRM_INTEGRATION, FEATURE_STORY_REACTIONS, FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import { LiffioAvatar } from "@/components/Logo";
 import { IPhoneShell } from "@/components/simulation/IPhoneShell";
 import { SimulationContent } from "@/components/simulation/SimulationContent";
@@ -581,12 +581,14 @@ const allFeatures = [
     color: "#0f74c5",
     bg: "rgba(15,116,197,0.07)",
     border: "rgba(15,116,197,0.18)",
-    tag: "Story reactions",
+    tag: FEATURE_STORY_REACTIONS ? "Story reactions" : "Story replies",
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><rect x="3" y="3" width="18" height="18" rx="3" ry="3" strokeLinecap="round" strokeLinejoin="round"/><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4"/></svg>),
     title: "Story Auto Reply",
     gridLabel: "Story Reply",
-    description: "Your stories get the most engaged viewers. Liffio auto-responds the moment someone reacts, replies to, or mentions your story - capturing leads at their highest point of interest.",
-    bullets: ["Triggers on reactions, replies, and @mentions", "Perfect for flash sales and limited-time offers", "Works 24/7, even mid-sleep"],
+    description: FEATURE_STORY_REACTIONS
+      ? "Your stories get the most engaged viewers. Liffio auto-responds the moment someone reacts, replies to, or mentions your story - capturing leads at their highest point of interest."
+      : "Your stories get the most engaged viewers. Liffio auto-responds the moment someone replies to or mentions your story - capturing leads at their highest point of interest.",
+    bullets: [FEATURE_STORY_REACTIONS ? "Triggers on reactions, replies, and story mentions" : "Triggers on story replies and story mentions", "Perfect for flash sales and limited-time offers", "Works 24/7, even mid-sleep"],
     Phone: StoryReplyPhone,
   },
   {
@@ -600,7 +602,7 @@ const allFeatures = [
     title: "DM Auto Reply",
     gridLabel: "DM Reply",
     description: "Build powerful automated flows triggered by incoming DMs. From simple keyword responses to multi-step qualification sequences - Liffio handles every conversation at scale.",
-    bullets: ["Keyword-triggered conversation flows", "Multi-step logic with yes/no branching", "Qualify leads without lifting a finger"],
+    bullets: ["Keyword-triggered conversation flows", FEATURE_BRANCHING_LOGIC ? "Multi-step logic with yes/no branching" : "Multi-step follow-up sequences", "Qualify leads without lifting a finger"],
     Phone: DmReplyPhone,
   },
   {
@@ -641,8 +643,10 @@ const allFeatures = [
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>),
     title: "Collect User Data",
     gridLabel: "Collect Data",
-    description: "Own your audience. Liffio asks followers for their email, phone number, or any custom field right inside a DM conversation - building your list without any external tools.",
-    bullets: ["Captures email, phone, and custom data", "Auto-exports to CSV and integrates with CRMs", "Fully GDPR-compliant data handling"],
+    description: FEATURE_COLLECT_DATA_PROMPTS
+      ? "Own your audience. Liffio asks followers for their email, phone number, or any custom field right inside a DM conversation - building your list without any external tools."
+      : "Own your audience. Liffio captures email addresses shared in DM conversations - building your list without any external tools.",
+    bullets: [FEATURE_COLLECT_DATA_PROMPTS ? "Captures email, phone, and custom data" : "Captures email addresses from DM replies", FEATURE_CRM_INTEGRATION ? "Export to CSV and integrate with CRMs" : "Export captured leads to CSV", "Fully GDPR-compliant data handling"],
     Phone: CollectDataPhone,
   },
   {

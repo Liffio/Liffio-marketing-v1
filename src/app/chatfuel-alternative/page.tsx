@@ -350,7 +350,7 @@ export default function ChatfuelAlternativePage() {
                 {
                   step: "1",
                   title: "Map your active Instagram automations in Chatfuel",
-                  body: "List every active Chatfuel flow that touches your Instagram account: the trigger (comment keyword, story reply), the DM text, any conditional logic, and any public comment replies. Multi-step sequences should be documented step by step. This takes 20–45 minutes depending on how many flows are running. Do not skip it — having a written list makes the Liffio setup much faster.",
+                  body: "List every active Chatfuel flow that touches your Instagram account: the trigger (comment keyword, story reply), the DM text, any flow logic, and any public comment replies. Multi-step sequences should be documented step by step. This takes 20–45 minutes depending on how many flows are running. Do not skip it — having a written list makes the Liffio setup much faster.",
                 },
                 {
                   step: "2",
