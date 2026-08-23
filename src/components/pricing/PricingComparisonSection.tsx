@@ -1,80 +1,147 @@
 "use client";
 
 import {
+  comparisonHighlightPlan,
   comparisonPlanNames,
+  comparisonPlanWorkspaces,
   featureCategories,
   getPlanColumnValue,
 } from "@/config/pricing.config";
 import { SwipeHint } from "@/components/pricing/PricingPlanCard";
 
+/**
+ * One continuous table with group bands, replacing three separate tables.
+ *
+ * The point of a comparison is the BOUNDARY — where Starter stops and Growth
+ * starts. Three tables each with their own header made you re-orient at every
+ * section and lost the tier names as soon as you scrolled. A single table with
+ * a sticky header and inline group bands keeps the columns anchored while you
+ * scan down, which is the only way the boundary is visible.
+ */
+
 function CellValue({ value }: { value: boolean | string }) {
   if (typeof value === "string") {
-    return <span className="text-sm font-semibold text-gray-700">{value}</span>;
+    return <span className="text-[13px] font-semibold text-[#17131A]">{value}</span>;
   }
   return value ? (
-    <span className="block text-center text-base font-bold text-green-500" aria-label="Included">✓</span>
+    <span className="block text-center text-[15px] font-bold text-emerald-600" aria-label="Included">
+      ✓
+    </span>
   ) : (
-    <span className="block text-center text-base text-zinc-400" aria-label="Not included">-</span>
+    <span className="block text-center text-[15px] text-[#C9C2CF]" aria-label="Not included">
+      —
+    </span>
   );
 }
 
 export default function PricingComparisonSection() {
   return (
-    <div className="space-y-12">
+    <div>
       <SwipeHint label="Swipe to compare all plans" />
 
-      {featureCategories.map((category) => (
-        <div key={category.name}>
-          <div className="mb-4">
-            <h3 className="text-lg font-bold text-[#0a0a0a]">{category.name}</h3>
-            <p className="mt-1 text-sm text-gray-500">{category.description}</p>
-          </div>
+      <div className="relative">
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 z-20 w-12 rounded-r-2xl bg-gradient-to-l from-white via-white/90 to-transparent lg:hidden"
+          aria-hidden
+        />
 
-          <div className="relative">
-            <div
-              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 rounded-r-2xl bg-gradient-to-l from-white via-white/90 to-transparent lg:hidden"
-              aria-hidden
-            />
-            <div className="overflow-x-auto rounded-2xl border border-gray-100 shadow-sm scrollbar-hide">
-              <table className="w-full min-w-[640px] text-left lg:min-w-0">
-                <thead>
-                  <tr className="border-b border-gray-100 bg-gray-50">
-                    <th className="sticky left-0 z-[1] w-[38%] bg-gray-50 px-4 py-3 text-xs font-bold uppercase tracking-wider text-gray-500 sm:px-5">
-                      Feature
-                    </th>
-                    {comparisonPlanNames.map((plan) => (
-                      <th
-                        key={plan}
-                        className="min-w-[4.75rem] px-3 py-3 text-center text-xs font-bold uppercase tracking-wider text-gray-500 sm:min-w-[5.5rem] sm:px-4"
-                      >
-                        {plan}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {category.features.map((row, i) => (
-                    <tr key={row.name} className={i % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
-                      <td className="sticky left-0 z-[1] bg-inherit px-4 py-3.5 text-sm text-gray-700 shadow-[4px_0_8px_-4px_rgba(0,0,0,0.08)] sm:px-5">
-                        {row.name}
-                      </td>
-                      {comparisonPlanNames.map((plan) => (
-                        <td key={plan} className="min-w-[4.75rem] px-3 py-3.5 text-center sm:min-w-[5.5rem] sm:px-4">
-                          <CellValue value={getPlanColumnValue(row, plan)} />
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+        <div className="overflow-x-auto rounded-2xl border border-[#EAE4DC] bg-white scrollbar-hide">
+          <table className="w-full min-w-[840px] border-collapse text-left lg:min-w-0">
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                  className="sticky left-0 top-0 z-30 min-w-[270px] bg-white px-5 py-4 text-left text-[13.5px] font-bold tracking-[-0.01em] text-[#17131A]"
+                  style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+                >
+                  Capability
+                </th>
+                {comparisonPlanNames.map((plan) => (
+                  <th
+                    key={plan}
+                    scope="col"
+                    className={`sticky top-0 z-20 min-w-[5.5rem] bg-white px-3 py-4 text-center text-[13.5px] font-bold tracking-[-0.01em] sm:px-4 ${
+                      plan === comparisonHighlightPlan ? "text-[#F5184C]" : "text-[#17131A]"
+                    }`}
+                    style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+                  >
+                    {plan}
+                    <span
+                      className="mt-0.5 block text-[10px] font-medium tracking-normal text-[#8B8391]"
+                      style={{ fontFamily: "var(--font-mono, ui-monospace, monospace)" }}
+                    >
+                      {comparisonPlanWorkspaces[plan]}
+                    </span>
+                  </th>
+                ))}
+              </tr>
+              <tr aria-hidden>
+                <th colSpan={comparisonPlanNames.length + 1} className="h-px bg-[#EAE4DC] p-0" />
+              </tr>
+            </thead>
+
+            <tbody>
+              {featureCategories.map((category) => (
+                <CategoryRows key={category.name} category={category} />
+              ))}
+            </tbody>
+          </table>
         </div>
-      ))}
+      </div>
 
-      <p className="text-center text-[11px] text-gray-400 lg:hidden">
+      <p className="mt-4 text-center text-[11px] text-[#8B8391] lg:hidden">
         {comparisonPlanNames.join(" · ")} - scroll horizontally to compare
       </p>
     </div>
+  );
+}
+
+function CategoryRows({
+  category,
+}: {
+  category: (typeof featureCategories)[number];
+}) {
+  return (
+    <>
+      {/* The group band. Its subtitle is why the section exists, one line. */}
+      <tr>
+        <th
+          scope="colgroup"
+          colSpan={comparisonPlanNames.length + 1}
+          className="border-y border-[#EAE4DC] bg-[#F7F3ED] px-5 py-2.5 text-left"
+        >
+          <span
+            className="block text-[10px] font-bold uppercase tracking-[0.14em] text-[#6F6776]"
+            style={{ fontFamily: "var(--font-mono, ui-monospace, monospace)" }}
+          >
+            {category.name}
+          </span>
+          <span className="mt-0.5 block text-[11px] font-normal normal-case tracking-normal text-[#8B8391]">
+            {category.description}
+          </span>
+        </th>
+      </tr>
+
+      {(category.features as ReadonlyArray<{ name: string }>).map((row) => (
+        <tr key={row.name} className="group border-b border-[#F1ECE5] last:border-b-0">
+          <th
+            scope="row"
+            className="sticky left-0 z-10 bg-white px-5 py-3 text-left text-[13px] font-medium text-[#17131A] shadow-[4px_0_8px_-4px_rgba(0,0,0,0.06)] group-hover:bg-[#FDFBF8]"
+          >
+            {row.name}
+          </th>
+          {comparisonPlanNames.map((plan) => (
+            <td
+              key={plan}
+              className={`min-w-[5.5rem] px-3 py-3 text-center align-middle text-[13px] text-[#4A4350] sm:px-4 group-hover:bg-[#FDFBF8] ${
+                plan === comparisonHighlightPlan ? "bg-[rgba(245,24,76,0.04)]" : ""
+              }`}
+            >
+              <CellValue value={getPlanColumnValue(row as never, plan)} />
+            </td>
+          ))}
+        </tr>
+      ))}
+    </>
   );
 }

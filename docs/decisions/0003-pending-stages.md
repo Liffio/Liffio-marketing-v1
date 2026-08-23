@@ -68,3 +68,53 @@ it.
 rather than at the start — better, but still a broken purchase. Enable this and
 drop `provisional` from the Growth card in the same change, so a highlighted
 card never carries a button that cannot complete.
+
+## Stage B6 — the `agency:*` capabilities are granted to no package
+
+🔴 **All seven `agency:*` capabilities exist as child modules and NO package
+holds any of them — Agency included.**
+
+```
+agency:branding             Brand name and logo        -> (NONE)
+agency:client_workspaces    Client workspaces          -> (NONE)
+agency:custom_domain        Custom domain              -> (NONE)
+agency:domain_verification  Domain verification        -> (NONE)
+agency:hide_branding        Hide Liffio branding       -> (NONE)
+agency:shortlink_domain     Custom short-link domain   -> (NONE)
+agency:theme_color          Theme colour               -> (NONE)
+```
+
+Two matrix rows and several card bullets therefore describe capabilities no tier
+holds: **"Agency white-label workspaces"** and **"Client sub-workspaces"**.
+
+⚠️ **Not a matrix fix — a package decision.** Either Agency's package should
+grant these, or the rows and bullets should go. Deleting the rows while the
+product intends to sell white-label would be as wrong as claiming it. The
+marketing repo cannot decide which.
+
+Partial mitigation already true: `package_limits.workspacesIncluded` **is** 20 on
+Agency, so "twenty workspaces" is real and is what the Agency card and the
+column sub-label say. What is unsupported is specifically the *white-label* and
+*CLIENT-role sub-workspace* capability set, not the workspace count.
+
+Same shape as D4 and the external API: a capability that exists in the schema,
+is named in copy, and is granted to nobody.
+
+## Note — `package_features` records offerability, not enforcement
+
+Established while resolving the Free keyword-trigger question, and it changes how
+much weight "the packages say X" can carry.
+
+`automation:keywords` has **no `capability_routes` row at all**, and every one of
+the **fourteen** automation rules that does exist is **`is_enabled: false`** —
+the runtime capability wall for automations is switched off. `MapAutomationOrphan
+Capabilities` says its own mappings "do not grant anything… Nothing a customer
+can reach changes when this runs", and `SeedAutomationCapabilityRoutes` excludes
+the keyword keys deliberately: *"Free+ in V4. Gating them would 403 the free
+tier's core loop."*
+
+So `package_features` describes what a package is *offered*, not what the runtime
+*enforces*. For marketing that is the right source — the site should describe the
+intended entitlement, not an enforcement gap — but an audit finding "the packages
+gate X at Starter" is weaker evidence than it appears, and should be checked
+against runtime before copy is changed on it.
