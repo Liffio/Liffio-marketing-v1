@@ -167,3 +167,61 @@ test("no retired intro price is advertised", () => {
     }
   }
 });
+
+// ── The authored annual total ────────────────────────────────────────────────
+//
+// `annual` is derived — a twelfth of the real price, shown for comparability.
+// `annualTotal` is the price itself. The distinction is the whole point of the
+// change: the API served a figure nobody authored ($7 = monthly * 0.8, floored)
+// and the page presented it as if someone had.
+
+const EXPECTED_ANNUAL_TOTAL = {
+  global: { Free: null, Starter: "$90", Growth: "$290", Business: "$590", Agency: "$5,490" },
+  india: { Free: null, Starter: "₹4,999", Growth: "₹14,999", Business: "₹24,999", Agency: "₹2,29,999" },
+} as const;
+
+test("every tier carries the authored annual total, and Free carries none", () => {
+  for (const region of REGIONS) {
+    const expected = EXPECTED_ANNUAL_TOTAL[region];
+    for (const [name, total] of Object.entries(expected)) {
+      const plan = planNamed(getPricingPlans(region), name);
+      assert.equal(plan.annualTotal, total, `${name} (${region}) annual total`);
+    }
+  }
+});
+
+test("the per-month annual figure is the total's twelfth, rounded UP, never down", () => {
+  for (const region of REGIONS) {
+    for (const plan of getPricingPlans(region)) {
+      if (!plan.annualTotal) continue;
+      const total = Number(plan.annualTotal.replace(/[^0-9.]/g, ""));
+      const perMonth = Number(plan.annual.replace(/[^0-9.]/g, ""));
+
+      // Never under-quote: twelve advertised months must cover the real bill.
+      assert.ok(perMonth * 12 >= total, `${plan.name} (${region}) under-quotes: ${plan.annual} x12 < ${plan.annualTotal}`);
+
+      // And it is genuinely the ceiling, not some other rounding.
+      const step = region === "india" ? 1 : 0.01;
+      const expected = Math.ceil((total / 12) / step) * step;
+      assert.ok(
+        Math.abs(perMonth - expected) < 1e-9,
+        `${plan.name} (${region}): expected ${expected}, got ${perMonth}`,
+      );
+    }
+  }
+});
+
+test("Business INR rounds up to 2084 — 2083 would under-quote by Rs 36 a year", () => {
+  const business = planNamed(getPricingPlans("india"), "Business");
+  assert.equal(business.annualTotal, "₹24,999");
+  assert.equal(business.annual, "₹2,084");
+  assert.equal(Math.round(24999 / 12), 2083, "nearest-rounding is the trap");
+  assert.ok(2083 * 12 < 24999, "and it under-quotes");
+});
+
+test("USD annual always shows two decimals, so $7.50 never renders as $7.5", () => {
+  for (const plan of getPricingPlans("global")) {
+    if (!plan.annualTotal) continue;
+    assert.match(plan.annual, /^\$\d+\.\d{2}$/, `${plan.name}: ${plan.annual}`);
+  }
+});
