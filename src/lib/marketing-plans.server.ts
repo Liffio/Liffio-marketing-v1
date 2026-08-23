@@ -118,9 +118,18 @@ export async function fetchMarketingPlansContext(region: PricingRegion): Promise
     const business = plans.find((p) => p.name === 'Business')
     return {
       plans,
-      businessPlanValue: business ? `${business.monthly}/mo` : region === 'india' ? '₹2,499/mo' : '$79/mo',
+      businessPlanValue: business ? `${business.monthly}/mo` : region === 'india' ? '₹2,499/mo' : '$59/mo',
     }
   }
+}
+
+const TIER_COUNT_WORDS: Record<number, string> = {
+  1: 'One',
+  2: 'Two',
+  3: 'Three',
+  4: 'Four',
+  5: 'Five',
+  6: 'Six',
 }
 
 export function buildFreePlanFaqAnswer(region: PricingRegion, plans: PricingPlan[]): string {
@@ -138,7 +147,10 @@ export function buildPlansOfferedFaqAnswer(region: PricingRegion, plans: Pricing
     const annual = p.annual !== p.monthly ? ` or ${p.annual}/mo billed annually` : ''
     return `${p.name} (${p.monthly}/mo${intro}${annual})`
   })
-  return `Four tiers: ${parts.join(', ')}. Every plan includes unlimited Instagram accounts and unlimited automated DMs.`
+  // Derived, never hardcoded: this list is whatever the catalogue returns, so a
+  // literal "Four tiers" here would silently misdescribe a five-tier response.
+  const count = TIER_COUNT_WORDS[parts.length] ?? String(parts.length)
+  return `${count} tiers: ${parts.join(', ')}. Every plan includes unlimited Instagram accounts and unlimited automated DMs.`
 }
 
 export function buildCreatorsProgramFaqAnswer(businessPlanValue: string): string {

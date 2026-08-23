@@ -1,8 +1,4 @@
-import type { PricingPlan } from "@/config/pricing.config";
-
-function isZeroPrice(price: string): boolean {
-  return price === "$0" || price === "₹0";
-}
+import { isZeroPrice, type PricingPlan } from "@/config/pricing.config";
 
 type PlanPriceBlockProps = {
   plan: PricingPlan;

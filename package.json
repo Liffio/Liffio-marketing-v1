@@ -7,7 +7,8 @@
     "dev:turbo": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --experimental-strip-types --disable-warning=ExperimentalWarning --import ./test/register-hooks.mjs --test test/**/*.test.ts"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.7",

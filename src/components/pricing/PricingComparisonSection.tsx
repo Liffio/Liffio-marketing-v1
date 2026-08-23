@@ -73,7 +73,7 @@ export default function PricingComparisonSection() {
       ))}
 
       <p className="text-center text-[11px] text-gray-400 lg:hidden">
-        Free · Starter · Business · Agency - scroll horizontally to compare
+        {comparisonPlanNames.join(" · ")} - scroll horizontally to compare
       </p>
     </div>
   );

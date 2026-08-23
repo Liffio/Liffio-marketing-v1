@@ -162,7 +162,7 @@ export const pageSeo = {
     pathname: "/features",
   }),
   pricing: buildPageMetadata({
-    title: "Instagram DM Automation Pricing — Free to $299/mo | Liffio",
+    title: "Instagram DM Automation Pricing — Free to $549/mo | Liffio",
     description:
       "Free plan with no credit card. Paid plans from $9/month. All plans include unlimited automated DMs and unlimited Instagram accounts. Cancel anytime.",
     pathname: "/pricing",

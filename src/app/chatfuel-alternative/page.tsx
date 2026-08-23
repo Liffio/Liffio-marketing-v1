@@ -236,8 +236,8 @@ export default function ChatfuelAlternativePage() {
               </p>
               <p>
                 Liffio&apos;s Starter plan is $9/month flat — unlimited DMs, unlimited conversations,
-                no quota. The Business plan at $79/month adds multi-step flows, conversion
-                analytics, and story reply automation. Agency at $299/month adds white-label
+                no quota. The Business plan at $59/month adds multi-step flows, conversion
+                analytics, and story reply automation. Agency at $549/month adds white-label
                 workspaces and unlimited client accounts. All plans include INR pricing for
                 Indian users through Razorpay.
               </p>
@@ -300,7 +300,7 @@ export default function ChatfuelAlternativePage() {
                 <p className="text-gray-600 leading-relaxed">
                   Agencies managing Instagram accounts for clients in India face an additional
                   cost with Chatfuel — USD billing plus international processing fees.
-                  Liffio&apos;s Agency plan at ₹9,999/month includes unlimited Instagram accounts,
+                  Liffio&apos;s Agency plan at ₹22,999/month includes unlimited Instagram accounts,
                   white-label client workspaces, and INR invoices via Razorpay. For agencies
                   billing clients in INR who have been absorbing the currency conversion cost,
                   switching to Liffio removes that overhead entirely.

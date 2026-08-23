@@ -103,7 +103,7 @@ function PricingMobilePreview({ plans }: { plans: PricingPlan[] }) {
           />
         </button>
         <span className={`text-xs font-semibold ${annual ? "text-[#0a0a0a]" : "text-gray-400"}`}>
-          Annual <span className="font-bold text-green-600">-20%</span>
+          Annual <span className="font-bold text-green-600">2 months free</span>
         </span>
       </div>
 
