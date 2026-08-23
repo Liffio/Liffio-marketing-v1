@@ -4,6 +4,8 @@ import Footer from "@/components/Footer";
 import PricingPlansGrid, { PricingBottomCta } from "@/components/PricingPlansGrid";
 import PricingComparisonSection from "@/components/pricing/PricingComparisonSection";
 import PositioningStrip from "@/components/pricing/PositioningStrip";
+import AgencyBreakEven from "@/components/pricing/AgencyBreakEven";
+import { BillingIntervalProvider } from "@/components/pricing/BillingInterval";
 import { SiteFaqSection } from "@/components/faq/SiteFaqSection";
 import { getPricingDetailedFaqCategories } from "@/config/faq.config";
 import { getPricingContext } from "@/lib/pricing-region.server";
@@ -41,6 +43,7 @@ export default async function PricingPage() {
       <SoftwareApplicationJsonLd />
       <FaqPageJsonLd categories={faqCategories} />
       <Navbar />
+      <BillingIntervalProvider>
       <main id="main-content" className="flex-1">
         {/* Header */}
         <section className="hero-gradient py-20 sm:py-28">
@@ -147,6 +150,8 @@ export default async function PricingPage() {
             </div>
 
             <PricingComparisonSection />
+
+            <AgencyBreakEven plans={plans} />
           </div>
         </section>
 
@@ -167,6 +172,7 @@ export default async function PricingPage() {
           <PricingBottomCta />
         </section>
       </main>
+      </BillingIntervalProvider>
       <Footer />
     </>
   );

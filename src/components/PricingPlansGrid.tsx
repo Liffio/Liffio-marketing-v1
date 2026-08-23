@@ -10,6 +10,7 @@ import {
 import { CountryFlag } from "@/components/pricing/CountryFlag";
 import { pricingPerks, type PricingPlan } from "@/config/pricing.config";
 import { getPricingLocationLabel, type PricingRegion } from "@/lib/pricing-region";
+import { useSharedBillingInterval } from "@/components/pricing/BillingInterval";
 import { siteConfig } from "@/config/site.config";
 
 type PricingPlansGridProps = {
@@ -53,7 +54,16 @@ export default function PricingPlansGrid({
   region,
   countryCode = null,
 }: PricingPlansGridProps) {
-  const [annual, setAnnual] = useState(false);
+  /*
+    Both hooks run unconditionally. When a BillingIntervalProvider is present
+    (the pricing page) the toggle is shared with the break-even calculator; on
+    the homepage there is none, and this falls back to its own state with no
+    change in behaviour.
+  */
+  const shared = useSharedBillingInterval();
+  const [localAnnual, setLocalAnnual] = useState(false);
+  const annual = shared ? shared.annual : localAnnual;
+  const setAnnual = shared ? shared.setAnnual : setLocalAnnual;
   const locationLabel = getPricingLocationLabel(region, countryCode);
 
   return (

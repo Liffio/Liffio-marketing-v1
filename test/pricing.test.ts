@@ -1,10 +1,14 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 
 import {
   comparisonPlanNames,
   featureCategories,
   getPlanColumnValue,
+  parseDisplayAmount,
+  planWorkspacesIncluded,
+  comparisonPlanWorkspaces,
   getPricingFaqs,
   getPricingPlans,
   isZeroPrice,
@@ -341,4 +345,71 @@ test("the matrix does not contradict the Business card on seats", () => {
     const seatBullet = business.features.find((f) => /team members/i.test(f.text));
     if (seatBullet) assert.match(seatBullet.text, /15/, "card and matrix disagree on Business seats");
   }
+});
+
+// ── The Agency break-even calculator ─────────────────────────────────────────
+//
+// The crossover is DERIVED (agencyPrice / businessMonthly), so these assert the
+// arithmetic the component performs rather than a number it stores. If either
+// price moves, the expected crossover here moves with it — which is the point.
+
+const breakEven = (region: (typeof REGIONS)[number]) => {
+  const plans = getPricingPlans(region);
+  const business = parseDisplayAmount(planNamed(plans, "Business").monthly)!;
+  const agency = parseDisplayAmount(planNamed(plans, "Agency").monthly)!;
+  return { business, agency, parity: agency / business, first: Math.floor(agency / business) + 1 };
+};
+
+test("Agency wins from 10 accounts in both currencies, and 9 is line ball", () => {
+  for (const region of REGIONS) {
+    const { business, agency, parity, first } = breakEven(region);
+
+    assert.equal(first, 10, `${region}: expected crossover at 10, parity ${parity}`);
+    // At 9 Business is still cheaper — the design's "line ball at 9" was wrong
+    // in direction, and the copy says so plainly instead.
+    assert.ok(business * 9 < agency, `${region}: 9 accounts should still favour Business`);
+    assert.ok(business * 10 > agency, `${region}: 10 accounts should favour Agency`);
+  }
+});
+
+test("a full Agency workspace costs less than one Growth subscription", () => {
+  // The single line that silently breaks if either price moves.
+  for (const region of REGIONS) {
+    const plans = getPricingPlans(region);
+    const agency = parseDisplayAmount(planNamed(plans, "Agency").monthly)!;
+    const growth = parseDisplayAmount(planNamed(plans, "Growth").monthly)!;
+    const perWorkspace = agency / planWorkspacesIncluded.Agency;
+    assert.ok(
+      perWorkspace < growth,
+      `${region}: ${perWorkspace} per workspace is not below Growth at ${growth}`,
+    );
+  }
+});
+
+test("the calculator hardcodes no tier price and no crossover", () => {
+  const source = readFileSync(
+    new URL("../src/components/pricing/AgencyBreakEven.tsx", import.meta.url),
+    "utf8",
+  );
+  const code = source.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*/g, "");
+  for (const literal of ["59", "549", "2499", "22999", "29", "1499", "9.3", "9.2"]) {
+    assert.equal(
+      new RegExp(`\b${literal.replace(".", "\.")}\b`).test(code),
+      false,
+      `AgencyBreakEven contains the literal ${literal} outside a comment`,
+    );
+  }
+
+  // Absence of price literals is not enough: `firstWinningCount = 10` contains
+  // no forbidden number and would pass the loop above while being exactly the
+  // hardcode this test exists to prevent. Assert the derivation is present.
+  assert.match(code, /parity\s*=\s*agencyPrice\s*\/\s*businessUnit/, "parity must be derived from the two prices");
+  assert.match(code, /firstWinningCount\s*=\s*Math\.floor\(parity\)\s*\+\s*1/, "crossover must be derived from parity");
+  assert.match(code, /perWorkspace\s*=\s*agencyPrice\s*\/\s*MAX_ACCOUNTS/, "per-workspace must be derived");
+});
+
+test("workspace display strings derive from the numbers", () => {
+  assert.equal(comparisonPlanWorkspaces.Agency, "20 workspaces");
+  assert.equal(comparisonPlanWorkspaces.Free, "1 workspace");
+  assert.equal(planWorkspacesIncluded.Agency, 20);
 });

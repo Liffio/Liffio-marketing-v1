@@ -439,13 +439,42 @@ export const comparisonPlanNames = ["Free", "Starter", "Growth", "Business", "Ag
  * workspace" on Agency, and the reader needs the multiplier in view to make
  * sense of it.
  */
-export const comparisonPlanWorkspaces: Record<(typeof comparisonPlanNames)[number], string> = {
-  Free: "1 workspace",
-  Starter: "1 workspace",
-  Growth: "1 workspace",
-  Business: "1 workspace",
-  Agency: "20 workspaces",
+export const planWorkspacesIncluded: Record<(typeof comparisonPlanNames)[number], number> = {
+  Free: 1,
+  Starter: 1,
+  Growth: 1,
+  Business: 1,
+  Agency: 20,
 };
+
+/** Display strings derive from the numbers above, so there is one source. */
+export const comparisonPlanWorkspaces: Record<(typeof comparisonPlanNames)[number], string> =
+  Object.fromEntries(
+    comparisonPlanNames.map((plan) => [
+      plan,
+      `${planWorkspacesIncluded[plan]} ${planWorkspacesIncluded[plan] === 1 ? "workspace" : "workspaces"}`,
+    ]),
+  ) as Record<(typeof comparisonPlanNames)[number], string>;
+
+/**
+ * "$2,499" -> 2499. Null when the string is not a plain money amount.
+ *
+ * 🚩 The break-even calculator parses the SAME strings the cards render, rather
+ * than reading a parallel numeric field. A second source could drift from the
+ * displayed one, and then the calculator would argue from prices the page does
+ * not show. Parsing what is rendered makes that impossible.
+ */
+export function parseDisplayAmount(display: string | null | undefined): number | null {
+  if (!display) return null;
+  const numeric = display.replace(/[^0-9.]/g, "");
+  if (!/^\d+(\.\d+)?$/.test(numeric)) return null;
+  return Number(numeric);
+}
+
+/** The leading currency symbol of a rendered price, for formatting derived figures. */
+export function currencySymbolOf(display: string): string {
+  return /^[^0-9]/.test(display) ? display[0] : "";
+}
 
 /** The column carrying emphasis, matching the highlighted card. */
 export const comparisonHighlightPlan: (typeof comparisonPlanNames)[number] = "Growth";
