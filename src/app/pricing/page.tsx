@@ -3,6 +3,7 @@ import { FEATURE_SALE_TRACKING } from "@/config/feature-flags";
 import Footer from "@/components/Footer";
 import PricingPlansGrid, { PricingBottomCta } from "@/components/PricingPlansGrid";
 import PricingComparisonSection from "@/components/pricing/PricingComparisonSection";
+import PositioningStrip from "@/components/pricing/PositioningStrip";
 import { SiteFaqSection } from "@/components/faq/SiteFaqSection";
 import { getPricingDetailedFaqCategories } from "@/config/faq.config";
 import { getPricingContext } from "@/lib/pricing-region.server";
@@ -77,6 +78,8 @@ export default async function PricingPage() {
         <section className="py-16 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <PricingPlansGrid plans={plans} region={region} countryCode={countryCode} />
+
+            <PositioningStrip plans={plans} />
           </div>
         </section>
 
