@@ -24,10 +24,15 @@ const EXPECTED_MONTHLY = {
   india: { Free: "₹0", Starter: "₹499", Growth: "₹1,499", Business: "₹2,499", Agency: "₹22,999" },
 } as const;
 
-/** Annual charges 10 months, not 12 — so the per-month figure is monthly * 10 / 12. */
+/**
+ * Annual per-month = the catalogue ANNUAL TOTAL / 12, rounded up.
+ * NOT monthly * 10 / 12: USD yearly is exactly monthly * 10, but every INR
+ * yearly is charm-priced Rs 9 above it (Rs 499/mo bills at Rs 4,999/yr), so
+ * deriving under-quotes INR. `npm run check:prices` enforces this live.
+ */
 const EXPECTED_ANNUAL = {
   global: { Free: "$0", Starter: "$7.50", Growth: "$24.17", Business: "$49.17", Agency: "$457.50" },
-  india: { Free: "₹0", Starter: "₹416", Growth: "₹1,250", Business: "₹2,083", Agency: "₹19,166" },
+  india: { Free: "₹0", Starter: "₹417", Growth: "₹1,250", Business: "₹2,084", Agency: "₹19,167" },
 } as const;
 
 const planNamed = (plans: PricingPlan[], name: string): PricingPlan => {

@@ -1,0 +1,38 @@
+name: CI
+
+# This repo had no CI at all. Nothing checked a pull request before it merged
+# and auto-deployed to production, which is how stale prices survived in it for
+# months. These are the cheap, offline checks; the live comparison against the
+# billing catalogue is in price-drift.yml.
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Typecheck and unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # --experimental-strip-types needs 22.6+.
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npx --no-install tsc --noEmit
+
+      - name: Unit tests
+        run: npm test
