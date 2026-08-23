@@ -1,5 +1,5 @@
 import { metaCopy } from "@/config/meta-copy";
-import { FEATURE_BRANCHING_LOGIC, FEATURE_CRM_INTEGRATION, FEATURE_SALE_TRACKING, FEATURE_STORY_REACTIONS, FEATURE_WELCOME_DM } from "@/config/feature-flags";
+import { FEATURE_BRANCHING_LOGIC, FEATURE_CRM_INTEGRATION, FEATURE_SALE_TRACKING, FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import type { PricingRegion } from "@/lib/pricing-region";
 import { siteConfig } from "./site.config";
 
@@ -302,14 +302,14 @@ export const pricingPerks = [
 
 export function getFreePlanFaqAnswer(region: PricingRegion): string {
   const price = region === "india" ? "₹0/month" : "$0/month";
-  return `Yes. The Free plan is ${price}. No credit card required. You get unlimited Instagram accounts, unlimited automated DMs, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.`;
+  return `Yes. The Free plan is ${price}. No credit card required. You get one Instagram account, unlimited automated DMs, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.`;
 }
 
 export function getPlansOfferedFaqAnswer(region: PricingRegion): string {
   if (region === "india") {
-    return "Five tiers: Free (₹0, $0), Starter (₹499/mo; $9/mo in USD), Growth (₹1,499/mo; $29/mo in USD), Business (₹2,499/mo; $59/mo in USD), and Agency (₹22,999/mo; $549/mo in USD). Annual billing charges 10 months instead of 12, so two months are free. Every plan includes unlimited Instagram accounts and unlimited automated DMs.";
+    return "Five tiers: Free (₹0, $0), Starter (₹499/mo; $9/mo in USD), Growth (₹1,499/mo; $29/mo in USD), Business (₹2,499/mo; $59/mo in USD), and Agency (₹22,999/mo; $549/mo in USD). Annual billing charges 10 months instead of 12, so two months are free. Every plan connects one Instagram account per workspace and includes unlimited automated DMs.";
   }
-  return "Five tiers: Free ($0), Starter ($9/mo; ₹499/mo in India), Growth ($29/mo; ₹1,499/mo in India), Business ($59/mo; ₹2,499/mo in India), and Agency ($549/mo; ₹22,999/mo in India). Annual billing charges 10 months instead of 12, so two months are free. Every plan includes unlimited Instagram accounts and unlimited automated DMs.";
+  return "Five tiers: Free ($0), Starter ($9/mo; ₹499/mo in India), Growth ($29/mo; ₹1,499/mo in India), Business ($59/mo; ₹2,499/mo in India), and Agency ($549/mo; ₹22,999/mo in India). Annual billing charges 10 months instead of 12, so two months are free. Every plan connects one Instagram account per workspace and includes unlimited automated DMs.";
 }
 
 export function getBusinessPlanValueLabel(region: PricingRegion): string {
@@ -328,7 +328,9 @@ export const featureCategories = [
     features: [
       { name: "Keyword comment triggers", free: true, starter: true, growth: true, business: true, agency: true },
       { name: "Public comment auto-replies", free: true, starter: true, growth: true, business: true, agency: true },
-      { name: FEATURE_STORY_REACTIONS ? "Story mention & reaction triggers" : "Story mention & reply triggers", free: false, starter: true, growth: true, business: true, agency: true },
+      // Story triggers were REMOVED, not hidden. D8 deleted the capability: all 15
+      // children of the Automations module are comment-based and the server rejects
+      // Stories, so this row was true on four tiers and honoured by none.
       ...(FEATURE_WELCOME_DM ? [{ name: "Welcome DM for new followers", free: false, starter: true, growth: true, business: true, agency: true }] : []),
       { name: "Multi-step DM flows with logic", free: false, starter: true, growth: true, business: true, agency: true },
       { name: "Follow-up DM sequences", free: false, starter: false, growth: true, business: true, agency: true },
@@ -353,8 +355,10 @@ export const featureCategories = [
     features: [
       { name: "Team members", free: "1", starter: "3", growth: "5", business: "5", agency: "Unlimited" },
       { name: "Role-based access (RBAC)", free: false, starter: true, growth: true, business: true, agency: true },
-      // Starter is NOT on the API ladder — see the starterFeatures note above.
-      { name: "External API keys", free: false, starter: false, growth: false, business: true, agency: true },
+      // External API keys were REMOVED, not moved. D4 withheld the external API from
+      // V4 launch: every package has maxApiCredentials 0 and apiRequestsPerDay 0, and
+      // there is no API module among the 14. It was true on Business and Agency and
+      // honoured on neither.
       { name: "Agency white-label workspaces", free: false, starter: false, growth: false, business: false, agency: true },
       { name: "Client sub-workspaces", free: false, starter: false, growth: false, business: false, agency: true },
       { name: "Affiliate program (50% commission)", free: false, starter: true, growth: true, business: true, agency: true },

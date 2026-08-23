@@ -25,7 +25,7 @@ Liffio connects to Instagram via official OAuth — no passwords stored. After a
 
 Annual billing charges 10 months instead of 12, so two months are free.
 
-India pricing available via Razorpay in INR (Free ₹0, Starter ₹499, Growth ₹1,499, Business ₹2,499, Agency ₹22,999 per month). All plans include unlimited Instagram accounts and unlimited automated DMs.
+India pricing available via Razorpay in INR (Free ₹0, Starter ₹499, Growth ₹1,499, Business ₹2,499, Agency ₹22,999 per month). Every plan connects one Instagram account per workspace (Agency includes 20 workspaces) and includes unlimited automated DMs.
 
 ## Key facts
 
