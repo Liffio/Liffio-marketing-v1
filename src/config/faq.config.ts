@@ -329,25 +329,25 @@ const pricingDetailCategory: FaqCategory = {
       id: "starter-features",
       question: "What features require Starter ($9/mo, ₹499/mo in India)?",
       answer:
-        `Starter includes all automation trigger types (comment-to-DM, story reply, ${FEATURE_WELCOME_DM ? "welcome DM, " : ""}inbound DM reply, ask for follow, follow-up sequences, collect user data), unlimited DM message templates, ${FEATURE_BRANCHING_LOGIC ? "multi-step DM flows with branching logic" : "multi-step DM follow-up flows"}, short links (go.liffio.com) with click and referrer tracking, lead capture from DMs and link clicks, post scheduler (Instagram feed), advanced analytics dashboard, conversion analytics (${FEATURE_SALE_TRACKING ? "comment to DM to click to sale" : "comment to DM to click"}), up to 3 team member seats, priority email support, and external API access.`,
+        `Starter includes all automation trigger types (comment-to-DM, story reply, ${FEATURE_WELCOME_DM ? "welcome DM, " : ""}inbound DM reply, ask for follow, follow-up sequences, collect user data), unlimited DM message templates, ${FEATURE_BRANCHING_LOGIC ? "multi-step DM flows with branching logic" : "multi-step DM follow-up flows"}, short links (go.liffio.com) with click and referrer tracking, lead capture from DMs and link clicks, post scheduler (Instagram feed), advanced analytics dashboard, conversion analytics (${FEATURE_SALE_TRACKING ? "comment to DM to click to sale" : "comment to DM to click"}), up to 3 team member seats, and priority email support.`,
     },
     {
       id: "business-features",
       question: "What features require Business ($59/mo, ₹2,499/mo in India)?",
       answer:
-        "Business includes everything in Starter, plus follow-up DM sequences, full conversion analytics with Instagram account-level insights, external API keys for developer integrations, up to 5 team member seats with role-based access, branded short links with UTM attribution, and priority support plus an onboarding call. Built for brands, e-commerce teams, and coaches who need attribution tracking across the full funnel.",
+        "Business includes everything in Starter, plus follow-up DM sequences, full conversion analytics with Instagram account-level insights, up to 15 team member seats with role-based access, branded short links with UTM attribution, and priority support plus an onboarding call. Built for brands, e-commerce teams, and coaches who need attribution tracking across the full funnel.",
     },
     {
       id: "agency-features",
       question: "What features require Agency ($549/mo, ₹22,999/mo in India)?",
       answer:
-        `Agency includes everything in Business, plus agency white-label workspaces, client sub-workspaces with CLIENT role access, a dedicated account manager, full API access${FEATURE_CRM_INTEGRATION ? ", custom integrations and CRM sync" : ""}, SLA-backed priority support, and volume and multi-workspace pricing. Built for marketing agencies running Instagram automation across multiple client brands from a single account.`,
+        `Agency includes everything in Business, plus agency white-label workspaces, client sub-workspaces with CLIENT role access, a dedicated account manager${FEATURE_CRM_INTEGRATION ? ", custom integrations and CRM sync" : ""}, SLA-backed priority support, and volume and multi-workspace pricing. Built for marketing agencies running Instagram automation across multiple client brands from a single account.`,
     },
     {
       id: "best-for-agencies",
       question: "Which plan is best for agencies?",
       answer:
-        `The Agency plan ($549/mo, ₹22,999/mo in India) is purpose-built for agencies. It includes white-label workspaces, client sub-workspaces with restricted CLIENT role access, a dedicated account manager, full API access${FEATURE_CRM_INTEGRATION ? ", CRM sync" : ""}, and SLA-backed priority support. If you manage Instagram automation for multiple brands and need to keep client accounts separate and white-labelled, Agency is the only plan that supports this at scale.`,
+        `The Agency plan ($549/mo, ₹22,999/mo in India) is purpose-built for agencies. It includes white-label workspaces, client sub-workspaces with restricted CLIENT role access, a dedicated account manager${FEATURE_CRM_INTEGRATION ? ", CRM sync" : ""}, and SLA-backed priority support. If you manage Instagram automation for multiple brands and need to keep client accounts separate and white-labelled, Agency is the only plan that supports this at scale.`,
     },
     {
       id: "hidden-fees",
@@ -594,7 +594,7 @@ export function getCreatorsFaqCategories(
           id: "creators-features-included",
           question: "What features are included in the Creators Program?",
           answer:
-            `Creators Program includes unlimited automated DMs across all automation types, unlimited automation workflows, advanced analytics and full conversion tracking (${FEATURE_SALE_TRACKING ? "comment to DM to click to sale" : "comment to DM to click"}), DM follow-up sequences, short links with click tracking and UTM attribution, advanced bio link page customisation, up to 5 team member seats, and priority and direct team support. Not included: white-label workspaces, agency client sub-accounts, external API keys, and Agency-tier features.`,
+            `Creators Program includes unlimited automated DMs across all automation types, unlimited automation workflows, advanced analytics and full conversion tracking (${FEATURE_SALE_TRACKING ? "comment to DM to click to sale" : "comment to DM to click"}), DM follow-up sequences, short links with click tracking and UTM attribution, advanced bio link page customisation, up to 15 team member seats, and priority and direct team support. Not included: white-label workspaces, agency client sub-accounts, external API keys, and Agency-tier features.`,
         },
         {
           id: "how-to-apply",
