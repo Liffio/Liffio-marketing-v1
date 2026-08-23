@@ -261,6 +261,62 @@ function compareMonthly(
  * checkout. A whole minor unit per month over it means the figure was not
  * rounded from this catalogue at all.
  */
+/**
+ * The AUTHORED annual price — compared by EXACT EQUALITY, no tolerance.
+ *
+ * `compareAnnual` below has to allow rounding slack, because the per-month
+ * figure it checks is a twelfth of this one and must round somewhere. This
+ * number is not derived from anything: it is what the catalogue charges, shown
+ * verbatim. If it differs from `packages.yearly_price_*` by a single minor unit,
+ * the site is quoting a commitment we do not bill.
+ */
+function compareAnnualTotal(
+  source: string,
+  name: string,
+  currency: Currency,
+  yearlyMinor: number | null,
+  display: string | null | undefined,
+): void {
+  // No annual plan in the catalogue (Free) — the site must show no total either.
+  if (yearlyMinor === null) {
+    if (display) {
+      report(
+        `${source}:annual-total:${name}:${currency}`,
+        source,
+        `${name} has no yearly price in the catalogue, but ${source} advertises an annual total of ${display}.`,
+      );
+    }
+    return;
+  }
+
+  if (!display) {
+    report(
+      `${source}:annual-total:${name}:${currency}`,
+      source,
+      `${name} is billed ${fmt(yearlyMinor, currency)}/yr by the catalogue, but ${source} carries no annual total to show.`,
+    );
+    return;
+  }
+
+  const actual = toMinorUnits(display, currency);
+  if (actual === null) {
+    report(
+      `${source}:annual-total:${name}:${currency}`,
+      source,
+      `${name} annual total (${currency.toUpperCase()}): "${display}" is not a well-formed ${SYMBOL[currency]} amount.`,
+    );
+    return;
+  }
+
+  if (actual !== yearlyMinor) {
+    report(
+      `${source}:annual-total:${name}:${currency}`,
+      source,
+      `${name} annual total (${currency.toUpperCase()}): ${source} advertises ${display}/yr, catalogue charges ${fmt(yearlyMinor, currency)}/yr.`,
+    );
+  }
+}
+
 function compareAnnual(
   source: string,
   name: string,
@@ -378,7 +434,8 @@ async function main(): Promise<number> {
       const monthlyMinor = currency === "usd" ? pkg.monthlyPriceUsdCents : pkg.monthlyPriceInrPaise;
       const yearlyMinor = currency === "usd" ? pkg.yearlyPriceUsdCents : pkg.yearlyPriceInrPaise;
 
-      const sources: Array<readonly [string, { monthly: string; annual: string } | undefined]> = [
+      type Comparable = { monthly: string; annual: string; annualTotal?: string | null };
+      const sources: Array<readonly [string, Comparable | undefined]> = [
         ["sheet", sheet.find((p: PricingPlan) => p.name === pkg.name)],
         ["rendered", rendered[region].find((p) => p.name === pkg.name)],
       ];
@@ -387,6 +444,12 @@ async function main(): Promise<number> {
         if (!plan) continue; // absence is already reported by compareTierSet
         compareMonthly(source, pkg.name, currency, monthlyMinor, plan.monthly);
         compareAnnual(source, pkg.name, currency, yearlyMinor, monthlyMinor, plan.annual);
+        // Sheet only: /marketing/plans serves no annual total, so there is
+        // nothing to compare on the rendered side. The per-month figure it does
+        // serve is checked above, and is currently waived (see WAIVERS).
+        if (source === "sheet") {
+          compareAnnualTotal(source, pkg.name, currency, yearlyMinor, plan.annualTotal);
+        }
       }
     }
   }

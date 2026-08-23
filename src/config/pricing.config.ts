@@ -8,7 +8,20 @@ export type PlanFeature = { text: string; included: boolean };
 export type PricingPlan = {
   name: string;
   monthly: string;
+  /**
+   * Per-month EQUIVALENT of the annual plan. Derived, and labelled as derived
+   * in the UI — nobody authored this number. Always rounded UP (see below).
+   */
   annual: string;
+  /**
+   * The AUTHORED annual price — what the customer is actually billed, straight
+   * from `packages.yearly_price_usd_cents` / `yearly_price_inr_paise`.
+   * `null` for tiers with no annual plan (Free).
+   *
+   * This is the anchor. `annual` is its twelfth, shown for comparability with
+   * the monthly card; this is the commitment.
+   */
+  annualTotal: string | null;
   /**
    * Introductory price shown prominently on monthly billing.
    * Currently unused — no tier has one, and no checkout path implements one.
@@ -51,19 +64,38 @@ function usdMonthly(amount: number): string {
   return `$${amount}`;
 }
 
-/** Per-month equivalent of the catalogue's ANNUAL TOTAL. Rounded UP so we never under-quote. */
+/**
+ * Per-month equivalent of the catalogue's ANNUAL TOTAL.
+ *
+ * 🚩 CEIL, not round, and never floor. Rounding to nearest under-quotes: Business
+ * INR is ₹24,999/12 = ₹2,083.25, and ₹2,083 understates the real bill by ₹36 a
+ * year. Flooring is how the API produces $7 against a real $7.50. Up is the only
+ * direction that cannot promise less than we charge.
+ *
+ * USD shows two decimals; INR shows whole rupees, because ₹416.58 reads badly
+ * and paise are not used in Indian price display.
+ */
 function usdAnnual(yearlyTotal: number): string {
-  const perMonth = Math.ceil((yearlyTotal / 12) * 100) / 100;
-  return `$${Number.isInteger(perMonth) ? perMonth : perMonth.toFixed(2)}`;
+  return `$${(Math.ceil((yearlyTotal / 12) * 100) / 100).toFixed(2)}`;
+}
+
+/** The authored annual price itself — the number the customer is billed. */
+function usdAnnualTotal(yearlyTotal: number): string {
+  return `$${yearlyTotal.toLocaleString("en-US")}`;
 }
 
 function inrMonthly(amount: number): string {
   return `₹${amount.toLocaleString("en-IN")}`;
 }
 
-/** Per-month equivalent of the catalogue's ANNUAL TOTAL. Rounded UP so we never under-quote. */
+/** See usdAnnual. Whole rupees, rounded UP. */
 function inrAnnual(yearlyTotal: number): string {
   return `₹${Math.ceil(yearlyTotal / 12).toLocaleString("en-IN")}`;
+}
+
+/** The authored annual price itself. en-IN grouping: ₹2,29,999, matching ₹22,999. */
+function inrAnnualTotal(yearlyTotal: number): string {
+  return `₹${yearlyTotal.toLocaleString("en-IN")}`;
 }
 
 /**
@@ -158,6 +190,7 @@ const globalPricingPlans: PricingPlan[] = [
     name: "Free",
     monthly: usdMonthly(0),
     annual: usdMonthly(0),
+    annualTotal: null,
     description: "Get started with comment-to-DM automation - no credit card required.",
     badge: null,
     highlight: false,
@@ -170,6 +203,7 @@ const globalPricingPlans: PricingPlan[] = [
     name: "Starter",
     monthly: usdMonthly(9),
     annual: usdAnnual(90),
+    annualTotal: usdAnnualTotal(90),
     description: "Everything creators need to convert comments into sales on autopilot.",
     badge: "Most Popular",
     highlight: true,
@@ -182,6 +216,7 @@ const globalPricingPlans: PricingPlan[] = [
     name: "Growth",
     monthly: usdMonthly(29),
     annual: usdAnnual(290),
+    annualTotal: usdAnnualTotal(290),
     description: "Scale content and analytics across a growing account.",
     badge: null,
     highlight: false,
@@ -194,6 +229,7 @@ const globalPricingPlans: PricingPlan[] = [
     name: "Business",
     monthly: usdMonthly(59),
     annual: usdAnnual(590),
+    annualTotal: usdAnnualTotal(590),
     description: "Full growth toolkit for power users, brands, and high-volume creators.",
     badge: null,
     highlight: false,
@@ -206,6 +242,7 @@ const globalPricingPlans: PricingPlan[] = [
     name: "Agency",
     monthly: usdMonthly(549),
     annual: usdAnnual(5490),
+    annualTotal: usdAnnualTotal(5490),
     description: "White-label workspaces for agencies managing multiple client brands.",
     badge: null,
     highlight: false,
@@ -221,6 +258,7 @@ const indiaPricingPlans: PricingPlan[] = [
     name: "Free",
     monthly: inrMonthly(0),
     annual: inrMonthly(0),
+    annualTotal: null,
     description: "Get started with comment-to-DM automation - no credit card required.",
     badge: null,
     highlight: false,
@@ -233,6 +271,7 @@ const indiaPricingPlans: PricingPlan[] = [
     name: "Starter",
     monthly: inrMonthly(499),
     annual: inrAnnual(4999),
+    annualTotal: inrAnnualTotal(4999),
     // No intro price. The "₹49 first month" offer was retired: no checkout path
     // ever implemented it, so it advertised a price nothing could charge. The
     // live catalogue serves `introPrice: null` for every tier. Starter is ₹499
@@ -251,6 +290,7 @@ const indiaPricingPlans: PricingPlan[] = [
     name: "Growth",
     monthly: inrMonthly(1499),
     annual: inrAnnual(14999),
+    annualTotal: inrAnnualTotal(14999),
     description: "Scale content and analytics across a growing account.",
     badge: null,
     highlight: false,
@@ -263,6 +303,7 @@ const indiaPricingPlans: PricingPlan[] = [
     name: "Business",
     monthly: inrMonthly(2499),
     annual: inrAnnual(24999),
+    annualTotal: inrAnnualTotal(24999),
     description: "Full growth toolkit for power users, brands, and high-volume creators.",
     badge: null,
     highlight: false,
@@ -275,6 +316,7 @@ const indiaPricingPlans: PricingPlan[] = [
     name: "Agency",
     monthly: inrMonthly(22999),
     annual: inrAnnual(229999),
+    annualTotal: inrAnnualTotal(229999),
     description: "White-label workspaces for agencies managing multiple client brands.",
     badge: null,
     highlight: false,

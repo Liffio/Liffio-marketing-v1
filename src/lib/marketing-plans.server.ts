@@ -85,6 +85,42 @@ function sanitizeFeatures(
     })
 }
 
+/**
+ * The API's `annual` field is WRONG and must not be rendered.
+ *
+ * `marketingPlansService` computes it as `monthly * ANNUAL_DISCOUNT` with
+ * ANNUAL_DISCOUNT = 0.8, floored — so Starter serves $7 against a real $7.50,
+ * Business $47 against $49.17, Agency $439 against $457.50. It is a 20% discount
+ * off the monthly rate, not the annual price anyone authored.
+ *
+ * The authored annual totals live in `packages.yearly_price_usd_cents` /
+ * `yearly_price_inr_paise` and are transcribed into pricing.config, where the
+ * drift check asserts them against production by exact equality. So we take
+ * `annual` and `annualTotal` from there and ignore what the API sent.
+ *
+ * ⏳ TEMPORARY. Delete this the day B1 ships (docs/decisions/0003). The guard
+ * below shouts when that happens, so it cannot quietly outlive its purpose.
+ */
+function authoredAnnual(
+  region: PricingRegion,
+  planName: string,
+  apiAnnual: string,
+): { annual: string; annualTotal: string | null } | null {
+  const authored = getFallbackPricingPlans(region).find((p) => p.name === planName)
+  if (!authored) return null
+
+  // Tiers with no annual plan match trivially ($0 === $0) and would fire this
+  // on every request — noise that teaches people to ignore the one warning that
+  // matters. Only a paid tier agreeing is evidence of anything.
+  if (authored.annualTotal !== null && apiAnnual === authored.annual) {
+    console.warn(
+      `[marketing-plans] ${planName} (${region}): the API now serves the correct annual figure ` +
+        `(${apiAnnual}). B1 has shipped — remove authoredAnnual() and this guard.`,
+    )
+  }
+  return { annual: authored.annual, annualTotal: authored.annualTotal }
+}
+
 export async function fetchMarketingPlansContext(region: PricingRegion): Promise<{
   plans: PricingPlan[]
   businessPlanValue: string
@@ -97,7 +133,8 @@ export async function fetchMarketingPlansContext(region: PricingRegion): Promise
     const plans: PricingPlan[] = payload.plans.map((p) => ({
       name: p.name,
       monthly: p.monthly,
-      annual: p.annual,
+      // annual/annualTotal come from the authored sheet, never from the API.
+      ...(authoredAnnual(region, p.name, p.annual) ?? { annual: p.annual, annualTotal: null }),
       introPrice: p.introPrice,
       introPriceLabel: p.introPriceLabel,
       description: p.description,
