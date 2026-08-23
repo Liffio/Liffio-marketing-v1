@@ -185,6 +185,22 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
       trackFormError('signup');
       return;
     }
+    /**
+     * Country is REQUIRED by the register endpoint (`registerSchema`, S4.4a) —
+     * it answers 400 `country: Required` without one, so an empty select fails
+     * signup outright after the password round-trip.
+     *
+     * Nothing else stops that: `CountrySelect` is a custom button dropdown, not
+     * a native `<select required>`, so the browser cannot enforce it. And the
+     * geo prefill lands blank whenever the CDN header is missing (any non-CDN
+     * environment) or names a country outside `COUNTRIES`, which is 60 entries,
+     * not the full ISO-3166 list.
+     */
+    if (!country) {
+      setError('Please select your country. It decides whether you are billed in INR or USD.');
+      trackFormError('signup');
+      return;
+    }
     setError('');
     setLoading(true);
     try {
@@ -193,7 +209,10 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
         name: `${firstName} ${lastName}`.trim(),
         email,
         password: pw,
-        country: country || undefined,
+        // Guaranteed non-empty by the guard above. Sending `undefined` here
+        // (the old `country || undefined`) was silently omitting the field for
+        // anyone whose geo prefill came back blank, which the endpoint rejects.
+        country,
         referralCode: referralCode.trim() || refPayload.referralCode,
         clientRef: refPayload.clientRef,
         sessionRef: refPayload.sessionRef,
@@ -271,6 +290,11 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
           <div className="space-y-1.5">
             <Label htmlFor="country">Country</Label>
             <CountrySelect value={country} onChange={(v) => { markFormStarted(); setCountry(v); }} />
+            {!country && (
+              <p className="text-xs text-muted-foreground">
+                Required — sets your billing currency. We could not detect it automatically.
+              </p>
+            )}
           </div>
 
           <div className="space-y-1.5">
