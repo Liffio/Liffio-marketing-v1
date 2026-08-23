@@ -23,6 +23,20 @@ export type PricingPlan = {
    */
   annualTotal: string | null;
   /**
+   * Shown, but not yet sellable.
+   *
+   * Growth is in the packages catalogue at $29/₹1,499 but `/marketing/plans`
+   * withholds it (`show_on_marketing_site = false`, D2 part 2, blocked on live
+   * Razorpay keys). The card is merged in from this sheet so the comparison
+   * matrix stops describing a tier with no card above it.
+   *
+   * 🚩 Its CTA must NOT lead to checkout. `PAID_PLANS` in confirm-email omits
+   * GROWTH, so `?plan=GROWTH` is silently dropped after signup and the visitor
+   * lands in onboarding with no subscription and no explanation. A buy button
+   * that does not buy is worse than no card at all.
+   */
+  provisional?: boolean;
+  /**
    * Introductory price shown prominently on monthly billing.
    * Currently unused — no tier has one, and no checkout path implements one.
    * Kept because the catalogue payload still carries the field.

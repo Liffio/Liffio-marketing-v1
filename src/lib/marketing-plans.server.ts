@@ -215,6 +215,55 @@ function authoredAnnual(
   return { annual: authored.annual, annualTotal: authored.annualTotal }
 }
 
+/**
+ * Tiers the catalogue sells that `/marketing/plans` withholds, merged in from
+ * the sheet so the page describes the real ladder.
+ *
+ * Growth is a live package at $29/₹1,499, but `show_on_marketing_site = false`
+ * (D2 part 2, blocked on live Razorpay keys), so the API serves four tiers while
+ * the comparison matrix has five columns. That mismatch is what this closes.
+ *
+ * 🚩 Merged bullets go through `sanitizeFeatures` exactly like API-served ones.
+ * UNSUPPORTED_CLAIMS otherwise runs only on the API payload, which would make
+ * the one statically-sourced tier the one tier exempt from the guard — the
+ * asymmetry in reverse.
+ *
+ * ⏳ Remove this the day D2 part 2 ships. `checkExpectedDivergence` in the drift
+ * check fails when Growth appears in the served payload, so the duplicate cannot
+ * go unnoticed.
+ */
+const MERGED_FROM_SHEET: ReadonlyArray<{ name: string; after: string }> = [
+  { name: 'Growth', after: 'Starter' },
+]
+
+function mergeWithheldTiers(region: PricingRegion, served: PricingPlan[]): PricingPlan[] {
+  const plans = [...served]
+
+  for (const { name, after } of MERGED_FROM_SHEET) {
+    if (plans.some((p) => p.name === name)) continue // the API serves it now
+
+    const authored = getFallbackPricingPlans(region).find((p) => p.name === name)
+    if (!authored) continue
+
+    const provisional: PricingPlan = {
+      ...authored,
+      features: sanitizeFeatures(authored.name, authored.features),
+      provisional: true,
+      // Not a checkout link. See PricingPlan.provisional.
+      cta: 'Coming soon',
+      href: '',
+      badge: 'Coming soon',
+      highlight: false,
+      popular: false,
+    }
+
+    const at = plans.findIndex((p) => p.name === after)
+    plans.splice(at === -1 ? plans.length : at + 1, 0, provisional)
+  }
+
+  return plans
+}
+
 export async function fetchMarketingPlansContext(region: PricingRegion): Promise<{
   plans: PricingPlan[]
   businessPlanValue: string
@@ -243,7 +292,7 @@ export async function fetchMarketingPlansContext(region: PricingRegion): Promise
       // An empty API response falls back to the static sheet — which must be
       // sanitized too. It carries the same unsupported claims verbatim, so
       // returning it raw would reinstate every string this guard just removed.
-      plans: plans.length > 0 ? plans : sanitizeFallback(region),
+      plans: plans.length > 0 ? mergeWithheldTiers(region, plans) : sanitizeFallback(region),
       businessPlanValue: payload.businessPlanValue,
     }
   } catch (error) {

@@ -90,28 +90,45 @@ export function PricingPlanCard({ plan, annual, compact = false, className = "" 
         ))}
       </ul>
 
-      <a
-        href={plan.href}
-        id={`pricing-${plan.name.toLowerCase()}`}
-        data-cta={plan.name === "Free" ? "pricing_start_free" : "pricing_upgrade"}
-        data-signup-cta="true"
-        className="block w-full rounded-xl py-3.5 text-center text-sm font-semibold transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
-        style={
-          plan.highlight
-            ? {
-                background: "white",
-                color: "#b20d8f",
-                boxShadow: "0 4px 16px rgba(0,0,0,0.14)",
-              }
-            : {
-                background: "rgba(245, 24, 76,0.08)",
-                color: "#e00e40",
-                boxShadow: "none",
-              }
-        }
-      >
-        {plan.cta}
-      </a>
+      {/*
+        A provisional tier is NOT a link. `PAID_PLANS` in confirm-email omits
+        GROWTH, so `?plan=GROWTH` is dropped after signup and the visitor lands
+        in onboarding with no subscription and no explanation. Rendering a real
+        CTA here would be worse than showing no card at all, so it renders as
+        inert text until D2 part 2 makes the tier buyable.
+      */}
+      {plan.provisional ? (
+        <span
+          id={`pricing-${plan.name.toLowerCase()}`}
+          aria-disabled="true"
+          className="block w-full cursor-default rounded-xl border border-dashed border-gray-300 py-3.5 text-center text-sm font-semibold text-gray-400"
+        >
+          {plan.cta}
+        </span>
+      ) : (
+        <a
+          href={plan.href}
+          id={`pricing-${plan.name.toLowerCase()}`}
+          data-cta={plan.name === "Free" ? "pricing_start_free" : "pricing_upgrade"}
+          data-signup-cta="true"
+          className="block w-full rounded-xl py-3.5 text-center text-sm font-semibold transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
+          style={
+            plan.highlight
+              ? {
+                  background: "white",
+                  color: "#b20d8f",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.14)",
+                }
+              : {
+                  background: "rgba(245, 24, 76,0.08)",
+                  color: "#e00e40",
+                  boxShadow: "none",
+                }
+          }
+        >
+          {plan.cta}
+        </a>
+      )}
     </div>
   );
 }
