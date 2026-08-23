@@ -34,17 +34,90 @@ type PlansApiResponse = {
 }
 
 
+type PlanFeatureItem = { text: string; included: boolean }
+
+/**
+ * Claims the catalogue does not support.
+ *
+ * These are NOT feature flags, and the distinction matters. A flag gates
+ * something that will ship, whose copy becomes accurate the day it does. These
+ * are claims the `packages` catalogue contradicts TODAY, so they are dropped or
+ * corrected here until plan_catalog is fixed at source.
+ *
+ * 🚩 Sanitizing here does NOT fix the source. plan_catalog still serves these
+ * strings to every other consumer. docs/decisions/0002 records the exact rows.
+ *
+ * `plans` omitted means the rule applies to every tier.
+ */
+const UNSUPPORTED_CLAIMS: ReadonlyArray<{
+  match: RegExp
+  plans?: readonly string[]
+  replaceWith?: string
+  reason: string
+}> = [
+  {
+    match: /^Unlimited Instagram accounts$/i,
+    reason:
+      'One account per workspace at every tier. workspacesIncluded is 1 on Free/Starter/Growth/Business and 20 on Agency, and V4 models 1 workspace = 1 account = 1 subscription. True of no tier.',
+  },
+  {
+    match: /^Unlimited automated DMs$/i,
+    plans: ['Free'],
+    reason:
+      'V4 gives Free 500 DMs/month, but nothing meters DMs: no DM key in package_limits, every dmsSent* reference is analytics, and V4 flags the cap as unbuilt (line 667, blocker 25.3). Dropped rather than restated with a number nothing enforces. The enforced Free cap is 3 automations (workflows), not a DM count.',
+  },
+  {
+    match: /^3 DM message templates$/i,
+    plans: ['Free'],
+    reason: 'No template limit exists. package_limits has 8 keys and none counts templates.',
+  },
+  {
+    match: /^Story automations$/i,
+    plans: ['Starter'],
+    reason:
+      'D8 deleted the capability. All 15 children of the Automations module are comment-based — no Story, Live, mention or welcome trigger on any package — and the server rejects Stories.',
+  },
+  {
+    match: /^Team members \(up to 5 seats\)$/i,
+    plans: ['Business'],
+    replaceWith: 'Team members (up to 15 seats)',
+    reason: 'package_limits.teamMembers is 15 for business. The card understated the package.',
+  },
+  {
+    match: /^External API keys \(plan-gated\)$/i,
+    plans: ['Business'],
+    reason:
+      'D4 withheld the external API from V4 launch. Every package has maxApiCredentials 0 and apiRequestsPerDay 0, and there is no API module among the 14 parent modules.',
+  },
+  {
+    match: /^Full API access & webhooks$/i,
+    plans: ['Agency'],
+    reason:
+      'Same as Business — 0 credentials, 0 requests/day, no API module. Selling it is the same class of claim as Stories.',
+  },
+]
+
+function applyClaimRules(planName: string, feature: PlanFeatureItem): PlanFeatureItem | null {
+  for (const rule of UNSUPPORTED_CLAIMS) {
+    if (!rule.match.test(feature.text)) continue
+    if (rule.plans && !rule.plans.includes(planName)) continue
+    if (rule.replaceWith) return { ...feature, text: rule.replaceWith }
+    console.warn(`[marketing-plans] dropped unsupported claim on ${planName}: "${feature.text}"`)
+    return null
+  }
+  return feature
+}
+
 /**
  * Compliance guard for plan feature strings sourced from the backend
  * plan_catalog table. The DB drifts independently of this repo, so this
- * fails CLOSED: strings are normalized first, and anything still carrying
- * a non-compliant claim (Live automation in any phrasing, welcome DMs
- * while the partner-beta flag is off) is dropped and logged rather than
- * rendered.
+ * fails CLOSED: strings are normalized first, anything still carrying a
+ * non-compliant claim (Live automation in any phrasing, welcome DMs while the
+ * partner-beta flag is off) is dropped and logged rather than rendered, and
+ * finally anything the packages catalogue contradicts is dropped or corrected
+ * per UNSUPPORTED_CLAIMS.
  */
-function sanitizeFeatures(
-  features: Array<{ text: string; included: boolean }>,
-): Array<{ text: string; included: boolean }> {
+function sanitizeFeatures(planName: string, features: PlanFeatureItem[]): PlanFeatureItem[] {
   return features
     .map((f) => {
       let text = f.text
@@ -83,6 +156,27 @@ function sanitizeFeatures(
       }
       return true
     })
+    // LAST, deliberately: the flag rewrites above turn the catalogue's
+    // "Story, Live & welcome DM automations" into "Story automations", which is
+    // the exact string the Starter rule matches. Running this earlier misses it.
+    .map((f) => applyClaimRules(planName, f))
+    .filter((f): f is PlanFeatureItem => f !== null)
+}
+
+/**
+ * The static sheet, put through the same guard as the API payload.
+ *
+ * ⚠️ The fallback is NOT a safe copy. It carries the same unsupported claims as
+ * plan_catalog, and it also contains Growth — which D2 part 2 is deliberately
+ * withholding from the site until Razorpay keys are live. So an API outage does
+ * not merely serve stale prices: it surfaces a tier that is not on sale. See
+ * docs/decisions/0002.
+ */
+function sanitizeFallback(region: PricingRegion): PricingPlan[] {
+  return getFallbackPricingPlans(region).map((p) => ({
+    ...p,
+    features: sanitizeFeatures(p.name, p.features),
+  }))
 }
 
 export async function fetchMarketingPlansContext(region: PricingRegion): Promise<{
@@ -104,17 +198,20 @@ export async function fetchMarketingPlansContext(region: PricingRegion): Promise
       badge: p.badge,
       highlight: p.highlight,
       popular: p.popular,
-      features: sanitizeFeatures(p.features),
+      features: sanitizeFeatures(p.name, p.features),
       cta: p.cta,
       href: p.href,
     }))
     return {
-      plans: plans.length > 0 ? plans : getFallbackPricingPlans(region),
+      // An empty API response falls back to the static sheet — which must be
+      // sanitized too. It carries the same unsupported claims verbatim, so
+      // returning it raw would reinstate every string this guard just removed.
+      plans: plans.length > 0 ? plans : sanitizeFallback(region),
       businessPlanValue: payload.businessPlanValue,
     }
   } catch (error) {
     console.error('[marketing-plans] fallback to static config', error)
-    const plans = getFallbackPricingPlans(region).map((p) => ({ ...p, features: sanitizeFeatures(p.features) }))
+    const plans = sanitizeFallback(region)
     const business = plans.find((p) => p.name === 'Business')
     return {
       plans,
@@ -135,7 +232,7 @@ const TIER_COUNT_WORDS: Record<number, string> = {
 export function buildFreePlanFaqAnswer(region: PricingRegion, plans: PricingPlan[]): string {
   const free = plans.find((p) => p.name === 'Free')
   const price = free?.monthly ?? (region === 'india' ? '₹0' : '$0')
-  return `Yes. The Free plan is ${price}/month. No credit card required. You get unlimited Instagram accounts, unlimited automated DMs, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.`
+  return `Yes. The Free plan is ${price}/month. No credit card required. You get one Instagram account, unlimited automated DMs, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.`
 }
 
 export function buildPlansOfferedFaqAnswer(region: PricingRegion, plans: PricingPlan[]): string {
@@ -150,7 +247,7 @@ export function buildPlansOfferedFaqAnswer(region: PricingRegion, plans: Pricing
   // Derived, never hardcoded: this list is whatever the catalogue returns, so a
   // literal "Four tiers" here would silently misdescribe a five-tier response.
   const count = TIER_COUNT_WORDS[parts.length] ?? String(parts.length)
-  return `${count} tiers: ${parts.join(', ')}. Every plan includes unlimited Instagram accounts and unlimited automated DMs.`
+  return `${count} tiers: ${parts.join(', ')}. Every plan connects one Instagram account per workspace and includes unlimited automated DMs.`
 }
 
 export function buildCreatorsProgramFaqAnswer(businessPlanValue: string): string {

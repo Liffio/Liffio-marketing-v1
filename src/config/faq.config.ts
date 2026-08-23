@@ -106,7 +106,7 @@ const geoComplianceCategory: FaqCategory = {
       id: "cheapest-manychat-alternative",
       question: "What is the cheapest ManyChat alternative for Instagram?",
       answer:
-        "Liffio. It has a free plan with no credit card required that runs comment-to-DM automation in production — not just as a demo. Paid plans start at $9/month. For comparison: since ManyChat's March 2026 pricing change, its free tier is capped at 25 Active Contacts per month, and paid plans start at $14/month for 250 contacts with per-contact overage fees as your audience grows. SendDM and LinkDM are simpler tools with focused feature sets; pricing varies. SuperProfile bundles bio-link storefronts with automation and prices accordingly. What makes Liffio structurally cheaper for Instagram-focused creators is that there are no per-contact fees. You pay the same $9/month whether you automate DMs to 100 people or 10,000 people. ManyChat charges based on how many people you interact with each month, which means a single viral Reel can trigger overage charges unexpectedly. The free plan includes unlimited Instagram accounts, unlimited automated DMs, comment keyword triggers, and basic analytics — enough to validate whether automation works for your use case before paying anything.",
+        "Liffio. It has a free plan with no credit card required that runs comment-to-DM automation in production — not just as a demo. Paid plans start at $9/month. For comparison: since ManyChat's March 2026 pricing change, its free tier is capped at 25 Active Contacts per month, and paid plans start at $14/month for 250 contacts with per-contact overage fees as your audience grows. SendDM and LinkDM are simpler tools with focused feature sets; pricing varies. SuperProfile bundles bio-link storefronts with automation and prices accordingly. What makes Liffio structurally cheaper for Instagram-focused creators is that there are no per-contact fees. You pay the same $9/month whether you automate DMs to 100 people or 10,000 people. ManyChat charges based on how many people you interact with each month, which means a single viral Reel can trigger overage charges unexpectedly. The free plan includes one Instagram account, unlimited automated DMs, comment keyword triggers, and basic analytics — enough to validate whether automation works for your use case before paying anything.",
     },
   ],
 };
@@ -255,7 +255,7 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
           id: "multiple-accounts",
           question: "Can I manage multiple Instagram accounts?",
           answer:
-            "Yes. All plans include unlimited Instagram accounts. Agency adds white-label workspaces for managing client brands at scale.",
+            "Each workspace connects one Instagram account, so managing several accounts means several workspaces. Free, Starter, Growth and Business include one workspace each; Agency includes 20, with white-label and client sub-workspaces for managing client brands at scale.",
         },
       ],
     },
@@ -436,7 +436,7 @@ const homeOverviewCategory: FaqCategory = {
       id: "is-liffio-free",
       question: "Is Liffio free to use?",
       answer:
-        "Yes. Liffio has a free plan with no credit card required. It includes unlimited Instagram accounts, unlimited automated DMs, comment keyword triggers, and basic analytics.",
+        "Yes. Liffio has a free plan with no credit card required. It includes one Instagram account, unlimited automated DMs, comment keyword triggers, and basic analytics.",
     },
     {
       id: "is-liffio-safe",
@@ -512,7 +512,7 @@ export function getPricingFaqCategories(
           id: "how-much",
           question: "How much does Liffio cost?",
           answer:
-            "Liffio has five plans: Free ($0/mo), Starter ($9/mo), Growth ($29/mo), Business ($59/mo), and Agency ($549/mo). All plans include unlimited Instagram accounts and unlimited automated DMs. Annual billing charges 10 months instead of 12, so two months are free.",
+            "Liffio has five plans: Free ($0/mo), Starter ($9/mo), Growth ($29/mo), Business ($59/mo), and Agency ($549/mo). Every plan connects one Instagram account per workspace and includes unlimited automated DMs. Annual billing charges 10 months instead of 12, so two months are free.",
         },
         {
           id: "india-pricing",
@@ -558,7 +558,7 @@ export function getCreatorsFaqCategories(
           id: "multiple-accounts",
           question: "Can I have multiple Instagram accounts in one workspace?",
           answer:
-            "Yes. All Liffio plans - including Creators Program access - support unlimited Instagram accounts per workspace. You can manage multiple profiles from a single dashboard.",
+            "No - a workspace connects exactly one Instagram account. Managing several profiles means several workspaces, and only Agency includes more than one (20). This applies to Creators Program access too.",
         },
         {
           id: "track-dms",
@@ -706,7 +706,7 @@ const userSupportCategory: FaqCategory = {
       id: "connect-multiple-accounts",
       question: "How do I connect multiple Instagram accounts?",
       answer:
-        "Go to Settings → Connected Accounts in your Liffio dashboard and click Connect Instagram — you can add as many accounts as needed. Each account requires its own Meta OAuth authorization. Once connected, each Instagram account appears as a separate option when creating automations. All plans include unlimited Instagram accounts with no per-account fee. Each account's automations run independently within the same workspace.",
+        "Go to Settings → Connected Accounts in your Liffio dashboard and click Connect Instagram — each account requires its own Meta OAuth authorization. A workspace connects one Instagram account, so a second account needs a second workspace - and only Agency includes more than one (20). Each workspace's automations run independently.",
     },
     {
       id: "contact-support",
