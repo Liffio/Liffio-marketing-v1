@@ -225,3 +225,120 @@ test("USD annual always shows two decimals, so $7.50 never renders as $7.5", () 
     assert.match(plan.annual, /^\$\d+\.\d{2}$/, `${plan.name}: ${plan.annual}`);
   }
 });
+
+// ── The comparison matrix ────────────────────────────────────────────────────
+//
+// ⚠️ WEAK BY CONSTRUCTION, and shipped anyway.
+//
+// These rows are static in pricing.config.ts. `/marketing/plans` serves no
+// matrix data and `/billing/packages` serves no limits and no capabilities, so
+// the drift check cannot see them — the same shape as the $299 that sat wrong
+// for weeks. Six cells were wrong here, one of them contradicting the Business
+// CARD on the same page after PR #5 corrected it.
+//
+// The expectations below were transcribed by the same hand that wrote the rows,
+// so this cannot prove them right. What it does is turn silent drift into a
+// visible expectation: changing a cell now requires changing this table too,
+// with the query below to check against.
+//
+// Verified 2026-08-24 against production:
+//
+//   SELECT p.key, l.key, l.value FROM package_limits l
+//     JOIN packages p ON p.id = l.package_id
+//    WHERE p.deleted_at IS NULL AND p.is_active;
+//
+//   SELECT pm.name, cm.name, string_agg(p.key, ',' ORDER BY p.sort_order)
+//     FROM package_features pf
+//     JOIN packages p ON p.id = pf.package_id
+//     JOIN parent_modules pm ON pm.id = pf.parent_module_id
+//     JOIN child_modules cm ON cm.id = pf.child_module_id
+//    WHERE p.deleted_at IS NULL AND p.is_active GROUP BY 1, 2;
+//
+// Replace this with a real comparison the day M3 exposes those two tables
+// publicly (docs/decisions/0003).
+
+const MATRIX_EXPECTATIONS: Array<{
+  row: string;
+  cells: Partial<Record<Lowercase<(typeof comparisonPlanNames)[number]>, boolean | string>>;
+  source: string;
+}> = [
+  {
+    row: "Team members",
+    cells: { free: "1", starter: "3", growth: "5", business: "15", agency: "15 per workspace" },
+    source: "package_limits.teamMembers = 1/3/5/15/15",
+  },
+  {
+    row: "Follow-up DM sequences (per automation)",
+    cells: { free: false, starter: "2", growth: "5", business: "5", agency: "5" },
+    source: "package_limits.dmFollowUps = 0/2/5/5/5",
+  },
+  {
+    row: "Role-based access (RBAC)",
+    cells: { free: false, starter: false, growth: false, business: true, agency: true },
+    source: "Team > Assign roles + Custom permissions = business,agency",
+  },
+  {
+    row: "Per-automation attribution",
+    cells: { free: false, starter: false, growth: false, business: true, agency: true },
+    source: "Analytics > Automation attribution = business,agency",
+  },
+  {
+    row: "Analytics export",
+    cells: { free: false, starter: false, growth: false, business: true, agency: true },
+    source: "Analytics > Export analytics = business,agency",
+  },
+  {
+    row: "Post, video & profile metrics",
+    cells: { free: false, starter: false, growth: true, business: true, agency: true },
+    source: "Analytics > Post metrics + Video metrics + Profile outcomes = growth,business,agency",
+  },
+  {
+    row: "Affiliate program (50% commission)",
+    cells: { free: true, starter: true, growth: true, business: true, agency: true },
+    source: "all ten Affiliate children = free,starter,growth,business,agency",
+  },
+];
+
+const matrixRow = (name: string) => {
+  const rows = featureCategories.flatMap(
+    (c) => c.features as ReadonlyArray<{ name: string }>,
+  );
+  const row = rows.find((f) => f.name === name);
+  assert.ok(row, `expected a matrix row named "${name}"`);
+  return row as Record<string, boolean | string>;
+};
+
+test("matrix cells match what production actually grants", () => {
+  for (const { row, cells, source } of MATRIX_EXPECTATIONS) {
+    const actual = matrixRow(row);
+    for (const [plan, expected] of Object.entries(cells)) {
+      assert.equal(actual[plan], expected, `${row} / ${plan} — ${source}`);
+    }
+  }
+});
+
+test("no matrix cell claims Unlimited — it is the PR #5 false-claim class", () => {
+  for (const category of featureCategories) {
+    for (const row of category.features) {
+      for (const plan of comparisonPlanNames) {
+        const value = getPlanColumnValue(row as never, plan);
+        assert.notEqual(
+          typeof value === "string" && /unlimited/i.test(value),
+          true,
+          `${row.name} / ${plan} says "${String(value)}"`,
+        );
+      }
+    }
+  }
+});
+
+test("the matrix does not contradict the Business card on seats", () => {
+  // PR #5 corrected the card to 15 while this row still said 5, on one page.
+  const seats = matrixRow("Team members");
+  assert.equal(seats.business, "15");
+  for (const region of REGIONS) {
+    const business = planNamed(getPricingPlans(region), "Business");
+    const seatBullet = business.features.find((f) => /team members/i.test(f.text));
+    if (seatBullet) assert.match(seatBullet.text, /15/, "card and matrix disagree on Business seats");
+  }
+});

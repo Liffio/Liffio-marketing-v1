@@ -179,7 +179,10 @@ const businessFeatures: PlanFeature[] = [
   { text: FEATURE_SALE_TRACKING ? "Full conversion analytics (comment → sale)" : "Full conversion analytics (comment → DM → click)", included: true },
   { text: "Instagram account-level insights", included: true },
   { text: "External API keys (plan-gated)", included: true },
-  { text: "Team members (up to 5 seats)", included: true },
+  // 15, not 5: package_limits.teamMembers is 15 for business. UNSUPPORTED_CLAIMS
+  // rewrites the API's "5 seats" at render, but this sheet is the fallback and
+  // shipped the wrong number in the bundle regardless.
+  { text: "Team members (up to 15 seats)", included: true },
   { text: "Branded short links with UTM attribution", included: true },
   { text: "Follow-up DM sequences", included: true },
   { text: "Priority support + onboarding call", included: true },
@@ -388,8 +391,8 @@ export const featureCategories = [
       // children of the Automations module are comment-based and the server rejects
       // Stories, so this row was true on four tiers and honoured by none.
       ...(FEATURE_WELCOME_DM ? [{ name: "Welcome DM for new followers", free: false, starter: true, growth: true, business: true, agency: true }] : []),
-      { name: "Multi-step DM flows with logic", free: false, starter: true, growth: true, business: true, agency: true },
-      { name: "Follow-up DM sequences", free: false, starter: false, growth: true, business: true, agency: true },
+      { name: "Multi-step DM flows", free: false, starter: true, growth: true, business: true, agency: true },
+      { name: "Follow-up DM sequences (per automation)", free: false, starter: "2", growth: "5", business: "5", agency: "5" },
     ],
   },
   {
@@ -402,22 +405,26 @@ export const featureCategories = [
       { name: "Lead capture from DMs & clicks", free: false, starter: true, growth: true, business: true, agency: true },
       { name: "Post scheduler (Instagram feed)", free: false, starter: true, growth: true, business: true, agency: true },
       { name: FEATURE_SALE_TRACKING ? "Conversion analytics (comment → sale)" : "Conversion analytics (comment → DM → click)", free: false, starter: true, growth: true, business: true, agency: true },
-      { name: "Instagram account insights", free: false, starter: false, growth: true, business: true, agency: true },
+      { name: "Post, video & profile metrics", free: false, starter: false, growth: true, business: true, agency: true },
+      // 8 and 9: the Growth -> Business boundary was invisible. Analytics has two
+      // business-only children with no row at all until now.
+      { name: "Per-automation attribution", free: false, starter: false, growth: false, business: true, agency: true },
+      { name: "Analytics export", free: false, starter: false, growth: false, business: true, agency: true },
     ],
   },
   {
     name: "Team, API & Agency",
     description: "Collaborate with your team, integrate via API, or manage client workspaces at scale.",
     features: [
-      { name: "Team members", free: "1", starter: "3", growth: "5", business: "5", agency: "Unlimited" },
-      { name: "Role-based access (RBAC)", free: false, starter: true, growth: true, business: true, agency: true },
+      { name: "Team members", free: "1", starter: "3", growth: "5", business: "15", agency: "15 per workspace" },
+      { name: "Role-based access (RBAC)", free: false, starter: false, growth: false, business: true, agency: true },
       // External API keys were REMOVED, not moved. D4 withheld the external API from
       // V4 launch: every package has maxApiCredentials 0 and apiRequestsPerDay 0, and
       // there is no API module among the 14. It was true on Business and Agency and
       // honoured on neither.
       { name: "Agency white-label workspaces", free: false, starter: false, growth: false, business: false, agency: true },
       { name: "Client sub-workspaces", free: false, starter: false, growth: false, business: false, agency: true },
-      { name: "Affiliate program (50% commission)", free: false, starter: true, growth: true, business: true, agency: true },
+      { name: "Affiliate program (50% commission)", free: true, starter: true, growth: true, business: true, agency: true },
     ],
   },
 ];
