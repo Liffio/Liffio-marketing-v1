@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --experimental-strip-types --disable-warning=ExperimentalWarning --import ./test/register-hooks.mjs --test test/**/*.test.ts"
+    "test": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./test/register-hooks.mjs --test test/**/*.test.ts",
+    "check:prices": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./test/register-hooks.mjs scripts/check-price-drift.mts"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.7",
