@@ -236,6 +236,34 @@ const MERGED_FROM_SHEET: ReadonlyArray<{ name: string; after: string }> = [
   { name: 'Growth', after: 'Starter' },
 ]
 
+/**
+ * Emphasis belongs on Growth, not Starter.
+ *
+ * Growth is V4's middle rung and the tier the whole ladder was restructured to
+ * create: the old Starter -> Business step was 5.4x, and Growth is what makes it
+ * two crossable steps instead of one cliff. Highlighting Starter points at the
+ * cheapest paid tier rather than the one the pricing is built around.
+ *
+ * plan_catalog serves `marketing_badge: "Most Popular"` on STARTER, so this
+ * overrides the payload the same way `authoredAnnual` does — and for the same
+ * reason: the source is wrong and out of scope to fix here.
+ *
+ * Exactly one tier carries emphasis; any other tier arriving with it is cleared.
+ */
+const EMPHASIS_TIER = 'Growth'
+
+function applyEmphasis(plans: PricingPlan[]): PricingPlan[] {
+  return plans.map((plan) => {
+    if (plan.name === EMPHASIS_TIER) {
+      return { ...plan, badge: 'Most Popular', highlight: true, popular: true }
+    }
+    if (plan.badge === 'Most Popular' || plan.highlight || plan.popular) {
+      return { ...plan, badge: null, highlight: false, popular: false }
+    }
+    return plan
+  })
+}
+
 function mergeWithheldTiers(region: PricingRegion, served: PricingPlan[]): PricingPlan[] {
   const plans = [...served]
 
@@ -252,9 +280,9 @@ function mergeWithheldTiers(region: PricingRegion, served: PricingPlan[]): Prici
       // Not a checkout link. See PricingPlan.provisional.
       cta: 'Coming soon',
       href: '',
-      badge: 'Coming soon',
-      highlight: false,
-      popular: false,
+      // badge/highlight/popular are left to applyEmphasis, which runs after
+      // this and puts "Most Popular" on Growth. The CTA carries the
+      // not-yet-buyable signal, so the badge slot stays free for it.
     }
 
     const at = plans.findIndex((p) => p.name === after)
@@ -292,7 +320,7 @@ export async function fetchMarketingPlansContext(region: PricingRegion): Promise
       // An empty API response falls back to the static sheet — which must be
       // sanitized too. It carries the same unsupported claims verbatim, so
       // returning it raw would reinstate every string this guard just removed.
-      plans: plans.length > 0 ? mergeWithheldTiers(region, plans) : sanitizeFallback(region),
+      plans: plans.length > 0 ? applyEmphasis(mergeWithheldTiers(region, plans)) : applyEmphasis(sanitizeFallback(region)),
       businessPlanValue: payload.businessPlanValue,
     }
   } catch (error) {

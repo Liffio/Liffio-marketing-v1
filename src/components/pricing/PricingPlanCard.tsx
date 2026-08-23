@@ -101,7 +101,11 @@ export function PricingPlanCard({ plan, annual, compact = false, className = "" 
         <span
           id={`pricing-${plan.name.toLowerCase()}`}
           aria-disabled="true"
-          className="block w-full cursor-default rounded-xl border border-dashed border-gray-300 py-3.5 text-center text-sm font-semibold text-gray-400"
+          className={`block w-full cursor-default rounded-xl border border-dashed py-3.5 text-center text-sm font-semibold ${
+            // Growth carries the emphasis now, so the inert CTA has to stay
+            // legible on the highlighted (dark) card as well as the plain one.
+            plan.highlight ? "border-white/40 text-white/70" : "border-gray-300 text-gray-400"
+          }`}
         >
           {plan.cta}
         </span>
