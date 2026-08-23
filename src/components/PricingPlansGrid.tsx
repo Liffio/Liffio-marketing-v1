@@ -40,7 +40,7 @@ function BillingToggle({ annual, onToggle }: { annual: boolean; onToggle: () => 
       <span className={`text-sm font-semibold transition-colors ${annual ? "text-[#0a0a0a]" : "text-gray-400"}`}>
         Annual{" "}
         <span className="ml-1 whitespace-nowrap rounded-full border border-green-100 bg-green-50 px-2 py-0.5 text-xs font-bold text-green-600">
-          Save 20%
+          2 months free
         </span>
       </span>
     </div>
@@ -83,7 +83,9 @@ export default function PricingPlansGrid({
       </div>
 
       {/* Desktop: grid */}
-      <div className="mx-auto hidden max-w-7xl grid-cols-2 gap-6 lg:grid xl:grid-cols-4">
+      {/* 5 tiers (Free/Starter/Growth/Business/Agency) — xl must be grid-cols-5
+          or the last card orphans onto its own row. */}
+      <div className="mx-auto hidden max-w-7xl grid-cols-2 gap-6 lg:grid xl:grid-cols-5">
         {plans.map((plan) => (
           <div
             key={plan.name}

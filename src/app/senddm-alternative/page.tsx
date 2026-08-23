@@ -234,7 +234,7 @@ export default function SendDMAlternativePage() {
               </p>
               <p>
                 Liffio charges a flat monthly rate: $0 on the free plan, $9/month on Starter,
-                $79/month on Business, $299/month on Agency. No per-contact charges. No
+                $29/month on Growth, $59/month on Business, $549/month on Agency. No per-contact charges. No
                 usage-based tiers that kick in when a post goes viral and your DM volume
                 spikes. The same flat rate whether you send 200 DMs in a month or 20,000.
               </p>
@@ -295,7 +295,7 @@ export default function SendDMAlternativePage() {
                   Agencies managing multiple client accounts
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Liffio's Agency plan is a flat ₹9,999/month in India (or $299/month) and includes
+                  Liffio's Agency plan is a flat ₹22,999/month in India (or $549/month) and includes
                   unlimited Instagram accounts, white-label workspaces, and client sub-accounts
                   with restricted access. There is no per-account surcharge. Agencies that
                   have been paying per seat or per account elsewhere — or who have been using

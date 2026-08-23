@@ -179,7 +179,7 @@ export default function AffiliateProgramContent() {
               </div>
             ))}
             <p className="border-t border-brand-100 pt-4 text-center text-xs text-gray-500">
-              Example: $79/mo Business plan → ~$19.75 month 1, ~$7.90 months 2 & 3 per workspace
+              Example: $59/mo Business plan → ~$14.75 month 1, ~$5.90 months 2 & 3 per workspace
             </p>
           </div>
         </div>

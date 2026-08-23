@@ -51,7 +51,7 @@ function plansCategory(region: PricingRegion, overrides?: MarketingFaqOverrides)
         id: "billing-cycle",
         question: "Can I pay monthly or annually?",
         answer:
-          "Yes. All paid plans are available on monthly or annual billing. Annual billing saves 20%. Payments are handled via Stripe (global) or Razorpay (India).",
+          "Yes. All paid plans are available on monthly or annual billing. Annual billing charges 10 months instead of 12, so two months are free. Payments are handled via Stripe (global) or Razorpay (India).",
       },
       {
         id: "dm-limit",
@@ -270,7 +270,7 @@ const affiliateCategory: FaqCategory = {
       id: "affiliate-commission",
       question: "How much commission do affiliates earn?",
       answer:
-        "Affiliates earn 50% lifetime recurring commission on every payment made by a referred workspace subscription. The 50% rate applies with no sliding scale, no cap, and no expiry — as long as the referred user maintains an active subscription. For example, refer someone on Business ($79/mo) and earn $39.50 every month they stay subscribed.",
+        "Affiliates earn 50% lifetime recurring commission on every payment made by a referred workspace subscription. The 50% rate applies with no sliding scale, no cap, and no expiry — as long as the referred user maintains an active subscription. For example, refer someone on Business ($59/mo) and earn $29.50 every month they stay subscribed.",
     },
     {
       id: "affiliate-recurring",
@@ -333,13 +333,13 @@ const pricingDetailCategory: FaqCategory = {
     },
     {
       id: "business-features",
-      question: "What features require Business ($79/mo, ₹2,499/mo in India)?",
+      question: "What features require Business ($59/mo, ₹2,499/mo in India)?",
       answer:
         "Business includes everything in Starter, plus follow-up DM sequences, full conversion analytics with Instagram account-level insights, external API keys for developer integrations, up to 5 team member seats with role-based access, branded short links with UTM attribution, and priority support plus an onboarding call. Built for brands, e-commerce teams, and coaches who need attribution tracking across the full funnel.",
     },
     {
       id: "agency-features",
-      question: "What features require Agency ($299/mo, ₹9,999/mo in India)?",
+      question: "What features require Agency ($549/mo, ₹22,999/mo in India)?",
       answer:
         `Agency includes everything in Business, plus agency white-label workspaces, client sub-workspaces with CLIENT role access, a dedicated account manager, full API access${FEATURE_CRM_INTEGRATION ? ", custom integrations and CRM sync" : ""}, SLA-backed priority support, and volume and multi-workspace pricing. Built for marketing agencies running Instagram automation across multiple client brands from a single account.`,
     },
@@ -347,7 +347,7 @@ const pricingDetailCategory: FaqCategory = {
       id: "best-for-agencies",
       question: "Which plan is best for agencies?",
       answer:
-        `The Agency plan ($299/mo, ₹9,999/mo in India) is purpose-built for agencies. It includes white-label workspaces, client sub-workspaces with restricted CLIENT role access, a dedicated account manager, full API access${FEATURE_CRM_INTEGRATION ? ", CRM sync" : ""}, and SLA-backed priority support. If you manage Instagram automation for multiple brands and need to keep client accounts separate and white-labelled, Agency is the only plan that supports this at scale.`,
+        `The Agency plan ($549/mo, ₹22,999/mo in India) is purpose-built for agencies. It includes white-label workspaces, client sub-workspaces with restricted CLIENT role access, a dedicated account manager, full API access${FEATURE_CRM_INTEGRATION ? ", CRM sync" : ""}, and SLA-backed priority support. If you manage Instagram automation for multiple brands and need to keep client accounts separate and white-labelled, Agency is the only plan that supports this at scale.`,
     },
     {
       id: "hidden-fees",
@@ -512,7 +512,7 @@ export function getPricingFaqCategories(
           id: "how-much",
           question: "How much does Liffio cost?",
           answer:
-            "Liffio has four plans: Free ($0/mo), Starter ($9/mo), Business ($79/mo), and Agency ($299/mo). All plans include unlimited Instagram accounts and unlimited automated DMs. Annual billing saves 20%.",
+            "Liffio has five plans: Free ($0/mo), Starter ($9/mo), Growth ($29/mo), Business ($59/mo), and Agency ($549/mo). All plans include unlimited Instagram accounts and unlimited automated DMs. Annual billing charges 10 months instead of 12, so two months are free.",
         },
         {
           id: "india-pricing",
