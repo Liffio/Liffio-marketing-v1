@@ -3,6 +3,11 @@ import { isZeroPrice, type PricingPlan } from "@/config/pricing.config";
 type PlanPriceBlockProps = {
   plan: PricingPlan;
   annual: boolean;
+  /**
+   * Light text for a dark surface. The pricing page no longer has one — its
+   * featured card is white with a coral ring — but the HOMEPAGE section still
+   * renders a dark card, so this stays for that caller.
+   */
   highlight?: boolean;
   compact?: boolean;
   align?: "left" | "right";
@@ -21,10 +26,10 @@ export function PlanPriceBlock({
   const heroSize = compact ? "1.75rem" : isZeroPrice(price) && !showIntro ? "2.5rem" : "2.75rem";
   const regularSize = compact ? "1.35rem" : "2.25rem";
 
-  const heroClass = highlight ? "text-white" : "text-[#0a0a0a]";
-  const mutedClass = highlight ? "text-white/60" : "text-gray-400";
+  const heroClass = highlight ? "text-white" : "text-[#17131A]";
+  const mutedClass = highlight ? "text-white/60" : "text-[#8B8391]";
   const accentClass = highlight ? "text-emerald-200" : "text-emerald-600";
-  const thenClass = highlight ? "text-white/75" : "text-gray-500";
+  const thenClass = highlight ? "text-white/75" : "text-[#4A4350]";
 
   const alignClass = align === "right" ? "text-right" : "text-left";
   const badgeAlignClass = align === "right" ? "ml-auto" : "";
@@ -44,7 +49,7 @@ export function PlanPriceBlock({
         <div className={`flex items-end gap-1 ${align === "right" ? "justify-end" : ""}`}>
           <span
             className={`font-extrabold tracking-tight leading-none ${heroClass}`}
-            style={{ fontSize: heroSize, fontFamily: "var(--font-outfit,sans-serif)" }}
+            style={{ fontSize: heroSize, fontFamily: "var(--font-mono, ui-monospace, monospace)", letterSpacing: "-0.03em" }}
           >
             {plan.introPrice}
           </span>
@@ -55,13 +60,13 @@ export function PlanPriceBlock({
         ) : null}
         <p className={`mt-2.5 text-sm font-medium ${thenClass}`}>
           then{" "}
-          <span className={`font-bold ${highlight ? "text-white" : "text-[#0a0a0a]"}`}>
+          <span className={`font-bold ${highlight ? "text-white" : "text-[#17131A]"}`}>
             {followUpPrice}
           </span>
           /mo
           {annual && plan.annualTotal ? (
             <span
-              className={`mt-0.5 block text-[10px] font-bold ${highlight ? "text-white/50" : "text-gray-400"}`}
+              className={`mt-0.5 block text-[10px] font-bold ${highlight ? "text-white/50" : "text-[#8B8391]"}`}
             >
               billed {plan.annualTotal} annually
             </span>
@@ -79,7 +84,8 @@ export function PlanPriceBlock({
         className={`font-extrabold leading-none tracking-tight ${heroClass}`}
         style={{
           fontSize: showPerMonth ? regularSize : heroSize,
-          fontFamily: "var(--font-outfit,sans-serif)",
+          fontFamily: "var(--font-mono, ui-monospace, monospace)",
+          letterSpacing: "-0.03em",
         }}
       >
         {price}
@@ -88,7 +94,7 @@ export function PlanPriceBlock({
         <span className={`pb-1.5 text-sm ${mutedClass}`}>
           /mo
           {annual && plan.annualTotal && !isZeroPrice(plan.monthly) ? (
-            <span className={`block text-[10px] font-bold ${highlight ? "text-white/50" : "text-gray-300"}`}>
+            <span className={`block text-[10px] font-bold ${highlight ? "text-white/50" : "text-[#8B8391]"}`}>
               billed {plan.annualTotal} annually
             </span>
           ) : null}
