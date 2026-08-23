@@ -49,14 +49,30 @@ const TIMEOUT_MS = 15_000;
  */
 type Waiver = { id: string; until: string; owner: string; why: string };
 
-const WAIVERS: Waiver[] = [
+/**
+ * Tiers the SHEET carries on purpose and the API does not serve.
+ *
+ * This is not a waiver. A waiver says "wrong, but tolerated for now"; this says
+ * "the two sources are meant to differ here". The sheet is the fallback and must
+ * be complete; `/marketing/plans` hides Growth because
+ * `plan_catalog.GROWTH.show_on_marketing_site = false` (D2 part 2, blocked on
+ * live Razorpay keys). So the sheet is a strict SUPERSET, and this names the
+ * only tier allowed to be extra.
+ *
+ * 🚩 It expires the moment Growth appears in the served payload — see
+ * `checkExpectedDivergence`. An exemption for Growth that outlives D2 part 2
+ * would silence the check on the newest tier: the one most likely to drift and
+ * the only one never yet verified against the catalogue in production.
+ */
+const EXPECTED_ABSENT_FROM_RENDERED: ReadonlyArray<{ tier: string; why: string; unblockedBy: string }> = [
   {
-    id: "rendered:tier-missing:Growth",
-    until: "2026-09-06",
-    owner: "backend",
-    why:
-      "plan_catalog.GROWTH.show_on_marketing_site = false, so /marketing/plans serves four tiers and the page has no Growth card. The fix is to flip it in Backend/src/config/marketing.config.ts; ensureSeeded() re-upserts on every boot, so editing the row directly will not hold.",
+    tier: "Growth",
+    why: "plan_catalog.GROWTH.show_on_marketing_site = false, so /marketing/plans serves four tiers. The sheet carries Growth because it is the fallback and must be complete.",
+    unblockedBy: "D2 part 2 — live Razorpay keys",
   },
+];
+
+const WAIVERS: Waiver[] = [
   {
     id: "rendered:annual:*",
     until: "2026-09-06",
@@ -172,6 +188,7 @@ function fmt(minor: number, currency: Currency): string {
 type Finding = { id: string; source: string; detail: string };
 
 const findings: Finding[] = [];
+const expectedDivergences = new Set<string>();
 const waived: Array<Finding & { waiver: Waiver }> = [];
 
 function matchWaiver(id: string): Waiver | undefined {
@@ -204,9 +221,36 @@ function report(id: string, source: string, detail: string): void {
 
 // ── The comparisons ──────────────────────────────────────────────────────────
 
+/**
+ * The exemption is only safe while the thing it exempts is still absent. Once
+ * Growth appears in the served payload, D2 part 2 has shipped and the special
+ * case must be deleted rather than left to silence the tier it covers.
+ */
+function checkExpectedDivergence(renderedNames: string[]): void {
+  for (const expected of EXPECTED_ABSENT_FROM_RENDERED) {
+    if (renderedNames.includes(expected.tier)) {
+      report(
+        `rendered:exemption-stale:${expected.tier}`,
+        "rendered",
+        `/marketing/plans now serves "${expected.tier}", so ${expected.unblockedBy} has shipped. ` +
+          `Remove it from EXPECTED_ABSENT_FROM_RENDERED, and drop the static merge that injects it — ` +
+          `otherwise the tier is served twice and checked never.`,
+      );
+    }
+  }
+}
+
 function compareTierSet(source: string, catalogue: string[], actual: string[]): void {
   for (const name of catalogue) {
     if (!actual.includes(name)) {
+      const expected =
+        source === "rendered" && EXPECTED_ABSENT_FROM_RENDERED.find((e) => e.tier === name);
+      if (expected) {
+        expectedDivergences.add(
+          `"${name}" absent from the served payload by design — ${expected.why} Unblocked by: ${expected.unblockedBy}.`,
+        );
+        continue;
+      }
       report(
         `${source}:tier-missing:${name}`,
         source,
@@ -424,11 +468,9 @@ async function main(): Promise<number> {
       catalogueNames,
       sheet.map((p: PricingPlan) => p.name),
     );
-    compareTierSet(
-      "rendered",
-      catalogueNames,
-      rendered[region].map((p) => p.name),
-    );
+    const renderedNames = rendered[region].map((p) => p.name);
+    compareTierSet("rendered", catalogueNames, renderedNames);
+    checkExpectedDivergence(renderedNames);
 
     for (const pkg of packages) {
       const monthlyMinor = currency === "usd" ? pkg.monthlyPriceUsdCents : pkg.monthlyPriceInrPaise;
@@ -456,15 +498,37 @@ async function main(): Promise<number> {
 
   // ── Output ─────────────────────────────────────────────────────────────────
 
+  for (const note of expectedDivergences) {
+    console.log(`  EXPECTED  ${note}\n`);
+  }
+
+  const daysLeft = (until: string) =>
+    Math.ceil((new Date(`${until}T23:59:59Z`).getTime() - Date.now()) / 86_400_000);
+
   for (const w of waived) {
-    console.log(`  WAIVED  ${w.id}`);
-    console.log(`          ${w.detail}`);
-    console.log(`          until ${w.waiver.until}, owner: ${w.waiver.owner}\n`);
+    const days = daysLeft(w.waiver.until);
+    console.log(`  WARN  ${w.id}`);
+    console.log(`        ${w.detail}`);
+    console.log(`        owner: ${w.waiver.owner} · expires ${w.waiver.until} (${days} day${days === 1 ? "" : "s"} left)\n`);
   }
 
   if (findings.length === 0) {
-    const suffix = waived.length ? ` (${waived.length} waived)` : "";
-    console.log(`  PASS — the site and the catalogue agree on every tier, currency and interval${suffix}.\n`);
+    if (waived.length === 0) {
+      console.log("  PASS — the site and the catalogue agree on every tier, currency and interval.\n");
+      return 0;
+    }
+    /**
+     * A bare PASS beside a live defect is how a green check stops meaning
+     * anything. The waived items ARE wrong on the page right now; they simply
+     * cannot be fixed from this repo. Say so, and say when the tolerance runs
+     * out, so nobody has to read the waiver block to learn it.
+     */
+    const soonest = Math.min(...waived.map((w) => daysLeft(w.waiver.until)));
+    console.log(
+      `  PASS with ${waived.length} WARNING${waived.length === 1 ? "" : "S"} — the sheet agrees with the catalogue, ` +
+        `but the SERVED page does not. Oldest tolerance expires in ${soonest} day${soonest === 1 ? "" : "s"}, ` +
+        `after which these fail.\n`,
+    );
     return 0;
   }
 
