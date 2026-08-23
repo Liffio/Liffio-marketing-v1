@@ -431,6 +431,25 @@ export const featureCategories = [
 
 export const comparisonPlanNames = ["Free", "Starter", "Growth", "Business", "Agency"] as const;
 
+/**
+ * Workspaces included per tier, shown as a sub-label under each column header.
+ *
+ * From `package_limits.workspacesIncluded` — 1 everywhere except Agency, which
+ * has 20. It sits in the header because the Team members row reads "15 per
+ * workspace" on Agency, and the reader needs the multiplier in view to make
+ * sense of it.
+ */
+export const comparisonPlanWorkspaces: Record<(typeof comparisonPlanNames)[number], string> = {
+  Free: "1 workspace",
+  Starter: "1 workspace",
+  Growth: "1 workspace",
+  Business: "1 workspace",
+  Agency: "20 workspaces",
+};
+
+/** The column carrying emphasis, matching the highlighted card. */
+export const comparisonHighlightPlan: (typeof comparisonPlanNames)[number] = "Growth";
+
 type PlanColumn = (typeof comparisonPlanNames)[number];
 
 export function getPricingFaqs(region: PricingRegion) {
