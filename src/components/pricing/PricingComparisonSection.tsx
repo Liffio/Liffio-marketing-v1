@@ -21,14 +21,21 @@ import { SwipeHint } from "@/components/pricing/PricingPlanCard";
 
 function CellValue({ value }: { value: boolean | string }) {
   if (typeof value === "string") {
-    return <span className="text-[13px] font-semibold text-[#17131A]">{value}</span>;
+    return (
+      <span
+        className="text-[12px] font-medium text-[#17131A]"
+        style={{ fontFamily: "var(--font-mono, ui-monospace, monospace)" }}
+      >
+        {value}
+      </span>
+    );
   }
   return value ? (
-    <span className="block text-center text-[15px] font-bold text-emerald-600" aria-label="Included">
+    <span className="block text-center text-[15px] font-bold text-[#F5184C]" aria-label="Included">
       ✓
     </span>
   ) : (
-    <span className="block text-center text-[15px] text-[#C9C2CF]" aria-label="Not included">
+    <span className="block text-center text-[15px] text-[#D3CCD8]" aria-label="Not included">
       —
     </span>
   );
@@ -116,9 +123,11 @@ function CategoryRows({
           >
             {category.name}
           </span>
-          <span className="mt-0.5 block text-[11px] font-normal normal-case tracking-normal text-[#8B8391]">
-            {category.description}
-          </span>
+          {category.description ? (
+            <span className="mt-0.5 block text-[11px] font-normal normal-case tracking-normal text-[#8B8391]">
+              {category.description}
+            </span>
+          ) : null}
         </th>
       </tr>
 

@@ -2,6 +2,7 @@ import type { PricingPlan } from '@/config/pricing.config'
 import type { PricingRegion } from '@/lib/pricing-region'
 import { getPricingPlans as getFallbackPricingPlans } from '@/config/pricing.config'
 import { getLiffioMarketingUrl } from '@/lib/liffio-api'
+import { V4_PLAN_CONTENT, v4FeatureList } from '@/config/pricing-v4.config'
 import {
   FEATURE_BRANCHING_LOGIC,
   FEATURE_COLLECT_DATA_PROMPTS,
@@ -173,10 +174,15 @@ function sanitizeFeatures(planName: string, features: PlanFeatureItem[]): PlanFe
  * docs/decisions/0002.
  */
 function sanitizeFallback(region: PricingRegion): PricingPlan[] {
-  return getFallbackPricingPlans(region).map((p) => ({
-    ...p,
-    features: sanitizeFeatures(p.name, p.features),
-  }))
+  return getFallbackPricingPlans(region).map((p) => {
+    const sanitized = { ...p, features: sanitizeFeatures(p.name, p.features) }
+    // 🚩 The sheet carries Growth with a WORKING checkout href. The API
+    // deliberately withholds that tier, so whenever it reaches the page from
+    // here — an outage, or an empty payload — it must arrive not-buyable, or an
+    // outage silently puts a live "Get Growth" button on a tier that cannot be
+    // bought. This is the ADR 0002 exposure, closed.
+    return WITHHELD_TIERS.has(p.name) ? asProvisional(sanitized) : sanitized
+  })
 }
 
 /**
@@ -236,6 +242,20 @@ const MERGED_FROM_SHEET: ReadonlyArray<{ name: string; after: string }> = [
   { name: 'Growth', after: 'Starter' },
 ]
 
+const WITHHELD_TIERS = new Set(MERGED_FROM_SHEET.map((t) => t.name))
+
+/**
+ * Shown, but not buyable.
+ *
+ * `PAID_PLANS` in confirm-email omits GROWTH, so `?plan=GROWTH` is dropped after
+ * signup and the visitor lands in onboarding with no subscription and no
+ * explanation. The CTA carries that signal; the badge slot stays free so
+ * applyEmphasis can still put "Most Popular" on it.
+ */
+function asProvisional(plan: PricingPlan): PricingPlan {
+  return { ...plan, provisional: true, cta: 'Coming soon', href: '' }
+}
+
 /**
  * Emphasis belongs on Growth, not Starter.
  *
@@ -251,6 +271,32 @@ const MERGED_FROM_SHEET: ReadonlyArray<{ name: string; after: string }> = [
  * Exactly one tier carries emphasis; any other tier arriving with it is cleared.
  */
 const EMPHASIS_TIER = 'Growth'
+
+/**
+ * Replace the catalogue's bullets and audience line with the V4 sheet's.
+ *
+ * 🔴 Runs LAST, after sanitize, merge and emphasis, so it is the final word on
+ * what every card on the site says. Applied to the shared context rather than
+ * inside the pricing page so the homepage and /pricing cannot describe the same
+ * tier differently - which is the defect PR #5 found, one page contradicting
+ * itself on Business seats.
+ *
+ * Prices are NOT touched. They stay whatever the catalogue serves, so
+ * `npm run check:prices` still guards every amount the site renders.
+ *
+ * ⚠️ This means `sanitizeFeatures()` no longer protects anything the site
+ * renders - it still runs on the payload, but these bullets replace its output.
+ * The claims it would have removed are now listed at the top of
+ * pricing-v4.config.ts and pinned by tests. See docs/decisions/0004.
+ */
+function applyV4Content(plans: PricingPlan[]): PricingPlan[] {
+  return plans.map((plan) => {
+    const content = V4_PLAN_CONTENT[plan.name]
+    const features = v4FeatureList(plan.name)
+    if (!content || !features) return plan
+    return { ...plan, description: content.audience, features }
+  })
+}
 
 function applyEmphasis(plans: PricingPlan[]): PricingPlan[] {
   return plans.map((plan) => {
@@ -273,17 +319,10 @@ function mergeWithheldTiers(region: PricingRegion, served: PricingPlan[]): Prici
     const authored = getFallbackPricingPlans(region).find((p) => p.name === name)
     if (!authored) continue
 
-    const provisional: PricingPlan = {
+    const provisional = asProvisional({
       ...authored,
       features: sanitizeFeatures(authored.name, authored.features),
-      provisional: true,
-      // Not a checkout link. See PricingPlan.provisional.
-      cta: 'Coming soon',
-      href: '',
-      // badge/highlight/popular are left to applyEmphasis, which runs after
-      // this and puts "Most Popular" on Growth. The CTA carries the
-      // not-yet-buyable signal, so the badge slot stays free for it.
-    }
+    })
 
     const at = plans.findIndex((p) => p.name === after)
     plans.splice(at === -1 ? plans.length : at + 1, 0, provisional)
@@ -320,12 +359,16 @@ export async function fetchMarketingPlansContext(region: PricingRegion): Promise
       // An empty API response falls back to the static sheet — which must be
       // sanitized too. It carries the same unsupported claims verbatim, so
       // returning it raw would reinstate every string this guard just removed.
-      plans: plans.length > 0 ? applyEmphasis(mergeWithheldTiers(region, plans)) : applyEmphasis(sanitizeFallback(region)),
+      plans: applyV4Content(
+        plans.length > 0
+          ? applyEmphasis(mergeWithheldTiers(region, plans))
+          : applyEmphasis(sanitizeFallback(region)),
+      ),
       businessPlanValue: payload.businessPlanValue,
     }
   } catch (error) {
     console.error('[marketing-plans] fallback to static config', error)
-    const plans = sanitizeFallback(region)
+    const plans = applyV4Content(applyEmphasis(mergeWithheldTiers(region, sanitizeFallback(region))))
     const business = plans.find((p) => p.name === 'Business')
     return {
       plans,

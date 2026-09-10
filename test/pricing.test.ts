@@ -14,6 +14,7 @@ import {
   isZeroPrice,
   type PricingPlan,
 } from "@/config/pricing.config";
+import { V4_PLAN_CONTENT } from "@/config/pricing-v4.config";
 
 const REGIONS = ["global", "india"] as const;
 
@@ -267,17 +268,32 @@ const MATRIX_EXPECTATIONS: Array<{
   source: string;
 }> = [
   {
-    row: "Team members",
-    cells: { free: "1", starter: "3", growth: "5", business: "15", agency: "15 per workspace" },
+    row: "Team seats",
+    cells: { free: "1", starter: "3", growth: "5", business: "15", agency: "15" },
     source: "package_limits.teamMembers = 1/3/5/15/15",
   },
   {
-    row: "Follow-up DM sequences (per automation)",
+    row: "DM follow-up sequences",
     cells: { free: false, starter: "2", growth: "5", business: "5", agency: "5" },
     source: "package_limits.dmFollowUps = 0/2/5/5/5",
   },
   {
-    row: "Role-based access (RBAC)",
+    row: "Automations",
+    cells: { free: "3", starter: "25", growth: "75", business: "150", agency: "150" },
+    source: "package_limits.workflows = 3/25/75/150/150",
+  },
+  {
+    row: "Workspaces per subscription",
+    cells: { free: "1", starter: "1", growth: "1", business: "1", agency: "20" },
+    source: "package_limits.workspacesIncluded = 1/1/1/1/20",
+  },
+  {
+    row: "Scheduled posts per day",
+    cells: { free: "3", starter: "30", growth: "100", business: "200", agency: "200" },
+    source: "package_limits.schedulerPostsPerDay = 3/30/100/200/200",
+  },
+  {
+    row: "ABAC policies",
     cells: { free: false, starter: false, growth: false, business: true, agency: true },
     source: "Team > Assign roles + Custom permissions = business,agency",
   },
@@ -292,12 +308,12 @@ const MATRIX_EXPECTATIONS: Array<{
     source: "Analytics > Export analytics = business,agency",
   },
   {
-    row: "Post, video & profile metrics",
+    row: "Post metrics — reach, views, saves, shares, ER",
     cells: { free: false, starter: false, growth: true, business: true, agency: true },
-    source: "Analytics > Post metrics + Video metrics + Profile outcomes = growth,business,agency",
+    source: "Analytics > Post metrics = growth,business,agency",
   },
   {
-    row: "Affiliate program (50% commission)",
+    row: "Affiliate programme — 50% recurring",
     cells: { free: true, starter: true, growth: true, business: true, agency: true },
     source: "all ten Affiliate children = free,starter,growth,business,agency",
   },
@@ -321,29 +337,78 @@ test("matrix cells match what production actually grants", () => {
   }
 });
 
-test("no matrix cell claims Unlimited — it is the PR #5 false-claim class", () => {
+/**
+ * Cells the catalogue CONTRADICTS, pinned so they cannot move quietly.
+ *
+ * 🔴 The old test here asserted no cell may say "Unlimited" — the PR #5
+ * false-claim class. Shipping the V4 design verbatim was an explicit decision
+ * that reintroduces that class, so deleting the guard outright would leave the
+ * page's most load-bearing false claims with no test at all.
+ *
+ * This is the inverse guard: it asserts the divergences are EXACTLY these and
+ * no others. Adding a new unverified claim fails the count check below; fixing
+ * one at source fails its row. Either way somebody has to come back here and
+ * read docs/decisions/0004 before the page changes.
+ */
+const KNOWN_DIVERGENT_CELLS: Array<{ row: string; plans: string[]; why: string }> = [
+  { row: "Automated DM sending", plans: ["free", "starter", "growth", "business", "agency"], why: "no DM metering exists (blocker 25.3)" },
+  { row: "DMs per month", plans: ["free", "starter", "growth", "business", "agency"], why: "same — no DM key in package_limits" },
+  { row: "API key create / view / revoke", plans: ["business", "agency"], why: "D4 — maxApiCredentials 0" },
+  { row: "API docs access, usage stats, key expiry", plans: ["business", "agency"], why: "D4 — no API module" },
+  { row: "API keys", plans: ["business", "agency"], why: "D4 — maxApiCredentials 0" },
+  { row: "API requests per day", plans: ["business", "agency"], why: "D4 — apiRequestsPerDay 0" },
+  { row: "Monthly tokens per workspace", plans: ["free", "starter", "growth", "business", "agency"], why: "never verified against ai_token_plan_configs" },
+  { row: "AI token rollover", plans: ["business", "agency"], why: "same" },
+  { row: "Lead storage", plans: ["free", "starter", "growth", "business", "agency"], why: "no lead-storage key in package_limits" },
+];
+
+test("the matrix's unverified claims are exactly the recorded ones", () => {
+  const recorded = new Set(KNOWN_DIVERGENT_CELLS.map((c) => c.row));
+
+  // Every recorded row still exists and still carries the claim.
+  for (const { row, plans, why } of KNOWN_DIVERGENT_CELLS) {
+    const actual = matrixRow(row);
+    for (const plan of plans) {
+      assert.notEqual(actual[plan], false, `"${row}" / ${plan} no longer claims anything — ${why}`);
+    }
+  }
+
+  // And no NEW "Unlimited" has appeared outside them.
   for (const category of featureCategories) {
     for (const row of category.features) {
+      if (recorded.has(row.name)) continue;
       for (const plan of comparisonPlanNames) {
         const value = getPlanColumnValue(row as never, plan);
         assert.notEqual(
           typeof value === "string" && /unlimited/i.test(value),
           true,
-          `${row.name} / ${plan} says "${String(value)}"`,
+          `${row.name} / ${plan} says "${String(value)}" and is not in KNOWN_DIVERGENT_CELLS`,
         );
       }
     }
   }
 });
 
-test("the matrix does not contradict the Business card on seats", () => {
+test("the matrix does not contradict the cards on seats or limits", () => {
   // PR #5 corrected the card to 15 while this row still said 5, on one page.
-  const seats = matrixRow("Team members");
-  assert.equal(seats.business, "15");
-  for (const region of REGIONS) {
-    const business = planNamed(getPricingPlans(region), "Business");
-    const seatBullet = business.features.find((f) => /team members/i.test(f.text));
-    if (seatBullet) assert.match(seatBullet.text, /15/, "card and matrix disagree on Business seats");
+  // The pricing page now draws its limits from the V4 sheet, so both must agree.
+  assert.equal(matrixRow("Team seats").business, "15");
+
+  for (const [plan, content] of Object.entries(V4_PLAN_CONTENT)) {
+    const column = plan.toLowerCase();
+    const seats = content.limits.find((l) => l.label === "Seats")?.value;
+    const automations = content.limits.find((l) => l.label === "Automations")?.value;
+
+    // Agency states its limits as "15 × 20" — per workspace, times the slots.
+    const expectedSeats = matrixRow("Team seats")[column];
+    const expectedAutomations = matrixRow("Automations")[column];
+
+    if (seats && !seats.includes("×")) {
+      assert.equal(seats, expectedSeats, `${plan} card seats disagree with the matrix`);
+    }
+    if (automations && !automations.includes("×")) {
+      assert.equal(automations, expectedAutomations, `${plan} card automations disagree with the matrix`);
+    }
   }
 });
 
@@ -392,9 +457,12 @@ test("the calculator hardcodes no tier price and no crossover", () => {
     "utf8",
   );
   const code = source.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*/g, "");
+  // 🚩 `\b` inside a template literal is U+0008, not a word boundary — this
+  // loop asserted that the source contained no backspace-delimited digits,
+  // which is true of every file ever written. Escaped, it tests what it says.
   for (const literal of ["59", "549", "2499", "22999", "29", "1499", "9.3", "9.2"]) {
     assert.equal(
-      new RegExp(`\b${literal.replace(".", "\.")}\b`).test(code),
+      new RegExp(`\\b${literal.replace(".", "\\.")}\\b`).test(code),
       false,
       `AgencyBreakEven contains the literal ${literal} outside a comment`,
     );
@@ -412,4 +480,37 @@ test("workspace display strings derive from the numbers", () => {
   assert.equal(comparisonPlanWorkspaces.Agency, "20 workspaces");
   assert.equal(comparisonPlanWorkspaces.Free, "1 workspace");
   assert.equal(planWorkspacesIncluded.Agency, 20);
+});
+
+test("the ladder hardcodes no price and no step ratio", () => {
+  const source = readFileSync(
+    new URL("../src/components/pricing/PricingLadder.tsx", import.meta.url),
+    "utf8",
+  );
+  const code = source.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*/g, "");
+
+  // "5.4" is the V4 design's own headline figure, computed against a $15
+  // standard Starter that never shipped. Starter is $9, which makes the first
+  // step 3.2x — so the design's sentence is false on the page it was drawn for.
+  // That is precisely why none of these may appear as a literal.
+  for (const literal of ["5.4", "3.2", "2.0", "6.6", "9", "29", "59", "549", "1499", "2499", "22999"]) {
+    assert.equal(
+      new RegExp(`\\b${literal.replace(".", "\\.")}\\b`).test(code),
+      false,
+      `PricingLadder contains the literal ${literal} outside a comment`,
+    );
+  }
+
+  // Absence of literals is not enough — assert the derivations are present.
+  assert.match(code, /a \/ b/, "step ratios must be computed from the two amounts");
+  assert.match(
+    code,
+    /ratio\(business, starter\)/,
+    "the without-Growth span must be derived, not written",
+  );
+  assert.match(
+    code,
+    /planWorkspacesIncluded\.Agency/,
+    "the Agency workspace count must come from the catalogue sheet",
+  );
 });

@@ -356,7 +356,7 @@ export const pricingPerks = [
   { label: "Cancel anytime" },
   { label: "No credit card required" },
   { label: "Instant setup" },
-  { label: "Stripe + Razorpay billing" },
+  { label: "Razorpay billing" },
 ];
 
 export function getFreePlanFaqAnswer(region: PricingRegion): string {
@@ -380,54 +380,15 @@ export function getCreatorsProgramFaqAnswer(region: PricingRegion): string {
   return `Yes. Qualified Instagram creators (5K–100K followers) can apply for our Creators Program and receive the full Business plan (${value} value) at no cost in exchange for active platform usage. No credit card required.`;
 }
 
-export const featureCategories = [
-  {
-    name: "Comment-to-DM Automation",
-    description: metaCopy.pricingCategoryApis,
-    features: [
-      { name: "Keyword comment triggers", free: true, starter: true, growth: true, business: true, agency: true },
-      { name: "Public comment auto-replies", free: true, starter: true, growth: true, business: true, agency: true },
-      // Story triggers were REMOVED, not hidden. D8 deleted the capability: all 15
-      // children of the Automations module are comment-based and the server rejects
-      // Stories, so this row was true on four tiers and honoured by none.
-      ...(FEATURE_WELCOME_DM ? [{ name: "Welcome DM for new followers", free: false, starter: true, growth: true, business: true, agency: true }] : []),
-      { name: "Multi-step DM flows", free: false, starter: true, growth: true, business: true, agency: true },
-      { name: "Follow-up DM sequences (per automation)", free: false, starter: "2", growth: "5", business: "5", agency: "5" },
-    ],
-  },
-  {
-    name: "Growth Toolkit",
-    description: "Bio links, short links, scheduling, and analytics - all in one workspace.",
-    features: [
-      { name: "Bio link pages (bio.liffio.com)", free: true, starter: true, growth: true, business: true, agency: true },
-      { name: "Branded short links (go.liffio.com)", free: false, starter: true, growth: true, business: true, agency: true },
-      { name: "Click & referrer tracking", free: false, starter: true, growth: true, business: true, agency: true },
-      { name: "Lead capture from DMs & clicks", free: false, starter: true, growth: true, business: true, agency: true },
-      { name: "Post scheduler (Instagram feed)", free: false, starter: true, growth: true, business: true, agency: true },
-      { name: FEATURE_SALE_TRACKING ? "Conversion analytics (comment → sale)" : "Conversion analytics (comment → DM → click)", free: false, starter: true, growth: true, business: true, agency: true },
-      { name: "Post, video & profile metrics", free: false, starter: false, growth: true, business: true, agency: true },
-      // 8 and 9: the Growth -> Business boundary was invisible. Analytics has two
-      // business-only children with no row at all until now.
-      { name: "Per-automation attribution", free: false, starter: false, growth: false, business: true, agency: true },
-      { name: "Analytics export", free: false, starter: false, growth: false, business: true, agency: true },
-    ],
-  },
-  {
-    name: "Team, API & Agency",
-    description: "Collaborate with your team, integrate via API, or manage client workspaces at scale.",
-    features: [
-      { name: "Team members", free: "1", starter: "3", growth: "5", business: "15", agency: "15 per workspace" },
-      { name: "Role-based access (RBAC)", free: false, starter: false, growth: false, business: true, agency: true },
-      // External API keys were REMOVED, not moved. D4 withheld the external API from
-      // V4 launch: every package has maxApiCredentials 0 and apiRequestsPerDay 0, and
-      // there is no API module among the 14. It was true on Business and Agency and
-      // honoured on neither.
-      { name: "Agency white-label workspaces", free: false, starter: false, growth: false, business: false, agency: true },
-      { name: "Client sub-workspaces", free: false, starter: false, growth: false, business: false, agency: true },
-      { name: "Affiliate program (50% commission)", free: true, starter: true, growth: true, business: true, agency: true },
-    ],
-  },
-];
+/**
+ * The comparison matrix.
+ *
+ * Now the V4 design's own 87 rows, shipped verbatim - see pricing-v4.config.ts
+ * for the list of rows that state entitlements production does not grant, and
+ * why they are here anyway. Re-exported under the old name so the component and
+ * the tests keep reading one source.
+ */
+export { V4_FEATURE_CATEGORIES as featureCategories } from "./pricing-v4.config";
 
 export const comparisonPlanNames = ["Free", "Starter", "Growth", "Business", "Agency"] as const;
 
@@ -493,7 +454,7 @@ export function getPricingFaqs(region: PricingRegion) {
     },
     {
       q: "Can I pay monthly, quarterly, or annually?",
-      a: "Yes. Paid plans are available on monthly or annual billing. Annual billing charges 10 months instead of 12, so you get two months free - a saving of about 17% compared to paying monthly. Billing is handled securely via Stripe (global) or Razorpay (India).",
+      a: "Yes. Paid plans are available on monthly or annual billing. Annual billing charges 10 months instead of 12, so you get two months free - a saving of about 17% compared to paying monthly. Billing is handled securely via Razorpay.",
     },
     {
       q: "Is Liffio safe for my Instagram account?",
@@ -523,4 +484,25 @@ export function getPlanColumnValue(
 ): boolean | string {
   const key = plan.toLowerCase() as Lowercase<PlanColumn>;
   return row[key];
+}
+
+/** en-IN groups as 2,29,999; everything else as 229,999. */
+export function localeForSymbol(symbol: string): string {
+  return symbol === "₹" ? "en-IN" : "en-US";
+}
+
+/** A whole-unit amount in the same currency the page is already rendering. */
+export function formatMoney(amount: number, symbol: string): string {
+  return `${symbol}${Math.round(amount).toLocaleString(localeForSymbol(symbol))}`;
+}
+
+/**
+ * A DERIVED amount — a per-workspace rate, a per-account cost — where the
+ * fraction is the point. Two decimals for USD, whole units for INR, because
+ * ₹416.58 reads badly and paise are not used in Indian price display.
+ */
+export function formatMoneyPrecise(amount: number, symbol: string): string {
+  return symbol === "₹"
+    ? `${symbol}${Math.round(amount).toLocaleString("en-IN")}`
+    : `${symbol}${amount.toFixed(2)}`;
 }

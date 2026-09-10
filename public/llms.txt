@@ -35,7 +35,7 @@ India pricing available via Razorpay in INR (Free ₹0, Starter ₹499, Growth �
 - Instagram connection: official Instagram API via Meta's OAuth consent flow (no password required, no scraping)
 - Send delays: 10–60 seconds per automation (configurable)
 - Data: GDPR-compliant, contact data exportable and deletable from dashboard
-- Payment: Stripe (USD global) and Razorpay (INR India)
+- Payment: Razorpay (USD global and INR India)
 - Competing tools: ManyChat, SendDM, Chatfuel, ReplyRush, LinkDM, SuperProfile, InstaChamp, Zorcha
 
 ## Pages

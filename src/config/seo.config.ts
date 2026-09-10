@@ -164,7 +164,10 @@ export const pageSeo = {
   pricing: buildPageMetadata({
     title: "Instagram DM Automation Pricing — Free to $549/mo | Liffio",
     description:
-      "Free plan with no credit card. Paid plans from $9/month. All plans include unlimited automated DMs and unlimited Instagram accounts. Cancel anytime.",
+      // "unlimited Instagram accounts" was removed here for the same reason it
+      // was removed from the cards, the FAQ and llms.txt: workspacesIncluded is
+      // 1 on every tier but Agency. See docs/decisions/0002.
+      "Free plan with no credit card. Paid plans from $9/month. One Instagram account per workspace, with unlimited automated DMs on every paid plan. Cancel anytime.",
     pathname: "/pricing",
   }),
   signup: {

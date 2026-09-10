@@ -51,7 +51,7 @@ function plansCategory(region: PricingRegion, overrides?: MarketingFaqOverrides)
         id: "billing-cycle",
         question: "Can I pay monthly or annually?",
         answer:
-          "Yes. All paid plans are available on monthly or annual billing. Annual billing charges 10 months instead of 12, so two months are free. Payments are handled via Stripe (global) or Razorpay (India).",
+          "Yes. All paid plans are available on monthly or annual billing. Annual billing charges 10 months instead of 12, so two months are free. Payments are handled via Razorpay.",
       },
       {
         id: "dm-limit",
@@ -518,7 +518,7 @@ export function getPricingFaqCategories(
           id: "india-pricing",
           question: "Does Liffio support Indian pricing?",
           answer:
-            "Yes. Liffio auto-detects your country and shows INR pricing for India, processed via Razorpay. Global plans are billed in USD via Stripe.",
+            "Yes. Liffio auto-detects your country and shows INR pricing for India and USD pricing elsewhere. Every plan, in either currency, is billed via Razorpay.",
         },
       ],
     },
@@ -652,7 +652,7 @@ const userSupportCategory: FaqCategory = {
       id: "refund-timeline",
       question: "How long do refunds take?",
       answer:
-        "Approved refunds are processed within 5–10 business days back to your original payment method. Stripe refunds (global) typically appear within 5–7 days. Razorpay refunds (India) take 7–10 business days. Email support@liffio.com to request a refund - see our Refund Policy for eligibility.",
+        "Approved refunds are processed within 5–10 business days back to your original payment method. Razorpay refunds typically take 7–10 business days. Email support@liffio.com to request a refund - see our Refund Policy for eligibility.",
     },
     {
       id: "switch-plans",
