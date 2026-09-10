@@ -21,6 +21,14 @@ import { isMetaVerified } from "@/lib/meta-verification";
  * instagram_business_manage_messages approved and _basic, _manage_comments,
  * _manage_insights, _content_publish renewed.
  *
+ * [flag] Liffio connects via the Instagram API with Instagram Login
+ * (instagram_business_* scopes). Users authorise on INSTAGRAM's consent screen
+ * and never see a Meta or Facebook login. Do not write "Meta APIs", "Meta login
+ * page" or "Meta's consent flow" in these strings - the verified branches all
+ * carried that error until 2026-09-11, because "Meta" reads as an upgrade word
+ * for "Instagram" and it is not; they name different things. "Meta's platform
+ * terms" IS correct - those do govern the integration.
+ *
  * [flag] This flag licenses TEXT ONLY. It does NOT license the Meta logo:
  * Meta's corporate brand routes certification badges through Brand Review with
  * a Meta counterpart. The Instagram glyph IS usable on the web without a
@@ -36,7 +44,7 @@ export const metaCopy = {
   signupCompliancePill: "Secure OAuth connection",
   signupTrustMeta: isMetaVerified ? "Meta-verified" : null,
   connectStepDetail: isMetaVerified
-    ? "One-click OAuth via official Meta APIs. As a Verified Meta Tech Provider, every connection runs through Meta's consent flow and operates within Instagram's terms of service."
+    ? "One-click OAuth via the official Instagram API. As a Verified Meta Tech Provider, every connection runs through Instagram's own consent screen and operates within Meta's platform terms."
     : "One-click OAuth connects your Instagram account securely. Every connection is encrypted and designed to operate within Instagram's terms of service.",
   connectStepNote: "Secure OAuth connection",
   connectSimButton: "Continue with Instagram",
@@ -47,16 +55,16 @@ export const metaCopy = {
     ? "Official Instagram Business APIs with secure webhooks, operating within Meta's platform terms."
     : "Instagram APIs with secure webhooks and platform-compliant automation.",
   pricingHeroApis: isMetaVerified
-    ? "Every plan runs on official Meta APIs with real-time webhook delivery."
+    ? "Every plan runs on the official Instagram API with real-time webhook delivery."
     : "Every plan runs on official Instagram APIs with real-time webhook delivery.",
   pricingCategoryApis: isMetaVerified
-    ? "Real-time, webhook-driven Instagram automation built on official Meta APIs."
+    ? "Real-time, webhook-driven Instagram automation built on the official Instagram API."
     : "Real-time, webhook-driven Instagram automation built on official Instagram APIs.",
   pricingFaqSafe: isMetaVerified
     ? "Yes. Liffio is a Verified Meta Tech Provider and uses only official Instagram APIs. All webhooks are HMAC-verified, and the integration operates within Meta's platform terms."
     : "Yes. Liffio uses official Instagram APIs with HMAC-verified webhooks, and is designed to operate within Instagram's terms of service.",
   helpConnectAnswer: isMetaVerified
-    ? "Go to your Liffio dashboard and click 'Connect Instagram'. You'll be redirected to the official Meta login page. Authorize the app and your account will be connected in seconds."
+    ? "Go to your Liffio dashboard and click 'Connect Instagram'. You'll be redirected to Instagram's own login page. Authorize the app and your account will be connected in seconds."
     : "Go to your Liffio dashboard and click 'Connect Instagram'. You'll be redirected to sign in with Instagram. Authorize the app and your account will be connected in seconds.",
   helpSafeAnswer: isMetaVerified
     ? "Yes! Liffio is a Verified Meta Tech Provider and uses only official Instagram APIs, operating within Instagram's terms of service."
