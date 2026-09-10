@@ -63,7 +63,7 @@ export default async function VsPage({ params }: Props) {
     {
       step: "2",
       title: "Connect Instagram to Liffio",
-      body: "Create a Liffio account and connect your Instagram through Meta's official OAuth flow — about two minutes. Connect every handle you manage now; all plans include unlimited accounts at no extra cost.",
+      body: "Create a Liffio account and connect your Instagram through Meta's official OAuth flow — about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace — the Agency plan bundles 20 workspaces into a single subscription.",
     },
     {
       step: "3",

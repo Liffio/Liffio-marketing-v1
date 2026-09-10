@@ -134,7 +134,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "ManyChat vs Liffio for Instagram-only work",
         paragraphs: [
-          "Both handle keyword comment-to-DM, story reply automations, and follow-up sequences. ManyChat has a longer track record and a huge template library. Liffio is built around Instagram growth workflows: unlimited automated DMs on every plan, post scheduling, bio links, and short links in the same account.",
+          "Both handle keyword comment-to-DM, story reply automations, and follow-up sequences. ManyChat has a longer track record and a huge template library. Liffio is built around Instagram growth workflows: unlimited automated DMs on every paid plan, post scheduling, bio links, and short links in the same account.",
           "ManyChat's free tier is workable for experiments but tight for always-on Instagram campaigns. Liffio's free plan is meant to run comment-to-DM in production, not just as a demo.",
           "If you already invested months in ManyChat flows, migration is mostly copy and recreate, not a magic import button. Budget an hour per active automation.",
         ],
@@ -163,12 +163,12 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         question: "Is Liffio really free to start?",
         answer:
-          "Yes. You can connect Instagram and run comment-to-DM on the free plan without a card. Paid plans add flows, API access, and team features.",
+          "Yes. You can connect Instagram and run comment-to-DM on the free plan without a card. Paid plans add unlimited automated DMs, more automation slots, and team seats.",
       },
       {
         question: "Do agencies use Liffio?",
         answer:
-          "The Agency plan includes client workspaces and white-label options so one team can manage multiple brands without sharing passwords.",
+          "The Agency plan bundles 20 workspaces on one subscription — one Instagram account each — so one team can manage multiple brands without sharing passwords.",
       },
     ],
     references: [

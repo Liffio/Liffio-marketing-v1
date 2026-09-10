@@ -1,13 +1,14 @@
 "use client";
 
 import { Fragment, useEffect, useRef, useState } from "react";
-import { isMetaVerified } from "@/lib/meta-verification";
 
 const stats = [
   { id: "api", value: "Official", label: "Instagram API" },
-  isMetaVerified
-    ? { id: "compliant", value: "100%", label: "Meta-compliant" }
-    : { id: "oauth", value: "OAuth", label: "Secure Meta login" },
+  // 🚩 Do NOT reintroduce an absolute compliance claim here ("100% Meta-compliant"
+  // was the previous verified branch). meta-copy.ts forbids absolute-compliance
+  // wording by name, and App Review grants permissions, not blanket compliance.
+  // This band states product facts; the credential lives in OfficialApiSection.
+  { id: "oauth", value: "OAuth", label: "No password shared" },
   { id: "delay", value: "10–60s", label: "Custom DM delay" },
   { id: "free", value: "Free", label: "No credit card required" },
 ] as const;
@@ -84,7 +85,7 @@ export default function StatsSection() {
       />
 
       <div className="relative mx-auto max-w-7xl px-4 py-11 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 items-stretch gap-10 sm:flex-row sm:items-center sm:justify-between sm:gap-5 lg:gap-6">
+        <div className="grid grid-cols-2 items-stretch gap-10 sm:flex sm:flex-row sm:items-center sm:justify-between sm:gap-5 lg:gap-6">
           {stats.map((s, i) => (
             <Fragment key={s.id}>
               {i > 0 ? <StatSeparator /> : null}

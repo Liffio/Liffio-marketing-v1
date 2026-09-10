@@ -27,38 +27,16 @@ export const metadata: Metadata = {
   },
 };
 
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": `${SITE_URL}/#organization`,
-  name: "Liffio",
-  legalName: "Liffio Private Limited",
-  url: SITE_URL,
-  foundingDate: "2026",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "First Floor, Shreeji General Store, Sultanpura Naka Laheri Pura New Road",
-    addressLocality: "Vadodara",
-    postalCode: "390001",
-    addressRegion: "Gujarat",
-    addressCountry: "IN",
-  },
-  foundingLocation: {
-    "@type": "Place",
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: "IN",
-    },
-  },
-};
+// 🚩 No Organization node here. This page used to emit a second one under the
+// same `@id` as <OrganizationJsonLd /> in layout.tsx — same identity, different
+// legalName — which is a conflict for any consumer, not extra detail. Its
+// richer facts (legalName "Liffio Private Limited", the full postal address,
+// foundingLocation) now live in that single canonical node in
+// src/lib/seo/json-ld.tsx. Do not re-add one.
 
 export default function AboutPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", item: SITE_URL },

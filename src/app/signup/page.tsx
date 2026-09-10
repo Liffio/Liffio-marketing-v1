@@ -105,20 +105,6 @@ export default async function SignupPage() {
                   label={metaCopy.signupBadge!}
                   variant="meta"
                   format="label"
-                  icon={
-                    <svg viewBox="0 0 512 512" className="h-4 w-4">
-                      <defs>
-                        <linearGradient id="mlg2" x1="0%" x2="100%">
-                          <stop offset="0%" stopColor="#0064e0" />
-                          <stop offset="100%" stopColor="#0080f9" />
-                        </linearGradient>
-                      </defs>
-                      <path
-                        fill="url(#mlg2)"
-                        d="m149.4 89.4c-81.6 0-144.1 106.2-144.1 218.5 0 70.3 34 114.7 91 114.7 41 0 70.5-19.3 123-111l36.9-65.2 31.2-52.8c26.5-40.9 48.4-61.3 74.4-61.3 54 0 97.2 79.5 97.2 177.2 0 37.2-12.2 58.8-37.5 58.8-24.2 0-35.8-16-81.8-90l-42.3 36.9c47.9 80.2 74.6 107.4 123 107.4 55.5 0 86.4-45.1 86.4-116.9 0-117.7-63.9-216.5-141.6-216.5-41.1 0-73.3 31-102.4 70.3l-32.3 47.4c-31.9 49-51.3 79.7-51.3 79.7-42.5 66.7-57.2 81.6-80.9 81.6-24.4 0-38.8-21.4-38.8-59.5 0-81.6 40.7-165 89.2-165z"
-                      />
-                    </svg>
-                  }
                 />
               </MetaVerifiedOnly>
 
@@ -207,7 +193,7 @@ export default async function SignupPage() {
                     Get started for free
                   </h2>
                   <p className="text-sm text-gray-500">
-                    Unlimited automated DMs on every plan - upgrade anytime.
+                    Unlimited automated DMs on every paid plan - upgrade anytime.
                   </p>
                 </div>
 

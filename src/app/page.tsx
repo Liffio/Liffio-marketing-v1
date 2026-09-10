@@ -4,9 +4,9 @@ import SeoDiscoverabilitySection from "@/components/seo/SeoDiscoverabilitySectio
 import { rootSeo } from "@/config/seo.config";
 import { FaqPageJsonLd, SoftwareApplicationJsonLd } from "@/lib/seo/json-ld";
 import HeroSection from "@/components/HeroSection";
-import StatsSection from "@/components/StatsSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
+import OfficialApiSection from "@/components/OfficialApiSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
@@ -36,7 +36,10 @@ export default async function Home() {
         <TrackSection name="hero">
           <HeroSection />
         </TrackSection>
-        <StatsSection />
+        {/* Directly under the hero on purpose: this is a trust bar, and it does
+            no work below the fold. It reinforces the hero's "Verified Meta Tech
+            Provider" chip with the specifics (which API, which approvals). */}
+        <OfficialApiSection />
         <TrackSection name="features">
           <FeaturesSection />
         </TrackSection>

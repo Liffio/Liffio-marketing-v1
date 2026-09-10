@@ -125,16 +125,37 @@ export function isZeroPrice(price: string): boolean {
   return price === "$0" || price === "₹0";
 }
 
-const unlimitedCore: PlanFeature[] = [
-  { text: "Unlimited Instagram accounts", included: true },
+/**
+ * The opening lines every plan card shares.
+ *
+ * 🚩 This used to be one `unlimitedCore` spread into Free, Starter, Business and
+ * Agency alike, and BOTH of its claims were wrong somewhere. "Unlimited
+ * Instagram accounts" was true of no tier at all — `planWorkspacesIncluded`
+ * below is 1 everywhere except Agency's 20, and one workspace connects exactly
+ * one Instagram account. "Unlimited automated DMs" is a paid-tier fact: V4 gives
+ * Free a monthly allowance, so Free carries the account line only.
+ *
+ * `UNSUPPORTED_CLAIMS` in marketing-plans.server.ts already strips both strings
+ * out of the API payload. This sheet is the fallback that renders during an API
+ * outage AND ships in the client bundle, so it must not reintroduce them.
+ */
+const accountCore: PlanFeature[] = [
+  { text: "One Instagram account per workspace", included: true },
+];
+
+const paidCore: PlanFeature[] = [
+  ...accountCore,
   { text: "Unlimited automated DMs", included: true },
 ];
 
 const freeFeatures: PlanFeature[] = [
-  ...unlimitedCore,
+  ...accountCore,
   { text: "Comment keyword triggers", included: true },
   { text: "Public comment auto-replies", included: true },
-  { text: "3 DM message templates", included: true },
+  // 3 automations, not "3 DM message templates". No template limit exists —
+  // package_limits has 8 keys and none counts templates — while the automation
+  // count is the cap Free actually enforces (V4 Automations row: 3).
+  { text: "3 automation workflows", included: true },
   { text: "Bio link page (bio.liffio.com)", included: true },
   { text: "Basic analytics", included: true },
   { text: "Story & multi-step flows", included: false },
@@ -143,7 +164,7 @@ const freeFeatures: PlanFeature[] = [
 ];
 
 const starterFeatures: PlanFeature[] = [
-  ...unlimitedCore,
+  ...paidCore,
   { text: "All automation trigger types", included: true },
   { text: "Unlimited templates & multi-step flows", included: true },
   { text: FEATURE_WELCOME_DM ? "Story & welcome DM automations" : "Story automations", included: true },
@@ -174,11 +195,16 @@ const growthFeatures: PlanFeature[] = [
 ];
 
 const businessFeatures: PlanFeature[] = [
-  ...unlimitedCore,
+  ...paidCore,
   { text: "Everything in Starter", included: true },
   { text: FEATURE_SALE_TRACKING ? "Full conversion analytics (comment → sale)" : "Full conversion analytics (comment → DM → click)", included: true },
   { text: "Instagram account-level insights", included: true },
-  { text: "External API keys (plan-gated)", included: true },
+  // Business has NO external API either. D4 withheld it from V4 launch: every
+  // package is maxApiCredentials 0 / apiRequestsPerDay 0 and there is no API
+  // module among the 14 parent modules. UNSUPPORTED_CLAIMS drops the API-served
+  // "External API keys (plan-gated)" string; this sheet now agrees with Free,
+  // Starter and Growth instead of selling it.
+  { text: "External API access", included: false },
   // 15, not 5: package_limits.teamMembers is 15 for business. UNSUPPORTED_CLAIMS
   // rewrites the API's "5 seats" at render, but this sheet is the fallback and
   // shipped the wrong number in the bundle regardless.
@@ -189,11 +215,17 @@ const businessFeatures: PlanFeature[] = [
 ];
 
 const agencyFeatures: PlanFeature[] = [
-  ...unlimitedCore,
-  { text: "Agency white-label workspaces", included: true },
-  { text: "Client sub-workspaces (CLIENT role)", included: true },
+  ...paidCore,
+  // 🚩 What Agency actually is: 20 workspaces, each a COMPLETE Business
+  // workspace, on one subscription. It is not a white-label product and it has
+  // no client sub-workspace hierarchy — all seven `agency:*` capabilities are
+  // granted to no package (ADR 0002 B6, ADR 0004:48), so "Agency white-label
+  // workspaces" and "Client sub-workspaces (CLIENT role)" described a tier that
+  // does not exist. "Full API access & webhooks" fails the same way Business's
+  // API line did: 0 credentials, 0 requests/day, no API module.
+  { text: "20 workspaces, each a complete Business workspace", included: true },
+  { text: "One subscription, one invoice, one renewal date", included: true },
   { text: "Dedicated account manager", included: true },
-  { text: "Full API access & webhooks", included: true },
   ...(FEATURE_CRM_INTEGRATION ? [{ text: "Custom integrations & CRM sync", included: true }] : []),
   { text: "Affiliate program management", included: true },
   { text: "SLA-backed priority support", included: true },
@@ -260,7 +292,7 @@ const globalPricingPlans: PricingPlan[] = [
     monthly: usdMonthly(549),
     annual: usdAnnual(5490),
     annualTotal: usdAnnualTotal(5490),
-    description: "White-label workspaces for agencies managing multiple client brands.",
+    description: "Twenty workspaces on one subscription for agencies managing multiple client brands.",
     badge: null,
     highlight: false,
     popular: false,
@@ -334,7 +366,7 @@ const indiaPricingPlans: PricingPlan[] = [
     monthly: inrMonthly(22999),
     annual: inrAnnual(229999),
     annualTotal: inrAnnualTotal(229999),
-    description: "White-label workspaces for agencies managing multiple client brands.",
+    description: "Twenty workspaces on one subscription for agencies managing multiple client brands.",
     badge: null,
     highlight: false,
     popular: false,
@@ -361,14 +393,17 @@ export const pricingPerks = [
 
 export function getFreePlanFaqAnswer(region: PricingRegion): string {
   const price = region === "india" ? "₹0/month" : "$0/month";
-  return `Yes. The Free plan is ${price}. No credit card required. You get one Instagram account, unlimited automated DMs, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.`;
+  // Not "unlimited automated DMs" — that is a paid-tier fact. Free's enforced
+  // cap is 3 automations (workflows); its DM allowance is unmetered, so it is
+  // not restated here as a number nothing counts.
+  return `Yes. The Free plan is ${price}. No credit card required. You get one Instagram account, three automation workflows, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.`;
 }
 
 export function getPlansOfferedFaqAnswer(region: PricingRegion): string {
   if (region === "india") {
-    return "Five tiers: Free (₹0, $0), Starter (₹499/mo; $9/mo in USD), Growth (₹1,499/mo; $29/mo in USD), Business (₹2,499/mo; $59/mo in USD), and Agency (₹22,999/mo; $549/mo in USD). Annual billing charges 10 months instead of 12, so two months are free. Every plan connects one Instagram account per workspace and includes unlimited automated DMs.";
+    return "Five tiers: Free (₹0, $0), Starter (₹499/mo; $9/mo in USD), Growth (₹1,499/mo; $29/mo in USD), Business (₹2,499/mo; $59/mo in USD), and Agency (₹22,999/mo; $549/mo in USD). Annual billing charges 10 months instead of 12, so two months are free. Every plan connects one Instagram account per workspace, and every paid plan includes unlimited automated DMs.";
   }
-  return "Five tiers: Free ($0), Starter ($9/mo; ₹499/mo in India), Growth ($29/mo; ₹1,499/mo in India), Business ($59/mo; ₹2,499/mo in India), and Agency ($549/mo; ₹22,999/mo in India). Annual billing charges 10 months instead of 12, so two months are free. Every plan connects one Instagram account per workspace and includes unlimited automated DMs.";
+  return "Five tiers: Free ($0), Starter ($9/mo; ₹499/mo in India), Growth ($29/mo; ₹1,499/mo in India), Business ($59/mo; ₹2,499/mo in India), and Agency ($549/mo; ₹22,999/mo in India). Annual billing charges 10 months instead of 12, so two months are free. Every plan connects one Instagram account per workspace, and every paid plan includes unlimited automated DMs.";
 }
 
 export function getBusinessPlanValueLabel(region: PricingRegion): string {
@@ -466,7 +501,7 @@ export function getPricingFaqs(region: PricingRegion) {
     },
     {
       q: "What's included in the Agency plan?",
-      a: "Agency includes white-label workspaces, client sub-workspaces with restricted CLIENT roles, dedicated account management, full API access, and volume pricing tailored to your agency.",
+      a: "Agency includes 20 complete Business workspaces on a single subscription - one invoice, one renewal date, and workspace switching from one login - plus dedicated account management, SLA-backed priority support, and volume pricing tailored to your agency.",
     },
     {
       q: "Do you offer a Creators Program?",

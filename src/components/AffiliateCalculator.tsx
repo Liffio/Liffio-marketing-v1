@@ -2,10 +2,16 @@
 
 import { useState } from "react";
 
+// Live USD monthly prices. Growth ($29) is deliberately absent — it is not
+// purchasable, so it cannot be referred.
+//
+// 🚩 Kept as literals because pricing.config.ts exposes no numeric USD price:
+// every amount there is a pre-formatted string ("$59") inside a PricingPlan.
+// Bump these by hand when the ladder moves.
 const PLANS = [
   { name: "Starter", price: 9 },
-  { name: "Business", price: 79 },
-  { name: "Agency", price: 299 },
+  { name: "Business", price: 59 },
+  { name: "Agency", price: 549 },
 ] as const;
 
 type PlanName = (typeof PLANS)[number]["name"];

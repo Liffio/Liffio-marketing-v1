@@ -42,3 +42,8 @@ next-env.d.ts
 
 # Internal design prototypes - unreleased pricing, never commit to a public repo
 liffio-pricing-*.html
+
+# Claude Code local config (launch.json dev-server ports, settings) - per-machine,
+# not shared. Nothing under .claude/ is tracked; keep it that way so `git add -A`
+# cannot sweep it in.
+/.claude/

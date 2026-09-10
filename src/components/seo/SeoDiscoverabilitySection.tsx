@@ -140,8 +140,8 @@ export default function SeoDiscoverabilitySection() {
             <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
               <h3 className="text-sm font-bold text-[#0a0a0a]">Agencies managing multiple accounts</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                One Liffio workspace for unlimited client Instagram accounts. White-label workspaces on the
-                Agency plan. Separate analytics per account with team access controls.
+                Each client Instagram account runs in its own workspace. The Agency plan bundles 20
+                workspaces on one subscription. Separate analytics per workspace with team access controls.
               </p>
             </div>
           </div>

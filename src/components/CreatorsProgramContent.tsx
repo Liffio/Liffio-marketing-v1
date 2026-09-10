@@ -39,14 +39,14 @@ function getBenefits(businessPlanValue: string) {
   return [
     {
       title: "Free Business Plan",
-      description: `Full, unrestricted access to our ${businessPlanValue} Business plan - at zero cost. Every feature, every workflow, every integration unlocked from day one.`,
+      description: `Full access to our ${businessPlanValue} Business plan - at zero cost. Every Business feature unlocked from day one.`,
       tag: `Worth ${businessPlanValue}`,
     },
     {
-      title: "Unlimited Automations",
+      title: "Up to 150 Automations",
       description:
-        "Create unlimited comment-to-DM workflows across all your posts. No caps, no throttling, no hidden limits on campaigns or keywords.",
-      tag: "Unlimited workflows",
+        "Build up to 150 comment-to-DM workflows across your posts. Every one sends unlimited automated DMs - no throttling, no hidden per-message fees.",
+      tag: "150 workflows",
     },
     ...STATIC_BENEFITS,
   ];

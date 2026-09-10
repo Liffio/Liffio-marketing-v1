@@ -3,23 +3,10 @@
 import { siteConfig } from "@/config/site.config";
 import HeroInteractiveDemo from "@/components/hero/HeroInteractiveDemo";
 import { TechBadge } from "@/components/TechBadge";
-import { MetaVerifiedOnly } from "@/components/MetaVerifiedOnly";
+// Restore alongside the commented-out hero badge below:
+// import { MetaVerifiedOnly } from "@/components/MetaVerifiedOnly";
 import { metaCopy } from "@/config/meta-copy";
 
-const MetaLogo = () => (
-  <svg viewBox="0 0 512 512" className="h-4 w-4 shrink-0" aria-hidden>
-    <defs>
-      <linearGradient id="mlg" x1="0%" x2="100%">
-        <stop offset="0%" stopColor="#0064e0" />
-        <stop offset="100%" stopColor="#0080f9" />
-      </linearGradient>
-    </defs>
-    <path
-      fill="url(#mlg)"
-      d="m149.4 89.4c-81.6 0-144.1 106.2-144.1 218.5 0 70.3 34 114.7 91 114.7 41 0 70.5-19.3 123-111l36.9-65.2 31.2-52.8c26.5-40.9 48.4-61.3 74.4-61.3 54 0 97.2 79.5 97.2 177.2 0 37.2-12.2 58.8-37.5 58.8-24.2 0-35.8-16-81.8-90l-42.3 36.9c47.9 80.2 74.6 107.4 123 107.4 55.5 0 86.4-45.1 86.4-116.9 0-117.7-63.9-216.5-141.6-216.5-41.1 0-73.3 31-102.4 70.3l-32.3 47.4c-31.9 49-51.3 79.7-51.3 79.7-42.5 66.7-57.2 81.6-80.9 81.6-24.4 0-38.8-21.4-38.8-59.5 0-81.6 40.7-165 89.2-165z"
-    />
-  </svg>
-);
 
 const VALUE_PROPS = [
   {
@@ -76,15 +63,30 @@ export default function HeroSection() {
         <div className="grid grid-cols-1 items-center gap-8 sm:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(320px,420px)] lg:gap-12 xl:gap-16">
           {/* Copy */}
           <div className="max-w-xl">
+            {/*
+              COMMENTED OUT, not deleted - restore by uncommenting this block AND
+              the MetaVerifiedOnly import at the top of the file.
+
+              This badge and the one heading <OfficialApiSection> were the same
+              string, the same blue and the same prompt, 851px apart on one page.
+              The section badge was kept because it heads a block that evidences
+              the claim (two cards plus the stats rail); this one asserted it and
+              moved straight into the H1.
+
+              The hero keeps its trust signal either way: `secure instagram oauth`
+              in the chip row below, and "Built on Instagram's official API" under
+              the CTAs. If you restore this, remove the section one instead -
+              having both is what we were fixing.
+
             <MetaVerifiedOnly>
               <TechBadge
                 className="hero-stagger hero-stagger-1 mb-6"
                 label={metaCopy.heroBadge!}
                 variant="meta"
                 format="label"
-                icon={<MetaLogo />}
               />
             </MetaVerifiedOnly>
+            */}
 
             {/* No entrance animation on the H1: it is the LCP element and the opacity
                 gate added ~1s of render delay on mobile. */}

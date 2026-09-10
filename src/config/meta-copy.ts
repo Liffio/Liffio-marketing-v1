@@ -7,22 +7,41 @@ import { isMetaVerified } from "@/lib/meta-verification";
  * listing. No string in the verified branches below may claim "Business
  * Partner" (or absolute compliance like "100% Meta-compliant") unless
  * Liffio is separately accepted into that program.
+ *
+ * 🚩 STATE THE CREDENTIAL ONCE PER PAGE. Every field below used to resolve to
+ * the same "Verified Meta Tech Provider" string once the flag went true - the
+ * homepage said it 6 times and /signup 9. It went unnoticed because the flag
+ * had never been on. The badge slots (heroBadge, ctaBadge, signupBadge) carry
+ * the credential; every other slot describes the CONNECTION and is true either
+ * way, so it no longer branches on the flag at all. Do not re-add the branch.
+ *
+ * Evidence (App Dashboard, 2026-09-10): Business verification Verified;
+ * Access verification Verified - "Your business was verified as a Tech
+ * Provider"; App Review submission approved, with
+ * instagram_business_manage_messages approved and _basic, _manage_comments,
+ * _manage_insights, _content_publish renewed.
+ *
+ * [flag] This flag licenses TEXT ONLY. It does NOT license the Meta logo:
+ * Meta's corporate brand routes certification badges through Brand Review with
+ * a Meta counterpart. The Instagram glyph IS usable on the web without a
+ * request, but only as the unmodified official asset, and never combined with
+ * the Liffio name or in any lockup that implies partnership.
  */
 
 export const metaCopy = {
-  heroBadge: isMetaVerified ? "Official Meta Tech Provider" : null,
-  heroComplianceChip: isMetaVerified ? "Verified Meta Tech Provider" : "Secure Instagram OAuth",
+  heroBadge: isMetaVerified ? "Verified Meta Tech Provider" : null,
+  heroComplianceChip: "Secure Instagram OAuth",
   ctaBadge: isMetaVerified ? "Verified Meta Tech Provider" : null,
   signupBadge: isMetaVerified ? "Verified Meta Tech Provider" : null,
-  signupCompliancePill: isMetaVerified ? "Verified Meta Tech Provider" : "Secure OAuth connection",
+  signupCompliancePill: "Secure OAuth connection",
   signupTrustMeta: isMetaVerified ? "Meta-verified" : null,
   connectStepDetail: isMetaVerified
     ? "One-click OAuth via official Meta APIs. As a Verified Meta Tech Provider, every connection runs through Meta's consent flow and operates within Instagram's terms of service."
     : "One-click OAuth connects your Instagram account securely. Every connection is encrypted and designed to operate within Instagram's terms of service.",
-  connectStepNote: isMetaVerified ? "Official Meta Tech Provider" : "Secure OAuth connection",
-  connectSimButton: isMetaVerified ? "Connect with Meta" : "Connect Instagram",
-  connectSimLoginTitle: isMetaVerified ? "Meta Secure Login" : "Secure login",
-  connectSimConnected: isMetaVerified ? "Verified Meta Tech Provider · Connected" : "Secure connection · Connected",
+  connectStepNote: "Secure OAuth connection",
+  connectSimButton: "Continue with Instagram",
+  connectSimLoginTitle: "Instagram secure login",
+  connectSimConnected: "Secure connection · Connected",
   ctaCapabilityTitle: isMetaVerified ? "Meta-verified integration" : "Secure Instagram integration",
   ctaCapabilityDescription: isMetaVerified
     ? "Official Instagram Business APIs with secure webhooks, operating within Meta's platform terms."
@@ -43,7 +62,7 @@ export const metaCopy = {
     ? "Yes! Liffio is a Verified Meta Tech Provider and uses only official Instagram APIs, operating within Instagram's terms of service."
     : "Yes! Liffio uses official Instagram APIs and operates within Instagram's terms of service.",
   navbarMobileLead: isMetaVerified ? "Meta Tech Provider" : "Early access",
-  navbarDesktopLead: isMetaVerified ? "Official Meta Tech Provider" : "Early access launch",
+  navbarDesktopLead: isMetaVerified ? "Verified Meta Tech Provider" : "Early access launch",
 } as const;
 
 export function getSignupTrustRow(): string[] {

@@ -57,13 +57,20 @@ function plansCategory(region: PricingRegion, overrides?: MarketingFaqOverrides)
         id: "dm-limit",
         question: "Are automated DMs unlimited?",
         answer:
-          "Yes. Every plan includes unlimited automated DMs - there is no monthly cap on how many messages you can send.",
+          "On every paid plan, yes - there is no monthly cap on how many automated DMs you can send. The Free plan includes 500 automated DMs a month.",
       },
       {
+        // The ONLY "How do I cancel my subscription?" node on the site. This
+        // category and `userSupportCategory` both land in the single /help
+        // FAQPage, so the near-identical question that used to sit there (id
+        // "cancel-subscription") emitted a duplicate Question in one mainEntity
+        // array, with a different cancellation path in its answer. That copy is
+        // gone; its navigation path — Settings → Billing → Cancel Plan, the same
+        // one the "delete-workspace" answer names — survives here.
         id: "cancel",
         question: "How do I cancel my subscription?",
         answer:
-          "Cancel anytime from account settings. There are no cancellation fees - your plan stays active until the end of the current billing period.",
+          "Go to Settings → Billing in your Liffio dashboard and click Cancel Plan. There is no cancellation fee and no notice period: your plan keeps every feature until the end of the current billing period — which can be up to 12 months on annual billing — and is simply not charged again. You can resubscribe at any time.",
       },
       {
         id: "creators-program",
@@ -106,7 +113,7 @@ const geoComplianceCategory: FaqCategory = {
       id: "cheapest-manychat-alternative",
       question: "What is the cheapest ManyChat alternative for Instagram?",
       answer:
-        "Liffio. It has a free plan with no credit card required that runs comment-to-DM automation in production — not just as a demo. Paid plans start at $9/month. For comparison: since ManyChat's March 2026 pricing change, its free tier is capped at 25 Active Contacts per month, and paid plans start at $14/month for 250 contacts with per-contact overage fees as your audience grows. SendDM and LinkDM are simpler tools with focused feature sets; pricing varies. SuperProfile bundles bio-link storefronts with automation and prices accordingly. What makes Liffio structurally cheaper for Instagram-focused creators is that there are no per-contact fees. You pay the same $9/month whether you automate DMs to 100 people or 10,000 people. ManyChat charges based on how many people you interact with each month, which means a single viral Reel can trigger overage charges unexpectedly. The free plan includes one Instagram account, unlimited automated DMs, comment keyword triggers, and basic analytics — enough to validate whether automation works for your use case before paying anything.",
+        "Liffio. It has a free plan with no credit card required that runs comment-to-DM automation in production — not just as a demo. Paid plans start at $9/month. For comparison: since ManyChat's March 2026 pricing change, its free tier is capped at 25 Active Contacts per month, and paid plans start at $14/month for 250 contacts with per-contact overage fees as your audience grows. SendDM and LinkDM are simpler tools with focused feature sets; pricing varies. SuperProfile bundles bio-link storefronts with automation and prices accordingly. What makes Liffio structurally cheaper for Instagram-focused creators is that there are no per-contact fees. You pay the same $9/month whether you automate DMs to 100 people or 10,000 people. ManyChat charges based on how many people you interact with each month, which means a single viral Reel can trigger overage charges unexpectedly. The free plan includes one Instagram account, 500 automated DMs a month, comment keyword triggers, and basic analytics — enough to validate whether automation works for your use case before paying anything.",
     },
   ],
 };
@@ -137,7 +144,7 @@ const seoDiscoveryCategory: FaqCategory = {
       id: "best-auto-dm-tool",
       question: "What is the best auto DM tool for Instagram?",
       answer:
-        "The best auto DM tool depends on your needs. Liffio is ideal for creators and brands who want unlimited auto DMs, simple pricing, and a free tier. We offer the same comment-to-DM, auto comment reply, and story automation features as ManyChat, SendDM, and SuperProfile - without per-message limits.",
+        "The best auto DM tool depends on your needs. Liffio is ideal for creators and brands who want unlimited auto DMs on any paid plan, simple pricing, and a free tier. We offer the same comment-to-DM, auto comment reply, and story automation features as ManyChat, SendDM, and SuperProfile - without per-message fees.",
     },
     {
       id: "free-auto-dm-tool",
@@ -149,7 +156,7 @@ const seoDiscoveryCategory: FaqCategory = {
       id: "manychat-senddm-linkdm",
       question: "How does Liffio compare to ManyChat, SendDM, or LinkDM?",
       answer:
-        "Like ManyChat, SendDM, LinkDM, and SuperProfile, Liffio supports keyword triggers, comment-to-DM, auto comment reply, story reply automation, and multi-step DM flows for Instagram. Liffio focuses on Instagram DM automation with unlimited auto DMs on every plan, simple pricing, and a generous free tier - making it a top ManyChat alternative.",
+        "Like ManyChat, SendDM, LinkDM, and SuperProfile, Liffio supports keyword triggers, comment-to-DM, auto comment reply, story reply automation, and multi-step DM flows for Instagram. Liffio focuses on Instagram DM automation with unlimited auto DMs on every paid plan, simple pricing, and a generous free tier - making it a top ManyChat alternative.",
     },
     {
       id: "dm-automation-tool",
@@ -228,16 +235,23 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
             "DMs send after your chosen delay - from 10 to 60 seconds after the trigger (comment, story reply, etc.). You control the timing so replies land at a natural conversational pace while staying on autopilot.",
         },
         {
+          // Says WHICH tier is metered. The old answer defined the unit and
+          // stopped, so it never answered the question a reader is actually
+          // asking ("will I run out?") and gave an AI engine no figure to cite.
           id: "what-counts-dm",
           question: "What counts as one automated DM?",
           answer:
-            "Each automated message sent to a unique user counts as one DM. Replies within the same conversation thread do not count as additional DMs.",
+            "Each automated message sent to a unique user counts as one DM, and follow-up replies within the same conversation thread do not count again. Only the Free plan is metered, at 500 automated DMs a month. Every paid plan is uncapped — no monthly DM quota, no per-message fee, and no contact limits.",
         },
         {
+          // "and more - depending on your plan" was the opposite of citable: no
+          // number, no closed list, nothing an answer engine can quote. The
+          // trigger list is unchanged apart from spelling out the two it already
+          // implied; the plan figures come from the V4 limits table.
           id: "automation-types",
           question: "What can Liffio automate?",
           answer:
-            `Comment-to-DM, ${FEATURE_STORY_REACTIONS ? "story mentions and reactions" : "story replies and story mentions"}, ${FEATURE_WELCOME_DM ? "welcome DMs for new followers, " : ""}multi-step flows, follow-up sequences, and more - depending on your plan.`,
+            `Liffio automates comment-to-DM, ${FEATURE_STORY_REACTIONS ? "story mentions and reactions" : "story replies and story mentions"}, ${FEATURE_WELCOME_DM ? "welcome DMs for new followers, " : ""}inbound DM replies, ask for follow, follow-up sequences, and data collection. Each automation sends its DM after a delay you set between 10 and 60 seconds. The Free plan runs 3 automations, Starter 25, and Business 150.`,
         },
       ],
     },
@@ -255,7 +269,7 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
           id: "multiple-accounts",
           question: "Can I manage multiple Instagram accounts?",
           answer:
-            "Each workspace connects one Instagram account, so managing several accounts means several workspaces. Free, Starter, Growth and Business include one workspace each; Agency includes 20, with white-label and client sub-workspaces for managing client brands at scale.",
+            "Each workspace connects one Instagram account, so managing several accounts means several workspaces. Free, Starter, Growth and Business include one workspace each; Agency includes 20 - each one a complete Business workspace, on a single subscription - for managing client brands at scale.",
         },
       ],
     },
@@ -332,22 +346,31 @@ const pricingDetailCategory: FaqCategory = {
         `Starter includes all automation trigger types (comment-to-DM, story reply, ${FEATURE_WELCOME_DM ? "welcome DM, " : ""}inbound DM reply, ask for follow, follow-up sequences, collect user data), unlimited DM message templates, ${FEATURE_BRANCHING_LOGIC ? "multi-step DM flows with branching logic" : "multi-step DM follow-up flows"}, short links (go.liffio.com) with click and referrer tracking, lead capture from DMs and link clicks, post scheduler (Instagram feed), advanced analytics dashboard, conversion analytics (${FEATURE_SALE_TRACKING ? "comment to DM to click to sale" : "comment to DM to click"}), up to 3 team member seats, and priority email support.`,
     },
     {
+      // 🚩 Every bullet here must be something Starter does NOT already grant.
+      // This answer used to sell "follow-up DM sequences" and "conversion
+      // analytics" as Business additions while the Starter answer directly above
+      // lists both — so the tier immediately above Starter read as costing 6.5x
+      // for things already included. Differentiators are taken from the V4
+      // sheet's Business bullets and the limits table (150 automations vs 25,
+      // 15 seats vs 3, 90-day history vs 30-day). Short links are a Starter
+      // feature and are not claimed here. The external API is NOT listed: every
+      // package grants 0 keys and 0 requests/day.
       id: "business-features",
       question: "What features require Business ($59/mo, ₹2,499/mo in India)?",
       answer:
-        "Business includes everything in Starter, plus follow-up DM sequences, full conversion analytics with Instagram account-level insights, up to 15 team member seats with role-based access, branded short links with UTM attribution, and priority support plus an onboarding call. Built for brands, e-commerce teams, and coaches who need attribution tracking across the full funnel.",
+        "Business includes everything in Starter, plus 150 automations instead of 25 and up to 15 team member seats instead of 3 — with invite and role management, per-user, per-module and per-action access control, and ABAC policies. It also adds a post approval workflow with activity log, per-automation attribution (DMs → clicks → leads), analytics export, 90-day analytics history, proactive AI growth alerts, and priority support plus an onboarding call. Built for brands, e-commerce teams, and coaches where more than one person touches the account.",
     },
     {
       id: "agency-features",
       question: "What features require Agency ($549/mo, ₹22,999/mo in India)?",
       answer:
-        `Agency includes everything in Business, plus agency white-label workspaces, client sub-workspaces with CLIENT role access, a dedicated account manager${FEATURE_CRM_INTEGRATION ? ", custom integrations and CRM sync" : ""}, SLA-backed priority support, and volume and multi-workspace pricing. Built for marketing agencies running Instagram automation across multiple client brands from a single account.`,
+        `Agency is 20 complete Business workspaces on one subscription - one invoice, one renewal date, and workspace switching from a single login. Every workspace carries the full Business feature set and limits, allocated slot by slot as you win clients. It also includes a dedicated account manager${FEATURE_CRM_INTEGRATION ? ", custom integrations and CRM sync" : ""}, SLA-backed priority support, and volume and multi-workspace pricing. Built for marketing agencies running Instagram automation across multiple client brands from a single account.`,
     },
     {
       id: "best-for-agencies",
       question: "Which plan is best for agencies?",
       answer:
-        `The Agency plan ($549/mo, ₹22,999/mo in India) is purpose-built for agencies. It includes white-label workspaces, client sub-workspaces with restricted CLIENT role access, a dedicated account manager${FEATURE_CRM_INTEGRATION ? ", CRM sync" : ""}, and SLA-backed priority support. If you manage Instagram automation for multiple brands and need to keep client accounts separate and white-labelled, Agency is the only plan that supports this at scale.`,
+        `The Agency plan ($549/mo, ₹22,999/mo in India) is purpose-built for agencies. It includes 20 complete Business workspaces on one subscription, allocated slot by slot as you win clients, a dedicated account manager${FEATURE_CRM_INTEGRATION ? ", CRM sync" : ""}, and SLA-backed priority support. If you manage Instagram automation for multiple brands and need each client kept in its own workspace, Agency is the only plan that includes more than one.`,
     },
     {
       id: "hidden-fees",
@@ -372,7 +395,7 @@ const homepageSeoCategory: FaqCategory = {
       id: "best-instagram-dm-tool",
       question: "What is the best Instagram DM automation tool?",
       answer:
-        `The best Instagram DM automation tool depends on your workflow. For creators, coaches, and brands who want comment-to-DM automation${FEATURE_WELCOME_DM ? ", story reply, and welcome DMs" : " and story reply"} — with unlimited messages and no contact-based pricing — Liffio is built specifically for that use case. Tools like ManyChat offer broader multi-channel coverage (Messenger, WhatsApp, SMS) at higher price points. If your entire workflow is Instagram and you want simple pricing with unlimited DMs from the free tier, Liffio is the most direct fit.`,
+        `The best Instagram DM automation tool depends on your workflow. For creators, coaches, and brands who want comment-to-DM automation${FEATURE_WELCOME_DM ? ", story reply, and welcome DMs" : " and story reply"} — with unlimited messages on any paid plan and no contact-based pricing — Liffio is built specifically for that use case. Tools like ManyChat offer broader multi-channel coverage (Messenger, WhatsApp, SMS) at higher price points. If your entire workflow is Instagram and you want simple pricing with unlimited DMs on every paid plan, Liffio is the most direct fit.`,
     },
     {
       id: "automated-dms-increase-engagement",
@@ -436,7 +459,7 @@ const homeOverviewCategory: FaqCategory = {
       id: "is-liffio-free",
       question: "Is Liffio free to use?",
       answer:
-        "Yes. Liffio has a free plan with no credit card required. It includes one Instagram account, unlimited automated DMs, comment keyword triggers, and basic analytics.",
+        "Yes. Liffio has a free plan with no credit card required. It includes one Instagram account, 500 automated DMs a month, comment keyword triggers, and basic analytics.",
     },
     {
       id: "is-liffio-safe",
@@ -462,8 +485,20 @@ export function getHomeFaqCategories(
   ];
 }
 
-export function getFeaturesFaqCategories(region: PricingRegion): FaqCategory[] {
-  const all = getFaqCategories(region);
+/**
+ * FAQ set for /features. Takes no region.
+ *
+ * `plansCategory()` is the ONLY region-aware block in `getFaqCategories()` —
+ * every other category is a module-level const or a literal built from
+ * `metaCopy` and feature flags. This function returns `geoCompliance`, its own
+ * "automations" category, `safety` and `featuresSeo`, and never "plans", so the
+ * region argument could not reach the output. Passing "global" is therefore not
+ * a default — it is the same result any region produced. Dropping the argument
+ * removes the route's only `getPricingContext()` call, and with it the
+ * `await headers()` that forced /features to render dynamically.
+ */
+export function getFeaturesFaqCategories(): FaqCategory[] {
+  const all = getFaqCategories("global");
   const automations = all.find((c) => c.id === "automations");
   const safety = all.find((c) => c.id === "safety");
   return [
@@ -479,16 +514,18 @@ export function getFeaturesFaqCategories(region: PricingRegion): FaqCategory[] {
             'You set a keyword (e.g. "LINK"). When someone comments that word on your post or Reel, Liffio automatically sends them a DM after your chosen delay (10–60 seconds) and optionally posts a public reply under their comment.',
         },
         {
+          // A bare list answers nothing on its own. Same trigger set as before,
+          // now self-contained: how they fire, and what each plan gets to run.
           id: "automation-types-features",
           question: "What types of Instagram automation does Liffio support?",
           answer:
-            `Liffio's automation types include comment-to-DM, story reply, inbound DM reply, ask for follow, follow-up sequences, ${FEATURE_WELCOME_DM ? "data collection, and welcome DM for new followers" : "and data collection"}.`,
+            `Liffio supports comment-to-DM, story reply, inbound DM reply, ask for follow, follow-up sequences, ${FEATURE_WELCOME_DM ? "data collection, and welcome DM for new followers" : "and data collection"} — all through Instagram's official API. Each one fires after a delay you set between 10 and 60 seconds. The Free plan runs 3 of these automations at a time, Starter 25, and Business 150.`,
         },
         {
           id: "manychat-alternative-features",
           question: "Is Liffio a ManyChat alternative?",
           answer:
-            "Yes. Liffio offers the same core comment-to-DM, story automation, and keyword trigger features as ManyChat - with unlimited automated DMs on every plan, simpler pricing, and a generous free tier.",
+            "Yes. Liffio offers the same core comment-to-DM, story automation, and keyword trigger features as ManyChat - with unlimited automated DMs on every paid plan, simpler pricing, and a generous free tier.",
         },
         ...(automations?.items.slice(0, 2) ?? []),
       ],
@@ -509,10 +546,14 @@ export function getPricingFaqCategories(
       label: "Pricing",
       items: [
         {
+          // Growth carries the same not-yet-buyable qualifier that
+          // `buildPlansOfferedFaqAnswer` derives from `plan.provisional`: the
+          // card says "Coming soon" with an empty href and its Offer is
+          // OutOfStock, so quoting the price alone contradicts the page.
           id: "how-much",
           question: "How much does Liffio cost?",
           answer:
-            "Liffio has five plans: Free ($0/mo), Starter ($9/mo), Growth ($29/mo), Business ($59/mo), and Agency ($549/mo). Every plan connects one Instagram account per workspace and includes unlimited automated DMs. Annual billing charges 10 months instead of 12, so two months are free.",
+            "Liffio has five plans: Free ($0/mo), Starter ($9/mo), Growth ($29/mo - coming soon, not yet available to buy), Business ($59/mo), and Agency ($549/mo). Every plan connects one Instagram account per workspace. Every paid plan includes unlimited automated DMs; Free includes 500 a month. Annual billing charges 10 months instead of 12, so two months are free.",
         },
         {
           id: "india-pricing",
@@ -594,7 +635,7 @@ export function getCreatorsFaqCategories(
           id: "creators-features-included",
           question: "What features are included in the Creators Program?",
           answer:
-            `Creators Program includes unlimited automated DMs across all automation types, unlimited automation workflows, advanced analytics and full conversion tracking (${FEATURE_SALE_TRACKING ? "comment to DM to click to sale" : "comment to DM to click"}), DM follow-up sequences, short links with click tracking and UTM attribution, advanced bio link page customisation, up to 15 team member seats, and priority and direct team support. Not included: white-label workspaces, agency client sub-accounts, external API keys, and Agency-tier features.`,
+            `Creators Program includes unlimited automated DMs across all automation types, up to 150 automation workflows, advanced analytics and full conversion tracking (${FEATURE_SALE_TRACKING ? "comment to DM to click to sale" : "comment to DM to click"}), DM follow-up sequences, short links with click tracking and UTM attribution, advanced bio link page customisation, up to 15 team member seats, and priority and direct team support. Not included: additional workspaces or any other Agency-tier feature - the program covers one workspace.`,
         },
         {
           id: "how-to-apply",
@@ -642,12 +683,12 @@ const userSupportCategory: FaqCategory = {
       answer:
         "Meta permission errors usually mean your access token has expired or a required permission was revoked. Go to Settings → Connected Accounts and reconnect your Instagram account. If the error persists, check that your Instagram account is linked to a Facebook Page and that the account type is set to 'Professional' (Creator or Business) in Instagram settings.",
     },
-    {
-      id: "cancel-subscription",
-      question: "How do I cancel my subscription?",
-      answer:
-        "Go to Settings → Billing in your dashboard and click 'Cancel Plan'. Your access stays active until the end of the current billing period - there is no immediate loss of features and no cancellation fee. You can reactivate at any time.",
-    },
+    // 🚩 "How do I cancel my subscription?" is NOT re-asked here. `plansCategory`
+    // already carries it (id "cancel") and both categories are concatenated into
+    // one FAQPage on /help — two Question nodes with the identical `name` and
+    // different answers in a single mainEntity array. The path this copy named
+    // (Settings → Billing → Cancel Plan) was the correct one and has been moved
+    // into the surviving answer; re-adding the question here reopens the defect.
     {
       id: "refund-timeline",
       question: "How long do refunds take?",
@@ -694,7 +735,7 @@ const userSupportCategory: FaqCategory = {
       id: "add-team-members",
       question: "How do I add team members?",
       answer:
-        "Go to Settings → Team in your Liffio dashboard and click Invite Member, then enter their email address and select their role: ADMIN (full access), MEMBER (limited access), or CLIENT (view-only for Agency users). They will receive an email invitation to join your workspace. Team seats by plan: Free — 1 seat (owner only), Starter — up to 3 seats, Business — up to 5 seats, Agency — unlimited seats.",
+        "Go to Settings → Team in your Liffio dashboard and click Invite Member, then enter their email address and select their role: ADMIN (full access), MEMBER (limited access), or CLIENT (view-only for Agency users). They will receive an email invitation to join your workspace. Team seats by plan: Free — 1 seat (owner only), Starter — up to 3 seats, Business — up to 15 seats, Agency — up to 15 seats in each of its 20 workspaces.",
     },
     {
       id: "delete-workspace",

@@ -311,10 +311,18 @@ function applyEmphasis(plans: PricingPlan[]): PricingPlan[] {
 }
 
 function mergeWithheldTiers(region: PricingRegion, served: PricingPlan[]): PricingPlan[] {
-  const plans = [...served]
+  // 🚩 Withholding is a property of the TIER, not of where the plan came from.
+  // This used to `continue` past a served Growth ("the API serves it now"),
+  // which left the payload's own cta/href intact — so the day
+  // `show_on_marketing_site` flips before checkout exists, /pricing ships a live
+  // "Choose Growth" button and a `?plan=GROWTH` signup link for a tier
+  // `PAID_PLANS` drops. Normalizing the served plan makes a withheld tier
+  // provisional down BOTH paths — merged from the sheet, or served by the API.
+  const plans = served.map((p) => (WITHHELD_TIERS.has(p.name) ? asProvisional(p) : p))
 
   for (const { name, after } of MERGED_FROM_SHEET) {
-    if (plans.some((p) => p.name === name)) continue // the API serves it now
+    // Already present (and normalized just above) — merging would duplicate it.
+    if (plans.some((p) => p.name === name)) continue
 
     const authored = getFallbackPricingPlans(region).find((p) => p.name === name)
     if (!authored) continue
@@ -337,7 +345,11 @@ export async function fetchMarketingPlansContext(region: PricingRegion): Promise
 }> {
   try {
     const url = `${getLiffioMarketingUrl('/plans')}?region=${region}`
-    const res = await fetch(url, { next: { revalidate: 300 } })
+    // /plans sits on the critical path of every uncached request to /, /pricing,
+    // /features and /help, so a hung upstream stalls TTFB on all four. The abort
+    // throws, and the catch below already turns a throw into the sanitized
+    // authored fallback sheet — so a hang degrades to a correct page, not a stall.
+    const res = await fetch(url, { next: { revalidate: 300 }, signal: AbortSignal.timeout(2500) })
     if (!res.ok) throw new Error(`plans ${res.status}`)
     const payload = (await res.json()) as PlansApiResponse
     const plans: PricingPlan[] = payload.plans.map((p) => ({
@@ -386,10 +398,24 @@ const TIER_COUNT_WORDS: Record<number, string> = {
   6: 'Six',
 }
 
+// 🚩 "unlimited automated DMs" is a PAID-tier fact and must not appear here.
+// UNSUPPORTED_CLAIMS above already drops that exact string from the Free tier of
+// the API payload — but this template is hardcoded, so the guard never sees it
+// and the claim shipped anyway. The Free caps that ARE published are 3
+// automations (workflows) and 500 DMs/month.
+//
+// 🚩 The DM figure is stated, not omitted. This answer used to list what Free
+// includes and say nothing about DMs, while the sibling "Are automated DMs
+// unlimited?" answer and the visible V4 limits table both say 500/month — so
+// /pricing gave two accounts of the same allowance, and the silent one is what
+// an AI engine quotes when asked whether Free is capped. All three now agree on
+// 500. (Enforcement is a separate matter: V4 blocker 25.3 still has nothing
+// metering DMs. That is a reason to build the meter, not to leave the published
+// allowance unstated on one answer out of three.)
 export function buildFreePlanFaqAnswer(region: PricingRegion, plans: PricingPlan[]): string {
   const free = plans.find((p) => p.name === 'Free')
   const price = free?.monthly ?? (region === 'india' ? '₹0' : '$0')
-  return `Yes. The Free plan is ${price}/month. No credit card required. You get one Instagram account, unlimited automated DMs, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.`
+  return `Yes. The Free plan is ${price}/month. No credit card required. You get one Instagram account, three automation workflows, 500 automated DMs a month, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.`
 }
 
 export function buildPlansOfferedFaqAnswer(region: PricingRegion, plans: PricingPlan[]): string {
@@ -399,12 +425,24 @@ export function buildPlansOfferedFaqAnswer(region: PricingRegion, plans: Pricing
         ? ` - ${p.introPrice} ${p.introPriceLabel}, then ${p.monthly}/mo`
         : ''
     const annual = p.annual !== p.monthly ? ` or ${p.annual}/mo billed annually` : ''
-    return `${p.name} (${p.monthly}/mo${intro}${annual})`
+    // 🚩 A withheld tier is SHOWN but not BUYABLE. `asProvisional` already gives
+    // Growth a "Coming soon" CTA and an empty href, and its Offer JSON-LD
+    // carries availability OutOfStock — but this answer quoted the price with no
+    // qualifier and silently undid all of that, which is the one sentence an AI
+    // engine lifts when asked what Liffio costs. Derived from `provisional`, not
+    // from the tier name, so it stays correct the day Growth goes on sale (or
+    // any other tier comes off).
+    const pending = p.provisional ? ' - coming soon, not yet available to buy' : ''
+    return `${p.name} (${p.monthly}/mo${intro}${annual}${pending})`
   })
   // Derived, never hardcoded: this list is whatever the catalogue returns, so a
   // literal "Four tiers" here would silently misdescribe a five-tier response.
   const count = TIER_COUNT_WORDS[parts.length] ?? String(parts.length)
-  return `${count} tiers: ${parts.join(', ')}. Every plan connects one Instagram account per workspace and includes unlimited automated DMs.`
+  // The account half is true of every tier and stays. The DM half is not: Free
+  // has an allowance, so "unlimited" is scoped to the paid tiers where it holds
+  // and Free's 500 is named — the same figure buildFreePlanFaqAnswer, the
+  // "Are automated DMs unlimited?" answer and the V4 limits table all state.
+  return `${count} tiers: ${parts.join(', ')}. Every plan connects one Instagram account per workspace, and every paid plan includes unlimited automated DMs; the Free plan includes 500 a month.`
 }
 
 export function buildCreatorsProgramFaqAnswer(businessPlanValue: string): string {

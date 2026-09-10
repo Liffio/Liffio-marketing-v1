@@ -8,13 +8,15 @@ import { getFeaturesFaqCategories } from "@/config/faq.config";
 import { BreadcrumbJsonLd, FaqPageJsonLd, SoftwareApplicationJsonLd } from "@/lib/seo/json-ld";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { SITE_URL } from "@/config/site.config";
-import { getPricingContext } from "@/lib/pricing-region.server";
 
 export const metadata = pageSeo.features;
 
 export default async function FeaturesPage() {
-  const { region } = await getPricingContext();
-  const faqCategories = getFeaturesFaqCategories(region);
+  // No getPricingContext() here: this page renders no prices, and its FAQ set
+  // excludes the only region-aware category ("Plans & billing"). Without that
+  // call there is no await headers(), so /features stays prerenderable and
+  // CDN-cacheable.
+  const faqCategories = getFeaturesFaqCategories();
 
   return (
     <>
