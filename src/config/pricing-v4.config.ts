@@ -3,8 +3,9 @@
  *
  * 🔴 READ THIS BEFORE CHANGING A ROW.
  *
- * This sheet is transcribed from `liffio-pricing-v4.html` / `PRICING_PACKAGES_V4.md`
- * on an explicit decision to ship the design as drawn. It is therefore the ONE
+ * This sheet is transcribed from the V4 design prototype and `PRICING_PACKAGES_V4.md`
+ * on an explicit decision to ship the design as drawn. Neither source lives in
+ * this repo: both carry unreleased pricing and this repo is public. It is therefore the ONE
  * place on the marketing site that deliberately states entitlements the live
  * `packages` catalogue does not grant today. `docs/decisions/0004` records the
  * list and the owner of each.
