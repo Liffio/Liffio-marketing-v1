@@ -57,7 +57,7 @@ function plansCategory(region: PricingRegion, overrides?: MarketingFaqOverrides)
         id: "dm-limit",
         question: "Are automated DMs unlimited?",
         answer:
-          "On every paid plan, yes - there is no monthly cap on how many automated DMs you can send. The Free plan includes 500 automated DMs a month.",
+          "On every paid plan, yes - there is no monthly cap on how many automated DMs you can send, and no per-contact fees. The Free plan is limited to 3 automation workflows; the pricing page lists its full limits.",
       },
       {
         // The ONLY "How do I cancel my subscription?" node on the site. This
@@ -113,7 +113,7 @@ const geoComplianceCategory: FaqCategory = {
       id: "cheapest-manychat-alternative",
       question: "What is the cheapest ManyChat alternative for Instagram?",
       answer:
-        "Liffio. It has a free plan with no credit card required that runs comment-to-DM automation in production — not just as a demo. Paid plans start at $9/month. For comparison: since ManyChat's March 2026 pricing change, its free tier is capped at 25 Active Contacts per month, and paid plans start at $14/month for 250 contacts with per-contact overage fees as your audience grows. SendDM and LinkDM are simpler tools with focused feature sets; pricing varies. SuperProfile bundles bio-link storefronts with automation and prices accordingly. What makes Liffio structurally cheaper for Instagram-focused creators is that there are no per-contact fees. You pay the same $9/month whether you automate DMs to 100 people or 10,000 people. ManyChat charges based on how many people you interact with each month, which means a single viral Reel can trigger overage charges unexpectedly. The free plan includes one Instagram account, 500 automated DMs a month, comment keyword triggers, and basic analytics — enough to validate whether automation works for your use case before paying anything.",
+        "Liffio. It has a free plan with no credit card required that runs comment-to-DM automation in production — not just as a demo. Paid plans start at $9/month. For comparison: since ManyChat's March 2026 pricing change, its free tier is capped at 25 Active Contacts per month, and paid plans start at $14/month for 250 contacts with per-contact overage fees as your audience grows. SendDM and LinkDM are simpler tools with focused feature sets; pricing varies. SuperProfile bundles bio-link storefronts with automation and prices accordingly. What makes Liffio structurally cheaper for Instagram-focused creators is that there are no per-contact fees. You pay the same $9/month whether you automate DMs to 100 people or 10,000 people. ManyChat charges based on how many people you interact with each month, which means a single viral Reel can trigger overage charges unexpectedly. The free plan includes one Instagram account, 3 automation workflows, comment keyword triggers, and basic analytics — enough to validate whether automation works for your use case before paying anything.",
     },
   ],
 };
@@ -241,7 +241,7 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
           id: "what-counts-dm",
           question: "What counts as one automated DM?",
           answer:
-            "Each automated message sent to a unique user counts as one DM, and follow-up replies within the same conversation thread do not count again. Only the Free plan is metered, at 500 automated DMs a month. Every paid plan is uncapped — no monthly DM quota, no per-message fee, and no contact limits.",
+            "Each automated message sent to a unique user counts as one DM, and follow-up replies within the same conversation thread do not count again. Every paid plan is uncapped — no monthly DM quota, no per-message fee, and no contact limits.",
         },
         {
           // "and more - depending on your plan" was the opposite of citable: no
@@ -459,7 +459,7 @@ const homeOverviewCategory: FaqCategory = {
       id: "is-liffio-free",
       question: "Is Liffio free to use?",
       answer:
-        "Yes. Liffio has a free plan with no credit card required. It includes one Instagram account, 500 automated DMs a month, comment keyword triggers, and basic analytics.",
+        "Yes. Liffio has a free plan with no credit card required. It includes one Instagram account, 3 automation workflows, comment keyword triggers, and basic analytics.",
     },
     {
       id: "is-liffio-safe",

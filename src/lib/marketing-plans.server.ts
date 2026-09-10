@@ -402,7 +402,9 @@ const TIER_COUNT_WORDS: Record<number, string> = {
 // UNSUPPORTED_CLAIMS above already drops that exact string from the Free tier of
 // the API payload — but this template is hardcoded, so the guard never sees it
 // and the claim shipped anyway. The Free caps that ARE published are 3
-// automations (workflows) and 500 DMs/month.
+// automations (workflows). Deliberately NOT a DM count: see UNSUPPORTED_CLAIMS above —
+// nothing meters DMs, and ADR 0004 contains the 500 figure to the V4 matrix and the
+// Free card Limits panel. Do not restate it here.
 //
 // 🚩 The DM figure is stated, not omitted. This answer used to list what Free
 // includes and say nothing about DMs, while the sibling "Are automated DMs
@@ -415,7 +417,7 @@ const TIER_COUNT_WORDS: Record<number, string> = {
 export function buildFreePlanFaqAnswer(region: PricingRegion, plans: PricingPlan[]): string {
   const free = plans.find((p) => p.name === 'Free')
   const price = free?.monthly ?? (region === 'india' ? '₹0' : '$0')
-  return `Yes. The Free plan is ${price}/month. No credit card required. You get one Instagram account, three automation workflows, 500 automated DMs a month, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.`
+  return `Yes. The Free plan is ${price}/month. No credit card required. You get one Instagram account, three automation workflows, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.`
 }
 
 export function buildPlansOfferedFaqAnswer(region: PricingRegion, plans: PricingPlan[]): string {

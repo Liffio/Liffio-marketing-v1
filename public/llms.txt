@@ -17,7 +17,7 @@ Liffio connects to Instagram via official OAuth — no passwords stored. After a
 
 ## Pricing (USD, billed monthly)
 
-- Free: $0/month — 3 automation workflows, 500 automated DMs a month, comment keyword triggers, bio link page, basic analytics
+- Free: $0/month — 3 automation workflows, comment keyword triggers, bio link page, basic analytics
 - Starter: $9/month ($7.50/month billed annually) — all automation types, unlimited templates, post scheduler, short links, lead capture
 - Growth (coming soon — announced but not yet available for purchase): $29/month ($24.17/month billed annually) — everything in Starter plus post, video and profile analytics, caption and schedule templates, bulk upload, 5 seats
 - Business: $59/month ($49.17/month billed annually) — everything in Starter plus conversion analytics, team members (15 seats), account-level insights, follow-up sequences
@@ -25,7 +25,7 @@ Liffio connects to Instagram via official OAuth — no passwords stored. After a
 
 Annual billing charges 10 months instead of 12, so two months are free.
 
-India pricing available via Razorpay in INR: Free ₹0, Starter ₹499, Growth ₹1,499 (coming soon), Business ₹2,499, Agency ₹22,999 per month. Every plan connects one Instagram account per workspace (Agency includes 20 workspaces). Every paid plan includes unlimited automated DMs; the Free plan includes 500 automated DMs a month.
+India pricing available via Razorpay in INR: Free ₹0, Starter ₹499, Growth ₹1,499 (coming soon), Business ₹2,499, Agency ₹22,999 per month. Every plan connects one Instagram account per workspace (Agency includes 20 workspaces). Every paid plan includes unlimited automated DMs.
 
 ## Key facts
 
