@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { FEATURE_SALE_TRACKING } from "@/config/feature-flags";
 import CreatorsForm from "@/components/CreatorsForm";
 import { TechBadge } from "@/components/TechBadge";
 import { siteConfig } from "@/config/site.config";
@@ -9,7 +10,9 @@ const STATIC_BENEFITS = [
   {
     title: "Advanced Analytics",
     description:
-      "Full conversion tracking: comment → DM → click → sale. See exactly what's driving your revenue at every step of the funnel.",
+      FEATURE_SALE_TRACKING
+        ? "Full conversion tracking: comment → DM → click → sale. See exactly what's driving your revenue at every step of the funnel."
+        : "Full conversion tracking: comment → DM → click. See exactly what's driving results at every step of the funnel.",
     tag: "Full attribution",
   },
   {
@@ -36,14 +39,14 @@ function getBenefits(businessPlanValue: string) {
   return [
     {
       title: "Free Business Plan",
-      description: `Full, unrestricted access to our ${businessPlanValue} Business plan - at zero cost. Every feature, every workflow, every integration unlocked from day one.`,
+      description: `Full access to our ${businessPlanValue} Business plan - at zero cost. Every Business feature unlocked from day one.`,
       tag: `Worth ${businessPlanValue}`,
     },
     {
-      title: "Unlimited Automations",
+      title: "Up to 150 Automations",
       description:
-        "Create unlimited comment-to-DM workflows across all your posts. No caps, no throttling, no hidden limits on campaigns or keywords.",
-      tag: "Unlimited workflows",
+        "Build up to 150 comment-to-DM workflows across your posts. Every one sends unlimited automated DMs - no throttling, no hidden per-message fees.",
+      tag: "150 workflows",
     },
     ...STATIC_BENEFITS,
   ];
@@ -204,7 +207,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
               },
               { num: businessPlanValue, label: "Value - completely free", color: "#ff7c49" },
               { num: "48h", label: "Review turnaround", color: "#b20d8f" },
-              { num: "10+", label: "Countries represented", color: "#2ea957" },
+              { num: "5K–100K", label: "Follower range", color: "#2ea957" },
             ].map((s, i) => (
               <div key={s.label}
                 className={`px-6 py-7 text-center ${i < 3 ? "border-r border-[#ffe4e6]" : ""}`}>

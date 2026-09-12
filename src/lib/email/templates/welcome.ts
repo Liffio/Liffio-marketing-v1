@@ -40,7 +40,7 @@ ${brand.description}
 
 Features:
 - Rapid Auto-Replies: Custom 10–60s delay from comment to DM, 24/7
-- AI-Powered Conversations: Human-like DMs that convert leads into customers
+- AI-Powered Conversations: Personalised DMs that convert leads into customers
 - Smart Analytics: Track engagement, conversions, and optimize your funnel
 
 What happens next?

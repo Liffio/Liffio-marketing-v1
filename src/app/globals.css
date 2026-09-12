@@ -322,6 +322,18 @@
     linear-gradient(180deg, #ffffff 0%, #fbfbfc 55%, #f7f7f9 100%);
 }
 
+/*
+ * Continues .hero-mesh-bg's ramp for the section directly beneath the hero.
+ * It STARTS on #f7f7f9 - the exact colour .hero-mesh-bg ends on - so the join
+ * is seamless, and lands on #ffffff, which is what FeaturesSection begins with,
+ * so the next join is seamless too. Applying .hero-mesh-bg itself here would
+ * restart the ramp at #ffffff and produce a visible step against the hero.
+ * If either neighbour's background changes, change these two stops with it.
+ */
+.hero-mesh-continue {
+  background: linear-gradient(180deg, #f7f7f9 0%, #ffffff 100%);
+}
+
 .hero-stagger {
   animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }

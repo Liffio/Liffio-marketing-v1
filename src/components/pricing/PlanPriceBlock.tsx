@@ -1,8 +1,4 @@
-import type { PricingPlan } from "@/config/pricing.config";
-
-function isZeroPrice(price: string): boolean {
-  return price === "$0" || price === "₹0";
-}
+import { isZeroPrice, type PricingPlan } from "@/config/pricing.config";
 
 type PlanPriceBlockProps = {
   plan: PricingPlan;
@@ -63,11 +59,11 @@ export function PlanPriceBlock({
             {followUpPrice}
           </span>
           /mo
-          {annual ? (
+          {annual && plan.annualTotal ? (
             <span
               className={`mt-0.5 block text-[10px] font-bold ${highlight ? "text-white/50" : "text-gray-400"}`}
             >
-              billed annually
+              billed {plan.annualTotal} annually
             </span>
           ) : null}
         </p>
@@ -91,9 +87,9 @@ export function PlanPriceBlock({
       {showPerMonth ? (
         <span className={`pb-1.5 text-sm ${mutedClass}`}>
           /mo
-          {annual && !isZeroPrice(plan.monthly) ? (
+          {annual && plan.annualTotal && !isZeroPrice(plan.monthly) ? (
             <span className={`block text-[10px] font-bold ${highlight ? "text-white/50" : "text-gray-300"}`}>
-              billed annually
+              billed {plan.annualTotal} annually
             </span>
           ) : null}
         </span>

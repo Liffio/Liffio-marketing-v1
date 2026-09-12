@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import { FEATURE_CATEGORIES, FEATURES, PLATFORM_EXTRAS } from "@/config/features.config";
 import { FeatureIcon } from "@/components/features/FeatureIcons";
 import { FEATURE_PHONE_MAP } from "@/components/features/feature-phones";
@@ -10,7 +11,7 @@ import { TechBadge } from "@/components/TechBadge";
 import { siteConfig } from "@/config/site.config";
 
 const HIGHLIGHTS = [
-  { value: "8", label: "Automation types" },
+  { value: String(FEATURES.length), label: "Automation types" },
   { value: "10–60s", label: "Custom DM delay" },
   { value: "24/7", label: "Autopilot mode" },
   { value: "1", label: "Dashboard for all" },
@@ -90,11 +91,11 @@ export default function FeaturesPageContent() {
             className="font-extrabold leading-tight text-[#0a0a0a]"
             style={{ fontFamily: "var(--font-outfit,sans-serif)", fontSize: "clamp(2.25rem,5vw,3.75rem)" }}
           >
-            8 Powerful Automations.{" "}
+            Powerful Automations.{" "}
             <span className="gradient-text">One Dashboard.</span>
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">
-            From comment-to-DM to welcome messages - every Instagram touchpoint automated with human-like delays,
+            From comment-to-DM to {FEATURE_WELCOME_DM ? "welcome messages" : "follow-up sequences"} - every Instagram touchpoint automated with configurable delays,
             full analytics, and official Instagram APIs.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

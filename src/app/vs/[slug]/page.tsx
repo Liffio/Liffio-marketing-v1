@@ -63,7 +63,7 @@ export default async function VsPage({ params }: Props) {
     {
       step: "2",
       title: "Connect Instagram to Liffio",
-      body: "Create a Liffio account and connect your Instagram through Meta's official OAuth flow — about two minutes. Connect every handle you manage now; all plans include unlimited accounts at no extra cost.",
+      body: "Create a Liffio account and connect your Instagram through Meta's official OAuth flow — about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace — the Agency plan bundles 20 workspaces into a single subscription.",
     },
     {
       step: "3",
@@ -246,9 +246,9 @@ export default async function VsPage({ params }: Props) {
                 Liffio.
               </p>
               <p>
-                Liffio requests only the messaging permissions Meta requires for automation and adds a
-                configurable 10–60 second delay between trigger and send, so DM volume distributes naturally
-                and stays within Meta&apos;s permitted use guidelines — even during a viral Reel with thousands
+                Liffio uses the permissions you approve on Meta&apos;s consent screen and adds a
+                configurable 10–60 second delay between trigger and send, so each reply reaches the
+                recipient at a natural conversational pace — even during a viral Reel with thousands
                 of comments.
               </p>
             </div>

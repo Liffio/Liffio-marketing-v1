@@ -65,8 +65,8 @@ Welcome to the ${brand.name} Creators Program, ${name}!
 We've received your application for @${instagramUsername} and we're excited to review it.
 
 WHAT YOU GET (IF APPROVED):
-- Full Business plan access (value $79/month)
-- Unlimited comment-to-DM automations
+- Full Business plan access (value $59/month)
+- Up to 150 comment-to-DM automations, with unlimited automated DMs
 - Advanced analytics & conversion tracking
 - DM follow-up sequences
 - Priority support
@@ -188,8 +188,8 @@ export function getCreatorsEmailHtml({ name, instagramUsername, status, reason }
               </td></tr>
               <tr><td>
                 <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
-                  <tr><td style="padding: 8px 0; font-family: sans-serif; font-size: 15px; color: #1E293B;"><span style="color: #22C55E; margin-right: 12px; font-weight: bold;">✓</span> Full Business plan access ($79/mo value)</td></tr>
-                  <tr><td style="padding: 8px 0; font-family: sans-serif; font-size: 15px; color: #1E293B;"><span style="color: #22C55E; margin-right: 12px; font-weight: bold;">✓</span> Unlimited comment-to-DM automations</td></tr>
+                  <tr><td style="padding: 8px 0; font-family: sans-serif; font-size: 15px; color: #1E293B;"><span style="color: #22C55E; margin-right: 12px; font-weight: bold;">✓</span> Full Business plan access ($59/mo value)</td></tr>
+                  <tr><td style="padding: 8px 0; font-family: sans-serif; font-size: 15px; color: #1E293B;"><span style="color: #22C55E; margin-right: 12px; font-weight: bold;">✓</span> Up to 150 comment-to-DM automations, with unlimited automated DMs</td></tr>
                   <tr><td style="padding: 8px 0; font-family: sans-serif; font-size: 15px; color: #1E293B;"><span style="color: #22C55E; margin-right: 12px; font-weight: bold;">✓</span> Advanced analytics & conversion tracking</td></tr>
                   <tr><td style="padding: 8px 0; font-family: sans-serif; font-size: 15px; color: #1E293B;"><span style="color: #22C55E; margin-right: 12px; font-weight: bold;">✓</span> Priority onboarding & support</td></tr>
                 </table>

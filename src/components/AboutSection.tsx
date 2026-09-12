@@ -22,7 +22,7 @@ export default function AboutSection() {
         </p>
         <p className="text-base leading-relaxed text-gray-600 mb-8">
           Launched in 2026, Liffio runs on official Instagram APIs and is
-          designed to feel human - with configurable delays, keyword triggers,
+          designed to feel personal - with configurable delays, keyword triggers,
           and multi-step flows that work while you sleep. Built in India{" "}
           <img
             src="https://flagcdn.com/w40/in.png"

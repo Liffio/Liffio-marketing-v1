@@ -10,6 +10,7 @@ import {
 import { CountryFlag } from "@/components/pricing/CountryFlag";
 import { pricingPerks, type PricingPlan } from "@/config/pricing.config";
 import { getPricingLocationLabel, type PricingRegion } from "@/lib/pricing-region";
+import { useSharedBillingInterval } from "@/components/pricing/BillingInterval";
 import { siteConfig } from "@/config/site.config";
 
 type PricingPlansGridProps = {
@@ -40,7 +41,7 @@ function BillingToggle({ annual, onToggle }: { annual: boolean; onToggle: () => 
       <span className={`text-sm font-semibold transition-colors ${annual ? "text-[#0a0a0a]" : "text-gray-400"}`}>
         Annual{" "}
         <span className="ml-1 whitespace-nowrap rounded-full border border-green-100 bg-green-50 px-2 py-0.5 text-xs font-bold text-green-600">
-          Save 20%
+          2 months free
         </span>
       </span>
     </div>
@@ -53,7 +54,16 @@ export default function PricingPlansGrid({
   region,
   countryCode = null,
 }: PricingPlansGridProps) {
-  const [annual, setAnnual] = useState(false);
+  /*
+    Both hooks run unconditionally. When a BillingIntervalProvider is present
+    (the pricing page) the toggle is shared with the break-even calculator; on
+    the homepage there is none, and this falls back to its own state with no
+    change in behaviour.
+  */
+  const shared = useSharedBillingInterval();
+  const [localAnnual, setLocalAnnual] = useState(false);
+  const annual = shared ? shared.annual : localAnnual;
+  const setAnnual = shared ? shared.setAnnual : setLocalAnnual;
   const locationLabel = getPricingLocationLabel(region, countryCode);
 
   return (
@@ -83,7 +93,9 @@ export default function PricingPlansGrid({
       </div>
 
       {/* Desktop: grid */}
-      <div className="mx-auto hidden max-w-7xl grid-cols-2 gap-6 lg:grid xl:grid-cols-4">
+      {/* 5 tiers (Free/Starter/Growth/Business/Agency) — xl must be grid-cols-5
+          or the last card orphans onto its own row. */}
+      <div className="mx-auto hidden max-w-7xl grid-cols-2 gap-6 lg:grid xl:grid-cols-5">
         {plans.map((plan) => (
           <div
             key={plan.name}

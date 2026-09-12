@@ -8,9 +8,9 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { COMPARISONS, ALTERNATIVE_PAGES } from "@/config/comparisons.config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Compare Liffio — Instagram DM Automation Tool Comparisons | Liffio",
+  title: "Instagram DM Automation Tool Comparisons | Liffio",
   description:
-    "See how Liffio compares to ManyChat, ReplyRush, LinkDM, SuperProfile, Zorcha, InstaChamp, and more. Feature and pricing comparisons for Instagram DM automation.",
+    "See how Liffio compares to ManyChat, ReplyRush, LinkDM, SuperProfile, Zorcha, and more. Feature and pricing comparisons for Instagram DM automation.",
   pathname: "/compare",
   ogImagePath: siteConfig.meta.ogImagePath,
   ogImageAlt: siteConfig.meta.ogImageAlt,
@@ -104,7 +104,7 @@ export default function ComparePage() {
                 Try Liffio free
               </h2>
               <p className="mt-2 text-white/90">
-                Free plan, no credit card. Unlimited automated DMs and unlimited Instagram accounts on every plan.
+                Free plan, no credit card. Unlimited automated DMs on every paid plan.
               </p>
               <a
                 href={siteConfig.urls.appSignup}

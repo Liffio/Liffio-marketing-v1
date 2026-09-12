@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ComparisonTable from "@/components/marketing/ComparisonTable";
@@ -9,9 +10,9 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import type { FaqCategory } from "@/config/faq.config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Best ManyChat Alternative for Instagram (2026) — Liffio",
+  title: "Free ManyChat Alternative for Instagram DM Automation | Liffio",
   description:
-    "Compare Liffio vs ManyChat, SendDM, LinkDM, and SuperProfile. Feature table, pricing comparison, migration guide, and FAQ. Free plan, no per-contact fees.",
+    "Looking for a free ManyChat alternative? ManyChat’s free tier caps you at 25 contacts a month. Liffio’s free plan has no per-contact fees. From $9/month.",
   pathname: "/manychat-alternative",
   ogImagePath: siteConfig.meta.ogImagePath,
   ogImageAlt: siteConfig.meta.ogImageAlt,
@@ -26,13 +27,13 @@ const faqCategories: FaqCategory[] = [
         id: "is-liffio-better",
         question: "Is Liffio better than ManyChat for Instagram?",
         answer:
-          "For Instagram-only DM automation, Liffio is the better choice for most creators and small agencies. Liffio is built specifically for Instagram and includes unlimited automated DMs on every plan — including the free tier — with no per-contact pricing. ManyChat is a strong choice if you need multi-channel automation across Facebook Messenger, WhatsApp, and Instagram simultaneously. If Instagram is your only channel, you end up paying for infrastructure you don't use. Liffio also includes post scheduling, bio links (bio.liffio.com), and short links (go.liffio.com) in the same workspace, which replaces two or three separate tools most creators pay for.",
+          "For Instagram-only DM automation, Liffio is the better choice for most creators and small agencies. Liffio is built specifically for Instagram and includes unlimited automated DMs on every paid plan, with no per-contact pricing. ManyChat is a strong choice if you need multi-channel automation across Facebook Messenger, WhatsApp, and Instagram simultaneously. If Instagram is your only channel, you end up paying for infrastructure you don't use. Liffio also includes post scheduling, bio links (bio.liffio.com), and short links (go.liffio.com) in the same workspace, which replaces two or three separate tools most creators pay for.",
       },
       {
         id: "does-liffio-work-with-reels",
         question: "Does Liffio work with Instagram Reels?",
         answer:
-          "Yes. Comment-to-DM automation works on both feed posts and Reels. When someone comments a keyword on your Reel, Liffio sends the automated DM after your chosen delay — whether that Reel gets 50 comments or 50,000. Story reply automation works when someone replies to a Story you have published, including Stories that promote a Reel. Live reply automation works during active Instagram Live sessions. All three are available on paid plans. Comment-to-DM on feed posts and Reels is available on the free plan.",
+          "Yes. Comment-to-DM automation works on both feed posts and Reels. When someone comments a keyword on your Reel, Liffio sends the automated DM after your chosen delay — whether that Reel gets 50 comments or 50,000. Story reply automation works when someone replies to a Story you have published, including Stories that promote a Reel, and is available on paid plans. Comment-to-DM on feed posts and Reels is available on the free plan.",
       },
       {
         id: "run-both",
@@ -44,7 +45,7 @@ const faqCategories: FaqCategory[] = [
         id: "free-trial",
         question: "Does Liffio have a free trial?",
         answer:
-          "Liffio has a free plan, not a time-limited free trial. There is no credit card required and no trial period that expires. The free plan includes unlimited Instagram accounts, unlimited automated DMs, comment keyword triggers on posts and Reels, public comment auto-replies, a bio link page at bio.liffio.com, and basic analytics. It is intended to run in production — not as a demo that locks you out after 14 days. If you outgrow the free plan's single flow and 3 message templates, paid plans start at $9/month.",
+          "Liffio has a free plan, not a time-limited free trial. There is no credit card required and no trial period that expires. The free plan includes comment keyword triggers on posts and Reels, public comment auto-replies, a bio link page at bio.liffio.com, and basic analytics. It is intended to run in production — not as a demo that locks you out after 14 days. It connects one Instagram account, the same as every workspace on any tier. If you outgrow the free plan's 3 automations, paid plans start at $9/month and add unlimited automated DMs.",
       },
       {
         id: "manychat-flows-switch",
@@ -95,9 +96,10 @@ export default function ManyChatAlternativePage() {
               The Best ManyChat Alternative for Instagram DM Automation
             </h1>
             <p className="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
-              ManyChat popularised comment-to-DM — but growing creators need unlimited messages, simpler
-              pricing, and tools built only for Instagram. Liffio delivers all three, with a free plan
-              that actually works in production.
+              ManyChat popularised comment-to-DM — but growing creators need simpler pricing, no
+              per-contact fees, and tools built only for Instagram. Liffio delivers all three, with
+              unlimited automated DMs on every paid plan and a free plan that actually works in
+              production.
             </p>
             <div className="mt-8 flex flex-wrap gap-4 justify-center">
               <a
@@ -140,8 +142,7 @@ export default function ManyChatAlternativePage() {
               <p>
                 A creator running comment-to-DM on three Reels per week does not need a general
                 chatbot platform. They need reliable keyword triggers, clean analytics, flat pricing,
-                and the ability to connect as many Instagram accounts as they manage without an
-                extra line item per account.
+                and a predictable price for every Instagram account they manage.
               </p>
               <ul className="mt-4 space-y-2 list-none">
                 <li className="flex gap-3">
@@ -256,13 +257,12 @@ export default function ManyChatAlternativePage() {
                   program, or giveaway and tells viewers to comment a keyword to get the link, discount
                   code, or guide. Liffio sends the DM automatically to every person who comments that
                   keyword — whether the post gets 30 comments or 3,000. The free plan handles
-                  comment-to-DM on posts and Reels with unlimited DMs, which is enough for most
-                  creators to test and prove out the workflow before paying anything.
+                  comment-to-DM on posts and Reels, which is enough for most creators to test
+                  and prove out the workflow before paying anything.
                 </p>
                 <p className="mt-3 text-gray-600 leading-relaxed">
                   Common automations in this segment: comment-to-DM for lead magnets and freebie
-                  downloads, story reply sequences for limited-time offers, and welcome DMs for
-                  new followers linked to an onboarding sequence.
+                  downloads{FEATURE_WELCOME_DM ? ", story reply sequences for limited-time offers, and welcome DMs for new followers linked to an onboarding sequence" : ", and story reply sequences for limited-time offers"}.
                 </p>
               </div>
 
@@ -292,10 +292,10 @@ export default function ManyChatAlternativePage() {
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   Agencies managing multiple client Instagram accounts use Liffio's Agency plan,
-                  which includes white-label workspaces and client sub-workspaces with restricted
-                  CLIENT role access. Each client sees only their own account and automations.
-                  The agency team manages everything from a single dashboard. There is no per-account
-                  surcharge — unlimited Instagram accounts is included at every plan tier.
+                  which bundles 20 workspaces into a single subscription — one Instagram account
+                  each, and every workspace a full Business workspace. The agency team manages
+                  everything from a single dashboard, on one invoice with one renewal date, and
+                  there is no per-account surcharge within that allowance.
                 </p>
                 <p className="mt-3 text-gray-600 leading-relaxed">
                   For agencies coming from ManyChat, the migration path is straightforward: recreate
@@ -324,21 +324,16 @@ export default function ManyChatAlternativePage() {
                 Liffio. Your Instagram password is never entered into Liffio at any point.
               </p>
               <p>
-                The permissions Liffio requests are the same ones Meta requires for messaging
-                automation: <code className="text-sm bg-gray-100 px-1.5 py-0.5 rounded">instagram_manage_messages</code>,{" "}
-                <code className="text-sm bg-gray-100 px-1.5 py-0.5 rounded">pages_messaging</code>, and the standard
-                read permissions for comments and stories. Liffio went through Meta&apos;s App Review
-                process to receive these permissions — the same process that every compliant
-                Instagram automation tool must pass.
+                The permissions Liffio requests are the ones you approve on Meta&apos;s consent
+                screen when you connect your account. You can review each permission before
+                approving, and you can revoke Liffio&apos;s access at any time from your Instagram
+                settings under Apps and Websites.
               </p>
               <p>
-                The other safety factor is send behavior. Instagram&apos;s spam detection looks for
-                patterns — identical messages sent at exactly the same timestamp, very high burst
-                volume from a single account in a short window, and zero variation in send timing.
-                Liffio introduces a configurable 10–60 second delay between trigger and send, which
-                distributes DM volume naturally over time. At normal creator usage levels — even
-                during a viral Reel with thousands of comments — the send pattern does not trigger
-                spam detection.
+                The other factor is send behavior. Liffio spaces automated sends with a
+                configurable 10–60 second delay between trigger and send. That pause creates a
+                natural conversation rhythm for the person on the receiving end — a reply that
+                lands a moment after their comment rather than a wall of instant messages.
               </p>
               <p>
                 The contrast is with tools that use unofficial access methods: browser automation,
@@ -366,7 +361,7 @@ export default function ManyChatAlternativePage() {
                 {
                   step: "2",
                   title: "Sign up for Liffio and connect Instagram",
-                  body: "Create a Liffio account at app.liffio.com and connect your Instagram account through the Meta OAuth flow. The connection takes about two minutes. If you manage multiple Instagram accounts, connect them all at this stage — all plans include unlimited accounts at no extra cost.",
+                  body: "Create a Liffio account at app.liffio.com and connect your Instagram account through the Meta OAuth flow. The connection takes about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace — the Agency plan bundles 20 workspaces into a single subscription.",
                 },
                 {
                   step: "3",
@@ -427,7 +422,7 @@ export default function ManyChatAlternativePage() {
             </h2>
             <p className="text-gray-600 mb-8">
               Set up comment-to-DM automation on your first Reel in under five minutes.
-              The free plan includes unlimited automated DMs and works in production — not just as a demo.
+              The free plan works in production — not just as a demo.
             </p>
             <a
               href={siteConfig.urls.appSignup}
@@ -436,7 +431,7 @@ export default function ManyChatAlternativePage() {
               Get Started Free
             </a>
             <p className="mt-3 text-xs text-gray-500">
-              Free plan includes unlimited DMs · No credit card required · Setup takes under 5 minutes
+              Free plan, no expiry · No credit card required · Setup takes under 5 minutes
             </p>
           </div>
         </section>

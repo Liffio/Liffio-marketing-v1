@@ -1,3 +1,5 @@
+import { FEATURE_STORY_REACTIONS, FEATURE_WELCOME_DM } from "@/config/feature-flags";
+
 export type BlogPost = {
   slug: string;
   category: string;
@@ -32,7 +34,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "What comment-to-DM actually does",
         paragraphs: [
           "You post a Reel or carousel and tell people to comment a word if they want the link, guide, or discount code. When Instagram sees that comment, a tool sends them a DM with whatever you promised. You are not sitting in your inbox copying the same message four hundred times.",
-          "The setup is simple on paper: one trigger word, one DM template, one delay so it does not feel robotic. The hard part is choosing a keyword your audience already understands and writing a DM that sounds like you, not like a blast from a marketing bot.",
+          "The setup is simple on paper: one trigger word, one DM template, one delay so replies arrive at a conversational pace. The hard part is choosing a keyword your audience already understands and writing a DM that sounds like you, not like a blast from a marketing bot.",
           "Most creators who do this well treat the comment as the handshake and the DM as the conversation. The comment is public proof that someone raised their hand. The DM is where you deliver the thing and, if it fits, ask a follow-up question.",
         ],
       },
@@ -49,7 +51,7 @@ export const BLOG_POSTS: BlogPost[] = [
         paragraphs: [
           "Connect Instagram through Meta login so you are on the official API, not a grey-market login that risks the account.",
           "Create a Comment automation, choose the post or Reel, and type the trigger exactly as you want it matched. Most teams use \"contains\" matching so GUIDE also catches \"guide please\".",
-          "Write the DM in two or three short lines. Put the link on its own line or use a button if you are on a paid plan. Set the delay to something between 15 and 45 seconds. Instant DMs feel fake; a half-minute pause feels like a human grabbed their phone.",
+          "Write the DM in two or three short lines. Put the link on its own line or use a button if you are on a paid plan. Set the delay to something between 15 and 45 seconds. Instant DMs can feel abrupt; a short pause gives the reply a natural conversational rhythm.",
           "Turn on a public reply if you want social proof under the comment. Something like \"Sent you a DM with the link\" stops the same person from commenting twelve times because they think it broke.",
           "Before you promote the post, comment from a second account and confirm the DM lands, the link opens on mobile, and the public reply looks right.",
         ],
@@ -80,7 +82,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         question: "Will Instagram punish automated DMs?",
         answer:
-          "Tools that use Meta's official messaging APIs and reasonable send delays are built for this use case. Avoid instant blasts, identical spammy copy, and third-party apps that ask for your password.",
+          "Tools that use Meta's official messaging APIs are built for this use case. Keep your copy useful and varied, and avoid third-party apps that ask for your password.",
       },
       {
         question: "Can I use more than one keyword on the same post?",
@@ -125,14 +127,14 @@ export const BLOG_POSTS: BlogPost[] = [
         paragraphs: [
           "Check whether automated Instagram DMs are capped per month or per contact. Some tools look cheap until a Reel blows up and you hit an overage.",
           "See if multiple Instagram accounts are included or billed separately. Agencies and creator managers care about this on day one.",
-          "Ask whether story replies, live comment triggers, and welcome DMs are native or add-ons.",
+          `Ask whether story replies${FEATURE_WELCOME_DM ? " and welcome DMs" : ""} are native or add-ons.`,
           "If you sell in India, confirm INR checkout and GST-friendly invoices. USD-only billing is a real friction point for Indian creators.",
         ],
       },
       {
         heading: "ManyChat vs Liffio for Instagram-only work",
         paragraphs: [
-          "Both handle keyword comment-to-DM, story reply automations, and follow-up sequences. ManyChat has a longer track record and a huge template library. Liffio is built around Instagram growth workflows: unlimited automated DMs on every plan, post scheduling, bio links, and short links in the same account.",
+          "Both handle keyword comment-to-DM, story reply automations, and follow-up sequences. ManyChat has a longer track record and a huge template library. Liffio is built around Instagram growth workflows: unlimited automated DMs on every paid plan, post scheduling, bio links, and short links in the same account.",
           "ManyChat's free tier is workable for experiments but tight for always-on Instagram campaigns. Liffio's free plan is meant to run comment-to-DM in production, not just as a demo.",
           "If you already invested months in ManyChat flows, migration is mostly copy and recreate, not a magic import button. Budget an hour per active automation.",
         ],
@@ -161,12 +163,12 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         question: "Is Liffio really free to start?",
         answer:
-          "Yes. You can connect Instagram and run comment-to-DM on the free plan without a card. Paid plans add flows, API access, and team features.",
+          "Yes. You can connect Instagram and run comment-to-DM on the free plan without a card. Paid plans add unlimited automated DMs, more automation slots, and team seats.",
       },
       {
         question: "Do agencies use Liffio?",
         answer:
-          "The Agency plan includes client workspaces and white-label options so one team can manage multiple brands without sharing passwords.",
+          "The Agency plan bundles 20 workspaces on one subscription — one Instagram account each — so one team can manage multiple brands without sharing passwords.",
       },
     ],
     references: [
@@ -206,7 +208,9 @@ export const BLOG_POSTS: BlogPost[] = [
         paragraphs: [
           "Any reply: good for launch weeks when every story is a CTA and you want one thank-you DM with the link.",
           "Keyword in the reply: useful when you ask \"reply STORY for the checklist\" on a sticker poll.",
-          "Emoji reactions: treat carefully. A fire emoji might mean hype, not \"send me the sales page.\" Many creators only auto-DM on text replies for that reason.",
+          ...(FEATURE_STORY_REACTIONS
+            ? ["Emoji reactions: treat carefully. A fire emoji might mean hype, not \"send me the sales page.\" Many creators only auto-DM on text replies for that reason."]
+            : []),
         ],
       },
       {
@@ -244,7 +248,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         question: "Will followers know the DM is automated?",
         answer:
-          "Only if you sound robotic. Use plain language, reasonable delays, and turn off automations on posts that are not offers.",
+          "Assume some will — and that is fine when the DM is useful. Use plain language, reasonable delays, and turn off automations on posts that are not offers.",
       },
     ],
   },
@@ -289,7 +293,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "Scripts 8 to 10: follow-ups and boundaries",
         paragraphs: [
-          "8) Follow-up 24 hours later, only once: \"Still want the guide from yesterday's Reel? Here it is again: [link]. Reply STOP if you are good.\"",
+          "8) Follow-up later the same day, only once: \"Still want the guide from yesterday's Reel? Here it is again: [link]. Reply STOP if you are good.\"",
           "9) Soft qualify: \"Got your comment. Are you looking for the free checklist or the paid course? Reply FREE or COURSE and I will send the right link.\"",
           "10) Close the loop after purchase: \"If you already grabbed it, ignore this. If not, here is the link again: [link].\"",
         ],
@@ -297,7 +301,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "When a script is doing poorly",
         paragraphs: [
-          "Low opens usually mean the first line is vague or the delay was instant and felt bot-like.",
+          "Low opens usually mean the first line is vague or the reply landed too abruptly.",
           "Low clicks mean the offer is unclear or the landing page is slow on mobile data.",
           "High unsubscribes or angry replies mean you followed up too many times or the DM did not match the post promise.",
           "Change one variable per post, not all four at once, or you will not know what fixed it.",
@@ -374,64 +378,7 @@ export const BLOG_POSTS: BlogPost[] = [
         url: "https://developers.facebook.com/docs/instagram-platform/overview",
       },
     ],
-  },
-  {
-    slug: "fashion-brand-dm-automation-case-study",
-    category: "Case Study",
-    title: "How a D2C Fashion Brand Used Comment-to-DM for Launch Week",
-    excerpt:
-      "A simplified case study from a six-person team: what they posted, which keywords they used, and how DMs fed their Shopify drop without a custom dev build.",
-    readTime: "2 min read",
-    date: "April 20, 2026",
-    author: "Liffio Team",
-    publishedAt: "2026-04-20",
-    updatedAt: "2026-04-20",
-    gradient: "from-pink-500 to-rose-600",
-    sections: [
-      {
-        heading: "The situation going in",
-        paragraphs: [
-          "The brand sells limited-run streetwear drops on Shopify. Instagram Reels drive waitlist hype, but the team was manually DMing links after each drop teaser. On the last drop, two people handled inbox for nine hours and still missed several hundred comments.",
-          "They did not need a complex chatbot. They needed every COMMENT that said DROP to receive the early access link within a minute, while the founders slept before launch morning.",
-        ],
-      },
-      {
-        heading: "What they posted",
-        paragraphs: [
-          "Three Reels in one week. Each ended with the same instruction: comment DROP for the secret cart link.",
-          "They pinned their own comment repeating the keyword and showing an example.",
-          "Stories pointed back to the latest Reel instead of introducing a second keyword, which kept reporting simple.",
-        ],
-      },
-      {
-        heading: "Automation layout",
-        paragraphs: [
-          "One comment automation per Reel, all using the DROP keyword, same DM body, 30 second delay.",
-          "Public reply: \"Sent to your DMs. Check requests if you do not see it.\"",
-          "DM copy: \"Early access cart for the drop: [shop link]. Password EARLY works until 10am IST. Reply SIZE if you need the fit guide.\"",
-          "A follow-up automation fired only on paid plans when someone replied SIZE, sending a size chart image and link to returns policy.",
-        ],
-      },
-      {
-        heading: "Results they tracked",
-        paragraphs: [
-          "Roughly 4,200 trigger comments across the three Reels.",
-          "About 3,100 unique DM conversations started by automation.",
-          "Shopify reported 680 orders tagged with the early access UTM in the DM link within 48 hours.",
-          "The team still answered about 90 manual threads about shipping to non-serviceable pincodes. Automation did not remove support; it removed copy-paste.",
-        ],
-      },
-      {
-        heading: "What they would do differently",
-        paragraphs: [
-          "They would cap the follow-up SIZE bot to one message instead of two, because a few customers felt nagged.",
-          "They would publish the keyword in the Reel caption text, not only spoken audio, after seeing misspellings like DORP.",
-          "They would pause the automation two hours after sellout to avoid sending dead links.",
-        ],
-      },
-    ],
-  },
-  {
+  },  {
     slug: "instagram-automation-mistakes",
     category: "Tips",
     title: "5 Instagram Automation Mistakes That Cost You Followers",
@@ -447,8 +394,8 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "1) Zero delay on every message",
         paragraphs: [
-          "If the DM lands the same second as the comment, people assume bot. Use at least 10 seconds, and many accounts do better in the 20 to 45 second range.",
-          "Vary delay slightly between campaigns if your tool allows it so the pattern is less mechanical.",
+          "If the DM lands the same second as the comment, it reads as abrupt. Use at least 10 seconds, and many accounts do better in the 20 to 45 second range.",
+          "Pick a delay that fits the conversation you want — a quick reply for time-sensitive offers, a longer pause for casual content.",
         ],
       },
       {
@@ -482,13 +429,13 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         question: "How many follow-up DMs are too many?",
         answer:
-          "For cold commenters, one follow-up after 24 hours is plenty. More than that and block rates climb on fashion and coaching accounts we have seen.",
+          "For cold commenters, one follow-up within 24 hours is plenty. More than that and block rates climb on fashion and coaching accounts we have seen.",
       },
-      {
+      ...(FEATURE_WELCOME_DM ? [{
         question: "Should I automate welcome DMs to new followers?",
         answer:
           "Only if the message is genuinely useful and infrequent. Generic \"thanks for following\" pitches annoy people who never asked to hear from you.",
-      },
+      }] : []),
     ],
     references: [
       {

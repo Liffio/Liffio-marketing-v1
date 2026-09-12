@@ -1,4 +1,6 @@
-const AUTOMATION_TYPES = [
+import { FEATURE_COLLECT_DATA_PROMPTS, FEATURE_WELCOME_DM } from "@/config/feature-flags";
+
+const ALL_AUTOMATION_TYPES = [
   {
     name: "Comment-to-DM",
     description:
@@ -8,11 +10,6 @@ const AUTOMATION_TYPES = [
     name: "Story reply",
     description:
       "Auto-responds when someone replies to your Instagram story or reacts to it. Useful for story-based lead collection and product drops.",
-  },
-  {
-    name: "Live reply",
-    description:
-      "Responds to keyword comments during an Instagram live stream. Runs in real time without interrupting the broadcast.",
   },
   {
     name: "DM reply",
@@ -25,14 +22,16 @@ const AUTOMATION_TYPES = [
       "Delivers content (link, code, file) only after the user follows you. The follow is verified before the DM sends.",
   },
   {
-    name: "Smart Re-engage",
+    name: "Follow-up Sequences",
     description:
-      "Sends a win-back message to contacts who engaged in the past but have gone quiet. Time gap and message are configurable.",
+      "Sends timed follow-up messages within an active DM conversation. Delay and message are configurable per step.",
   },
   {
     name: "Collect Data",
     description:
-      "Captures lead information — name, email, phone, or custom fields — through a guided DM conversation.",
+      FEATURE_COLLECT_DATA_PROMPTS
+        ? "Captures lead information — name, email, phone, or custom fields — through a guided DM conversation."
+        : "Captures email addresses shared during a DM conversation and stores them as leads.",
   },
   {
     name: "Welcome New Followers",
@@ -40,6 +39,10 @@ const AUTOMATION_TYPES = [
       "Sends an automatic DM to each new follower within the configured delay. Runs 24/7 without manual action.",
   },
 ] as const;
+
+const AUTOMATION_TYPES_LIST = ALL_AUTOMATION_TYPES.filter(
+  (t) => t.name !== "Welcome New Followers" || FEATURE_WELCOME_DM,
+);
 
 const COMPLIANCE_FACTS = [
   {
@@ -53,9 +56,9 @@ const COMPLIANCE_FACTS = [
       "Instagram restricts tools that simulate a logged-in user in a browser (often called 'bots'). It does not restrict tools that connect through the official OAuth flow. The distinction is authorization method, not action type. Liffio authorizes through Meta's developer OAuth — the same method used by any official third-party app.",
   },
   {
-    heading: "Send delays reduce the risk of rate limiting",
+    heading: "Send delays pace replies naturally",
     body:
-      "Liffio sends DMs after a 10–60 second delay (configurable). Instant bulk sends are more likely to trigger Instagram's rate limits. A short, human-like delay distributes sends over time and matches how a person would respond.",
+      "Liffio sends DMs after a 10–60 second delay (configurable). The short delay spreads sends over time and keeps the reply pace natural for the person receiving it.",
   },
 ] as const;
 
@@ -73,13 +76,13 @@ export default function SeoDiscoverabilitySection() {
             className="text-2xl font-extrabold text-[#0a0a0a] sm:text-3xl"
             style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
           >
-            The 8 automation types Liffio supports
+            The automation types Liffio supports
           </h2>
           <p className="mt-3 text-gray-600 max-w-2xl">
             Each automation runs independently. You can have multiple active at the same time on the same account.
           </p>
           <dl className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {AUTOMATION_TYPES.map(({ name, description }) => (
+            {AUTOMATION_TYPES_LIST.map(({ name, description }) => (
               <div key={name} className="rounded-2xl border border-gray-100 bg-[#faf9ff] p-5">
                 <dt className="text-sm font-bold text-[#0a0a0a]">{name}</dt>
                 <dd className="mt-2 text-sm leading-relaxed text-gray-600">{description}</dd>
@@ -124,7 +127,7 @@ export default function SeoDiscoverabilitySection() {
               <h3 className="text-sm font-bold text-[#0a0a0a]">DTC brands and e-commerce</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
                 Product launch automation: a Reel drop, a comment keyword, and a DM with the buy link.
-                Story replies for flash sales. Welcome DMs for new followers with a first-order code.
+                Story replies for flash sales.{FEATURE_WELCOME_DM ? " Welcome DMs for new followers with a first-order code." : ""}
               </p>
             </div>
             <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
@@ -137,8 +140,8 @@ export default function SeoDiscoverabilitySection() {
             <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
               <h3 className="text-sm font-bold text-[#0a0a0a]">Agencies managing multiple accounts</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                One Liffio workspace for unlimited client Instagram accounts. White-label workspaces on the
-                Agency plan. Separate analytics per account with team access controls.
+                Each client Instagram account runs in its own workspace. The Agency plan bundles 20
+                workspaces on one subscription. Separate analytics per workspace with team access controls.
               </p>
             </div>
           </div>

@@ -193,19 +193,20 @@ function SignupSim({ animKey }: { animKey: number }) {
 
 // ─── Step 2: Connect Instagram simulation ─────────────────────────────────────
 
-const MetaLogo = () => (
-  <svg viewBox="0 0 512 512" className="h-5 w-5 flex-shrink-0">
-    <defs>
-      <linearGradient id="hiw-mlg" x1="0%" x2="100%">
-        <stop offset="0%" stopColor="#0064e0" />
-        <stop offset="100%" stopColor="#0080f9" />
-      </linearGradient>
-    </defs>
-    <path
-      fill="url(#hiw-mlg)"
-      d="m149.4 89.4c-81.6 0-144.1 106.2-144.1 218.5 0 70.3 34 114.7 91 114.7 41 0 70.5-19.3 123-111l36.9-65.2 31.2-52.8c26.5-40.9 48.4-61.3 74.4-61.3 54 0 97.2 79.5 97.2 177.2 0 37.2-12.2 58.8-37.5 58.8-24.2 0-35.8-16-81.8-90l-42.3 36.9c47.9 80.2 74.6 107.4 123 107.4 55.5 0 86.4-45.1 86.4-116.9 0-117.7-63.9-216.5-141.6-216.5-41.1 0-73.3 31-102.4 70.3l-32.3 47.4c-31.9 49-51.3 79.7-51.3 79.7-42.5 66.7-57.2 81.6-80.9 81.6-24.4 0-38.8-21.4-38.8-59.5 0-81.6 40.7-165 89.2-165z"
-    />
-  </svg>
+const InstagramGlyph = ({ variant = "black" }: { variant?: "black" | "white" }) => (
+  // The Instagram Brand Asset Pack's own file, byte-identical and unmodified -
+  // Instagram requires the supplied asset, so no re-export, resize or recolour.
+  // Black on light grounds, white on the coloured button, per the pack's own
+  // variants. The connect flow is Instagram Login (`instagram_business_*`), so
+  // this is also the accurate mark for what the user actually sees.
+  <img
+    src={`/logo/instagram/Instagram_Glyph_${variant === "white" ? "White" : "Black"}.svg`}
+    alt=""
+    aria-hidden
+    width={20}
+    height={20}
+    className="h-5 w-5 flex-shrink-0"
+  />
 );
 
 function ConnectSim({ animKey }: { animKey: number }) {
@@ -277,7 +278,7 @@ function ConnectSim({ animKey }: { animKey: number }) {
                 transform: phase === 0 ? "scale(0.97)" : "scale(1)",
               }}
             >
-              <MetaLogo />
+              <InstagramGlyph variant="white" />
               {metaCopy.connectSimButton}
             </button>
           )}
@@ -293,7 +294,7 @@ function ConnectSim({ animKey }: { animKey: number }) {
           }}
         >
           <div className="flex items-center gap-2 mb-3">
-            <MetaLogo />
+            <InstagramGlyph />
             <p className="text-[10px] font-bold text-[#0064e0]">{metaCopy.connectSimLoginTitle}</p>
           </div>
           {connecting && (

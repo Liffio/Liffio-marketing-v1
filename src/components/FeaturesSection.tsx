@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { siteConfig } from "@/config/site.config";
+import { FEATURE_BRANCHING_LOGIC, FEATURE_COLLECT_DATA_PROMPTS, FEATURE_CRM_INTEGRATION, FEATURE_STORY_REACTIONS, FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import { LiffioAvatar } from "@/components/Logo";
 import { IPhoneShell } from "@/components/simulation/IPhoneShell";
 import { SimulationContent } from "@/components/simulation/SimulationContent";
@@ -559,7 +560,7 @@ export function WelcomeFollowersPhone({ animKey }: { animKey: number }) {
 
 // ─── Feature list ─────────────────────────────────────────────────────────────
 
-const features = [
+const allFeatures = [
   {
     id: "auto-comment-reply",
     num: "01",
@@ -570,7 +571,7 @@ const features = [
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>),
     title: "Auto Comment Reply",
     gridLabel: "Comment Reply",
-    description: "When a follower comments a keyword on your post or reel, Liffio sends them a personalised DM and a public comment reply on your schedule. Choose a custom delay from 10–60 seconds after the comment for natural, human-like timing.",
+    description: "When a follower comments a keyword on your post or reel, Liffio sends them a personalised DM and a public comment reply on your schedule. Choose a custom delay from 10–60 seconds after the comment so replies land at a natural pace.",
     bullets: ["Works on posts, reels, and carousels", "Unlimited keywords per campaign", "Sends public reply + private DM simultaneously"],
     Phone: CommentReplyPhone,
   },
@@ -580,31 +581,19 @@ const features = [
     color: "#0f74c5",
     bg: "rgba(15,116,197,0.07)",
     border: "rgba(15,116,197,0.18)",
-    tag: "Story reactions",
+    tag: FEATURE_STORY_REACTIONS ? "Story reactions" : "Story replies",
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><rect x="3" y="3" width="18" height="18" rx="3" ry="3" strokeLinecap="round" strokeLinejoin="round"/><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4"/></svg>),
     title: "Story Auto Reply",
     gridLabel: "Story Reply",
-    description: "Your stories get the most engaged viewers. Liffio auto-responds the moment someone reacts, replies to, or mentions your story - capturing leads at their highest point of interest.",
-    bullets: ["Triggers on reactions, replies, and @mentions", "Perfect for flash sales and limited-time offers", "Works 24/7, even mid-sleep"],
+    description: FEATURE_STORY_REACTIONS
+      ? "Your stories get the most engaged viewers. Liffio auto-responds the moment someone reacts, replies to, or mentions your story - capturing leads at their highest point of interest."
+      : "Your stories get the most engaged viewers. Liffio auto-responds the moment someone replies to or mentions your story - capturing leads at their highest point of interest.",
+    bullets: [FEATURE_STORY_REACTIONS ? "Triggers on reactions, replies, and story mentions" : "Triggers on story replies and story mentions", "Perfect for flash sales and limited-time offers", "Works 24/7, even mid-sleep"],
     Phone: StoryReplyPhone,
   },
   {
-    id: "live-auto-reply",
-    num: "03",
-    color: "#f5184c",
-    bg: "rgba(245, 24, 76,0.07)",
-    border: "rgba(245, 24, 76,0.18)",
-    tag: "Live stream DMs",
-    icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>),
-    title: "Live Auto Reply",
-    gridLabel: "Live Reply",
-    description: "Your Instagram Live is a live sales event. Liffio monitors comments in real-time and sends DMs to every viewer who types a keyword - turning a broadcast into a revenue funnel.",
-    bullets: ["Monitors keywords during live streams", "Ideal for product launches, Q&As, and webinars", "Sends discount codes, links, and resources automatically"],
-    Phone: LiveReplyPhone,
-  },
-  {
     id: "dm-auto-reply",
-    num: "04",
+    num: "03",
     color: "#2ea957",
     bg: "rgba(46,169,87,0.07)",
     border: "rgba(46,169,87,0.18)",
@@ -613,12 +602,12 @@ const features = [
     title: "DM Auto Reply",
     gridLabel: "DM Reply",
     description: "Build powerful automated flows triggered by incoming DMs. From simple keyword responses to multi-step qualification sequences - Liffio handles every conversation at scale.",
-    bullets: ["Keyword-triggered conversation flows", "Multi-step logic with yes/no branching", "Qualify leads without lifting a finger"],
+    bullets: ["Keyword-triggered conversation flows", FEATURE_BRANCHING_LOGIC ? "Multi-step logic with yes/no branching" : "Multi-step follow-up sequences", "Qualify leads without lifting a finger"],
     Phone: DmReplyPhone,
   },
   {
     id: "ask-for-follow",
-    num: "05",
+    num: "04",
     color: "#b20d8f",
     bg: "rgba(178, 13, 143,0.07)",
     border: "rgba(178, 13, 143,0.18)",
@@ -632,21 +621,21 @@ const features = [
   },
   {
     id: "smart-reengage",
-    num: "06",
+    num: "05",
     color: "#14b8a6",
     bg: "rgba(20,184,166,0.07)",
     border: "rgba(20,184,166,0.18)",
-    tag: "Win-back sequences",
+    tag: "Follow-up sequences",
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>),
-    title: "Smart Re-engage",
-    gridLabel: "Re-engage",
-    description: "Warm leads go cold fast. Liffio identifies users who've interacted with you before and automatically sends timed follow-ups - converting browsers into buyers on autopilot.",
-    bullets: ["Re-engages previous commenters and DM contacts", "Configurable time-based follow-up sequences", "Personalised message templates per segment"],
+    title: "Follow-up Sequences",
+    gridLabel: "Follow-ups",
+    description: "Keep the conversation moving. Liffio sends timed follow-up messages inside an active DM thread - a reminder, a second link, or the next step in your flow - on autopilot.",
+    bullets: ["Timed follow-ups within an active DM conversation", "Configurable delay per step", "Personalised message templates per flow"],
     Phone: ReengagePhone,
   },
   {
     id: "collect-user-data",
-    num: "07",
+    num: "06",
     color: "#ee7a1f",
     bg: "rgba(238,122,31,0.07)",
     border: "rgba(238,122,31,0.18)",
@@ -654,13 +643,15 @@ const features = [
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>),
     title: "Collect User Data",
     gridLabel: "Collect Data",
-    description: "Own your audience. Liffio asks followers for their email, phone number, or any custom field right inside a DM conversation - building your list without any external tools.",
-    bullets: ["Captures email, phone, and custom data", "Auto-exports to CSV and integrates with CRMs", "Fully GDPR-compliant data handling"],
+    description: FEATURE_COLLECT_DATA_PROMPTS
+      ? "Own your audience. Liffio asks followers for their email, phone number, or any custom field right inside a DM conversation - building your list without any external tools."
+      : "Own your audience. Liffio captures email addresses shared in DM conversations - building your list without any external tools.",
+    bullets: [FEATURE_COLLECT_DATA_PROMPTS ? "Captures email, phone, and custom data" : "Captures email addresses from DM replies", FEATURE_CRM_INTEGRATION ? "Export to CSV and integrate with CRMs" : "Export captured leads to CSV", "Fully GDPR-compliant data handling"],
     Phone: CollectDataPhone,
   },
   {
     id: "welcome-new-followers",
-    num: "08",
+    num: "07",
     color: "#ad36a7",
     bg: "rgba(173,54,167,0.07)",
     border: "rgba(173,54,167,0.18)",
@@ -673,6 +664,8 @@ const features = [
     Phone: WelcomeFollowersPhone,
   },
 ] as const;
+
+const features = allFeatures.filter((f) => f.id !== "welcome-new-followers" || FEATURE_WELCOME_DM);
 
 // ─── Simulation shell (matches How It Works) ──────────────────────────────────
 
@@ -732,18 +725,18 @@ export default function FeaturesSection() {
               className="text-3xl font-extrabold leading-tight text-[#0a0a0a] sm:text-4xl sm:text-[2.75rem]"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
             >
-              8 Auto DM Automations.{" "}
+              Auto DM Automations.{" "}
               <span className="text-foreground">One Dashboard.</span>
             </h2>
             <p className="mt-3 text-base leading-relaxed text-gray-500 sm:text-lg">
-              Auto DMs from comments, stories, live streams & inbox - Liffio is your complete Instagram auto DM tool.
+              Auto DMs from comments, stories & inbox - Liffio is your complete Instagram auto DM tool.
             </p>
           </div>
           <div className="flex flex-wrap gap-2 lg:max-w-sm lg:justify-end">
             {[
               { label: "Auto DM + Auto Comment", color: "#ff7c49" },
-              { label: "10–60s human-like delay", color: "#f5184c" },
-              { label: "Unlimited auto DMs", color: "#b20d8f" },
+              { label: "10–60s custom delay", color: "#f5184c" },
+              { label: "Unlimited auto DMs (paid)", color: "#b20d8f" },
             ].map((chip) => (
               <TechBadge key={chip.label} label={chip.label} variant="chip" accent={chip.color} />
             ))}
@@ -837,7 +830,7 @@ export default function FeaturesSection() {
             >
               <div className="mb-2 flex flex-wrap items-center gap-2">
                 <TechBadge label={f.tag} variant="inline" format="label" accent={f.color} />
-                <span className="text-[10px] font-bold text-gray-500">{f.num} / 08</span>
+                <span className="text-[10px] font-bold text-gray-500">{f.num} / {String(features.length).padStart(2, "0")}</span>
               </div>
               <div className="flex items-start gap-3">
                 <div
@@ -871,7 +864,7 @@ export default function FeaturesSection() {
               </div>
             </article>
 
-            <p className="mt-3 text-center text-xs text-gray-500">8 automations · one dashboard</p>
+            <p className="mt-3 text-center text-xs text-gray-500">Every automation · one dashboard</p>
 
             <a
               href={siteConfig.urls.appSignup}

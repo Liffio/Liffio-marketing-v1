@@ -24,7 +24,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogImage = `${SITE_URL}${siteConfig.meta.ogImagePath}`;
 
   return {
-    title: `${post.title} | Liffio Blog`,
+    // The " | Liffio Blog" suffix cost ~104px and pushed four of the six posts
+    // past the ~575px SERP title width, truncating the post titles themselves.
+    // Even " | Liffio" left two over. The suffix is redundant anyway: the
+    // /blog/ URL path renders under the title and Google appends the site name
+    // to the title link from og:site_name / WebSite JSON-LD. Bare post titles
+    // run 451-531px.
+    title: post.title,
     description: post.excerpt,
     alternates: { canonical: `/blog/${slug}` },
     openGraph: {
@@ -75,6 +81,7 @@ export default async function BlogArticlePage({ params }: Props) {
         slug={slug}
         publishedAt={post.publishedAt}
         updatedAt={post.updatedAt}
+        author={post.author}
       />
       <BreadcrumbJsonLd
         items={[

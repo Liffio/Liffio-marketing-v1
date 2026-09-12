@@ -1,0 +1,99 @@
+name: Price drift
+
+# Two triggers, for two different failure modes.
+#
+#   pull_request — catches someone editing a price by hand into a value the
+#                  catalogue does not sell. Blocks the PR.
+#
+#   schedule     — catches the catalogue moving under files nobody touched.
+#                  This is the one that matters here: the $299-for-a-$549-tier
+#                  defect arrived without a single commit, so a PR-only check
+#                  would never have fired for months.
+#
+# The scheduled run cannot block anything, so it opens an issue instead.
+
+on:
+  pull_request:
+  schedule:
+    # 06:00 UTC daily (11:30 IST) — before the India working day.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: price-drift-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Site prices match the billing catalogue
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # --experimental-strip-types needs 22.6+.
+          node-version: "22"
+          cache: npm
+
+      # The check imports src/config/pricing.config.ts, which pulls in a couple
+      # of sibling config modules. No build, no browser, no dev server.
+      - run: npm ci
+
+      - name: Compare against the live catalogue
+        id: drift
+        env:
+          # `pr` skips on an unreachable API; `scheduled` fails on it.
+          # See the getJson comment in the script for why they differ.
+          DRIFT_MODE: ${{ github.event_name == 'schedule' && 'scheduled' || 'pr' }}
+          LIFFIO_API_URL: ${{ vars.LIFFIO_API_URL || 'https://api.liffio.com' }}
+        run: |
+          set +e
+          npm run check:prices 2>&1 | tee drift.log
+          echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          exit "${PIPESTATUS[0]}"
+
+      - name: Summarise
+        if: always()
+        run: |
+          {
+            echo "### Price drift check"
+            echo
+            echo '```'
+            cat drift.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # A red timer nobody sees is not a check. Failures on the schedule become
+      # an issue; the next green run closes it, so it cannot pile up.
+      - name: Open an issue on scheduled failure
+        if: failure() && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Marketing prices have drifted from the billing catalogue"
+          existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number')
+          body=$(printf '%s\n\n```\n%s\n```\n' \
+            "The scheduled price-drift check failed. The site and the catalogue disagree, or the API has been unreachable for a sustained period. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            "$(cat drift.log)")
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "$body"
+          else
+            gh issue create --title "$title" --body "$body" --label pricing
+          fi
+
+      - name: Close the issue when the schedule goes green
+        if: success() && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Marketing prices have drifted from the billing catalogue"
+          existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "Scheduled check is green again — site and catalogue agree."
+          fi

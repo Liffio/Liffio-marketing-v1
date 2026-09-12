@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { SITE_URL, siteConfig } from "@/config/site.config";
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import { BreadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { Breadcrumb } from "@/components/Breadcrumb";
 
@@ -26,38 +27,16 @@ export const metadata: Metadata = {
   },
 };
 
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": `${SITE_URL}/#organization`,
-  name: "Liffio",
-  legalName: "Liffio Private Limited",
-  url: SITE_URL,
-  foundingDate: "2026",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "First Floor, Shreeji General Store, Sultanpura Naka Laheri Pura New Road",
-    addressLocality: "Vadodara",
-    postalCode: "390001",
-    addressRegion: "Gujarat",
-    addressCountry: "IN",
-  },
-  foundingLocation: {
-    "@type": "Place",
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: "IN",
-    },
-  },
-};
+// 🚩 No Organization node here. This page used to emit a second one under the
+// same `@id` as <OrganizationJsonLd /> in layout.tsx — same identity, different
+// legalName — which is a conflict for any consumer, not extra detail. Its
+// richer facts (legalName "Liffio Private Limited", the full postal address,
+// foundingLocation) now live in that single canonical node in
+// src/lib/seo/json-ld.tsx. Do not re-add one.
 
 export default function AboutPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", item: SITE_URL },
@@ -128,10 +107,11 @@ export default function AboutPage() {
                 your story, or sends you a DM with a keyword, Liffio sends a pre-written reply automatically.
               </p>
               <p>
-                Replies go out within 10 to 60 seconds — with a configurable human-like delay so it doesn&apos;t
-                feel instant and robotic. The tool supports eight workflow types: comment-to-DM, story reply,
-                live reply, DM reply, follow gating, re-engagement sequences, lead data collection, and
-                welcome messages for new followers. It runs 24/7 without any action from you.
+                Replies go out within 10 to 60 seconds — with a configurable delay so each reply
+                reaches the recipient at a natural conversational pace. The tool supports workflow
+                types like comment-to-DM, story reply, DM reply, follow gating, follow-up sequences,{" "}
+                {FEATURE_WELCOME_DM ? "lead data collection, and welcome messages for new followers" : "and lead data collection"}. It runs 24/7 without
+                any action from you.
               </p>
               <p>
                 Liffio is built specifically for Instagram. We don&apos;t support Facebook, WhatsApp, or email

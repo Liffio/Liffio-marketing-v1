@@ -7,7 +7,14 @@ import { authStore } from '@/lib/auth/store';
 import { verifyEmailCode, resendEmailVerification, getAuthMe, appHandoffUrl } from '@/lib/auth/api';
 import { AuthCard, Button, ErrorMsg, MailIcon, OtpInput, type OtpState } from '@/lib/auth/ui';
 
-const PAID_PLANS = ['PRO', 'BUSINESS', 'AGENCY'];
+// PRO is retired — non-public in `packages`, hidden in `plan_catalog`, and not
+// sold by any path — so it can never legitimately be a pending plan.
+//
+// ⚠️ GROWTH is deliberately NOT added here yet. It belongs, but the Free card's
+// CTA is `?plan=STARTER` (see planSignupUrl in pricing.config), so this list
+// cannot be widened to the real set of paid tiers until Free stops signing up
+// as STARTER — otherwise every Free signup gets routed to checkout.
+const PAID_PLANS = ['BUSINESS', 'AGENCY'];
 
 function SuccessScreen() {
   return (

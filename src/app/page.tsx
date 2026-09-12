@@ -4,9 +4,9 @@ import SeoDiscoverabilitySection from "@/components/seo/SeoDiscoverabilitySectio
 import { rootSeo } from "@/config/seo.config";
 import { FaqPageJsonLd, SoftwareApplicationJsonLd } from "@/lib/seo/json-ld";
 import HeroSection from "@/components/HeroSection";
-import StatsSection from "@/components/StatsSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
+import OfficialApiSection from "@/components/OfficialApiSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
@@ -17,6 +17,7 @@ import { LandingStepTracker } from "@/lib/analytics/LandingStepTracker";
 import { getHomepageFaqCategories } from "@/config/faq.config";
 import { getPricingContext } from "@/lib/pricing-region.server";
 import { fetchMarketingPlansContext } from "@/lib/marketing-plans.server";
+import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
 
 export const metadata: Metadata = rootSeo;
 
@@ -35,7 +36,10 @@ export default async function Home() {
         <TrackSection name="hero">
           <HeroSection />
         </TrackSection>
-        <StatsSection />
+        {/* Directly under the hero on purpose: this is a trust bar, and it does
+            no work below the fold. It reinforces the hero's "Verified Meta Tech
+            Provider" chip with the specifics (which API, which approvals). */}
+        <OfficialApiSection />
         <TrackSection name="features">
           <FeaturesSection />
         </TrackSection>
@@ -59,16 +63,15 @@ export default async function Home() {
               <p>
                 Liffio is an Instagram DM automation tool built for creators, coaches, and agencies
                 who want to respond to audience interactions without doing it manually. When someone
-                comments on a post, replies to a story, sends a DM containing a specific keyword,
-                or follows an account, Liffio sends a pre-written direct message automatically within
+                comments on a post, replies to a story, {FEATURE_WELCOME_DM ? "sends a DM containing a specific keyword, or follows an account" : "or sends a DM containing a specific keyword"}, Liffio sends a pre-written direct message automatically within
                 10 to 60 seconds.
               </p>
               <p>
                 The tool connects through Instagram&apos;s official OAuth API — no account password is
                 stored or shared. All automations run inside Meta&apos;s permitted use guidelines. Liffio
-                supports eight workflow types: comment-to-DM, story reply, live reply, DM reply,
-                follow gating, re-engagement, data collection, and welcome messages. Pricing starts
-                at $0 and scales to $299 per month for agencies managing multiple accounts. Liffio
+                supports workflow types like comment-to-DM, story reply, DM reply,
+                follow gating, follow-up sequences, {FEATURE_WELCOME_DM ? "data collection, and welcome messages" : "and data collection"}. Pricing starts
+                at $0 and scales to $549 per month for agencies managing multiple accounts. Liffio
                 is built in India and works with Instagram accounts worldwide.{' '}
                 <a href="/about" className="underline underline-offset-2 hover:text-foreground transition-colors">Learn more about Liffio.</a>
               </p>

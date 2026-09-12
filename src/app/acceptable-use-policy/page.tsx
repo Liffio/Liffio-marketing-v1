@@ -31,8 +31,8 @@ When using Reactova, you agree NOT to:
 - API Violation: Attempt to use Reactova to bypass Instagram's official API restrictions or engage in "bot-like" behaviour that violates Meta's Platform Policies.
 
 3. Instagram Best Practices
-To maintain account health, we recommend:
-- Setting reasonable human-like delays (30-90 seconds) between automated DMs.
+To keep automation respectful for recipients, we recommend:
+- Setting reasonable send delays (30-90 seconds) between automated DMs.
 - Limiting the number of automated interactions per hour as per Instagram's dynamic limits.
 - Ensuring your automated messages provide genuine value to your followers.
 

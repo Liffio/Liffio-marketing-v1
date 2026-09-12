@@ -14,48 +14,48 @@ export const SEO_KEYWORDS = [
   "best auto dm tool",
   "free auto dm tool",
   // Instagram-specific auto DM
-  "instagram auto dm",
-  "auto dm instagram",
-  "instagram auto dm tool",
-  "auto dm for instagram",
-  "instagram auto dms",
-  "instagram auto dm free",
-  "instagram auto dm bot",
+  "Instagram auto dm",
+  "auto dm Instagram",
+  "Instagram auto dm tool",
+  "auto dm for Instagram",
+  "Instagram auto dms",
+  "Instagram auto dm free",
+  "Instagram auto dm bot",
   // DM automation variations
   "dm automation",
   "dm automation tool",
   "dm automation software",
   "dming tool",
-  "instagram dm automation",
-  "instagram dm automation tool",
-  "instagram dm automation software",
+  "Instagram dm automation",
+  "Instagram dm automation tool",
+  "Instagram dm automation software",
   "automated dm tool",
-  "automated dms instagram",
+  "automated dms Instagram",
   // Auto comment terms
   "auto comment tool",
   "auto comment reply",
-  "auto comment reply instagram",
-  "instagram auto comment",
-  "instagram auto comment reply",
-  "auto reply comments instagram",
+  "auto comment reply Instagram",
+  "Instagram auto comment",
+  "Instagram auto comment reply",
+  "auto reply comments Instagram",
   // Comment to DM flow
   "comment to dm",
   "comment to dm automation",
   "comment to dm tool",
-  "instagram comment automation",
-  "instagram comment to dm",
+  "Instagram comment automation",
+  "Instagram comment to dm",
   // Keyword triggers
-  "keyword trigger instagram",
-  "instagram keyword automation",
+  "keyword trigger Instagram",
+  "Instagram keyword automation",
   "keyword dm automation",
   // Story automation
   "story reply automation",
-  "instagram story automation",
-  "auto reply story instagram",
+  "Instagram story automation",
+  "auto reply story Instagram",
   // Auto reply terms
-  "auto reply instagram dm",
-  "instagram auto reply",
-  "auto reply tool instagram",
+  "auto reply Instagram dm",
+  "Instagram auto reply",
+  "auto reply tool Instagram",
   "private reply tool",
   // Competitor alternatives
   "manychat alternative",
@@ -65,21 +65,20 @@ export const SEO_KEYWORDS = [
   "superprofile alternative",
   "igdm alternative",
   // Bot/engagement terms
-  "instagram dm bot",
-  "instagram engagement automation",
-  "instagram marketing automation",
-  "instagram lead generation tool",
-  "instagram automation tool",
+  "Instagram dm bot",
+  "Instagram engagement automation",
+  "Instagram marketing automation",
+  "Instagram lead generation tool",
+  "Instagram automation tool",
   // Meta/compliance
-  "meta approved dm automation",
-  "instagram api dm tool",
+  "Instagram api dm tool",
 ] as const;
 
 /** Primary keywords to emphasize in H1s and important sections */
 export const PRIMARY_KEYWORDS = [
   "auto dm",
   "auto dm tool",
-  "instagram auto dm",
+  "Instagram auto dm",
   "dm automation",
   "auto comment reply",
   "comment to dm",
@@ -157,15 +156,25 @@ export const rootSeo = buildPageMetadata({
 
 export const pageSeo = {
   features: buildPageMetadata({
-    title: "Instagram DM Automation Features — 8 Automations in One Dashboard | Liffio",
+    title: "Instagram DM & Comment Automation Features | Liffio",
     description:
-      "Comment-to-DM, story reply, live reply, DM sequences, follow gating, and more. All 8 automation types in one place. Built on Instagram’s official API.",
+      "Comment-to-DM, story reply, DM sequences, follow gating, and more. Every automation type in one place. Built on Instagram’s official API.",
     pathname: "/features",
   }),
   pricing: buildPageMetadata({
-    title: "Instagram DM Automation Pricing — Free to $299/mo | Liffio",
+    // The "| Liffio" suffix was traded for "₹499/mo": native INR billing with
+    // GST invoices is the one differentiator no competitor pricing page claims,
+    // and /pricing is the only page where it belongs in the title (the
+    // description already carried GST). Google appends the site name to the
+    // title link anyway, so the brand is not actually lost. 557px.
+    title: "Instagram DM Automation Pricing — Free Plan, $9 or ₹499/mo",
     description:
-      "Free plan with no credit card. Paid plans from $9/month. All plans include unlimited automated DMs and unlimited Instagram accounts. Cancel anytime.",
+      // "unlimited Instagram accounts" was removed here for the same reason it
+      // was removed from the cards, the FAQ and llms.txt: workspacesIncluded is
+      // 1 on every tier but Agency. See docs/decisions/0002.
+      // "unlimited automated DMs" stays qualified with "on paid plans" — Free
+      // is capped at 500 DMs/month.
+      "Free plan, no credit card. From $9/mo, or ₹499/mo in India with GST invoices. One Instagram account per workspace, unlimited automated DMs on paid plans.",
     pathname: "/pricing",
   }),
   signup: {
@@ -178,7 +187,9 @@ export const pageSeo = {
     robots: { index: false, follow: true },
   },
   blog: buildPageMetadata({
-    title: "Instagram DM Automation Blog — Guides, Scripts, and Tutorials | Liffio",
+    // 630px -> 537px. "and Tutorials" dropped; "Guides" already covers it and
+    // the description spells out the tutorial topics.
+    title: "Instagram DM Automation Blog — Guides and Scripts | Liffio",
     description:
       "How-to guides on comment-to-DM setup, story automation, DM scripts that convert, and common automation mistakes to avoid.",
     pathname: "/blog",
@@ -190,13 +201,19 @@ export const pageSeo = {
     pathname: "/help",
   }),
   affiliate: buildPageMetadata({
-    title: "Liffio Affiliate Program — Earn Commission on Instagram DM Tool Referrals",
+    // Was the widest title on the site at 675px, truncating inside "Instagram
+    // DM Tool Referrals". 559px now: "Earn Commission on" -> "Earn on" keeps
+    // the whole "Instagram DM Tool Referrals" phrase intact instead, and
+    // "recurring commissions" is still the first thing the description says.
+    title: "Liffio Affiliate Program — Earn on Instagram DM Tool Referrals",
     description:
       "Earn recurring commissions promoting Liffio, the Instagram DM automation and auto comment tool for creators and agencies.",
     pathname: "/affiliate",
   }),
   creatorsProgram: buildPageMetadata({
-    title: "Liffio Creators Program — Free Business Plan for Instagram Creators",
+    // 617px -> 535px. Trailing "Creators" dropped as redundant with "Creators
+    // Program"; "Instagram" kept because it is the keyword doing the work.
+    title: "Liffio Creators Program — Free Business Plan for Instagram",
     description:
       "Qualifying creators with 5K–100K followers get Liffio’s Business plan free. Apply in 2 minutes. No credit card. Up to 50 spots available.",
     pathname: "/creators-program",

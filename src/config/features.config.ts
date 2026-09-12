@@ -12,12 +12,14 @@ export type FeatureDefinition = {
   highlight: string;
 };
 
+import { FEATURE_BRANCHING_LOGIC, FEATURE_COLLECT_DATA_PROMPTS, FEATURE_CRM_INTEGRATION, FEATURE_SALE_TRACKING, FEATURE_STORY_REACTIONS, FEATURE_WELCOME_DM } from "@/config/feature-flags";
+
 export const FEATURE_CATEGORIES = [
-  { id: "engage", label: "Engage & capture", featureIds: ["auto-comment-reply", "story-auto-reply", "live-auto-reply", "dm-auto-reply"] },
-  { id: "grow", label: "Grow & convert", featureIds: ["ask-for-follow", "smart-reengage", "collect-user-data", "welcome-new-followers"] },
+  { id: "engage", label: "Engage & capture", featureIds: ["auto-comment-reply", "story-auto-reply", "dm-auto-reply"] },
+  { id: "grow", label: "Grow & convert", featureIds: ["ask-for-follow", "smart-reengage", "collect-user-data", ...(FEATURE_WELCOME_DM ? ["welcome-new-followers"] : [])] },
 ] as const;
 
-export const FEATURES: readonly FeatureDefinition[] = [
+const ALL_FEATURES: readonly FeatureDefinition[] = [
   {
     id: "auto-comment-reply",
     num: "01",
@@ -29,7 +31,7 @@ export const FEATURES: readonly FeatureDefinition[] = [
     gridLabel: "Auto Comment",
     highlight: "The signature auto DM tool feature - comment to DM automation.",
     description:
-      "When a follower comments a keyword on your post or reel, Liffio sends them an auto DM and a public auto comment reply. This comment-to-DM automation is the core feature of any Instagram auto DM tool - with 10–60 second delays for human-like timing.",
+      "When a follower comments a keyword on your post or reel, Liffio sends them an auto DM and a public auto comment reply. This comment-to-DM automation is the core feature of any Instagram auto DM tool - with configurable 10–60 second reply delays.",
     bullets: [
       "Auto DM + auto comment reply in one workflow",
       "Unlimited keyword triggers per campaign",
@@ -45,36 +47,22 @@ export const FEATURES: readonly FeatureDefinition[] = [
     tag: "Story Auto DM",
     title: "Story Auto Reply",
     gridLabel: "Story Auto DM",
-    highlight: "Auto DMs from story reactions and mentions.",
+    highlight: FEATURE_STORY_REACTIONS
+      ? "Auto DMs from story reactions and mentions."
+      : "Auto DMs from story replies and mentions.",
     description:
-      "Liffio sends auto DMs the moment someone reacts, replies to, or mentions your story - capturing leads at peak interest. Story auto reply is a must-have feature for any Instagram auto DM tool.",
+      FEATURE_STORY_REACTIONS
+        ? "Liffio sends auto DMs the moment someone reacts, replies to, or mentions your story - capturing leads at peak interest. Story auto reply is a must-have feature for any Instagram auto DM tool."
+        : "Liffio sends auto DMs the moment someone replies to or mentions your story - capturing leads at peak interest. Story auto reply is a must-have feature for any Instagram auto DM tool.",
     bullets: [
-      "Auto DM on reactions, replies, and @mentions",
+      FEATURE_STORY_REACTIONS ? "Auto DM on reactions, replies, and story mentions" : "Auto DM on story replies and story mentions",
       "Perfect for flash sales and limited-time offers",
       "Auto DMs work 24/7, even while you sleep",
     ],
   },
   {
-    id: "live-auto-reply",
-    num: "03",
-    color: "#f5184c",
-    bg: "rgba(245, 24, 76,0.07)",
-    border: "rgba(245, 24, 76,0.18)",
-    tag: "Live Stream Auto DM",
-    title: "Live Auto Reply",
-    gridLabel: "Live Auto DM",
-    highlight: "Auto DMs from live stream comments.",
-    description:
-      "Monitor live comments in real time and send auto DMs to every viewer who types a keyword - ideal for launches, Q&As, and webinars. Turn your Instagram Live into a lead-gen machine with live auto DM.",
-    bullets: [
-      "Auto DM on keyword triggers during live streams",
-      "Send links, discount codes, and resources automatically",
-      "DM automation for product launches and flash offers",
-    ],
-  },
-  {
     id: "dm-auto-reply",
-    num: "04",
+    num: "03",
     color: "#2ea957",
     bg: "rgba(46,169,87,0.07)",
     border: "rgba(46,169,87,0.18)",
@@ -83,16 +71,18 @@ export const FEATURES: readonly FeatureDefinition[] = [
     gridLabel: "DM Auto Reply",
     highlight: "Auto DM flows for inbound messages.",
     description:
-      "Build automated DM flows triggered by incoming messages - from simple keyword auto replies to multi-step sequences with branching logic. This DM automation tool feature qualifies leads inside the thread.",
+      FEATURE_BRANCHING_LOGIC
+        ? "Build automated DM flows triggered by incoming messages - from simple keyword auto replies to multi-step sequences with branching logic. This DM automation tool feature qualifies leads inside the thread."
+        : "Build automated DM flows triggered by incoming messages - from simple keyword auto replies to multi-step follow-up sequences. This DM automation tool feature qualifies leads inside the thread.",
     bullets: [
       "Keyword-triggered auto DM flows",
-      "Multi-step DM automation with branching",
+      FEATURE_BRANCHING_LOGIC ? "Multi-step DM automation with branching" : "Multi-step DM automation",
       "Qualify leads without lifting a finger",
     ],
   },
   {
     id: "ask-for-follow",
-    num: "05",
+    num: "04",
     color: "#b20d8f",
     bg: "rgba(178, 13, 143,0.07)",
     border: "rgba(178, 13, 143,0.18)",
@@ -110,25 +100,25 @@ export const FEATURES: readonly FeatureDefinition[] = [
   },
   {
     id: "smart-reengage",
-    num: "06",
+    num: "05",
     color: "#14b8a6",
     bg: "rgba(20,184,166,0.07)",
     border: "rgba(20,184,166,0.18)",
-    tag: "Win-back sequences",
-    title: "Smart Re-engage",
-    gridLabel: "Re-engage",
-    highlight: "Win back warm leads automatically.",
+    tag: "Follow-up sequences",
+    title: "Follow-up Sequences",
+    gridLabel: "Follow-ups",
+    highlight: "Timed follow-ups inside active conversations.",
     description:
-      "Identify users who've interacted before and send timed follow-ups - converting browsers into buyers on autopilot.",
+      "Send timed follow-up messages inside an active DM conversation - a reminder, a second link, or the next step in your flow.",
     bullets: [
-      "Re-engages previous commenters and DM contacts",
-      "Configurable time-based follow-up sequences",
-      "Personalised message templates per segment",
+      "Timed follow-ups within an active DM conversation",
+      "Configurable delay per step",
+      "Personalised message templates per flow",
     ],
   },
   {
     id: "collect-user-data",
-    num: "07",
+    num: "06",
     color: "#ee7a1f",
     bg: "rgba(238,122,31,0.07)",
     border: "rgba(238,122,31,0.18)",
@@ -137,16 +127,18 @@ export const FEATURES: readonly FeatureDefinition[] = [
     gridLabel: "Collect Data",
     highlight: "Build your list inside Instagram DMs.",
     description:
-      "Ask followers for email, phone, or custom fields right inside a DM conversation - no external forms required.",
+      FEATURE_COLLECT_DATA_PROMPTS
+        ? "Ask followers for email, phone, or custom fields right inside a DM conversation - no external forms required."
+        : "Capture email addresses from DM conversations automatically - no external forms required.",
     bullets: [
-      "Captures email, phone, and custom data",
-      "Auto-exports to CSV and integrates with CRMs",
+      FEATURE_COLLECT_DATA_PROMPTS ? "Captures email, phone, and custom data" : "Captures email addresses from DM replies",
+      FEATURE_CRM_INTEGRATION ? "Export to CSV and integrate with CRMs" : "Export captured leads to CSV",
       "GDPR-compliant data handling",
     ],
   },
   {
     id: "welcome-new-followers",
-    num: "08",
+    num: "07",
     color: "#ad36a7",
     bg: "rgba(173,54,167,0.07)",
     border: "rgba(173,54,167,0.18)",
@@ -164,9 +156,13 @@ export const FEATURES: readonly FeatureDefinition[] = [
   },
 ];
 
+export const FEATURES: readonly FeatureDefinition[] = ALL_FEATURES.filter(
+  (f) => f.id !== "welcome-new-followers" || FEATURE_WELCOME_DM,
+);
+
 export const PLATFORM_EXTRAS = [
   { title: "Bio link pages", desc: "Branded pages with click tracking at bio.liffio.com." },
   { title: "Smart short links", desc: "Track every link delivered in DMs with UTM attribution." },
-  { title: "Conversion analytics", desc: "Comment → DM → click → sale in one dashboard." },
+  { title: "Conversion analytics", desc: FEATURE_SALE_TRACKING ? "Comment → DM → click → sale in one dashboard." : "Comment → DM → click in one dashboard." },
   { title: "Team workspaces", desc: "Collaborate with VAs and managers on Starter and above." },
 ] as const;
