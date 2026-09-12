@@ -232,9 +232,18 @@ export async function isWorkspaceInstagramConnected(workspaceId: string): Promis
 
 // ── Integrations ──────────────────────────────────────────────────────────
 
-export function getMetaOAuthStartUrl(workspaceId: string) {
+/**
+ * `mode` decides how the callback comes back, and it travels inside the signed OAuth state.
+ *
+ * `popup` (the default, and what desktop sends) keeps the existing behaviour exactly. `redirect`
+ * is for touch devices: on a phone the popup usually becomes a new tab or is handed to the
+ * Instagram app, so by the time the callback lands there is no opener to postMessage — and the
+ * popup-complete page then strands the user on a dark "close this window" screen, on the platform
+ * carrying most of the traffic.
+ */
+export function getMetaOAuthStartUrl(workspaceId: string, mode: 'popup' | 'redirect' = 'popup') {
   const clientOrigin = typeof window !== 'undefined' ? window.location.origin : '';
-  const params = new URLSearchParams({ returnTo: 'onboarding', clientOrigin });
+  const params = new URLSearchParams({ returnTo: 'onboarding', clientOrigin, mode });
   return apiRequest<{ url: string }>(
     `${V1}/integrations/meta/oauth/start?${params.toString()}`,
     { workspaceId },
@@ -253,6 +262,26 @@ export function createAutomation(workspaceId: string, body: CreateAutomationInpu
     workspaceId,
     body,
   });
+}
+
+/**
+ * The Free-tier strings appended to every DM a Free workspace sends.
+ *
+ * Fetched, never hardcoded: the onboarding demo claims to show exactly what will be sent from the
+ * customer's own account, and these values are env-driven on the server
+ * (`DM_BRANDING_SUGGESTION_LINE`, `FREE_TIER_FOLLOW_UP_*`). A local copy is a copy that drifts,
+ * and what it drifts on is a promise about someone else's Instagram account.
+ */
+export type BrandingConfig = {
+  brandingLine: string;
+  followUpMessage: string;
+  followUpButtonLabel: string;
+  followUpButtonUrl: string;
+  followUpDelayMinutes: number;
+};
+
+export function getBrandingConfig() {
+  return apiRequest<BrandingConfig>(`${V1}/workspaces/branding-config`);
 }
 
 // ── Affiliate ─────────────────────────────────────────────────────────────

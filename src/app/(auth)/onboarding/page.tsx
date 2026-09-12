@@ -1,50 +1,200 @@
 'use client';
 
-import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Logo from '@/components/Logo';
-import { authStore } from '@/lib/auth/store';
 import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import {
+  appHandoffUrl,
   getAuthMe,
+  getBrandingConfig,
   getMetaOAuthStartUrl,
   isWorkspaceInstagramConnected,
   updateWorkspace,
-  getAutomationWizardData,
-  createAutomation,
-  appHandoffUrl,
-  type AutomationWizardData,
+  type BrandingConfig,
 } from '@/lib/auth/api';
-import { openMetaOAuthPopup, META_OAUTH_BC_CHANNEL, META_OAUTH_MESSAGE_TYPE, type MetaOAuthResult } from '@/lib/auth/meta-oauth-popup';
+import { authStore } from '@/lib/auth/store';
 import {
-  AlertCircleIcon,
-  ArrowRightIcon,
-  Button,
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  Input,
-  InstagramIcon,
-  Label,
-  LockIcon,
-  MessageSquareIcon,
-  PlusIcon,
-  Spinner,
-  Textarea,
-  XIcon,
-  ZapIcon,
-} from '@/lib/auth/ui';
+  META_OAUTH_BC_CHANNEL,
+  META_OAUTH_MESSAGE_TYPE,
+  openMetaOAuthPopup,
+  type MetaOAuthResult,
+} from '@/lib/auth/meta-oauth-popup';
+import { AlertCircleIcon, Button, CheckIcon, InstagramIcon, Spinner } from '@/lib/auth/ui';
 import { trackSignupStep } from '@/lib/analytics/analytics';
+import { commentMatchesKeywords } from '@/lib/onboarding/keyword-match';
+import {
+  goalOptionsForRole,
+  templateForGoal,
+  type OnboardingGoal,
+  type OnboardingRole,
+  type OnboardingTemplate,
+} from '@/lib/onboarding/templates';
 
-// ── Error copy ─────────────────────────────────────────────────────────────
+/**
+ * Liffio onboarding — who it's for, what to send, a demo, then connect.
+ *
+ * Spec: `Website/v2/docs/onboarding/liffio-onboarding-stage2.md`, structured after
+ * `liffio-onboarding-preview.html`, themed with this site's own tokens rather than the preview's
+ * raw hex.
+ *
+ * ## The three rules that shaped this rewrite
+ *
+ * 1. **Onboarding creates nothing.** The previous flow ended in a four-substep wizard that called
+ *    `POST /automations`. Nothing here does: `assertWorkflowLimit` counts every non-deleted
+ *    automation regardless of status, so even a draft made during onboarding would silently
+ *    consume one of the three slots a Free workspace is sold — before the user had decided
+ *    anything. A real automation exists only when they hit Go live in the app's own create flow,
+ *    and setting one up is always skippable.
+ * 2. **Nothing hidden in DMs.** The demo shows the Free branding line *inside* the DM and the
+ *    branded follow-up that lands minutes later, fetched from the server so it cannot drift from
+ *    what is actually sent. We append to the customer's message and then send a second,
+ *    unsolicited message advertising ourselves — from their account, to their follower. If the
+ *    preview omits that, the first they hear of it is when a follower asks.
+ * 3. **The answers are ids, never copy.** Only `role`, `goal` and `suggestedTemplate: { id,
+ *    version }` are persisted; every string lives in the client registry. That is what lets the
+ *    server's onboarding schema be a short list of enums with nothing free-text in it.
+ *
+ * ## Auth
+ *
+ * The access token set at registration (`authStore`, persisted in `localStorage`) is attached as a
+ * Bearer header by `apiRequest`, together with `x-workspace-id`. Nothing here touches tokens
+ * directly except the final cross-domain handoff, which is the one place a token legitimately
+ * travels in a URL.
+ */
+
+// ── Local icons ────────────────────────────────────────────────────────────
+// Defined here rather than added to the shared auth UI kit: they are used by these screens and
+// nothing else, and this rewrite is deliberately scoped to onboarding.
+
+type IconProps = { size?: number };
+
+const iconBase = (size: number) =>
+  ({
+    width: size,
+    height: size,
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 1.8,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+    'aria-hidden': true,
+  }) as const;
+
+function UserIcon({ size = 18 }: IconProps) {
+  return (
+    <svg {...iconBase(size)}>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" />
+    </svg>
+  );
+}
+function BriefcaseIcon({ size = 18 }: IconProps) {
+  return (
+    <svg {...iconBase(size)}>
+      <rect x="3" y="7" width="18" height="13" rx="2" />
+      <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
+    </svg>
+  );
+}
+function UsersIcon({ size = 18 }: IconProps) {
+  return (
+    <svg {...iconBase(size)}>
+      <circle cx="9" cy="8" r="3.5" />
+      <path d="M2 20v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1" />
+      <path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14h1a4 4 0 0 1 4 4v2" />
+    </svg>
+  );
+}
+function LinkIcon({ size = 18 }: IconProps) {
+  return (
+    <svg {...iconBase(size)}>
+      <path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1" />
+      <path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1" />
+    </svg>
+  );
+}
+function GiftIcon({ size = 18 }: IconProps) {
+  return (
+    <svg {...iconBase(size)}>
+      <rect x="3" y="9" width="18" height="12" rx="2" />
+      <path d="M3 13h18M12 9v12M12 9S9.5 9 8.5 8 8 5 9.5 5 12 9 12 9ZM12 9s2.5 0 3.5-1 .5-3-1-3S12 9 12 9Z" />
+    </svg>
+  );
+}
+function TagIcon({ size = 18 }: IconProps) {
+  return (
+    <svg {...iconBase(size)}>
+      <path d="M3 11V4a1 1 0 0 1 1-1h7l9 9-8 8-9-9Z" />
+      <circle cx="7.5" cy="7.5" r="1.2" />
+    </svg>
+  );
+}
+function CoinIcon({ size = 18 }: IconProps) {
+  return (
+    <svg {...iconBase(size)}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M14.5 9.5a3 3 0 0 0-5 2.5c0 3 5 1.5 5 4a3 3 0 0 1-5 1M12 6.5v11" />
+    </svg>
+  );
+}
+function HelpIcon({ size = 18 }: IconProps) {
+  return (
+    <svg {...iconBase(size)}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9.5 9.5a2.5 2.5 0 1 1 3.2 2.4c-.6.2-1 .8-1 1.4v.4" />
+      <path d="M12 17h.01" />
+    </svg>
+  );
+}
+function ArrowLeftIcon({ size = 18 }: IconProps) {
+  return (
+    <svg {...iconBase(size)}>
+      <path d="M19 12H5M11 18l-6-6 6-6" />
+    </svg>
+  );
+}
+function ReplayIcon({ size = 14 }: IconProps) {
+  return (
+    <svg {...iconBase(size)}>
+      <path d="M20 11a8 8 0 0 0-15.5-2M4 5v4h4" />
+      <path d="M4 13a8 8 0 0 0 15.5 2M20 19v-4h-4" />
+    </svg>
+  );
+}
+function ShieldIcon({ size = 14 }: IconProps) {
+  return (
+    <svg {...iconBase(size)}>
+      <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" />
+      <path d="m9 12 2 2 4-4" />
+    </svg>
+  );
+}
+function SendIcon({ size = 14 }: IconProps) {
+  return (
+    <svg {...iconBase(size)}>
+      <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z" />
+    </svg>
+  );
+}
+
+// ── Connect error copy ─────────────────────────────────────────────────────
 
 const IG_ERRORS: Record<string, { title: string; summary: string; steps: string[] }> = {
   no_instagram_business_account: {
     title: 'Instagram account not found',
-    summary: 'No Professional Instagram account was found linked to your Facebook Page.',
+    summary: 'No Professional Instagram account was found for that login.',
     steps: [
-      'Switch your Instagram to a Professional account — Instagram → Settings → Account → Switch to Professional',
-      'Link that Instagram account to your Facebook Page — Facebook Page → Settings → Linked accounts → Instagram',
-      'Enable message access in Instagram → Settings → Privacy → Messages',
+      'Open Instagram → Settings → Account type and tools → Switch to professional account',
+      'Pick Creator or Business and finish the steps',
+      'Come back here and connect again',
     ],
   },
   instagram_already_linked: {
@@ -57,9 +207,10 @@ const IG_ERRORS: Record<string, { title: string; summary: string; steps: string[
   },
   invalid_platform_app: {
     title: 'Meta app configuration error',
-    summary: 'Instagram rejected the connection — the Meta developer app may not be configured correctly.',
+    summary:
+      'Instagram rejected the connection — the Meta developer app may not be configured correctly.',
     steps: [
-      'In Meta for Developers → Instagram → API setup with Instagram login → Business login settings: add your callback URL to OAuth Redirect URIs',
+      'In Meta for Developers → Instagram → Business login settings: add your callback URL to OAuth Redirect URIs',
       'Confirm META_INSTAGRAM_BUSINESS_LOGIN_APP_ID / APP_SECRET match the Instagram App ID / Secret',
     ],
   },
@@ -69,6 +220,19 @@ const IG_ERRORS: Record<string, { title: string; summary: string; steps: string[
     steps: [
       'Copy the exact value of META_OAUTH_REDIRECT_URI from your server .env file',
       'Add it verbatim to Meta → Instagram → Business login settings → OAuth Redirect URIs',
+    ],
+  },
+  invalid_state: {
+    title: 'That connect link expired',
+    summary: 'The login took longer than the window we allow. Nothing is wrong with your account.',
+    steps: ['Tap Connect Instagram again — it should go straight through'],
+  },
+  connection_not_persisted: {
+    title: 'Almost there',
+    summary: "Instagram connected, but we couldn't save it against your workspace.",
+    steps: [
+      'Try connecting once more',
+      'If it keeps happening, contact support and we will link it for you',
     ],
   },
   token_exchange_failed: {
@@ -81,574 +245,294 @@ const IG_ERRORS: Record<string, { title: string; summary: string; steps: string[
   },
 };
 
-// ── Sub-components ─────────────────────────────────────────────────────────
+// ── Shared pieces ──────────────────────────────────────────────────────────
 
-// step prop is 1 (Your Brand) | 2 (Connect) | 3 (Automate)
-// "Sign up" is always index 0 and always shown as completed — gives users
-// the 20% momentum hit the moment they land on onboarding.
-const PROGRESS_STEPS = ['Sign up', 'Your Brand', 'Connect', 'Automate'] as const;
-const PROGRESS_PCT: Record<number, number> = { 1: 25, 2: 50, 3: 75 };
+const TOTAL_STEPS = 4;
 
-function StepProgress({ step }: { step: number }) {
-  const pct = PROGRESS_PCT[step] ?? 20;
-  // step 1 → activeIndex 1, step 2 → 2, step 3 → 3; index 0 always done
-  const activeIndex = step;
+/** How long a chosen card stays visibly selected before the screen advances. */
+const ADVANCE_DELAY_MS = 250;
 
-  return (
-    <div className="mb-6 w-full max-w-lg">
-      <div className="mb-4">
-        <h2 className="text-xl font-bold text-foreground">You&apos;re doing great! <span className="animate-confetti">🎉</span></h2>
-        <p className="mt-0.5 text-sm text-muted-foreground">Just a few more details to complete your account setup</p>
-      </div>
+const REPLY_DELAY_MS = 800;
+const DM_DELAY_MS = 1200;
 
-      <div className="rounded-2xl border bg-card p-5 shadow-soft">
-        {/* Label + percentage */}
-        <div className="mb-3 flex items-center justify-between">
-          <span className="text-sm font-semibold text-primary">Your Progress</span>
-          <span className="text-sm font-bold text-primary">{pct}% <span className="animate-flame">🔥</span></span>
-        </div>
+/**
+ * "Are we past hydration?" without a setState-in-effect.
+ *
+ * The flow reads `localStorage` (via `authStore`) and `window.matchMedia`, so it cannot render its
+ * real output on the server. The usual `useState(false)` + `useEffect(() => setMounted(true))`
+ * does that job but trips `react-hooks/set-state-in-effect` — the rule is right that it causes a
+ * cascading render. `useSyncExternalStore` answers the same question by definition: the server
+ * snapshot is `false`, the client snapshot is `true`, and React handles the transition itself.
+ *
+ * The store never changes, so `subscribe` returns a no-op unsubscribe and is hoisted to module
+ * scope — a new function identity each render would make React re-subscribe on every pass.
+ */
+const noopSubscribe = () => () => {};
+const useHydrated = () => useSyncExternalStore(noopSubscribe, () => true, () => false);
 
-        {/* Progress bar */}
-        <div className="mb-5 h-2 overflow-hidden rounded-full bg-muted">
-          <div
-            className="h-full rounded-full bg-gradient-to-r from-primary to-brand-400 transition-all duration-700 ease-out"
-            style={{ width: `${pct}%` }}
-          />
-        </div>
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' &&
+  typeof window.matchMedia === 'function' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        {/* Step dots */}
-        <div className="flex items-start justify-between">
-          {PROGRESS_STEPS.map((label, i) => {
-            const done = i < activeIndex;
-            const active = i === activeIndex;
-            return (
-              <div key={label} className="flex flex-1 flex-col items-center gap-1.5">
-                <div className={`flex h-9 w-9 items-center justify-center rounded-full transition-all duration-300 ${
-                  done
-                    ? 'bg-primary text-primary-foreground shadow-sm'
-                    : active
-                    ? 'border-2 border-primary bg-primary/5'
-                    : 'border-2 border-muted bg-background'
-                }`}>
-                  {done ? (
-                    <CheckIcon size={15} />
-                  ) : active ? (
-                    <div className="h-2.5 w-2.5 rounded-full bg-primary" />
-                  ) : null}
-                </div>
-                <span className={`text-center text-[11px] leading-tight ${
-                  active ? 'font-bold text-foreground' : done ? 'font-medium text-foreground' : 'text-muted-foreground'
-                }`}>
-                  {label}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Requirement({ text }: { text: string }) {
-  return (
-    <div className="flex items-center gap-2.5 text-sm text-foreground">
-      <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/15">
-        <CheckIcon size={10} />
-      </div>
-      {text}
-    </div>
-  );
-}
-
-function ValueProp({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
-  return (
-    <div className="flex items-start gap-3 p-3.5">
-      <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-muted">{icon}</div>
-      <div>
-        <div className="text-sm font-medium text-foreground">{title}</div>
-        <div className="mt-0.5 text-xs text-muted-foreground">{desc}</div>
-      </div>
-    </div>
-  );
-}
-
-function IgErrorPanel({ reason }: { reason: string }) {
-  const [expanded, setExpanded] = useState(false);
-  const info = IG_ERRORS[reason];
-  if (!info) {
-    return (
-      <div className="flex items-start gap-2.5 rounded-xl border border-destructive/30 bg-destructive/10 p-3.5 text-sm text-destructive">
-        <AlertCircleIcon size={14} />
-        <span>{reason || 'Instagram connect failed. Please try again.'}</span>
-      </div>
-    );
+/**
+ * Touch devices get a full-page redirect instead of a popup.
+ *
+ * Detected from coarse pointer + no hover rather than a user-agent string: it is the input model
+ * that predicts whether a popup survives, and it keeps working on devices nobody has added to a
+ * UA list yet. On a phone the popup usually becomes a new tab or is handed to the Instagram app,
+ * so the callback lands with no opener to postMessage and the user is stranded on a dark
+ * "close this window" page — on the platform carrying most of the traffic.
+ */
+function preferredOAuthMode(): 'popup' | 'redirect' {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return 'popup';
+  try {
+    return window.matchMedia('(pointer: coarse)').matches &&
+      window.matchMedia('(hover: none)').matches
+      ? 'redirect'
+      : 'popup';
+  } catch {
+    return 'popup';
   }
-  return (
-    <div className="overflow-hidden rounded-xl border border-warning/30 bg-warning/10">
-      <div className="space-y-1 p-4">
-        <div className="flex items-center gap-2 text-sm font-semibold text-warning">
-          <AlertCircleIcon size={14} />
-          {info.title}
-        </div>
-        <p className="pl-6 text-xs text-warning">{info.summary}</p>
-      </div>
-      <button type="button" className="flex w-full items-center justify-between border-t border-warning/30 px-4 py-2.5 text-xs text-muted-foreground hover:bg-warning/10 transition-colors" onClick={() => setExpanded((e) => !e)}>
-        How to fix this
-        {expanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
-      </button>
-      {expanded && (
-        <div className="space-y-2.5 border-t border-warning/20 px-4 pb-4 pt-2">
-          {info.steps.map((s, i) => (
-            <div key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
-              <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-warning/20 text-[10px] font-bold text-warning">{i + 1}</span>
-              <span>{s}</span>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
 }
 
-function LockedCard({ label }: { label: string }) {
-  return (
-    <div className="flex items-center gap-2.5 rounded-xl border bg-muted px-4 py-3 text-sm text-muted-foreground">
-      <LockIcon size={14} />
-      {label}
-      <span className="ml-auto text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded-full">Pro</span>
-    </div>
-  );
-}
-
-function Segmented({ value, onChange, options }: { value: string; onChange: (v: string) => void; options: { v: string; l: string }[] }) {
-  return (
-    <div className="inline-flex w-full rounded-lg border bg-muted p-1">
-      {options.map((o) => (
-        <button key={o.v} type="button" onClick={() => onChange(o.v)}
-          className={`flex-1 rounded-md px-2 py-1.5 text-xs font-medium transition-colors ${value === o.v ? 'bg-card text-primary shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}>
-          {o.l}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function ReviewRow({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="rounded-xl border bg-card p-3.5">
-      <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{title}</div>
-      <div className="text-sm text-foreground">{children}</div>
-    </div>
-  );
-}
-
-// ── Automation Wizard ──────────────────────────────────────────────────────
-
-function AutomationWizard({
-  onClose,
-  onLaunch,
-  resolveWorkspaceId,
+/**
+ * Four segments, one per screen, plus the back and skip affordances.
+ *
+ * The dashboard has no progress bar — reaching it is the end of onboarding, not a fifth step, and
+ * a bar that still showed would tell the user they had more to do at the exact moment we want them
+ * to start using the app.
+ */
+function StepProgress({
+  step,
+  onBack,
+  onSkip,
+  skipLabel,
 }: {
-  onClose: () => void;
-  onLaunch: () => void;
-  resolveWorkspaceId: () => Promise<string>;
+  step: number;
+  onBack?: () => void;
+  onSkip?: () => void;
+  skipLabel?: string;
 }) {
-  const [sub, setSub] = useState<1 | 2 | 3 | 4>(1);
-  const [postMode, setPostMode] = useState<'specific' | 'any' | 'next'>('any');
-  const [selectedPost, setSelectedPost] = useState<string | null>(null);
-  const [keywordMode, setKeywordMode] = useState<'specific' | 'any'>('specific');
-  const [keywords, setKeywords] = useState<string[]>(['GUIDE']);
-  const [kwInput, setKwInput] = useState('');
-  const [autoReply, setAutoReply] = useState(true);
-  const [replies, setReplies] = useState(['Sent! Check your DMs', 'On its way to your inbox', 'Just DM\'d you the link']);
-  const [dmType, setDmType] = useState('text-button');
-  const [dmText, setDmText] = useState('Hi there! Appreciate your comment. Here\'s the link you asked for');
-  const [hasButton, setHasButton] = useState(true);
-  const [btnLabel, setBtnLabel] = useState('Get Your Free Guide');
-  const [btnUrl, setBtnUrl] = useState('https://');
-  const [wizardData, setWizardData] = useState<AutomationWizardData | null>(null);
-  const [wizardLoading, setWizardLoading] = useState(true);
-  const [wizardError, setWizardError] = useState('');
-  const [launching, setLaunching] = useState(false);
-  const [launchError, setLaunchError] = useState('');
-
-  useEffect(() => {
-    resolveWorkspaceId().then((workspaceId) =>
-      getAutomationWizardData(workspaceId)
-        .then((data) => { setWizardData(data); if (data.media?.[0]) setSelectedPost(data.media[0].id); })
-        .catch((err) => setWizardError((err as Error).message))
-        .finally(() => setWizardLoading(false))
-    );
-  }, [resolveWorkspaceId]);
-
-  function addKw() {
-    const v = kwInput.trim().toUpperCase();
-    if (!v || keywords.includes(v)) return;
-    setKeywords((k) => [...k, v]);
-    setKwInput('');
-  }
-
-  async function launch() {
-    setLaunchError('');
-    setLaunching(true);
-    try {
-      const workspaceId = await resolveWorkspaceId();
-      await createAutomation(workspaceId, {
-        name: `${(wizardData?.profile.username ?? 'Instagram').replace(/^@/, '')} – Comment DM`,
-        keywords: keywordMode === 'any' ? [] : keywords.map((k) => k.trim()).filter(Boolean),
-        excludedKeywords: [],
-        anyComment: keywordMode === 'any',
-        postScope: postMode,
-        postId: postMode === 'specific' ? (selectedPost ?? null) : null,
-        dmMessage: dmText.trim(),
-        autoReply,
-        replyMessages: autoReply ? replies.map((r) => r.trim()).filter(Boolean) : [],
-        dmButtonLabel: dmType === 'text-button' && hasButton ? btnLabel.trim() || undefined : undefined,
-        dmButtonUrl: dmType === 'text-button' && hasButton ? btnUrl.trim() || undefined : undefined,
-      });
-      onLaunch();
-    } catch (err) {
-      setLaunchError((err as Error).message);
-    } finally {
-      setLaunching(false);
-    }
-  }
-
-  const selectedMedia = wizardData?.media.find((m) => m.id === selectedPost) ?? null;
-  const SUBSTEP_LABELS = ['Trigger', 'Keywords & Replies', 'Message'];
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
-      <div className="flex max-h-[90vh] w-full max-w-xl flex-col rounded-2xl border bg-card shadow-2xl">
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-border px-5 py-4">
-          <div className="flex min-w-0 items-center gap-2.5">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-              <MessageSquareIcon size={14} />
-            </div>
-            <div>
-              <div className="text-sm font-semibold text-foreground">New automation</div>
-              <div className="text-xs text-muted-foreground">Comment → auto DM</div>
-            </div>
-          </div>
-          <button onClick={onClose} className="rounded-md p-1.5 text-muted-foreground hover:text-foreground transition-colors">
-            <XIcon size={16} />
+    <div className="mb-4 w-full">
+      <div
+        className="flex gap-1.5"
+        role="progressbar"
+        aria-valuemin={1}
+        aria-valuemax={TOTAL_STEPS}
+        aria-valuenow={step}
+        aria-label={`Step ${step} of ${TOTAL_STEPS}`}
+      >
+        {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
+          <span
+            key={i}
+            className={`h-1 flex-1 rounded-full transition-colors ${i < step ? 'bg-primary' : 'bg-border'}`}
+          />
+        ))}
+      </div>
+      <div className="mt-2 flex h-8 items-center justify-between">
+        {onBack ? (
+          <button
+            type="button"
+            onClick={onBack}
+            aria-label="Go back"
+            className="-ml-1.5 inline-flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-muted hover:text-foreground"
+          >
+            <ArrowLeftIcon />
           </button>
-        </div>
-
-        {/* Profile bar */}
-        <div className="flex items-center gap-2 border-b border-border px-5 py-2.5">
-          {wizardData?.profile.profilePictureUrl ? (
-            <img src={wizardData.profile.profilePictureUrl} alt="" className="h-7 w-7 rounded-full object-cover" />
-          ) : (
-            <div className="h-7 w-7 rounded-full bg-gradient-to-br from-brand-500 to-brand-700" />
-          )}
-          <span className="text-sm font-medium text-foreground">@{wizardData?.profile.username ?? 'yourbrand'}</span>
-          <div className="ml-auto flex items-center gap-1">
-            {SUBSTEP_LABELS.map((_, i) => (
-              <div key={i} className={`h-1.5 w-6 rounded-full transition-all ${i + 1 <= Math.min(sub, 3) ? 'bg-primary' : 'bg-muted'}`} />
-            ))}
-          </div>
-        </div>
-
-        {/* Body */}
-        <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
-          {wizardLoading && <div className="rounded-lg border bg-muted p-3 text-sm text-muted-foreground">Loading your Instagram profile…</div>}
-          {wizardError && <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">{wizardError}</div>}
-
-          {/* Sub-step 1: Trigger */}
-          {sub === 1 && (
-            <>
-              <div>
-                <Label>Which post triggers this automation?</Label>
-                <p className="mt-0.5 text-xs text-muted-foreground">Choose when comments on your Instagram should trigger a DM.</p>
-              </div>
-              <Segmented value={postMode} onChange={(v) => setPostMode(v as 'specific' | 'any' | 'next')} options={[{ v: 'any', l: 'All posts' }, { v: 'next', l: 'Next post only' }, { v: 'specific', l: 'Pick a post' }]} />
-              {postMode === 'any' && <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-xs text-primary">One automation covers every post and reel on your account — past and future.</div>}
-              {postMode === 'next' && <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-xs text-primary">This automation activates only on your next published post.</div>}
-              {postMode === 'specific' && (
-                <>
-                  <div className="grid grid-cols-3 gap-2">
-                    {(wizardData?.media ?? []).map((item) => (
-                      <button key={item.id} type="button" onClick={() => setSelectedPost(item.id)}
-                        className={`relative aspect-square overflow-hidden rounded-lg border-2 bg-muted transition-all ${selectedPost === item.id ? 'border-primary' : 'border-border hover:border-muted-foreground'}`}>
-                        {item.thumbnailUrl ? (
-                          <img src={item.thumbnailUrl} alt={item.caption || ''} className="absolute inset-0 h-full w-full object-cover" />
-                        ) : (
-                          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
-                        )}
-                        {selectedPost === item.id && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-primary/25">
-                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary"><CheckIcon size={14} /></div>
-                          </div>
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                  {(wizardData?.media?.length ?? 0) === 0 && !wizardLoading && <p className="text-xs text-muted-foreground">No posts found on this account yet.</p>}
-                </>
-              )}
-            </>
-          )}
-
-          {/* Sub-step 2: Keywords */}
-          {sub === 2 && (
-            <>
-              <div>
-                <Label>What triggers the automation?</Label>
-                <p className="mt-0.5 text-xs text-muted-foreground">Send a DM when someone comments a specific keyword, or on any comment.</p>
-              </div>
-              <Segmented value={keywordMode} onChange={(v) => setKeywordMode(v as 'specific' | 'any')} options={[{ v: 'specific', l: 'Specific keyword' }, { v: 'any', l: 'Any comment' }]} />
-              {keywordMode === 'specific' && (
-                <>
-                  <div className="flex gap-2">
-                    <Input value={kwInput} onChange={(e) => setKwInput(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addKw(); } }} placeholder="e.g. GUIDE, LINK, FREE" />
-                    <Button variant="outline" onClick={addKw} type="button"><PlusIcon size={14} /> Add</Button>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {keywords.map((k) => (
-                      <span key={k} className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
-                        {k}
-                        <button type="button" onClick={() => setKeywords((kw) => kw.filter((x) => x !== k))} className="text-primary/70 hover:text-destructive"><XIcon size={10} /></button>
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-xs text-muted-foreground">Not case-sensitive. The comment must contain the keyword.</p>
-                </>
-              )}
-
-              <div className="h-px bg-border" />
-
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-sm font-medium text-foreground">Auto-reply on the post</div>
-                  <p className="mt-0.5 text-xs text-muted-foreground">Reply publicly to their comment — rotates between variations</p>
-                </div>
-                <button type="button" onClick={() => setAutoReply((v) => !v)}
-                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none ${autoReply ? 'bg-primary' : 'bg-muted'}`}>
-                  <span className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-card shadow transform transition-transform ${autoReply ? 'translate-x-5' : 'translate-x-0'}`} />
-                </button>
-              </div>
-
-              {autoReply && (
-                <div className="space-y-2.5">
-                  {replies.map((r, i) => (
-                    <div key={i}>
-                      <Label>Reply variation {i + 1}</Label>
-                      <Textarea value={r} onChange={(e) => { const next = [...replies]; next[i] = e.target.value.slice(0, 140); setReplies(next); }} rows={2} />
-                      <div className="mt-0.5 text-right text-[10px] text-muted-foreground">{r.length}/140</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </>
-          )}
-
-          {/* Sub-step 3: Message */}
-          {sub === 3 && (
-            <>
-              <div>
-                <Label>What DM do you want to send?</Label>
-                <p className="mt-0.5 text-xs text-muted-foreground">Write the message that gets sent automatically when someone comments.</p>
-              </div>
-
-              <div className="space-y-1.5">
-                <Label>Message type</Label>
-                <Segmented value={dmType} onChange={setDmType} options={[{ v: 'text-button', l: 'Text + Button' }, { v: 'text', l: 'Text only' }]} />
-              </div>
-
-              <div>
-                <Label>Message</Label>
-                <Textarea value={dmText} onChange={(e) => setDmText(e.target.value.slice(0, 900))} rows={4} placeholder="Hi there! Here's the resource you asked for…" className="mt-1" />
-                <div className="mt-1 flex items-center justify-between">
-                  <span className="text-[11px] text-muted-foreground">Use {'{{name}}'} {'{{username}}'} {'{{keyword}}'} as variables</span>
-                  <span className="text-[10px] text-muted-foreground">{dmText.length}/900</span>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <LockedCard label="Follow-up message sequence" />
-                <LockedCard label="Ask to follow before DM" />
-              </div>
-
-              {dmType === 'text-button' && (
-                hasButton ? (
-                  <div className="space-y-2.5 rounded-xl border border-input bg-muted p-3.5">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold text-foreground">Button</span>
-                      <button type="button" onClick={() => setHasButton(false)} className="rounded p-1 text-muted-foreground hover:text-destructive"><XIcon size={14} /></button>
-                    </div>
-                    <Input value={btnLabel} onChange={(e) => setBtnLabel(e.target.value)} placeholder="Button label" />
-                    <Input value={btnUrl} onChange={(e) => setBtnUrl(e.target.value)} placeholder="https://yourlink.com" />
-                  </div>
-                ) : (
-                  <Button variant="outline" onClick={() => setHasButton(true)} type="button"><PlusIcon size={14} /> Add button link</Button>
-                )
-              )}
-            </>
-          )}
-
-          {/* Sub-step 4: Review */}
-          {sub === 4 && (
-            <>
-              <div>
-                <h3 className="font-display text-base font-bold text-foreground">Review your automation</h3>
-                <p className="mt-0.5 text-xs text-muted-foreground">Confirm the details before launching.</p>
-              </div>
-              <div className="space-y-3">
-                <ReviewRow title="Trigger">
-                  {postMode === 'specific' ? 'Comment on a specific post' : postMode === 'next' ? 'Comment on your next post' : 'Comment on any post or reel'}
-                  {postMode === 'specific' && selectedMedia && (
-                    <div className="mt-1.5 flex items-center gap-2">
-                      {selectedMedia.thumbnailUrl && <img src={selectedMedia.thumbnailUrl} alt="" className="h-10 w-10 shrink-0 rounded-md object-cover" />}
-                      <span className="line-clamp-2 text-xs text-muted-foreground">{selectedMedia.caption || 'Selected post'}</span>
-                    </div>
-                  )}
-                </ReviewRow>
-                <ReviewRow title="Keyword">
-                  {keywordMode === 'any' ? 'Any comment' : (
-                    <div className="mt-1 flex flex-wrap gap-1">
-                      {keywords.map((k) => <span key={k} className="rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary">{k}</span>)}
-                    </div>
-                  )}
-                </ReviewRow>
-                {autoReply && (
-                  <ReviewRow title="Public reply">
-                    <span className="italic text-muted-foreground">"{replies[0]}"</span>
-                    {replies.length > 1 && <span className="text-xs text-muted-foreground"> +{replies.length - 1} variations</span>}
-                  </ReviewRow>
-                )}
-                <ReviewRow title="DM message">
-                  <div className="mt-1 max-w-[85%] rounded-xl rounded-tl-sm border bg-muted p-3">
-                    <p className="text-sm text-foreground">{dmText}</p>
-                    {dmType === 'text-button' && hasButton && btnLabel && (
-                      <div className="mt-2 rounded-md bg-primary px-3 py-1.5 text-center text-xs font-medium text-primary-foreground">{btnLabel}</div>
-                    )}
-                  </div>
-                </ReviewRow>
-              </div>
-              {launchError && <p className="text-xs text-destructive mt-1">{launchError}</p>}
-            </>
-          )}
-        </div>
-
-        {/* Footer */}
-        <div className="flex items-center justify-between border-t border-border px-5 py-4">
-          <span className="text-xs text-muted-foreground">{sub <= 3 ? `Step ${sub} of 3` : 'Review'}</span>
-          <div className="flex gap-2">
-            {sub > 1 && <Button variant="outline" onClick={() => setSub((s) => (s - 1) as 1 | 2 | 3 | 4)}>Back</Button>}
-            {sub < 3 && <Button onClick={() => setSub((s) => (s + 1) as 1 | 2 | 3 | 4)}>Next</Button>}
-            {sub === 3 && <Button onClick={() => setSub(4)}>Review & Launch</Button>}
-            {sub === 4 && (
-              <Button loading={launching} disabled={wizardLoading || !!wizardError || (postMode === 'specific' && !selectedPost) || (keywordMode === 'specific' && keywords.length === 0)} onClick={launch}>
-                Confirm & Launch
-              </Button>
-            )}
-          </div>
-        </div>
+        ) : (
+          <span />
+        )}
+        {onSkip ? (
+          <button
+            type="button"
+            onClick={onSkip}
+            className="rounded-lg px-2 py-1 text-sm text-muted-foreground transition hover:text-foreground"
+          >
+            {skipLabel ?? 'Skip'}
+          </button>
+        ) : (
+          <span />
+        )}
       </div>
     </div>
   );
 }
 
-// ── Main Onboarding Page ───────────────────────────────────────────────────
+function OptionCard({
+  icon,
+  title,
+  subtitle,
+  selected,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  subtitle: string;
+  selected: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={selected}
+      className={`flex w-full items-center gap-3.5 rounded-xl border p-4 text-left transition ${
+        selected
+          ? 'border-primary bg-primary/5 ring-1 ring-primary'
+          : 'border-input hover:border-primary/40 hover:bg-muted'
+      }`}
+    >
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-muted text-foreground">
+        {icon}
+      </span>
+      <span className="min-w-0">
+        <span className="block text-sm font-semibold text-foreground">{title}</span>
+        <span className="block text-sm text-muted-foreground">{subtitle}</span>
+      </span>
+    </button>
+  );
+}
 
-function OnboardingPageInner() {
+/**
+ * The DM exactly as a Free workspace will send it — branding line and all.
+ *
+ * The strings come from the server; while that request is in flight they are simply not drawn,
+ * never replaced with a hardcoded stand-in, which would be the exact drift the endpoint exists to
+ * prevent.
+ */
+function DmBubbles({
+  template,
+  branding,
+}: {
+  template: OnboardingTemplate;
+  branding: BrandingConfig | null;
+}) {
+  return (
+    <div className="space-y-2">
+      <div className="rounded-2xl rounded-bl-md bg-muted px-3.5 py-2.5 text-sm leading-relaxed text-foreground">
+        <p className="whitespace-pre-wrap">{template.dmMessage}</p>
+        {branding?.brandingLine ? (
+          <p className="mt-2 whitespace-pre-wrap text-muted-foreground">
+            {branding.brandingLine.trim()}
+          </p>
+        ) : null}
+        <div className="mt-2.5 rounded-lg border border-input bg-background px-3 py-1.5 text-center text-xs font-semibold text-foreground">
+          {template.dmButtonLabel}
+        </div>
+      </div>
+
+      {branding ? (
+        <>
+          <div className="flex items-center gap-2 py-1">
+            <span className="h-px flex-1 bg-border" />
+            <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
+              {branding.followUpDelayMinutes} minutes later
+            </span>
+            <span className="h-px flex-1 bg-border" />
+          </div>
+          <div className="rounded-2xl rounded-bl-md bg-muted px-3.5 py-2.5 text-sm leading-relaxed text-foreground">
+            <p className="whitespace-pre-wrap">{branding.followUpMessage}</p>
+            <div className="mt-2.5 rounded-lg border border-input bg-background px-3 py-1.5 text-center text-xs font-semibold text-foreground">
+              {branding.followUpButtonLabel}
+            </div>
+          </div>
+          <p className="pt-1 text-xs text-muted-foreground">
+            The last line and the second message get added on Free. Remove branding on paid plans.
+          </p>
+        </>
+      ) : null}
+    </div>
+  );
+}
+
+// ── Page ───────────────────────────────────────────────────────────────────
+
+export default function OnboardingPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center py-20">
+          <Spinner />
+        </div>
+      }
+    >
+      <OnboardingFlow />
+    </Suspense>
+  );
+}
+
+type DemoPhase = 'idle' | 'replied' | 'dm';
+
+function OnboardingFlow() {
   const router = useRouter();
   const params = useSearchParams();
 
-  const [step, setStep] = useState(1);
-  const [displayName, setDisplayName] = useState('');
-  const [handle, setHandle] = useState('');
-  const [igConnected, setIgConnected] = useState(false);
-  const [igError, setIgError] = useState<string | null>(null);
-  const [showWizard, setShowWizard] = useState(false);
-  const [automationCreated, setAutomationCreated] = useState(false);
-  const [saving, setSaving] = useState(false);
+  const mounted = useHydrated();
+
+  /**
+   * The OAuth return is read during render, not in an effect.
+   *
+   * The callback sends the user back to `/onboarding?meta=…`, and those params are available on
+   * the very first render — so deriving the initial screen from them with lazy initialisers gives
+   * the right output immediately, instead of painting screen 1 and then correcting it. It also
+   * keeps `setState` out of the effect below, which now only does what effects are for: talking to
+   * an external system (the router, analytics).
+   */
+  const metaParam = params.get('meta');
+  const [step, setStep] = useState(() => (metaParam ? 4 : 1));
+  const [role, setRole] = useState<OnboardingRole | null>(null);
+  const [goal, setGoal] = useState<OnboardingGoal | null>(null);
+  const [picked, setPicked] = useState<string | null>(null);
+  const [branding, setBranding] = useState<BrandingConfig | null>(null);
+
+  const [igError, setIgError] = useState<string | null>(() => {
+    if (metaParam !== 'error') return null;
+    // `params.get` already percent-decodes; decoding a second time would mangle any value
+    // containing a literal %.
+    const reason = params.get('reason') ?? '';
+    return reason && reason !== 'user_canceled' ? reason : null;
+  });
   const [connecting, setConnecting] = useState(false);
-  const [finishing, setFinishing] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [connectedHandle, setConnectedHandle] = useState<string | null>(() =>
+    metaParam === 'connected' ? (params.get('igHandle') ?? 'Your account') : null,
+  );
 
-  // Guards signup_step('instagram_connected') against the 3 separate success
-  // paths (popup result, URL redirect, BroadcastChannel) all firing once.
-  const igConnectedTrackedRef = useRef(false);
-  function markInstagramConnected() {
-    if (igConnectedTrackedRef.current) return;
-    igConnectedTrackedRef.current = true;
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const finishing = useRef(false);
+  const igTracked = useRef(false);
+
+  const template = useMemo(() => templateForGoal(goal), [goal]);
+
+  // The advance timer outlives the component if the user navigates away mid-beat; without this it
+  // fires setStep on an unmounted screen.
+  useEffect(
+    () => () => {
+      if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    },
+    [],
+  );
+
+  const markInstagramConnected = useCallback(() => {
+    if (igTracked.current) return;
+    igTracked.current = true;
     trackSignupStep('instagram_connected');
-  }
-
-  useEffect(() => {
-    setMounted(true);
   }, []);
 
-  // Handle OAuth redirect back to onboarding (popup fallback — full page redirect)
+  // Free branding strings for the demo. Non-blocking: if it never lands, the demo still plays and
+  // simply does not draw the branding rather than inventing it.
   useEffect(() => {
-    const meta = params.get('meta');
-    if (!meta) return;
-    if (meta === 'connected') {
-      setIgConnected(true);
-      setIgError(null);
-      setStep((s) => Math.max(s, 3));
-      markInstagramConnected();
-    } else if (meta === 'error') {
-      const reason = decodeURIComponent(params.get('reason') ?? '');
-      if (reason !== 'user_canceled') {
-        setIgError(reason);
-        setStep((s) => (s < 2 ? 2 : s));
-      }
-    }
-    // Clean up URL params
-    router.replace('/onboarding');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Listen for BroadcastChannel from OAuth complete page (same-origin popup)
-  useEffect(() => {
-    if (typeof BroadcastChannel === 'undefined') return;
-    const bc = new BroadcastChannel(META_OAUTH_BC_CHANNEL);
-    bc.onmessage = async (e: MessageEvent) => {
-      if (!e.data || e.data.type !== META_OAUTH_MESSAGE_TYPE) return;
-      const result: MetaOAuthResult = e.data.payload;
-      if (result.meta === 'connected') {
-        if (result.workspaceId) {
-          const ok = await isWorkspaceInstagramConnected(result.workspaceId);
-          if (!ok) { setIgError('connection_not_persisted'); return; }
-        }
-        setIgConnected(true);
-        setIgError(null);
-        setStep((s) => Math.max(s, 3));
-        markInstagramConnected();
-      } else if (result.meta === 'error' && result.reason !== 'user_canceled') {
-        setIgError(result.reason ?? 'token_exchange_failed');
-        setStep((s) => (s < 2 ? 2 : s));
-      }
+    let cancelled = false;
+    getBrandingConfig()
+      .then((cfg) => {
+        if (!cancelled) setBranding(cfg);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
     };
-    return () => bc.close();
   }, []);
-
-  // Accept token from app.liffio.com handoff (e.g. when guard redirects here)
-  useEffect(() => {
-    const urlToken = params.get('token');
-    if (urlToken) {
-      authStore.setSession({ accessToken: urlToken });
-      getAuthMe({ token: urlToken }).then((me) => authStore.setAuthMe(me)).catch(() => {});
-      // Remove token from URL
-      router.replace('/onboarding');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Redirect if already onboarded
-  useEffect(() => {
-    if (!mounted) return;
-    const { isOnboarded, accessToken } = authStore.getState();
-    if (!accessToken) { router.replace('/login'); return; }
-    if (isOnboarded) {
-      window.location.href = appHandoffUrl(accessToken, '/dashboard');
-    }
-  }, [mounted, router]);
 
   const resolveWorkspaceId = useCallback(async (): Promise<string> => {
     const { workspaceId, accessToken } = authStore.getState();
@@ -660,30 +544,174 @@ function OnboardingPageInner() {
     return authMe.workspaceId;
   }, []);
 
-  async function handleStep1Continue() {
-    setSaving(true);
+  /**
+   * Persist an answer. **Never blocks, never surfaces a failure.**
+   *
+   * The spec is explicit: *"answers save after each screen. If a save fails, keep going and retry
+   * quietly. Never block the user on it."* Nothing stored here is load-bearing — `role` and `goal`
+   * reorder some options and pick a suggestion on the dashboard. A spinner between two taps costs
+   * more than the thing it would be reporting, and `finish()` re-sends everything anyway.
+   */
+  const save = useCallback(
+    (onboarding: Record<string, unknown>) => {
+      void (async () => {
+        try {
+          const workspaceId = await resolveWorkspaceId();
+          await updateWorkspace(workspaceId, { onboarding });
+        } catch {
+          /* deliberately silent — see the note above */
+        }
+      })();
+    },
+    [resolveWorkspaceId],
+  );
+
+  // Token arriving from an app-side handoff (the app's guard can bounce an un-onboarded user here).
+  useEffect(() => {
+    const urlToken = params.get('token');
+    if (!urlToken) return;
+    authStore.setSession({ accessToken: urlToken });
+    getAuthMe({ token: urlToken })
+      .then((me) => authStore.setAuthMe(me))
+      .catch(() => {});
+    router.replace('/onboarding');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // OAuth full-page redirect back to onboarding (the mobile path, and the popup's own fallback).
+  // The screen and error state were already derived during render above; this only does the two
+  // external things — fire the analytics event, and strip the params so a refresh cannot replay
+  // a connect that already happened.
+  useEffect(() => {
+    if (!metaParam) return;
+    if (metaParam === 'connected') markInstagramConnected();
+    router.replace('/onboarding');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Same-origin popup reporting back over BroadcastChannel (Instagram severs window.opener).
+  useEffect(() => {
+    if (typeof BroadcastChannel === 'undefined') return;
+    const bc = new BroadcastChannel(META_OAUTH_BC_CHANNEL);
+    bc.onmessage = async (e: MessageEvent) => {
+      if (!e.data || e.data.type !== META_OAUTH_MESSAGE_TYPE) return;
+      const result: MetaOAuthResult = e.data.payload;
+      if (result.meta === 'connected') {
+        if (result.workspaceId) {
+          const ok = await isWorkspaceInstagramConnected(result.workspaceId);
+          if (!ok) {
+            setIgError('connection_not_persisted');
+            return;
+          }
+        }
+        setIgError(null);
+        setConnectedHandle(result.igHandle ?? 'Your account');
+        markInstagramConnected();
+      } else if (result.meta === 'error' && result.reason !== 'user_canceled') {
+        setIgError(result.reason ?? 'token_exchange_failed');
+      }
+    };
+    return () => bc.close();
+  }, [markInstagramConnected]);
+
+  // Already finished? Straight to the app.
+  useEffect(() => {
+    if (!mounted) return;
+    const { isOnboarded, accessToken } = authStore.getState();
+    if (!accessToken) {
+      router.replace('/login');
+      return;
+    }
+    if (isOnboarded) window.location.href = appHandoffUrl(accessToken, '/dashboard');
+  }, [mounted, router]);
+
+  /**
+   * End of onboarding: hand the session to the app.
+   *
+   * 🚩 The terminal save carries the **answers** as well as `isOnboarded`, not just the flag. Every
+   * per-screen save is fire-and-forget and may quietly fail; re-sending everything here makes the
+   * last write complete, so one flaky request mid-flow cannot cost the user the suggestion waiting
+   * for them on the dashboard.
+   *
+   * The handoff runs even if that write fails — stranding someone on a finished flow is worse than
+   * a missing suggestion, and the app re-reads `auth/me` on arrival.
+   */
+  const finish = useCallback(async () => {
+    if (finishing.current) return;
+    finishing.current = true;
+    const { accessToken } = authStore.getState();
+    if (!accessToken) {
+      router.replace('/login');
+      return;
+    }
     try {
       const workspaceId = await resolveWorkspaceId();
       await updateWorkspace(workspaceId, {
-        ...(displayName.trim() ? { displayName: displayName.trim() } : {}),
-        onboarding: { handle: handle.trim() ? `@${handle.replace(/^@/, '')}` : undefined, step: 1 },
+        onboarding: {
+          role,
+          goal,
+          suggestedTemplate: { id: templateForGoal(goal).id, version: 1 },
+        },
+        isOnboarded: true,
       });
-      trackSignupStep('workspace_created');
-    } catch { /* non-fatal */ }
-    setSaving(false);
-    setStep(2);
-  }
+      const authMe = await getAuthMe({ token: accessToken });
+      authStore.setAuthMe(authMe);
+    } catch {
+      /* see the note above — the handoff happens regardless */
+    }
+    window.location.href = appHandoffUrl(accessToken, '/dashboard');
+  }, [resolveWorkspaceId, role, goal, router]);
 
-  async function handleConnectInstagram() {
+  // A short confirmation beat after a successful connect, then the dashboard.
+  useEffect(() => {
+    if (!connectedHandle) return;
+    const t = setTimeout(() => void finish(), 1000);
+    return () => clearTimeout(t);
+  }, [connectedHandle, finish]);
+
+  const advance = (to: number) => {
+    if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    advanceTimer.current = setTimeout(() => {
+      setPicked(null);
+      setStep(to);
+    }, ADVANCE_DELAY_MS);
+  };
+
+  const pickRole = (next: OnboardingRole | null) => {
+    if (picked) return;
+    setPicked(next ?? 'skip');
+    setRole(next);
+    save({ role: next });
+    trackSignupStep('workspace_created');
+    advance(2);
+  };
+
+  const pickGoal = (next: OnboardingGoal | null) => {
+    if (picked) return;
+    setPicked(next ?? 'skip');
+    setGoal(next);
+    // `goal` is the answer; `suggestedTemplate` is the decision made from it. Both are stored —
+    // "not sure yet" and a skipped screen resolve to the same template today, and only `goal` can
+    // tell them apart if that ever needs to change.
+    save({ goal: next, suggestedTemplate: { id: templateForGoal(next).id, version: 1 } });
+    advance(3);
+  };
+
+  async function handleConnect() {
+    if (connecting) return;
     setIgError(null);
     setConnecting(true);
     try {
       const workspaceId = await resolveWorkspaceId();
+
+      if (preferredOAuthMode() === 'redirect') {
+        const { url } = await getMetaOAuthStartUrl(workspaceId, 'redirect');
+        window.location.assign(url);
+        return;
+      }
+
       const result = await openMetaOAuthPopup(
-        async () => {
-          const data = await getMetaOAuthStartUrl(workspaceId);
-          return data.url;
-        },
+        async () => (await getMetaOAuthStartUrl(workspaceId, 'popup')).url,
         {
           oauthWorkspaceId: workspaceId,
           checkConnected: () => isWorkspaceInstagramConnected(workspaceId),
@@ -691,9 +719,8 @@ function OnboardingPageInner() {
         },
       );
       if (result.meta === 'connected') {
-        setIgConnected(true);
         setIgError(null);
-        setStep(3);
+        setConnectedHandle(result.igHandle ?? 'Your account');
         markInstagramConnected();
       } else if (result.reason !== 'user_canceled') {
         setIgError(result.reason ?? 'token_exchange_failed');
@@ -705,183 +732,509 @@ function OnboardingPageInner() {
     }
   }
 
-  async function finishOnboarding() {
-    setFinishing(true);
-    try {
-      const { accessToken } = authStore.getState();
-      if (!accessToken) { router.replace('/login'); return; }
-      const workspaceId = await resolveWorkspaceId();
-      await updateWorkspace(workspaceId, { isOnboarded: true });
-      const authMe = await getAuthMe({ token: accessToken });
-      authStore.setAuthMe(authMe);
-      window.location.href = appHandoffUrl(accessToken, '/dashboard');
-    } catch (err) {
-      alert((err as Error).message);
-    } finally {
-      setFinishing(false);
-    }
-  }
-
   if (!mounted) return null;
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-background">
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-soft-gradient opacity-60" />
-      <header className="relative z-10 flex items-center justify-between px-6 py-4">
-        <Logo size="small" />
-      </header>
-
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 py-10">
-        <StepProgress step={step} />
-
-        <div className="w-full max-w-lg">
-          <div className="w-full rounded-2xl border bg-card p-8 shadow-soft">
-
-            {/* ── Step 1: Brand ───────────────────────────────── */}
-            {step === 1 && (
-              <div className="space-y-6">
-                <div>
-                  <h1 className="font-display text-xl font-bold tracking-tight text-foreground">Welcome to Liffio</h1>
-                  <p className="mt-1 text-sm text-muted-foreground">Connect your Instagram and start sending automated DMs in minutes.</p>
-                </div>
-                <div className="space-y-4">
-                  <div className="space-y-1.5">
-                    <Label htmlFor="ws-name">Workspace name</Label>
-                    <Input id="ws-name" value={displayName} onChange={(e) => setDisplayName(e.target.value.slice(0, 80))} placeholder="My Brand, Studio Name…" />
-                    <p className="text-xs text-muted-foreground">Used as your workspace label inside Liffio.</p>
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="ig-handle">Instagram handle <span className="font-normal text-muted-foreground">(optional)</span></Label>
-                    <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">@</span>
-                      <Input id="ig-handle" value={handle} onChange={(e) => setHandle(e.target.value.replace(/^@/, '').replace(/\s/g, ''))} placeholder="yourbrand" className="pl-7" />
-                    </div>
-                    <p className="text-xs text-muted-foreground">We'll verify it when you connect your account.</p>
-                  </div>
-                </div>
-                <Button className="w-full" onClick={handleStep1Continue} loading={saving}>
-                  Continue <ArrowRightIcon size={14} />
-                </Button>
-              </div>
-            )}
-
-            {/* ── Step 2: Connect Instagram ───────────────────── */}
-            {step === 2 && (
-              <div className="space-y-6">
-                <div>
-                  <h1 className="font-display text-2xl font-bold tracking-tight text-foreground">Connect your Instagram</h1>
-                  <p className="mt-1 text-sm text-muted-foreground">Liffio connects via Instagram Business Login — your password is never shared.</p>
-                </div>
-
-                {igConnected ? (
-                  <div className="space-y-5">
-                    <div className="flex items-center gap-3 rounded-xl border border-success/30 bg-success/10 p-4">
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-success/20">
-                        <CheckIcon size={18} />
-                      </div>
-                      <div>
-                        <div className="text-sm font-semibold text-foreground">Instagram connected</div>
-                        {handle && <div className="rr-mask text-xs text-muted-foreground">@{handle.replace(/^@/, '')}</div>}
-                      </div>
-                    </div>
-                    <Button className="w-full" onClick={() => setStep(3)}>Continue <ArrowRightIcon size={14} /></Button>
-                  </div>
-                ) : (
-                  <>
-                    <div className="space-y-3 rounded-xl border bg-muted p-4">
-                      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Requirements</p>
-                      <Requirement text="Professional account (Creator or Business)" />
-                      <Requirement text="Instagram linked to a Facebook Page" />
-                      <Requirement text="Admin access on that Facebook Page" />
-                    </div>
-
-                    {igError && <IgErrorPanel reason={igError} />}
-
-                    <div className="space-y-2.5">
-                      <Button className="w-full" onClick={handleConnectInstagram} loading={connecting}>
-                        <InstagramIcon size={16} />
-                        {igError ? 'Retry Instagram connect' : 'Connect with Instagram'}
-                      </Button>
-                      <Button variant="ghost" className="w-full text-sm text-muted-foreground" onClick={() => setStep(3)}>
-                        Skip for now — I'll connect later
-                      </Button>
-                    </div>
-                  </>
-                )}
-              </div>
-            )}
-
-            {/* ── Step 3: First Automation ─────────────────────── */}
-            {step === 3 && (
-              <div className="space-y-6">
-                <div>
-                  <h1 className="font-display text-2xl font-bold tracking-tight text-foreground">
-                    {automationCreated ? 'Automation is live' : 'Create your first automation'}
-                  </h1>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {automationCreated
-                      ? 'Liffio is now monitoring your comments 24/7 and sending DMs automatically.'
-                      : 'When someone comments a keyword on your post, Liffio sends them a DM instantly.'}
-                  </p>
-                </div>
-
-                {automationCreated ? (
-                  <div className="space-y-4">
-                    <div className="space-y-1.5 rounded-xl border border-success/30 bg-success/10 p-4">
-                      <div className="flex items-center gap-2 text-sm font-medium text-success">
-                        <CheckIcon size={14} /> Your automation is active
-                      </div>
-                      <p className="pl-6 text-xs text-success">New comments that match your keyword will receive a DM automatically.</p>
-                    </div>
-                    <Button className="w-full" onClick={finishOnboarding} loading={finishing}>
-                      {finishing ? 'Opening dashboard…' : 'Go to dashboard'} <ArrowRightIcon size={14} />
-                    </Button>
-                  </div>
-                ) : (
-                  <>
-                    <div className="divide-y divide-border overflow-hidden rounded-xl border bg-card">
-                      <ValueProp icon={<MessageSquareIcon size={14} />} title="Comment triggers DM" desc="Someone comments your keyword → they receive a personal DM instantly" />
-                      <ValueProp icon={<ZapIcon size={14} />} title="Auto-reply on the post" desc="Reply publicly to boost engagement and post reach" />
-                      <ValueProp icon={<ArrowRightIcon size={14} />} title="Link button in DM" desc="Send a button to your link, product, or free resource" />
-                    </div>
-                    <div className="space-y-2.5">
-                      <Button className="w-full" onClick={() => setShowWizard(true)} disabled={!igConnected}>
-                        <ZapIcon size={14} /> Set up automation
-                      </Button>
-                      {!igConnected && <p className="text-center text-xs text-muted-foreground">Connect Instagram first to enable automations</p>}
-                      <Button variant="ghost" className="w-full text-sm text-muted-foreground" onClick={finishOnboarding} loading={finishing}>
-                        Skip — I'll set up later
-                      </Button>
-                    </div>
-                  </>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {step > 1 && (
-          <button className="mt-5 text-sm text-muted-foreground transition-colors hover:text-foreground" onClick={() => setStep((s) => s - 1)}>
-            ← Back
-          </button>
-        )}
-      </div>
-
-      {showWizard && (
-        <AutomationWizard
-          onClose={() => setShowWizard(false)}
-          resolveWorkspaceId={resolveWorkspaceId}
-          onLaunch={() => { setShowWizard(false); setAutomationCreated(true); }}
+    <div className={`w-full ${step === 3 ? 'max-w-3xl' : 'max-w-lg'}`}>
+      {step === 1 && <StepProgress step={1} onSkip={() => pickRole(null)} />}
+      {step === 2 && (
+        <StepProgress step={2} onBack={() => setStep(1)} onSkip={() => pickGoal(null)} />
+      )}
+      {step === 3 && (
+        <StepProgress
+          step={3}
+          onBack={() => setStep(2)}
+          onSkip={() => setStep(4)}
+          skipLabel="Skip demo"
         />
       )}
+      {step === 4 && <StepProgress step={4} onBack={() => setStep(3)} />}
+
+      <div className="w-full rounded-2xl border bg-card p-6 shadow-soft sm:p-8">
+        {step === 1 && <ScreenRole picked={picked} onPick={pickRole} />}
+        {step === 2 && <ScreenGoal role={role} picked={picked} onPick={pickGoal} />}
+        {step === 3 && (
+          <ScreenDemo template={template} branding={branding} onContinue={() => setStep(4)} />
+        )}
+        {step === 4 && (
+          <ScreenConnect
+            role={role}
+            connecting={connecting}
+            connectedHandle={connectedHandle}
+            igError={igError}
+            onConnect={() => void handleConnect()}
+            onSkip={() => void finish()}
+          />
+        )}
+      </div>
     </div>
   );
 }
 
-export default function OnboardingPage() {
+// ── Screen 1: Who's this for ───────────────────────────────────────────────
+
+const ROLE_OPTIONS: Array<{
+  role: OnboardingRole;
+  title: string;
+  subtitle: string;
+  icon: React.ReactNode;
+}> = [
+  {
+    role: 'creator',
+    title: 'My own account',
+    subtitle: "I'm a creator or I run my own page",
+    icon: <UserIcon />,
+  },
+  {
+    role: 'business',
+    title: 'My business',
+    subtitle: 'A brand, shop, or service',
+    icon: <BriefcaseIcon />,
+  },
+  {
+    role: 'agency',
+    title: 'My clients',
+    subtitle: 'I manage Instagram for other people',
+    icon: <UsersIcon />,
+  },
+];
+
+/**
+ * No Continue button. A tap selects, holds the selected state for a beat so the choice registers
+ * visually, then advances — an instant jump reads as a mis-tap and people hit back to check what
+ * they picked.
+ *
+ * The answer is a *hint*, never a gate: it reorders screen 2 and changes two strings later.
+ */
+function ScreenRole({
+  picked,
+  onPick,
+}: {
+  picked: string | null;
+  onPick: (r: OnboardingRole) => void;
+}) {
   return (
-    <Suspense fallback={null}>
-      <OnboardingPageInner />
-    </Suspense>
+    <div className="space-y-6">
+      <div>
+        <h1 className="font-display text-xl font-bold tracking-tight text-foreground">
+          Who are you setting Liffio up for?
+        </h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          We&apos;ll use this to show you the right examples.
+        </p>
+      </div>
+      <div className="space-y-2.5">
+        {ROLE_OPTIONS.map((o) => (
+          <OptionCard
+            key={o.role}
+            icon={o.icon}
+            title={o.title}
+            subtitle={o.subtitle}
+            selected={picked === o.role}
+            onClick={() => onPick(o.role)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Screen 2: What do you want to send ─────────────────────────────────────
+
+const GOAL_ICONS: Record<OnboardingGoal, React.ReactNode> = {
+  link: <LinkIcon />,
+  resource: <GiftIcon />,
+  code: <TagIcon />,
+  prices: <CoinIcon />,
+  unsure: <HelpIcon />,
+};
+
+function ScreenGoal({
+  role,
+  picked,
+  onPick,
+}: {
+  role: OnboardingRole | null;
+  picked: string | null;
+  onPick: (g: OnboardingGoal) => void;
+}) {
+  const options = useMemo(() => goalOptionsForRole(role), [role]);
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="font-display text-xl font-bold tracking-tight text-foreground">
+          What do you want to DM people when they comment?
+        </h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Pick one to start. You can set up others later.
+        </p>
+      </div>
+      <div className="space-y-2.5">
+        {options.map((o) => (
+          <OptionCard
+            key={o.goal}
+            icon={GOAL_ICONS[o.goal]}
+            title={o.title}
+            subtitle={o.subtitle}
+            selected={picked === o.goal}
+            onClick={() => onPick(o.goal)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Screen 3: Demo ─────────────────────────────────────────────────────────
+
+/**
+ * The whole product, working, before we ask for a single permission.
+ *
+ * `commentMatchesKeywords` is a port of the server's matcher — lower-case, punctuation stripped,
+ * whole words. A demo that fires on "guidebook" when production would not is a lie told at the
+ * moment we are asking to be trusted. It creates nothing: every bit of state below is local.
+ */
+function ScreenDemo({
+  template,
+  branding,
+  onContinue,
+}: {
+  template: OnboardingTemplate;
+  branding: BrandingConfig | null;
+  onContinue: () => void;
+}) {
+  const [phase, setPhase] = useState<DemoPhase>('idle');
+  const [comment, setComment] = useState('');
+  const [posted, setPosted] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const timers = useRef<Array<ReturnType<typeof setTimeout>>>([]);
+
+  const clearTimers = useCallback(() => {
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
+  }, []);
+  useEffect(() => clearTimers, [clearTimers]);
+
+  const replay = () => {
+    clearTimers();
+    setPhase('idle');
+    setPosted('');
+    setComment('');
+    setError(null);
+  };
+
+  const post = () => {
+    const trimmed = comment.trim();
+    if (!trimmed) {
+      setError('Type a comment first');
+      return;
+    }
+    if (!commentMatchesKeywords(trimmed, template.demoKeywords)) {
+      setError(template.demoMissHint);
+      setComment('');
+      return;
+    }
+    setError(null);
+    setPosted(trimmed);
+    setComment('');
+    if (prefersReducedMotion()) {
+      setPhase('dm');
+      return;
+    }
+    timers.current.push(setTimeout(() => setPhase('replied'), REPLY_DELAY_MS));
+    timers.current.push(setTimeout(() => setPhase('dm'), REPLY_DELAY_MS + DM_DELAY_MS));
+  };
+
+  const rail = [
+    { label: `Someone comments ${template.displayKeyword}`, done: posted !== '' },
+    { label: 'Liffio replies to their comment', done: phase === 'replied' || phase === 'dm' },
+    { label: 'They get your DM in seconds', done: phase === 'dm' },
+  ];
+
+  return (
+    <div className="grid gap-8 md:grid-cols-[1fr_320px] md:items-start">
+      {/* Headline, rail and CTA — first on mobile, right-hand column on desktop */}
+      <div className="order-1 md:order-2">
+        <h1 className="font-display text-xl font-bold tracking-tight text-foreground">
+          Here&apos;s how it works
+        </h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Comment on this post like one of your followers would.
+        </p>
+
+        <ol className="mt-5 space-y-3">
+          {rail.map((s, i) => (
+            <li
+              key={s.label}
+              className={`flex items-center gap-3 text-sm transition-colors ${
+                s.done ? 'text-foreground' : 'text-muted-foreground'
+              }`}
+            >
+              <span
+                className={`grid h-6 w-6 shrink-0 place-items-center rounded-full border text-[11px] font-semibold transition-colors ${
+                  s.done ? 'border-primary bg-primary text-primary-foreground' : 'border-input'
+                }`}
+              >
+                {s.done ? <CheckIcon size={12} /> : i + 1}
+              </span>
+              {s.label}
+            </li>
+          ))}
+        </ol>
+
+        {phase === 'dm' && (
+          <div className="mt-6 space-y-2">
+            <Button className="w-full" onClick={onContinue}>
+              Set this up on my Instagram
+            </Button>
+            <Button variant="ghost" className="w-full" onClick={replay} type="button">
+              <ReplayIcon /> Replay
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {/* The sample post */}
+      <div className="order-2 md:order-1">
+        <div className="overflow-hidden rounded-2xl border border-input bg-background">
+          <div className="flex items-center gap-2.5 border-b border-input px-3.5 py-3">
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-muted text-xs font-semibold text-foreground">
+              Y
+            </span>
+            <span className="text-sm font-semibold text-foreground">yourpage</span>
+          </div>
+
+          <div aria-hidden className="aspect-[4/3] bg-gradient-to-br from-muted to-background" />
+
+          <div className="space-y-3 p-3.5">
+            <p className="text-sm text-foreground">{template.demoCaption}</p>
+
+            {posted && (
+              <div className="space-y-2 border-t border-input pt-3">
+                <div className="flex gap-2.5">
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-muted text-[11px] font-semibold text-foreground">
+                    Y
+                  </span>
+                  <p className="min-w-0 break-words text-sm text-foreground">
+                    <span className="font-semibold">you</span>{' '}
+                    <span className="text-muted-foreground">{posted}</span>
+                  </p>
+                </div>
+                {(phase === 'replied' || phase === 'dm') && (
+                  <div className="ml-9 flex gap-2.5">
+                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-primary/10 text-[11px] font-semibold text-primary">
+                      Y
+                    </span>
+                    <p className="min-w-0 break-words text-sm text-foreground">
+                      <span className="font-semibold">yourpage</span>{' '}
+                      <span className="text-muted-foreground">{template.publicReply}</span>
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {phase === 'dm' && (
+              <div className="space-y-2 border-t border-input pt-3">
+                <p className="text-xs font-semibold text-muted-foreground">Direct messages</p>
+                <DmBubbles template={template} branding={branding} />
+              </div>
+            )}
+          </div>
+
+          {phase === 'idle' && (
+            <div className="border-t border-input p-3.5">
+              <div className="flex gap-2">
+                <input
+                  value={comment}
+                  onChange={(e) => {
+                    setComment(e.target.value);
+                    if (error) setError(null);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      post();
+                    }
+                  }}
+                  placeholder={template.demoInputPlaceholder}
+                  aria-label="Write a comment"
+                  aria-invalid={Boolean(error)}
+                  className="min-w-0 flex-1 rounded-xl border border-input bg-background px-3 py-2 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/30"
+                />
+                <Button onClick={post} type="button" className="shrink-0 px-3 py-2">
+                  <SendIcon /> Post
+                </Button>
+              </div>
+              {error && (
+                <p role="status" className="mt-2 text-xs text-destructive">
+                  {error}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+
+        <p className="mt-2 text-center text-xs text-muted-foreground">
+          Sample post. Nothing gets posted to Instagram.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ── Screen 4: Connect Instagram ────────────────────────────────────────────
+
+const CONNECT_STEPS = [
+  'Instagram asks you to log in',
+  'You approve access for Liffio',
+  'You come back here',
+];
+
+/**
+ * Every permission we are about to request is named here first, in plain words, with the one that
+ * looks alarming explained ("only when you schedule one"). Instagram's own dialog lists scopes in
+ * its language, not ours, and "publish posts" arriving unannounced on a screen someone reached to
+ * automate comments reads as overreach. The cost of saying it is a longer screen; the cost of not
+ * saying it is a cancel inside Meta's dialog, where we cannot explain anything.
+ */
+function ScreenConnect({
+  role,
+  connecting,
+  connectedHandle,
+  igError,
+  onConnect,
+  onSkip,
+}: {
+  role: OnboardingRole | null;
+  connecting: boolean;
+  connectedHandle: string | null;
+  igError: string | null;
+  onConnect: () => void;
+  onSkip: () => void;
+}) {
+  const [howToOpen, setHowToOpen] = useState(false);
+
+  if (connectedHandle) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-3 py-10">
+        <span className="grid h-12 w-12 place-items-center rounded-full bg-success/10 text-success">
+          <CheckIcon size={22} />
+        </span>
+        <p className="text-sm font-semibold text-foreground">{connectedHandle} connected</p>
+      </div>
+    );
+  }
+
+  const err = igError ? IG_ERRORS[igError] : null;
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="font-display text-xl font-bold tracking-tight text-foreground">
+          Now connect your Instagram
+        </h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {role === 'agency'
+            ? "Connect a client's professional account, or your own to try it out."
+            : 'Connect a professional account so you can start sending DMs like the one you just saw.'}
+        </p>
+      </div>
+
+      {igError && (
+        <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-3.5">
+          <div className="flex items-start gap-2">
+            <span className="mt-0.5 text-destructive">
+              <AlertCircleIcon size={15} />
+            </span>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-foreground">
+                {err?.title ?? "That didn't work"}
+              </p>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                {err?.summary ?? 'We could not connect Instagram. Please try again.'}
+              </p>
+              {err?.steps?.length ? (
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-muted-foreground">
+                  {err.steps.map((s) => (
+                    <li key={s}>{s}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="rounded-xl border border-input bg-muted/50 p-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          What happens next
+        </p>
+        <ol className="mt-3 space-y-2.5">
+          {CONNECT_STEPS.map((s, i) => (
+            <li key={s} className="flex items-center gap-3 text-sm text-foreground">
+              <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-input text-[11px] font-semibold">
+                {i + 1}
+              </span>
+              {s}
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div className="space-y-3">
+        <p className="text-xs leading-relaxed text-muted-foreground">
+          Instagram will ask to let Liffio see your profile and posts, read and reply to comments,
+          send messages, see insights, and publish posts (only when you schedule one).
+        </p>
+        <p className="text-xs leading-relaxed text-muted-foreground">
+          Needs a Business or Creator account. On a personal account? Switching is free and takes a
+          minute.{' '}
+          <button
+            type="button"
+            onClick={() => setHowToOpen((o) => !o)}
+            aria-expanded={howToOpen}
+            className="font-semibold text-foreground underline underline-offset-2"
+          >
+            How to switch
+          </button>
+        </p>
+        {howToOpen && (
+          <ol className="list-decimal space-y-1 rounded-xl border border-input bg-muted/50 p-3 pl-7 text-xs text-muted-foreground">
+            <li>Open Instagram and go to your profile</li>
+            <li>Tap the menu, then Settings and privacy</li>
+            <li>Tap Account type and tools, then Switch to professional account</li>
+            <li>Pick Creator or Business and finish the steps</li>
+          </ol>
+        )}
+      </div>
+
+      <div className="space-y-2.5">
+        <Button className="w-full" onClick={onConnect} loading={connecting} disabled={connecting}>
+          {connecting ? (
+            'Connecting…'
+          ) : (
+            <>
+              <InstagramIcon size={15} /> Connect Instagram
+            </>
+          )}
+        </Button>
+
+        <p className="flex items-center justify-center gap-1.5 text-center text-[11px] text-muted-foreground">
+          <ShieldIcon /> Official Instagram API · Verified Meta Tech Provider
+        </p>
+        <p className="text-center text-xs text-muted-foreground">
+          Liffio never sees your password. You can disconnect any time in Settings.
+        </p>
+
+        <button
+          type="button"
+          onClick={onSkip}
+          className="mx-auto block rounded-lg px-2 py-1 text-sm text-muted-foreground transition hover:text-foreground"
+        >
+          Do this later
+        </button>
+      </div>
+    </div>
   );
 }
