@@ -24,6 +24,27 @@ function formatApiError(payload: unknown): string {
   return 'Request failed';
 }
 
+/**
+ * Thrown by every failed `apiRequest`.
+ *
+ * Still an `Error` with the same `.message` as before, so existing `catch (err) { (err as
+ * Error).message }` call sites are untouched — it just also carries the HTTP status and the
+ * server's machine-readable `code`. Some failures are not failures: `PATCH /auth/me/country`
+ * answers 409 `COUNTRY_ALREADY_SET` when the value is already there, and onboarding needs to tell
+ * that apart from a real error without string-matching a human sentence.
+ */
+export class ApiError extends Error {
+  readonly status: number;
+  readonly code: string | null;
+
+  constructor(message: string, status: number, code: string | null) {
+    super(message);
+    this.name = 'ApiError';
+    this.status = status;
+    this.code = code;
+  }
+}
+
 type RequestConfig = {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   body?: unknown;
@@ -53,7 +74,12 @@ export async function apiRequest<T>(path: string, config: RequestConfig = {}): P
 
   if (!res.ok) {
     const payload = await res.json().catch(() => ({}));
-    throw new Error(formatApiError(payload));
+    const code = (payload as { code?: unknown }).code;
+    throw new ApiError(
+      formatApiError(payload),
+      res.status,
+      typeof code === 'string' ? code : null,
+    );
   }
   if (res.status === 204) return undefined as T;
   return (await res.json()) as T;
@@ -150,6 +176,26 @@ export function logout() {
 
 export function getAuthMe(options: { token?: string; workspaceId?: string } = {}) {
   return apiRequest<AuthMePayload>(`${V1}/auth/me`, options);
+}
+
+/**
+ * Set the account's country — the value that decides INR versus USD at checkout.
+ *
+ * 🔴 **Set-once on the server, and never inferred from IP.** `PATCH /auth/me/country` answers 409
+ * `COUNTRY_ALREADY_SET` rather than updating, because currency is baked into the subscription at
+ * creation; and the backend deliberately refuses to read `cf-ipcountry` here even though the helper
+ * sits in the same module, since that would make a customer's price depend on where they happened
+ * to open the browser. The customer answers; we send the answer.
+ *
+ * This is the missing half of Google signup. That callback is a redirect with no form, so it writes
+ * `country: null`, and `createPackageCheckout` then refuses with `CHECKOUT_COUNTRY_REQUIRED` — a
+ * dead end until something asks. Onboarding is what asks.
+ */
+export function setMyCountry(country: string) {
+  return apiRequest<{ country: string }>(`${V1}/auth/me/country`, {
+    method: 'PATCH',
+    body: { country },
+  });
 }
 
 export function googleAuthUrl(redirectTo: string, frontendOrigin: string): string {
