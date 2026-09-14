@@ -88,6 +88,15 @@ function FeatureMark() {
 function priceSubline(plan: PricingPlan, annual: boolean): ReactNode {
   if (isZeroPrice(plan.monthly)) return "Forever. One free workspace per login.";
 
+  // With an intro price in the headline, the ONGOING price is the thing the
+  // subline has to state — that is the number the buyer pays every month after
+  // the first, and the headline is deliberately not it.
+  if (!annual && plan.introPrice) {
+    return plan.annualTotal
+      ? `Then ${plan.monthly}/month · or ${plan.annualTotal}/year`
+      : `Then ${plan.monthly}/month`;
+  }
+
   const workspaces =
     planWorkspacesIncluded[plan.name as keyof typeof planWorkspacesIncluded] ?? 1;
   const shown = parseDisplayAmount(annual ? plan.annual : plan.monthly);
@@ -118,7 +127,21 @@ export default function EditorialPlanCard({
   // One price per tier, straight from the catalogue. The design's
   // launch/standard mechanic was removed on instruction, so nothing here can
   // advertise a figure the catalogue does not carry.
-  const price = annual ? plan.annual : plan.monthly;
+  /*
+    The intro price REPLACES the headline, on monthly billing only.
+
+    🚩 Monthly only, and not by accident: it is a first-MONTH offer, so showing
+    it against the yearly toggle would advertise ₹49 for a ₹4,999 commitment.
+    `annual` gates it, and the yearly view is left exactly as it was.
+
+    🚩 The unit next to the number changes with it - "first month", not
+    "/month". That is what keeps the card honest at a glance: this card sits in
+    a row beside Growth at ₹1,499, and a bare ₹49 under a "/month" suffix reads
+    as the ongoing price. With the unit changed, the strike-through original and
+    the "Then ₹499/month" subline, the offer is legible without overclaiming.
+  */
+  const intro = !annual && plan.introPrice ? plan.introPrice : null;
+  const price = intro ?? (annual ? plan.annual : plan.monthly);
   const symbol = currencySymbolOf(price);
   const amount = price.slice(symbol.length);
   const showPer = !isZeroPrice(plan.monthly);
@@ -205,7 +228,15 @@ export default function EditorialPlanCard({
             className="ml-1 text-[12px] font-medium text-[#8B8391]"
             style={{ fontFamily: "var(--font-inter, sans-serif)" }}
           >
-            /month
+            {intro ? plan.introPriceLabel : "/month"}
+          </span>
+        ) : null}
+        {intro ? (
+          <span
+            className="ml-1.5 text-[15px] font-semibold text-[#B8B1BE] line-through decoration-[1.5px]"
+            aria-label={`normally ${plan.monthly} per month`}
+          >
+            {plan.monthly}
           </span>
         ) : null}
       </div>

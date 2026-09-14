@@ -165,10 +165,42 @@ test("the comparison matrix has a column for every tier, and no holes", () => {
   }
 });
 
-test("no retired intro price is advertised", () => {
+/*
+  D17 retired the "₹49 first month" offer because the page advertised a price
+  no checkout could charge. It is back, deliberately, so the blanket assertion
+  that NOTHING carries an intro price is gone — but the shape is still pinned,
+  because the failure mode never was "an intro price exists", it was "an intro
+  price the buyer cannot actually get".
+*/
+test("only India's Starter advertises an intro price, and it is a real discount", () => {
   for (const region of REGIONS) {
     for (const plan of getPricingPlans(region)) {
-      assert.equal(plan.introPrice ?? null, null, `${plan.name} still advertises an intro price`);
+      const isIntroTier = region === "india" && plan.name === "Starter";
+
+      if (!isIntroTier) {
+        assert.equal(
+          plan.introPrice ?? null,
+          null,
+          `${region}/${plan.name} advertises an intro price — only India's Starter may`,
+        );
+        continue;
+      }
+
+      assert.ok(plan.introPrice, "India Starter should carry the intro price");
+      assert.ok(
+        plan.introPriceLabel,
+        "an intro price with no label renders a bare number with no unit beside it",
+      );
+
+      // An "offer" at or above the ongoing price is not an offer. This catches
+      // the repricing that moves `monthly` and forgets this line.
+      const intro = parseDisplayAmount(plan.introPrice!);
+      const ongoing = parseDisplayAmount(plan.monthly);
+      assert.ok(intro !== null && ongoing !== null, "both prices must parse");
+      assert.ok(
+        intro! < ongoing!,
+        `intro ${plan.introPrice} is not below the ongoing ${plan.monthly}`,
+      );
     }
   }
 });

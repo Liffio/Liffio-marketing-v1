@@ -37,9 +37,19 @@ export type PricingPlan = {
    */
   provisional?: boolean;
   /**
-   * Introductory price shown prominently on monthly billing.
-   * Currently unused — no tier has one, and no checkout path implements one.
-   * Kept because the catalogue payload still carries the field.
+   * Introductory price, shown INSTEAD of `monthly` on monthly billing.
+   *
+   * India's Starter carries one: ₹49 for the first month, then ₹499. Nothing
+   * else does, and the guard in `applyIntroOffer` enforces that rather than
+   * trusting whatever the payload says.
+   *
+   * 🚩 This is an advertised PRICE, so it is only ever correct while the
+   * checkout actually charges it. It was withdrawn once for exactly that
+   * reason - see the note on the India Starter entry below before touching it.
+   *
+   * `introPriceLabel` is the unit the headline number is in ("first month"),
+   * not a marketing slogan: it is what stops ₹49 reading as the ongoing price
+   * beside Growth's ₹1,499.
    */
   introPrice?: string | null;
   introPriceLabel?: string | null;
@@ -321,12 +331,24 @@ const indiaPricingPlans: PricingPlan[] = [
     monthly: inrMonthly(499),
     annual: inrAnnual(4999),
     annualTotal: inrAnnualTotal(4999),
-    // No intro price. The "₹49 first month" offer was retired: no checkout path
-    // ever implemented it, so it advertised a price nothing could charge. The
-    // live catalogue serves `introPrice: null` for every tier. Starter is ₹499
-    // permanently (D17).
-    introPrice: null,
-    introPriceLabel: null,
+    /*
+      ₹49 for the first month, then ₹499. India only.
+
+      🚩 READ THIS BEFORE CHANGING IT. This offer was here once, was RETIRED
+      under D17 because no checkout path implemented it, and is now back on an
+      explicit product decision that billing charges it. `/marketing/plans`
+      still serves `introPrice: null` for every tier, so this sheet is the only
+      source and `applyIntroOffer` puts it back over the payload - which means
+      the page can advertise ₹49 whether or not anything can charge ₹49. That
+      is precisely the failure D17 recorded.
+
+      If the first Starter invoice in India is not ₹49, flip
+      `INTRO_OFFER_LIVE` to false in marketing-plans.server.ts. That is one
+      boolean and it removes the claim from the card, the plans FAQ answer and
+      the AI-facing price sentence at once, because all three derive from it.
+    */
+    introPrice: inrMonthly(49),
+    introPriceLabel: "first month",
     description: "Everything creators need to convert comments into sales on autopilot.",
     badge: "Most Popular",
     highlight: true,

@@ -222,6 +222,58 @@ function authoredAnnual(
 }
 
 /**
+ * The introductory-price offer, ON or OFF in one place.
+ *
+ * 🚩 THE KILL SWITCH. Set this to false the moment the checkout stops charging
+ * the intro price, and the claim disappears from every surface at once: the
+ * card headline, the plans FAQ answer, and the AI-facing price sentence all
+ * derive from `plan.introPrice`, which only survives if this is true.
+ *
+ * It exists as a constant rather than as "delete the two sheet fields" because
+ * an advertised price that the checkout does not honour is the exact defect
+ * D17 was raised for. One boolean is something you can flip under pressure;
+ * editing a config sheet correctly under pressure is not.
+ */
+const INTRO_OFFER_LIVE = true
+
+/**
+ * Tiers allowed to advertise an introductory price, by region.
+ *
+ * 🚩 An ALLOW-LIST, not a passthrough. `/marketing/plans` serves
+ * `introPrice: null` for every tier today, so the authored sheet is the only
+ * source — but the day the catalogue starts serving one, this still decides
+ * which tier may show it. A payload that suddenly puts an intro price on
+ * Agency does not get to.
+ */
+const INTRO_OFFER_TIERS: Record<PricingRegion, ReadonlySet<string>> = {
+  india: new Set(['Starter']),
+  global: new Set(),
+}
+
+/**
+ * Put the authored intro price back over whatever the payload said.
+ *
+ * Runs LAST, like applyV4Content, so it is the final word — and it CLEARS the
+ * field on every tier that is not allow-listed, so this function is the only
+ * way an intro price can reach a card. That is deliberate: a guard that only
+ * adds can be bypassed by the source it is guarding against.
+ */
+function applyIntroOffer(region: PricingRegion, plans: PricingPlan[]): PricingPlan[] {
+  const allowed = INTRO_OFFER_TIERS[region]
+  return plans.map((plan) => {
+    if (!INTRO_OFFER_LIVE || !allowed.has(plan.name)) {
+      return { ...plan, introPrice: null, introPriceLabel: null }
+    }
+    const authored = getFallbackPricingPlans(region).find((p) => p.name === plan.name)
+    return {
+      ...plan,
+      introPrice: authored?.introPrice ?? null,
+      introPriceLabel: authored?.introPriceLabel ?? null,
+    }
+  })
+}
+
+/**
  * Tiers the catalogue sells that `/marketing/plans` withholds, merged in from
  * the sheet so the page describes the real ladder.
  *
@@ -385,16 +437,22 @@ export async function fetchMarketingPlansContext(region: PricingRegion): Promise
       // An empty API response falls back to the static sheet — which must be
       // sanitized too. It carries the same unsupported claims verbatim, so
       // returning it raw would reinstate every string this guard just removed.
-      plans: applyV4Content(
-        plans.length > 0
-          ? applyEmphasis(mergeWithheldTiers(region, plans))
-          : applyEmphasis(sanitizeFallback(region)),
+      plans: applyIntroOffer(
+        region,
+        applyV4Content(
+          plans.length > 0
+            ? applyEmphasis(mergeWithheldTiers(region, plans))
+            : applyEmphasis(sanitizeFallback(region)),
+        ),
       ),
       businessPlanValue: payload.businessPlanValue,
     }
   } catch (error) {
     console.error('[marketing-plans] fallback to static config', error)
-    const plans = applyV4Content(applyEmphasis(mergeWithheldTiers(region, sanitizeFallback(region))))
+    const plans = applyIntroOffer(
+      region,
+      applyV4Content(applyEmphasis(mergeWithheldTiers(region, sanitizeFallback(region)))),
+    )
     const business = plans.find((p) => p.name === 'Business')
     return {
       plans,
