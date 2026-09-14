@@ -4,9 +4,18 @@ import Image from 'next/image'
 type Theme = 'light' | 'dark'
 type Size = 'xs' | 'small' | 'medium' | 'large'
 
+/*
+  One logo, two grounds. Both files are the SAME crimson mark and the same
+  wordmark; `-dark` differs only in that the near-black wordmark is white, so it
+  reads on the footer's gray-950.
+
+  🚩 `dark` used to point at `logo-light.webp`, a violet/blue variant of the
+  mark from an older palette. The header and the footer of every page were
+  therefore showing two different brands.
+*/
 export const LIFFIO_LOGO_SRC = {
   light: '/logo/inline-transparent.webp',
-  dark: '/logo/logo-light.webp',
+  dark: '/logo/inline-transparent-dark.webp',
 } as const
 
 const SIZE_CLASS: Record<Size, string> = {

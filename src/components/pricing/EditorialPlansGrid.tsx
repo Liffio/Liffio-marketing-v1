@@ -115,12 +115,22 @@ export default function EditorialPlansGrid({
         </span>
       </div>
 
-      {/* Mobile: snap scroller. */}
-      <div className="relative sm:hidden">
-        <div
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#FBF9F5] via-[#FBF9F5]/80 to-transparent"
-          aria-hidden
-        />
+      {/*
+        Mobile: snap scroller, NO edge fade.
+
+        🚩 There used to be a gradient overlay pinned to the right of this
+        wrapper. It washed the next card out to near-paper for the last ~56px,
+        which reads as a pale vertical band down the side of the screen - the
+        reported UI bug. It also could not be made to line up: the wrapper sits
+        inside the page's `px-4` container while the scroller below breaks out
+        with `-mx-4`, so the overlay stopped 16px short of where the cards
+        actually stop and left a hard unfaded strip at the very edge.
+
+        The cards now simply clip at the viewport edge, which is what a snap
+        carousel should do. The "Swipe to compare plans" hint below already
+        says the row scrolls, so the fade was carrying no information.
+      */}
+      <div className="sm:hidden">
         <p className="mb-3 flex items-center justify-center gap-1.5 text-center text-[11px] text-[#8B8391]">
           <span>Swipe to compare plans</span>
           <svg

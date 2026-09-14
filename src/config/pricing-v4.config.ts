@@ -30,10 +30,18 @@
  * catch them.
  */
 
-/** `**bold**` segments are rendered with emphasis, as `<b>` does in the design. */
+/**
+ * `**bold**` segments are rendered with emphasis, as `<b>` does in the design.
+ *
+ * `{beta}` is the one other inline marker: it renders a small Beta pill where it
+ * sits. Lyra AI is the only thing wearing it - the suite ships to every tier,
+ * including Free, but it is not out of beta, and the card is where a buyer
+ * decides. `stripEmphasis()` removes both markers for plain-text surfaces.
+ */
 export type V4Feature = string;
 
-export type V4Limit = { label: string; value: string };
+/** `beta` draws the same pill beside the limit's label. */
+export type V4Limit = { label: string; value: string; beta?: boolean };
 
 export type V4PlanContent = {
   /** The `.pfor` line: who this tier is for, one sentence. */
@@ -60,7 +68,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
       "Bio link page, Liffio badge shown",
       "Lead capture by username",
       "Overview analytics, 7-day history",
-      "AI Insights + zero-token answers",
+      "**Lyra AI**{beta} — AI Insights + zero-token answers",
       "Affiliate programme, 50% recurring",
     ],
     limitsLabel: "Limits",
@@ -69,7 +77,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
       { label: "DMs / month", value: "500" },
       { label: "Follow-ups", value: "0" },
       { label: "Seats", value: "1" },
-      { label: "AI tokens", value: "1,000" },
+      { label: "Lyra AI tokens", value: "1,000", beta: true },
     ],
   },
 
@@ -85,7 +93,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
       "Short links, lead emails, CSV export",
       "Bio link unlocked, **badge removed**",
       "30-day analytics, conversion rate",
-      "The full Lyra creative AI suite",
+      "The full **Lyra AI** creative suite{beta}",
     ],
     limitsLabel: "Limits",
     limits: [
@@ -93,7 +101,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
       { label: "DMs / month", value: "Unlimited" },
       { label: "Follow-ups", value: "2" },
       { label: "Seats", value: "3" },
-      { label: "AI tokens", value: "10,000" },
+      { label: "Lyra AI tokens", value: "10,000", beta: true },
     ],
   },
 
@@ -101,7 +109,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     audience:
       "A serious creator posting consistently and deciding from data — still working alone.",
     flag: { text: "The new step", tone: "brand" },
-    cta: "Choose Growth",
+    cta: "Start Growth",
     includedLabel: "Everything in Starter, plus",
     features: [
       "**Instagram post analytics** — reach, views, saves, shares, engagement rate",
@@ -118,7 +126,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
       { label: "DMs / month", value: "Unlimited" },
       { label: "Follow-ups", value: "5" },
       { label: "Seats", value: "5" },
-      { label: "AI tokens", value: "30,000" },
+      { label: "Lyra AI tokens", value: "30,000", beta: true },
     ],
   },
 
@@ -134,7 +142,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
       "**Per-automation attribution** — DMs → clicks → leads",
       "Analytics export",
       "External API — 10 keys, 5,000 requests/day",
-      "Proactive AI growth alerts",
+      "Proactive **Lyra AI** growth alerts{beta}",
       "AI token rollover up to 25,000",
     ],
     limitsLabel: "Limits",
@@ -143,7 +151,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
       { label: "DMs / month", value: "Unlimited" },
       { label: "Follow-ups", value: "5" },
       { label: "Seats", value: "15" },
-      { label: "AI tokens", value: "75,000" },
+      { label: "Lyra AI tokens", value: "75,000", beta: true },
     ],
   },
 
@@ -166,14 +174,14 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
       { label: "DMs / month", value: "Unlimited" },
       { label: "Seats", value: "15 × 20" },
       { label: "API requests/day", value: "5,000 × 20" },
-      { label: "AI tokens", value: "75,000 × 20" },
+      { label: "Lyra AI tokens", value: "75,000 × 20", beta: true },
     ],
   },
 };
 
-/** `**bold**` markers, stripped — for surfaces that render plain feature text. */
+/** Inline markers, stripped — for surfaces that render plain feature text. */
 export function stripEmphasis(feature: V4Feature): string {
-  return feature.replace(/\*\*/g, "");
+  return feature.replace(/\*\*/g, "").replace(/\s*\{beta\}/g, " (Beta)");
 }
 
 /**
@@ -255,6 +263,8 @@ const values = (
 export const V4_FEATURE_CATEGORIES: ReadonlyArray<{
   name: string;
   description?: string;
+  /** Draws a Beta pill beside the group name. */
+  beta?: boolean;
   features: MatrixRow[];
 }> = [
   {
@@ -339,6 +349,7 @@ export const V4_FEATURE_CATEGORIES: ReadonlyArray<{
   },
   {
     name: "Lyra AI",
+    beta: true,
     features: [
       all("AI Insights across dashboard, analytics, scheduler"),
       all("Zero-token quick answers"),

@@ -27,17 +27,37 @@ import { V4_PLAN_CONTENT } from "@/config/pricing-v4.config";
 
 const BRAND_GRADIENT = "linear-gradient(100deg,#FF7C49 0%,#F5184C 52%,#B20D8F 100%)";
 
-/** `**bold**` -> <b>, as `<b>` does in the design's own markup. */
-function emphasize(text: string): ReactNode[] {
-  return text.split(/(\*\*[^*]+\*\*)/g).map((part, index) =>
-    part.startsWith("**") && part.endsWith("**") ? (
-      <b key={index} className="font-semibold text-[#17131A]">
-        {part.slice(2, -2)}
-      </b>
-    ) : (
-      <span key={index}>{part}</span>
-    ),
+/**
+ * The Beta pill.
+ *
+ * Deliberately quiet - a hairline outline in the brand ink, not a filled brand
+ * chip. It qualifies a feature the tier really includes; it is not a second
+ * flag competing with "The new step" for the eye.
+ */
+function BetaPill() {
+  return (
+    <span
+      className="ml-1 inline-flex translate-y-[-1px] items-center rounded-[4px] border border-[#F5184C]/35 bg-[#F5184C]/[0.07] px-[5px] py-[1px] align-middle text-[9px] font-bold uppercase tracking-[0.08em] text-[#F5184C]"
+      style={{ fontFamily: "var(--font-mono, ui-monospace, monospace)" }}
+    >
+      Beta
+    </span>
   );
+}
+
+/** `**bold**` -> <b> and `{beta}` -> the pill, as the design's own markup does. */
+function emphasize(text: string): ReactNode[] {
+  return text.split(/(\*\*[^*]+\*\*|\{beta\})/g).map((part, index) => {
+    if (part === "{beta}") return <BetaPill key={index} />;
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <b key={index} className="font-semibold text-[#17131A]">
+          {part.slice(2, -2)}
+        </b>
+      );
+    }
+    return <span key={index}>{part}</span>;
+  });
 }
 
 function FeatureMark() {
@@ -257,7 +277,10 @@ export default function EditorialPlanCard({
           <dl className="grid gap-1">
             {limits.map((limit) => (
               <div key={limit.label} className="flex justify-between gap-2 text-[11.5px]">
-                <dt className="text-[#8B8391]">{limit.label}</dt>
+                <dt className="text-[#8B8391]">
+                  {limit.label}
+                  {limit.beta ? <BetaPill /> : null}
+                </dt>
                 <dd
                   className="m-0 text-right font-medium text-[#4A4350]"
                   style={{ fontFamily: "var(--font-mono, ui-monospace, monospace)" }}

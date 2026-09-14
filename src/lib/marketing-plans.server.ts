@@ -168,20 +168,20 @@ function sanitizeFeatures(planName: string, features: PlanFeatureItem[]): PlanFe
  * The static sheet, put through the same guard as the API payload.
  *
  * ⚠️ The fallback is NOT a safe copy. It carries the same unsupported claims as
- * plan_catalog, and it also contains Growth — which D2 part 2 is deliberately
- * withholding from the site until Razorpay keys are live. So an API outage does
- * not merely serve stale prices: it surfaces a tier that is not on sale. See
- * docs/decisions/0002.
+ * plan_catalog. It also contains Growth, which the API still withholds — that
+ * is now a presentation difference rather than an exposure, because Growth is
+ * on sale, but any tier added to `NOT_BUYABLE` gets the old treatment here too.
+ * See docs/decisions/0002.
  */
 function sanitizeFallback(region: PricingRegion): PricingPlan[] {
   return getFallbackPricingPlans(region).map((p) => {
     const sanitized = { ...p, features: sanitizeFeatures(p.name, p.features) }
-    // 🚩 The sheet carries Growth with a WORKING checkout href. The API
-    // deliberately withholds that tier, so whenever it reaches the page from
-    // here — an outage, or an empty payload — it must arrive not-buyable, or an
-    // outage silently puts a live "Get Growth" button on a tier that cannot be
-    // bought. This is the ADR 0002 exposure, closed.
-    return WITHHELD_TIERS.has(p.name) ? asProvisional(sanitized) : sanitized
+    // 🚩 The sheet carries every tier with a WORKING checkout href. A tier in
+    // `NOT_BUYABLE` must still arrive not-buyable when it reaches the page from
+    // here — an outage, or an empty payload — or an outage silently puts a live
+    // button on a tier that cannot be bought. This is the ADR 0002 exposure,
+    // closed; the set is empty today because Growth went on sale.
+    return withBuyability(sanitized)
   })
 }
 
@@ -242,18 +242,32 @@ const MERGED_FROM_SHEET: ReadonlyArray<{ name: string; after: string }> = [
   { name: 'Growth', after: 'Starter' },
 ]
 
-const WITHHELD_TIERS = new Set(MERGED_FROM_SHEET.map((t) => t.name))
-
 /**
- * Shown, but not buyable.
+ * Shown, but NOT buyable — a separate decision from where the tier's copy comes
+ * from.
  *
- * `PAID_PLANS` in confirm-email omits GROWTH, so `?plan=GROWTH` is dropped after
- * signup and the visitor lands in onboarding with no subscription and no
- * explanation. The CTA carries that signal; the badge slot stays free so
- * applyEmphasis can still put "Most Popular" on it.
+ * A tier belongs in here when `PAID_PLANS` in confirm-email does not accept it:
+ * `?plan=<TIER>` is dropped after signup and the visitor lands in onboarding
+ * with no subscription and no explanation, so the card must not offer a
+ * checkout nothing can honour.
+ *
+ * 🚩 Growth used to be in this set (it is still merged from the sheet, which is
+ * why MERGED_FROM_SHEET is no longer what derives it). It now ships a live
+ * "Start Growth" CTA on an explicit product decision. That is only correct
+ * while GROWTH is in the backend's `PAID_PLANS` — if it is ever taken back out,
+ * put 'Growth' in here rather than editing the card, because the Offer JSON-LD
+ * qualifier, the plans FAQ answer and the AI-facing price sentence all derive
+ * from `provisional` and will follow on their own.
  */
+const NOT_BUYABLE: ReadonlySet<string> = new Set<string>()
+
 function asProvisional(plan: PricingPlan): PricingPlan {
   return { ...plan, provisional: true, cta: 'Coming soon', href: '' }
+}
+
+/** Provisional only if the tier is one nothing can check out. */
+function withBuyability(plan: PricingPlan): PricingPlan {
+  return NOT_BUYABLE.has(plan.name) ? asProvisional(plan) : plan
 }
 
 /**
@@ -311,14 +325,14 @@ function applyEmphasis(plans: PricingPlan[]): PricingPlan[] {
 }
 
 function mergeWithheldTiers(region: PricingRegion, served: PricingPlan[]): PricingPlan[] {
-  // 🚩 Withholding is a property of the TIER, not of where the plan came from.
+  // 🚩 Buyability is a property of the TIER, not of where the plan came from.
   // This used to `continue` past a served Growth ("the API serves it now"),
   // which left the payload's own cta/href intact — so the day
   // `show_on_marketing_site` flips before checkout exists, /pricing ships a live
-  // "Choose Growth" button and a `?plan=GROWTH` signup link for a tier
-  // `PAID_PLANS` drops. Normalizing the served plan makes a withheld tier
-  // provisional down BOTH paths — merged from the sheet, or served by the API.
-  const plans = served.map((p) => (WITHHELD_TIERS.has(p.name) ? asProvisional(p) : p))
+  // button and a `?plan=…` signup link for a tier `PAID_PLANS` drops.
+  // Normalizing the served plan keeps a non-buyable tier provisional down BOTH
+  // paths — merged from the sheet, or served by the API.
+  const plans = served.map(withBuyability)
 
   for (const { name, after } of MERGED_FROM_SHEET) {
     // Already present (and normalized just above) — merging would duplicate it.
@@ -327,13 +341,13 @@ function mergeWithheldTiers(region: PricingRegion, served: PricingPlan[]): Prici
     const authored = getFallbackPricingPlans(region).find((p) => p.name === name)
     if (!authored) continue
 
-    const provisional = asProvisional({
+    const merged = withBuyability({
       ...authored,
       features: sanitizeFeatures(authored.name, authored.features),
     })
 
     const at = plans.findIndex((p) => p.name === after)
-    plans.splice(at === -1 ? plans.length : at + 1, 0, provisional)
+    plans.splice(at === -1 ? plans.length : at + 1, 0, merged)
   }
 
   return plans

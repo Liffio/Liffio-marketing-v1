@@ -187,29 +187,26 @@ const OFFER_LADDER: {
       `Starter plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Flat rate — unlimited DMs and contacts.`,
   },
   {
-    // 🚩 Growth is NOT purchasable. It is in the catalogue but withheld from the
-    // marketing site's plan feed, and the card carries a "Coming soon" CTA with
-    // no checkout href. An Offer with no availability qualifier is
-    // indistinguishable from the four tiers you can actually buy, so this one
-    // is qualified and says so in its description too — this markup renders on
-    // 11 URLs, and a price Google can surface for a plan nobody can buy is a
-    // support ticket at best.
+    // 🚩 Growth IS purchasable now — the card ships a live "Start Growth" CTA
+    // and a `?plan=GROWTH` signup link, so this Offer carries no availability
+    // qualifier, exactly like the other buyable tiers.
     //
-    // 🚩 OutOfStock, NOT PreOrder. PreOrder means "available for pre-order" —
-    // it asserts a checkout path that takes your money now and delivers later.
-    // Growth has no checkout path at all (cta "Coming soon", href ""), so
-    // PreOrder is a straightforwardly false claim. Of the ItemAvailability
-    // members, OutOfStock is the only one that denies purchasability without
-    // also asserting something untrue: SoldOut and Discontinued both imply the
-    // plan was once on sale, and PreSale/BackOrder/MadeToOrder/Reserved all
-    // imply an order can be placed today. OutOfStock says only "you cannot buy
-    // this right now", which is exactly the fact.
+    // It used to be qualified `OutOfStock` and its description ended "announced
+    // but not yet available for purchase", because the card was a dead "Coming
+    // soon" pill. Both are gone together: this markup renders on 11 URLs, and
+    // an OutOfStock price for a plan the page sells is as wrong in the other
+    // direction as a bare price for one nobody could buy.
+    //
+    // If Growth is ever pulled from checkout again, restore BOTH — add
+    // 'Growth' to `NOT_BUYABLE` in marketing-plans.server.ts (which drives the
+    // card, the FAQ answer and the AI price sentence) and put the
+    // `availability` line and the closing sentence back here. This array is
+    // hand-maintained and does NOT derive from `provisional`.
     name: "Growth",
-    availability: "https://schema.org/OutOfStock",
     usd: { price: "29.00", monthly: "$29", annualPerMonth: "$24.17" },
     inr: { price: "1499", monthly: "₹1,499", annualPerMonth: "₹1,250" },
     describe: (monthly, annualPerMonth) =>
-      `Growth plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Post, video and profile analytics with bulk upload. This plan is announced but not yet available for purchase.`,
+      `Growth plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Post, video and profile analytics with bulk upload.`,
   },
   {
     name: "Business",

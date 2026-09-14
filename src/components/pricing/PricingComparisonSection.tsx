@@ -122,6 +122,11 @@ function CategoryRows({
             style={{ fontFamily: "var(--font-mono, ui-monospace, monospace)" }}
           >
             {category.name}
+            {"beta" in category && category.beta ? (
+              <span className="ml-1.5 inline-flex items-center rounded-[4px] border border-[#F5184C]/35 bg-[#F5184C]/[0.07] px-[5px] py-[1px] align-middle text-[9px] tracking-[0.08em] text-[#F5184C]">
+                Beta
+              </span>
+            ) : null}
           </span>
           {category.description ? (
             <span className="mt-0.5 block text-[11px] font-normal normal-case tracking-normal text-[#8B8391]">
