@@ -75,16 +75,25 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   // Bumped from 2026-06-07: AffiliateCalculator's Business/Agency prices were
   // corrected ($79→$59, $299→$549), which changes what this page renders.
   { path: "/affiliate", changeFrequency: "monthly", priority: 0.6, lastModified: "2026-09-11" },
-  // The seven policy routes below keep their dates. The 2026-09-11 change set
-  // edited only the shared FAQ block `LegalPage` appends beneath the policy
-  // text; no policy wording moved, and each page still prints its own earlier
-  // "Last updated" in the body. See the third rule above.
-  { path: "/privacy-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-08-03" },
-  { path: "/terms-of-service", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-08-03" },
-  { path: "/cookie-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-06-09" },
-  { path: "/refund-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-06-09" },
-  { path: "/acceptable-use-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-08-07" },
-  { path: "/creators-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-06-09" },
+  // 2026-09-15 is the policy pack: these seven routes were rewritten wholesale
+  // from src/content/legal/*.md and each now prints "Last updated:
+  // 15 September 2026" in its own body, so the lastmod and the page agree -
+  // which is the third rule above.
+  { path: "/terms-of-service", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
+  { path: "/cookie-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
+  { path: "/refund-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
+  { path: "/acceptable-use-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
+  { path: "/creators-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
+  { path: "/shipping-delivery-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
+  // Privacy joined the pack once its Grievance Officer name was supplied. This
+  // one is a content CORRECTION as well as a rewrite: the old text named Stripe
+  // as the processor receiving customer data, and Stripe left the backend on
+  // 11 September.
+  { path: "/privacy-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
+  // 🚩 KEEPS its old date because it still serves its old text. The replacement
+  // is final and carries no placeholder, but publishing it starts a 30-day
+  // notice obligation to existing affiliates, so it is held pending that
+  // decision. Move this date in the same change that switches the route.
   { path: "/affiliate-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-08-09" },
 ] as const;
 

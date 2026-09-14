@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import LegalPage from "@/components/LegalPage";
-import { loadCreatorsPolicyContent } from "@/lib/legal/load-creators-policy";
+import { loadPolicy, policyPublicationDate } from "@/lib/legal/load-policy";
 import { buildPageMetadata } from "@/config/seo.config";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -15,8 +15,8 @@ export default function CreatorsProgramPolicyPage() {
   return (
     <LegalPage
       title="Creators Program Policy"
-      lastUpdated="June 2026"
-      content={loadCreatorsPolicyContent()}
+      lastUpdated={policyPublicationDate("creators-program-policy")}
+      content={loadPolicy("creators-program-policy")}
     />
   );
 }

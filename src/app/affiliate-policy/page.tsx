@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import LegalPage from "@/components/LegalPage";
 import { normalizePolicyContent } from "@/lib/legal/normalize-policy";
+import { legacyPolicyToMarkdown } from "@/lib/legal/legacy-policy";
 import { buildPageMetadata } from "@/config/seo.config";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -234,7 +235,18 @@ For affiliate program enquiries: support@liffio.com
 Website: liffio.com
 `;
 
-const content = normalizePolicyContent(CONTENT.trim());
+/*
+  ⏳ Still plain text, and still on the OLD wording.
+
+  🔴 The replacement document exists at src/content/legal/ but carries a
+  placeholder the pack itself refuses to publish with. Switching this route
+  over is a one-line change to `loadPolicy(...)` once that is resolved -
+  see the blockers named in test/legal.test.ts.
+
+  `legacyPolicyToMarkdown` only restores the heading structure the shared
+  renderer used to infer; it changes no wording.
+*/
+const content = legacyPolicyToMarkdown(normalizePolicyContent(CONTENT.trim()));
 
 export default function AffiliatePolicyPage() {
   return <LegalPage title="Affiliate Program Policy" lastUpdated="June 2026" content={content} />;

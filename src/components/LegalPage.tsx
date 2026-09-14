@@ -1,25 +1,30 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PolicyMarkdown from "@/components/legal/PolicyMarkdown";
 import { SiteFaqSection } from "@/components/faq/SiteFaqSection";
 import { getRegionFreeFaqCategories } from "@/config/faq.config";
 
 type LegalPageProps = {
   title: string;
   lastUpdated: string;
+  /** Markdown. See PolicyMarkdown for the subset the policy pack uses. */
   content: string;
 };
 
-function isSectionHeading(paragraph: string): boolean {
-  const trimmed = paragraph.trim();
-  return /^\d+(\.\d+)?\.\s/.test(trimmed) || (/^[A-Z]/.test(trimmed) && trimmed.length < 72 && !trimmed.endsWith("."));
-}
+/*
+  🚩 `isSectionHeading` is GONE. It guessed which lines were headings from their
+  shape - numbered, or short and capitalised and unpunctuated - because the old
+  content was one plain-text blob with no structure to read. The policy pack is
+  Markdown, so headings are marked as headings and no longer have to be
+  inferred. The heuristic also flattened every level to `h2`; the pack nests
+  three deep, and `PolicyMarkdown` keeps that nesting.
+*/
 
 // Deliberately NOT async and does not read the pricing region: legal pages
 // carry no region-specific pricing, so keeping them free of headers() lets
 // all seven render statically (CDN-cacheable).
 export default function LegalPage({ title, lastUpdated, content }: LegalPageProps) {
   const faqCategories = getRegionFreeFaqCategories();
-  const paragraphs = content.split("\n").filter((p) => p.trim() !== "");
 
   return (
     <>
@@ -42,21 +47,7 @@ export default function LegalPage({ title, lastUpdated, content }: LegalPageProp
         <section className="bg-white py-12 sm:py-16">
           <div className="mx-auto max-w-3xl px-4 sm:px-6">
             <div className="card-base p-6 sm:p-10">
-              <div className="space-y-4 text-sm leading-relaxed text-gray-600 sm:text-[0.9375rem]">
-                {paragraphs.map((p, i) =>
-                  isSectionHeading(p) ? (
-                    <h2
-                      key={i}
-                      className="!mt-8 text-base font-bold text-[#0a0a0a] first:!mt-0 sm:text-lg"
-                      style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
-                    >
-                      {p}
-                    </h2>
-                  ) : (
-                    <p key={i}>{p}</p>
-                  ),
-                )}
-              </div>
+              <PolicyMarkdown source={content} />
             </div>
           </div>
         </section>

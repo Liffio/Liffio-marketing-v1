@@ -33,6 +33,10 @@ const footerLinks = {
     { label: "Acceptable Use", href: "/acceptable-use-policy" },
     { label: "Creators Program Policy", href: "/creators-policy" },
     { label: "Affiliate Program Policy", href: "/affiliate-policy" },
+    // The eighth document. Razorpay requires a shipping and delivery page on
+    // every merchant site, and the go-live checklist requires the footer to
+    // link all eight.
+    { label: "Shipping & Delivery", href: "/shipping-delivery-policy" },
   ],
 };
 
