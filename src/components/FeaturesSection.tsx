@@ -840,26 +840,57 @@ export default function FeaturesSection() {
                   <span className="text-[8px] font-black leading-none tracking-wider">{f.num}</span>
                   <div className="scale-75">{f.icon}</div>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-base font-bold text-[#0a0a0a]">{f.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-gray-500">{f.description}</p>
-                  <ul className="mt-3 space-y-1.5">
-                    {f.bullets.slice(0, 2).map((b) => (
-                      <li key={b} className="flex items-start gap-2 text-xs text-gray-600">
-                        <svg viewBox="0 0 16 16" className="mt-0.5 h-3.5 w-3.5 shrink-0" fill="none">
-                          <circle cx="8" cy="8" r="8" fill={f.bg} />
-                          <path
-                            d="M4.5 8.5l2 2 4.5-5"
-                            stroke={f.color}
-                            strokeWidth="1.6"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
+                {/*
+                  🚩 EVERY feature is rendered here, stacked in a single grid
+                  cell, with all but the active one hidden by `visibility`.
+
+                  The carousel advances itself every 8s and the descriptions are
+                  not the same length, so rendering only the active one made this
+                  card 253px tall on "Collect User Data" and 328px on "Story Auto
+                  Reply". That 75px swing moved the entire rest of the document
+                  (14519px to 14594px), and on a phone - where this card is
+                  usually on screen - the page visibly jumped up and down every
+                  8 seconds while you were trying to read it.
+
+                  Stacking makes the row as tall as the TALLEST feature and keeps
+                  it there, so nothing below ever moves. It is derived from the
+                  copy rather than a hardcoded `min-h-[328px]`, which would go
+                  stale the moment a description is edited or a font falls back.
+
+                  `visibility: hidden` and not `display: none`: a hidden grid
+                  item must still occupy the cell, or it contributes no height
+                  and the whole point is lost. It also takes the inactive copy
+                  out of the accessibility tree, which `opacity: 0` would not.
+                */}
+                <div className="grid min-w-0 flex-1">
+                  {features.map((feat, i) => (
+                    <div
+                      key={feat.id}
+                      className="col-start-1 row-start-1"
+                      style={{ visibility: i === activeFeature ? "visible" : "hidden" }}
+                      aria-hidden={i !== activeFeature}
+                    >
+                      <h3 className="text-base font-bold text-[#0a0a0a]">{feat.title}</h3>
+                      <p className="mt-1.5 text-sm leading-relaxed text-gray-500">{feat.description}</p>
+                      <ul className="mt-3 space-y-1.5">
+                        {feat.bullets.slice(0, 2).map((b) => (
+                          <li key={b} className="flex items-start gap-2 text-xs text-gray-600">
+                            <svg viewBox="0 0 16 16" className="mt-0.5 h-3.5 w-3.5 shrink-0" fill="none">
+                              <circle cx="8" cy="8" r="8" fill={feat.bg} />
+                              <path
+                                d="M4.5 8.5l2 2 4.5-5"
+                                stroke={feat.color}
+                                strokeWidth="1.6"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                            {b}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
                 </div>
               </div>
             </article>

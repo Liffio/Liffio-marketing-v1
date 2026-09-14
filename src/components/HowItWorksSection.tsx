@@ -656,22 +656,56 @@ export default function HowItWorksSection() {
                 boxShadow: `0 8px 32px ${step.bg}`,
               }}
             >
-              <div className="mb-2 flex flex-wrap items-center gap-2">
-                <TechBadge label={step.note} variant="inline" format="label" accent={step.color} />
-                <span className="text-[10px] font-bold text-gray-400">{step.num} / 03</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <div
-                  className="flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl"
-                  style={{ background: step.color, color: "white" }}
-                >
-                  <span className="text-[8px] font-black leading-none tracking-wider">{step.num}</span>
-                  <div className="scale-75">{step.icon}</div>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-base font-bold text-[#0a0a0a]">{step.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-gray-500">{step.detail}</p>
-                </div>
+              {/*
+                🚩 ALL THREE steps are rendered, stacked in one grid cell, with
+                the inactive ones hidden by `visibility`.
+
+                This carousel advances itself every 7s and the steps do not
+                describe themselves at the same length, so rendering only the
+                active one resized this card on every advance and shunted the
+                whole page up and down underneath the reader - the same bug as
+                the features section, and fixed the same way.
+
+                The WHOLE card body is stacked here, not just the title and
+                detail: the badge row above carries `step.note`, which differs
+                per step and comes partly from `metaCopy`, so it can wrap to a
+                second line on one step and not another. Stacking from the badge
+                down means every source of height variance is inside the cell.
+
+                Sized by the tallest step rather than a hardcoded `min-h`, so
+                editing the copy - or metaCopy changing under it - cannot
+                reintroduce the jump. `visibility` and not `display: none`: a
+                hidden grid item must still occupy the cell to contribute its
+                height, and this keeps the inactive copy out of the
+                accessibility tree as well.
+              */}
+              <div className="grid">
+                {steps.map((s, i) => (
+                  <div
+                    key={s.num}
+                    className="col-start-1 row-start-1"
+                    style={{ visibility: i === activeStep ? "visible" : "hidden" }}
+                    aria-hidden={i !== activeStep}
+                  >
+                    <div className="mb-2 flex flex-wrap items-center gap-2">
+                      <TechBadge label={s.note} variant="inline" format="label" accent={s.color} />
+                      <span className="text-[10px] font-bold text-gray-400">{s.num} / 03</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div
+                        className="flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl"
+                        style={{ background: s.color, color: "white" }}
+                      >
+                        <span className="text-[8px] font-black leading-none tracking-wider">{s.num}</span>
+                        <div className="scale-75">{s.icon}</div>
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-base font-bold text-[#0a0a0a]">{s.title}</h3>
+                        <p className="mt-1.5 text-sm leading-relaxed text-gray-500">{s.detail}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </article>
 
