@@ -36,6 +36,11 @@ export const metadata: Metadata = {
   ...rootSeo,
   metadataBase: new URL(SITE_URL),
   robots: "index, follow",
+  // Icons come from the app-directory file conventions - `favicon.ico`,
+  // `icon.png` and `apple-icon.png` sit next to this file. There is
+  // deliberately no `icons` key here: declaring one REPLACES those
+  // conventions wholesale, which silently dropped the apple-touch-icon link
+  // the last time this was done by hand.
 };
 
 export default function RootLayout({

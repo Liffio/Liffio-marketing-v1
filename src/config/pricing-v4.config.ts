@@ -49,7 +49,14 @@ export type V4PlanContent = {
   /** The corner flag. `brand` paints the gradient, `ink` the solid dark pill. */
   flag?: { text: string; tone: "brand" | "ink" };
   cta: string;
-  /** In-page anchor instead of signup, as Agency uses for "See the maths". */
+  /**
+   * In-page anchor instead of signup.
+   *
+   * Unused today. Agency carried `#agency-break-even` behind a "See the maths"
+   * label; the label is now "Choose Agency", which promises a checkout, so the
+   * anchor had to go with it. The break-even section still renders on /pricing
+   * - nothing links to it from the cards any more.
+   */
   ctaAnchor?: string;
   includedLabel: string;
   features: V4Feature[];
@@ -109,7 +116,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     audience:
       "A serious creator posting consistently and deciding from data — still working alone.",
     flag: { text: "The new step", tone: "brand" },
-    cta: "Start Growth",
+    cta: "Choose Growth",
     includedLabel: "Everything in Starter, plus",
     features: [
       "**Instagram post analytics** — reach, views, saves, shares, engagement rate",
@@ -158,8 +165,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
   Agency: {
     audience: "Studios and multi-brand operators running 10 to 20 Instagram accounts.",
     flag: { text: "20 workspaces", tone: "ink" },
-    cta: "See the maths",
-    ctaAnchor: "#agency-break-even",
+    cta: "Choose Agency",
     includedLabel: "Twenty complete Business workspaces",
     features: [
       "**Every workspace is a full Business workspace** — same features, same limits",

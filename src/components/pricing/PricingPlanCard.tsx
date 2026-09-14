@@ -156,7 +156,9 @@ export function HorizontalScrollFade({ children, ariaLabel }: { children: ReactN
         aria-hidden
       />
       <div
-        className="scrollbar-hide -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-2 touch-pan-x [scroll-padding-inline:1rem] lg:mx-0 lg:block lg:overflow-visible lg:px-0 lg:pb-0"
+        // 🚩 No `touch-pan-x`: it blocks vertical scrolling for any touch
+        // starting inside the row, which strands the reader on a phone.
+        className="scrollbar-hide -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-2 [scroll-padding-inline:1rem] lg:mx-0 lg:block lg:overflow-visible lg:px-0 lg:pb-0"
         role="region"
         aria-label={ariaLabel}
       >

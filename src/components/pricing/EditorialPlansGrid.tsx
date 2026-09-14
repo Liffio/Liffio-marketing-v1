@@ -144,8 +144,22 @@ export default function EditorialPlansGrid({
             <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
           </svg>
         </p>
+        {/*
+          🚩 NO `touch-pan-x` here. It compiles to `touch-action: pan-x`, which
+          tells the browser that a touch starting on this element may ONLY pan
+          horizontally - a vertical swipe is swallowed rather than handed to the
+          page. These cards are several screens tall, so on a phone your finger
+          is almost always inside the scroller and the page could not be
+          scrolled down at all: it only moved left and right. It also disabled
+          pinch-zoom over the whole row.
+
+          Leaving `touch-action` at its `auto` default lets the browser pick the
+          axis from the gesture itself - swipe sideways and the row scrolls,
+          swipe down and the page does. `overscroll-x-contain` still stops a
+          horizontal overscroll from chaining out to the page.
+        */}
         <div
-          className="scrollbar-hide -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-2 pt-3 touch-pan-x [scroll-padding-inline:1rem]"
+          className="scrollbar-hide -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-2 pt-3 [scroll-padding-inline:1rem]"
           role="region"
           aria-label="Pricing plans"
         >

@@ -271,7 +271,7 @@ const globalPricingPlans: PricingPlan[] = [
     highlight: false,
     popular: false,
     features: growthFeatures,
-    cta: "Start Growth",
+    cta: "Get Growth",
     href: planSignupUrl("GROWTH"),
   },
   {
@@ -345,7 +345,7 @@ const indiaPricingPlans: PricingPlan[] = [
     highlight: false,
     popular: false,
     features: growthFeatures,
-    cta: "Start Growth",
+    cta: "Get Growth",
     href: planSignupUrl("GROWTH"),
   },
   {
