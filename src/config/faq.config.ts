@@ -638,7 +638,7 @@ export function getCreatorsFaqCategories(
           id: "approval-time",
           question: "How long does approval take?",
           answer:
-            "All applications are reviewed manually within 48-72 hours. If accepted, you receive confirmation via email and immediate full Business plan access from day one. If not accepted, you may reapply after 30 days. Liffio does not provide reasons for rejection.",
+            "All applications are reviewed manually within 48 to 72 hours. If accepted, you receive confirmation via email and immediate full Business plan access from day one. If not accepted, you can reapply after a cooldown period, which we tell you in that email. Liffio does not provide reasons for rejection.",
         },
         {
           id: "creators-features-included",
@@ -650,7 +650,7 @@ export function getCreatorsFaqCategories(
           id: "how-to-apply",
           question: "How do I apply for the Creators Program?",
           answer:
-            "Apply in the Liffio app at app.liffio.com/creators-program, linked from liffio.com/creators-program. It takes under 2 minutes. You will need to provide your name, email, country, Instagram username, follower count range, and primary content niche. Applications submitted through email, social media, or direct message are not accepted. Spots are limited to 50 in the initial launch phase.",
+            "Apply from inside Liffio, in the Creators Program section of your account at app.liffio.com/creators-program. The creators page on liffio.com links you there. There is no long form: we use your Liffio account name and email, and your connected Instagram account's username, follower count and posting activity. Connect your Instagram account before you apply, or we cannot assess your profile. Applications submitted through email, social media, or direct message are not accepted. Spots are limited to 50 in the initial launch phase.",
         },
       ],
     },

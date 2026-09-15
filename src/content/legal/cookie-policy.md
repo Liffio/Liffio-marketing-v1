@@ -33,7 +33,7 @@ Where the law requires your consent for these (for example, if you are in the EU
 
 ### 2.3 Analytics
 
-We use Umami to understand how our website and app are used. It is configured not to place cookies or store identifiers in your browser.
+We use Umami to understand how our website and app are used. Umami does not place cookies or store identifiers in your browser, and does not collect personal data.
 
 ### 2.4 Advertising
 

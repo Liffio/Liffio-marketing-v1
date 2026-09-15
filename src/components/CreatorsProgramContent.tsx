@@ -88,7 +88,7 @@ const HOW_STEPS = [
   {
     num: "1",
     title: "Apply in 2 Minutes",
-    desc: "Apply in the Liffio app with your profile details. Tell us about your content and how you engage your audience.",
+    desc: "Connect your Instagram account in the Liffio app, then apply from the Creators Program section. There is no long form to fill in.",
   },
   {
     num: "2",
@@ -386,8 +386,9 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
               </svg>
             </a>
             <p className="mt-4 text-xs leading-relaxed text-gray-500">
-              You will be taken to app.liffio.com to apply. Applications are not accepted by email,
-              social media or direct message.
+              You will be taken to the Creators Program section of your Liffio account. Connect your
+              Instagram account before you apply, or we cannot assess your profile. Applications are
+              not accepted by email, social media or direct message.
             </p>
           </div>
         </div>

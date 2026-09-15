@@ -28,19 +28,16 @@ To be eligible, you must:
 
 ## 3. How to apply
 
-Apply only through the official form at liffio.com/creators-program. We don't accept applications by email, social media, or direct message.
+You apply from inside Liffio, in the Creators Program section of your account. The creators page on liffio.com links you there. We don't accept applications by email, social media, or direct message.
 
-The form asks for:
+Because you apply from your account, there is no long form to fill in. We use:
 
-- Your full name and email address
-- Your country of residence
-- Your Instagram username and profile link
-- Your follower count range
-- Your main content niche
-- Whether you currently ask followers to comment for links or guides
-- An optional note on why you want to join
+- Your Liffio account details: your name and email address
+- Your connected Instagram account: your username, follower count, and posting activity
 
-We review every application by hand. If you're accepted, we'll email you within 48-72 hours. If you're not, you can reapply after 30 days if your profile has grown or changed. We don't give reasons for rejections.
+Make sure your Instagram account is connected before you apply, or we can't assess your profile.
+
+A member of our team reviews every application, alongside the automated score described in Section 8.3. If you're accepted, we'll email you within 48-72 hours. If you're not, you can reapply after a cooldown period, which we'll tell you when we email you. We don't give reasons for rejections.
 
 ## 4. Capacity and exclusivity
 

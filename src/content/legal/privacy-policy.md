@@ -131,7 +131,7 @@ We share personal data only with service providers who help us run Liffio. They 
 | Brevo | Service and marketing emails, and invoice delivery |
 | Google | Sign in with Google, if you choose it |
 | Sentry and New Relic | Error and performance monitoring |
-| Umami and PostHog | Website and product analytics |
+| Umami | Website and product analytics |
 
 ### 7.2 The business you interacted with
 
