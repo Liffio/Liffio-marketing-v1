@@ -379,6 +379,15 @@ const pricingDetailCategory: FaqCategory = {
         "No. Liffio's pricing is flat and transparent. You pay the plan price, monthly or annually, and that is the total cost. No per-message fees, no overage charges, no contact limits, no feature add-ons sold separately, and no setup fees.",
     },
     {
+      // Terms 7.3, restated for the page rather than paraphrased. Keep the two
+      // halves together: the India half is only reassuring next to the export
+      // half, and a visitor who sees one currency needs to know why.
+      id: "gst-on-prices",
+      question: "Do the prices include GST?",
+      answer:
+        "Prices shown in rupees include GST, so the amount you see is the amount you pay, and we issue a GST tax invoice for every payment. Give us your state so we can apply the correct tax treatment, and your GSTIN if you want it on the invoice. Sales billed in US dollars are treated as exports and are billed without Indian GST, though you may owe tax in your own country on such a sale.",
+    },
+    {
       id: "upgrade-later",
       question: "Can I upgrade later?",
       answer:

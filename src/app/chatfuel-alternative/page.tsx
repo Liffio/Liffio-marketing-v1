@@ -298,7 +298,7 @@ export default function ChatfuelAlternativePage() {
                 <p className="text-gray-600 leading-relaxed">
                   Agencies managing Instagram accounts for clients in India face an additional
                   cost with Chatfuel: USD billing plus international processing fees.
-                  Liffio&apos;s Agency plan at ₹22,999/month includes 20 workspaces, one Instagram
+                  Liffio&apos;s Agency plan at ₹22,999/month incl. GST includes 20 workspaces, one Instagram
                   account each, on a single subscription, and INR invoices via Razorpay. For agencies
                   billing clients in INR who have been absorbing the currency conversion cost,
                   switching to Liffio removes that overhead entirely.

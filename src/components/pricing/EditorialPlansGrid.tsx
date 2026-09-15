@@ -6,6 +6,7 @@ import EditorialPlanCard from "@/components/pricing/EditorialPlanCard";
 import { CountryFlag } from "@/components/pricing/CountryFlag";
 import { useSharedBillingInterval } from "@/components/pricing/BillingInterval";
 import { pricingPerks, type PricingPlan } from "@/config/pricing.config";
+import { taxNoteForRegion } from "@/config/tax-copy";
 import { getPricingLocationLabel, type PricingRegion } from "@/lib/pricing-region";
 
 /**
@@ -179,11 +180,15 @@ export default function EditorialPlansGrid({
       </div>
 
       <div className="flex flex-wrap gap-x-[18px] gap-y-2 pt-5 text-[12.5px] text-[#8B8391]">
-        <span>
-          {region === "india"
-            ? "India prices are exclusive of GST, billed via Razorpay."
-            : "Global prices are billed via Razorpay."}
-        </span>
+        {/*
+          🚩 This line used to read "India prices are exclusive of GST", which
+          is the exact opposite of Terms 7.3 ("Prices shown in rupees include
+          GST, so the amount you see is the amount you pay") and of the
+          Affiliate Policy's Net Revenue definition, which deducts GST from the
+          rupee price precisely because the tax is already inside it. The
+          wording now comes from `tax-copy.ts` so both views state the Terms.
+        */}
+        <span>{taxNoteForRegion(region)}</span>
         <span>
           Annual billing is a flat 17% saving on every tier, roughly two months free.
         </span>

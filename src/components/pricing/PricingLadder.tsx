@@ -10,6 +10,7 @@ import {
   planWorkspacesIncluded,
   type PricingPlan,
 } from "@/config/pricing.config";
+import { INR_TAX_NOTE, USD_TAX_NOTE } from "@/config/tax-copy";
 
 /**
  * The ladder: what each step up actually costs, and what it buys.
@@ -168,6 +169,14 @@ export default function PricingLadder({ plans }: { plans: PricingPlan[] }) {
             solo creator drifts past.
           </p>
         ) : null}
+
+        {/* Terms 7.3, keyed off the symbol the rungs are already rendering. */}
+        <p
+          className="mt-3 text-[11px] text-[#8B8391]"
+          style={{ fontFamily: "var(--font-mono, ui-monospace, monospace)" }}
+        >
+          {steps[0].symbol === "₹" ? `Every figure above is ${INR_TAX_NOTE}.` : USD_TAX_NOTE}
+        </p>
       </div>
     </>
   );

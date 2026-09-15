@@ -1,6 +1,7 @@
 import { metaCopy } from "@/config/meta-copy";
 import { FEATURE_BRANCHING_LOGIC, FEATURE_CRM_INTEGRATION, FEATURE_SALE_TRACKING, FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import type { PricingRegion } from "@/lib/pricing-region";
+import { INR_TAX_NOTE_LONG, USD_TAX_NOTE } from "@/config/tax-copy";
 import { siteConfig } from "./site.config";
 
 export type PlanFeature = { text: string; included: boolean };
@@ -423,9 +424,9 @@ export function getFreePlanFaqAnswer(region: PricingRegion): string {
 
 export function getPlansOfferedFaqAnswer(region: PricingRegion): string {
   if (region === "india") {
-    return "Five tiers: Free (₹0, $0), Starter (₹499/mo; $9/mo in USD), Growth (₹1,499/mo; $29/mo in USD), Business (₹2,499/mo; $59/mo in USD), and Agency (₹22,999/mo; $549/mo in USD). Annual billing charges 10 months instead of 12, so two months are free. Every plan connects one Instagram account per workspace, and every paid plan includes unlimited automated DMs.";
+    return `Five tiers: Free (₹0, $0), Starter (₹499/mo; $9/mo in USD), Growth (₹1,499/mo; $29/mo in USD), Business (₹2,499/mo; $59/mo in USD), and Agency (₹22,999/mo; $549/mo in USD). ${INR_TAX_NOTE_LONG} Annual billing charges 10 months instead of 12, so two months are free. Every plan connects one Instagram account per workspace, and every paid plan includes unlimited automated DMs.`;
   }
-  return "Five tiers: Free ($0), Starter ($9/mo; ₹499/mo in India), Growth ($29/mo; ₹1,499/mo in India), Business ($59/mo; ₹2,499/mo in India), and Agency ($549/mo; ₹22,999/mo in India). Annual billing charges 10 months instead of 12, so two months are free. Every plan connects one Instagram account per workspace, and every paid plan includes unlimited automated DMs.";
+  return `Five tiers: Free ($0), Starter ($9/mo; ₹499/mo in India), Growth ($29/mo; ₹1,499/mo in India), Business ($59/mo; ₹2,499/mo in India), and Agency ($549/mo; ₹22,999/mo in India). ${USD_TAX_NOTE} Annual billing charges 10 months instead of 12, so two months are free. Every plan connects one Instagram account per workspace, and every paid plan includes unlimited automated DMs.`;
 }
 
 export function getBusinessPlanValueLabel(region: PricingRegion): string {

@@ -9,8 +9,8 @@
  *
  * Caught, in every git-tracked text file:
  *   - U+2014 EM DASH and U+2013 EN DASH, literal
- *   - the HTML entities &mdash; &ndash; &#8212; &#8211; &#x2014; &#x2013;
- *   - the JS/TS escapes — and –, and their \x{...}/\u{...} spellings
+ *   - the HTML entities for both, named (mdash, ndash) and numeric
+ *   - the JS/TS escapes for both, in \uXXXX, \u{XXXX} and \xXX{...} spellings
  *
  * Ranges keep a plain hyphen ("5-7 days") or read as words ("5 to 7 days").
  * A genuine need to normalise dash input in code uses the Unicode property
@@ -18,6 +18,10 @@
  *
  * Deliberately NOT caught: a double hyphen (`--`). It collides with CLI flags,
  * CSS custom properties and BEM modifiers, so it is reviewed by eye, not here.
+ *
+ * This file is excluded from its own scan. A rule that names the characters it
+ * forbids cannot also be its own input, so the patterns below are written as
+ * escapes and the file skips itself.
  *
  * Usage: npm run check:dashes
  */
@@ -31,13 +35,14 @@ const TEXT_EXTENSIONS = new Set([
 ]);
 
 const PATTERNS = [
-  { label: "em dash (U+2014)", re: /—/g },
-  { label: "en dash (U+2013)", re: /–/g },
+  { label: "em dash (U+2014)", re: /\u2014/g },
+  { label: "en dash (U+2013)", re: /\u2013/g },
   { label: "dash HTML entity", re: /&(?:mdash|ndash);|&#(?:8212|8211);|&#x(?:2014|2013);/gi },
-  { label: "dash escape sequence", re: /\\(?:u|x)\{?(?:2014|2013)\}?/g },
+  { label: "dash escape sequence", re: new RegExp("\\\\(?:u|x)\\{?(?:2014|2013)\\}?", "g") },
 ];
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
+const selfPath = path.resolve(import.meta.filename);
 
 const tracked = execFileSync("git", ["ls-files", "-z"], {
   cwd: repoRoot,
@@ -46,7 +51,8 @@ const tracked = execFileSync("git", ["ls-files", "-z"], {
 })
   .split("\0")
   .filter(Boolean)
-  .filter((file) => TEXT_EXTENSIONS.has(path.extname(file).toLowerCase()));
+  .filter((file) => TEXT_EXTENSIONS.has(path.extname(file).toLowerCase()))
+  .filter((file) => path.resolve(repoRoot, file) !== selfPath);
 
 const findings = [];
 
@@ -80,7 +86,7 @@ for (const { file, line, column, label, text } of findings) {
   console.error(`  ${file}:${line}:${column}  ${label}`);
   console.error(`    ${text.length > 160 ? `${text.slice(0, 157)}...` : text}\n`);
 }
-console.error("Rewrite each sentence so it reads naturally: a comma, a full stop, a colon or");
-console.error("brackets. For ranges use a plain hyphen or the word \"to\". Do not swap in a");
+console.error('Rewrite each sentence so it reads naturally: a comma, a full stop, a colon or');
+console.error('brackets. For ranges use a plain hyphen or the word "to". Do not swap in a');
 console.error("spaced hyphen.\n");
 process.exit(1);

@@ -1,4 +1,5 @@
 import { isZeroPrice, type PricingPlan } from "@/config/pricing.config";
+import { taxNoteForPrice } from "@/config/tax-copy";
 
 type PlanPriceBlockProps = {
   plan: PricingPlan;
@@ -28,6 +29,9 @@ export function PlanPriceBlock({
 
   const alignClass = align === "right" ? "text-right" : "text-left";
   const badgeAlignClass = align === "right" ? "ml-auto" : "";
+  // Terms 7.3: rupee figures are GST-inclusive and say so under the price.
+  const taxNote = taxNoteForPrice(price);
+  const taxNoteClass = `mt-1 text-[11px] font-medium ${highlight ? "text-white/70" : "text-gray-500"}`;
 
   if (showIntro) {
     return (
@@ -67,6 +71,7 @@ export function PlanPriceBlock({
             </span>
           ) : null}
         </p>
+        {taxNote ? <p className={taxNoteClass}>{taxNote}</p> : null}
       </div>
     );
   }
@@ -74,7 +79,8 @@ export function PlanPriceBlock({
   const showPerMonth = !isZeroPrice(plan.monthly);
 
   return (
-    <div className={`flex items-end gap-1 ${align === "right" ? "justify-end" : ""} ${alignClass}`}>
+    <div className={alignClass}>
+    <div className={`flex items-end gap-1 ${align === "right" ? "justify-end" : ""}`}>
       <span
         className={`font-extrabold leading-none tracking-tight ${heroClass}`}
         style={{
@@ -94,6 +100,8 @@ export function PlanPriceBlock({
           ) : null}
         </span>
       ) : null}
+    </div>
+    {taxNote ? <p className={taxNoteClass}>{taxNote}</p> : null}
     </div>
   );
 }

@@ -8,6 +8,7 @@ import {
   type PricingPlan,
 } from "@/config/pricing.config";
 import { V4_PLAN_CONTENT } from "@/config/pricing-v4.config";
+import { taxNoteForPrice } from "@/config/tax-copy";
 
 /**
  * The V4 plan card: flat paper-and-rule, monospaced numerals, a limits panel.
@@ -146,6 +147,10 @@ export default function EditorialPlanCard({
   const amount = price.slice(symbol.length);
   const showPer = !isZeroPrice(plan.monthly);
   const flag = content?.flag;
+  // Terms 7.3: a rupee figure is GST-inclusive and says so beside itself. A
+  // dollar figure is an export sale, and carries its note once under the grid
+  // rather than five times down the row.
+  const taxNote = taxNoteForPrice(price);
 
   // A tier with no V4 entry still renders its price and CTA rather than
   // vanishing - the same reason PositioningStrip filters instead of assuming.
@@ -240,6 +245,14 @@ export default function EditorialPlanCard({
           </span>
         ) : null}
       </div>
+      {taxNote ? (
+        <p
+          className="mt-1.5 text-[11px] font-medium leading-none text-[#4A4350]"
+          style={{ fontFamily: "var(--font-mono, ui-monospace, monospace)" }}
+        >
+          {taxNote}
+        </p>
+      ) : null}
       <p
         className="mt-2 min-h-[2rem] text-[11.5px] leading-[1.4] text-[#8B8391]"
         style={{ fontFamily: "var(--font-mono, ui-monospace, monospace)" }}

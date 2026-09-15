@@ -174,7 +174,7 @@ export const pageSeo = {
       // 1 on every tier but Agency. See docs/decisions/0002.
       // "unlimited automated DMs" stays qualified with "on paid plans", Free
       // is capped at 500 DMs/month.
-      "Free plan, no credit card. From $9/mo, or ₹499/mo in India with GST invoices. One Instagram account per workspace, unlimited automated DMs on paid plans.",
+      "Free plan, no credit card. From $9/mo, or ₹499/mo in India, GST included on a GST invoice. One account per workspace, unlimited automated DMs on paid plans.",
     pathname: "/pricing",
   }),
   signup: {

@@ -11,6 +11,7 @@ import {
   FEATURE_STORY_REACTIONS,
   FEATURE_WELCOME_DM,
 } from '@/config/feature-flags'
+import { INR_TAX_NOTE_LONG, USD_TAX_NOTE } from '@/config/tax-copy'
 
 type ApiMarketingPlan = {
   plan: string
@@ -516,7 +517,10 @@ export function buildPlansOfferedFaqAnswer(region: PricingRegion, plans: Pricing
   // has an allowance, so "unlimited" is scoped to the paid tiers where it holds
   // and Free's 500 is named, the same figure buildFreePlanFaqAnswer, the
   // "Are automated DMs unlimited?" answer and the V4 limits table all state.
-  return `${count} tiers: ${parts.join(', ')}. Every plan connects one Instagram account per workspace, and every paid plan includes unlimited automated DMs; the Free plan includes 500 a month.`
+  // Terms 7.3, derived from the currency the catalogue actually served rather
+  // than from `region`, so the sentence matches the figures beside it.
+  const tax = region === 'india' ? ` ${INR_TAX_NOTE_LONG}` : ` ${USD_TAX_NOTE}`
+  return `${count} tiers: ${parts.join(', ')}.${tax} Every plan connects one Instagram account per workspace, and every paid plan includes unlimited automated DMs; the Free plan includes 500 a month.`
 }
 
 export function buildCreatorsProgramFaqAnswer(businessPlanValue: string): string {

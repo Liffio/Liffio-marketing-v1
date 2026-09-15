@@ -283,8 +283,8 @@ export default function SendDMAlternativePage() {
                   in India, that simplifies the paper trail.
                 </p>
                 <p className="mt-3 text-gray-600 leading-relaxed">
-                  Liffio's Starter plan is ₹499/month in India, paid through a local payment
-                  method. Business is ₹2,499/month and includes conversion analytics and
+                  Liffio's Starter plan is ₹499/month incl. GST in India, paid through a local
+                  payment method. Business is ₹2,499/month incl. GST and includes conversion analytics and
                   multi-step DM flows.
                 </p>
               </div>
@@ -294,7 +294,7 @@ export default function SendDMAlternativePage() {
                   Agencies managing multiple client accounts
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Liffio's Agency plan is a flat ₹22,999/month in India (or $549/month) and includes
+                  Liffio's Agency plan is a flat ₹22,999/month incl. GST in India (or $549/month) and includes
                   20 workspaces on a single subscription: one Instagram account each, every
                   workspace a full Business workspace, one invoice and one renewal date.
                   There is no per-account surcharge within that allowance. Agencies that

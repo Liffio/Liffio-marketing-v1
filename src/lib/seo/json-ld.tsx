@@ -1,6 +1,7 @@
 import type { FaqCategory } from "@/config/faq.config";
 import { SITE_URL, siteConfig } from "@/config/site.config";
 import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
+import { USD_TAX_NOTE } from "@/config/tax-copy";
 
 function JsonLdScript({ data }: { data: object | object[] }) {
   const payload = Array.isArray(data) ? data : [data];
@@ -228,22 +229,37 @@ const OFFER_LADDER: {
   },
 ];
 
+/**
+ * 🚩 `taxIncluded` is not cosmetic: it is Terms 7.3 in structured form. Rupee
+ * prices include GST, so the amount shown is the amount charged; dollar sales
+ * are exports and carry no Indian GST. An aggregator reading these Offers gets
+ * the same answer the pricing page gives a visitor.
+ */
 const OFFER_CURRENCIES = [
-  { code: "USD", key: "usd" },
-  { code: "INR", key: "inr" },
+  { code: "USD", key: "usd", taxIncluded: false, taxNote: USD_TAX_NOTE },
+  { code: "INR", key: "inr", taxIncluded: true, taxNote: "Price includes GST." },
 ] as const;
 
 function pricingOffers() {
-  return OFFER_CURRENCIES.flatMap(({ code, key }) =>
+  return OFFER_CURRENCIES.flatMap(({ code, key, taxIncluded, taxNote }) =>
     OFFER_LADDER.map((tier) => {
       const money = tier[key];
+      const free = money.price === "0";
       return {
         "@type": "Offer",
         name: tier.name,
         price: money.price,
         priceCurrency: code,
         ...(tier.availability ? { availability: tier.availability } : {}),
-        description: tier.describe(money.monthly, money.annualPerMonth),
+        priceSpecification: {
+          "@type": "PriceSpecification",
+          price: money.price,
+          priceCurrency: code,
+          valueAddedTaxIncluded: taxIncluded,
+        },
+        description: free
+          ? tier.describe(money.monthly, money.annualPerMonth)
+          : `${tier.describe(money.monthly, money.annualPerMonth)} ${taxNote}`,
         url: `${SITE_URL}/pricing`,
       };
     }),

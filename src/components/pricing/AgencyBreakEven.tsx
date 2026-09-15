@@ -11,6 +11,7 @@ import {
 } from "@/config/pricing.config";
 import { useSharedBillingInterval } from "@/components/pricing/BillingInterval";
 import SectionHead from "@/components/pricing/SectionHead";
+import { INR_TAX_NOTE, USD_TAX_NOTE } from "@/config/tax-copy";
 
 /**
  * When does one Agency bill beat N individual Business subscriptions?
@@ -240,6 +241,14 @@ export default function AgencyBreakEven({ plans }: { plans: PricingPlan[] }) {
           <Figure term="Over a year" value={money(annual ? difference : difference * 12)} />
           <Figure term="Slots left" value={`${slotsLeft} of ${MAX_ACCOUNTS}`} />
         </dl>
+
+        {/* Terms 7.3. Derived from the symbol the calculator is already using. */}
+        <p
+          className="relative z-[1] mt-4 text-[11px] text-[#7E7686]"
+          style={{ fontFamily: "var(--font-mono, ui-monospace, monospace)" }}
+        >
+          {symbol === "₹" ? `Every figure above is ${INR_TAX_NOTE}.` : USD_TAX_NOTE}
+        </p>
 
         {growthPrice && perWorkspaceMonthly < growthPrice ? (
           <p className="relative z-[1] mt-6 rounded-xl border border-[#2C2633] bg-white/[0.03] px-[18px] py-[15px] text-[14px] leading-relaxed text-[#D8D2DD]">
