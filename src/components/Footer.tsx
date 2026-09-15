@@ -1,5 +1,6 @@
 import Logo from "./Logo";
 import { siteConfig } from "@/config/site.config";
+import { CookieSettingsLink } from "@/components/consent/CookieSettingsLink";
 
 const footerLinks = {
   Product: [
@@ -111,6 +112,17 @@ export default function Footer() {
                     </a>
                   </li>
                 ))}
+                {/*
+                  Cookie Policy 4 promises the choice can be changed "at any
+                  time from the cookie settings on our website". It sits under
+                  Legal, next to the Cookie Policy it acts on, and the footer is
+                  on every page, so the promise holds on every page.
+                */}
+                {category === "Legal" ? (
+                  <li>
+                    <CookieSettingsLink className="text-left text-sm text-gray-400 transition-colors duration-200 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400" />
+                  </li>
+                ) : null}
               </ul>
             </div>
           ))}

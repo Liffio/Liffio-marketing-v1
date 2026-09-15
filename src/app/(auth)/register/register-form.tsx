@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { authStore } from '@/lib/auth/store';
 import { register, getAuthMe, googleAuthUrl, validateAffiliateCode } from '@/lib/auth/api';
-import { captureReferralFromUrl, getStoredReferralCode, getReferralPayloadForRegister, clearStoredReferralCode } from '@/lib/auth/referral';
+import { readReferralCodeFromSearch, getStoredReferralCode, getReferralPayloadForRegister, clearStoredReferralCode } from '@/lib/auth/referral';
 import { AuthCard, Button, CheckIcon, ErrorMsg, EyeIcon, GoogleIcon, Input, Label, OrDivider } from '@/lib/auth/ui';
 import { CountrySelect, isKnownCountryCode } from '@/lib/auth/countries';
 import { trackFormStart, trackFormError, trackFormSubmit, trackFormAbandon, trackSignupStep, identifyUser } from '@/lib/analytics/analytics';
@@ -54,7 +54,17 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
     setMounted(true);
     if (pendingPlanParam) localStorage.setItem('pending_plan', pendingPlanParam);
     const urlRef = params.get('ref');
-    const captured = urlRef ? captureReferralFromUrl(`?ref=${encodeURIComponent(urlRef)}`) : null;
+    /*
+      🚩 READ, not capture. This used to call captureReferralFromUrl, which
+      writes the cookie and both storages, so an EU visitor landing on /register
+      with a ?ref= got the referral cookie set before the banner had asked
+      anything. Filling the field is not storing: Cookie Policy 2.2 is explicit
+      that "you can still enter a referral code when you sign up and it will
+      work the same way" after a reject, and this prefill is that path. The
+      write stays with CookieConsent, which is rendered by the root layout
+      above this form.
+    */
+    const captured = urlRef ? readReferralCodeFromSearch(`?ref=${encodeURIComponent(urlRef)}`) : null;
     const stored = captured ?? getStoredReferralCode();
     if (stored) setReferralCode(stored);
     // eslint-disable-next-line react-hooks/exhaustive-deps

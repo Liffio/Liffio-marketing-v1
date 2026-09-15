@@ -3,7 +3,7 @@ import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { rootSeo } from "@/config/seo.config";
 import { SITE_URL } from "@/config/site.config";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/lib/seo/json-ld";
-import { ReferralCapture } from "@/components/ReferralCapture";
+import { CookieConsent } from "@/components/consent/CookieConsent";
 import { DelegatedClicks } from "@/lib/analytics/DelegatedClicks";
 import { ScrollDepthTracker } from "@/lib/analytics/ScrollDepthTracker";
 import { IdentifyOnLoad } from "@/lib/analytics/IdentifyOnLoad";
@@ -55,7 +55,12 @@ export default function RootLayout({
       >
         <OrganizationJsonLd />
         <WebSiteJsonLd />
-        <ReferralCapture />
+        {/*
+          Replaces <ReferralCapture />. It still captures the ?ref= code, but it
+          decides FIRST whether this visitor has to be asked before anything is
+          stored, and it renders the banner that asks. Cookie Policy 2.2.
+        */}
+        <CookieConsent />
         <DelegatedClicks />
         <ScrollDepthTracker />
         <IdentifyOnLoad />

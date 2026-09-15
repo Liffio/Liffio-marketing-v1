@@ -30,11 +30,35 @@ function getClientCookieRef(): string | null {
   try { return decodeURIComponent(match[1]); } catch { return match[1]; }
 }
 
-export function captureReferralFromUrl(search: string): string | null {
-  if (!isBrowser) return null;
+/**
+ * The `?ref=` code in a query string, validated, WITHOUT storing anything.
+ *
+ * 🔴 The read half of `captureReferralFromUrl`, split out so a caller can hold
+ * a referral in memory while the visitor decides. Cookie Policy 2.2 only lets
+ * an EU or UK visitor's referral cookie be set after they agree, and the code
+ * has to survive from landing until they press a button, without touching
+ * storage in between. See CookieConsent.
+ */
+export function readReferralCodeFromSearch(search: string): string | null {
   const params = new URLSearchParams(search.startsWith('?') ? search : `?${search}`);
   const ref = params.get('ref')?.trim();
   if (!ref || !isValidCode(ref)) return null;
+  return ref;
+}
+
+/**
+ * Store a referral code in the cookie, localStorage and sessionStorage.
+ *
+ * 🔴 CONSENT IS THE CALLER'S JOB, and there is one caller that may decide it:
+ * `CookieConsent`. It writes only when the visitor is outside the EU, EEA and
+ * UK, or when a visitor inside them has pressed Accept. Do not call this from
+ * a bare `useEffect` on mount, which is what `ReferralCapture` used to do, and
+ * which set the cookie for every visitor before anything had been asked.
+ */
+export function captureReferralFromUrl(search: string): string | null {
+  if (!isBrowser) return null;
+  const ref = readReferralCodeFromSearch(search);
+  if (!ref) return null;
   try {
     setWithTs(sessionStorage, ref);
     setWithTs(localStorage, ref);
