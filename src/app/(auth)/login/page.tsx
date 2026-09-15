@@ -142,7 +142,7 @@ function LoginPageInner() {
       <div className="hidden max-w-sm shrink-0 lg:block">
         <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight text-foreground">
           Turn Instagram comments into{' '}
-          <span className="gradient-text">customers</span> — on autopilot.
+          <span className="gradient-text">customers</span>, on autopilot.
         </h2>
         <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
           {[

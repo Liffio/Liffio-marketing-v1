@@ -4,7 +4,7 @@ const ALL_AUTOMATION_TYPES = [
   {
     name: "Comment-to-DM",
     description:
-      "Sends a DM when someone comments a keyword on a post or Reel. The trigger fires after a configurable 10–60 second delay. A public reply can also post under the comment at the same time.",
+      "Sends a DM when someone comments a keyword on a post or Reel. The trigger fires after a configurable 10 to 60 second delay. A public reply can also post under the comment at the same time.",
   },
   {
     name: "Story reply",
@@ -30,7 +30,7 @@ const ALL_AUTOMATION_TYPES = [
     name: "Collect Data",
     description:
       FEATURE_COLLECT_DATA_PROMPTS
-        ? "Captures lead information — name, email, phone, or custom fields — through a guided DM conversation."
+        ? "Captures lead information (name, email, phone, or custom fields) through a guided DM conversation."
         : "Captures email addresses shared during a DM conversation and stores them as leads.",
   },
   {
@@ -48,17 +48,17 @@ const COMPLIANCE_FACTS = [
   {
     heading: "Instagram allows DM automation through its official API",
     body:
-      "Meta publishes the Instagram Messaging API as part of its developer platform. Tools that authenticate via OAuth — rather than logging in with a password or using browser automation — are permitted under Instagram's platform policy. Liffio uses only the official API.",
+      "Meta publishes the Instagram Messaging API as part of its developer platform. Tools that authenticate via OAuth, rather than logging in with a password or using browser automation, are permitted under Instagram's platform policy. Liffio uses only the official API.",
   },
   {
     heading: "Account safety depends on how the tool connects",
     body:
-      "Instagram restricts tools that simulate a logged-in user in a browser (often called 'bots'). It does not restrict tools that connect through the official OAuth flow. The distinction is authorization method, not action type. Liffio authorizes through Meta's developer OAuth — the same method used by any official third-party app.",
+      "Instagram restricts tools that simulate a logged-in user in a browser (often called 'bots'). It does not restrict tools that connect through the official OAuth flow. The distinction is authorization method, not action type. Liffio authorizes through Meta's developer OAuth, the same method used by any official third-party app.",
   },
   {
     heading: "Send delays pace replies naturally",
     body:
-      "Liffio sends DMs after a 10–60 second delay (configurable). The short delay spreads sends over time and keeps the reply pace natural for the person receiving it.",
+      "Liffio sends DMs after a 10 to 60 second delay (configurable). The short delay spreads sends over time and keeps the reply pace natural for the person receiving it.",
   },
 ] as const;
 
@@ -117,7 +117,7 @@ export default function SeoDiscoverabilitySection() {
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
             <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
-              <h3 className="text-sm font-bold text-[#0a0a0a]">Creators and influencers (5K–500K followers)</h3>
+              <h3 className="text-sm font-bold text-[#0a0a0a]">Creators and influencers (5K to 500K followers)</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
                 Comment-to-DM for lead magnets, digital products, discount codes, and giveaway entries.
                 The automation handles the inbox volume so creators can spend time on content, not replies.

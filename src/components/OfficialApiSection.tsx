@@ -3,30 +3,30 @@ import { TechBadge } from "@/components/TechBadge";
 import { metaCopy } from "@/config/meta-copy";
 
 /**
- * The trust panel — how Liffio connects, who verified it, and what it costs.
+ * The trust panel: how Liffio connects, who verified it, and what it costs.
  *
  * Layout follows the approved design: ONE bordered panel containing both
  * credential cards plus a stats rail, rather than loose cards. The stats rail
  * absorbed the old standalone <StatsSection>, which is why that component is no
- * longer rendered on the homepage — the two were stating overlapping things one
+ * longer rendered on the homepage, the two were stating overlapping things one
  * after the other. "Official / Instagram API" was dropped from the rail on the
  * way in, because the card directly above it already says exactly that.
  *
- * 🔴 BRAND RULES — read before editing. Every one of these shaped the markup.
+ * 🔴 BRAND RULES: read before editing. Every one of these shaped the markup.
  *
  * The Instagram glyph may be used on the web WITHOUT a permission request:
  * Instagram only requires a request for broadcast, radio, out-of-home, or print
  * larger than A4. But the usage rules still bind, and four constrain this file:
  *
- *   1. "Implies partnership, sponsorship or endorsement" — forbidden. The copy
+ *   1. "Implies partnership, sponsorship or endorsement": forbidden. The copy
  *      says what Meta actually did (approved the business and access
  *      verifications) and never that Meta endorses Liffio. Do not upgrade it.
- *   2. "Makes the Instagram brand the most distinctive or prominent feature" —
+ *   2. "Makes the Instagram brand the most distinctive or prominent feature":
  *      forbidden. The glyph is 20px in a tile, on ONE of two equal cards.
  *   3. "Keep the letter 'I' in Instagram capitalized and in the same font size
- *      and style as the content surrounding it" — no styling on the word.
+ *      and style as the content surrounding it": no styling on the word.
  *   4. "Don't combine any part of the Instagram brand with a company name,
- *      other trademarks, or generic terms" — no "Liffio x Instagram" lockup,
+ *      other trademarks, or generic terms": no "Liffio x Instagram" lockup,
  *      and the glyph is never paired with the Liffio wordmark.
  *
  * 🚩 THE GLYPH IS AN IMAGE, NOT A DRAWN PATH, AND IT IS NOT TINTED. The design
@@ -36,7 +36,7 @@ import { metaCopy } from "@/config/meta-copy";
  * would fight the glyph's own colours, and recolouring the glyph to resolve that
  * is exactly what you may not do.
  *
- * The shipped file is the pack's GRADIENT glyph resampled to 60px — it renders
+ * The shipped file is the pack's GRADIENT glyph resampled to 60px, it renders
  * at 20px, so that covers 3x DPR. Resampling is not modification, and it is not
  * optional here: the pack's only gradient files are a 2.6 MB 5000px PNG and a
  * 10.9 MB "SVG" that is really a base64 PNG in a wrapper. Neither is shippable.
@@ -46,14 +46,14 @@ import { metaCopy } from "@/config/meta-copy";
  *
  * 🚩 The Meta mark is absent on purpose, and this is the one people try to
  * "fix". Meta's corporate brand routes certification badges through Brand Review
- * with a Meta counterpart — unlike Instagram's, it is not self-serve. Until that
+ * with a Meta counterpart: unlike Instagram's, it is not self-serve. Until that
  * approval exists, "Verified Meta Tech Provider" is TEXT.
  *
  * 🚩 Both cards state a credential Liffio actually holds, evidenced in the App
  * Dashboard as of 2026-09-10: business verification Verified, access
  * verification Verified as a Tech Provider, and an approved App Review
  * submission. Do NOT add press logos, award badges or "featured in" marks that
- * are not real — that is the defect class ADR 0002 exists to prevent. Gated
+ * are not real, and that is the defect class ADR 0002 exists to prevent. Gated
  * behind MetaVerifiedOnly so the panel disappears rather than degrading if the
  * flag is turned off.
  */
@@ -62,7 +62,7 @@ const BORDER = "border-[#e7e2dc]";
 
 const STATS = [
   { value: "OAuth", label: "No password shared" },
-  { value: "10–60s", label: "Custom DM delay" },
+  { value: "10 to 60s", label: "Custom DM delay" },
   { value: "Free", label: "No credit card required" },
 ];
 
@@ -100,7 +100,7 @@ export default function OfficialApiSection() {
 
           The blue TechBadge above the h2 is the second signal, and it doubles
           as the credential itself. Do not reach for a background tint or a grid
-          wash instead — a tint
+          wash instead, because a tint
           reintroduces the visible step this ground exists to remove.
         */}
         <div

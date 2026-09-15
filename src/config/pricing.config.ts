@@ -10,11 +10,11 @@ export type PricingPlan = {
   monthly: string;
   /**
    * Per-month EQUIVALENT of the annual plan. Derived, and labelled as derived
-   * in the UI — nobody authored this number. Always rounded UP (see below).
+   * in the UI: nobody authored this number. Always rounded UP (see below).
    */
   annual: string;
   /**
-   * The AUTHORED annual price — what the customer is actually billed, straight
+   * The AUTHORED annual price, what the customer is actually billed, straight
    * from `packages.yearly_price_usd_cents` / `yearly_price_inr_paise`.
    * `null` for tiers with no annual plan (Free).
    *
@@ -65,7 +65,7 @@ export type PricingPlan = {
 const signup = siteConfig.urls.appSignup;
 
 /**
- * Annual billing charges TEN months, not "20% off" — two months free, 16.67%.
+ * Annual billing charges TEN months, not "20% off", two months free, 16.67%.
  * The old `* 0.8` multiplier under-quoted every paid tier ($84/yr advertised
  * against $90/yr actually charged on Starter).
  *
@@ -73,7 +73,7 @@ const signup = siteConfig.urls.appSignup;
  * exactly `monthly * 10`, but every INR yearly in the `packages` table is
  * charm-priced ₹9 ABOVE that: ₹499/mo bills at ₹4,999/yr, not ₹4,990. A
  * previous revision of this file derived it and under-quoted INR by ₹1 on
- * Starter, Business and Agency — small, but wrong in the direction that
+ * Starter, Business and Agency, small, but wrong in the direction that
  * matters, and invisible without a comparison against the catalogue.
  *
  * So the numbers passed below are ANNUAL TOTALS transcribed from
@@ -103,7 +103,7 @@ function usdAnnual(yearlyTotal: number): string {
   return `$${(Math.ceil((yearlyTotal / 12) * 100) / 100).toFixed(2)}`;
 }
 
-/** The authored annual price itself — the number the customer is billed. */
+/** The authored annual price itself, the number the customer is billed. */
 function usdAnnualTotal(yearlyTotal: number): string {
   return `$${yearlyTotal.toLocaleString("en-US")}`;
 }
@@ -123,11 +123,11 @@ function inrAnnualTotal(yearlyTotal: number): string {
 }
 
 /**
- * A zero price must still RENDER — the Free tier's headline is "$0"/"₹0".
+ * A zero price must still RENDER: the Free tier's headline is "$0"/"₹0".
  *
  * 🚩 Never gate a price on truthiness. `0` is falsy and `"$0"` is not, so any
  * refactor that moves from the formatted string to a numeric amount (which is
- * what wiring `/billing/packages` would do — it serves
+ * what wiring `/billing/packages` would do: it serves
  * `monthlyPriceUsdCents: 0`) turns `if (price)` into "hide the Free card".
  * Compare against the zero VALUE explicitly, as here, and keep it that way.
  */
@@ -140,7 +140,7 @@ export function isZeroPrice(price: string): boolean {
  *
  * 🚩 This used to be one `unlimitedCore` spread into Free, Starter, Business and
  * Agency alike, and BOTH of its claims were wrong somewhere. "Unlimited
- * Instagram accounts" was true of no tier at all — `planWorkspacesIncluded`
+ * Instagram accounts" was true of no tier at all, `planWorkspacesIncluded`
  * below is 1 everywhere except Agency's 20, and one workspace connects exactly
  * one Instagram account. "Unlimited automated DMs" is a paid-tier fact: V4 gives
  * Free a monthly allowance, so Free carries the account line only.
@@ -162,8 +162,8 @@ const freeFeatures: PlanFeature[] = [
   ...accountCore,
   { text: "Comment keyword triggers", included: true },
   { text: "Public comment auto-replies", included: true },
-  // 3 automations, not "3 DM message templates". No template limit exists —
-  // package_limits has 8 keys and none counts templates — while the automation
+  // 3 automations, not "3 DM message templates". No template limit exists ,
+  // package_limits has 8 keys and none counts templates, while the automation
   // count is the cap Free actually enforces (V4 Automations row: 3).
   { text: "3 automation workflows", included: true },
   { text: "Bio link page (bio.liffio.com)", included: true },
@@ -228,7 +228,7 @@ const agencyFeatures: PlanFeature[] = [
   ...paidCore,
   // 🚩 What Agency actually is: 20 workspaces, each a COMPLETE Business
   // workspace, on one subscription. It is not a white-label product and it has
-  // no client sub-workspace hierarchy — all seven `agency:*` capabilities are
+  // no client sub-workspace hierarchy, all seven `agency:*` capabilities are
   // granted to no package (ADR 0002 B6, ADR 0004:48), so "Agency white-label
   // workspaces" and "Client sub-workspaces (CLIENT role)" described a tier that
   // does not exist. "Full API access & webhooks" fails the same way Business's
@@ -415,7 +415,7 @@ export const pricingPerks = [
 
 export function getFreePlanFaqAnswer(region: PricingRegion): string {
   const price = region === "india" ? "₹0/month" : "$0/month";
-  // Not "unlimited automated DMs" — that is a paid-tier fact. Free's enforced
+  // Not "unlimited automated DMs", that is a paid-tier fact. Free's enforced
   // cap is 3 automations (workflows); its DM allowance is unmetered, so it is
   // not restated here as a number nothing counts.
   return `Yes. The Free plan is ${price}. No credit card required. You get one Instagram account, three automation workflows, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.`;
@@ -434,7 +434,7 @@ export function getBusinessPlanValueLabel(region: PricingRegion): string {
 
 export function getCreatorsProgramFaqAnswer(region: PricingRegion): string {
   const value = getBusinessPlanValueLabel(region);
-  return `Yes. Qualified Instagram creators (5K–100K followers) can apply for our Creators Program and receive the full Business plan (${value} value) at no cost in exchange for active platform usage. No credit card required.`;
+  return `Yes. Qualified Instagram creators (5K to 100K followers) can apply for our Creators Program and receive the full Business plan (${value} value) at no cost in exchange for active platform usage. No credit card required.`;
 }
 
 /**
@@ -452,7 +452,7 @@ export const comparisonPlanNames = ["Free", "Starter", "Growth", "Business", "Ag
 /**
  * Workspaces included per tier, shown as a sub-label under each column header.
  *
- * From `package_limits.workspacesIncluded` — 1 everywhere except Agency, which
+ * From `package_limits.workspacesIncluded`, 1 everywhere except Agency, which
  * has 20. It sits in the header because the Team members row reads "15 per
  * workspace" on Agency, and the reader needs the multiplier in view to make
  * sense of it.
@@ -554,7 +554,7 @@ export function formatMoney(amount: number, symbol: string): string {
 }
 
 /**
- * A DERIVED amount — a per-workspace rate, a per-account cost — where the
+ * A DERIVED amount, a per-workspace rate, a per-account cost, where the
  * fraction is the point. Two decimals for USD, whole units for INR, because
  * ₹416.58 reads badly and paise are not used in Indian price display.
  */

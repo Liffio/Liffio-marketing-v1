@@ -80,7 +80,7 @@ export default function EditorialPlansGrid({
     present and the toggle is shared with the break-even calculator; on the
     homepage there is none, and this falls back to its own state.
 
-    🚩 The fallback used to be `?? (() => {})` — a no-op setter, which left the
+    🚩 The fallback used to be `?? (() => {})`, a no-op setter, which left the
     homepage with a Monthly/Yearly control that could not be switched.
   */
   const shared = useSharedBillingInterval();
@@ -185,7 +185,7 @@ export default function EditorialPlansGrid({
             : "Global prices are billed via Razorpay."}
         </span>
         <span>
-          Annual billing is a flat 17% saving on every tier — roughly two months free.
+          Annual billing is a flat 17% saving on every tier, roughly two months free.
         </span>
       </div>
 

@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   async redirects() {
     return [
-      // Enforce non-www canonical — any www.liffio.com/* → liffio.com/*
+      // Enforce non-www canonical: any www.liffio.com/* → liffio.com/*
       {
         source: "/:path*",
         has: [{ type: "host", value: "www.liffio.com" }],

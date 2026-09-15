@@ -304,7 +304,7 @@ export default function AffiliateProgramContent() {
             </div>
             <div className="rounded-xl border border-brand-100 bg-white px-5 py-3 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Processing</p>
-              <p className="text-lg font-bold text-[#0a0a0a]">5–10 business days</p>
+              <p className="text-lg font-bold text-[#0a0a0a]">5 to 10 business days</p>
             </div>
           </div>
         </div>

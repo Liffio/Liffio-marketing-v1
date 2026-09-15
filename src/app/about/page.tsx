@@ -7,7 +7,7 @@ import { BreadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { Breadcrumb } from "@/components/Breadcrumb";
 
 export const metadata: Metadata = {
-  title: "About Liffio — Built in India, Made for Creators Worldwide",
+  title: "About Liffio: Built in India, Made for Creators Worldwide",
   description:
     "Liffio is a small team from India building Instagram DM automation for creators, coaches, and agencies worldwide.",
   alternates: { canonical: "/about" },
@@ -28,8 +28,8 @@ export const metadata: Metadata = {
 };
 
 // 🚩 No Organization node here. This page used to emit a second one under the
-// same `@id` as <OrganizationJsonLd /> in layout.tsx — same identity, different
-// legalName — which is a conflict for any consumer, not extra detail. Its
+// same `@id` as <OrganizationJsonLd /> in layout.tsx, same identity, different
+// legalName, which is a conflict for any consumer, not extra detail. Its
 // richer facts (legalName "Liffio Private Limited", the full postal address,
 // foundingLocation) now live in that single canonical node in
 // src/lib/seo/json-ld.tsx. Do not re-add one.
@@ -78,7 +78,7 @@ export default function AboutPage() {
                 the same DM for two hours. That&apos;s not a sustainable way to run a business.
               </p>
               <p>
-                We looked at the tools that existed — ManyChat, SendDM, LinkDM — and found that most were
+                We looked at the tools that existed (ManyChat, SendDM, LinkDM) and found that most were
                 built for multi-channel marketing teams, not individual creators or small agencies managing a
                 few Instagram accounts. The ones that were simple enough to use quickly got expensive as you
                 scaled. None of them were Instagram-only and priced for it.
@@ -86,7 +86,7 @@ export default function AboutPage() {
               <p>
                 We started building Liffio in early 2026. The idea was straightforward: connect
                 via Instagram&apos;s official OAuth API, build keyword triggers for comments, stories, and DMs,
-                and price it flat — not per-contact. We launched in June 2026 and are onboarding our
+                and price it flat, not per-contact. We launched in June 2026 and are onboarding our
                 first creators and agencies now.
               </p>
             </div>
@@ -101,13 +101,13 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                Liffio connects to Instagram through Meta&apos;s official OAuth flow — the same authorization
+                Liffio connects to Instagram through Meta&apos;s official OAuth flow, the same authorization
                 method used by any official third-party app. You never share your password. Once connected,
                 you set up keyword triggers: when someone comments a specific word on your post, replies to
                 your story, or sends you a DM with a keyword, Liffio sends a pre-written reply automatically.
               </p>
               <p>
-                Replies go out within 10 to 60 seconds — with a configurable delay so each reply
+                Replies go out within 10 to 60 seconds, with a configurable delay so each reply
                 reaches the recipient at a natural conversational pace. The tool supports workflow
                 types like comment-to-DM, story reply, DM reply, follow gating, follow-up sequences,{" "}
                 {FEATURE_WELCOME_DM ? "lead data collection, and welcome messages for new followers" : "and lead data collection"}. It runs 24/7 without
@@ -115,7 +115,7 @@ export default function AboutPage() {
               </p>
               <p>
                 Liffio is built specifically for Instagram. We don&apos;t support Facebook, WhatsApp, or email
-                marketing — and that focus keeps the product simple and the pricing flat.
+                marketing, and that focus keeps the product simple and the pricing flat.
               </p>
             </div>
           </section>
@@ -130,7 +130,7 @@ export default function AboutPage() {
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
                 We&apos;re based in Vadodara, Gujarat, India. Liffio is operated by Liffio Private Limited, a
-                company registered in India. The team is small — we&apos;re building Liffio the way
+                company registered in India. The team is small: we&apos;re building Liffio the way
                 we wished existing tools were built: focused on one platform, easy to set up, priced honestly.
               </p>
               <p>

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Brand ramp anchored on the Liffio primary (#F5184C, hue ~346) — see
+/* Brand ramp anchored on the Liffio primary (#F5184C, hue ~346), see
    G:\REACTOVA\Website\v2\Client-v2\BRANDKIT.md for the source of truth. */
 @theme {
   --color-brand-50: #fff1f2;

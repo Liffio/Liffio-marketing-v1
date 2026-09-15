@@ -62,7 +62,7 @@ export default function ComparePage() {
               How Liffio compares
             </h1>
             <p className="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
-              Side-by-side comparisons with the most common Instagram DM automation tools — features,
+              Side-by-side comparisons with the most common Instagram DM automation tools: features,
               pricing model, account limits, and how to switch.
             </p>
           </div>

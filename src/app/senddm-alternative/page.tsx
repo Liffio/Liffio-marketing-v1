@@ -32,7 +32,7 @@ const faqCategories: FaqCategory[] = [
         id: "senddm-free-plan",
         question: "Does SendDM have a free plan?",
         answer:
-          "Yes — as of July 2026 SendDM offers a free plan, capped at a fixed number of automated DMs per month, with paid plans from ₹399/month that lift the DM cap but limit connected accounts per tier. Liffio's free plan includes comment-to-DM automation on posts and Reels, plus a bio link page at bio.liffio.com and basic analytics. No credit card is required and there is no trial period that expires. The free plan is designed for actual production use, not just for testing; unlimited automated DMs come with the paid plans, which start at $9/month.",
+          "Yes. As of July 2026 SendDM offers a free plan, capped at a fixed number of automated DMs per month, with paid plans from ₹399/month that lift the DM cap but limit connected accounts per tier. Liffio's free plan includes comment-to-DM automation on posts and Reels, plus a bio link page at bio.liffio.com and basic analytics. No credit card is required and there is no trial period that expires. The free plan is designed for actual production use, not just for testing; unlimited automated DMs come with the paid plans, which start at $9/month.",
       },
       {
         id: "switch-from-senddm",
@@ -44,13 +44,13 @@ const faqCategories: FaqCategory[] = [
         id: "senddm-instagram-api",
         question: "Does Liffio use official Instagram APIs like SendDM?",
         answer:
-          "Yes. Liffio connects to Instagram through Meta's official OAuth flow and sends messages through Instagram's official API. Your Instagram password is never entered into Liffio at any point — you approve the permissions on Meta's consent screen when you connect, and you can revoke access anytime from your Instagram settings. Liffio also spaces automated sends with a configurable 10–60 second delay, which keeps the reply pacing natural for the person receiving it.",
+          "Yes. Liffio connects to Instagram through Meta's official OAuth flow and sends messages through Instagram's official API. Your Instagram password is never entered into Liffio at any point: you approve the permissions on Meta's consent screen when you connect, and you can revoke access anytime from your Instagram settings. Liffio also spaces automated sends with a configurable 10 to 60 second delay, which keeps the reply pacing natural for the person receiving it.",
       },
       {
         id: "senddm-agency",
         question: "Can I use Liffio for multiple client Instagram accounts?",
         answer:
-          "Yes — through workspaces. A Liffio workspace connects exactly one Instagram account, so several client accounts means several workspaces. The Agency plan includes 20 workspaces on a single subscription, each one a full Business workspace, billed on one invoice with one renewal date. There is no per-account surcharge within that allowance. For agencies that have been paying per-seat or per-account fees with SendDM or other tools, switching to Liffio's Agency plan at a flat rate typically reduces the monthly cost as the account count grows.",
+          "Yes, through workspaces. A Liffio workspace connects exactly one Instagram account, so several client accounts means several workspaces. The Agency plan includes 20 workspaces on a single subscription, each one a full Business workspace, billed on one invoice with one renewal date. There is no per-account surcharge within that allowance. For agencies that have been paying per-seat or per-account fees with SendDM or other tools, switching to Liffio's Agency plan at a flat rate typically reduces the monthly cost as the account count grows.",
       },
     ],
   },
@@ -136,7 +136,7 @@ export default function SendDMAlternativePage() {
             </h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                SendDM does what it says — it automates Instagram DMs triggered by comments and
+                SendDM does what it says: it automates Instagram DMs triggered by comments and
                 story replies. For a tool that covers a specific workflow, it works. The friction
                 starts when you try to figure out what it costs before signing up, or when
                 you need the tool to do something beyond sending a DM.
@@ -146,7 +146,7 @@ export default function SendDMAlternativePage() {
                 SendDM's free tier caps how many automated DMs you can send each month, and
                 its paid tiers (from ₹399/month as of July 2026) cap how many Instagram
                 accounts you can connect. That structure penalizes exactly the moments
-                automation matters most — a viral post or a growing client roster. Liffio's
+                automation matters most, namely a viral post or a growing client roster. Liffio's
                 paid plans have no DM cap at all, and a growing roster is handled by the
                 Agency plan&apos;s 20 workspaces on a single flat subscription.
               </p>
@@ -154,17 +154,17 @@ export default function SendDMAlternativePage() {
                 The second issue is scope. SendDM is focused narrowly on DM sequences and comment
                 triggers. If you also need a bio link page to replace Linktree, a post scheduler
                 to plan your content calendar, or short links for tracking, you are paying for
-                those separately. Liffio includes all of it in the same workspace — which
+                those separately. Liffio includes all of it in the same workspace, which
                 simplifies the tool stack and reduces the total monthly spend.
               </p>
               <ul className="mt-4 space-y-2 list-none">
                 <li className="flex gap-3">
                   <span className="text-[#f5184c] font-bold mt-0.5">→</span>
-                  <span><strong className="text-gray-900">DM caps on the free tier:</strong> SendDM&apos;s free plan limits automated DMs per month. Liffio&apos;s free plan runs real automations in production — comment triggers and a bio link page — with no credit card required, and unlimited automated DMs come with every paid plan.</span>
+                  <span><strong className="text-gray-900">DM caps on the free tier:</strong> SendDM&apos;s free plan limits automated DMs per month. Liffio&apos;s free plan runs real automations in production (comment triggers and a bio link page) with no credit card required, and unlimited automated DMs come with every paid plan.</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-[#f5184c] font-bold mt-0.5">→</span>
-                  <span><strong className="text-gray-900">Account caps on paid tiers:</strong> SendDM&apos;s paid plans limit how many Instagram accounts you can connect, so costs step up as a client roster grows. Liffio prices by workspace — one Instagram account each — and the Agency plan covers 20 of them on a single flat subscription.</span>
+                  <span><strong className="text-gray-900">Account caps on paid tiers:</strong> SendDM&apos;s paid plans limit how many Instagram accounts you can connect, so costs step up as a client roster grows. Liffio prices by workspace, one Instagram account each, and the Agency plan covers 20 of them on a single flat subscription.</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-[#f5184c] font-bold mt-0.5">→</span>
@@ -179,7 +179,7 @@ export default function SendDMAlternativePage() {
         <section id="comparison" className="py-16 bg-[#fff7f7] border-y border-[#ffe4e6]">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
-              Liffio vs SendDM — side-by-side comparison
+              Liffio vs SendDM: side-by-side comparison
             </h2>
             <p className="text-gray-600 mb-8">
               Feature-level comparison for Instagram DM automation.{" "}
@@ -216,7 +216,7 @@ export default function SendDMAlternativePage() {
                       </td>
                       <td className="py-3 px-4 text-gray-600">{tool.free ? "✓ Yes" : "✗ No"}</td>
                       <td className="py-3 px-4 text-gray-600">{tool.paidFrom}</td>
-                      <td className="py-3 px-4 text-gray-600">{tool.perContact ? "Yes — scales with contacts" : "No — flat pricing"}</td>
+                      <td className="py-3 px-4 text-gray-600">{tool.perContact ? "Yes, scales with contacts" : "No, flat pricing"}</td>
                       <td className="py-3 px-4 text-gray-600">{tool.publicPricing ? "✓ Yes" : "✗ No"}</td>
                     </tr>
                   ))}
@@ -229,7 +229,7 @@ export default function SendDMAlternativePage() {
                 SendDM publishes its pricing in INR (from ₹399/month as of July 2026) and caps
                 the free tier by DM volume and paid tiers by connected accounts. Liffio&apos;s
                 paid plans carry no DM cap at all, and multi-account work is priced by
-                workspace — one Instagram account each, with 20 workspaces bundled into the
+                workspace, one Instagram account each, with 20 workspaces bundled into the
                 Agency plan.
               </p>
               <p>
@@ -265,7 +265,7 @@ export default function SendDMAlternativePage() {
                 <p className="text-gray-600 leading-relaxed">
                   The most common reason creators move from SendDM to Liffio is what the free
                   plan lets you prove. Liffio&apos;s free plan runs comment-to-DM on posts and
-                  Reels — you can set up a real automation on a real post and see it work
+                  Reels, so you can set up a real automation on a real post and see it work
                   before entering a payment method, then move to a paid plan, where automated
                   DMs are unlimited. For creators who are new to DM automation or who want to
                   validate the workflow before committing to monthly spend, that matters.
@@ -295,11 +295,11 @@ export default function SendDMAlternativePage() {
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   Liffio's Agency plan is a flat ₹22,999/month in India (or $549/month) and includes
-                  20 workspaces on a single subscription — one Instagram account each, every
+                  20 workspaces on a single subscription: one Instagram account each, every
                   workspace a full Business workspace, one invoice and one renewal date.
                   There is no per-account surcharge within that allowance. Agencies that
-                  have been paying per seat or per account elsewhere — or who have been using
-                  multiple SendDM accounts for different clients — typically find the Agency
+                  have been paying per seat or per account elsewhere, or who have been using
+                  multiple SendDM accounts for different clients, typically find the Agency
                   plan cheaper once they are managing five or more client accounts.
                 </p>
               </div>
@@ -316,7 +316,7 @@ export default function SendDMAlternativePage() {
             </h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                Yes — Liffio connects through Meta&apos;s official OAuth flow, the same mechanism
+                Yes. Liffio connects through Meta&apos;s official OAuth flow, the same mechanism
                 used by every compliant Instagram tool. You see a standard Meta login screen,
                 approve the permissions, and Meta issues an access token directly to Liffio.
                 Your Instagram password is never shared with Liffio at any point.
@@ -327,13 +327,13 @@ export default function SendDMAlternativePage() {
                 revoke access at any time from your Instagram settings.
               </p>
               <p>
-                On the send-behavior side, Liffio uses a configurable 10–60 second delay between
+                On the send-behavior side, Liffio uses a configurable 10 to 60 second delay between
                 trigger and send. The pause gives each automated reply a natural conversation
-                pace for the recipient — whether a Reel gets fifty comments or several thousand.
+                pace for the recipient, whether a Reel gets fifty comments or several thousand.
               </p>
               <p>
-                The risk profile with unofficial tools — ones that use browser automation,
-                session cookie hijacking, or that ask for your Instagram password directly —
+                The risk profile with unofficial tools, ones that use browser automation,
+                session cookie hijacking, or that ask for your Instagram password directly,
                 is meaningfully higher. Liffio does not use any unofficial access methods.
               </p>
             </div>
@@ -351,22 +351,22 @@ export default function SendDMAlternativePage() {
                 {
                   step: "1",
                   title: "List your active SendDM automations",
-                  body: "Before making any changes, write down every active automation: the trigger keyword, the delay setting, the DM text, any public comment reply text, and which posts or story types the automation covers. For most creators this takes 15–20 minutes. Do this before touching anything — recreating from memory is slower and error-prone.",
+                  body: "Before making any changes, write down every active automation: the trigger keyword, the delay setting, the DM text, any public comment reply text, and which posts or story types the automation covers. For most creators this takes 15 to 20 minutes. Do this before touching anything, because recreating from memory is slower and error-prone.",
                 },
                 {
                   step: "2",
                   title: "Create a Liffio account and connect Instagram",
-                  body: "Sign up at app.liffio.com — no credit card required on the free plan. Connect your Instagram account through the Meta OAuth flow. The connection takes about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace — the Agency plan bundles 20 workspaces into a single subscription.",
+                  body: "Sign up at app.liffio.com. No credit card is required on the free plan. Connect your Instagram account through the Meta OAuth flow. The connection takes about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace, and the Agency plan bundles 20 workspaces into a single subscription.",
                 },
                 {
                   step: "3",
                   title: "Recreate your automations in Liffio",
-                  body: "Start with your highest-traffic automation — usually the comment-to-DM flow on your most active post or Reel. In Liffio, create a Comment automation, select the post, enter the trigger keyword, write the DM text, and set the delay. Most simple comment-to-DM automations take five to ten minutes each to set up.",
+                  body: "Start with your highest-traffic automation, usually the comment-to-DM flow on your most active post or Reel. In Liffio, create a Comment automation, select the post, enter the trigger keyword, write the DM text, and set the delay. Most simple comment-to-DM automations take five to ten minutes each to set up.",
                 },
                 {
                   step: "4",
                   title: "Run both in parallel for a few days",
-                  body: "Do not disable SendDM immediately. Run both tools on a lower-traffic post for three to five days to confirm that Liffio's automations fire correctly. Watch for duplicate DMs during the overlap — if both tools trigger simultaneously on the same comment, the same person could receive two messages. Once you have confirmed Liffio is working, move to the final step.",
+                  body: "Do not disable SendDM immediately. Run both tools on a lower-traffic post for three to five days to confirm that Liffio's automations fire correctly. Watch for duplicate DMs during the overlap: if both tools trigger simultaneously on the same comment, the same person could receive two messages. Once you have confirmed Liffio is working, move to the final step.",
                 },
                 {
                   step: "5",
@@ -386,7 +386,7 @@ export default function SendDMAlternativePage() {
               ))}
             </div>
             <p className="mt-6 text-sm text-gray-500">
-              Estimated migration time: 1–2 hours for a typical setup with 3–5 active automations.
+              Estimated migration time: 1 to 2 hours for a typical setup with 3 to 5 active automations.
             </p>
           </div>
         </section>
@@ -412,7 +412,7 @@ export default function SendDMAlternativePage() {
         <section className="py-16 bg-[#fff7f7] border-t border-[#ffe4e6] text-center">
           <div className="mx-auto max-w-2xl px-4 sm:px-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
-              Start free — see for yourself
+              Start free and see for yourself
             </h2>
             <p className="text-gray-600 mb-8">
               Set up your first comment-to-DM automation in under five minutes.

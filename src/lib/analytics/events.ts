@@ -1,6 +1,6 @@
 // ── Umami event names + allowed property values ─────────────────────────────
 // Single source of truth. Never call umami.track() with a hardcoded string
-// elsewhere — import from here so a typo becomes a type error, not a
+// elsewhere, so import from here so a typo becomes a type error, not a
 // silent data-quality bug.
 
 export const EVENTS = {
@@ -19,7 +19,7 @@ export const EVENTS = {
 export type EventName = (typeof EVENTS)[keyof typeof EVENTS];
 
 // Sections instrumented with section_view. "benefits" is intentionally
-// excluded — no homepage section currently maps to it.
+// excluded, no homepage section currently maps to it.
 export const SECTIONS = [
   "hero",
   "features",
@@ -34,7 +34,7 @@ export const SCROLL_DEPTHS = [50, 100] as const;
 export type ScrollDepth = (typeof SCROLL_DEPTHS)[number];
 
 // CTA button values. footer_cta and creator_program-as-signup are excluded/
-// scoped per the confirmed implementation plan — see analytics.ts callers.
+// scoped per the confirmed implementation plan, see analytics.ts callers.
 export const CTA_BUTTONS = [
   "hero_start_free",
   "navbar_login",
@@ -46,7 +46,7 @@ export const CTA_BUTTONS = [
 ] as const;
 export type CtaButton = (typeof CTA_BUTTONS)[number];
 
-// navigation_click is scoped to features/pricing only — faq has no navbar
+// navigation_click is scoped to features/pricing only, faq has no navbar
 // link, and login/signup are covered by cta_click alone to avoid double
 // counting the same click (confirmed decision).
 export const NAV_ITEMS = ["features", "pricing"] as const;

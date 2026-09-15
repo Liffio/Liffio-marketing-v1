@@ -17,7 +17,9 @@ function toSlug(text: string) {
   return text
     .trim()
     .toLowerCase()
-    .replace(/[–-]/g, "-")
+    // Any Unicode dash punctuation collapses to a plain hyphen. Written as a
+    // property escape so no literal dash characters live in the source.
+    .replace(/\p{Pd}/gu, "-")
     .replace(/\s+/g, "_")
     .replace(/[^a-z0-9_+-]/g, "");
 }

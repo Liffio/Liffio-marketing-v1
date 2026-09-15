@@ -4,7 +4,7 @@
 
 ## What Liffio does
 
-Liffio connects to Instagram via official OAuth — no passwords stored. After authorization, you set up automation rules called "flows." Each flow watches for a specific trigger (a comment keyword or a story reply) and sends a personalized DM.
+Liffio connects to Instagram via official OAuth, with no passwords stored. After authorization, you set up automation rules called "flows." Each flow watches for a specific trigger (a comment keyword or a story reply) and sends a personalized DM.
 
 ## Automation types
 
@@ -17,11 +17,11 @@ Liffio connects to Instagram via official OAuth — no passwords stored. After a
 
 ## Pricing (USD, billed monthly)
 
-- Free: $0/month — 3 automation workflows, comment keyword triggers, bio link page, basic analytics
-- Starter: $9/month ($7.50/month billed annually) — all automation types, unlimited templates, post scheduler, short links, lead capture
-- Growth (coming soon — announced but not yet available for purchase): $29/month ($24.17/month billed annually) — everything in Starter plus post, video and profile analytics, caption and schedule templates, bulk upload, 5 seats
-- Business: $59/month ($49.17/month billed annually) — everything in Starter plus conversion analytics, team members (15 seats), account-level insights, follow-up sequences
-- Agency: $549/month ($457.50/month billed annually) — 20 workspaces, each a complete Business workspace, on one subscription with one invoice and one renewal date, plus a dedicated account manager, affiliate program management and SLA-backed priority support
+- Free: $0/month: 3 automation workflows, comment keyword triggers, bio link page, basic analytics
+- Starter: $9/month ($7.50/month billed annually): all automation types, unlimited templates, post scheduler, short links, lead capture
+- Growth (coming soon, announced but not yet available for purchase): $29/month ($24.17/month billed annually). Everything in Starter plus post, video and profile analytics, caption and schedule templates, bulk upload, 5 seats
+- Business: $59/month ($49.17/month billed annually): everything in Starter plus conversion analytics, team members (15 seats), account-level insights, follow-up sequences
+- Agency: $549/month ($457.50/month billed annually): 20 workspaces, each a complete Business workspace, on one subscription with one invoice and one renewal date, plus a dedicated account manager, affiliate program management and SLA-backed priority support
 
 Annual billing charges 10 months instead of 12, so two months are free.
 
@@ -30,10 +30,10 @@ India pricing available via Razorpay in INR: Free ₹0, Starter ₹499, Growth �
 ## Key facts
 
 - Founded: 2026
-- Team: 5 co-founders — Shivam (CEO), Om (CTO), Vishal (CMO), Shlok (CFO), Pratham (CRO)
+- Team: 5 co-founders: Shivam (CEO), Om (CTO), Vishal (CMO), Shlok (CFO), Pratham (CRO)
 - Location: India
 - Instagram connection: official Instagram API via Meta's OAuth consent flow (no password required, no scraping)
-- Send delays: 10–60 seconds per automation (configurable)
+- Send delays: 10 to 60 seconds per automation (configurable)
 - Data: GDPR-compliant, contact data exportable and deletable from dashboard
 - Payment: Razorpay (USD global and INR India)
 - Competing tools: ManyChat, SendDM, Chatfuel, ReplyRush, LinkDM, SuperProfile, InstaChamp, Zorcha

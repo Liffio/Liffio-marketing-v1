@@ -4,7 +4,7 @@
  * WHY THIS EXISTS
  * ---------------
  * For months the site quoted $299 for a tier that sells at $549, and $79 for
- * one that sells at $59. No PR introduced those numbers — the catalogue moved
+ * one that sells at $59. No PR introduced those numbers: the catalogue moved
  * underneath files nobody edited. Unit tests could not catch it, because the
  * numbers they assert against were transcribed by the same hand that got them
  * wrong. The only cure is to compare against production and fail on any
@@ -19,7 +19,7 @@
  * Both SHEET and RENDERED are checked, and that is deliberate. The cards are
  * served from /marketing/plans (plan_catalog); the sheet is only the fallback
  * used when that call fails. Checking the sheet alone would report "all clear"
- * while the live page showed a different set of tiers at different prices —
+ * while the live page showed a different set of tiers at different prices,
  * which is exactly the state this repo is in today.
  *
  * Per tier, per currency (USD + INR), per interval (monthly + annual), plus
@@ -42,7 +42,7 @@ const ATTEMPTS = 3;
 const TIMEOUT_MS = 15_000;
 
 /**
- * Divergences we have SEEN, ACCEPTED and OWNED — never a way to silence a
+ * Divergences we have SEEN, ACCEPTED and OWNED, never a way to silence a
  * finding indefinitely. Every entry needs an owner and an expiry; past its
  * expiry it fails like anything else, so a forgotten waiver becomes loud
  * rather than permanent.
@@ -59,7 +59,7 @@ type Waiver = { id: string; until: string; owner: string; why: string };
  * live Razorpay keys). So the sheet is a strict SUPERSET, and this names the
  * only tier allowed to be extra.
  *
- * 🚩 It expires the moment Growth appears in the served payload — see
+ * 🚩 It expires the moment Growth appears in the served payload: see
  * `checkExpectedDivergence`. An exemption for Growth that outlives D2 part 2
  * would silence the check on the newest tier: the one most likely to drift and
  * the only one never yet verified against the catalogue in production.
@@ -68,7 +68,7 @@ const EXPECTED_ABSENT_FROM_RENDERED: ReadonlyArray<{ tier: string; why: string; 
   {
     tier: "Growth",
     why: "plan_catalog.GROWTH.show_on_marketing_site = false, so /marketing/plans serves four tiers. The sheet carries Growth because it is the fallback and must be complete.",
-    unblockedBy: "D2 part 2 — live Razorpay keys",
+    unblockedBy: "D2 part 2: live Razorpay keys",
   },
 ];
 
@@ -101,13 +101,13 @@ type Currency = "usd" | "inr";
 const REGIONS: Region[] = ["global", "india"];
 const REGION_CURRENCY: Record<Region, Currency> = { global: "usd", india: "inr" };
 const SYMBOL: Record<Currency, string> = { usd: "$", inr: "₹" };
-/** Minor units per major unit — cents, paise. */
+/** Minor units per major unit: cents, paise. */
 const MINOR: Record<Currency, number> = { usd: 100, inr: 100 };
 /**
  * Smallest amount the site can actually DISPLAY, in minor units. USD prices
  * are shown to the cent; INR prices are shown as whole rupees. Rounding a
  * per-month figure up to the next displayable step is correct behaviour, so
- * the annual tolerance has to be expressed in these, not in raw minor units —
+ * the annual tolerance has to be expressed in these, not in raw minor units ,
  * otherwise a legitimate ₹1 round-up reads as a pricing error.
  */
 const DISPLAY_STEP: Record<Currency, number> = { usd: 1, inr: 100 };
@@ -233,7 +233,7 @@ function checkExpectedDivergence(renderedNames: string[]): void {
         `rendered:exemption-stale:${expected.tier}`,
         "rendered",
         `/marketing/plans now serves "${expected.tier}", so ${expected.unblockedBy} has shipped. ` +
-          `Remove it from EXPECTED_ABSENT_FROM_RENDERED, and drop the static merge that injects it — ` +
+          `Remove it from EXPECTED_ABSENT_FROM_RENDERED, and drop the static merge that injects it, ` +
           `otherwise the tier is served twice and checked never.`,
       );
     }
@@ -247,7 +247,7 @@ function compareTierSet(source: string, catalogue: string[], actual: string[]): 
         source === "rendered" && EXPECTED_ABSENT_FROM_RENDERED.find((e) => e.tier === name);
       if (expected) {
         expectedDivergences.add(
-          `"${name}" absent from the served payload by design — ${expected.why} Unblocked by: ${expected.unblockedBy}.`,
+          `"${name}" absent from the served payload by design: ${expected.why} Unblocked by: ${expected.unblockedBy}.`,
         );
         continue;
       }
@@ -263,7 +263,7 @@ function compareTierSet(source: string, catalogue: string[], actual: string[]): 
       report(
         `${source}:tier-unknown:${name}`,
         source,
-        `${source} advertises "${name}", which is not a live package — retired, renamed, or never sold.`,
+        `${source} advertises "${name}", which is not a live package. It was retired, renamed, or never sold.`,
       );
     }
   }
@@ -306,7 +306,7 @@ function compareMonthly(
  * rounded from this catalogue at all.
  */
 /**
- * The AUTHORED annual price — compared by EXACT EQUALITY, no tolerance.
+ * The AUTHORED annual price, compared by EXACT EQUALITY, no tolerance.
  *
  * `compareAnnual` below has to allow rounding slack, because the per-month
  * figure it checks is a twelfth of this one and must round somewhere. This
@@ -321,7 +321,7 @@ function compareAnnualTotal(
   yearlyMinor: number | null,
   display: string | null | undefined,
 ): void {
-  // No annual plan in the catalogue (Free) — the site must show no total either.
+  // No annual plan in the catalogue (Free), the site must show no total either.
   if (yearlyMinor === null) {
     if (display) {
       report(
@@ -443,16 +443,16 @@ async function main(): Promise<number> {
       const message = `API unreachable: ${error.message}`;
       if (MODE === "pr") {
         console.warn(`::warning title=Price drift check skipped::${message}`);
-        console.warn(`\n  SKIPPED — ${message}`);
+        console.warn(`\n  SKIPPED: ${message}`);
         console.warn("  A network failure is not evidence about our prices, so it does not block this PR.");
         console.warn("  The scheduled run treats a sustained outage as a failure.\n");
         return 0;
       }
-      console.error(`\n  FAILED — ${message}`);
+      console.error(`\n  FAILED: ${message}`);
       console.error("  Scheduled runs fail on unreachability: nobody is watching a skipped timer.\n");
       return 2;
     }
-    console.error(`\n  FAILED — ${(error as Error).message}\n`);
+    console.error(`\n  FAILED: ${(error as Error).message}\n`);
     return 1;
   }
 
@@ -514,7 +514,7 @@ async function main(): Promise<number> {
 
   if (findings.length === 0) {
     if (waived.length === 0) {
-      console.log("  PASS — the site and the catalogue agree on every tier, currency and interval.\n");
+      console.log("  PASS: the site and the catalogue agree on every tier, currency and interval.\n");
       return 0;
     }
     /**
@@ -525,7 +525,7 @@ async function main(): Promise<number> {
      */
     const soonest = Math.min(...waived.map((w) => daysLeft(w.waiver.until)));
     console.log(
-      `  PASS with ${waived.length} WARNING${waived.length === 1 ? "" : "S"} — the sheet agrees with the catalogue, ` +
+      `  PASS with ${waived.length} WARNING${waived.length === 1 ? "" : "S"}: the sheet agrees with the catalogue, ` +
         `but the SERVED page does not. Oldest tolerance expires in ${soonest} day${soonest === 1 ? "" : "s"}, ` +
         `after which these fail.\n`,
     );
@@ -537,8 +537,8 @@ async function main(): Promise<number> {
     console.error(`    [${f.source}] ${f.detail}`);
     console.error(`      id: ${f.id}\n`);
   }
-  console.error("  'sheet'    = src/config/pricing.config.ts — fix it in this repo.");
-  console.error("  'rendered' = /api/v1/marketing/plans — fix it in the Backend; plan_catalog drives it.\n");
+  console.error("  'sheet'    = src/config/pricing.config.ts, fix it in this repo.");
+  console.error("  'rendered' = /api/v1/marketing/plans, fix it in the Backend; plan_catalog drives it.\n");
   return 1;
 }
 

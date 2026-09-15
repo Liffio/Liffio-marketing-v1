@@ -71,11 +71,11 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     cta: "Start free",
     includedLabel: "Included",
     features: [
-      "**A complete automation loop** — keyword trigger, any-comment trigger, public auto-reply",
+      "**A complete automation loop**: keyword trigger, any-comment trigger, public auto-reply",
       "Bio link page, Liffio badge shown",
       "Lead capture by username",
       "Overview analytics, 7-day history",
-      "**Lyra AI**{beta} — AI Insights + zero-token answers",
+      "**Lyra AI**{beta}: AI Insights + zero-token answers",
       "Affiliate programme, 50% recurring",
     ],
     limitsLabel: "Limits",
@@ -93,9 +93,9 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     cta: "Choose Starter",
     includedLabel: "Everything in Free, plus",
     features: [
-      "**Unlimited DMs** — no quota, no contact caps",
+      "**Unlimited DMs**: no quota, no contact caps",
       "All 15 automation capabilities",
-      "**Follow-up sequences** — 2 per automation",
+      "**Follow-up sequences**: 2 per automation",
       "Full post scheduler + media library",
       "Short links, lead emails, CSV export",
       "Bio link unlocked, **badge removed**",
@@ -114,12 +114,12 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
 
   Growth: {
     audience:
-      "A serious creator posting consistently and deciding from data — still working alone.",
+      "A serious creator posting consistently and deciding from data, still working alone.",
     flag: { text: "The new step", tone: "brand" },
     cta: "Choose Growth",
     includedLabel: "Everything in Starter, plus",
     features: [
-      "**Instagram post analytics** — reach, views, saves, shares, engagement rate",
+      "**Instagram post analytics**: reach, views, saves, shares, engagement rate",
       "Video metrics and profile outcomes",
       "**Best-time-to-post heatmap** from your own data",
       "90-day analytics history",
@@ -143,12 +143,12 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     cta: "Choose Business",
     includedLabel: "Everything in Growth, plus",
     features: [
-      "**Team management** — invite, assign roles, revoke",
+      "**Team management**: invite, assign roles, revoke",
       "Per-user, per-module, per-action access control and ABAC",
       "**Post approval workflow** + activity log",
-      "**Per-automation attribution** — DMs → clicks → leads",
+      "**Per-automation attribution**: DMs → clicks → leads",
       "Analytics export",
-      "External API — 10 keys, 5,000 requests/day",
+      "External API: 10 keys, 5,000 requests/day",
       "Proactive **Lyra AI** growth alerts{beta}",
       "AI token rollover up to 25,000",
     ],
@@ -168,9 +168,9 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     cta: "Choose Agency",
     includedLabel: "Twenty complete Business workspaces",
     features: [
-      "**Every workspace is a full Business workspace** — same features, same limits",
+      "**Every workspace is a full Business workspace**: same features, same limits",
       "One subscription, one invoice, one renewal date",
-      "**Slot-based allocation** — create workspaces as you win clients",
+      "**Slot-based allocation**: create workspaces as you win clients",
       "Workspace switching from a single login",
       "**Cheaper per workspace than a single Growth plan**",
     ],
@@ -185,7 +185,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
   },
 };
 
-/** Inline markers, stripped — for surfaces that render plain feature text. */
+/** Inline markers, stripped, for surfaces that render plain feature text. */
 export function stripEmphasis(feature: V4Feature): string {
   return feature.replace(/\*\*/g, "").replace(/\s*\{beta\}/g, " (Beta)");
 }
@@ -193,8 +193,8 @@ export function stripEmphasis(feature: V4Feature): string {
 /**
  * The V4 bullets as the `PlanFeature[]` shape the homepage cards expect.
  *
- * Every entry is `included: true`. The V4 sheet lists only what a tier HAS —
- * there is no exclusion list — so the homepage's ✗ rows disappear along with
+ * Every entry is `included: true`. The V4 sheet lists only what a tier HAS, and
+ * there is no exclusion list, so the homepage's ✗ rows disappear along with
  * the claims that produced them ("Story & multi-step flows" on Free, which
  * ADR 0002 already flagged as half-wrong).
  */
@@ -227,7 +227,7 @@ const all = (name: string): MatrixRow => ({
   agency: true,
 });
 
-/** Free excluded, every paid tier included — the commonest shape in the sheet. */
+/** Free excluded, every paid tier included, the commonest shape in the sheet. */
 const paid = (name: string): MatrixRow => ({
   name,
   free: false,
@@ -343,10 +343,10 @@ export const V4_FEATURE_CATEGORIES: ReadonlyArray<{
   {
     name: "Analytics",
     features: [
-      all("Overview — DMs, leads, clicks, automations"),
+      all("Overview: DMs, leads, clicks, automations"),
       { name: "Time-series charts", free: false, starter: "30d", growth: "90d", business: "90d", agency: "90d" },
       paid("Conversion rate"),
-      growthUp("Post metrics — reach, views, saves, shares, ER"),
+      growthUp("Post metrics: reach, views, saves, shares, ER"),
       growthUp("Video metrics"),
       growthUp("Profile outcomes"),
       businessUp("Per-automation attribution"),
@@ -360,7 +360,7 @@ export const V4_FEATURE_CATEGORIES: ReadonlyArray<{
       all("AI Insights across dashboard, analytics, scheduler"),
       all("Zero-token quick answers"),
       paid("Caption, hashtag, content-idea assist"),
-      paid("Media analyze — summary, OCR, vision"),
+      paid("Media analyze: summary, OCR, vision"),
       paid("Automation Copilot + keyword suggest"),
       paid("DM message assist, bio text assist"),
       paid("Creator Assistant"),
@@ -376,7 +376,7 @@ export const V4_FEATURE_CATEGORIES: ReadonlyArray<{
       businessUp("Invite / remove members, assign roles"),
       businessUp("Resend / revoke invites"),
       businessUp("Per-user × per-module × per-action access control"),
-      businessUp("Per-capability overrides — user and workspace"),
+      businessUp("Per-capability overrides: user and workspace"),
       businessUp("ABAC policies"),
     ],
   },
@@ -388,7 +388,7 @@ export const V4_FEATURE_CATEGORIES: ReadonlyArray<{
     ],
   },
   {
-    name: "Limits — per workspace, never pooled",
+    name: "Limits: per workspace, never pooled",
     features: [
       values("Workspaces per subscription", "1", "1", "1", "1", "20"),
       values("Instagram accounts per workspace", "1", "1", "1", "1", "1 each"),
@@ -410,8 +410,8 @@ export const V4_FEATURE_CATEGORIES: ReadonlyArray<{
       all("Drafts autosave"),
       all("In-app notifications"),
       all("Two-factor authentication"),
-      all("Billing self-service — invoices, portal, cancel"),
-      all("Affiliate programme — 50% recurring"),
+      all("Billing self-service: invoices, portal, cancel"),
+      all("Affiliate programme: 50% recurring"),
       all("Creator Program eligibility"),
       values("Support", "Community", "Email", "Email", "Priority", "Priority"),
     ],

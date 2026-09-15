@@ -58,17 +58,17 @@ export default async function VsPage({ params }: Props) {
     {
       step: "1",
       title: `Document your active ${cmp.competitor} automations`,
-      body: `Screenshot or note every active automation: trigger keyword, delay, DM text, and any public comment reply. This takes 15–30 minutes and makes recreation far faster than working from memory.`,
+      body: `Screenshot or note every active automation: trigger keyword, delay, DM text, and any public comment reply. This takes 15 to 30 minutes and makes recreation far faster than working from memory.`,
     },
     {
       step: "2",
       title: "Connect Instagram to Liffio",
-      body: "Create a Liffio account and connect your Instagram through Meta's official OAuth flow — about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace — the Agency plan bundles 20 workspaces into a single subscription.",
+      body: "Create a Liffio account and connect your Instagram through Meta's official OAuth flow, which takes about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace, and the Agency plan bundles 20 workspaces into a single subscription.",
     },
     {
       step: "3",
       title: "Recreate your automations",
-      body: "Start with your highest-revenue flow — usually comment-to-DM on your most active Reel. Select the post, enter the keyword, write the DM, set the delay. Most automations take five to ten minutes each.",
+      body: "Start with your highest-revenue flow, usually comment-to-DM on your most active Reel. Select the post, enter the keyword, write the DM, set the delay. Most automations take five to ten minutes each.",
     },
     {
       step: "4",
@@ -164,7 +164,7 @@ export default async function VsPage({ params }: Props) {
               className="text-2xl font-bold text-gray-900 mb-4"
               style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
             >
-              Liffio vs {cmp.competitor} — feature comparison
+              Liffio vs {cmp.competitor}: feature comparison
             </h2>
             <p className="text-gray-600 mb-8">
               Compare comment-to-DM, automation types, account limits, and pricing model side by side.
@@ -211,10 +211,10 @@ export default async function VsPage({ params }: Props) {
                       </td>
                       <td className="py-3 px-4 text-gray-600">{tool.paidFrom}</td>
                       <td className="py-3 px-4 text-gray-600">
-                        {tool.perContact ? "Yes — scales with contacts" : "No — flat pricing"}
+                        {tool.perContact ? "Yes, scales with contacts" : "No, flat pricing"}
                       </td>
                       <td className="py-3 px-4 text-gray-600">
-                        {tool.instagramOnly ? "Yes" : "No — multi-purpose"}
+                        {tool.instagramOnly ? "Yes" : "No, multi-purpose"}
                       </td>
                     </tr>
                   ))}
@@ -223,7 +223,7 @@ export default async function VsPage({ params }: Props) {
             </div>
             <p className="mt-6 text-gray-600 leading-relaxed">{cmp.pricingNote}</p>
             <p className="mt-3 text-xs text-gray-400">
-              Competitor pricing and features are summarized as of publication and may change — check{" "}
+              Competitor pricing and features are summarized as of publication and may change, so check{" "}
               {cmp.competitor}&apos;s site for current details.
             </p>
           </div>
@@ -240,15 +240,15 @@ export default async function VsPage({ params }: Props) {
             </h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                Yes. Liffio connects through Meta&apos;s official OAuth flow — the same authorization method
+                Yes. Liffio connects through Meta&apos;s official OAuth flow, the same authorization method
                 used by major social tools. You approve permissions on a standard Meta screen and Meta
                 issues an access token directly to Liffio. Your Instagram password is never entered into
                 Liffio.
               </p>
               <p>
                 Liffio uses the permissions you approve on Meta&apos;s consent screen and adds a
-                configurable 10–60 second delay between trigger and send, so each reply reaches the
-                recipient at a natural conversational pace — even during a viral Reel with thousands
+                configurable 10 to 60 second delay between trigger and send, so each reply reaches the
+                recipient at a natural conversational pace, even during a viral Reel with thousands
                 of comments.
               </p>
             </div>

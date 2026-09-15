@@ -41,7 +41,7 @@ import {
 } from '@/lib/onboarding/templates';
 
 /**
- * Liffio onboarding — who it's for, what to send, a demo, then connect.
+ * Liffio onboarding: who it's for, what to send, a demo, then connect.
  *
  * Spec: `Website/v2/docs/onboarding/liffio-onboarding-stage2.md`, structured after
  * `liffio-onboarding-preview.html`, themed with this site's own tokens rather than the preview's
@@ -52,13 +52,13 @@ import {
  * 1. **Onboarding creates nothing.** The previous flow ended in a four-substep wizard that called
  *    `POST /automations`. Nothing here does: `assertWorkflowLimit` counts every non-deleted
  *    automation regardless of status, so even a draft made during onboarding would silently
- *    consume one of the three slots a Free workspace is sold — before the user had decided
+ *    consume one of the three slots a Free workspace is sold, before the user had decided
  *    anything. A real automation exists only when they hit Go live in the app's own create flow,
  *    and setting one up is always skippable.
  * 2. **Nothing hidden in DMs.** The demo shows the Free branding line *inside* the DM and the
  *    branded follow-up that lands minutes later, fetched from the server so it cannot drift from
  *    what is actually sent. We append to the customer's message and then send a second,
- *    unsolicited message advertising ourselves — from their account, to their follower. If the
+ *    unsolicited message advertising ourselves, from their account, to their follower. If the
  *    preview omits that, the first they hear of it is when a follower asks.
  * 3. **The answers are ids, never copy.** Only `role`, `goal` and `suggestedTemplate: { id,
  *    version }` are persisted; every string lives in the client registry. That is what lets the
@@ -211,7 +211,7 @@ const IG_ERRORS: Record<string, { title: string; summary: string; steps: string[
   invalid_platform_app: {
     title: 'Meta app configuration error',
     summary:
-      'Instagram rejected the connection — the Meta developer app may not be configured correctly.',
+      'Instagram rejected the connection. The Meta developer app may not be configured correctly.',
     steps: [
       'In Meta for Developers → Instagram → Business login settings: add your callback URL to OAuth Redirect URIs',
       'Confirm META_INSTAGRAM_BUSINESS_LOGIN_APP_ID / APP_SECRET match the Instagram App ID / Secret',
@@ -228,7 +228,7 @@ const IG_ERRORS: Record<string, { title: string; summary: string; steps: string[
   invalid_state: {
     title: 'That connect link expired',
     summary: 'The login took longer than the window we allow. Nothing is wrong with your account.',
-    steps: ['Tap Connect Instagram again — it should go straight through'],
+    steps: ['Tap Connect Instagram again. It should go straight through'],
   },
   connection_not_persisted: {
     title: 'Almost there',
@@ -272,12 +272,12 @@ const DM_DELAY_MS = 1200;
  *
  * The flow reads `localStorage` (via `authStore`) and `window.matchMedia`, so it cannot render its
  * real output on the server. The usual `useState(false)` + `useEffect(() => setMounted(true))`
- * does that job but trips `react-hooks/set-state-in-effect` — the rule is right that it causes a
+ * does that job but trips `react-hooks/set-state-in-effect`. The rule is right that it causes a
  * cascading render. `useSyncExternalStore` answers the same question by definition: the server
  * snapshot is `false`, the client snapshot is `true`, and React handles the transition itself.
  *
  * The store never changes, so `subscribe` returns a no-op unsubscribe and is hoisted to module
- * scope — a new function identity each render would make React re-subscribe on every pass.
+ * scope: a new function identity each render would make React re-subscribe on every pass.
  */
 const noopSubscribe = () => () => {};
 const useHydrated = () => useSyncExternalStore(noopSubscribe, () => true, () => false);
@@ -294,7 +294,7 @@ const prefersReducedMotion = () =>
  * that predicts whether a popup survives, and it keeps working on devices nobody has added to a
  * UA list yet. On a phone the popup usually becomes a new tab or is handed to the Instagram app,
  * so the callback lands with no opener to postMessage and the user is stranded on a dark
- * "close this window" page — on the platform carrying most of the traffic.
+ * "close this window" page, on the platform carrying most of the traffic.
  */
 function preferredOAuthMode(): 'popup' | 'redirect' {
   if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return 'popup';
@@ -311,7 +311,7 @@ function preferredOAuthMode(): 'popup' | 'redirect' {
 /**
  * Four segments, one per screen, plus the back and skip affordances.
  *
- * The dashboard has no progress bar — reaching it is the end of onboarding, not a fifth step, and
+ * The dashboard has no progress bar: reaching it is the end of onboarding, not a fifth step, and
  * a bar that still showed would tell the user they had more to do at the exact moment we want them
  * to start using the app.
  */
@@ -408,7 +408,7 @@ function OptionCard({
 }
 
 /**
- * The DM exactly as a Free workspace will send it — branding line and all.
+ * The DM exactly as a Free workspace will send it, branding line and all.
  *
  * The strings come from the server; while that request is in flight they are simply not drawn,
  * never replaced with a hardcoded stand-in, which would be the exact drift the endpoint exists to
@@ -487,7 +487,7 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
    * The OAuth return is read during render, not in an effect.
    *
    * The callback sends the user back to `/onboarding?meta=…`, and those params are available on
-   * the very first render — so deriving the initial screen from them with lazy initialisers gives
+   * the very first render, so deriving the initial screen from them with lazy initialisers gives
    * the right output immediately, instead of painting screen 1 and then correcting it. It also
    * keeps `setState` out of the effect below, which now only does what effects are for: talking to
    * an external system (the router, analytics).
@@ -510,8 +510,8 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
    * Whether this account still owes us a country. `null` until `auth/me` answers.
    *
    * Email signup collects it on the form, so for most accounts this resolves to `false` and the
-   * screen below never renders. Google signup *cannot* collect it — that callback is a redirect
-   * with no form — so those accounts arrive with `country: null`, as does every account created
+   * screen below never renders. Google signup *cannot* collect it: that callback is a redirect
+   * with no form, so those accounts arrive with `country: null`, as does every account created
    * before the field was made required.
    *
    * A ref, not state, because the only reader is `finish()` and it must see the current answer
@@ -577,7 +577,7 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
    * Persist an answer. **Never blocks, never surfaces a failure.**
    *
    * The spec is explicit: *"answers save after each screen. If a save fails, keep going and retry
-   * quietly. Never block the user on it."* Nothing stored here is load-bearing — `role` and `goal`
+   * quietly. Never block the user on it."* Nothing stored here is load-bearing: `role` and `goal`
    * reorder some options and pick a suggestion on the dashboard. A spinner between two taps costs
    * more than the thing it would be reporting, and `finish()` re-sends everything anyway.
    */
@@ -588,7 +588,7 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
           const workspaceId = await resolveWorkspaceId();
           await updateWorkspace(workspaceId, { onboarding });
         } catch {
-          /* deliberately silent — see the note above */
+          /* deliberately silent, see the note above */
         }
       })();
     },
@@ -604,7 +604,7 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
    * which is why this is one effect and one request rather than two.
    *
    * ⚠️ A failure resolves to `false`, not `true`. Not knowing whether a country is missing is not a
-   * reason to stand a screen in front of someone — the checkout ask is the backstop, and blocking
+   * reason to stand a screen in front of someone: the checkout ask is the backstop, and blocking
    * the end of onboarding on a request that just failed would strand them for nothing.
    */
   useEffect(() => {
@@ -628,7 +628,7 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
 
   // OAuth full-page redirect back to onboarding (the mobile path, and the popup's own fallback).
   // The screen and error state were already derived during render above; this only does the two
-  // external things — fire the analytics event, and strip the params so a refresh cannot replay
+  // external things: fire the analytics event, and strip the params so a refresh cannot replay
   // a connect that already happened.
   useEffect(() => {
     if (!metaParam) return;
@@ -681,7 +681,7 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
    * last write complete, so one flaky request mid-flow cannot cost the user the suggestion waiting
    * for them on the dashboard.
    *
-   * The handoff runs even if that write fails — stranding someone on a finished flow is worse than
+   * The handoff runs even if that write fails. Stranding someone on a finished flow is worse than
    * a missing suggestion, and the app re-reads `auth/me` on arrival.
    */
   const finish = useCallback(async () => {
@@ -693,10 +693,10 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
      *
      * It sits here rather than earlier in the flow for two reasons. It is the last thing standing
      * between the customer and the app, so nobody who finishes onboarding can reach checkout
-     * without a country — and putting it here means it never flashes in front of the 90%+ of
+     * without a country, and putting it here means it never flashes in front of the 90%+ of
      * accounts that already have one, because by now `auth/me` has long since answered.
      *
-     * `null` means that answer has not landed yet — possible only on the OAuth-return path, which
+     * `null` means that answer has not landed yet, possible only on the OAuth-return path, which
      * jumps straight to the connect screen and finishes a second later. Ask again rather than
      * guess; one extra request in a rare race is cheaper than a skipped ask or a false one.
      */
@@ -709,7 +709,7 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
           authStore.setAuthMe(me);
           countryNeeded.current = !me.user.country;
         } catch {
-          /* unknown is not a reason to stop someone — checkout still refuses without one */
+          /* unknown is not a reason to stop someone: checkout still refuses without one */
         }
       }
     }
@@ -739,7 +739,7 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
       const authMe = await getAuthMe({ token: accessToken });
       authStore.setAuthMe(authMe);
     } catch {
-      /* see the note above — the handoff happens regardless */
+      /* see the note above, the handoff happens regardless */
     }
     window.location.href = appHandoffUrl(accessToken, '/dashboard');
   }, [resolveWorkspaceId, role, goal, router]);
@@ -748,7 +748,7 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
    * Save the country, then carry on to the dashboard.
    *
    * ⚠️ **A 409 is a success here.** The server sets country once and answers `COUNTRY_ALREADY_SET`
-   * if it is already there — a second tab, a retry after a dropped response, support having filled
+   * if it is already there: a second tab, a retry after a dropped response, support having filled
    * it in. The account has a country, which is the entire point of this screen; reporting an error
    * would strand someone over a question that is already answered.
    *
@@ -778,7 +778,7 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
     void finish();
   }, [country, countrySaving, finish]);
 
-  /** The escape hatch — only reachable after a save has actually failed. See `submitCountry`. */
+  /** The escape hatch, only reachable after a save has actually failed. See `submitCountry`. */
   const skipCountry = useCallback(() => {
     countryNeeded.current = false;
     void finish();
@@ -812,7 +812,7 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
     if (picked) return;
     setPicked(next ?? 'skip');
     setGoal(next);
-    // `goal` is the answer; `suggestedTemplate` is the decision made from it. Both are stored —
+    // `goal` is the answer; `suggestedTemplate` is the decision made from it. Both are stored : 
     // "not sure yet" and a skipped screen resolve to the same template today, and only `goal` can
     // tell them apart if that ever needs to change.
     save({ goal: next, suggestedTemplate: { id: templateForGoal(next).id, version: 1 } });
@@ -937,7 +937,7 @@ const ROLE_OPTIONS: Array<{
 
 /**
  * No Continue button. A tap selects, holds the selected state for a beat so the choice registers
- * visually, then advances — an instant jump reads as a mis-tap and people hit back to check what
+ * visually, then advances. An instant jump reads as a mis-tap and people hit back to check what
  * they picked.
  *
  * The answer is a *hint*, never a gate: it reorders screen 2 and changes two strings later.
@@ -1026,7 +1026,7 @@ function ScreenGoal({
 /**
  * The whole product, working, before we ask for a single permission.
  *
- * `commentMatchesKeywords` is a port of the server's matcher — lower-case, punctuation stripped,
+ * `commentMatchesKeywords` is a port of the server's matcher: lower-case, punctuation stripped,
  * whole words. A demo that fires on "guidebook" when production would not is a lie told at the
  * moment we are asking to be trusted. It creates nothing: every bit of state below is local.
  */
@@ -1089,7 +1089,7 @@ function ScreenDemo({
 
   return (
     <div className="grid gap-8 md:grid-cols-[1fr_320px] md:items-start">
-      {/* Headline, rail and CTA — first on mobile, right-hand column on desktop */}
+      {/* Headline, rail and CTA, first on mobile, right-hand column on desktop */}
       <div className="order-1 md:order-2">
         <h1 className="font-display text-xl font-bold tracking-tight text-foreground">
           Here&apos;s how it works
@@ -1382,7 +1382,7 @@ function ScreenConnect({
  *
  * ## Why it is asked and not detected
  *
- * There is a geo header on this request, and `defaultCountry` is read from it — as a **pre-fill**,
+ * There is a geo header on this request, and `defaultCountry` is read from it, as a **pre-fill**,
  * which the customer can change and confirms by pressing the button. What it is not is the answer.
  * Country is the only thing choosing INR versus USD under a single gateway, and the server sets it
  * **once**: an inferred value is a price the customer never agreed to, charged for the life of the
@@ -1397,7 +1397,7 @@ function ScreenConnect({
  * and a skip would simply move the question to the moment the customer is trying to pay. Pre-filled
  * and one tap, here, is the cheaper place to answer it.
  *
- * The "continue without saving" link appears **only after a save has actually failed** — see
+ * The "continue without saving" link appears **only after a save has actually failed**. See
  * `submitCountry`. A last screen that a flaky API can lock someone out of is worse than a missing
  * country, and checkout still catches it.
  */
@@ -1426,7 +1426,7 @@ function ScreenCountry({
     >
       <div>
         <h1 className="font-display text-xl font-bold tracking-tight text-foreground">
-          Last thing — where are you based?
+          Last thing: where are you based?
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
           This sets the currency you are billed in if you ever upgrade. It does not change anything

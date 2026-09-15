@@ -1,7 +1,7 @@
 import { isMetaVerified } from "@/lib/meta-verification";
 
 /**
- * IS_META_VERIFIED means Meta ACCESS VERIFICATION passed — i.e. verified
+ * IS_META_VERIFIED means Meta ACCESS VERIFICATION passed, i.e. verified
  * Meta TECH PROVIDER status only. It does NOT mean Meta Business Partner:
  * that is a separate program with its own application and directory
  * listing. No string in the verified branches below may claim "Business

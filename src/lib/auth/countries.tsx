@@ -6,8 +6,8 @@ import { useEffect, useRef, useState } from 'react';
  * The one country list the product asks from.
  *
  * It lives here rather than in the signup form because signup is no longer the only place that
- * asks. **Google signup cannot ask** — the callback is a redirect with no form, and Google's
- * profile carries no country — so the account lands with `country: null` and onboarding has to
+ * asks. **Google signup cannot ask**: the callback is a redirect with no form, and Google's
+ * profile carries no country, so the account lands with `country: null` and onboarding has to
  * collect it instead (`(auth)/onboarding/screen-country.tsx`).
  *
  * Two copies of this list would be two different sets of selectable countries for the same
@@ -44,7 +44,7 @@ export const COUNTRIES: [string, string][] = [
 
 const KNOWN_CODES = new Set(COUNTRIES.map(([code]) => code));
 
-/** Only codes the picker can actually render — anything else must fall back to blank. */
+/** Only codes the picker can actually render: anything else must fall back to blank. */
 export function isKnownCountryCode(code: string | null | undefined): boolean {
   return !!code && KNOWN_CODES.has(code.toUpperCase());
 }

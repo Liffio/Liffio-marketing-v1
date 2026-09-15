@@ -12,7 +12,7 @@ import { SwipeHint } from "@/components/pricing/PricingPlanCard";
 /**
  * One continuous table with group bands, replacing three separate tables.
  *
- * The point of a comparison is the BOUNDARY — where Starter stops and Growth
+ * The point of a comparison is the BOUNDARY: where Starter stops and Growth
  * starts. Three tables each with their own header made you re-orient at every
  * section and lost the tier names as soon as you scrolled. A single table with
  * a sticky header and inline group bands keeps the columns anchored while you
@@ -36,7 +36,8 @@ function CellValue({ value }: { value: boolean | string }) {
     </span>
   ) : (
     <span className="block text-center text-[15px] text-[#D3CCD8]" aria-label="Not included">
-      —
+      {/* Drawn rule, not a dash character, so the copy stays dash-free. */}
+      <span className="inline-block h-px w-3 align-middle bg-current" aria-hidden />
     </span>
   );
 }

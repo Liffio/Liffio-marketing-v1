@@ -61,7 +61,7 @@ export default function RootLayout({
         <IdentifyOnLoad />
         {children}
         <GoogleAnalytics gaId="G-TPNX0042QC" />
-        {/* Plain <script> (not next/script) — Umami reads document.currentScript for
+        {/* Plain <script> (not next/script): Umami reads document.currentScript for
             its config, which is null when Next.js's Script component injects the tag
             dynamically after hydration. A parser-inserted tag preserves currentScript. */}
         <script

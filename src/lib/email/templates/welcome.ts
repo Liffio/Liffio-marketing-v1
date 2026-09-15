@@ -39,7 +39,7 @@ What is ${brand.name}?
 ${brand.description}
 
 Features:
-- Rapid Auto-Replies: Custom 10–60s delay from comment to DM, 24/7
+- Rapid Auto-Replies: Custom 10 to 60s delay from comment to DM, 24/7
 - AI-Powered Conversations: Personalised DMs that convert leads into customers
 - Smart Analytics: Track engagement, conversions, and optimize your funnel
 

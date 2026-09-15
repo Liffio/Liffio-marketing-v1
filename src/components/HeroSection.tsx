@@ -146,7 +146,7 @@ export default function HeroSection() {
 
             <div className="hero-stagger hero-stagger-6 mt-8 flex items-center gap-4">
               <p className="text-sm text-gray-600">
-                <strong className="font-semibold text-gray-900">Free plan included</strong> — no credit card required.
+                <strong className="font-semibold text-gray-900">Free plan included</strong>, no credit card required.
                 Built on Instagram&apos;s official API.
               </p>
             </div>

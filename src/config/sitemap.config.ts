@@ -5,7 +5,7 @@ import { getAllComparisonSlugs } from "@/config/comparisons.config";
 
 /**
  * ⚠️ EVERY `lastModified` BELOW IS HAND-MAINTAINED. BUMP IT WHEN THE PAGE'S
- * CONTENT ACTUALLY CHANGES — and only then.
+ * CONTENT ACTUALLY CHANGES, and only then.
  *
  * This file used to compute `new Date()` once per build and stamp it on all 30
  * URLs, so every page claimed to have changed every time anything deployed.
@@ -15,16 +15,16 @@ import { getAllComparisonSlugs } from "@/config/comparisons.config";
  * crawler that last fetched /pricing on 2026-08-13.
  *
  * Rules:
- *   • ISO `YYYY-MM-DD` strings only. Never `new Date()` / `Date.now()` — a
+ *   • ISO `YYYY-MM-DD` strings only. Never `new Date()` / `Date.now()`: a
  *     build-time clock is exactly the defect this replaced.
  *   • Editing a page's OWN content means editing its date here in the same
  *     change. "Own content" is the copy the route exists to serve, or the
- *     structured data describing that route — whether it lives in the page
+ *     structured data describing that route, whether it lives in the page
  *     file or in a config the page renders from.
  *   • A block that repeats across many routes is NOT any one route's own
  *     content. Editing the nav, the footer, or the site-wide FAQ that
  *     `LegalPage` appends under the policy text moves the dates of the routes
- *     that block is primary content for (/help, /pricing) — not the date of
+ *     that block is primary content for (/help, /pricing), not the date of
  *     every route that happens to render it. The seven policy routes also
  *     print their own "Last updated: <month> 2026" in the body; a lastmod that
  *     disagrees with the date on the page is worse than a stale one.
@@ -42,7 +42,7 @@ type SitemapEntry = {
   path: string;
   changeFrequency: NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
   priority: number;
-  /** ISO `YYYY-MM-DD`. Hand-maintained — see the note above. */
+  /** ISO `YYYY-MM-DD`. Hand-maintained, see the note above. */
   lastModified: string;
 };
 
@@ -55,7 +55,7 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   { path: "/pricing", changeFrequency: "weekly", priority: 0.9, lastModified: "2026-09-11" },
   // The index renders each post's title and excerpt only, so it moves when those
   // move (2026-08-09). The 2026-09-11 edit to posts.ts rewrote body copy inside
-  // /blog/manychat-alternatives — that belongs on the post's own `updatedAt`,
+  // /blog/manychat-alternatives: that belongs on the post's own `updatedAt`,
   // not here, and nothing the index renders changed.
   { path: "/blog", changeFrequency: "weekly", priority: 0.8, lastModified: "2026-08-09" },
   // Hub renders hubBlurb/ALTERNATIVE_PAGES out of comparisons.config.ts; three
@@ -66,7 +66,7 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   { path: "/senddm-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-09-11" },
   { path: "/chatfuel-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-09-11" },
   // No visible copy changed here, but the page stopped emitting its duplicate
-  // Organization node — a structured-data change worth a re-crawl.
+  // Organization node, a structured-data change worth a re-crawl.
   { path: "/about", changeFrequency: "monthly", priority: 0.7, lastModified: "2026-09-11" },
   // The FAQ set is what /help exists to serve, and answers were corrected in
   // five of its categories (geo-compliance, discovery, plans, safety, support).
@@ -117,7 +117,7 @@ const COMPARISON_LAST_MODIFIED: Record<string, string> = {
 /**
  * Used when a comparison is added to comparisons.config.ts and nobody adds it
  * above. Deliberately left at an older date rather than tracking the newest
- * entry — an unmaintained URL should look stale, not freshly edited, so this
+ * entry: an unmaintained URL should look stale, not freshly edited, so this
  * constant is not bumped when the dates above are.
  */
 const COMPARISON_LAST_MODIFIED_FALLBACK = "2026-08-08";

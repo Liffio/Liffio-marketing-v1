@@ -10,7 +10,7 @@ import { identifyUser } from "./analytics";
  * across page loads (not the user object), so a returning visitor with a
  * valid session still needs one getAuthMe() call before we know who they
  * are. Without this, only the exact moment of submitting the login form
- * gets identified — a bookmarked/reopened tab with a still-valid token
+ * gets identified: a bookmarked/reopened tab with a still-valid token
  * would stay anonymous even though it's the same known user.
  */
 export function IdentifyOnLoad() {
@@ -29,7 +29,7 @@ export function IdentifyOnLoad() {
         identifyUser(authMe.user.id);
       })
       .catch(() => {
-        // Expired/invalid token — non-fatal, just skip identification.
+        // Expired/invalid token, non-fatal, just skip identification.
       });
   }, []);
 

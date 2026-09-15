@@ -9,7 +9,7 @@
 //
 // One workspace connects exactly one Instagram account; only Agency includes more
 // than one (20 workspaces). Do not reintroduce "unlimited Instagram accounts", an
-// unlimited-DM claim on the free plan, or agency white-label — none are true.
+// unlimited-DM claim on the free plan, or agency white-label: none are true.
 
 import { FEATURE_WELCOME_DM } from "@/config/feature-flags";
 
@@ -43,7 +43,7 @@ export type Comparison = {
   whyIntro: string[];
   /** Bulleted differences (title + body) */
   whyPoints: { title: string; body: string }[];
-  /** Feature table — competitor column values per row */
+  /** Feature table: competitor column values per row */
   tableRows: ComparisonRow[];
   /** Pricing table rows (Liffio row is added automatically) */
   pricing: CompetitorPricing;
@@ -82,7 +82,7 @@ export const COMPARISONS: Comparison[] = [
   {
     slug: "replyrush",
     competitor: "ReplyRush",
-    metaTitle: "Liffio vs ReplyRush — Flat vs Tiered Instagram DM Plans (2026)",
+    metaTitle: "Liffio vs ReplyRush: Flat vs Tiered Instagram DM Plans (2026)",
     metaDescription:
       "Liffio vs ReplyRush for Instagram DM automation. Compare comment-to-DM, pricing, free plans, and multi-account support. Flat pricing, no per-contact fees.",
     heroSubtitle:
@@ -95,21 +95,21 @@ export const COMPARISONS: Comparison[] = [
     whyPoints: [
       {
         title: "Twenty accounts on one Agency subscription",
-        body: "A Liffio workspace connects one Instagram account, and the Agency plan bundles 20 of them into a single flat subscription — one invoice, one renewal, each workspace a full Business workspace.",
+        body: "A Liffio workspace connects one Instagram account, and the Agency plan bundles 20 of them into a single flat subscription: one invoice, one renewal, each workspace a full Business workspace.",
       },
       {
         title: "Free plan built for production",
-        body: "Liffio's free plan runs real comment-to-DM automations on posts and Reels — not a time-limited trial. You can prove out the workflow before paying anything.",
+        body: "Liffio's free plan runs real comment-to-DM automations on posts and Reels, not a time-limited trial. You can prove out the workflow before paying anything.",
       },
       {
         title: "Instagram-first automation stack",
-        body: `Comment-to-DM, story reply, DM reply, follow gating, follow-up sequences, ${FEATURE_WELCOME_DM ? "lead capture, and welcome messages" : "and lead capture"} — all in one Instagram-focused dashboard.`,
+        body: `Comment-to-DM, story reply, DM reply, follow gating, follow-up sequences, ${FEATURE_WELCOME_DM ? "lead capture, and welcome messages" : "and lead capture"}, all in one Instagram-focused dashboard.`,
       },
     ],
     tableRows: rows({ free: "yes", unlimitedDm: "limited", flat: "tiered", inr: true, igOnly: "IG + FB" }),
     pricing: { name: "ReplyRush", free: true, paidFrom: "Tiered plans", perContact: false, instagramOnly: false },
     pricingNote:
-      "ReplyRush offers a free tier and paid plans priced by usage tier. Liffio's difference is flat pricing with unlimited DMs on every paid plan — the bill does not move when a Reel goes viral. Each Instagram account runs in its own workspace, and Agency bundles 20 of them into one flat subscription.",
+      "ReplyRush offers a free tier and paid plans priced by usage tier. Liffio's difference is flat pricing with unlimited DMs on every paid plan: the bill does not move when a Reel goes viral. Each Instagram account runs in its own workspace, and Agency bundles 20 of them into one flat subscription.",
     faq: [
       {
         question: "Is Liffio a good ReplyRush alternative?",
@@ -124,18 +124,18 @@ export const COMPARISONS: Comparison[] = [
       {
         question: "Do both tools use the official Instagram API?",
         answer:
-          "Yes. Both Liffio and ReplyRush connect through Meta's official OAuth flow — no password sharing, no browser automation. Liffio uses the permissions you approve on Meta's consent screen and adds a configurable send delay so replies arrive at a conversational pace.",
+          "Yes. Both Liffio and ReplyRush connect through Meta's official OAuth flow: no password sharing, no browser automation. Liffio uses the permissions you approve on Meta's consent screen and adds a configurable send delay so replies arrive at a conversational pace.",
       },
     ],
   },
   {
     slug: "linkdm",
     competitor: "LinkDM",
-    metaTitle: "Liffio vs LinkDM — Instagram Auto DM Tool Comparison (2026)",
+    metaTitle: "Liffio vs LinkDM: Instagram Auto DM Tool Comparison (2026)",
     metaDescription:
       "Liffio vs LinkDM for Instagram automation. LinkDM delivers links by DM; Liffio adds story replies, follow-ups and unlimited DMs on paid plans.",
     heroSubtitle:
-      `LinkDM focuses on link-in-DM delivery. Liffio covers the full automation stack — from comment-to-DM to ${FEATURE_WELCOME_DM ? "welcome messages" : "follow-up sequences"} — with a production-ready free plan and a 20-workspace Agency plan.`,
+      `LinkDM focuses on link-in-DM delivery. Liffio covers the full automation stack, from comment-to-DM to ${FEATURE_WELCOME_DM ? "welcome messages" : "follow-up sequences"}, with a production-ready free plan and a 20-workspace Agency plan.`,
     hubBlurb: "Full automation stack and a 20-workspace Agency plan vs LinkDM's link-delivery focus.",
     whyIntro: [
       "LinkDM is a clean, focused Instagram tool built around delivering links via DM when someone comments a keyword. It does that one job well and is a Meta Business Partner.",
@@ -168,7 +168,7 @@ export const COMPARISONS: Comparison[] = [
       {
         question: "Does Liffio have a free plan like the tools I'm comparing?",
         answer:
-          "Liffio has a genuine free plan — not a trial. It includes comment keyword triggers on posts and Reels, public comment auto-replies, a bio link page, and basic analytics. Paid plans start at $9/month and add unlimited automated DMs when you outgrow it.",
+          "Liffio has a genuine free plan, not a trial. It includes comment keyword triggers on posts and Reels, public comment auto-replies, a bio link page, and basic analytics. Paid plans start at $9/month and add unlimited automated DMs when you outgrow it.",
       },
       {
         question: "How do I switch from LinkDM to Liffio?",
@@ -180,20 +180,20 @@ export const COMPARISONS: Comparison[] = [
   {
     slug: "superprofile",
     competitor: "SuperProfile",
-    metaTitle: "Liffio vs SuperProfile — Instagram DM vs Creator Suite (2026)",
+    metaTitle: "Liffio vs SuperProfile: Instagram DM vs Creator Suite (2026)",
     metaDescription:
       "Liffio vs SuperProfile for Instagram DM automation. Compare dedicated automation features, pricing, and free plans. Instagram-focused, flat pricing.",
     heroSubtitle:
-      "SuperProfile bundles automation into a creator-monetization platform. Liffio is dedicated Instagram DM automation — deeper on the automation itself, flat priced.",
+      "SuperProfile bundles automation into a creator-monetization platform. Liffio is dedicated Instagram DM automation: deeper on the automation itself, flat priced.",
     hubBlurb: "Dedicated DM automation vs SuperProfile's all-in-one creator suite.",
     whyIntro: [
-      "SuperProfile is a broad creator-monetization platform — link-in-bio, digital product storefronts, and DM automation bundled together. If a storefront is your primary need, that bundle is useful.",
+      "SuperProfile is a broad creator-monetization platform: link-in-bio, digital product storefronts, and DM automation bundled together. If a storefront is your primary need, that bundle is useful.",
       "If Instagram DM automation is the actual job, a dedicated tool goes deeper: more automation types, more control over triggers and delays, and pricing that reflects automation rather than a storefront suite you may not use.",
     ],
     whyPoints: [
       {
         title: "Dedicated to Instagram automation",
-        body: "Liffio's entire product is Instagram DM automation — a full set of workflow types with fine-grained keyword, delay, and reply controls, rather than automation as one feature in a larger suite.",
+        body: "Liffio's entire product is Instagram DM automation: a full set of workflow types with fine-grained keyword, delay, and reply controls, rather than automation as one feature in a larger suite.",
       },
       {
         title: "Unlimited DMs on every paid plan",
@@ -201,13 +201,13 @@ export const COMPARISONS: Comparison[] = [
       },
       {
         title: "Flat pricing for the automation you use",
-        body: "Paid plans start at $9/month flat — you pay for DM automation, not a bundled storefront platform.",
+        body: "Paid plans start at $9/month flat: you pay for DM automation, not a bundled storefront platform.",
       },
     ],
     tableRows: rows({ igOnly: "part of suite", flat: "suite pricing", unlimitedAccounts: "varies", inr: true }),
     pricing: { name: "SuperProfile", free: true, paidFrom: "Suite pricing", perContact: false, instagramOnly: false },
     pricingNote:
-      "SuperProfile bundles bio-link and storefront tools with automation, priced as a suite. Liffio prices the automation directly — flat, from $9/month, with unlimited DMs on every paid plan. Choose SuperProfile if the storefront is central; choose Liffio if DM automation is the priority.",
+      "SuperProfile bundles bio-link and storefront tools with automation, priced as a suite. Liffio prices the automation directly: flat, from $9/month, with unlimited DMs on every paid plan. Choose SuperProfile if the storefront is central; choose Liffio if DM automation is the priority.",
     faq: [
       {
         question: "Is Liffio a good SuperProfile alternative?",
@@ -217,7 +217,7 @@ export const COMPARISONS: Comparison[] = [
       {
         question: "Does Liffio include a bio link page?",
         answer:
-          "Yes. Liffio includes a bio link page (bio.liffio.com) and short links (go.liffio.com) alongside DM automation, so you get the link-in-bio basics without a separate tool — while keeping the focus on automation depth.",
+          "Yes. Liffio includes a bio link page (bio.liffio.com) and short links (go.liffio.com) alongside DM automation, so you get the link-in-bio basics without a separate tool, while keeping the focus on automation depth.",
       },
       {
         question: "Can I run both during migration?",
@@ -229,7 +229,7 @@ export const COMPARISONS: Comparison[] = [
   {
     slug: "zorcha",
     competitor: "Zorcha",
-    metaTitle: "Liffio vs Zorcha — Full Instagram DM Automation Stack (2026)",
+    metaTitle: "Liffio vs Zorcha: Full Instagram DM Automation Stack (2026)",
     metaDescription:
       "Liffio vs Zorcha for Instagram DM automation. Zorcha is a newer entrant; Liffio brings a full automation stack, flat $9/month plans and INR billing.",
     heroSubtitle:
@@ -242,7 +242,7 @@ export const COMPARISONS: Comparison[] = [
     whyPoints: [
       {
         title: "A full automation stack in one place",
-        body: `Comment-to-DM, story reply, DM reply, follow gating, follow-up sequences, ${FEATURE_WELCOME_DM ? "lead capture, and welcome messages" : "and lead capture"} — a complete stack rather than a subset.`,
+        body: `Comment-to-DM, story reply, DM reply, follow gating, follow-up sequences, ${FEATURE_WELCOME_DM ? "lead capture, and welcome messages" : "and lead capture"}, a complete stack rather than a subset.`,
       },
       {
         title: "Unlimited DMs on every paid plan",
@@ -256,7 +256,7 @@ export const COMPARISONS: Comparison[] = [
     tableRows: rows({ inr: true }),
     pricing: { name: "Zorcha", free: "varies", paidFrom: "Check site", perContact: false, instagramOnly: true },
     pricingNote:
-      "Zorcha's plans and free tier change as a newer product — verify current details on their site. Liffio's constant is flat pricing from $9/month with unlimited DMs on every paid plan, and an Agency tier that bundles 20 workspaces into one subscription.",
+      "Zorcha's plans and free tier change as a newer product, so verify current details on their site. Liffio's constant is flat pricing from $9/month with unlimited DMs on every paid plan, and an Agency tier that bundles 20 workspaces into one subscription.",
     faq: [
       {
         question: "Is Liffio a good Zorcha alternative?",
@@ -271,22 +271,22 @@ export const COMPARISONS: Comparison[] = [
       {
         question: "Is Liffio safe for my Instagram account?",
         answer:
-          "Yes. Liffio connects through Meta's official OAuth — your password is never shared — and adds a configurable 10–60 second send delay so each reply reaches the recipient at a natural conversational pace.",
+          "Yes. Liffio connects through Meta's official OAuth, so your password is never shared, and adds a configurable 10 to 60 second send delay so each reply reaches the recipient at a natural conversational pace.",
       },
     ],
   },
   {
     slug: "instachamp",
     competitor: "InstaChamp",
-    metaTitle: "Liffio vs InstaChamp — Instagram-Only vs Chatbot Suite (2026)",
+    metaTitle: "Liffio vs InstaChamp: Instagram-Only vs Chatbot Suite (2026)",
     metaDescription:
       "Liffio vs InstaChamp (by MobileMonkey) for Instagram DM automation. Compare comment-to-DM, pricing, free plans, and Instagram-only focus. Flat pricing.",
     heroSubtitle:
-      "InstaChamp comes from the MobileMonkey chatbot lineage. Liffio is purpose-built for Instagram — simpler setup, flat pricing, unlimited DMs on every paid plan.",
+      "InstaChamp comes from the MobileMonkey chatbot lineage. Liffio is purpose-built for Instagram: simpler setup, flat pricing, unlimited DMs on every paid plan.",
     hubBlurb: "Purpose-built Instagram automation vs InstaChamp's chatbot-platform roots.",
     whyIntro: [
       "InstaChamp is an Instagram automation product from the MobileMonkey family, which grew out of multi-channel chatbot tooling. That heritage brings breadth, but also complexity aimed at chatbot builders.",
-      "Creators who just want reliable Instagram comment-to-DM and story automation often prefer a tool built only for Instagram — fewer settings designed for other platforms, faster setup, and pricing scoped to Instagram automation.",
+      "Creators who just want reliable Instagram comment-to-DM and story automation often prefer a tool built only for Instagram: fewer settings designed for other platforms, faster setup, and pricing scoped to Instagram automation.",
     ],
     whyPoints: [
       {

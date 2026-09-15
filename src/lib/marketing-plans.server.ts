@@ -76,7 +76,7 @@ const UNSUPPORTED_CLAIMS: ReadonlyArray<{
     match: /^Story automations$/i,
     plans: ['Starter'],
     reason:
-      'D8 deleted the capability. All 15 children of the Automations module are comment-based — no Story, Live, mention or welcome trigger on any package — and the server rejects Stories.',
+      'D8 deleted the capability. All 15 children of the Automations module are comment-based (no Story, Live, mention or welcome trigger on any package) and the server rejects Stories.',
   },
   {
     match: /^Team members \(up to 5 seats\)$/i,
@@ -94,7 +94,7 @@ const UNSUPPORTED_CLAIMS: ReadonlyArray<{
     match: /^Full API access & webhooks$/i,
     plans: ['Agency'],
     reason:
-      'Same as Business — 0 credentials, 0 requests/day, no API module. Selling it is the same class of claim as Stories.',
+      'Same as Business: 0 credentials, 0 requests/day, no API module. Selling it is the same class of claim as Stories.',
   },
 ]
 
@@ -168,7 +168,7 @@ function sanitizeFeatures(planName: string, features: PlanFeatureItem[]): PlanFe
  * The static sheet, put through the same guard as the API payload.
  *
  * ⚠️ The fallback is NOT a safe copy. It carries the same unsupported claims as
- * plan_catalog. It also contains Growth, which the API still withholds — that
+ * plan_catalog. It also contains Growth, which the API still withholds, that
  * is now a presentation difference rather than an exposure, because Growth is
  * on sale, but any tier added to `NOT_BUYABLE` gets the old treatment here too.
  * See docs/decisions/0002.
@@ -178,7 +178,7 @@ function sanitizeFallback(region: PricingRegion): PricingPlan[] {
     const sanitized = { ...p, features: sanitizeFeatures(p.name, p.features) }
     // 🚩 The sheet carries every tier with a WORKING checkout href. A tier in
     // `NOT_BUYABLE` must still arrive not-buyable when it reaches the page from
-    // here — an outage, or an empty payload — or an outage silently puts a live
+    // here (an outage, or an empty payload), or an outage silently puts a live
     // button on a tier that cannot be bought. This is the ADR 0002 exposure,
     // closed; the set is empty today because Growth went on sale.
     return withBuyability(sanitized)
@@ -189,7 +189,7 @@ function sanitizeFallback(region: PricingRegion): PricingPlan[] {
  * The API's `annual` field is WRONG and must not be rendered.
  *
  * `marketingPlansService` computes it as `monthly * ANNUAL_DISCOUNT` with
- * ANNUAL_DISCOUNT = 0.8, floored — so Starter serves $7 against a real $7.50,
+ * ANNUAL_DISCOUNT = 0.8, floored, so Starter serves $7 against a real $7.50,
  * Business $47 against $49.17, Agency $439 against $457.50. It is a 20% discount
  * off the monthly rate, not the annual price anyone authored.
  *
@@ -210,12 +210,12 @@ function authoredAnnual(
   if (!authored) return null
 
   // Tiers with no annual plan match trivially ($0 === $0) and would fire this
-  // on every request — noise that teaches people to ignore the one warning that
+  // on every request, noise that teaches people to ignore the one warning that
   // matters. Only a paid tier agreeing is evidence of anything.
   if (authored.annualTotal !== null && apiAnnual === authored.annual) {
     console.warn(
       `[marketing-plans] ${planName} (${region}): the API now serves the correct annual figure ` +
-        `(${apiAnnual}). B1 has shipped — remove authoredAnnual() and this guard.`,
+        `(${apiAnnual}). B1 has shipped: remove authoredAnnual() and this guard.`,
     )
   }
   return { annual: authored.annual, annualTotal: authored.annualTotal }
@@ -241,7 +241,7 @@ const INTRO_OFFER_LIVE = true
  *
  * 🚩 An ALLOW-LIST, not a passthrough. `/marketing/plans` serves
  * `introPrice: null` for every tier today, so the authored sheet is the only
- * source — but the day the catalogue starts serving one, this still decides
+ * source, but the day the catalogue starts serving one, this still decides
  * which tier may show it. A payload that suddenly puts an intro price on
  * Agency does not get to.
  */
@@ -253,7 +253,7 @@ const INTRO_OFFER_TIERS: Record<PricingRegion, ReadonlySet<string>> = {
 /**
  * Put the authored intro price back over whatever the payload said.
  *
- * Runs LAST, like applyV4Content, so it is the final word — and it CLEARS the
+ * Runs LAST, like applyV4Content, so it is the final word, and it CLEARS the
  * field on every tier that is not allow-listed, so this function is the only
  * way an intro price can reach a card. That is deliberate: a guard that only
  * adds can be bypassed by the source it is guarding against.
@@ -283,7 +283,7 @@ function applyIntroOffer(region: PricingRegion, plans: PricingPlan[]): PricingPl
  *
  * 🚩 Merged bullets go through `sanitizeFeatures` exactly like API-served ones.
  * UNSUPPORTED_CLAIMS otherwise runs only on the API payload, which would make
- * the one statically-sourced tier the one tier exempt from the guard — the
+ * the one statically-sourced tier the one tier exempt from the guard, the
  * asymmetry in reverse.
  *
  * ⏳ Remove this the day D2 part 2 ships. `checkExpectedDivergence` in the drift
@@ -295,7 +295,7 @@ const MERGED_FROM_SHEET: ReadonlyArray<{ name: string; after: string }> = [
 ]
 
 /**
- * Shown, but NOT buyable — a separate decision from where the tier's copy comes
+ * Shown, but NOT buyable, a separate decision from where the tier's copy comes
  * from.
  *
  * A tier belongs in here when `PAID_PLANS` in confirm-email does not accept it:
@@ -306,7 +306,7 @@ const MERGED_FROM_SHEET: ReadonlyArray<{ name: string; after: string }> = [
  * 🚩 Growth used to be in this set (it is still merged from the sheet, which is
  * why MERGED_FROM_SHEET is no longer what derives it). It now ships a live
  * "Start Growth" CTA on an explicit product decision. That is only correct
- * while GROWTH is in the backend's `PAID_PLANS` — if it is ever taken back out,
+ * while GROWTH is in the backend's `PAID_PLANS`: if it is ever taken back out,
  * put 'Growth' in here rather than editing the card, because the Offer JSON-LD
  * qualifier, the plans FAQ answer and the AI-facing price sentence all derive
  * from `provisional` and will follow on their own.
@@ -331,7 +331,7 @@ function withBuyability(plan: PricingPlan): PricingPlan {
  * cheapest paid tier rather than the one the pricing is built around.
  *
  * plan_catalog serves `marketing_badge: "Most Popular"` on STARTER, so this
- * overrides the payload the same way `authoredAnnual` does — and for the same
+ * overrides the payload the same way `authoredAnnual` does, and for the same
  * reason: the source is wrong and out of scope to fix here.
  *
  * Exactly one tier carries emphasis; any other tier arriving with it is cleared.
@@ -379,15 +379,15 @@ function applyEmphasis(plans: PricingPlan[]): PricingPlan[] {
 function mergeWithheldTiers(region: PricingRegion, served: PricingPlan[]): PricingPlan[] {
   // 🚩 Buyability is a property of the TIER, not of where the plan came from.
   // This used to `continue` past a served Growth ("the API serves it now"),
-  // which left the payload's own cta/href intact — so the day
+  // which left the payload's own cta/href intact, so the day
   // `show_on_marketing_site` flips before checkout exists, /pricing ships a live
   // button and a `?plan=…` signup link for a tier `PAID_PLANS` drops.
   // Normalizing the served plan keeps a non-buyable tier provisional down BOTH
-  // paths — merged from the sheet, or served by the API.
+  // paths: merged from the sheet, or served by the API.
   const plans = served.map(withBuyability)
 
   for (const { name, after } of MERGED_FROM_SHEET) {
-    // Already present (and normalized just above) — merging would duplicate it.
+    // Already present (and normalized just above): merging would duplicate it.
     if (plans.some((p) => p.name === name)) continue
 
     const authored = getFallbackPricingPlans(region).find((p) => p.name === name)
@@ -414,7 +414,7 @@ export async function fetchMarketingPlansContext(region: PricingRegion): Promise
     // /plans sits on the critical path of every uncached request to /, /pricing,
     // /features and /help, so a hung upstream stalls TTFB on all four. The abort
     // throws, and the catch below already turns a throw into the sanitized
-    // authored fallback sheet — so a hang degrades to a correct page, not a stall.
+    // authored fallback sheet, so a hang degrades to a correct page, not a stall.
     const res = await fetch(url, { next: { revalidate: 300 }, signal: AbortSignal.timeout(2500) })
     if (!res.ok) throw new Error(`plans ${res.status}`)
     const payload = (await res.json()) as PlansApiResponse
@@ -434,7 +434,7 @@ export async function fetchMarketingPlansContext(region: PricingRegion): Promise
       href: p.href,
     }))
     return {
-      // An empty API response falls back to the static sheet — which must be
+      // An empty API response falls back to the static sheet, which must be
       // sanitized too. It carries the same unsupported claims verbatim, so
       // returning it raw would reinstate every string this guard just removed.
       plans: applyIntroOffer(
@@ -472,15 +472,15 @@ const TIER_COUNT_WORDS: Record<number, string> = {
 
 // 🚩 "unlimited automated DMs" is a PAID-tier fact and must not appear here.
 // UNSUPPORTED_CLAIMS above already drops that exact string from the Free tier of
-// the API payload — but this template is hardcoded, so the guard never sees it
+// the API payload, but this template is hardcoded, so the guard never sees it
 // and the claim shipped anyway. The Free caps that ARE published are 3
-// automations (workflows). Deliberately NOT a DM count: see UNSUPPORTED_CLAIMS above —
+// automations (workflows). Deliberately NOT a DM count: see UNSUPPORTED_CLAIMS above : 
 // nothing meters DMs, and ADR 0004 contains the 500 figure to the V4 matrix and the
 // Free card Limits panel. Do not restate it here.
 //
 // 🚩 The DM figure is stated, not omitted. This answer used to list what Free
 // includes and say nothing about DMs, while the sibling "Are automated DMs
-// unlimited?" answer and the visible V4 limits table both say 500/month — so
+// unlimited?" answer and the visible V4 limits table both say 500/month, so
 // /pricing gave two accounts of the same allowance, and the silent one is what
 // an AI engine quotes when asked whether Free is capped. All three now agree on
 // 500. (Enforcement is a separate matter: V4 blocker 25.3 still has nothing
@@ -501,7 +501,7 @@ export function buildPlansOfferedFaqAnswer(region: PricingRegion, plans: Pricing
     const annual = p.annual !== p.monthly ? ` or ${p.annual}/mo billed annually` : ''
     // 🚩 A withheld tier is SHOWN but not BUYABLE. `asProvisional` already gives
     // Growth a "Coming soon" CTA and an empty href, and its Offer JSON-LD
-    // carries availability OutOfStock — but this answer quoted the price with no
+    // carries availability OutOfStock, but this answer quoted the price with no
     // qualifier and silently undid all of that, which is the one sentence an AI
     // engine lifts when asked what Liffio costs. Derived from `provisional`, not
     // from the tier name, so it stays correct the day Growth goes on sale (or
@@ -514,11 +514,11 @@ export function buildPlansOfferedFaqAnswer(region: PricingRegion, plans: Pricing
   const count = TIER_COUNT_WORDS[parts.length] ?? String(parts.length)
   // The account half is true of every tier and stays. The DM half is not: Free
   // has an allowance, so "unlimited" is scoped to the paid tiers where it holds
-  // and Free's 500 is named — the same figure buildFreePlanFaqAnswer, the
+  // and Free's 500 is named, the same figure buildFreePlanFaqAnswer, the
   // "Are automated DMs unlimited?" answer and the V4 limits table all state.
   return `${count} tiers: ${parts.join(', ')}. Every plan connects one Instagram account per workspace, and every paid plan includes unlimited automated DMs; the Free plan includes 500 a month.`
 }
 
 export function buildCreatorsProgramFaqAnswer(businessPlanValue: string): string {
-  return `Yes. Qualified Instagram creators (5K–100K followers) can apply for our Creators Program and receive the full Business plan (${businessPlanValue} value) at no cost in exchange for active platform usage. No credit card required.`
+  return `Yes. Qualified Instagram creators (5K to 100K followers) can apply for our Creators Program and receive the full Business plan (${businessPlanValue} value) at no cost in exchange for active platform usage. No credit card required.`
 }

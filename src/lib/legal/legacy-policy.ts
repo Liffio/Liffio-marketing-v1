@@ -6,7 +6,7 @@
  *
  * 🔴 WHY IT EXISTS. `LegalPage` used to guess which lines were headings from
  * their shape, because its content was one undifferentiated blob. The policy
- * pack is Markdown, so that guesswork was removed — and doing so silently
+ * pack is Markdown, so that guesswork was removed, and doing so silently
  * flattened these two pages, which still pass plain text: the Privacy Policy
  * rendered as 28 consecutive paragraphs with no headings at all, and the
  * Affiliate Policy as 78. A legal document with no visible structure is close

@@ -89,7 +89,7 @@ function priceSubline(plan: PricingPlan, annual: boolean): ReactNode {
   if (isZeroPrice(plan.monthly)) return "Forever. One free workspace per login.";
 
   // With an intro price in the headline, the ONGOING price is the thing the
-  // subline has to state — that is the number the buyer pays every month after
+  // subline has to state, that is the number the buyer pays every month after
   // the first, and the headline is deliberately not it.
   if (!annual && plan.introPrice) {
     return plan.annualTotal
@@ -108,11 +108,11 @@ function priceSubline(plan: PricingPlan, annual: boolean): ReactNode {
 
   if (!plan.annualTotal) return null;
   // The headline number is already the per-month equivalent on annual, so the
-  // subline states the figure it is NOT showing — the amount actually charged.
+  // subline states the figure it is NOT showing, the amount actually charged.
   // V4 could say "Effective $7.50/mo" because its headline was the yearly total.
   return annual
     ? `Billed ${plan.annualTotal}/year · 17% saving`
-    : `Or ${plan.annualTotal}/year — 17% saving`;
+    : `Or ${plan.annualTotal}/year, a 17% saving`;
 }
 
 export default function EditorialPlanCard({
@@ -156,7 +156,7 @@ export default function EditorialPlanCard({
     /*
       🚩 The emphasis ring is a BORDER, not a `shadow-[0_0_0_2px]` ring.
       A ring sits outside the border box, so the gradient cap had to be pulled
-      out with negative insets to reach it — and at 2px ring against 1px inset
+      out with negative insets to reach it, and at 2px ring against 1px inset
       the cap overhung the corner radius on both sides and clipped the
       neighbouring card. Widening the border instead keeps the cap inside the
       padding box, where `top-0 inset-x-0` is exactly right and the radius
@@ -176,7 +176,7 @@ export default function EditorialPlanCard({
 
         A 4px-tall bar with a 14px corner radius is the bug this replaces: the
         radius is larger than the element's own height, so its top corners curve
-        away far too steeply and expose the coral border behind them — the two
+        away far too steeply and expose the coral border behind them, the two
         hooks either side of the flag. Any `rounded-t-*` on a bar this thin has
         the same problem, whatever the value, because the curve is governed by
         the radius and the bar has no height to spend on it.

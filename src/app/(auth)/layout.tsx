@@ -4,7 +4,7 @@ import Logo from '@/components/Logo';
 
 // `robots` used to be the only field set here. None of the five routes in this
 // group (login, register, onboarding, forgot-password, confirm-email) exports
-// metadata of its own — all five are client components — so Next.js's shallow
+// metadata of its own (all five are client components), so Next.js's shallow
 // per-field merge handed every unset field down from the ROOT layout, which
 // spreads `rootSeo` (src/config/seo.config.ts). Five noindexed auth screens
 // therefore served the homepage's title, description, `alternates.canonical`
@@ -14,10 +14,10 @@ import Logo from '@/components/Logo';
 // The title and description below replace the two of those five that describe
 // the page itself; one pair covers the whole group. Canonical and the
 // openGraph/twitter block are still inherited from root and still describe the
-// homepage — deliberately left alone here, since `robots: 'noindex'` already
+// homepage, deliberately left alone here, since `robots: 'noindex'` already
 // keeps these URLs out of the index and changing them is a separate call.
 export const metadata: Metadata = {
-  title: 'Account — Liffio',
+  title: 'Account | Liffio',
   description:
     'Sign in to Liffio or create an account to set up Instagram DM automations.',
   robots: 'noindex',

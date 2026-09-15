@@ -19,8 +19,8 @@ import { V4_PLAN_CONTENT } from "@/config/pricing-v4.config";
 const REGIONS = ["global", "india"] as const;
 
 /**
- * The catalogue sheet. These are the prices the backend actually charges —
- * `plan_catalog` / `packages`, both currencies — and this repo's static
+ * The catalogue sheet. These are the prices the backend actually charges:
+ * `plan_catalog` / `packages`, both currencies, and this repo's static
  * fallback must agree with them. If a tier's price moves, this table is what
  * fails first.
  */
@@ -50,7 +50,7 @@ const planNamed = (plans: PricingPlan[], name: string): PricingPlan => {
 //
 // This is the regression this file exists for. Free's headline price is "$0" /
 // "₹0". Any code that decides "is there a price to show?" with a truthy check
-// hides the Free card — silently, and only for the one tier whose whole job is
+// hides the Free card, silently, and only for the one tier whose whole job is
 // to be visible.
 
 test("Free renders a zero price in every region", () => {
@@ -64,7 +64,7 @@ test("Free renders a zero price in every region", () => {
   }
 });
 
-test("a truthy check on the price AMOUNT would hide Free — so nothing may use one", () => {
+test("a truthy check on the price AMOUNT would hide Free, so nothing may use one", () => {
   for (const region of REGIONS) {
     const free = planNamed(getPricingPlans(region), "Free");
 
@@ -72,7 +72,7 @@ test("a truthy check on the price AMOUNT would hide Free — so nothing may use 
     // /billing/packages would hand us `monthlyPriceUsdCents: 0` directly.
     const amount = Number(free.monthly.replace(/[^0-9.]/g, ""));
     assert.equal(amount, 0);
-    assert.equal(Boolean(amount), false, "0 is falsy — this is the trap");
+    assert.equal(Boolean(amount), false, "0 is falsy, this is the trap");
 
     // The formatted string is NOT falsy, which is why the render path keys off
     // the string and compares against the zero value explicitly.
@@ -158,7 +158,7 @@ test("the comparison matrix has a column for every tier, and no holes", () => {
         assert.notEqual(
           value,
           undefined,
-          `"${row.name}" has no value for ${plan} — a tier column was added without filling this row`,
+          `"${row.name}" has no value for ${plan}, a tier column was added without filling this row`,
         );
       }
     }
@@ -168,7 +168,7 @@ test("the comparison matrix has a column for every tier, and no holes", () => {
 /*
   D17 retired the "₹49 first month" offer because the page advertised a price
   no checkout could charge. It is back, deliberately, so the blanket assertion
-  that NOTHING carries an intro price is gone — but the shape is still pinned,
+  that NOTHING carries an intro price is gone, but the shape is still pinned,
   because the failure mode never was "an intro price exists", it was "an intro
   price the buyer cannot actually get".
 */
@@ -181,7 +181,7 @@ test("only India's Starter advertises an intro price, and it is a real discount"
         assert.equal(
           plan.introPrice ?? null,
           null,
-          `${region}/${plan.name} advertises an intro price — only India's Starter may`,
+          `${region}/${plan.name} advertises an intro price, only India's Starter may`,
         );
         continue;
       }
@@ -207,7 +207,7 @@ test("only India's Starter advertises an intro price, and it is a real discount"
 
 // ── The authored annual total ────────────────────────────────────────────────
 //
-// `annual` is derived — a twelfth of the real price, shown for comparability.
+// `annual` is derived, a twelfth of the real price, shown for comparability.
 // `annualTotal` is the price itself. The distinction is the whole point of the
 // change: the API served a figure nobody authored ($7 = monthly * 0.8, floored)
 // and the page presented it as if someone had.
@@ -248,7 +248,7 @@ test("the per-month annual figure is the total's twelfth, rounded UP, never down
   }
 });
 
-test("Business INR rounds up to 2084 — 2083 would under-quote by Rs 36 a year", () => {
+test("Business INR rounds up to 2084, because 2083 would under-quote by Rs 36 a year", () => {
   const business = planNamed(getPricingPlans("india"), "Business");
   assert.equal(business.annualTotal, "₹24,999");
   assert.equal(business.annual, "₹2,084");
@@ -269,7 +269,7 @@ test("USD annual always shows two decimals, so $7.50 never renders as $7.5", () 
 //
 // These rows are static in pricing.config.ts. `/marketing/plans` serves no
 // matrix data and `/billing/packages` serves no limits and no capabilities, so
-// the drift check cannot see them — the same shape as the $299 that sat wrong
+// the drift check cannot see them, the same shape as the $299 that sat wrong
 // for weeks. Six cells were wrong here, one of them contradicting the Business
 // CARD on the same page after PR #5 corrected it.
 //
@@ -340,12 +340,12 @@ const MATRIX_EXPECTATIONS: Array<{
     source: "Analytics > Export analytics = business,agency",
   },
   {
-    row: "Post metrics — reach, views, saves, shares, ER",
+    row: "Post metrics: reach, views, saves, shares, ER",
     cells: { free: false, starter: false, growth: true, business: true, agency: true },
     source: "Analytics > Post metrics = growth,business,agency",
   },
   {
-    row: "Affiliate programme — 50% recurring",
+    row: "Affiliate programme: 50% recurring",
     cells: { free: true, starter: true, growth: true, business: true, agency: true },
     source: "all ten Affiliate children = free,starter,growth,business,agency",
   },
@@ -364,7 +364,7 @@ test("matrix cells match what production actually grants", () => {
   for (const { row, cells, source } of MATRIX_EXPECTATIONS) {
     const actual = matrixRow(row);
     for (const [plan, expected] of Object.entries(cells)) {
-      assert.equal(actual[plan], expected, `${row} / ${plan} — ${source}`);
+      assert.equal(actual[plan], expected, `${row} / ${plan}, ${source}`);
     }
   }
 });
@@ -372,7 +372,7 @@ test("matrix cells match what production actually grants", () => {
 /**
  * Cells the catalogue CONTRADICTS, pinned so they cannot move quietly.
  *
- * 🔴 The old test here asserted no cell may say "Unlimited" — the PR #5
+ * 🔴 The old test here asserted no cell may say "Unlimited", the PR #5
  * false-claim class. Shipping the V4 design verbatim was an explicit decision
  * that reintroduces that class, so deleting the guard outright would leave the
  * page's most load-bearing false claims with no test at all.
@@ -384,11 +384,11 @@ test("matrix cells match what production actually grants", () => {
  */
 const KNOWN_DIVERGENT_CELLS: Array<{ row: string; plans: string[]; why: string }> = [
   { row: "Automated DM sending", plans: ["free", "starter", "growth", "business", "agency"], why: "no DM metering exists (blocker 25.3)" },
-  { row: "DMs per month", plans: ["free", "starter", "growth", "business", "agency"], why: "same — no DM key in package_limits" },
-  { row: "API key create / view / revoke", plans: ["business", "agency"], why: "D4 — maxApiCredentials 0" },
-  { row: "API docs access, usage stats, key expiry", plans: ["business", "agency"], why: "D4 — no API module" },
-  { row: "API keys", plans: ["business", "agency"], why: "D4 — maxApiCredentials 0" },
-  { row: "API requests per day", plans: ["business", "agency"], why: "D4 — apiRequestsPerDay 0" },
+  { row: "DMs per month", plans: ["free", "starter", "growth", "business", "agency"], why: "same: no DM key in package_limits" },
+  { row: "API key create / view / revoke", plans: ["business", "agency"], why: "D4: maxApiCredentials 0" },
+  { row: "API docs access, usage stats, key expiry", plans: ["business", "agency"], why: "D4: no API module" },
+  { row: "API keys", plans: ["business", "agency"], why: "D4: maxApiCredentials 0" },
+  { row: "API requests per day", plans: ["business", "agency"], why: "D4: apiRequestsPerDay 0" },
   { row: "Monthly tokens per workspace", plans: ["free", "starter", "growth", "business", "agency"], why: "never verified against ai_token_plan_configs" },
   { row: "AI token rollover", plans: ["business", "agency"], why: "same" },
   { row: "Lead storage", plans: ["free", "starter", "growth", "business", "agency"], why: "no lead-storage key in package_limits" },
@@ -401,7 +401,7 @@ test("the matrix's unverified claims are exactly the recorded ones", () => {
   for (const { row, plans, why } of KNOWN_DIVERGENT_CELLS) {
     const actual = matrixRow(row);
     for (const plan of plans) {
-      assert.notEqual(actual[plan], false, `"${row}" / ${plan} no longer claims anything — ${why}`);
+      assert.notEqual(actual[plan], false, `"${row}" / ${plan} no longer claims anything, ${why}`);
     }
   }
 
@@ -431,7 +431,7 @@ test("the matrix does not contradict the cards on seats or limits", () => {
     const seats = content.limits.find((l) => l.label === "Seats")?.value;
     const automations = content.limits.find((l) => l.label === "Automations")?.value;
 
-    // Agency states its limits as "15 × 20" — per workspace, times the slots.
+    // Agency states its limits as "15 × 20", per workspace, times the slots.
     const expectedSeats = matrixRow("Team seats")[column];
     const expectedAutomations = matrixRow("Automations")[column];
 
@@ -448,7 +448,7 @@ test("the matrix does not contradict the cards on seats or limits", () => {
 //
 // The crossover is DERIVED (agencyPrice / businessMonthly), so these assert the
 // arithmetic the component performs rather than a number it stores. If either
-// price moves, the expected crossover here moves with it — which is the point.
+// price moves, the expected crossover here moves with it, which is the point.
 
 const breakEven = (region: (typeof REGIONS)[number]) => {
   const plans = getPricingPlans(region);
@@ -462,7 +462,7 @@ test("Agency wins from 10 accounts in both currencies, and 9 is line ball", () =
     const { business, agency, parity, first } = breakEven(region);
 
     assert.equal(first, 10, `${region}: expected crossover at 10, parity ${parity}`);
-    // At 9 Business is still cheaper — the design's "line ball at 9" was wrong
+    // At 9 Business is still cheaper, the design's "line ball at 9" was wrong
     // in direction, and the copy says so plainly instead.
     assert.ok(business * 9 < agency, `${region}: 9 accounts should still favour Business`);
     assert.ok(business * 10 > agency, `${region}: 10 accounts should favour Agency`);
@@ -489,7 +489,7 @@ test("the calculator hardcodes no tier price and no crossover", () => {
     "utf8",
   );
   const code = source.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*/g, "");
-  // 🚩 `\b` inside a template literal is U+0008, not a word boundary — this
+  // 🚩 `\b` inside a template literal is U+0008, not a word boundary, this
   // loop asserted that the source contained no backspace-delimited digits,
   // which is true of every file ever written. Escaped, it tests what it says.
   for (const literal of ["59", "549", "2499", "22999", "29", "1499", "9.3", "9.2"]) {
@@ -523,7 +523,7 @@ test("the ladder hardcodes no price and no step ratio", () => {
 
   // "5.4" is the V4 design's own headline figure, computed against a $15
   // standard Starter that never shipped. Starter is $9, which makes the first
-  // step 3.2x — so the design's sentence is false on the page it was drawn for.
+  // step 3.2x, so the design's sentence is false on the page it was drawn for.
   // That is precisely why none of these may appear as a literal.
   for (const literal of ["5.4", "3.2", "2.0", "6.6", "9", "29", "59", "549", "1499", "2499", "22999"]) {
     assert.equal(
@@ -533,7 +533,7 @@ test("the ladder hardcodes no price and no step ratio", () => {
     );
   }
 
-  // Absence of literals is not enough — assert the derivations are present.
+  // Absence of literals is not enough: assert the derivations are present.
   assert.match(code, /a \/ b/, "step ratios must be computed from the two amounts");
   assert.match(
     code,

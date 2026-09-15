@@ -19,7 +19,7 @@ export type Block =
 
 const HEADING = /^(#{1,6})\s+(.*)$/;
 const BULLET = /^[-*]\s+(.*)$/;
-/** `1.` … `9.` — the Affiliate Policy numbers its attribution steps, and the
+/** `1.` … `9.`: the Affiliate Policy numbers its attribution steps, and the
  *  order is load-bearing there: it is the sequence attribution is resolved in. */
 const ORDERED = /^\d+\.\s+(.*)$/;
 const TABLE_ROW = /^\|(.*)\|\s*$/;

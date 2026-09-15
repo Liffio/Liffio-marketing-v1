@@ -1,5 +1,5 @@
 /**
- * The onboarding template registry — the ONLY place template copy lives.
+ * The onboarding template registry, the ONLY place template copy lives.
  *
  * Spec: `Website/v2/docs/onboarding/liffio-onboarding-stage2.md` §"Template registry".
  * Kept deliberately in sync with the identical registry in the app (`Client-v2`), because the
@@ -7,7 +7,7 @@
  *
  * ## Why the copy is here and not on the server
  *
- * `workspace.onboarding_state` stores **ids and ISO timestamps only** — `{ id: 'resource',
+ * `workspace.onboarding_state` stores **ids and ISO timestamps only**: `{ id: 'resource',
  * version: 1 }`, never a caption or a DM body. Two consequences, both deliberate:
  *
  * - Changing a suggestion's wording is a deploy, not a data migration.
@@ -87,7 +87,7 @@ export const TEMPLATES: Record<TemplateId, OnboardingTemplate> = {
     /**
      * The odd one out, in three ways, all of which the demo has to respect:
      *
-     * - four keywords rather than one, because "price" and "prices" are separate keywords — the
+     * - four keywords rather than one, because "price" and "prices" are separate keywords, the
      *   matcher does whole-word matching and does not stem plurals;
      * - a caption with **no keyword instruction**, because the whole point is answering the
      *   "how much?" comments people already leave; and
@@ -118,7 +118,7 @@ const GOAL_COPY: Record<OnboardingGoal, Omit<GoalOption, 'goal'>> = {
 /**
  * Screen 2's option order, by the role chosen on screen 1.
  *
- * The only thing screen 1's answer changes — it reorders, it never filters. Someone who says "my
+ * The only thing screen 1's answer changes: it reorders, it never filters. Someone who says "my
  * own account" can still pick "a link to buy"; it just is not the first thing they read. A skipped
  * screen 1 uses the business ordering, which is what `null` resolves to below.
  */
@@ -139,7 +139,7 @@ export function goalOptionsForRole(role: OnboardingRole | null): GoalOption[] {
 /**
  * The template a goal resolves to.
  *
- * `unsure` — and a skipped screen 2, which stores `goal: null` — both land on `resource`. That is
+ * `unsure` (and a skipped screen 2, which stores `goal: null`) both land on `resource`. That is
  * the "popular one" the copy promises, and it is the template whose demo reads best without any
  * context: a free guide needs no shop, no discount and no price list to make sense.
  */

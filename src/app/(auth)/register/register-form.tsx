@@ -131,7 +131,7 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
         </h2>
         <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
           {[
-            'Free forever — no card required to start',
+            'Free forever, no card required to start',
             'Connect Instagram and go live in minutes',
             'Turn followers into paying customers',
           ].map((item) => (
@@ -148,7 +148,7 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
       <AuthCard wide>
         <header className="mb-6 border-b border-border pb-5">
           <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">Create your workspace</h1>
-          <p className="mt-1.5 text-sm text-muted-foreground">Join in seconds and start automating your Instagram DMs — free forever, no card required.</p>
+          <p className="mt-1.5 text-sm text-muted-foreground">Join in seconds and start automating your Instagram DMs: free forever, no card required.</p>
         </header>
 
         <a href={gUrl} className="flex h-11 w-full items-center justify-center gap-2.5 rounded-xl border border-input bg-background px-4 text-sm font-medium text-foreground transition-colors duration-150 hover:border-primary hover:bg-primary/5">
@@ -208,7 +208,7 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
               Referral code <span className="font-normal text-muted-foreground">(optional)</span>
             </Label>
             <Input id="referral" value={referralCode} onChange={(e) => setReferralCode(e.target.value)} onFocus={markFormStarted} placeholder="Friend's code" />
-            {refValid === true && <p className="text-xs text-success">✓ Valid referral — 10% off your first payment</p>}
+            {refValid === true && <p className="text-xs text-success">✓ Valid referral: 10% off your first payment</p>}
             {refValid === false && <p className="text-xs text-destructive">Referral code not found</p>}
           </div>
 

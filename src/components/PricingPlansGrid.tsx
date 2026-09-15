@@ -93,7 +93,7 @@ export default function PricingPlansGrid({
       </div>
 
       {/* Desktop: grid */}
-      {/* 5 tiers (Free/Starter/Growth/Business/Agency) — xl must be grid-cols-5
+      {/* 5 tiers (Free/Starter/Growth/Business/Agency): xl must be grid-cols-5
           or the last card orphans onto its own row. */}
       <div className="mx-auto hidden max-w-7xl grid-cols-2 gap-6 lg:grid xl:grid-cols-5">
         {plans.map((plan) => (

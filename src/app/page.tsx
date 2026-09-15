@@ -67,7 +67,7 @@ export default async function Home() {
                 10 to 60 seconds.
               </p>
               <p>
-                The tool connects through Instagram&apos;s official OAuth API — no account password is
+                The tool connects through Instagram&apos;s official OAuth API, and no account password is
                 stored or shared. All automations run inside Meta&apos;s permitted use guidelines. Liffio
                 supports workflow types like comment-to-DM, story reply, DM reply,
                 follow gating, follow-up sequences, {FEATURE_WELCOME_DM ? "data collection, and welcome messages" : "and data collection"}. Pricing starts

@@ -146,7 +146,7 @@ export function buildPageMetadata({
 }
 
 export const rootSeo = buildPageMetadata({
-  title: "Liffio — Instagram DM Automation for Creators and Brands",
+  title: "Liffio: Instagram DM Automation for Creators and Brands",
   description:
     "Auto-reply to Instagram comments, story mentions, and DMs with keyword triggers. Runs 24/7 on the official Instagram API. Free plan, no card needed.",
   pathname: "/",
@@ -167,12 +167,12 @@ export const pageSeo = {
     // and /pricing is the only page where it belongs in the title (the
     // description already carried GST). Google appends the site name to the
     // title link anyway, so the brand is not actually lost. 557px.
-    title: "Instagram DM Automation Pricing — Free Plan, $9 or ₹499/mo",
+    title: "Instagram DM Automation Pricing: Free Plan, $9 or ₹499/mo",
     description:
       // "unlimited Instagram accounts" was removed here for the same reason it
       // was removed from the cards, the FAQ and llms.txt: workspacesIncluded is
       // 1 on every tier but Agency. See docs/decisions/0002.
-      // "unlimited automated DMs" stays qualified with "on paid plans" — Free
+      // "unlimited automated DMs" stays qualified with "on paid plans", Free
       // is capped at 500 DMs/month.
       "Free plan, no credit card. From $9/mo, or ₹499/mo in India with GST invoices. One Instagram account per workspace, unlimited automated DMs on paid plans.",
     pathname: "/pricing",
@@ -189,7 +189,7 @@ export const pageSeo = {
   blog: buildPageMetadata({
     // 630px -> 537px. "and Tutorials" dropped; "Guides" already covers it and
     // the description spells out the tutorial topics.
-    title: "Instagram DM Automation Blog — Guides and Scripts | Liffio",
+    title: "Instagram DM Automation Blog: Guides and Scripts | Liffio",
     description:
       "How-to guides on comment-to-DM setup, story automation, DM scripts that convert, and common automation mistakes to avoid.",
     pathname: "/blog",
@@ -205,7 +205,7 @@ export const pageSeo = {
     // DM Tool Referrals". 559px now: "Earn Commission on" -> "Earn on" keeps
     // the whole "Instagram DM Tool Referrals" phrase intact instead, and
     // "recurring commissions" is still the first thing the description says.
-    title: "Liffio Affiliate Program — Earn on Instagram DM Tool Referrals",
+    title: "Liffio Affiliate Program: Earn on Instagram DM Tool Referrals",
     description:
       "Earn recurring commissions promoting Liffio, the Instagram DM automation and auto comment tool for creators and agencies.",
     pathname: "/affiliate",
@@ -213,9 +213,9 @@ export const pageSeo = {
   creatorsProgram: buildPageMetadata({
     // 617px -> 535px. Trailing "Creators" dropped as redundant with "Creators
     // Program"; "Instagram" kept because it is the keyword doing the work.
-    title: "Liffio Creators Program — Free Business Plan for Instagram",
+    title: "Liffio Creators Program: Free Business Plan for Instagram",
     description:
-      "Qualifying creators with 5K–100K followers get Liffio’s Business plan free. Apply in 2 minutes. No credit card. Up to 50 spots available.",
+      "Qualifying creators with 5K to 100K followers get Liffio’s Business plan free. Apply in 2 minutes. No credit card. Up to 50 spots available.",
     pathname: "/creators-program",
   }),
 } as const;

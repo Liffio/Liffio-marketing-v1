@@ -6,7 +6,7 @@ import { createContext, useContext, useState, type ReactNode } from "react";
  * Shared monthly/annual state for one page.
  *
  * The toggle lives in PricingPlansGrid, but the break-even calculator further
- * down the page needs to know about it — it hides itself on annual, because
+ * down the page needs to know about it, it hides itself on annual, because
  * "how many accounts do you run" and "how are you billed" together make a
  * two-variable comparison for no gain. The crossover is 10 either way.
  *
@@ -27,7 +27,7 @@ export function BillingIntervalProvider({ children }: { children: ReactNode }) {
   );
 }
 
-/** Null when there is no provider — the caller then owns its own state. */
+/** Null when there is no provider, the caller then owns its own state. */
 export function useSharedBillingInterval(): BillingInterval | null {
   return useContext(BillingIntervalContext);
 }

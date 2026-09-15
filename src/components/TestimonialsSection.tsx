@@ -34,7 +34,7 @@ const testimonials = [  {
     name: "L. P.",
     role: "Beta Tester",
     quote:
-      "Was spending 2–3 hours every evening just replying to DMs from comments. This takes care of all of that automatically. Massive time saver.",
+      "Was spending 2 to 3 hours every evening just replying to DMs from comments. This takes care of all of that automatically. Massive time saver.",
     gradient: "linear-gradient(135deg,#ff7c49,#b20d8f)",
   },
   {

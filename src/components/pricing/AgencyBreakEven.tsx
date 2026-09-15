@@ -37,7 +37,7 @@ const BRAND_GRADIENT = "linear-gradient(100deg,#FF7C49 0%,#F5184C 52%,#B20D8F 10
   🚩 `h-6` is load-bearing, not decoration.
 
   `appearance-none` collapses an `input[type=range]` to the height of its
-  styled track — 5px here. The 22px thumb is then painted overflowing that box
+  styled track, 5px here. The 22px thumb is then painted overflowing that box
   (that is what the negative margin-top does), so it LOOKS grabbable while the
   element's actual hit area is a 5px sliver: the slider reads as simply broken.
   Sizing the input to the thumb gives the pointer something to land on, and
@@ -95,7 +95,7 @@ export default function AgencyBreakEven({ plans }: { plans: PricingPlan[] }) {
     widest either bar could ever be.
 
     Scaling to `businessUnit * MAX_ACCOUNTS` pinned Agency's bar at a constant
-    width — correct, since Agency is a flat price, but it reads as a broken
+    width, correct, since Agency is a flat price, but it reads as a broken
     control: you drag the slider and one of the two bars never moves. Scaling to
     the current pair keeps the bigger bill at full width and shrinks the other
     against it, so both respond at every position and the crossover is the
@@ -112,7 +112,7 @@ export default function AgencyBreakEven({ plans }: { plans: PricingPlan[] }) {
   const verdictDetail = agencyWins
     ? `Save ${money(difference)}${per}${slotsLeft > 0 ? ` and get ${slotsLeft} more workspaces` : " on the same twenty accounts"}`
     : accounts === lineBallCount
-      ? `Agency costs ${money(difference)} more — and leaves ${slotsLeft} workspaces spare`
+      ? `Agency costs ${money(difference)} more, and leaves ${slotsLeft} workspaces spare`
       : `Agency costs ${money(difference)} more until you reach ${firstWinningCount} accounts`;
 
   return (
@@ -121,7 +121,7 @@ export default function AgencyBreakEven({ plans }: { plans: PricingPlan[] }) {
         eyebrow="The Agency question"
         title={`At ${firstWinningCount} accounts, Agency stops being an upgrade and becomes the cheaper option.`}
       >
-        Agency is not a feature tier — it&rsquo;s {MAX_ACCOUNTS} Business workspaces bought
+        Agency is not a feature tier: it&rsquo;s {MAX_ACCOUNTS} Business workspaces bought
         together. Drag to the number of Instagram accounts you actually run.
       </SectionHead>
 
@@ -145,8 +145,8 @@ export default function AgencyBreakEven({ plans }: { plans: PricingPlan[] }) {
             </h3>
             {/*
               True today, and true for a measurable reason: Agency and Business are
-              identical on every limit in package_limits — workflows 150/150,
-              schedulerPostsPerDay 200/200, teamMembers 15/15, dmFollowUps 5/5 — and
+              identical on every limit in package_limits: workflows 150/150,
+              schedulerPostsPerDay 200/200, teamMembers 15/15, dmFollowUps 5/5, and
               Agency holds every package_features child Business holds.
 
               ⚠️ It is ALSO true because all seven agency:* capabilities are granted
@@ -252,8 +252,7 @@ export default function AgencyBreakEven({ plans }: { plans: PricingPlan[] }) {
               }}
             >
               {precise(perWorkspaceMonthly)}/month
-            </b>{" "}
-            — less than a single <b className="text-white">Growth</b> subscription at{" "}
+            </b>, less than a single <b className="text-white">Growth</b> subscription at{" "}
             {money(growthPrice)}.
           </p>
         ) : null}

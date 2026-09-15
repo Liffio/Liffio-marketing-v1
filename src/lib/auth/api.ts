@@ -28,7 +28,7 @@ function formatApiError(payload: unknown): string {
  * Thrown by every failed `apiRequest`.
  *
  * Still an `Error` with the same `.message` as before, so existing `catch (err) { (err as
- * Error).message }` call sites are untouched — it just also carries the HTTP status and the
+ * Error).message }` call sites are untouched, it just also carries the HTTP status and the
  * server's machine-readable `code`. Some failures are not failures: `PATCH /auth/me/country`
  * answers 409 `COUNTRY_ALREADY_SET` when the value is already there, and onboarding needs to tell
  * that apart from a real error without string-matching a human sentence.
@@ -179,7 +179,7 @@ export function getAuthMe(options: { token?: string; workspaceId?: string } = {}
 }
 
 /**
- * Set the account's country — the value that decides INR versus USD at checkout.
+ * Set the account's country, the value that decides INR versus USD at checkout.
  *
  * 🔴 **Set-once on the server, and never inferred from IP.** `PATCH /auth/me/country` answers 409
  * `COUNTRY_ALREADY_SET` rather than updating, because currency is baked into the subscription at
@@ -188,7 +188,7 @@ export function getAuthMe(options: { token?: string; workspaceId?: string } = {}
  * to open the browser. The customer answers; we send the answer.
  *
  * This is the missing half of Google signup. That callback is a redirect with no form, so it writes
- * `country: null`, and `createPackageCheckout` then refuses with `CHECKOUT_COUNTRY_REQUIRED` — a
+ * `country: null`, and `createPackageCheckout` then refuses with `CHECKOUT_COUNTRY_REQUIRED`, a
  * dead end until something asks. Onboarding is what asks.
  */
 export function setMyCountry(country: string) {
@@ -283,7 +283,7 @@ export async function isWorkspaceInstagramConnected(workspaceId: string): Promis
  *
  * `popup` (the default, and what desktop sends) keeps the existing behaviour exactly. `redirect`
  * is for touch devices: on a phone the popup usually becomes a new tab or is handed to the
- * Instagram app, so by the time the callback lands there is no opener to postMessage — and the
+ * Instagram app, so by the time the callback lands there is no opener to postMessage, and the
  * popup-complete page then strands the user on a dark "close this window" screen, on the platform
  * carrying most of the traffic.
  */

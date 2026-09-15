@@ -31,7 +31,7 @@ const FEATURES = [
   {
     title: "Comment → DM Automation",
     description:
-      "Someone comments a keyword on your post → Liffio sends them a personalised DM on your schedule. Set a custom delay from 10–60 seconds so replies arrive at a natural pace, around the clock.",
+      "Someone comments a keyword on your post → Liffio sends them a personalised DM on your schedule. Set a custom delay from 10 to 60 seconds so replies arrive at a natural pace, around the clock.",
     tag: "Core engine",
   },
   {
@@ -54,7 +54,7 @@ const QUICK_STATS = [
   { num: "24/7", label: "On autopilot" },
   { num: "24/7", label: "Runs on autopilot" },
   { num: "Free", label: "Starter plan" },
-  { num: "10–60s", label: "Custom send delay" },
+  { num: "10 to 60s", label: "Custom send delay" },
 ];
 
 const BENEFITS = [

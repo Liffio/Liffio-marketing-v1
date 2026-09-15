@@ -9,7 +9,7 @@ const stats = [
   // wording by name, and App Review grants permissions, not blanket compliance.
   // This band states product facts; the credential lives in OfficialApiSection.
   { id: "oauth", value: "OAuth", label: "No password shared" },
-  { id: "delay", value: "10–60s", label: "Custom DM delay" },
+  { id: "delay", value: "10 to 60s", label: "Custom DM delay" },
   { id: "free", value: "Free", label: "No credit card required" },
 ] as const;
 

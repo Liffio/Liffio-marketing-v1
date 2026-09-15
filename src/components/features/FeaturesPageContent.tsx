@@ -12,7 +12,7 @@ import { siteConfig } from "@/config/site.config";
 
 const HIGHLIGHTS = [
   { value: String(FEATURES.length), label: "Automation types" },
-  { value: "10–60s", label: "Custom DM delay" },
+  { value: "10 to 60s", label: "Custom DM delay" },
   { value: "24/7", label: "Autopilot mode" },
   { value: "1", label: "Dashboard for all" },
 ];

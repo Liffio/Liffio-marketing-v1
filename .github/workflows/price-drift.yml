@@ -2,10 +2,10 @@ name: Price drift
 
 # Two triggers, for two different failure modes.
 #
-#   pull_request — catches someone editing a price by hand into a value the
+#   pull_request: catches someone editing a price by hand into a value the
 #                  catalogue does not sell. Blocks the PR.
 #
-#   schedule     — catches the catalogue moving under files nobody touched.
+#   schedule    : catches the catalogue moving under files nobody touched.
 #                  This is the one that matters here: the $299-for-a-$549-tier
 #                  defect arrived without a single commit, so a PR-only check
 #                  would never have fired for months.
@@ -15,7 +15,7 @@ name: Price drift
 on:
   pull_request:
   schedule:
-    # 06:00 UTC daily (11:30 IST) — before the India working day.
+    # 06:00 UTC daily (11:30 IST), before the India working day.
     - cron: "0 6 * * *"
   workflow_dispatch:
 
@@ -95,5 +95,5 @@ jobs:
           title="Marketing prices have drifted from the billing catalogue"
           existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number')
           if [ -n "$existing" ]; then
-            gh issue close "$existing" --comment "Scheduled check is green again — site and catalogue agree."
+            gh issue close "$existing" --comment "Scheduled check is green again: site and catalogue agree."
           fi

@@ -53,7 +53,7 @@ function getBenefits(businessPlanValue: string) {
 }
 
 const QUALIFICATIONS = [
-  "5,000 – 100,000 Instagram followers",
+  "5,000 to 100,000 Instagram followers",
   "Engagement rate above 3%",
   "Posts content at least once per week",
   "Business, marketing, fitness, or creator niche",
@@ -85,7 +85,7 @@ const HOW_STEPS = [
   {
     num: "2",
     title: "Manual Review",
-    desc: "Our team reviews every application personally - no automated filters. You'll hear back with a decision within 48–72 hours.",
+    desc: "Our team reviews every application personally - no automated filters. You'll hear back with a decision within 48 to 72 hours.",
   },
   {
     num: "3",
@@ -183,7 +183,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-gray-500">
-            {["Free forever for approved creators", "Reviewed within 48–72 hours", "No credit card required"].map(t => (
+            {["Free forever for approved creators", "Reviewed within 48 to 72 hours", "No credit card required"].map(t => (
               <span key={t} className="flex items-center gap-1.5">
                 <svg className="w-3.5 h-3.5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -207,7 +207,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
               },
               { num: businessPlanValue, label: "Value - completely free", color: "#ff7c49" },
               { num: "48h", label: "Review turnaround", color: "#b20d8f" },
-              { num: "5K–100K", label: "Follower range", color: "#2ea957" },
+              { num: "5K to 100K", label: "Follower range", color: "#2ea957" },
             ].map((s, i) => (
               <div key={s.label}
                 className={`px-6 py-7 text-center ${i < 3 ? "border-r border-[#ffe4e6]" : ""}`}>

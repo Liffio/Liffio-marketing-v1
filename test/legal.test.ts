@@ -46,7 +46,7 @@ test("no published policy carries an unresolved placeholder", () => {
     assert.equal(
       found,
       null,
-      `${route} would publish with the unresolved placeholder ${found} — resolve it or unwire the route`,
+      `${route} would publish with the unresolved placeholder ${found}, resolve it or unwire the route`,
     );
   }
 });
@@ -101,10 +101,10 @@ test("an unpublished document has no date, and says so loudly", () => {
 test("the title and date are stripped from the body, not duplicated", () => {
   for (const { slug, route } of PUBLISHED) {
     const body = loadPolicy(slug);
-    assert.ok(!/^#\s/m.test(body), `${route} still carries its H1 — the page header renders it`);
+    assert.ok(!/^#\s/m.test(body), `${route} still carries its H1, the page header renders it`);
     assert.ok(
       !/^\*\*Last updated:/m.test(body),
-      `${route} still carries its "Last updated" line — the page header renders it`,
+      `${route} still carries its "Last updated" line, the page header renders it`,
     );
   }
 });
@@ -130,10 +130,10 @@ test("the renderer covers every construct the pack uses", () => {
       const trimmed = line.trim();
       if (trimmed === "") continue;
       // Links and images are NOT supported, and the pack currently has none.
-      if (/!?\[[^\]]+\]\([^)]+\)/.test(trimmed)) unsupported.push(`${file}: link/image — ${trimmed}`);
+      if (/!?\[[^\]]+\]\([^)]+\)/.test(trimmed)) unsupported.push(`${file}: link/image: ${trimmed}`);
       // Nor blockquotes, numbered lists or fenced code.
-      if (/^>\s/.test(trimmed)) unsupported.push(`${file}: blockquote — ${trimmed}`);
-      if (/^```/.test(trimmed)) unsupported.push(`${file}: fenced code — ${trimmed}`);
+      if (/^>\s/.test(trimmed)) unsupported.push(`${file}: blockquote: ${trimmed}`);
+      if (/^```/.test(trimmed)) unsupported.push(`${file}: fenced code: ${trimmed}`);
     }
   }
 
@@ -147,7 +147,7 @@ test("the renderer covers every construct the pack uses", () => {
 test("every published policy parses into real structure", () => {
   for (const { slug, route } of PUBLISHED) {
     const blocks = parsePolicyMarkdown(loadPolicy(slug));
-    assert.ok(blocks.length > 3, `${route} parsed into almost nothing — ${blocks.length} blocks`);
+    assert.ok(blocks.length > 3, `${route} parsed into almost nothing, ${blocks.length} blocks`);
     assert.ok(
       blocks.some((b) => b.kind === "heading"),
       `${route} parsed with no headings at all`,

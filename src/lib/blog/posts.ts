@@ -92,11 +92,11 @@ export const BLOG_POSTS: BlogPost[] = [
     ],
     references: [
       {
-        label: "Instagram Messaging API — Meta for Developers",
+        label: "Instagram Messaging API: Meta for Developers",
         url: "https://developers.facebook.com/docs/messenger-platform/instagram",
       },
       {
-        label: "Instagram Platform Policy — Meta",
+        label: "Instagram Platform Policy: Meta",
         url: "https://developers.facebook.com/docs/instagram-platform/overview",
       },
     ],
@@ -168,16 +168,16 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         question: "Do agencies use Liffio?",
         answer:
-          "The Agency plan bundles 20 workspaces on one subscription — one Instagram account each — so one team can manage multiple brands without sharing passwords.",
+          "The Agency plan bundles 20 workspaces on one subscription: one Instagram account each, so one team can manage multiple brands without sharing passwords.",
       },
     ],
     references: [
       {
-        label: "Instagram Messaging API — Meta for Developers",
+        label: "Instagram Messaging API: Meta for Developers",
         url: "https://developers.facebook.com/docs/messenger-platform/instagram",
       },
       {
-        label: "Liffio vs ManyChat — full feature and pricing comparison",
+        label: "Liffio vs ManyChat: full feature and pricing comparison",
         url: "/manychat-alternative",
       },
     ],
@@ -248,7 +248,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         question: "Will followers know the DM is automated?",
         answer:
-          "Assume some will — and that is fine when the DM is useful. Use plain language, reasonable delays, and turn off automations on posts that are not offers.",
+          "Assume some will, and that is fine when the DM is useful. Use plain language, reasonable delays, and turn off automations on posts that are not offers.",
       },
     ],
   },
@@ -370,11 +370,11 @@ export const BLOG_POSTS: BlogPost[] = [
     ],
     references: [
       {
-        label: "Instagram Messaging API — Meta for Developers",
+        label: "Instagram Messaging API: Meta for Developers",
         url: "https://developers.facebook.com/docs/messenger-platform/instagram",
       },
       {
-        label: "Instagram Platform Policy — Meta",
+        label: "Instagram Platform Policy: Meta",
         url: "https://developers.facebook.com/docs/instagram-platform/overview",
       },
     ],
@@ -395,7 +395,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "1) Zero delay on every message",
         paragraphs: [
           "If the DM lands the same second as the comment, it reads as abrupt. Use at least 10 seconds, and many accounts do better in the 20 to 45 second range.",
-          "Pick a delay that fits the conversation you want — a quick reply for time-sensitive offers, a longer pause for casual content.",
+          "Pick a delay that fits the conversation you want: a quick reply for time-sensitive offers, a longer pause for casual content.",
         ],
       },
       {
@@ -439,11 +439,11 @@ export const BLOG_POSTS: BlogPost[] = [
     ],
     references: [
       {
-        label: "Instagram Platform Policy — Meta",
+        label: "Instagram Platform Policy: Meta",
         url: "https://developers.facebook.com/docs/instagram-platform/overview",
       },
       {
-        label: "Meta's Messaging Policy — Messenger Platform",
+        label: "Meta's Messaging Policy: Messenger Platform",
         url: "https://developers.facebook.com/docs/messenger-platform/policy",
       },
     ],

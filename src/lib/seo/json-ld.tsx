@@ -23,7 +23,7 @@ export function OrganizationJsonLd() {
         legalName: "Liffio Private Limited",
         url: SITE_URL,
         // 🚩 2280×765 are the file's REAL pixel dimensions, read from its PNG
-        // IHDR header — not a guess and not the CSS size it is rendered at.
+        // IHDR header, not a guess and not the CSS size it is rendered at.
         // This used to declare 200×60, which was wrong by an order of magnitude
         // and, more importantly, put the declared height under Google's 112px
         // minimum for an Organization logo, disqualifying the node on its own
@@ -34,7 +34,7 @@ export function OrganizationJsonLd() {
         // content-type lie, but it is NOT fixable here: other code and possibly
         // external references point at this exact path, so renaming or
         // re-encoding the asset is a separate change. Do not "fix" it by
-        // editing this URL — the URL must keep matching the file that exists.
+        // editing this URL: the URL must keep matching the file that exists.
         logo: {
           "@type": "ImageObject",
           url: `${SITE_URL}/logo/inline-transparent.webp`,
@@ -42,7 +42,7 @@ export function OrganizationJsonLd() {
           height: 765,
         },
         description:
-          "Liffio is an Instagram DM automation tool for creators, coaches, and agencies. Auto-reply to comments, stories, and DMs using keyword triggers — no password required, built on Meta's official API.",
+          "Liffio is an Instagram DM automation tool for creators, coaches, and agencies. Auto-reply to comments, stories, and DMs using keyword triggers, with no password required, built on Meta's official API.",
         foundingDate: "2026",
         founder: [
           { "@type": "Person", name: "Shivam", jobTitle: "Co-founder & CEO" },
@@ -55,7 +55,7 @@ export function OrganizationJsonLd() {
         // 🚩 This is the ONE canonical Organization node. /about used to emit a
         // second one under the same `@id` with a conflicting legalName and a
         // richer address, which is a merge conflict for any consumer rather
-        // than extra detail. The richer facts were folded in here instead — do
+        // than extra detail. The richer facts were folded in here instead, do
         // not re-add a per-page Organization node.
         address: {
           "@type": "PostalAddress",
@@ -76,7 +76,7 @@ export function OrganizationJsonLd() {
         // It was broken twice over. First, it dangled: this Organization node
         // renders from layout.tsx on every page, but #software is only emitted
         // by <SoftwareApplicationJsonLd />, which appears on 11 of the 30
-        // sitemap URLs — so on the other 19 the reference pointed at a node
+        // sitemap URLs, so on the other 19 the reference pointed at a node
         // that does not exist in the graph. Second, schema.org's range for
         // makesOffer is Offer, not SoftwareApplication, so it was the wrong
         // type even on the 11 pages where it did resolve. An absent optional
@@ -134,8 +134,8 @@ export function WebSiteJsonLd() {
         // `/blog?q={search_term_string}`, and that endpoint does not exist:
         // /blog is a static page that reads no searchParams at all, and its
         // only filter UI is BlogPostGrid's client-side category tabs. Anything
-        // that followed the template — Google's sitelinks searchbox, or an AI
-        // agent told the site is searchable — got the full unfiltered post list
+        // that followed the template, Google's sitelinks searchbox, or an AI
+        // agent told the site is searchable, got the full unfiltered post list
         // back and no error, which is worse than having no search advertised.
         // A SearchAction belongs here only once a route actually reads the
         // query parameter it names.
@@ -165,7 +165,7 @@ export function WebSiteJsonLd() {
 const OFFER_LADDER: {
   name: string;
   /**
-   * Omitted for the four buyable tiers — schema.org treats an Offer with no
+   * Omitted for the four buyable tiers: schema.org treats an Offer with no
    * availability as purchasable, which is correct for them.
    */
   availability?: string;
@@ -184,10 +184,10 @@ const OFFER_LADDER: {
     usd: { price: "9.00", monthly: "$9", annualPerMonth: "$7.50" },
     inr: { price: "499", monthly: "₹499", annualPerMonth: "₹417" },
     describe: (monthly, annualPerMonth) =>
-      `Starter plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Flat rate — unlimited DMs and contacts.`,
+      `Starter plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Flat rate: unlimited DMs and contacts.`,
   },
   {
-    // 🚩 Growth IS purchasable now — the card ships a live "Start Growth" CTA
+    // 🚩 Growth IS purchasable now: the card ships a live "Start Growth" CTA
     // and a `?plan=GROWTH` signup link, so this Offer carries no availability
     // qualifier, exactly like the other buyable tiers.
     //
@@ -197,7 +197,7 @@ const OFFER_LADDER: {
     // an OutOfStock price for a plan the page sells is as wrong in the other
     // direction as a bare price for one nobody could buy.
     //
-    // If Growth is ever pulled from checkout again, restore BOTH — add
+    // If Growth is ever pulled from checkout again, restore BOTH: add
     // 'Growth' to `NOT_BUYABLE` in marketing-plans.server.ts (which drives the
     // card, the FAQ answer and the AI price sentence) and put the
     // `availability` line and the closing sentence back here. This array is
@@ -213,10 +213,10 @@ const OFFER_LADDER: {
     usd: { price: "59.00", monthly: "$59", annualPerMonth: "$49.17" },
     inr: { price: "2499", monthly: "₹2,499", annualPerMonth: "₹2,084" },
     describe: (monthly, annualPerMonth) =>
-      `Business plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Flat rate — unlimited DMs and contacts.`,
+      `Business plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Flat rate: unlimited DMs and contacts.`,
   },
   {
-    // 🚩 Agency is NOT white-label and does NOT include unlimited workspaces —
+    // 🚩 Agency is NOT white-label and does NOT include unlimited workspaces:
     // all seven agency:* capabilities are granted to no package, and the limit
     // is a fixed 20 workspaces. What ships is 20 full Business workspaces on a
     // single subscription. Describe that, and nothing more.
@@ -224,7 +224,7 @@ const OFFER_LADDER: {
     usd: { price: "549.00", monthly: "$549", annualPerMonth: "$457.50" },
     inr: { price: "22999", monthly: "₹22,999", annualPerMonth: "₹19,167" },
     describe: (monthly, annualPerMonth) =>
-      `Agency plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. 20 workspaces, each a full Business workspace — 150 automations, 15 seats and unlimited automated DMs per workspace — on one subscription, one invoice and one renewal date.`,
+      `Agency plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. 20 workspaces, each a full Business workspace: 150 automations, 15 seats and unlimited automated DMs per workspace, on one subscription, one invoice and one renewal date.`,
   },
 ];
 
@@ -263,7 +263,7 @@ export function SoftwareApplicationJsonLd() {
         url: SITE_URL,
         publisher: { "@id": `${SITE_URL}/#organization` },
         description:
-          "Liffio is an Instagram DM automation tool. It sends automatic replies to comments, story mentions, and DMs using keyword triggers. It connects through Instagram's official OAuth API — no password or third-party login required.",
+          "Liffio is an Instagram DM automation tool. It sends automatic replies to comments, story mentions, and DMs using keyword triggers. It connects through Instagram's official OAuth API, with no password or third-party login required.",
         offers: pricingOffers(),
         featureList: [
           "Comment-to-DM automation",
@@ -294,14 +294,14 @@ export function ArticleJsonLd({
   publishedAt: string;
   /**
    * The post's own `updatedAt`. Pass it verbatim and it is always emitted as
-   * `dateModified`, including when it equals `publishedAt` — that is not a
+   * `dateModified`, including when it equals `publishedAt`, that is not a
    * claimed revision, it is the true statement that the last modification was
    * the publication itself. Every current post is in exactly that state.
    */
   updatedAt: string;
   /**
    * The post's byline, from `BlogPost.author`. Every current post sets this to
-   * "Liffio Team" — a group, not a named individual.
+   * "Liffio Team", a group, not a named individual.
    */
   author: string;
   imageUrl?: string;
@@ -316,12 +316,12 @@ export function ArticleJsonLd({
         description,
         // 🚩 The byline the page itself prints, not the publisher wearing an
         // author hat. This used to hardcode the Organization node, so every
-        // post was authored by the same @id as its own publisher — which tells
+        // post was authored by the same @id as its own publisher, which tells
         // a reader (and an AI summariser) nothing about who wrote it. The
         // distinct, un-@id'd node keeps that separation.
         //
         // 🚩 Organization, NOT Person. Every post's `author` is "Liffio Team",
-        // which is a group name — typing it as a Person asserts that a human
+        // which is a group name: typing it as a Person asserts that a human
         // being goes by it. schema.org allows author to be either, so use the
         // one that matches the value. If a post ever carries a real individual
         // byline, that post needs a Person node, not this one relabelled.

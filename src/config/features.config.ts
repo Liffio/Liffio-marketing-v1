@@ -31,7 +31,7 @@ const ALL_FEATURES: readonly FeatureDefinition[] = [
     gridLabel: "Auto Comment",
     highlight: "The signature auto DM tool feature - comment to DM automation.",
     description:
-      "When a follower comments a keyword on your post or reel, Liffio sends them an auto DM and a public auto comment reply. This comment-to-DM automation is the core feature of any Instagram auto DM tool - with configurable 10–60 second reply delays.",
+      "When a follower comments a keyword on your post or reel, Liffio sends them an auto DM and a public auto comment reply. This comment-to-DM automation is the core feature of any Instagram auto DM tool - with configurable 10 to 60 second reply delays.",
     bullets: [
       "Auto DM + auto comment reply in one workflow",
       "Unlimited keyword triggers per campaign",

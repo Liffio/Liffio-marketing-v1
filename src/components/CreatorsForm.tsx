@@ -7,9 +7,9 @@ type ContentNiche = 'fitness' | 'business' | 'marketing' | 'education' | 'tech' 
 
 const FOLLOWER_OPTIONS: { value: FollowerRange; label: string }[] = [
   { value: 'under5k', label: 'Under 5K' },
-  { value: '5k-10k', label: '5K – 10K' },
-  { value: '10k-50k', label: '10K – 50K' },
-  { value: '50k-100k', label: '50K – 100K' },
+  { value: '5k-10k', label: '5K to 10K' },
+  { value: '10k-50k', label: '10K to 50K' },
+  { value: '50k-100k', label: '50K to 100K' },
   { value: '100k+', label: '100K+' },
 ]
 
@@ -149,7 +149,7 @@ export default function CreatorsForm() {
       <div className="text-center py-16 px-8">
         <h3 className="text-2xl font-bold text-gray-900 mb-3">Application Submitted!</h3>
         <p className="text-gray-600 max-w-md mx-auto leading-relaxed">
-          We've sent a confirmation to <strong>{formData.email}</strong>. Our team reviews all applications manually and will get back to you within 48–72 hours.
+          We've sent a confirmation to <strong>{formData.email}</strong>. Our team reviews all applications manually and will get back to you within 48 to 72 hours.
         </p>
         <div className="mt-8 space-y-3">
           <p className="text-sm font-semibold text-gray-700">While you wait:</p>
@@ -339,7 +339,7 @@ export default function CreatorsForm() {
       </button>
 
       <p className="text-xs text-gray-500 text-center">
-        All applications are reviewed manually. Accepted creators are notified within 48–72 hours.
+        All applications are reviewed manually. Accepted creators are notified within 48 to 72 hours.
       </p>
     </form>
   )

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-// Live USD monthly prices. Growth ($29) is deliberately absent — it is not
+// Live USD monthly prices. Growth ($29) is deliberately absent: it is not
 // purchasable, so it cannot be referred.
 //
 // 🚩 Kept as literals because pricing.config.ts exposes no numeric USD price:

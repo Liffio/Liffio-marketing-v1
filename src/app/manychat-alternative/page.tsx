@@ -33,25 +33,25 @@ const faqCategories: FaqCategory[] = [
         id: "does-liffio-work-with-reels",
         question: "Does Liffio work with Instagram Reels?",
         answer:
-          "Yes. Comment-to-DM automation works on both feed posts and Reels. When someone comments a keyword on your Reel, Liffio sends the automated DM after your chosen delay — whether that Reel gets 50 comments or 50,000. Story reply automation works when someone replies to a Story you have published, including Stories that promote a Reel, and is available on paid plans. Comment-to-DM on feed posts and Reels is available on the free plan.",
+          "Yes. Comment-to-DM automation works on both feed posts and Reels. When someone comments a keyword on your Reel, Liffio sends the automated DM after your chosen delay, whether that Reel gets 50 comments or 50,000. Story reply automation works when someone replies to a Story you have published, including Stories that promote a Reel, and is available on paid plans. Comment-to-DM on feed posts and Reels is available on the free plan.",
       },
       {
         id: "run-both",
         question: "Can I run both Liffio and ManyChat at the same time?",
         answer:
-          "Yes, technically — both tools can be connected to the same Instagram account simultaneously because they both use the official Instagram API. Running both in parallel for a short migration window (five to seven days) is the recommended approach before you cut over entirely. During that period, run your main comment-to-DM flow only in Liffio and keep ManyChat for any automations you have not yet recreated. The risk of running both permanently is duplicate DMs: if the same trigger fires in both tools at the same time, the same person gets two identical messages. That is worth avoiding once migration is complete.",
+          "Yes, technically. Both tools can be connected to the same Instagram account simultaneously because they both use the official Instagram API. Running both in parallel for a short migration window (five to seven days) is the recommended approach before you cut over entirely. During that period, run your main comment-to-DM flow only in Liffio and keep ManyChat for any automations you have not yet recreated. The risk of running both permanently is duplicate DMs: if the same trigger fires in both tools at the same time, the same person gets two identical messages. That is worth avoiding once migration is complete.",
       },
       {
         id: "free-trial",
         question: "Does Liffio have a free trial?",
         answer:
-          "Liffio has a free plan, not a time-limited free trial. There is no credit card required and no trial period that expires. The free plan includes comment keyword triggers on posts and Reels, public comment auto-replies, a bio link page at bio.liffio.com, and basic analytics. It is intended to run in production — not as a demo that locks you out after 14 days. It connects one Instagram account, the same as every workspace on any tier. If you outgrow the free plan's 3 automations, paid plans start at $9/month and add unlimited automated DMs.",
+          "Liffio has a free plan, not a time-limited free trial. There is no credit card required and no trial period that expires. The free plan includes comment keyword triggers on posts and Reels, public comment auto-replies, a bio link page at bio.liffio.com, and basic analytics. It is intended to run in production, not as a demo that locks you out after 14 days. It connects one Instagram account, the same as every workspace on any tier. If you outgrow the free plan's 3 automations, paid plans start at $9/month and add unlimited automated DMs.",
       },
       {
         id: "manychat-flows-switch",
         question: "What happens to my ManyChat flows if I switch to Liffio?",
         answer:
-          "ManyChat does not offer a flow export that Liffio can import directly. Migration is manual: screenshot or document each active ManyChat automation (trigger keyword, delay setting, DM text, public comment reply text), then recreate each one in Liffio. For a typical creator with three to five active automations, this takes one to two hours. Agencies with ten or more flows should budget a half day. Start with your highest-revenue automation — usually the comment-to-DM flow on your most recent or most active Reel. Run both tools in parallel for a short period on a smaller post before migrating the big campaigns.",
+          "ManyChat does not offer a flow export that Liffio can import directly. Migration is manual: screenshot or document each active ManyChat automation (trigger keyword, delay setting, DM text, public comment reply text), then recreate each one in Liffio. For a typical creator with three to five active automations, this takes one to two hours. Agencies with ten or more flows should budget a half day. Start with your highest-revenue automation, usually the comment-to-DM flow on your most recent or most active Reel. Run both tools in parallel for a short period on a smaller post before migrating the big campaigns.",
       },
     ],
   },
@@ -96,7 +96,7 @@ export default function ManyChatAlternativePage() {
               The Best ManyChat Alternative for Instagram DM Automation
             </h1>
             <p className="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
-              ManyChat popularised comment-to-DM — but growing creators need simpler pricing, no
+              ManyChat popularised comment-to-DM, but growing creators need simpler pricing, no
               per-contact fees, and tools built only for Instagram. Liffio delivers all three, with
               unlimited automated DMs on every paid plan and a free plan that actually works in
               production.
@@ -126,7 +126,7 @@ export default function ManyChatAlternativePage() {
             </h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                ManyChat is the most recognized name in comment-to-DM automation, and for good reason —
+                ManyChat is the most recognized name in comment-to-DM automation, and for good reason:
                 they popularized the workflow and have a large template library. But the product is built
                 for marketers running multi-channel campaigns across Instagram, Facebook Messenger, and
                 WhatsApp simultaneously. If Instagram comments and DMs are ninety percent of your
@@ -166,7 +166,7 @@ export default function ManyChatAlternativePage() {
         <section id="comparison" className="py-16 bg-[#fff7f7] border-y border-[#ffe4e6]">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
-              Liffio vs ManyChat — side-by-side comparison
+              Liffio vs ManyChat: side-by-side comparison
             </h2>
             <p className="text-gray-600 mb-8">
               Compare comment-to-DM, pricing model, and platform extras.{" "}
@@ -209,8 +209,8 @@ export default function ManyChatAlternativePage() {
                       </td>
                       <td className="py-3 px-4 text-gray-600">{tool.free ? "✓ Yes" : "✗ No"}</td>
                       <td className="py-3 px-4 text-gray-600">{tool.paidFrom}</td>
-                      <td className="py-3 px-4 text-gray-600">{tool.perContact ? "Yes — scales with contacts" : "No — flat pricing"}</td>
-                      <td className="py-3 px-4 text-gray-600">{tool.instagramOnly ? "Yes" : "No — multi-channel"}</td>
+                      <td className="py-3 px-4 text-gray-600">{tool.perContact ? "Yes, scales with contacts" : "No, flat pricing"}</td>
+                      <td className="py-3 px-4 text-gray-600">{tool.instagramOnly ? "Yes" : "No, multi-channel"}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -219,7 +219,7 @@ export default function ManyChatAlternativePage() {
             <div className="mt-6 space-y-4 text-gray-600 leading-relaxed">
               <p>
                 The structural difference between Liffio and ManyChat on pricing is not just the
-                starting number — it is the pricing model. ManyChat charges based on your total contact
+                starting number. It is the pricing model. ManyChat charges based on your total contact
                 count. At 1,000 contacts the price is manageable; at 10,000 contacts the bill is
                 meaningfully higher, and you hit 10,000 contacts faster than you expect when
                 comment-to-DM automation is running on active Reels.
@@ -233,7 +233,7 @@ export default function ManyChatAlternativePage() {
               <p>
                 SendDM and LinkDM are simpler tools with focused feature sets. Neither has
                 transparent public pricing at the time of writing. SuperProfile bundles a bio-link
-                storefront with its automation product — useful if the link-in-bio is your primary
+                storefront with its automation product, which is useful if the link-in-bio is your primary
                 need, but heavier than necessary if DM automation is the priority.
               </p>
             </div>
@@ -250,13 +250,13 @@ export default function ManyChatAlternativePage() {
 
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-3" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
-                  Creators with 5K–100K followers
+                  Creators with 5K to 100K followers
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   This is the core use case. A creator posts a Reel about a digital product, coaching
                   program, or giveaway and tells viewers to comment a keyword to get the link, discount
                   code, or guide. Liffio sends the DM automatically to every person who comments that
-                  keyword — whether the post gets 30 comments or 3,000. The free plan handles
+                  keyword, whether the post gets 30 comments or 3,000. The free plan handles
                   comment-to-DM on posts and Reels, which is enough for most creators to test
                   and prove out the workflow before paying anything.
                 </p>
@@ -275,8 +275,8 @@ export default function ManyChatAlternativePage() {
                   restocks. When a brand posts a new product announcement with a keyword
                   trigger, interested commenters receive a DM with a direct product link or
                   a limited-time discount code that expires in 24 hours. The automation
-                  captures purchase intent at peak engagement — at the moment someone is watching
-                  the post — rather than hoping they navigate to a bio link later.
+                  captures purchase intent at peak engagement, at the moment someone is watching
+                  the post, rather than hoping they navigate to a bio link later.
                 </p>
                 <p className="mt-3 text-gray-600 leading-relaxed">
                   Liffio's analytics track the full comment-to-DM-to-click chain, which gives
@@ -292,7 +292,7 @@ export default function ManyChatAlternativePage() {
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   Agencies managing multiple client Instagram accounts use Liffio's Agency plan,
-                  which bundles 20 workspaces into a single subscription — one Instagram account
+                  which bundles 20 workspaces into a single subscription: one Instagram account
                   each, and every workspace a full Business workspace. The agency team manages
                   everything from a single dashboard, on one invoice with one renewal date, and
                   there is no per-account surcharge within that allowance.
@@ -317,7 +317,7 @@ export default function ManyChatAlternativePage() {
             </h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                Yes — and the reason is the connection method. Liffio connects to your Instagram
+                Yes, and the reason is the connection method. Liffio connects to your Instagram
                 account through Meta&apos;s official OAuth flow, the same authorization mechanism used by
                 major social media management tools. You see a standard Meta login screen, you
                 approve the requested permissions, and Meta issues an access token directly to
@@ -331,8 +331,8 @@ export default function ManyChatAlternativePage() {
               </p>
               <p>
                 The other factor is send behavior. Liffio spaces automated sends with a
-                configurable 10–60 second delay between trigger and send. That pause creates a
-                natural conversation rhythm for the person on the receiving end — a reply that
+                configurable 10 to 60 second delay between trigger and send. That pause creates a
+                natural conversation rhythm for the person on the receiving end: a reply that
                 lands a moment after their comment rather than a wall of instant messages.
               </p>
               <p>
@@ -356,22 +356,22 @@ export default function ManyChatAlternativePage() {
                 {
                   step: "1",
                   title: "Document your active ManyChat automations",
-                  body: "Before touching anything, screenshot or write down every active automation: the trigger keyword, the delay setting, the DM text, any public comment reply text, and which posts the automation is running on. This takes 15–30 minutes depending on how many active flows you have. Do not skip this step — recreating from memory is slower than recreating from notes.",
+                  body: "Before touching anything, screenshot or write down every active automation: the trigger keyword, the delay setting, the DM text, any public comment reply text, and which posts the automation is running on. This takes 15 to 30 minutes depending on how many active flows you have. Do not skip this step, because recreating from memory is slower than recreating from notes.",
                 },
                 {
                   step: "2",
                   title: "Sign up for Liffio and connect Instagram",
-                  body: "Create a Liffio account at app.liffio.com and connect your Instagram account through the Meta OAuth flow. The connection takes about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace — the Agency plan bundles 20 workspaces into a single subscription.",
+                  body: "Create a Liffio account at app.liffio.com and connect your Instagram account through the Meta OAuth flow. The connection takes about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace, and the Agency plan bundles 20 workspaces into a single subscription.",
                 },
                 {
                   step: "3",
                   title: "Recreate your automations in Liffio",
-                  body: "Start with your highest-revenue automation — usually the comment-to-DM flow on your most active Reel. Create a Comment automation, select the post, enter the trigger keyword, write the DM text, and set the delay. The flow builder is designed for simple keyword-to-DM workflows, so most comment automations can be recreated in five to ten minutes each.",
+                  body: "Start with your highest-revenue automation, usually the comment-to-DM flow on your most active Reel. Create a Comment automation, select the post, enter the trigger keyword, write the DM text, and set the delay. The flow builder is designed for simple keyword-to-DM workflows, so most comment automations can be recreated in five to ten minutes each.",
                 },
                 {
                   step: "4",
                   title: "Run both tools in parallel for one week",
-                  body: "Do not disconnect ManyChat immediately. Run both tools on a smaller post for five to seven days while you verify that Liffio's automations are firing correctly. Check that DMs are being delivered, the delay is working, and public comment replies are posting. Watch for duplicate DMs during the overlap period — if the same trigger fires in both tools simultaneously, the same person can receive two messages.",
+                  body: "Do not disconnect ManyChat immediately. Run both tools on a smaller post for five to seven days while you verify that Liffio's automations are firing correctly. Check that DMs are being delivered, the delay is working, and public comment replies are posting. Watch for duplicate DMs during the overlap period: if the same trigger fires in both tools simultaneously, the same person can receive two messages.",
                 },
                 {
                   step: "5",
@@ -391,7 +391,7 @@ export default function ManyChatAlternativePage() {
               ))}
             </div>
             <p className="mt-6 text-sm text-gray-500">
-              Estimated migration time: 1–2 hours for a typical creator setup with 3–5 active automations.
+              Estimated migration time: 1 to 2 hours for a typical creator setup with 3 to 5 active automations.
               Agencies with 10+ flows should budget a half day.
             </p>
           </div>
@@ -418,11 +418,11 @@ export default function ManyChatAlternativePage() {
         <section className="py-16 bg-[#fff7f7] border-t border-[#ffe4e6] text-center">
           <div className="mx-auto max-w-2xl px-4 sm:px-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
-              Start free — no card required
+              Start free, no card required
             </h2>
             <p className="text-gray-600 mb-8">
               Set up comment-to-DM automation on your first Reel in under five minutes.
-              The free plan works in production — not just as a demo.
+              The free plan works in production, not just as a demo.
             </p>
             <a
               href={siteConfig.urls.appSignup}

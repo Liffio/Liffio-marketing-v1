@@ -65,12 +65,12 @@ function plansCategory(region: PricingRegion, overrides?: MarketingFaqOverrides)
         // FAQPage, so the near-identical question that used to sit there (id
         // "cancel-subscription") emitted a duplicate Question in one mainEntity
         // array, with a different cancellation path in its answer. That copy is
-        // gone; its navigation path — Settings → Billing → Cancel Plan, the same
-        // one the "delete-workspace" answer names — survives here.
+        // gone; its navigation path (Settings → Billing → Cancel Plan, the same
+        // one the "delete-workspace" answer names) survives here.
         id: "cancel",
         question: "How do I cancel my subscription?",
         answer:
-          "Go to Settings → Billing in your Liffio dashboard and click Cancel Plan. There is no cancellation fee and no notice period: your plan keeps every feature until the end of the current billing period — which can be up to 12 months on annual billing — and is simply not charged again. You can resubscribe at any time.",
+          "Go to Settings → Billing in your Liffio dashboard and click Cancel Plan. There is no cancellation fee and no notice period: your plan keeps every feature until the end of the current billing period, which can be up to 12 months on annual billing, and is simply not charged again. You can resubscribe at any time.",
       },
       {
         id: "creators-program",
@@ -89,31 +89,31 @@ const geoComplianceCategory: FaqCategory = {
       id: "does-instagram-allow-automation",
       question: "Does Instagram allow DM automation?",
       answer:
-        "Yes. Instagram permits DM automation through its official API, which is part of Meta's developer platform. Tools that connect via the official API using OAuth — rather than scraping or using your password — are the path Instagram's platform policy allows. Liffio integrates exclusively through this official API using OAuth: you approve the permissions on Meta's consent screen when you connect, and you can revoke access at any time from your Instagram settings. Never passwords, scraping, or unofficial endpoints. The distinction matters practically: tools operating outside the official API — browser automation, credential scraping, or unofficial endpoints — work outside Meta's permitted use guidelines, which is where account risk comes from.",
+        "Yes. Instagram permits DM automation through its official API, which is part of Meta's developer platform. Tools that connect via the official API using OAuth, rather than scraping or using your password, are the path Instagram's platform policy allows. Liffio integrates exclusively through this official API using OAuth: you approve the permissions on Meta's consent screen when you connect, and you can revoke access at any time from your Instagram settings. Never passwords, scraping, or unofficial endpoints. The distinction matters practically: tools operating outside the official API (browser automation, credential scraping, or unofficial endpoints) work outside Meta's permitted use guidelines, which is where account risk comes from.",
     },
     {
       id: "what-is-comment-to-dm",
       question: "What is comment-to-DM automation on Instagram?",
       answer:
-        "Comment-to-DM automation sends a direct message to someone automatically when they comment a specific keyword on your Instagram post or Reel. Here is how it works: you connect your Instagram account via the official API, choose a post, set a trigger keyword (such as LINK, PRICE, or GUIDE), and write a DM template. When any commenter types that keyword, the automation fires and sends your pre-written DM — after a short configurable delay of 10 to 60 seconds — without you doing anything manually. For example: you post a Reel about a digital product and tell viewers to comment FREE to get the download link. Every person who comments that word receives the link in their inbox automatically, even if you are asleep or offline. One limitation: comment-to-DM only fires on posts you explicitly enable it for. It does not apply to all posts on your account automatically.",
+        "Comment-to-DM automation sends a direct message to someone automatically when they comment a specific keyword on your Instagram post or Reel. Here is how it works: you connect your Instagram account via the official API, choose a post, set a trigger keyword (such as LINK, PRICE, or GUIDE), and write a DM template. When any commenter types that keyword, the automation fires and sends your pre-written DM, after a short configurable delay of 10 to 60 seconds, without you doing anything manually. For example: you post a Reel about a digital product and tell viewers to comment FREE to get the download link. Every person who comments that word receives the link in their inbox automatically, even if you are asleep or offline. One limitation: comment-to-DM only fires on posts you explicitly enable it for. It does not apply to all posts on your account automatically.",
     },
     {
       id: "will-instagram-ban",
       question: "Will Instagram ban my account for using DM automation?",
       answer:
-        "Instagram's enforcement targets tools that access accounts by logging in with your password, simulating browser behavior, or using unofficial endpoints. The official Instagram API works differently. You authorize Liffio through Meta's own OAuth screen — the same login flow used by major apps like Hootsuite or Later. Your password is never entered into Liffio at any point, and Liffio never stores credentials. Meta issues an access token directly to Liffio, which you can revoke at any time from your Instagram settings under Apps and Websites. Liffio also adds a 10–60 second configurable delay between trigger and send, so each automated reply arrives at a natural conversational pace for the person receiving it rather than as an instant blast.",
+        "Instagram's enforcement targets tools that access accounts by logging in with your password, simulating browser behavior, or using unofficial endpoints. The official Instagram API works differently. You authorize Liffio through Meta's own OAuth screen, the same login flow used by major apps like Hootsuite or Later. Your password is never entered into Liffio at any point, and Liffio never stores credentials. Meta issues an access token directly to Liffio, which you can revoke at any time from your Instagram settings under Apps and Websites. Liffio also adds a configurable 10 to 60 second delay between trigger and send, so each automated reply arrives at a natural conversational pace for the person receiving it rather than as an instant blast.",
     },
     {
       id: "can-you-automate-dm-replies",
       question: "Can you automate Instagram DM replies?",
       answer:
-        `Yes. With keyword-trigger tools like Liffio, you can automate replies to incoming Instagram interactions such as comments on posts and Reels, story replies, ${FEATURE_WELCOME_DM ? "inbound DMs, and new follower events" : "and inbound DMs"}. Each automation type works through the same mechanism: you define a trigger condition (a keyword or a reply), write the message, and set a delay. When the trigger fires, Liffio sends the message automatically via Instagram's official API. For example: if you run a coaching business, you could set up a DM trigger so that anyone who sends you the word APPLY in a DM receives your application form link — without you checking your inbox. The delay is configurable between 10 and 60 seconds per automation, so replies arrive at a natural conversational pace for the recipient instead of landing the instant they comment.`,
+        `Yes. With keyword-trigger tools like Liffio, you can automate replies to incoming Instagram interactions such as comments on posts and Reels, story replies, ${FEATURE_WELCOME_DM ? "inbound DMs, and new follower events" : "and inbound DMs"}. Each automation type works through the same mechanism: you define a trigger condition (a keyword or a reply), write the message, and set a delay. When the trigger fires, Liffio sends the message automatically via Instagram's official API. For example: if you run a coaching business, you could set up a DM trigger so that anyone who sends you the word APPLY in a DM receives your application form link, without you checking your inbox. The delay is configurable between 10 and 60 seconds per automation, so replies arrive at a natural conversational pace for the recipient instead of landing the instant they comment.`,
     },
     {
       id: "cheapest-manychat-alternative",
       question: "What is the cheapest ManyChat alternative for Instagram?",
       answer:
-        "Liffio. It has a free plan with no credit card required that runs comment-to-DM automation in production — not just as a demo. Paid plans start at $9/month. For comparison: since ManyChat's March 2026 pricing change, its free tier is capped at 25 Active Contacts per month, and paid plans start at $14/month for 250 contacts with per-contact overage fees as your audience grows. SendDM and LinkDM are simpler tools with focused feature sets; pricing varies. SuperProfile bundles bio-link storefronts with automation and prices accordingly. What makes Liffio structurally cheaper for Instagram-focused creators is that there are no per-contact fees. You pay the same $9/month whether you automate DMs to 100 people or 10,000 people. ManyChat charges based on how many people you interact with each month, which means a single viral Reel can trigger overage charges unexpectedly. The free plan includes one Instagram account, 3 automation workflows, comment keyword triggers, and basic analytics — enough to validate whether automation works for your use case before paying anything.",
+        "Liffio. It has a free plan with no credit card required that runs comment-to-DM automation in production, not just as a demo. Paid plans start at $9/month. For comparison: since ManyChat's March 2026 pricing change, its free tier is capped at 25 Active Contacts per month, and paid plans start at $14/month for 250 contacts with per-contact overage fees as your audience grows. SendDM and LinkDM are simpler tools with focused feature sets; pricing varies. SuperProfile bundles bio-link storefronts with automation and prices accordingly. What makes Liffio structurally cheaper for Instagram-focused creators is that there are no per-contact fees. You pay the same $9/month whether you automate DMs to 100 people or 10,000 people. ManyChat charges based on how many people you interact with each month, which means a single viral Reel can trigger overage charges unexpectedly. The free plan includes one Instagram account, 3 automation workflows, comment keyword triggers, and basic analytics. That is enough to validate whether automation works for your use case before paying anything.",
     },
   ],
 };
@@ -126,7 +126,7 @@ const seoDiscoveryCategory: FaqCategory = {
       id: "what-is-auto-dm-tool",
       question: "What is an auto DM tool?",
       answer:
-        "An auto DM tool (also called auto DM software or DM automation tool) sends Instagram direct messages automatically when a trigger fires - for example a keyword in a comment, a story reply, or an inbound DM. Liffio is an auto DM tool that lets you set delays (10–60 seconds), personalize messages, and run comment-to-DM flows without manual inbox work.",
+        "An auto DM tool (also called auto DM software or DM automation tool) sends Instagram direct messages automatically when a trigger fires - for example a keyword in a comment, a story reply, or an inbound DM. Liffio is an auto DM tool that lets you set delays (10 to 60 seconds), personalize messages, and run comment-to-DM flows without manual inbox work.",
     },
     {
       id: "what-are-auto-dms",
@@ -180,7 +180,7 @@ const seoDiscoveryCategory: FaqCategory = {
       id: "auto-dm-safe",
       question: "Are auto DM tools safe for my Instagram account?",
       answer:
-        "Yes, when you use a compliant auto DM tool like Liffio. We use official Instagram APIs, configurable send delays (10-60 seconds), and rate limiting. Unofficial bots that log in with your password or simulate a browser operate outside Meta's permitted use guidelines — Liffio connects only through Meta's OAuth consent flow.",
+        "Yes, when you use a compliant auto DM tool like Liffio. We use official Instagram APIs, configurable send delays (10-60 seconds), and rate limiting. Unofficial bots that log in with your password or simulate a browser operate outside Meta's permitted use guidelines. Liffio connects only through Meta's OAuth consent flow.",
     },
   ],
 };
@@ -188,7 +188,7 @@ const seoDiscoveryCategory: FaqCategory = {
 /** Region-aware FAQ used across the marketing site */
 /**
  * FAQ set for pages that must NOT depend on the visitor's pricing region.
- * Identical to getFaqCategories() minus the "Plans & billing" category —
+ * Identical to getFaqCategories() minus the "Plans & billing" category,
  * the only region-dependent block (INR vs USD amounts). Letting legal pages
  * use this keeps them statically renderable: no getPricingContext(), so no
  * headers() call, so no forced dynamic render.
@@ -214,7 +214,7 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
           id: "setup-time",
           question: "How long does setup take?",
           answer:
-            "Most creators connect Instagram and send their first automated DM in under five minutes. Pick a trigger, write your message, set your delay (10–60 seconds), and go live. No credit card required.",
+            "Most creators connect Instagram and send their first automated DM in under five minutes. Pick a trigger, write your message, set your delay (10 to 60 seconds), and go live. No credit card required.",
         },
         {
           id: "keyword-triggers",
@@ -241,7 +241,7 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
           id: "what-counts-dm",
           question: "What counts as one automated DM?",
           answer:
-            "Each automated message sent to a unique user counts as one DM, and follow-up replies within the same conversation thread do not count again. Every paid plan is uncapped — no monthly DM quota, no per-message fee, and no contact limits.",
+            "Each automated message sent to a unique user counts as one DM, and follow-up replies within the same conversation thread do not count again. Every paid plan is uncapped: no monthly DM quota, no per-message fee, and no contact limits.",
         },
         {
           // "and more - depending on your plan" was the opposite of citable: no
@@ -284,13 +284,13 @@ const affiliateCategory: FaqCategory = {
       id: "affiliate-commission",
       question: "How much commission do affiliates earn?",
       answer:
-        "Affiliates earn 50% lifetime recurring commission on every payment made by a referred workspace subscription. The 50% rate applies with no sliding scale, no cap, and no expiry — as long as the referred user maintains an active subscription. For example, refer someone on Business ($59/mo) and earn $29.50 every month they stay subscribed.",
+        "Affiliates earn 50% lifetime recurring commission on every payment made by a referred workspace subscription. The 50% rate applies with no sliding scale, no cap, and no expiry, for as long as the referred user maintains an active subscription. For example, refer someone on Business ($59/mo) and earn $29.50 every month they stay subscribed.",
     },
     {
       id: "affiliate-recurring",
       question: "Is the commission recurring?",
       answer:
-        "Yes — fully recurring for the lifetime of the referred subscription. As long as the referred user keeps their subscription active and unbroken (within the 15-day grace period on renewal), you earn 50% of every billing cycle. The commission stops permanently if the referred user's subscription lapses beyond the 15-day grace period.",
+        "Yes, fully recurring for the lifetime of the referred subscription. As long as the referred user keeps their subscription active and unbroken (within the 15-day grace period on renewal), you earn 50% of every billing cycle. The commission stops permanently if the referred user's subscription lapses beyond the 15-day grace period.",
     },
     {
       id: "affiliate-payout",
@@ -302,7 +302,7 @@ const affiliateCategory: FaqCategory = {
       id: "affiliate-attribution",
       question: "What is the attribution window?",
       answer:
-        "90 days from signup. You earn commission on any workspace subscription the referred user purchases within 90 days of creating their account. Attribution is first-click: whichever affiliate link is clicked first gets the credit — later clicks from other affiliates do not override it.",
+        "90 days from signup. You earn commission on any workspace subscription the referred user purchases within 90 days of creating their account. Attribution is first-click: whichever affiliate link is clicked first gets the credit, and later clicks from other affiliates do not override it.",
     },
     {
       id: "affiliate-custom-code",
@@ -326,7 +326,7 @@ const affiliateCategory: FaqCategory = {
       id: "affiliate-join",
       question: "How do I join the affiliate program?",
       answer:
-        "The affiliate program is open to all registered Liffio users — including Free plan users — with no separate application. Create a free account, then find your unique referral link in your dashboard. No approval process, no follower count requirement, and no minimum sales threshold to join. Your affiliate link is available immediately after registration.",
+        "The affiliate program is open to all registered Liffio users, including Free plan users, with no separate application. Create a free account, then find your unique referral link in your dashboard. No approval process, no follower count requirement, and no minimum sales threshold to join. Your affiliate link is available immediately after registration.",
     },
   ],
 };
@@ -349,7 +349,7 @@ const pricingDetailCategory: FaqCategory = {
       // 🚩 Every bullet here must be something Starter does NOT already grant.
       // This answer used to sell "follow-up DM sequences" and "conversion
       // analytics" as Business additions while the Starter answer directly above
-      // lists both — so the tier immediately above Starter read as costing 6.5x
+      // lists both, so the tier immediately above Starter read as costing 6.5x
       // for things already included. Differentiators are taken from the V4
       // sheet's Business bullets and the limits table (150 automations vs 25,
       // 15 seats vs 3, 90-day history vs 30-day). Short links are a Starter
@@ -358,7 +358,7 @@ const pricingDetailCategory: FaqCategory = {
       id: "business-features",
       question: "What features require Business ($59/mo, ₹2,499/mo in India)?",
       answer:
-        "Business includes everything in Starter, plus 150 automations instead of 25 and up to 15 team member seats instead of 3 — with invite and role management, per-user, per-module and per-action access control, and ABAC policies. It also adds a post approval workflow with activity log, per-automation attribution (DMs → clicks → leads), analytics export, 90-day analytics history, proactive AI growth alerts, and priority support plus an onboarding call. Built for brands, e-commerce teams, and coaches where more than one person touches the account.",
+        "Business includes everything in Starter, plus 150 automations instead of 25 and up to 15 team member seats instead of 3, with invite and role management, per-user, per-module and per-action access control, and ABAC policies. It also adds a post approval workflow with activity log, per-automation attribution (DMs → clicks → leads), analytics export, 90-day analytics history, proactive AI growth alerts, and priority support plus an onboarding call. Built for brands, e-commerce teams, and coaches where more than one person touches the account.",
     },
     {
       id: "agency-features",
@@ -376,7 +376,7 @@ const pricingDetailCategory: FaqCategory = {
       id: "hidden-fees",
       question: "Are there any hidden fees?",
       answer:
-        "No. Liffio's pricing is flat and transparent. You pay the plan price — monthly or annually — and that is the total cost. No per-message fees, no overage charges, no contact limits, no feature add-ons sold separately, and no setup fees.",
+        "No. Liffio's pricing is flat and transparent. You pay the plan price, monthly or annually, and that is the total cost. No per-message fees, no overage charges, no contact limits, no feature add-ons sold separately, and no setup fees.",
     },
     {
       id: "upgrade-later",
@@ -395,19 +395,19 @@ const homepageSeoCategory: FaqCategory = {
       id: "best-instagram-dm-tool",
       question: "What is the best Instagram DM automation tool?",
       answer:
-        `The best Instagram DM automation tool depends on your workflow. For creators, coaches, and brands who want comment-to-DM automation${FEATURE_WELCOME_DM ? ", story reply, and welcome DMs" : " and story reply"} — with unlimited messages on any paid plan and no contact-based pricing — Liffio is built specifically for that use case. Tools like ManyChat offer broader multi-channel coverage (Messenger, WhatsApp, SMS) at higher price points. If your entire workflow is Instagram and you want simple pricing with unlimited DMs on every paid plan, Liffio is the most direct fit.`,
+        `The best Instagram DM automation tool depends on your workflow. For creators, coaches, and brands who want comment-to-DM automation${FEATURE_WELCOME_DM ? ", story reply, and welcome DMs" : " and story reply"}, with unlimited messages on any paid plan and no contact-based pricing, Liffio is built specifically for that use case. Tools like ManyChat offer broader multi-channel coverage (Messenger, WhatsApp, SMS) at higher price points. If your entire workflow is Instagram and you want simple pricing with unlimited DMs on every paid plan, Liffio is the most direct fit.`,
     },
     {
       id: "automated-dms-increase-engagement",
       question: "How do automated Instagram DMs increase engagement?",
       answer:
-        `Automated DMs increase engagement by responding to every comment and ${FEATURE_STORY_REACTIONS ? "story reaction" : "story reply"} — even at 3am, even when a Reel unexpectedly goes viral. Most manually managed accounts respond to 10-20% of comment-driven DM requests; automation responds to 100%. Higher response rates mean more link clicks, more lead captures, and more conversations started — which Instagram's algorithm rewards with further reach.`,
+        `Automated DMs increase engagement by responding to every comment and ${FEATURE_STORY_REACTIONS ? "story reaction" : "story reply"}, even at 3am, even when a Reel unexpectedly goes viral. Most manually managed accounts respond to 10-20% of comment-driven DM requests; automation responds to 100%. Higher response rates mean more link clicks, more lead captures, and more conversations started, which Instagram's algorithm rewards with further reach.`,
     },
     {
       id: "comment-automation-generate-leads",
       question: "Can Instagram comment automation generate leads?",
       answer:
-        `Yes — this is the primary commercial use case. Comment automation captures leads at the moment of highest intent: when someone raises their hand on your content. ${FEATURE_COLLECT_DATA_PROMPTS ? "Liffio's comment-to-DM flow can ask for an email address or phone number inside the DM conversation, capture it automatically" : "Liffio captures email addresses shared in the DM conversation automatically"}, and export${FEATURE_CRM_INTEGRATION ? "s them to CSV or a CRM" : "s them to CSV"}. Creators and brands use this to build email lists, qualify prospects, and route buyers — all without leaving Instagram.`,
+        `Yes, this is the primary commercial use case. Comment automation captures leads at the moment of highest intent: when someone raises their hand on your content. ${FEATURE_COLLECT_DATA_PROMPTS ? "Liffio's comment-to-DM flow can ask for an email address or phone number inside the DM conversation, capture it automatically" : "Liffio captures email addresses shared in the DM conversation automatically"}, and export${FEATURE_CRM_INTEGRATION ? "s them to CSV or a CRM" : "s them to CSV"}. Creators and brands use this to build email lists, qualify prospects, and route buyers, all without leaving Instagram.`,
     },
   ],
 };
@@ -420,19 +420,19 @@ const featuresSeoCategory: FaqCategory = {
       id: "automation-grow-followers",
       question: "Can Instagram automation help grow followers?",
       answer:
-        "Yes, through the Ask for Follow feature. When someone comments a keyword and is about to receive the promised link or resource, Liffio first prompts them to follow your account — displaying your profile card inside the DM conversation. Liffio tracks follow conversion rates in analytics so you can see exactly how many follows each campaign generated.",
+        "Yes, through the Ask for Follow feature. When someone comments a keyword and is about to receive the promised link or resource, Liffio first prompts them to follow your account, displaying your profile card inside the DM conversation. Liffio tracks follow conversion rates in analytics so you can see exactly how many follows each campaign generated.",
     },
     {
       id: "automated-messages-no-coding",
       question: "Can I send automated Instagram messages without coding?",
       answer:
-        "Yes — no coding or technical knowledge is required at any point. Setting up a comment-to-DM automation involves three inputs: choosing your trigger keyword, writing your DM, and setting a delay. Everything is done through a visual dashboard. Connecting your Instagram account is a single OAuth step — no API keys, no webhooks, no developer needed. Most creators complete their first live automation in under five minutes.",
+        "Yes. No coding or technical knowledge is required at any point. Setting up a comment-to-DM automation involves three inputs: choosing your trigger keyword, writing your DM, and setting a delay. Everything is done through a visual dashboard. Connecting your Instagram account is a single OAuth step: no API keys, no webhooks, no developer needed. Most creators complete their first live automation in under five minutes.",
     },
     {
       id: "automation-works-with-reels",
       question: "Does Instagram automation work with Reels?",
       answer:
-        "Yes. All of Liffio's comment-based automations work on Instagram Reels in exactly the same way as on feed posts and carousels. When someone comments your keyword on a Reel, the DM and public reply fire after your configured delay. Reels are the most common use case — the comment CTA is a standard Reel hook that drives high comment volume, which Liffio handles automatically regardless of how many comments come in.",
+        "Yes. All of Liffio's comment-based automations work on Instagram Reels in exactly the same way as on feed posts and carousels. When someone comments your keyword on a Reel, the DM and public reply fire after your configured delay. Reels are the most common use case, because the comment CTA is a standard Reel hook that drives high comment volume, which Liffio handles automatically regardless of how many comments come in.",
     },
   ],
 };
@@ -465,7 +465,7 @@ const homeOverviewCategory: FaqCategory = {
       id: "is-liffio-safe",
       question: "Is Liffio safe for my Instagram account?",
       answer:
-        "Yes. Liffio connects through Instagram's official API using Meta's OAuth consent flow — your password is never shared — and sends every DM with a configurable 10–60 second delay so replies arrive at a natural conversational pace.",
+        "Yes. Liffio connects through Instagram's official API using Meta's OAuth consent flow, so your password is never shared, and sends every DM with a configurable 10 to 60 second delay so replies arrive at a natural conversational pace.",
     },
   ],
 };
@@ -488,12 +488,12 @@ export function getHomeFaqCategories(
 /**
  * FAQ set for /features. Takes no region.
  *
- * `plansCategory()` is the ONLY region-aware block in `getFaqCategories()` —
+ * `plansCategory()` is the ONLY region-aware block in `getFaqCategories()`:
  * every other category is a module-level const or a literal built from
  * `metaCopy` and feature flags. This function returns `geoCompliance`, its own
  * "automations" category, `safety` and `featuresSeo`, and never "plans", so the
  * region argument could not reach the output. Passing "global" is therefore not
- * a default — it is the same result any region produced. Dropping the argument
+ * a default. It is the same result any region produced. Dropping the argument
  * removes the route's only `getPricingContext()` call, and with it the
  * `await headers()` that forced /features to render dynamically.
  */
@@ -511,7 +511,7 @@ export function getFeaturesFaqCategories(): FaqCategory[] {
           id: "comment-to-dm-how",
           question: "How does comment-to-DM automation work?",
           answer:
-            'You set a keyword (e.g. "LINK"). When someone comments that word on your post or Reel, Liffio automatically sends them a DM after your chosen delay (10–60 seconds) and optionally posts a public reply under their comment.',
+            'You set a keyword (e.g. "LINK"). When someone comments that word on your post or Reel, Liffio automatically sends them a DM after your chosen delay (10 to 60 seconds) and optionally posts a public reply under their comment.',
         },
         {
           // A bare list answers nothing on its own. Same trigger set as before,
@@ -519,7 +519,7 @@ export function getFeaturesFaqCategories(): FaqCategory[] {
           id: "automation-types-features",
           question: "What types of Instagram automation does Liffio support?",
           answer:
-            `Liffio supports comment-to-DM, story reply, inbound DM reply, ask for follow, follow-up sequences, ${FEATURE_WELCOME_DM ? "data collection, and welcome DM for new followers" : "and data collection"} — all through Instagram's official API. Each one fires after a delay you set between 10 and 60 seconds. The Free plan runs 3 of these automations at a time, Starter 25, and Business 150.`,
+            `Liffio supports comment-to-DM, story reply, inbound DM reply, ask for follow, follow-up sequences, ${FEATURE_WELCOME_DM ? "data collection, and welcome DM for new followers" : "and data collection"}, all through Instagram's official API. Each one fires after a delay you set between 10 and 60 seconds. The Free plan runs 3 of these automations at a time, Starter 25, and Business 150.`,
         },
         {
           id: "manychat-alternative-features",
@@ -581,7 +581,7 @@ export function getCreatorsFaqCategories(
           id: "who-qualifies",
           question: "Who qualifies for the Creators Program?",
           answer:
-            "Creators with 5,000–100,000 Instagram followers, an engagement rate above 3%, and content posted at least once per week. You should already drive comment engagement on posts and actively sell products, courses, or services. Applications are reviewed manually within 48–72 hours.",
+            "Creators with 5,000 to 100,000 Instagram followers, an engagement rate above 3%, and content posted at least once per week. You should already drive comment engagement on posts and actively sell products, courses, or services. Applications are reviewed manually within 48 to 72 hours.",
         },
         {
           id: "free-forever",
@@ -623,7 +623,7 @@ export function getCreatorsFaqCategories(
           id: "followers-needed",
           question: "How many followers do I need?",
           answer:
-            "Between 5,000 and 100,000. The program is designed for mid-tier creators — not micro-accounts under 5K, and not large accounts over 100K who typically have dedicated marketing budgets. The focus is on creators who already drive meaningful comment engagement relative to their audience size (3%+ engagement rate).",
+            "Between 5,000 and 100,000. The program is designed for mid-tier creators, not micro-accounts under 5K, and not large accounts over 100K who typically have dedicated marketing budgets. The focus is on creators who already drive meaningful comment engagement relative to their audience size (3%+ engagement rate).",
         },
         {
           id: "approval-time",
@@ -641,7 +641,7 @@ export function getCreatorsFaqCategories(
           id: "how-to-apply",
           question: "How do I apply for the Creators Program?",
           answer:
-            "Apply at liffio.com/creators-program — the form takes under 2 minutes. You will need to provide your name, email, country, Instagram username, follower count range, and primary content niche. Applications submitted through email, social media, or direct message are not accepted. Spots are limited to 50 in the initial launch phase.",
+            "Apply at liffio.com/creators-program. The form takes under 2 minutes. You will need to provide your name, email, country, Instagram username, follower count range, and primary content niche. Applications submitted through email, social media, or direct message are not accepted. Spots are limited to 50 in the initial launch phase.",
         },
       ],
     },
@@ -685,7 +685,7 @@ const userSupportCategory: FaqCategory = {
     },
     // 🚩 "How do I cancel my subscription?" is NOT re-asked here. `plansCategory`
     // already carries it (id "cancel") and both categories are concatenated into
-    // one FAQPage on /help — two Question nodes with the identical `name` and
+    // one FAQPage on /help: two Question nodes with the identical `name` and
     // different answers in a single mainEntity array. The path this copy named
     // (Settings → Billing → Cancel Plan) was the correct one and has been moved
     // into the surviving answer; re-adding the question here reopens the defect.
@@ -693,7 +693,7 @@ const userSupportCategory: FaqCategory = {
       id: "refund-timeline",
       question: "How long do refunds take?",
       answer:
-        "Approved refunds are processed within 5–10 business days back to your original payment method. Razorpay refunds typically take 7–10 business days. Email support@liffio.com to request a refund - see our Refund Policy for eligibility.",
+        "Approved refunds are processed within 5 to 10 business days back to your original payment method. Razorpay refunds typically take 7 to 10 business days. Email support@liffio.com to request a refund - see our Refund Policy for eligibility.",
     },
     {
       id: "switch-plans",
@@ -705,13 +705,13 @@ const userSupportCategory: FaqCategory = {
       id: "dms-not-sending",
       question: "Why are my DMs not sending?",
       answer:
-        "If automations are triggering but DMs are not arriving, check: your Instagram account must be set to Professional (Creator or Business) — personal accounts cannot receive or send API-driven DMs. Confirm your Instagram account is linked to a Facebook Page in Meta Business Suite. Check that the recipient's DM settings allow messages from accounts they don't follow. Your delay setting must be at least 10 seconds — that is the minimum the platform supports. Go to Settings → Connected Accounts and reconnect to refresh your access token. If DMs are still not sending, email support@liffio.com with your account email and the affected automation name.",
+        "If automations are triggering but DMs are not arriving, check: your Instagram account must be set to Professional (Creator or Business), because personal accounts cannot receive or send API-driven DMs. Confirm your Instagram account is linked to a Facebook Page in Meta Business Suite. Check that the recipient's DM settings allow messages from accounts they don't follow. Your delay setting must be at least 10 seconds, the minimum the platform supports. Go to Settings → Connected Accounts and reconnect to refresh your access token. If DMs are still not sending, email support@liffio.com with your account email and the affected automation name.",
     },
     {
       id: "reconnect-facebook",
       question: "How do I reconnect my Facebook Page?",
       answer:
-        "A Facebook Page connection is required for Liffio's API access to function. Go to Settings → Connected Accounts and disconnect your Instagram account. In Meta Business Suite, confirm your Instagram account is still linked to your Facebook Page under Accounts → Instagram Accounts. If the link has been removed, re-link Instagram to your Facebook Page in Meta Business Suite first. Then return to Liffio and click Connect Instagram — the OAuth flow will detect the linked Page automatically.",
+        "A Facebook Page connection is required for Liffio's API access to function. Go to Settings → Connected Accounts and disconnect your Instagram account. In Meta Business Suite, confirm your Instagram account is still linked to your Facebook Page under Accounts → Instagram Accounts. If the link has been removed, re-link Instagram to your Facebook Page in Meta Business Suite first. Then return to Liffio and click Connect Instagram. The OAuth flow will detect the linked Page automatically.",
     },
     {
       id: "keyword-trigger-not-working",
@@ -723,37 +723,37 @@ const userSupportCategory: FaqCategory = {
       id: "export-leads",
       question: "How do I export leads?",
       answer:
-        `Leads captured through the Collect User Data automation are stored in your workspace analytics. Go to Analytics → Leads in your Liffio dashboard, select the date range or campaign, and click Export CSV — the file includes all captured fields with timestamps and source campaign. CSV export is available on Starter and above. Free plan users can view leads in the dashboard but cannot export.${FEATURE_CRM_INTEGRATION ? " For CRM integration (Business and Agency plans), connect your CRM from Settings → Integrations." : ""}`,
+        `Leads captured through the Collect User Data automation are stored in your workspace analytics. Go to Analytics → Leads in your Liffio dashboard, select the date range or campaign, and click Export CSV. The file includes all captured fields with timestamps and source campaign. CSV export is available on Starter and above. Free plan users can view leads in the dashboard but cannot export.${FEATURE_CRM_INTEGRATION ? " For CRM integration (Business and Agency plans), connect your CRM from Settings → Integrations." : ""}`,
     },
     {
       id: "reset-password",
       question: "How do I reset my password?",
       answer:
-        "Go to liffio.com/login and click Forgot Password. Enter the email address associated with your Liffio account and check your inbox for a reset email (check spam if it does not arrive within 2 minutes). Click the reset link, enter your new password, and confirm. If you signed up via Google or Meta OAuth, use the same OAuth sign-in method — there is no separate Liffio password to reset.",
+        "Go to liffio.com/login and click Forgot Password. Enter the email address associated with your Liffio account and check your inbox for a reset email (check spam if it does not arrive within 2 minutes). Click the reset link, enter your new password, and confirm. If you signed up via Google or Meta OAuth, use the same OAuth sign-in method, because there is no separate Liffio password to reset.",
     },
     {
       id: "add-team-members",
       question: "How do I add team members?",
       answer:
-        "Go to Settings → Team in your Liffio dashboard and click Invite Member, then enter their email address and select their role: ADMIN (full access), MEMBER (limited access), or CLIENT (view-only for Agency users). They will receive an email invitation to join your workspace. Team seats by plan: Free — 1 seat (owner only), Starter — up to 3 seats, Business — up to 15 seats, Agency — up to 15 seats in each of its 20 workspaces.",
+        "Go to Settings → Team in your Liffio dashboard and click Invite Member, then enter their email address and select their role: ADMIN (full access), MEMBER (limited access), or CLIENT (view-only for Agency users). They will receive an email invitation to join your workspace. Team seats by plan: Free has 1 seat (owner only), Starter up to 3 seats, Business up to 15 seats, and Agency up to 15 seats in each of its 20 workspaces.",
     },
     {
       id: "delete-workspace",
       question: "How do I delete a workspace?",
       answer:
-        "Workspace deletion is permanent and cannot be undone — all automations, leads, analytics, and connected Instagram accounts will be deleted. First cancel your subscription if on a paid plan (Settings → Billing → Cancel Plan), then go to Settings → Workspace → Danger Zone, click Delete Workspace and confirm by typing the workspace name. If you only want to remove a specific Instagram account, go to Settings → Connected Accounts → Disconnect instead.",
+        "Workspace deletion is permanent and cannot be undone: all automations, leads, analytics, and connected Instagram accounts will be deleted. First cancel your subscription if on a paid plan (Settings → Billing → Cancel Plan), then go to Settings → Workspace → Danger Zone, click Delete Workspace and confirm by typing the workspace name. If you only want to remove a specific Instagram account, go to Settings → Connected Accounts → Disconnect instead.",
     },
     {
       id: "connect-multiple-accounts",
       question: "How do I connect multiple Instagram accounts?",
       answer:
-        "Go to Settings → Connected Accounts in your Liffio dashboard and click Connect Instagram — each account requires its own Meta OAuth authorization. A workspace connects one Instagram account, so a second account needs a second workspace - and only Agency includes more than one (20). Each workspace's automations run independently.",
+        "Go to Settings → Connected Accounts in your Liffio dashboard and click Connect Instagram. Each account requires its own Meta OAuth authorization. A workspace connects one Instagram account, so a second account needs a second workspace - and only Agency includes more than one (20). Each workspace's automations run independently.",
     },
     {
       id: "contact-support",
       question: "How do I contact support?",
       answer:
-        "Email support@liffio.com for a response within 24 hours, or use the contact form at liffio.com/help. Business plan users get priority email support. Agency plan users get a dedicated account manager with direct access. When emailing, include your account email, the Instagram username affected, and a description of the issue — screenshots help speed up resolution.",
+        "Email support@liffio.com for a response within 24 hours, or use the contact form at liffio.com/help. Business plan users get priority email support. Agency plan users get a dedicated account manager with direct access. When emailing, include your account email, the Instagram username affected, and a description of the issue. Screenshots help speed up resolution.",
     },
     {
       id: "refunds-policy",

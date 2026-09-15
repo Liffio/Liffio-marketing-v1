@@ -571,7 +571,7 @@ const allFeatures = [
     icon: (<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>),
     title: "Auto Comment Reply",
     gridLabel: "Comment Reply",
-    description: "When a follower comments a keyword on your post or reel, Liffio sends them a personalised DM and a public comment reply on your schedule. Choose a custom delay from 10–60 seconds after the comment so replies land at a natural pace.",
+    description: "When a follower comments a keyword on your post or reel, Liffio sends them a personalised DM and a public comment reply on your schedule. Choose a custom delay from 10 to 60 seconds after the comment so replies land at a natural pace.",
     bullets: ["Works on posts, reels, and carousels", "Unlimited keywords per campaign", "Sends public reply + private DM simultaneously"],
     Phone: CommentReplyPhone,
   },
@@ -735,7 +735,7 @@ export default function FeaturesSection() {
           <div className="flex flex-wrap gap-2 lg:max-w-sm lg:justify-end">
             {[
               { label: "Auto DM + Auto Comment", color: "#ff7c49" },
-              { label: "10–60s custom delay", color: "#f5184c" },
+              { label: "10 to 60s custom delay", color: "#f5184c" },
               { label: "Unlimited auto DMs (paid)", color: "#b20d8f" },
             ].map((chip) => (
               <TechBadge key={chip.label} label={chip.label} variant="chip" accent={chip.color} />

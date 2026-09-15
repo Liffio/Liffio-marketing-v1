@@ -1,24 +1,24 @@
 # 2. Feature claims the catalogue does not support
 
 Date: 2026-08-23
-Status: **Accepted** — marketing-side sanitize applied; Backend stage recorded, not applied
+Status: **Accepted**: marketing-side sanitize applied; Backend stage recorded, not applied
 
 ## Context
 
 Measured against the live `packages` catalogue, the pricing page sold things
-that are not true. Not stale numbers this time — capabilities the product does
+that are not true. Not stale numbers this time: capabilities the product does
 not have.
 
 These are **not feature flags**. A flag gates something that will ship, whose
 copy becomes accurate the day it does. These are claims `packages` contradicts
 today.
 
-## Decision — sanitize here, fix at source later
+## Decision: sanitize here, fix at source later
 
 `sanitizeFeatures()` in `src/lib/marketing-plans.server.ts` gained a final
 `UNSUPPORTED_CLAIMS` stage. It runs **last**, after the existing flag rewrites,
 because those rewrites turn the catalogue's `"Story, Live & welcome DM
-automations"` into `"Story automations"` — the string the Starter rule matches.
+automations"` into `"Story automations"`, the string the Starter rule matches.
 
 | Claim | Tiers | Action | Evidence |
 | --- | --- | --- | --- |
@@ -38,7 +38,7 @@ V4 §10.2 gives Free 500 DMs/month. Nothing enforces it:
 
 - no DM key among the 8 in `package_limits`
 - every `dmsSent*` reference in the Backend is analytics, not a quota
-- V4 line 667 says it outright — *"no DM volume metering exists at all"* — and
+- V4 line 667 says it outright (*"no DM volume metering exists at all"*) and
   line 1351 marks it **blocker 25.3, "entirely new code"**
 
 `automationsPerDay` is enforced only in `externalApiUsage.ts` on the external-API
@@ -48,23 +48,23 @@ count. Restating "500/month" would have invented a limit; the claim was dropped.
 
 It remains on the paid tiers, where it is accurate today.
 
-## Also changed — the same claims outside the cards
+## Also changed: the same claims outside the cards
 
 `sanitizeFeatures()` only reaches card bullets. The identical claims rendered in
 prose on the same screen, which would have left the page contradicting itself:
 
-- `pricing.config.ts` — Free-plan FAQ answer, and both region variants of
+- `pricing.config.ts`: Free-plan FAQ answer, and both region variants of
   "Every plan includes unlimited Instagram accounts…"
-- `marketing-plans.server.ts` — the same two strings in the derived FAQ builders
-- `faq.config.ts` — seven answers, including three dedicated multi-account
+- `marketing-plans.server.ts`: the same two strings in the derived FAQ builders
+- `faq.config.ts`: seven answers, including three dedicated multi-account
   questions rewritten to state the real model (one account per workspace;
   only Agency includes more than one)
-- `public/llms.txt` — the same sentence, a static asset no flag reaches
-- **comparison matrix** — two rows removed rather than set false, since a row
+- `public/llms.txt`: the same sentence, a static asset no flag reaches
+- **comparison matrix**: two rows removed rather than set false, since a row
   false on every tier is noise: `Story mention & reply triggers` (was true on
   four tiers, D8) and `External API keys` (was true on two, D4)
 
-## 🔴 Backend stage — recorded, NOT applied
+## 🔴 Backend stage: recorded, NOT applied
 
 `plan_catalog.marketing_features` is JSONB; indices are 1-based as stored.
 
@@ -83,12 +83,12 @@ prose on the same screen, which would have left the page contradicting itself:
 
 **The fix goes in the seed source, not the row.** `planCatalogService.ensureSeeded()`
 re-upserts `plan_catalog` on every API boot, so a direct SQL edit reverts on the
-next restart — silently, and probably during an unrelated deploy.
+next restart, silently, and probably during an unrelated deploy.
 
 Until that ships, the source stays wrong for every other consumer. This repo is
 only sanitizing the symptom.
 
-## 🔴 Separate finding — `plan_catalog`'s limit columns are stale defaults
+## 🔴 Separate finding: `plan_catalog`'s limit columns are stale defaults
 
 Not copy. A live trap.
 
@@ -102,17 +102,17 @@ AGENCY     true     false        0          1      1           3
 PRO        false    false        0          1      1           3
 ```
 
-Every plan carries identical values — Agency included. They disagree with
+Every plan carries identical values, Agency included. They disagree with
 `package_limits`, which is authoritative: Business seats 15 (not 1), Agency
 workspaces 20 (not 1), automations 3/25/75/150/150 (not a flat 3).
 
 **Only the marketing strings in `plan_catalog` are meaningful. Nothing should
 read its limits.** They are wrong, they look plausible, and they sit in a table
-that is already read at runtime for other fields — which is exactly the shape of
+that is already read at runtime for other fields, which is exactly the shape of
 a defect that surfaces as a mysterious entitlement bug much later. Worth either
 dropping the columns or making them mirror `package_limits`.
 
-## ⚠️ Fallback hazard — an outage would surface Growth
+## ⚠️ Fallback hazard: an outage would surface Growth
 
 `fetchMarketingPlansContext` falls back to the static sheet in
 `pricing.config.ts` when the plans API fails **or returns an empty array**. That
@@ -120,7 +120,7 @@ sheet contains **Growth**, which the API deliberately withholds
 (`plan_catalog.GROWTH.show_on_marketing_site = false`) because **D2 part 2 is
 blocked on live Razorpay keys**.
 
-So an API outage does not merely serve stale prices — it puts a **Growth card on
+So an API outage does not merely serve stale prices: it puts a **Growth card on
 the pricing page for a tier that cannot be bought**, with a working checkout CTA.
 Nobody would predict that failure mode from reading either file alone.
 
@@ -129,7 +129,7 @@ Partly mitigated here: the empty-array branch previously returned the fallback
 branches now route through `sanitizeFallback()`. The Growth exposure itself
 remains, and is the reason this is recorded rather than closed.
 
-## Known inconsistency — Growth column, no Growth card
+## Known inconsistency: Growth column, no Growth card
 
 The comparison matrix has a Growth column; the cards do not. Cause:
 `show_on_marketing_site = false`. **Unblock condition: D2 part 2, live Razorpay
@@ -141,5 +141,5 @@ keys.** Until then the matrix describes a tier with no card above it.
   exist on a higher tier; after D8 none does. Multi-step flows *are* real on
   Starter, so the row is half-right and needs splitting rather than deleting.
 - Starter's ✓ `All automation trigger types` is now comment-only. Technically
-  true — every trigger type that exists is comment-based — but it reads as
+  true (every trigger type that exists is comment-based) but it reads as
   broader than it is.

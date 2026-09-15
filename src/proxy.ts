@@ -7,7 +7,7 @@ export function proxy(request: NextRequest) {
   const region = resolvePricingRegion(country);
 
   // Pass pricing region to server components via request headers (not response cookies).
-  // This keeps responses cacheable — no Set-Cookie means Vercel edge cache can serve them.
+  // This keeps responses cacheable: no Set-Cookie means Vercel edge cache can serve them.
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-pricing-region", region);
 
