@@ -618,15 +618,15 @@ export function getCreatorsFaqCategories(
         },
         {
           id: "bio-badge",
-          question: "What does the \"Powered by @Liffio\" bio link badge look like?",
+          question: "What does the \"Powered by @getliffio\" badge look like?",
           answer:
-            "It's a small footer line on your bio link page (bio.liffio.com/yourusername). It reads \"Powered by @Liffio\" and links to liffio.com. It's subtle - one line at the bottom of your public link page. Removing or hiding it ends your Creators Program eligibility.",
+            "It's a short line reading \"Powered by @getliffio\". It is subtle, and Liffio adds it for you. Removing or hiding it, or working around it, ends your Creators Program eligibility.",
         },
         {
           id: "monthly-requirements",
           question: "What are the monthly requirements?",
           answer:
-            "Send at least 300 automated DMs per month through Liffio, keep at least 2 active automation campaigns running every 30 days, and keep the 'Powered by @Liffio' tag visible in your bio link page footer. An automated alert is sent on Day 25 of the month if you are below the 300 DM threshold, giving you time to run a campaign before the month ends.",
+            "Send at least 300 automated DMs per month through Liffio, keep at least 2 active automation campaigns running every 30 days, and keep the 'Powered by @getliffio' tag in place. An automated alert is sent on Day 25 of the month if you are below the 300 DM threshold, giving you time to run a campaign before the month ends.",
         },
         {
           id: "followers-needed",

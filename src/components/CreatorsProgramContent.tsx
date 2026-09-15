@@ -72,7 +72,7 @@ const REQUIREMENTS = [
   },
   {
     label: "Branding",
-    text: 'Keep the "Powered by @Liffio" tag in your bio link page footer',
+    text: 'Keep the "Powered by @getliffio" tag in place',
   },
 ];
 

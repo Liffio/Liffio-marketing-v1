@@ -85,7 +85,10 @@ export const siteConfig = {
 
   social: {
     twitter: "https://twitter.com/liffio",
-    instagram: "https://instagram.com/liffio",
+    // Creators Policy 6.2 and 6.3 name @getliffio as the handle creators must
+    // tag and the tag Liffio adds to their automated DMs. The account the site
+    // links to has to be that same account.
+    instagram: "https://instagram.com/getliffio",
     linkedin: "https://linkedin.com/company/liffio",
   },
 

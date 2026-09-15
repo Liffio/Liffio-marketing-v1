@@ -154,12 +154,12 @@ export default function CreatorsForm() {
         <div className="mt-8 space-y-3">
           <p className="text-sm font-semibold text-gray-700">While you wait:</p>
           <a
-            href="https://instagram.com/liffio"
+            href="https://instagram.com/getliffio"
             target="_blank"
             rel="noopener noreferrer"
             className="block text-[#b20d8f] hover:underline text-sm"
           >
-            → Follow us on Instagram @liffio
+            → Follow us on Instagram @getliffio
           </a>
           <a
             href={`https://instagram.com/${formData.instagramUsername}`}
