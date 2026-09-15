@@ -650,7 +650,7 @@ export function getCreatorsFaqCategories(
           id: "how-to-apply",
           question: "How do I apply for the Creators Program?",
           answer:
-            "Apply at liffio.com/creators-program. The form takes under 2 minutes. You will need to provide your name, email, country, Instagram username, follower count range, and primary content niche. Applications submitted through email, social media, or direct message are not accepted. Spots are limited to 50 in the initial launch phase.",
+            "Apply in the Liffio app at app.liffio.com/creators-program, linked from liffio.com/creators-program. It takes under 2 minutes. You will need to provide your name, email, country, Instagram username, follower count range, and primary content niche. Applications submitted through email, social media, or direct message are not accepted. Spots are limited to 50 in the initial launch phase.",
         },
       ],
     },

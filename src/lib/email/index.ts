@@ -1,11 +1,7 @@
 import nodemailer from 'nodemailer'
 import { siteConfig } from '@/config/site.config'
 import { getWelcomeEmailHtml, getWelcomeEmailText, getWelcomeEmailSubject } from './templates/welcome'
-import { getCreatorsEmailHtml, getCreatorsEmailText, getCreatorsEmailSubject } from './templates/creators'
 import {
-  getCreatorApplicationAlertHtml,
-  getCreatorApplicationAlertSubject,
-  getCreatorApplicationAlertText,
   getPreRegistrationAlertHtml,
   getPreRegistrationAlertSubject,
   getPreRegistrationAlertText,
@@ -71,64 +67,6 @@ export async function sendWelcomeEmail({ name, email, discountCode, spotNumber, 
     return { success: true }
   } catch (error) {
     console.error('Failed to send welcome email:', error)
-    return { success: false, error }
-  }
-}
-
-interface SendCreatorsEmailParams {
-  name: string
-  email: string
-  instagramUsername: string
-  status?: 'received' | 'approved' | 'rejected'
-  reason?: string
-}
-
-export async function sendCreatorsEmail({ name, email, instagramUsername, status, reason }: SendCreatorsEmailParams) {
-  const { brand } = siteConfig
-  const emailData = { name, instagramUsername, status, reason }
-
-  try {
-    await transporter.sendMail({
-      from: `"${brand.name} Creators" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
-      to: email,
-      subject: getCreatorsEmailSubject(emailData),
-      text: getCreatorsEmailText(emailData),
-      html: getCreatorsEmailHtml(emailData),
-    })
-    return { success: true }
-  } catch (error) {
-    console.error('Failed to send creators email:', error)
-    return { success: false, error }
-  }
-}
-
-interface SendCreatorApplicationAlertParams {
-  name: string
-  email: string
-  instagramUsername: string
-  followerRange: string
-  contentNiche: string
-}
-
-export async function sendCreatorApplicationAlert(params: SendCreatorApplicationAlertParams) {
-  const { brand } = siteConfig
-  const fromAddr = getSmtpFromAddress()
-  const toAddr = getAdminNotificationRecipients()
-
-  if (!fromAddr) return { success: false }
-
-  try {
-    await transporter.sendMail({
-      from: `"${brand.name} Notifications" <${fromAddr}>`,
-      to: toAddr,
-      replyTo: params.email,
-      subject: getCreatorApplicationAlertSubject(params),
-      text: getCreatorApplicationAlertText(params),
-      html: getCreatorApplicationAlertHtml(params),
-    })
-    return { success: true }
-  } catch (error) {
-    console.error('Failed to send creator application alert:', error)
     return { success: false, error }
   }
 }

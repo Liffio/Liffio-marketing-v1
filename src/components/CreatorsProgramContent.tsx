@@ -2,9 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { FEATURE_SALE_TRACKING } from "@/config/feature-flags";
-import CreatorsForm from "@/components/CreatorsForm";
 import { TechBadge } from "@/components/TechBadge";
 import { siteConfig } from "@/config/site.config";
+
+/*
+  Applications are taken in the Liffio app, not on this page.
+
+  🚩 The marketing site no longer collects them at all: there is no form, no
+  validation, no submit handler and no POST route behind it. This page's job is
+  to explain the programme and hand the visitor over.
+*/
+const APPLY_URL = "https://app.liffio.com/creators-program";
 
 const STATIC_BENEFITS = [
   {
@@ -80,7 +88,7 @@ const HOW_STEPS = [
   {
     num: "1",
     title: "Apply in 2 Minutes",
-    desc: "Fill out the form below with your profile details. Tell us about your content and how you engage your audience.",
+    desc: "Apply in the Liffio app with your profile details. Tell us about your content and how you engage your audience.",
   },
   {
     num: "2",
@@ -332,7 +340,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
         </div>
       </section>
 
-      {/* Application form */}
+      {/* Apply: handover to the app, no form on this site */}
       <section id="apply" className="py-16 sm:py-20 px-4"
         style={{ background: "linear-gradient(155deg,#fff1f2,#ffe4e6 60%,#fff4f2)" }}>
         <div className="mx-auto max-w-2xl">
@@ -345,6 +353,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
             <p className="text-gray-500 text-sm">
               Takes under 2 minutes · Reviewed within 48 hours · No credit card required
             </p>
+            <p className="mt-2 text-gray-500 text-sm">Applications are taken in the Liffio app.</p>
             {spotsRemaining !== null && (
               <TechBadge
                 className="mt-4"
@@ -360,9 +369,26 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
             )}
           </div>
 
-          <div className="rounded-3xl bg-white p-7 sm:p-9"
+          <div className="rounded-3xl bg-white p-7 text-center sm:p-9"
             style={{ border: "1px solid rgba(245, 24, 76,0.14)", boxShadow: "0 8px 40px rgba(245, 24, 76,0.12)" }}>
-            <CreatorsForm />
+            <a
+              href={APPLY_URL}
+              data-cta="creator_program"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-4 text-base font-bold text-white transition-all duration-200 hover:opacity-90 active:scale-[0.99] sm:w-auto sm:px-10"
+              style={{
+                background: "linear-gradient(135deg,#f5184c,#b20d8f)",
+                boxShadow: "0 8px 24px rgba(178, 13, 143,0.3)",
+              }}
+            >
+              Apply now
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+            <p className="mt-4 text-xs leading-relaxed text-gray-500">
+              You will be taken to app.liffio.com to apply. Applications are not accepted by email,
+              social media or direct message.
+            </p>
           </div>
         </div>
       </section>
