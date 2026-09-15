@@ -22,7 +22,6 @@ import {
 import { metaCopy } from "@/config/meta-copy";
 import { pageSeo } from "@/config/seo.config";
 import { BreadcrumbJsonLd, FaqPageJsonLd, SoftwareApplicationJsonLd } from "@/lib/seo/json-ld";
-import { Breadcrumb } from "@/components/Breadcrumb";
 import { TechBadge } from "@/components/TechBadge";
 import { SITE_URL } from "@/config/site.config";
 
@@ -93,13 +92,6 @@ export default async function PricingPage() {
             Features) are centred too.
           */}
           <div className="mx-auto max-w-[1300px] px-4 pb-2 pt-10 text-center sm:px-6 sm:pt-16">
-            <Breadcrumb
-              className="mb-6 justify-center"
-              items={[
-                { label: "Home", href: "/" },
-                { label: "Pricing", href: "/pricing" },
-              ]}
-            />
             {/*
               Derived, not written: an eyebrow reading "Five steps" while the
               catalogue serves four tiers is the same defect as a hardcoded

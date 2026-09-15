@@ -10,14 +10,19 @@ const ANNOUNCEMENT_MESSAGES = [
 ] as const;
 
 /*
-  The four links, in order, on desktop and in the mobile menu. ONE array feeds
-  both, so the two cannot drift apart or fall out of order.
+  The links, in order, on desktop and in the mobile menu. ONE array feeds both,
+  so the two cannot drift apart or fall out of order.
+
+  Home is a real nav item, not only the logo. /features and /pricing used to
+  carry a "Home / Features" breadcrumb for the way back; those are gone, so the
+  way back lives here instead, where it is on every page rather than on two.
 
   Support points at /help, which is the site's support page: the contact form,
   the help FAQ and the support email all live there, and the footer already
   calls it "Help Center".
 */
 const navLinks: { href: string; label: string; navKey?: "features" | "pricing" }[] = [
+  { href: "/", label: "Home" },
   { href: "/features", label: "Features", navKey: "features" },
   { href: "/pricing", label: "Pricing", navKey: "pricing" },
   { href: "/creators-program", label: "Creators" },
@@ -51,10 +56,14 @@ const mobileNavLinkActiveClass =
  * an exact match alone would drop the highlight on any child route a section
  * grows later. Trailing slashes are normalised because a link written without
  * one and a pathname served with one are the same page.
+ *
+ * 🚩 "/" is EXACT MATCH ONLY. It is a prefix of every path on the site, so the
+ * segment-boundary rule below would light Home up on all of them.
  */
 function isCurrent(pathname: string | null, href: string): boolean {
   if (!pathname) return false;
   const path = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+  if (href === "/") return path === "/";
   return path === href || path.startsWith(`${href}/`);
 }
 
