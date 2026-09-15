@@ -562,5 +562,12 @@ export function formatMoney(amount: number, symbol: string): string {
 export function formatMoneyPrecise(amount: number, symbol: string): string {
   return symbol === "₹"
     ? `${symbol}${Math.round(amount).toLocaleString("en-IN")}`
-    : `${symbol}${amount.toFixed(2)}`;
+    : // Grouped, not `toFixed(2)`. Every caller used to pass a per-workspace or
+      // per-account rate under four figures, where the two read identically;
+      // the affiliate calculator's twelve-month total does not, and "$1755.25"
+      // is a worse number to read than "$1,755.25".
+      `${symbol}${amount.toLocaleString(localeForSymbol(symbol), {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}`;
 }

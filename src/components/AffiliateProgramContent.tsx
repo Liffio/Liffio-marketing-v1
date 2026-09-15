@@ -1,18 +1,73 @@
 import { TechBadge } from "@/components/TechBadge";
 import { siteConfig } from "@/config/site.config";
+import {
+  ATTRIBUTION_WINDOW_DAYS,
+  COMMISSION_RATE,
+  GRACE_PERIOD_DAYS,
+  HOLD_PERIOD_DAYS,
+  MINIMUM_WITHDRAWAL_USD,
+  NET_REVENUE_BASIS_NOTE,
+  PAYOUT_PROCESSING_DAYS,
+  PROJECTION_DISCLAIMER,
+  REFERRED_USER_FIRST_PAYMENT_DISCOUNT,
+} from "@/config/affiliate.config";
+import {
+  currencySymbolOf,
+  formatMoneyPrecise,
+  isZeroPrice,
+  parseDisplayAmount,
+  type PricingPlan,
+} from "@/config/pricing.config";
 
+const RATE_LABEL = `${Math.round(COMMISSION_RATE * 100)}%`;
+const DISCOUNT_LABEL = `${Math.round(REFERRED_USER_FIRST_PAYMENT_DISCOUNT * 100)}%`;
+
+/*
+  🔴 The commission model is the policy's: Section 2.1 pays 50% of Net Revenue
+  on EVERY payment a referred workspace makes, for as long as its subscription
+  runs unbroken. This block used to draw a 25% / 10% / 10% taper that stopped at
+  month three and a "Month 4+ / No further commission" row, none of which the
+  policy has ever said. The rate is the same on every row now, because that is
+  the product: what changes down the column is only the discount on the referred
+  user's first payment, which Section 2.3 grants and Section 2.2 then takes out
+  of Net Revenue before commission is worked out.
+*/
 const COMMISSION_MONTHS = [
-  { month: "Month 1", rate: "25%", desc: "First payment", color: "#ff7c49", width: "100%" },
-  { month: "Month 2", rate: "10%", desc: "Second payment", color: "#f5184c", width: "72%" },
-  { month: "Month 3", rate: "10%", desc: "Third payment", color: "#2ea957", width: "72%" },
-  { month: "Month 4+", rate: "-", desc: "No further commission", color: "#e5e7eb", width: "24%" },
+  {
+    month: "First payment",
+    rate: RATE_LABEL,
+    desc: `Of Net Revenue, after their ${DISCOUNT_LABEL} first-payment discount`,
+    color: "#ff7c49",
+    width: "90%",
+  },
+  {
+    month: "Month 2",
+    rate: RATE_LABEL,
+    desc: "Of Net Revenue on the full price",
+    color: "#f5184c",
+    width: "100%",
+  },
+  {
+    month: "Month 3",
+    rate: RATE_LABEL,
+    desc: "Of Net Revenue on the full price",
+    color: "#2ea957",
+    width: "100%",
+  },
+  {
+    month: "Month 4 onwards",
+    rate: RATE_LABEL,
+    desc: "Unchanged, for the life of the subscription",
+    color: "#b20d8f",
+    width: "100%",
+  },
 ];
 
 const KEY_STATS = [
-  { value: "25%", label: "Month 1 commission", accent: "#ff7c49" },
-  { value: "90d", label: "Attribution window", accent: "#f5184c" },
-  { value: "$50", label: "Minimum withdrawal", accent: "#b20d8f" },
-  { value: "20", label: "Day hold before payout", accent: "#2ea957" },
+  { value: RATE_LABEL, label: "Lifetime recurring commission", accent: "#ff7c49" },
+  { value: `${ATTRIBUTION_WINDOW_DAYS}d`, label: "Attribution window", accent: "#f5184c" },
+  { value: `${MINIMUM_WITHDRAWAL_USD}`, label: "Minimum withdrawal", accent: "#b20d8f" },
+  { value: String(HOLD_PERIOD_DAYS), label: "Day hold before payout", accent: "#2ea957" },
 ];
 
 const HOW_STEPS = [
@@ -29,17 +84,22 @@ const HOW_STEPS = [
   {
     num: "03",
     title: "Refer paying customers",
-    desc: "When someone signs up through your link and subscribes within 90 days, you earn.",
+    desc: `When someone signs up through your link and subscribes within ${ATTRIBUTION_WINDOW_DAYS} days, you earn on every payment they make.`,
   },
   {
     num: "04",
     title: "Withdraw on demand",
-    desc: "Request a payout once cleared balance hits $50. No fixed monthly payout schedule.",
+    desc: `Request a payout once cleared balance hits ${MINIMUM_WITHDRAWAL_USD}. No fixed monthly payout schedule.`,
   },
 ];
 
+// Section 6.4 of the policy live at /affiliate-policy, which lists exactly
+// these five. The unpublished Markdown revision adds a sixth, "Scheduled", for
+// annual-plan instalments; it is deliberately NOT drawn here, because the
+// published policy pays an annual referral as a single commission event and
+// this page must not describe a payout stage the live document does not have.
 const PAYOUT_STAGES = [
-  { stage: "Pending", desc: "Within 20-day hold", active: false },
+  { stage: "Pending", desc: `Within ${HOLD_PERIOD_DAYS}-day hold`, active: false },
   { stage: "Available", desc: "Ready to withdraw", active: true },
   { stage: "Requested", desc: "You submitted payout", active: false },
   { stage: "Approved", desc: "Being processed", active: false },
@@ -48,25 +108,19 @@ const PAYOUT_STAGES = [
 
 const ATTRIBUTION_RULES = [
   {
-    title: "90-day window",
-    desc: "Earn on any workspace subscription purchased within 90 days of the referred user's signup.",
+    title: `${ATTRIBUTION_WINDOW_DAYS}-day window`,
+    desc: `Earn on any workspace subscription purchased within ${ATTRIBUTION_WINDOW_DAYS} days of the referred user's signup.`,
   },
   {
     title: "First click wins",
     desc: "Credit goes to the first affiliate link clicked - later clicks from other affiliates don't override.",
   },
   {
+    // Section 2.4: per workspace, independently, and a lapse on one leaves the
+    // others alone. Not a "3-month commission cycle", which nothing grants.
     title: "Per workspace",
-    desc: "Each new workspace starts its own 3-month commission cycle inside the attribution window.",
+    desc: "Each workspace earns its own commission stream, independently, for as long as that workspace stays subscribed.",
   },
-];
-
-const ELIGIBLE_PLANS = [
-  { name: "Free", earns: false, note: "No commission" },
-  { name: "Starter", earns: true },
-  { name: "Business", earns: true },
-  { name: "Agency", earns: true },
-  { name: "Creators Program", earns: false, note: "No payment" },
 ];
 
 const PROHIBITED = [
@@ -77,9 +131,41 @@ const PROHIBITED = [
   "Auto-inserting links in bulk DMs or emails",
 ];
 
-export default function AffiliateProgramContent() {
+export default function AffiliateProgramContent({ plans }: { plans: PricingPlan[] }) {
   const brand = siteConfig.brand.name;
   const appLogin = siteConfig.urls.appLogin;
+
+  /*
+    🚩 Both the eligibility list and the worked example are DERIVED from the
+    catalogue the pricing cards render, never written down. The hardcoded list
+    here omitted Growth for as long as Growth was unsellable and then stayed
+    wrong after it went on sale, and the worked example quoted a taper that the
+    policy does not grant. Deriving both means a repricing or a new tier moves
+    this page on its own, and `npm run check:prices` covers it.
+  */
+  const paidPlans = plans.filter((plan) => !isZeroPrice(plan.monthly));
+  const eligiblePlans = [
+    ...plans.map((plan) => ({
+      name: plan.name,
+      earns: !isZeroPrice(plan.monthly),
+      note: isZeroPrice(plan.monthly) ? "No payment, no commission" : undefined,
+    })),
+    { name: "Creators Program", earns: false, note: "No payment" },
+  ];
+
+  // Section 2.7 works its example on the tier a referrer is likeliest to quote.
+  // Both the cheapest paid tier and the mid tier are shown, because "50% of
+  // Net Revenue" means nothing until it is a number someone can check.
+  const cheapest = paidPlans[0];
+  const example = paidPlans.find((plan) => plan.name === "Business") ?? paidPlans.at(-1);
+  const commissionOn = (plan: PricingPlan | undefined) => {
+    if (!plan) return null;
+    const amount = parseDisplayAmount(plan.monthly);
+    if (amount === null) return null;
+    return formatMoneyPrecise(amount * COMMISSION_RATE, currencySymbolOf(plan.monthly));
+  };
+  const cheapestCommission = commissionOn(cheapest);
+  const exampleCommission = commissionOn(example);
 
   return (
     <>
@@ -99,8 +185,9 @@ export default function AffiliateProgramContent() {
             <br className="hidden sm:block" /> for every referral
           </h1>
           <p className="mx-auto max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">
-            Share {brand}, refer paying workspaces, and earn a hybrid commission across each customer&apos;s first three
-            months - with reliable tracking and on-demand payouts.
+            Share {brand}, refer paying workspaces, and earn {RATE_LABEL} of Net Revenue on every payment they
+            make, for as long as their subscription stays active. Reliable tracking, on-demand payouts,
+            and {DISCOUNT_LABEL} off their first payment for the person you refer.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a href={siteConfig.urls.appSignup} className="btn-primary inline-flex items-center gap-2">
@@ -148,10 +235,11 @@ export default function AffiliateProgramContent() {
               className="text-2xl font-extrabold text-[#0a0a0a] sm:text-3xl"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
             >
-              Hybrid model - first 3 months
+              {RATE_LABEL} of Net Revenue, for the life of the subscription
             </h2>
             <p className="mt-2 text-sm text-gray-500 sm:text-base">
-              Commission applies per referred workspace, independently.
+              Commission applies per referred workspace, independently, and never expires while that
+              workspace keeps an unbroken paid subscription.
             </p>
           </div>
 
@@ -178,9 +266,33 @@ export default function AffiliateProgramContent() {
                 </div>
               </div>
             ))}
-            <p className="border-t border-brand-100 pt-4 text-center text-xs text-gray-500">
-              Example: $59/mo Business plan → ~$14.75 month 1, ~$5.90 months 2 & 3 per workspace
-            </p>
+            {/*
+              🔴 Both figures are computed from the live catalogue price at
+              {RATE_LABEL}. The line this replaces read "$59/mo Business plan →
+              ~$14.75 month 1, ~$5.90 months 2 & 3", which was the old taper
+              applied to a tier the policy pays 50% on, every month, for as long
+              as the workspace stays subscribed.
+            */}
+            <div className="border-t border-brand-100 pt-4 text-center">
+              {cheapest && cheapestCommission ? (
+                <p className="text-xs text-gray-500">
+                  Example: one {cheapest.name} referral at {cheapest.monthly}/month earns you{" "}
+                  <b className="text-[#0a0a0a]">{cheapestCommission}</b> a month
+                  {example && exampleCommission && example.name !== cheapest.name ? (
+                    <>
+                      , and one {example.name} referral at {example.monthly}/month earns{" "}
+                      <b className="text-[#0a0a0a]">{exampleCommission}</b> a month
+                    </>
+                  ) : null}
+                  , for as long as that workspace stays subscribed.
+                </p>
+              ) : null}
+              <p className="mt-2 text-[11px] leading-relaxed text-gray-400">
+                {NET_REVENUE_BASIS_NOTE} A workspace that lapses for more than{" "}
+                {GRACE_PERIOD_DAYS} days ends its commission permanently.{" "}
+                {PROJECTION_DISCLAIMER}
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -296,15 +408,15 @@ export default function AffiliateProgramContent() {
           <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-center">
             <div className="rounded-xl border border-brand-100 bg-white px-5 py-3 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Hold period</p>
-              <p className="text-lg font-bold text-[#0a0a0a]">20 days</p>
+              <p className="text-lg font-bold text-[#0a0a0a]">{HOLD_PERIOD_DAYS} days</p>
             </div>
             <div className="rounded-xl border border-brand-100 bg-white px-5 py-3 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Min. withdrawal</p>
-              <p className="text-lg font-bold text-[#0a0a0a]">$50</p>
+              <p className="text-lg font-bold text-[#0a0a0a]">${MINIMUM_WITHDRAWAL_USD}</p>
             </div>
             <div className="rounded-xl border border-brand-100 bg-white px-5 py-3 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Processing</p>
-              <p className="text-lg font-bold text-[#0a0a0a]">5 to 10 business days</p>
+              <p className="text-lg font-bold text-[#0a0a0a]">{PAYOUT_PROCESSING_DAYS}</p>
             </div>
           </div>
         </div>
@@ -320,7 +432,7 @@ export default function AffiliateProgramContent() {
             Which plans earn commission?
           </h2>
           <div className="space-y-2">
-            {ELIGIBLE_PLANS.map((plan) => (
+            {eligiblePlans.map((plan) => (
               <div
                 key={plan.name}
                 className={`flex items-center justify-between rounded-xl border px-4 py-3.5 sm:px-5 ${
