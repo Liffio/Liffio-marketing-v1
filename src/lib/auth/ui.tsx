@@ -4,6 +4,32 @@ import { useEffect, useRef, useState, type ReactNode, type ReactElement } from '
 
 // ── Card ──────────────────────────────────────────────────────────────────
 
+/**
+ * Shown on /login and /register to a visitor who already has a session, for the
+ * moment before the browser leaves for the app.
+ *
+ * `role="status"` so a screen reader announces the change rather than leaving
+ * someone on a page that silently swapped its form for a sentence. It is
+ * deliberately plain text and not a spinner alone: "why has the login form
+ * disappeared" deserves an answer even if it is only on screen briefly.
+ */
+export function SignedInNotice() {
+  return (
+    <div className="mx-auto flex w-full max-w-md flex-col items-center justify-center">
+      <AuthCard>
+        <div role="status" className="py-4 text-center">
+          <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">
+            You are already signed in
+          </h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Taking you to your dashboard.
+          </p>
+        </div>
+      </AuthCard>
+    </div>
+  );
+}
+
 export function AuthCard({ children, wide, otpState }: { children: ReactNode; wide?: boolean; otpState?: OtpState }) {
   const glow =
     otpState === 'error'

@@ -6,7 +6,8 @@ import Link from 'next/link';
 import { authStore } from '@/lib/auth/store';
 import { register, getAuthMe, googleAuthUrl, validateAffiliateCode } from '@/lib/auth/api';
 import { readReferralCodeFromSearch, getStoredReferralCode, getReferralPayloadForRegister, clearStoredReferralCode } from '@/lib/auth/referral';
-import { AuthCard, Button, CheckIcon, ErrorMsg, EyeIcon, GoogleIcon, Input, Label, OrDivider } from '@/lib/auth/ui';
+import { AuthCard, Button, CheckIcon, ErrorMsg, EyeIcon, GoogleIcon, Input, Label, OrDivider, SignedInNotice } from '@/lib/auth/ui';
+import { useRedirectWhenSignedIn } from '@/lib/auth/app-redirect';
 import { CountrySelect, isKnownCountryCode } from '@/lib/auth/countries';
 import { trackFormStart, trackFormError, trackFormSubmit, trackFormAbandon, trackSignupStep, identifyUser } from '@/lib/analytics/analytics';
 
@@ -39,6 +40,14 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [mounted, setMounted] = useState(false);
+
+  /*
+    Same bounce as /login, for the same reason: offering "create free account"
+    to someone who already has one, and is signed in on this very browser, is
+    the unnecessary auth flow the brief rules out. Declared with the other
+    hooks, above the early return further down.
+  */
+  const signedIn = useRedirectWhenSignedIn(redirectPath);
 
   const formStartedRef = useRef(false);
   const formSubmittedRef = useRef(false);
@@ -132,6 +141,9 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
       setLoading(false);
     }
   }
+
+  // The redirect is under way; do not offer a signup form about to disappear.
+  if (signedIn) return <SignedInNotice />;
 
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-center gap-8 lg:flex-row lg:items-center lg:gap-16">

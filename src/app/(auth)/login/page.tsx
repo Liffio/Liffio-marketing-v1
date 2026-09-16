@@ -24,8 +24,10 @@ import {
   Label,
   OrDivider,
   OtpInput,
+  SignedInNotice,
 } from '@/lib/auth/ui';
 import { identifyUser } from '@/lib/analytics/analytics';
+import { useRedirectWhenSignedIn } from '@/lib/auth/app-redirect';
 
 function LoginPageInner() {
   const router = useRouter();
@@ -50,6 +52,18 @@ function LoginPageInner() {
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
+
+  /*
+    Already signed in? Then this screen is in the way, and the brief is explicit
+    that an authenticated visitor must not be pushed through a login flow they
+    do not need. The session cookie lives on `.liffio.com` and the app reads it
+    itself, so this hands nothing over: it just steps aside.
+
+    🚩 Declared with the other hooks, ABOVE any early return. The bounce below
+    renders different markup, and a hook called after it would change hook order
+    between renders and crash the page.
+  */
+  const signedIn = useRedirectWhenSignedIn(redirectPath);
 
   useEffect(() => {
     if (resendIn <= 0) return;
@@ -136,6 +150,14 @@ function LoginPageInner() {
   }
 
   const gUrl = mounted ? googleAuthUrl(redirectPath, window.location.origin) : '#';
+
+  /*
+    The redirect is already under way. Showing the sign-in form for the frame or
+    two the browser takes to leave would invite someone to start typing
+    credentials into a page that is about to vanish, so it says what is
+    happening instead.
+  */
+  if (signedIn) return <SignedInNotice />;
 
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-center gap-8 lg:flex-row lg:items-center lg:gap-16">
