@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 import { siteConfig } from "@/config/site.config";
+import { useSession } from "@/lib/auth/session";
 const ANNOUNCEMENT_MESSAGES = [
   "Liffio sends your first automated DM in under 5 minutes - Get Started Free",
   "New: Post Scheduler now live - schedule Instagram feed posts from Liffio",
@@ -48,6 +49,63 @@ const mobileNavLinkClass =
 const mobileNavLinkActiveClass =
   "px-4 py-3 text-sm font-semibold text-[#f5184c] bg-[#fff7f7] rounded-xl transition-colors";
 
+/*
+  The CTA slot, and why it is a one-cell grid rather than a ternary.
+
+  🚩 Every variant of the CTA block is rendered into the SAME grid cell, all the
+  time, and only VISIBILITY is switched. `visibility: hidden` keeps an element
+  in layout, so the slot is permanently as wide as its widest variant and the
+  header cannot shift when the answer arrives. A ternary that swapped "Log in +
+  Get Started Free" for one "Go to Dashboard" would change the slot's width, and
+  on desktop the nav is `flex-1 justify-center` BETWEEN the logo and this slot,
+  so every nav link would visibly jump. A hard-coded min-width would work until
+  a font or a label changed; this cannot drift.
+
+  `visibility: hidden` also removes the inactive variants from the tab order and
+  the accessibility tree, so a keyboard or screen reader user is never offered a
+  "Log in" that is not on screen.
+
+  🚩 The cost of rendering every variant is that the app.liffio.com link is in
+  the prerendered HTML of every public page, whether or not it is on screen.
+  Hence `rel="nofollow"` on it: app.liffio.com is a signed-in destination, not
+  something the marketing site is voting for, and the brief is explicit that
+  none of this may change indexing behaviour.
+*/
+const CELL = { gridArea: "1 / 1" } as const;
+
+/*
+  🚩 NO TRANSITION ON THE SWAP, deliberately, and this was a bug before it was a
+  rule. With `transition-opacity` on these layers, which CTA is on screen became
+  dependent on a transition actually running to completion: in a throttled tab
+  (backgrounded, or under CDP automation) the browser pauses transitions, the
+  layer keeps `opacity: 0` despite computing to `opacity-100`, and the header is
+  left showing NO call to action at all. A fade is decoration; which button a
+  signed-in customer sees is not. The swap is now a single instantaneous style
+  change that cannot be interrupted, paused or left half-applied.
+
+  Same reason the controls inside these layers avoid `transition-all`:
+  `visibility` is inherited AND animatable, so `transition-all` on a child makes
+  an inherited visibility flip a discrete transition that lands halfway through
+  the duration rather than immediately.
+*/
+const layerClass = (shown: boolean) =>
+  `flex items-center ${shown ? "visible" : "invisible"}`;
+
+/*
+  While the session answer is in flight the slot shows neutral pills, never a
+  guess. Each is narrower than the real control it stands in for, so the
+  skeleton can never be the variant that decides the slot's width.
+*/
+function CtaSkeleton({ shown, sizes }: { shown: boolean; sizes: string[] }) {
+  return (
+    <div style={CELL} aria-hidden="true" className={`${layerClass(shown)} gap-2`}>
+      {sizes.map((size) => (
+        <div key={size} className={`${size} animate-pulse rounded-lg bg-gray-100`} />
+      ))}
+    </div>
+  );
+}
+
 /**
  * Is this link the page being viewed?
  *
@@ -85,6 +143,31 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [announcementIndex, setAnnouncementIndex] = useState(0);
+
+  /*
+    One call, for the whole site. Navbar is the only consumer, and the store
+    behind this hook collapses concurrent callers into one request, so adding
+    more consumers later costs no extra traffic. See src/lib/auth/session.ts.
+
+    🚩 This picks a button. It is NOT authorization and must never gate content,
+    copy or any action: it can be stale the moment it is read, because the
+    visitor may have signed out in another tab. Real authorization happens in
+    the app, against the cookie, on the server.
+
+    'error' is deliberately folded in with 'unauthenticated' here and nowhere
+    else: if the API is down or the answer is unreadable, the marketing site
+    shows its ordinary signed-out CTAs and carries on. It never blocks, never
+    shows an error, and never offers a Dashboard it cannot vouch for.
+
+    `session.user` (id, name, email) is available for a "Hi <name>" greeting.
+    It is deliberately not used: a name is arbitrary-width and would either
+    reintroduce the layout shift the slot below exists to prevent, or need
+    truncation rules of its own. The data is one line away when it is wanted.
+  */
+  const session = useSession();
+  const authed = session.status === "authenticated";
+  const checking = session.status === "loading";
+  const signedOut = !authed && !checking;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -146,45 +229,83 @@ export default function Navbar() {
               })}
             </nav>
 
-            <div className="hidden flex-shrink-0 items-center gap-2 lg:flex">
-              <a
-                href={siteConfig.urls.appLogin}
-                data-cta="navbar_login"
-                className="rounded-lg px-4 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-[#0a0a0a]"
-              >
-                Log in
-              </a>
-              <a
-                href={siteConfig.urls.appSignup}
-                data-cta="navbar_signup"
-                data-signup-cta="true"
-                className="rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg active:scale-[0.98]"
-                style={{
-                  background: "linear-gradient(135deg, #f5184c, #b20d8f)",
-                  boxShadow: "0 2px 12px rgba(178, 13, 143,0.28)",
-                }}
-              >
-                Get Started Free
-              </a>
+            <div className="hidden flex-shrink-0 grid-cols-1 items-center justify-items-end lg:grid">
+              <div style={CELL} className={`${layerClass(signedOut)} gap-2`}>
+                <a
+                  href={siteConfig.urls.appLogin}
+                  data-cta="navbar_login"
+                  className="rounded-lg px-4 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-[#0a0a0a]"
+                >
+                  Log in
+                </a>
+                <a
+                  href={siteConfig.urls.appSignup}
+                  data-cta="navbar_signup"
+                  data-signup-cta="true"
+                  className="rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-[opacity,box-shadow,transform] duration-200 hover:opacity-90 hover:shadow-lg active:scale-[0.98]"
+                  style={{
+                    background: "linear-gradient(135deg, #f5184c, #b20d8f)",
+                    boxShadow: "0 2px 12px rgba(178, 13, 143,0.28)",
+                  }}
+                >
+                  Get Started Free
+                </a>
+              </div>
+
+              <div style={CELL} className={layerClass(authed)}>
+                <a
+                  href={siteConfig.urls.appBase}
+                  data-cta="navbar_dashboard"
+                  rel="nofollow"
+                  className="rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-[opacity,box-shadow,transform] duration-200 hover:opacity-90 hover:shadow-lg active:scale-[0.98]"
+                  style={{
+                    background: "linear-gradient(135deg, #f5184c, #b20d8f)",
+                    boxShadow: "0 2px 12px rgba(178, 13, 143,0.28)",
+                  }}
+                >
+                  Go to Dashboard
+                </a>
+              </div>
+
+              <CtaSkeleton shown={checking} sizes={["h-9 w-14", "h-10 w-32"]} />
             </div>
 
             <div className="flex items-center gap-0.5 sm:gap-1 lg:hidden">
-              <a
-                href={siteConfig.urls.appSignup}
-                data-cta="navbar_signup"
-                data-signup-cta="true"
-                className="hidden min-[400px]:inline-flex rounded-lg px-3 py-2 text-xs font-semibold text-white sm:text-sm"
-                style={{ background: "linear-gradient(135deg, #f5184c, #b20d8f)" }}
-              >
-                Sign up
-              </a>
-              <a
-                href={siteConfig.urls.appLogin}
-                data-cta="navbar_login"
-                className="px-2 py-2 text-xs font-medium text-gray-500 hover:text-gray-900 sm:px-3 sm:text-sm"
-              >
-                Log in
-              </a>
+              {/* Same one-cell grid as desktop, so the hamburger never moves. */}
+              <div className="grid grid-cols-1 items-center justify-items-end">
+                <div style={CELL} className={`${layerClass(signedOut)} gap-0.5 sm:gap-1`}>
+                  <a
+                    href={siteConfig.urls.appSignup}
+                    data-cta="navbar_signup"
+                    data-signup-cta="true"
+                    className="hidden min-[400px]:inline-flex rounded-lg px-3 py-2 text-xs font-semibold text-white sm:text-sm"
+                    style={{ background: "linear-gradient(135deg, #f5184c, #b20d8f)" }}
+                  >
+                    Sign up
+                  </a>
+                  <a
+                    href={siteConfig.urls.appLogin}
+                    data-cta="navbar_login"
+                    className="px-2 py-2 text-xs font-medium text-gray-500 hover:text-gray-900 sm:px-3 sm:text-sm"
+                  >
+                    Log in
+                  </a>
+                </div>
+
+                <div style={CELL} className={layerClass(authed)}>
+                  <a
+                    href={siteConfig.urls.appBase}
+                    data-cta="navbar_dashboard"
+                    rel="nofollow"
+                    className="rounded-lg px-3 py-2 text-xs font-semibold text-white sm:text-sm"
+                    style={{ background: "linear-gradient(135deg, #f5184c, #b20d8f)" }}
+                  >
+                    Dashboard
+                  </a>
+                </div>
+
+                <CtaSkeleton shown={checking} sizes={["h-8 w-16"]} />
+              </div>
               <button
                 type="button"
                 onClick={() => setMenuOpen(!menuOpen)}
@@ -225,15 +346,32 @@ export default function Navbar() {
                 );
               })}
             </nav>
-            <a
-              href={siteConfig.urls.appSignup}
-              data-cta="navbar_signup"
-              data-signup-cta="true"
-              className="block w-full rounded-xl py-3.5 text-center text-sm font-semibold text-white"
-              style={{ background: "linear-gradient(135deg, #f5184c, #b20d8f)" }}
-            >
-              Get Started Free →
-            </a>
+            {/*
+              The drawer needs no placeholder: it can only be opened by a tap,
+              which is long after hydration, so the session answer is in hand by
+              then. A plain conditional is honest here and keeps the markup flat.
+            */}
+            {authed ? (
+              <a
+                href={siteConfig.urls.appBase}
+                data-cta="navbar_dashboard"
+                rel="nofollow"
+                className="block w-full rounded-xl py-3.5 text-center text-sm font-semibold text-white"
+                style={{ background: "linear-gradient(135deg, #f5184c, #b20d8f)" }}
+              >
+                Go to Dashboard →
+              </a>
+            ) : (
+              <a
+                href={siteConfig.urls.appSignup}
+                data-cta="navbar_signup"
+                data-signup-cta="true"
+                className="block w-full rounded-xl py-3.5 text-center text-sm font-semibold text-white"
+                style={{ background: "linear-gradient(135deg, #f5184c, #b20d8f)" }}
+              >
+                Get Started Free →
+              </a>
+            )}
           </div>
         ) : null}
       </header>

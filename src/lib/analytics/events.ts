@@ -39,6 +39,10 @@ export const CTA_BUTTONS = [
   "hero_start_free",
   "navbar_login",
   "navbar_signup",
+  // Shown in place of login/signup when the backend says this visitor already
+  // has a session. Deliberately NOT carrying data-signup-cta: an existing
+  // customer heading for their dashboard is not a signup funnel step.
+  "navbar_dashboard",
   "pricing_start_free",
   "pricing_upgrade",
   "creator_program",
