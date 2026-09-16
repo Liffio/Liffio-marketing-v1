@@ -1,3 +1,5 @@
+import { cookieDomainAttribute } from '../cookie-scope';
+
 const REF_KEY = '_ref';
 const REF_TS_KEY = '_ref_ts';
 const REF_CLIENT_KEY = '_ref_client';
@@ -62,7 +64,23 @@ export function captureReferralFromUrl(search: string): string | null {
   try {
     setWithTs(sessionStorage, ref);
     setWithTs(localStorage, ref);
-    document.cookie = `${REF_CLIENT_KEY}=${encodeURIComponent(ref)}; max-age=${Math.floor(TTL_MS / 1000)}; path=/; SameSite=Lax`;
+    /*
+      🚩 The host-only copy is deleted FIRST, and that order is the point.
+
+      This cookie used to be written with no domain, so it lived on liffio.com
+      alone and app.liffio.com could not read it. Adding a domain does not
+      overwrite that older cookie: a host-only `_ref_client` and a
+      `.liffio.com` `_ref_client` are two DIFFERENT cookies that coexist, both
+      come back from `document.cookie`, and the read below would take whichever
+      the browser happens to list first. For a returning visitor who was
+      referred twice that is a stale affiliate code winning over the current
+      one, which is attribution, which is money. Clearing the old one on every
+      write makes the pair impossible.
+    */
+    document.cookie = `${REF_CLIENT_KEY}=; max-age=0; path=/`;
+    document.cookie =
+      `${REF_CLIENT_KEY}=${encodeURIComponent(ref)}` +
+      `; max-age=${Math.floor(TTL_MS / 1000)}; path=/; SameSite=Lax${cookieDomainAttribute()}`;
   } catch { /* storage blocked */ }
   return ref;
 }
@@ -89,6 +107,15 @@ export function clearStoredReferralCode() {
     sessionStorage.removeItem(REF_TS_KEY);
     localStorage.removeItem(REF_KEY);
     localStorage.removeItem(REF_TS_KEY);
+    /*
+      Both scopes, because a delete only matches a cookie of the SAME domain.
+      Clearing just one would leave the other in place and "cleared" would be a
+      lie: the next read would still find a code. The first line covers the
+      host-only cookie written before this moved to `.liffio.com`, the second
+      covers the current one.
+    */
     document.cookie = `${REF_CLIENT_KEY}=; max-age=0; path=/`;
+    const domain = cookieDomainAttribute();
+    if (domain) document.cookie = `${REF_CLIENT_KEY}=; max-age=0; path=/${domain}`;
   } catch { /* ignore */ }
 }
