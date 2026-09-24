@@ -20,10 +20,10 @@ import { join } from "path";
 const PUBLICATION_DATES: Partial<Record<PolicySlug, string>> = {
   "acceptable-use-policy": "15 September 2026",
   "cookie-policy": "15 September 2026",
-  "creators-program-policy": "15 September 2026",
+  "creators-program-policy": "25 September 2026",
   "refund-policy": "15 September 2026",
   "shipping-delivery-policy": "15 September 2026",
-  "terms-and-conditions": "15 September 2026",
+  "terms-and-conditions": "25 September 2026",
   // Published in the same change that resolved its Grievance Officer name and
   // dropped the Stripe reference the old text still carried.
   "privacy-policy": "15 September 2026",

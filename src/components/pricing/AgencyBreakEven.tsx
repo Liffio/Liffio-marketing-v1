@@ -122,8 +122,8 @@ export default function AgencyBreakEven({ plans }: { plans: PricingPlan[] }) {
         eyebrow="The Agency question"
         title={`At ${firstWinningCount} accounts, Agency stops being an upgrade and becomes the cheaper option.`}
       >
-        Agency is not a feature tier: it&rsquo;s {MAX_ACCOUNTS} Business workspaces bought
-        together. Drag to the number of Instagram accounts you actually run.
+        Agency is {MAX_ACCOUNTS} Business workspaces bought together, with agency branding on
+        top. Drag to the number of Instagram accounts you actually run.
       </SectionHead>
 
       <div className="relative overflow-hidden rounded-[22px] bg-[#151119] px-5 pb-8 pt-9 text-white sm:px-8">
@@ -145,18 +145,16 @@ export default function AgencyBreakEven({ plans }: { plans: PricingPlan[] }) {
               Individual Business subscriptions vs one Agency bill
             </h3>
             {/*
-              True today, and true for a measurable reason: Agency and Business are
-              identical on every limit in package_limits: workflows 150/150,
-              schedulerPostsPerDay 200/200, teamMembers 15/15, dmFollowUps 5/5, and
-              Agency holds every package_features child Business holds.
+              Agency is everything in Business, per workspace, plus agency branding
+              and hide Liffio branding (docs/decisions/0005). So "identical" would
+              be false; "every Business feature and limit" is the true half.
 
-              ⚠️ It is ALSO true because all seven agency:* capabilities are granted
-              to no package (stage B6). The day white-label is actually granted,
-              this sentence becomes false and must change.
+              ⚠️ Say nothing broader about white label here. Client workspaces,
+              custom domains and theme colour are not switched on.
             */}
             <p className="m-0 max-w-[48ch] text-[13.5px] text-[#A9A1B0]">
-              Identical features either way. The only variable is how many accounts
-              you&rsquo;re paying for.
+              Every Business feature and limit either way. The only variable is how many
+              accounts you&rsquo;re paying for.
             </p>
           </div>
           <div className="text-left sm:text-right">

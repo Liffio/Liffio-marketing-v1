@@ -8,16 +8,17 @@ import { planWorkspacesIncluded, type PricingPlan } from "@/config/pricing.confi
  * cannot describe a tier the page does not show - the same derivation that
  * turned "Four tiers" into a count instead of a literal.
  *
- * Every claim here is checked against the packages catalogue:
- *   Free      one account            - workspacesIncluded 1
- *   Business  approval step, seats   - Approval workflow module, teamMembers 15
- *   Agency    twenty workspaces      - workspacesIncluded 20
+ * Every claim here is in the live plan table (docs/decisions/0005):
+ *   Free      unlimited DMs, full scheduler, 3 workflows, one workspace
+ *   Growth    post metrics, templates, AI insights
+ *   Business  approval workflow, custom permissions, automation attribution
+ *   Agency    twenty workspaces
  *   Agency    cheaper than Growth    - $549/20 = $27.45 against Growth's $29
  */
 const POSITIONING: Record<string, { headline: string; body: string; verb: string }> = {
   Free: {
     headline: "Prove it on your account.",
-    body: "One real automation, end to end, on one Instagram account.",
+    body: "Unlimited DMs, the full post scheduler and three workflows, on one Instagram account.",
     verb: "proves it",
   },
   Starter: {
@@ -27,12 +28,12 @@ const POSITIONING: Record<string, { headline: string; body: string; verb: string
   },
   Growth: {
     headline: "See what's actually working.",
-    body: "Post-level analytics, content templates and deeper automation, for the creator still working alone.",
+    body: "Post metrics, content templates and AI insights, for the creator deciding from data.",
     verb: "measures it",
   },
   Business: {
     headline: "One account, run by a team.",
-    body: "Seats with real permissions, an approval step before anything publishes, and attribution that names the winner.",
+    body: "Custom permissions, an approval step before anything publishes, and attribution that names the winner.",
     verb: "delegates it",
   },
   Agency: {

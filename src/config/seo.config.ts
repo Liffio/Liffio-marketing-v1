@@ -172,9 +172,9 @@ export const pageSeo = {
       // "unlimited Instagram accounts" was removed here for the same reason it
       // was removed from the cards, the FAQ and llms.txt: workspacesIncluded is
       // 1 on every tier but Agency. See docs/decisions/0002.
-      // "unlimited automated DMs" stays qualified with "on paid plans", Free
-      // is capped at 500 DMs/month.
-      "Free plan, no credit card. From $9/mo, or ₹499/mo in India, GST included on a GST invoice. One account per workspace, unlimited automated DMs on paid plans.",
+      // "unlimited automated DMs" is true of every plan, Free included
+      // (docs/decisions/0005).
+      "Free plan, no credit card. From $9/mo, or ₹499/mo in India, GST included on a GST invoice. One account per workspace, unlimited automated DMs on every plan.",
     pathname: "/pricing",
   }),
   signup: {
@@ -211,11 +211,11 @@ export const pageSeo = {
     pathname: "/affiliate",
   }),
   creatorsProgram: buildPageMetadata({
-    // 617px -> 535px. Trailing "Creators" dropped as redundant with "Creators
-    // Program"; "Instagram" kept because it is the keyword doing the work.
-    title: "Liffio Creators Program: Free Business Plan for Instagram",
+    // The trade is in the title itself: "Free Business Plan" read as no catch.
+    // 60 characters against the old 57, so it truncates no worse in results.
+    title: "Liffio Creators Program: Business Features for Your Branding",
     description:
-      "Qualifying creators with 5K to 100K followers get Liffio’s Business plan free. Apply in 2 minutes. No credit card. Up to 50 spots available.",
+      "Instagram creators with 5K to 100K followers get every Liffio Business feature free, in exchange for keeping Liffio branding on. Apply in 2 minutes.",
     pathname: "/creators-program",
   }),
 } as const;

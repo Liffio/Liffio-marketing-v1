@@ -26,7 +26,7 @@ Liffio is a software platform that helps businesses and creators automate Instag
 - Bio link pages and short links with click analytics
 - Analytics and reporting on your automations and Instagram account
 - Lyra, our AI assistant, where available
-- Team accounts, and client workspaces on the Agency plan
+- Team accounts, and 20 workspaces on the Agency plan
 - The Creators Program and the Affiliate Program
 
 The features available to you depend on your plan, as shown on our pricing page. Some features listed on our pricing page are marked as not included on a given plan; those are not part of what you are buying.
@@ -95,9 +95,9 @@ The Creators Program is covered by our Creators Program Policy.
 
 The Affiliate Program, including commission rates, payouts, and rules, is covered by our Affiliate Program Policy. On affiliate matters, the Affiliate Program Policy applies.
 
-## 11. Agencies and client workspaces
+## 11. Agencies managing client accounts
 
-**11.1** The Agency plan lets you manage several client Instagram accounts as separate workspaces under one subscription, with client roles for the people who work on them.
+**11.1** The Agency plan includes 20 workspaces on one subscription, each connecting one Instagram account. You may use them to manage Instagram accounts on behalf of your clients.
 
 **11.2** Instagram's login screen shows Liffio's name when an account is connected. You must tell your clients, in your own terms or privacy notice, that you use a third-party platform to manage their Instagram accounts.
 

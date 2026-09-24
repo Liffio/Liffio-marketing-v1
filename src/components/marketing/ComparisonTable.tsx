@@ -6,13 +6,13 @@ type ComparisonRow = {
 
 // Row set follows docs/decisions/0002-unsupported-feature-claims.md and 0004:
 // one workspace connects exactly one Instagram account (`workspacesIncluded` is 1
-// on every plan except Agency, which has 20), and unlimited DMs are a paid-plan
-// fact. The agency white-label row is dropped pending stage B6 and the external
-// API row pending stage D4; do not restore either row here.
+// on every plan except Agency, which has 20), and unlimited DMs are true of every
+// plan, Free included (docs/decisions/0005). No agency white-label row: only
+// agency branding ships, and client workspaces and custom domains do not.
 const DEFAULT_ROWS: ComparisonRow[] = [
   { name: "Comment-to-DM", liffio: true, competitor: true },
   { name: "Story auto reply", liffio: true, competitor: true },
-  { name: "Unlimited DMs (paid plans)", liffio: true, competitor: false },
+  { name: "Unlimited DMs (every plan)", liffio: true, competitor: false },
   { name: "Free plan", liffio: true, competitor: "limited" },
   { name: "Instagram accounts per subscription", liffio: "1 per workspace (Agency: 20)", competitor: false },
   { name: "Bio link pages", liffio: true, competitor: false },

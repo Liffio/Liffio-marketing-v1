@@ -6,9 +6,9 @@ This Creators Program Policy ("Policy") governs the Liffio Creators Program. By 
 
 ## 1. What is the Creators Program?
 
-The Liffio Creators Program is an invite-only program that gives selected Instagram creators free access to the Liffio Business plan (worth $59/month, or ₹2,499/month in India).
+The Liffio Creators Program is an invite-only program that gives selected Instagram creators free access to everything in the Liffio Business plan (worth $59/month, or ₹2,499/month in India), except turning off Liffio branding.
 
-In exchange, creators actively use Liffio and keep a short "Powered by @getliffio" line in their automated DMs, which Liffio adds automatically.
+In exchange, creators actively use Liffio and keep Liffio branding on. This is the trade for free access, and creators cannot turn it off. Liffio adds the branding automatically, as set out in Section 6.2.
 
 It works for both sides: creators get a strong automation tool at no cost, and Liffio gets real-world use and organic exposure.
 
@@ -49,11 +49,12 @@ Membership is not exclusive. We may accept several creators from the same niche,
 
 For as long as you remain an active, compliant member, you get at no cost:
 
-- Full access to Liffio Business plan features, as listed on our pricing page
+- Every Liffio Business plan feature and limit, as listed on our pricing page, except turning off Liffio branding
+- API access with the Business plan's API limits: 1,000 requests, 400 automations and 400 scheduled posts a day, and 15 API keys
 - No monthly cap on automated DMs. Meta's sending limits still apply, and Liffio applies them for you.
-- Priority support
+- Priority email support
 
-Creator access does not include white label features, API access, or Agency plan features.
+Creator access does not include turning off Liffio branding, or any Agency plan feature, such as additional workspaces, agency branding, or hiding Liffio branding.
 
 Access is month to month and depends on following this Policy. There is no guaranteed minimum period.
 
@@ -72,7 +73,13 @@ There is no minimum number of DMs. Do not try to increase message volume artific
 
 ### 6.2 Program tag
 
-While you are in the program, Liffio automatically adds "Powered by @getliffio" to automated DMs sent from your account. You must not try to hide, remove, or work around it.
+While you are in the program, Liffio automatically adds three pieces of branding (together, the "program tag"):
+
+- **In your automated DMs:** a closing line, written as your own recommendation, that reads "I automate my DMs with @Liffio" and ends with a link to Liffio. It is text with a link, not a button.
+- **A branded follow-up DM:** a separate message sent a few minutes after the first, with a "Get the tool now!" button that links to Liffio. It is sent whenever an automation has no follow-up steps of its own.
+- **On your bio link page:** the "Powered by @Liffio" badge, which links to Liffio.
+
+You must not try to hide, remove, or work around any of them.
 
 ### 6.3 Disclosure
 

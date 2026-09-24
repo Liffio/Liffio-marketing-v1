@@ -156,6 +156,12 @@ export default function EditorialPlanCard({
   // vanishing - the same reason PositioningStrip filters instead of assuming.
   const features = content?.features ?? plan.features.filter((f) => f.included).map((f) => f.text);
   const limits = content?.limits ?? [];
+  // Two groups, same treatment. API limits get their own heading so a buyer
+  // cannot read "Scheduled posts / day" as a cap on scheduling in the app.
+  const limitGroups = [
+    { label: content?.limitsLabel, rows: limits },
+    { label: content?.apiLimitsLabel, rows: content?.apiLimits ?? [] },
+  ].filter((group) => group.rows.length > 0);
 
   return (
     /*
@@ -310,16 +316,16 @@ export default function EditorialPlanCard({
         ))}
       </ul>
 
-      {limits.length > 0 ? (
-        <>
+      {limitGroups.map((group, index) => (
+        <div key={group.label ?? index} className={index === 0 ? "mt-auto" : ""}>
           <p
-            className="mb-2 mt-auto border-t border-[#F1ECE5] pt-3.5 text-[9.5px] font-medium uppercase tracking-[0.11em] text-[#8B8391]"
+            className="mb-2 border-t border-[#F1ECE5] pt-3.5 text-[9.5px] font-medium uppercase tracking-[0.11em] text-[#8B8391]"
             style={{ fontFamily: "var(--font-mono, ui-monospace, monospace)" }}
           >
-            {content?.limitsLabel}
+            {group.label}
           </p>
-          <dl className="grid gap-1">
-            {limits.map((limit) => (
+          <dl className={`grid gap-1 ${index < limitGroups.length - 1 ? "mb-3.5" : ""}`}>
+            {group.rows.map((limit) => (
               <div key={limit.label} className="flex justify-between gap-2 text-[11.5px]">
                 <dt className="text-[#8B8391]">
                   {limit.label}
@@ -334,8 +340,8 @@ export default function EditorialPlanCard({
               </div>
             ))}
           </dl>
-        </>
-      ) : null}
+        </div>
+      ))}
     </div>
   );
 }

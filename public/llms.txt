@@ -17,17 +17,19 @@ Liffio connects to Instagram via official OAuth, with no passwords stored. After
 
 ## Pricing (USD, billed monthly)
 
-- Free: $0/month: 3 automation workflows, comment keyword triggers, bio link page, basic analytics
-- Starter: $9/month ($7.50/month billed annually): all automation types, unlimited templates, post scheduler, short links, lead capture
-- Growth (coming soon, announced but not yet available for purchase): $29/month ($24.17/month billed annually). Everything in Starter plus post, video and profile analytics, caption and schedule templates, bulk upload, 5 seats
-- Business: $59/month ($49.17/month billed annually): everything in Starter plus conversion analytics, team members (15 seats), account-level insights, follow-up sequences
-- Agency: $549/month ($457.50/month billed annually): 20 workspaces, each a complete Business workspace, on one subscription with one invoice and one renewal date, plus a dedicated account manager, affiliate program management and SLA-backed priority support
+DMs are unlimited on every plan, Free included. No plan has a DM cap.
+
+- Free: $0/month: comment to DM automation (keywords, excluded keywords, any comment, public replies, reply variants, DM button), the full post scheduler (feed, reels, stories, carousels, media library, first comment, music, alt text, cover selection, timezone scheduling), leads list and timeline, bio link, short links, team invites and roles, affiliate programme, audit log, two factor authentication. Limits: 3 automation workflows, 0 DM follow-ups, 1 team member, 1 workspace, 1,000 AI tokens a month, no API
+- Starter: $9/month ($7.50/month billed annually): everything in Free plus trigger blocks (the multi-keyword builder), turn off Liffio branding, follow before DM, bio link styling (custom slug, hide badge, icons, thumbnails, item visibility, click tracking), short link custom slugs, lead export, conversion rate and time series analytics, API access. Limits: 25 workflows, 2 DM follow-ups, 3 team members, 10,000 AI tokens a month. API limits (Liffio API calls, not app usage): 200 requests, 50 automations and 50 scheduled posts a day, 5 API keys
+- Growth: $29/month ($24.17/month billed annually): everything in Starter plus bulk upload, caption templates, schedule templates, hashtag groups, post metrics, video metrics, profile outcomes, AI insights. Limits: 100 workflows, 5 DM follow-ups, 5 team members, 30,000 AI tokens a month. API limits (Liffio API calls, not app usage): 500 requests, 150 automations and 150 scheduled posts a day, 10 API keys
+- Business: $59/month ($49.17/month billed annually): everything in Growth plus an approval workflow (approve posts, activity log), custom permissions, analytics export, automation attribution. Limits: 250 workflows, 10 DM follow-ups, 15 team members, 75,000 AI tokens a month with rollover up to 25,000. API limits (Liffio API calls, not app usage): 1,000 requests, 400 automations and 400 scheduled posts a day, 15 API keys
+- Agency: $549/month ($457.50/month billed annually): everything in Business plus 20 workspaces on one bill and one billing date, agency branding and hide Liffio branding. Every limit above is per workspace, across the 20
 
 Annual billing charges 10 months instead of 12, so two months are free.
 
 US dollar prices are billed as an export. No Indian GST applies. Prices shown in rupees include GST, so the amount shown is the amount charged, and a GST tax invoice is issued for every payment.
 
-India pricing available via Razorpay in INR, incl. GST: Free ₹0, Starter ₹499, Growth ₹1,499 (coming soon), Business ₹2,499, Agency ₹22,999 per month. Every plan connects one Instagram account per workspace (Agency includes 20 workspaces). Every paid plan includes unlimited automated DMs.
+India pricing available via Razorpay in INR, incl. GST: Free ₹0, Starter ₹499, Growth ₹1,499, Business ₹2,499, Agency ₹22,999 per month. Every plan connects one Instagram account per workspace (Agency includes 20 workspaces). Every plan, Free included, includes unlimited automated DMs.
 
 ## Key facts
 
