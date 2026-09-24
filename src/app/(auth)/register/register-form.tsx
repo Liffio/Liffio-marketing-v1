@@ -9,6 +9,8 @@ import { readReferralCodeFromSearch, getStoredReferralCode, getReferralPayloadFo
 import { AuthCard, Button, CheckIcon, ErrorMsg, EyeIcon, GoogleIcon, Input, Label, OrDivider, SignedInNotice } from '@/lib/auth/ui';
 import { useRedirectWhenSignedIn } from '@/lib/auth/app-redirect';
 import { CountrySelect, isKnownCountryCode } from '@/lib/auth/countries';
+import { precheckRegistration } from './actions';
+import { signupEmailError, splitEmail } from '@/lib/auth/email-rules';
 import { trackFormStart, trackFormError, trackFormSubmit, trackFormAbandon, trackSignupStep, identifyUser } from '@/lib/analytics/analytics';
 
 function strengthScore(pw: string): number {
@@ -39,6 +41,7 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
   const [refValid, setRefValid] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [mounted, setMounted] = useState(false);
 
   /*
@@ -105,6 +108,13 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
 
   const gUrl = mounted ? googleAuthUrl(redirectPath || '/dashboard', window.location.origin) : '#';
 
+  function showEmailError(message: string) {
+    setEmailError(message);
+    const field = document.getElementById('email');
+    field?.focus();
+    field?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (pw !== cpw || !agreed) {
@@ -112,8 +122,24 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
       return;
     }
     setError('');
+    const ruleError = signupEmailError(email);
+    if (ruleError) {
+      trackFormError('signup');
+      showEmailError(ruleError);
+      return;
+    }
     setLoading(true);
     try {
+      // Server-side domain check before the API sees the signup. Only "@domain" is sent, never the
+      // part before the "@". A failed call (network, deploy skew) is not a verdict, so it falls
+      // through to register rather than blocking.
+      const precheck = await precheckRegistration(`@${splitEmail(email)?.domain ?? ''}`).catch(() => null);
+      if (precheck && !precheck.ok) {
+        trackFormError('signup');
+        showEmailError(precheck.error);
+        return;
+      }
+
       const refPayload = getReferralPayloadForRegister();
       const result = await register({
         name: `${firstName} ${lastName}`.trim(),
@@ -194,7 +220,21 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
 
           <div className="space-y-1.5">
             <Label htmlFor="email">Email address</Label>
-            <Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} onFocus={markFormStarted} type="email" required autoComplete="email" placeholder="you@brand.com" />
+            <Input
+              id="email"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setEmailError(''); }}
+              onFocus={markFormStarted}
+              onBlur={() => { if (email.trim()) setEmailError(signupEmailError(email) ?? ''); }}
+              type="email"
+              required
+              autoComplete="email"
+              placeholder="you@brand.com"
+              error={!!emailError}
+              aria-invalid={!!emailError}
+              aria-describedby={emailError ? 'email-error' : undefined}
+            />
+            {emailError && <p id="email-error" role="alert" className="text-xs text-destructive">{emailError}</p>}
           </div>
 
           <div className="space-y-1.5">

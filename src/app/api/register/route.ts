@@ -5,8 +5,20 @@ import {
   sendPreRegistrationAlert,
 } from '@/lib/email/index'
 import { liffioMarketingFetch, getLiffioMarketingUrl } from '@/lib/liffio-api'
+import { emailDomain, isDisposableEmail } from '@/lib/email-domain-check.server'
+import { signupEmailError } from '@/lib/auth/email-rules'
+import { clientIp, createRateLimiter } from '@/lib/rate-limit.server'
+
+const registerLimiter = createRateLimiter({ limit: 10, windowMs: 10 * 60 * 1000 })
 
 export async function POST(request: NextRequest) {
+  if (!registerLimiter(clientIp(request.headers))) {
+    return NextResponse.json(
+      { error: 'Too many attempts. Please wait a few minutes and try again.' },
+      { status: 429 },
+    )
+  }
+
   try {
     const body = await request.json()
     const { name, email, device, source } = body
@@ -16,8 +28,18 @@ export async function POST(request: NextRequest) {
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
+    if (typeof email !== 'string' || !emailRegex.test(email) || !emailDomain(email)) {
       return NextResponse.json({ error: 'Invalid email format' }, { status: 400 })
+    }
+
+    const ruleError = signupEmailError(email)
+    if (ruleError) {
+      return NextResponse.json({ error: ruleError }, { status: 400 })
+    }
+
+    // Fails open: null (checker unavailable) lets the signup continue.
+    if ((await isDisposableEmail(email)) === true) {
+      return NextResponse.json({ error: 'Please use a permanent email address.' }, { status: 400 })
     }
 
     const { ok, status, data } = await liffioMarketingFetch<{
