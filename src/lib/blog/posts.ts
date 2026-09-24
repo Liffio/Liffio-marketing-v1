@@ -111,7 +111,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "June 1, 2026",
     author: "Liffio Team",
     publishedAt: "2026-06-01",
-    updatedAt: "2026-09-25",
+    updatedAt: "2026-06-01",
     gradient: "from-rose-500 to-rose-600",
     sections: [
       {
@@ -134,7 +134,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "ManyChat vs Liffio for Instagram-only work",
         paragraphs: [
-          "Both handle keyword comment-to-DM, story reply automations, and follow-up sequences. ManyChat has a longer track record and a huge template library. Liffio is built around Instagram growth workflows: unlimited automated DMs on every plan, post scheduling, bio links, and short links in the same account.",
+          "Both handle keyword comment-to-DM, story reply automations, and follow-up sequences. ManyChat has a longer track record and a huge template library. Liffio is built around Instagram growth workflows: unlimited automated DMs on every paid plan, post scheduling, bio links, and short links in the same account.",
           "ManyChat's free tier is workable for experiments but tight for always-on Instagram campaigns. Liffio's free plan is meant to run comment-to-DM in production, not just as a demo.",
           "If you already invested months in ManyChat flows, migration is mostly copy and recreate, not a magic import button. Budget an hour per active automation.",
         ],
@@ -144,7 +144,7 @@ export const BLOG_POSTS: BlogPost[] = [
         paragraphs: [
           "SendDM and LinkDM are focused products. You get comment-to-DM and related Instagram triggers without much else. That is great if you want minimal UI and you already use separate tools for scheduling and analytics.",
           "SuperProfile leans hard into bio link storefronts. Automation exists, but the product story centers the link-in-bio page. Creators who live in the bio page often start there; creators who live in Reels comments often want the automation product first.",
-          "Zorcha is popular with Indian creators and agencies who want local pricing and support hours that match IST. Compare feature parity on live automation and team members, not just the rupee price on the landing page.",
+          "Zorcha is popular with Indian creators and agencies who want local pricing and support hours that match IST. Compare feature parity on live automation and team seats, not just the rupee price on the landing page.",
           "Liffio sits in the middle: Instagram automation is the core, but scheduling, go.liffio.com short links, and lead capture mean you can replace two or three subscriptions over time.",
         ],
       },
@@ -163,7 +163,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         question: "Is Liffio really free to start?",
         answer:
-          "Yes. You can connect Instagram and run comment-to-DM on the free plan without a card, with unlimited automated DMs. Paid plans add more automation workflows, DM follow-ups, and team members.",
+          "Yes. You can connect Instagram and run comment-to-DM on the free plan without a card. Paid plans add unlimited automated DMs, more automation slots, and team seats.",
       },
       {
         question: "Do agencies use Liffio?",

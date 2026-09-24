@@ -736,7 +736,7 @@ export default function FeaturesSection() {
             {[
               { label: "Auto DM + Auto Comment", color: "#ff7c49" },
               { label: "10 to 60s custom delay", color: "#f5184c" },
-              { label: "Unlimited auto DMs (every plan)", color: "#b20d8f" },
+              { label: "Unlimited auto DMs (paid)", color: "#b20d8f" },
             ].map((chip) => (
               <TechBadge key={chip.label} label={chip.label} variant="chip" accent={chip.color} />
             ))}

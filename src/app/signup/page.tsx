@@ -1,4 +1,5 @@
 import AppLink from "@/components/AppLink";
+import { FEATURE_BRANCHING_LOGIC, FEATURE_COLLECT_DATA_PROMPTS, FEATURE_SALE_TRACKING, FEATURE_STORY_REACTIONS, FEATURE_WELCOME_DM } from "@/config/feature-flags";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SignupForm from "@/components/SignupForm";
@@ -34,15 +35,17 @@ const FEATURES = [
     tag: "Core engine",
   },
   {
-    title: "Unlimited DMs",
+    title: "Full Conversion Analytics",
     description:
-      "No monthly DM cap and no per-contact fees on any plan, Free included. Send as many automated DMs as your posts earn.",
-    tag: "Every plan",
+      FEATURE_SALE_TRACKING
+        ? "Track every step: comment → DM → click → sale. Know exactly which posts, keywords, and flows are driving revenue - not just DM volume."
+        : "Track every step: comment → DM → click. Know exactly which posts, keywords, and flows are driving action - not just DM volume.",
+    tag: "Advanced",
   },
   {
-    title: "Full Post Scheduler",
+    title: "Smart Link Delivery",
     description:
-      "Schedule feed posts, reels, stories and carousels with a media library, first comment, music, alt text, cover selection and timezone scheduling.",
+      "Branded short links with click tracking and UTM attribution built into every automated DM. Every URL delivered is fully measurable end-to-end.",
     tag: "Built in",
   },
 ];
@@ -50,19 +53,18 @@ const FEATURES = [
 const QUICK_STATS = [
   { num: "24/7", label: "On autopilot" },
   { num: "24/7", label: "Runs on autopilot" },
-  { num: "Free", label: "Plan, no card" },
+  { num: "Free", label: "Starter plan" },
   { num: "10 to 60s", label: "Custom send delay" },
 ];
 
-// Shown beside "Get started for free", so every line here is on the Free plan
-// except the last, which says where it starts.
 const BENEFITS = [
-  "Unlimited automated DMs on every plan, Free included",
   "Auto-reply to every comment with a keyword trigger",
-  "Public replies, reply variants and a DM button",
-  "Schedule feed posts, reels, stories and carousels",
-  "A leads list and timeline, a bio link and short links",
-  "DM follow-ups and conversion analytics from Starter",
+  FEATURE_STORY_REACTIONS ? "Story mentions & reactions handled automatically" : "Story replies & mentions handled automatically",
+  FEATURE_BRANCHING_LOGIC ? "Multi-step DM sequences with conditional logic" : "Multi-step DM follow-up sequences",
+  ...(FEATURE_WELCOME_DM ? ["Welcome new followers with a personalised message"] : []),
+  FEATURE_COLLECT_DATA_PROMPTS ? "Collect emails and data directly inside DM chats" : "Capture emails shared inside DM chats",
+  "Timed follow-ups within active conversations",
+  FEATURE_SALE_TRACKING ? "Full analytics: comment → DM → click → sale" : "Full analytics: comment → DM → click",
 ];
 
 function Check() {
@@ -191,7 +193,7 @@ export default async function SignupPage() {
                     Get started for free
                   </h2>
                   <p className="text-sm text-gray-500">
-                    Unlimited automated DMs on every plan, Free included.
+                    Unlimited automated DMs on every paid plan - upgrade anytime.
                   </p>
                 </div>
 
@@ -270,9 +272,8 @@ export default async function SignupPage() {
               Content creator with 5K+ followers?
             </h2>
             <p className="text-gray-500 mb-6 max-w-xl mx-auto leading-relaxed">
-              Apply to the Liffio Creators Program and get everything in our Business plan ({businessPlanValue} value)
-              free, in exchange for active usage and keeping Liffio branding on your DMs and bio link
-              page.
+              Apply to the Liffio Creators Program and get our full Business plan ({businessPlanValue} value) for
+              completely free - in exchange for active usage.
             </p>
             <AppLink
               href="/creators-program"

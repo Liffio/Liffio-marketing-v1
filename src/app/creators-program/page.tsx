@@ -18,10 +18,11 @@ import {
 export async function generateMetadata(): Promise<Metadata> {
   const { region } = await getPricingContext();
   const { businessPlanValue: value } = await fetchMarketingPlansContext(region);
-  // `value` is "$59/mo" in USD and "₹2,499/mo" in INR. The trade (keeping Liffio
-  // branding on) is part of the sentence, not a footnote, and both variants
-  // stay under 155: 141 chars USD, 144 INR.
-  const description = `Get every Liffio Business feature (${value} value) free, in exchange for keeping Liffio branding on. For Instagram creators with 5K+ followers.`;
+  // `value` is "$59/mo" in USD and "₹2,499/mo" in INR, so the India rendering
+  // is 3 chars longer and used to truncate worse (158 chars USD / 161 INR).
+  // "at no cost" -> "free" and "our full" -> "the" brings both variants under
+  // 155: 147 chars USD, 150 INR.
+  const description = `Apply to the Liffio Creators Program and get the Business plan (${value} value) free - Instagram auto DM tool access for creators with 5K+ followers.`;
   return {
     ...pageSeo.creatorsProgram,
     description,

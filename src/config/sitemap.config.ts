@@ -36,9 +36,6 @@ import { getAllComparisonSlugs } from "@/config/comparisons.config";
  * free-tier-unlimited-DM and agency-white-label claims (docs/decisions/0002,
  * 0004); it legitimately touches most routes because those claims were spread
  * across the shared marketing configs every marketing route renders from.
- * 2026-09-25 is the plan update (docs/decisions/0005): the plan cards, matrix,
- * FAQs and "unlimited DMs on every plan, Free included" copy moved on every
- * route dated that day, and on all five /vs pages through the shared rows().
  */
 
 type SitemapEntry = {
@@ -52,10 +49,10 @@ type SitemapEntry = {
 /** Public, indexable marketing routes only (matches src/app route pages). */
 export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   // Hero, How-it-works, Features and SEO sections all had plan claims rewritten.
-  { path: "", changeFrequency: "weekly", priority: 1, lastModified: "2026-09-25" },
-  { path: "/features", changeFrequency: "weekly", priority: 0.9, lastModified: "2026-09-25" },
+  { path: "", changeFrequency: "weekly", priority: 1, lastModified: "2026-09-11" },
+  { path: "/features", changeFrequency: "weekly", priority: 0.9, lastModified: "2026-09-11" },
   // Plan cards, the plans FAQ and the derived plan answers all changed.
-  { path: "/pricing", changeFrequency: "weekly", priority: 0.9, lastModified: "2026-09-25" },
+  { path: "/pricing", changeFrequency: "weekly", priority: 0.9, lastModified: "2026-09-11" },
   // The index renders each post's title and excerpt only, so it moves when those
   // move (2026-08-09). The 2026-09-11 edit to posts.ts rewrote body copy inside
   // /blog/manychat-alternatives: that belongs on the post's own `updatedAt`,
@@ -63,32 +60,30 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   { path: "/blog", changeFrequency: "weekly", priority: 0.8, lastModified: "2026-08-09" },
   // Hub renders hubBlurb/ALTERNATIVE_PAGES out of comparisons.config.ts; three
   // hubBlurbs were rewritten on 2026-09-11.
-  { path: "/compare", changeFrequency: "weekly", priority: 0.85, lastModified: "2026-09-25" },
+  { path: "/compare", changeFrequency: "weekly", priority: 0.85, lastModified: "2026-09-11" },
   // All three: page copy plus ComparisonTable's DEFAULT_ROWS were corrected.
-  { path: "/manychat-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-09-25" },
-  { path: "/senddm-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-09-25" },
-  { path: "/chatfuel-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-09-25" },
+  { path: "/manychat-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-09-11" },
+  { path: "/senddm-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-09-11" },
+  { path: "/chatfuel-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-09-11" },
   // No visible copy changed here, but the page stopped emitting its duplicate
   // Organization node, a structured-data change worth a re-crawl.
   { path: "/about", changeFrequency: "monthly", priority: 0.7, lastModified: "2026-09-11" },
   // The FAQ set is what /help exists to serve, and answers were corrected in
   // five of its categories (geo-compliance, discovery, plans, safety, support).
-  { path: "/help", changeFrequency: "weekly", priority: 0.7, lastModified: "2026-09-25" },
-  { path: "/creators-program", changeFrequency: "monthly", priority: 0.6, lastModified: "2026-09-25" },
+  { path: "/help", changeFrequency: "weekly", priority: 0.7, lastModified: "2026-09-11" },
+  { path: "/creators-program", changeFrequency: "monthly", priority: 0.6, lastModified: "2026-09-11" },
   // Bumped from 2026-06-07: AffiliateCalculator's Business/Agency prices were
   // corrected ($79→$59, $299→$549), which changes what this page renders.
   { path: "/affiliate", changeFrequency: "monthly", priority: 0.6, lastModified: "2026-09-11" },
-  // /terms-of-service and /creators-policy moved to 2026-09-25 with the plan
-  // update (docs/decisions/0005); their printed dates in load-policy.ts match.
   // 2026-09-15 is the policy pack: these seven routes were rewritten wholesale
   // from src/content/legal/*.md and each now prints "Last updated:
   // 15 September 2026" in its own body, so the lastmod and the page agree -
   // which is the third rule above.
-  { path: "/terms-of-service", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-25" },
+  { path: "/terms-of-service", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
   { path: "/cookie-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
   { path: "/refund-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
   { path: "/acceptable-use-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
-  { path: "/creators-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-25" },
+  { path: "/creators-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
   { path: "/shipping-delivery-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
   // Privacy joined the pack once its Grievance Officer name was supplied. This
   // one is a content CORRECTION as well as a rewrite: the old text named Stripe
@@ -112,11 +107,11 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
  * `rows()` helper and ComparisonTable that all five render.
  */
 const COMPARISON_LAST_MODIFIED: Record<string, string> = {
-  replyrush: "2026-09-25",
-  linkdm: "2026-09-25",
-  superprofile: "2026-09-25",
-  zorcha: "2026-09-25",
-  instachamp: "2026-09-25",
+  replyrush: "2026-09-11",
+  linkdm: "2026-09-11",
+  superprofile: "2026-09-11",
+  zorcha: "2026-09-11",
+  instachamp: "2026-09-11",
 };
 
 /**

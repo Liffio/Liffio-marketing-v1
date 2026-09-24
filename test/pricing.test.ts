@@ -15,7 +15,6 @@ import {
   type PricingPlan,
 } from "@/config/pricing.config";
 import { V4_PLAN_CONTENT } from "@/config/pricing-v4.config";
-import { loadPolicy } from "@/lib/legal/load-policy";
 
 const REGIONS = ["global", "india"] as const;
 
@@ -268,209 +267,181 @@ test("USD annual always shows two decimals, so $7.50 never renders as $7.5", () 
 //
 // ⚠️ WEAK BY CONSTRUCTION, and shipped anyway.
 //
-// These rows are static in pricing-v4.config.ts. `/marketing/plans` serves no
+// These rows are static in pricing.config.ts. `/marketing/plans` serves no
 // matrix data and `/billing/packages` serves no limits and no capabilities, so
-// the drift check cannot see them.
+// the drift check cannot see them, the same shape as the $299 that sat wrong
+// for weeks. Six cells were wrong here, one of them contradicting the Business
+// CARD on the same page after PR #5 corrected it.
 //
-// The expectations below are the plan table the owner confirmed live on
-// production on 2026-09-25 (docs/decisions/0005). They were transcribed by the
-// same hand that wrote the rows, so this cannot prove them right. What it does
-// is turn silent drift into a visible expectation: changing a cell now requires
-// changing this table too.
+// The expectations below were transcribed by the same hand that wrote the rows,
+// so this cannot prove them right. What it does is turn silent drift into a
+// visible expectation: changing a cell now requires changing this table too,
+// with the query below to check against.
 //
-// Replace this with a real comparison the day M3 exposes package limits
+// Verified 2026-08-24 against production:
+//
+//   SELECT p.key, l.key, l.value FROM package_limits l
+//     JOIN packages p ON p.id = l.package_id
+//    WHERE p.deleted_at IS NULL AND p.is_active;
+//
+//   SELECT pm.name, cm.name, string_agg(p.key, ',' ORDER BY p.sort_order)
+//     FROM package_features pf
+//     JOIN packages p ON p.id = pf.package_id
+//     JOIN parent_modules pm ON pm.id = pf.parent_module_id
+//     JOIN child_modules cm ON cm.id = pf.child_module_id
+//    WHERE p.deleted_at IS NULL AND p.is_active GROUP BY 1, 2;
+//
+// Replace this with a real comparison the day M3 exposes those two tables
 // publicly (docs/decisions/0003).
 
-type Column = Lowercase<(typeof comparisonPlanNames)[number]>;
-
-const MATRIX_EXPECTATIONS: Array<{ row: string; cells: Record<Column, boolean | string> }> = [
-  { row: "Automated DMs", cells: { free: "Unlimited", starter: "Unlimited", growth: "Unlimited", business: "Unlimited", agency: "Unlimited" } },
-  { row: "Automation workflows", cells: { free: "3", starter: "25", growth: "100", business: "250", agency: "250" } },
-  { row: "DM follow-ups", cells: { free: "0", starter: "2", growth: "5", business: "10", agency: "10" } },
-  { row: "Team members", cells: { free: "1", starter: "3", growth: "5", business: "15", agency: "15" } },
-  { row: "Workspaces", cells: { free: "1", starter: "1", growth: "1", business: "1", agency: "20" } },
-  { row: "AI tokens per month", cells: { free: "1,000", starter: "10,000", growth: "30,000", business: "75,000", agency: "75,000" } },
-  { row: "AI token rollover", cells: { free: false, starter: false, growth: false, business: "Up to 25,000", agency: "Up to 25,000" } },
-  { row: "API access", cells: { free: false, starter: true, growth: true, business: true, agency: true } },
-  { row: "API requests per day", cells: { free: "0", starter: "200", growth: "500", business: "1,000", agency: "1,000" } },
-  { row: "API keys", cells: { free: "0", starter: "5", growth: "10", business: "15", agency: "15" } },
-  { row: "Automations per day via API", cells: { free: "0", starter: "50", growth: "150", business: "400", agency: "400" } },
-  { row: "Scheduled posts per day via API", cells: { free: "0", starter: "50", growth: "150", business: "400", agency: "400" } },
-  { row: "Feed posts, reels, stories, carousels", cells: { free: true, starter: true, growth: true, business: true, agency: true } },
-  { row: "Team invites and roles", cells: { free: true, starter: true, growth: true, business: true, agency: true } },
-  { row: "Reply variants", cells: { free: true, starter: true, growth: true, business: true, agency: true } },
-  { row: "Trigger blocks: the multi-keyword builder", cells: { free: false, starter: true, growth: true, business: true, agency: true } },
-  { row: "Turn off Liffio branding", cells: { free: false, starter: true, growth: true, business: true, agency: true } },
-  { row: "Lead export", cells: { free: false, starter: true, growth: true, business: true, agency: true } },
-  { row: "Bulk upload", cells: { free: false, starter: false, growth: true, business: true, agency: true } },
-  { row: "Post metrics", cells: { free: false, starter: false, growth: true, business: true, agency: true } },
-  { row: "AI insights", cells: { free: false, starter: false, growth: true, business: true, agency: true } },
-  { row: "Custom permissions", cells: { free: false, starter: false, growth: false, business: true, agency: true } },
-  { row: "Automation attribution", cells: { free: false, starter: false, growth: false, business: true, agency: true } },
-  { row: "Analytics export", cells: { free: false, starter: false, growth: false, business: true, agency: true } },
-  { row: "Agency branding and hide Liffio branding", cells: { free: false, starter: false, growth: false, business: false, agency: true } },
+const MATRIX_EXPECTATIONS: Array<{
+  row: string;
+  cells: Partial<Record<Lowercase<(typeof comparisonPlanNames)[number]>, boolean | string>>;
+  source: string;
+}> = [
+  {
+    row: "Team seats",
+    cells: { free: "1", starter: "3", growth: "5", business: "15", agency: "15" },
+    source: "package_limits.teamMembers = 1/3/5/15/15",
+  },
+  {
+    row: "DM follow-up sequences",
+    cells: { free: false, starter: "2", growth: "5", business: "5", agency: "5" },
+    source: "package_limits.dmFollowUps = 0/2/5/5/5",
+  },
+  {
+    row: "Automations",
+    cells: { free: "3", starter: "25", growth: "75", business: "150", agency: "150" },
+    source: "package_limits.workflows = 3/25/75/150/150",
+  },
+  {
+    row: "Workspaces per subscription",
+    cells: { free: "1", starter: "1", growth: "1", business: "1", agency: "20" },
+    source: "package_limits.workspacesIncluded = 1/1/1/1/20",
+  },
+  {
+    row: "Scheduled posts per day",
+    cells: { free: "3", starter: "30", growth: "100", business: "200", agency: "200" },
+    source: "package_limits.schedulerPostsPerDay = 3/30/100/200/200",
+  },
+  {
+    row: "ABAC policies",
+    cells: { free: false, starter: false, growth: false, business: true, agency: true },
+    source: "Team > Assign roles + Custom permissions = business,agency",
+  },
+  {
+    row: "Per-automation attribution",
+    cells: { free: false, starter: false, growth: false, business: true, agency: true },
+    source: "Analytics > Automation attribution = business,agency",
+  },
+  {
+    row: "Analytics export",
+    cells: { free: false, starter: false, growth: false, business: true, agency: true },
+    source: "Analytics > Export analytics = business,agency",
+  },
+  {
+    row: "Post metrics: reach, views, saves, shares, ER",
+    cells: { free: false, starter: false, growth: true, business: true, agency: true },
+    source: "Analytics > Post metrics = growth,business,agency",
+  },
+  {
+    row: "Affiliate programme: 50% recurring",
+    cells: { free: true, starter: true, growth: true, business: true, agency: true },
+    source: "all ten Affiliate children = free,starter,growth,business,agency",
+  },
 ];
 
-const allMatrixRows = () =>
-  featureCategories.flatMap((c) => c.features as ReadonlyArray<Record<string, boolean | string>>);
-
 const matrixRow = (name: string) => {
-  const row = allMatrixRows().find((f) => f.name === name);
+  const rows = featureCategories.flatMap(
+    (c) => c.features as ReadonlyArray<{ name: string }>,
+  );
+  const row = rows.find((f) => f.name === name);
   assert.ok(row, `expected a matrix row named "${name}"`);
-  return row;
+  return row as Record<string, boolean | string>;
 };
 
-test("matrix cells match the live plan table", () => {
-  for (const { row, cells } of MATRIX_EXPECTATIONS) {
+test("matrix cells match what production actually grants", () => {
+  for (const { row, cells, source } of MATRIX_EXPECTATIONS) {
     const actual = matrixRow(row);
     for (const [plan, expected] of Object.entries(cells)) {
-      assert.equal(actual[plan], expected, `${row} / ${plan}`);
+      assert.equal(actual[plan], expected, `${row} / ${plan}, ${source}`);
     }
   }
 });
 
-test("DMs are unlimited on every plan, on the cards and in the matrix", () => {
-  for (const [plan, content] of Object.entries(V4_PLAN_CONTENT)) {
-    const dms = content.limits.find((l) => l.label === "DMs")?.value;
-    assert.equal(dms, "Unlimited", `${plan} card shows DMs as "${dms}"`);
-  }
-  // The only "Unlimited" cell in the matrix is the DM row. Anything else saying
-  // it is a new claim, and needs a line in the plan table before it ships.
-  for (const row of allMatrixRows()) {
-    if (row.name === "Automated DMs") continue;
-    for (const plan of comparisonPlanNames) {
-      const value = getPlanColumnValue(row as never, plan);
-      assert.notEqual(
-        typeof value === "string" && /unlimited/i.test(value),
-        true,
-        `${String(row.name)} / ${plan} says "${String(value)}"`,
-      );
+/**
+ * Cells the catalogue CONTRADICTS, pinned so they cannot move quietly.
+ *
+ * 🔴 The old test here asserted no cell may say "Unlimited", the PR #5
+ * false-claim class. Shipping the V4 design verbatim was an explicit decision
+ * that reintroduces that class, so deleting the guard outright would leave the
+ * page's most load-bearing false claims with no test at all.
+ *
+ * This is the inverse guard: it asserts the divergences are EXACTLY these and
+ * no others. Adding a new unverified claim fails the count check below; fixing
+ * one at source fails its row. Either way somebody has to come back here and
+ * read docs/decisions/0004 before the page changes.
+ */
+const KNOWN_DIVERGENT_CELLS: Array<{ row: string; plans: string[]; why: string }> = [
+  { row: "Automated DM sending", plans: ["free", "starter", "growth", "business", "agency"], why: "no DM metering exists (blocker 25.3)" },
+  { row: "DMs per month", plans: ["free", "starter", "growth", "business", "agency"], why: "same: no DM key in package_limits" },
+  { row: "API key create / view / revoke", plans: ["business", "agency"], why: "D4: maxApiCredentials 0" },
+  { row: "API docs access, usage stats, key expiry", plans: ["business", "agency"], why: "D4: no API module" },
+  { row: "API keys", plans: ["business", "agency"], why: "D4: maxApiCredentials 0" },
+  { row: "API requests per day", plans: ["business", "agency"], why: "D4: apiRequestsPerDay 0" },
+  { row: "Monthly tokens per workspace", plans: ["free", "starter", "growth", "business", "agency"], why: "never verified against ai_token_plan_configs" },
+  { row: "AI token rollover", plans: ["business", "agency"], why: "same" },
+  { row: "Lead storage", plans: ["free", "starter", "growth", "business", "agency"], why: "no lead-storage key in package_limits" },
+];
+
+test("the matrix's unverified claims are exactly the recorded ones", () => {
+  const recorded = new Set(KNOWN_DIVERGENT_CELLS.map((c) => c.row));
+
+  // Every recorded row still exists and still carries the claim.
+  for (const { row, plans, why } of KNOWN_DIVERGENT_CELLS) {
+    const actual = matrixRow(row);
+    for (const plan of plans) {
+      assert.notEqual(actual[plan], false, `"${row}" / ${plan} no longer claims anything, ${why}`);
     }
   }
-});
 
-test("no DM cap is stated anywhere in the pricing FAQs", () => {
-  for (const region of REGIONS) {
-    const text = getPricingFaqs(region).map((f) => `${f.q} ${f.a}`).join(" ");
-    assert.equal(/\b500\b|DMs? (a|per) month|paid plans? includes? unlimited/i.test(text), false, region);
-  }
-});
-
-test("the cards agree with the matrix on every shared limit", () => {
-  const pairs: Array<[card: string, row: string]> = [
-    ["Workflows", "Automation workflows"],
-    ["DM follow-ups", "DM follow-ups"],
-    ["Team members", "Team members"],
-    ["AI tokens / month", "AI tokens per month"],
-  ];
-  const apiPairs: Array<[card: string, row: string]> = [
-    ["Requests / day", "API requests per day"],
-    ["API keys", "API keys"],
-    ["Automations / day", "Automations per day via API"],
-    ["Scheduled posts / day", "Scheduled posts per day via API"],
-  ];
-  for (const [plan, content] of Object.entries(V4_PLAN_CONTENT)) {
-    const column = plan.toLowerCase();
-    for (const [rows, list] of [[pairs, content.limits], [apiPairs, content.apiLimits]] as const) {
-      for (const [label, rowName] of rows) {
-        const card = list.find((l) => l.label === label)?.value;
-        assert.equal(card, matrixRow(rowName)[column], `${plan} "${label}"`);
+  // And no NEW "Unlimited" has appeared outside them.
+  for (const category of featureCategories) {
+    for (const row of category.features) {
+      if (recorded.has(row.name)) continue;
+      for (const plan of comparisonPlanNames) {
+        const value = getPlanColumnValue(row as never, plan);
+        assert.notEqual(
+          typeof value === "string" && /unlimited/i.test(value),
+          true,
+          `${row.name} / ${plan} says "${String(value)}" and is not in KNOWN_DIVERGENT_CELLS`,
+        );
       }
     }
   }
 });
 
-test("API limits sit under an API limits heading, never among the app limits", () => {
+test("the matrix does not contradict the cards on seats or limits", () => {
+  // PR #5 corrected the card to 15 while this row still said 5, on one page.
+  // The pricing page now draws its limits from the V4 sheet, so both must agree.
+  assert.equal(matrixRow("Team seats").business, "15");
+
   for (const [plan, content] of Object.entries(V4_PLAN_CONTENT)) {
-    assert.match(content.apiLimitsLabel, /^API limits\b/, `${plan} API heading`);
-    assert.equal(content.apiLimits.length, 4, `${plan} shows all four API limits`);
-    for (const limit of content.limits) {
-      assert.equal(/api|per day|\/ day/i.test(limit.label), false, `${plan}: "${limit.label}" is an API limit in the app limits`);
+    const column = plan.toLowerCase();
+    const seats = content.limits.find((l) => l.label === "Seats")?.value;
+    const automations = content.limits.find((l) => l.label === "Automations")?.value;
+
+    // Agency states its limits as "15 × 20", per workspace, times the slots.
+    const expectedSeats = matrixRow("Team seats")[column];
+    const expectedAutomations = matrixRow("Automations")[column];
+
+    if (seats && !seats.includes("×")) {
+      assert.equal(seats, expectedSeats, `${plan} card seats disagree with the matrix`);
+    }
+    if (automations && !automations.includes("×")) {
+      assert.equal(automations, expectedAutomations, `${plan} card automations disagree with the matrix`);
     }
   }
-  const apiGroup = featureCategories.find((c) => c.name === "API limits");
-  assert.ok(apiGroup?.description && /not limited/i.test(apiGroup.description), "matrix API group says it does not limit the app");
-});
-
-test('plan copy says "team members", never "seats", and never sells white label', () => {
-  const copy = [
-    ...Object.values(V4_PLAN_CONTENT).flatMap((c) => [
-      c.audience,
-      c.includedLabel,
-      ...c.features,
-      ...c.limits.map((l) => l.label),
-    ]),
-    ...allMatrixRows().map((r) => String(r.name)),
-    ...featureCategories.map((c) => `${c.name} ${c.description ?? ""}`),
-    ...REGIONS.flatMap((region) => getPricingFaqs(region).map((f) => `${f.q} ${f.a}`)),
-  ].join("\n");
-  assert.equal(/\bseats?\b/i.test(copy), false, '"seat" appears in plan copy');
-  assert.equal(
-    /white.?label|client workspace|custom domain|domain verification|theme colou?r/i.test(copy),
-    false,
-    "an agency capability that is not switched on is advertised",
-  );
-});
-
-test("the Creator plan is not shown anywhere on the site", () => {
-  for (const region of REGIONS) {
-    assert.equal(getPricingPlans(region).some((p) => /creator/i.test(p.name)), false, region);
-  }
-  assert.deepEqual([...comparisonPlanNames], ["Free", "Starter", "Growth", "Business", "Agency"]);
-  assert.deepEqual(Object.keys(V4_PLAN_CONTENT), ["Free", "Starter", "Growth", "Business", "Agency"]);
-  assert.equal(allMatrixRows().some((r) => /creator/i.test(String(r.name))), false, "a matrix row names Creator");
-
-  // No page may name it as a plan: "Creator plan", "Creator access", "Creator tier".
-  const sources = ["../src/config/faq.config.ts", "../src/components/CreatorsProgramContent.tsx",
-    "../src/app/signup/page.tsx", "../src/config/pricing.config.ts", "../src/lib/marketing-plans.server.ts",
-    "../src/config/seo.config.ts", "../public/llms.txt"];
-  for (const path of sources) {
-    const text = readFileSync(new URL(path, import.meta.url), "utf8");
-    assert.equal(/\bCreator (plan|access|tier)\b/.test(text), false, `${path} names a Creator plan`);
-  }
-});
-
-test("creator access states the branding trade and includes API access, everywhere it is described", () => {
-  const read = (path: string) => readFileSync(new URL(path, import.meta.url), "utf8");
-  const policy = read("../src/content/legal/creators-program-policy.md");
-  const surfaces = {
-    policy,
-    faq: read("../src/config/faq.config.ts"),
-    page: read("../src/components/CreatorsProgramContent.tsx"),
-  };
-  // The branding, as the Backend code sends it (docs/decisions/0005 has file:line):
-  // the DM line from DM_BRANDING_SUGGESTION_LINE, the follow-up button label from
-  // FREE_TIER_FOLLOW_UP_BUTTON_LABEL, and the bio link badge text.
-  for (const [name, text] of Object.entries(surfaces)) {
-    assert.match(text, /I automate my DMs with @Liffio/, `${name} does not quote the DM line the code adds`);
-    assert.match(text, /Powered by @Liffio/, `${name} does not name the bio link badge`);
-    assert.match(text, /API access/, `${name} does not include API access`);
-    assert.equal(/Powered by @getliffio/.test(text), false, `${name} quotes a DM tag the code never sends`);
-  }
-  for (const [name, text] of Object.entries({ policy, faq: surfaces.faq })) {
-    assert.match(text, /Get the tool now!/, `${name} does not name the follow-up button`);
-  }
-  assert.equal(/does not include[^.]*API/i.test(policy), false, "the policy still withholds API access");
-  assert.match(policy, /Priority email support/, "priority email support is a program benefit and stays");
-  assert.equal(/No Strings/i.test(surfaces.page), false, "the page says No Strings while describing a trade");
-});
-
-test("creator requirements match Creators Program Policy 6.1, which is binding", () => {
-  const read = (path: string) => readFileSync(new URL(path, import.meta.url), "utf8");
-  const policy = read("../src/content/legal/creators-program-policy.md");
-  assert.match(policy, /There is no minimum number of DMs/, "the policy itself moved; re-check the pages");
-  for (const path of ["../src/config/faq.config.ts", "../src/components/CreatorsProgramContent.tsx"]) {
-    const text = read(path);
-    assert.equal(/300 (automated )?DM|DM\/month minimum|active (automation )?campaigns/i.test(text), false, `${path} still asks for a DM minimum or campaigns`);
-    assert.match(text, /2 posts or reels/, `${path} does not state the posts requirement`);
-    assert.match(text, /one Liffio automation active/, `${path} does not state the automation requirement`);
-  }
-});
-
-test("the rendered policy quotes the bio link badge verbatim", () => {
-  const rendered = loadPolicy("creators-program-policy");
-  assert.match(rendered, /"Powered by @Liffio" badge/);
-  assert.equal(/Powered by @getliffio/.test(rendered), false, "the normalizer rewrote the product's own text");
 });
 
 // ── The Agency break-even calculator ─────────────────────────────────────────

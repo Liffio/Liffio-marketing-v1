@@ -22,23 +22,23 @@ import { INR_TAX_NOTE, USD_TAX_NOTE } from "@/config/tax-copy";
  * was drawn for. So the ratios are derived and the headline says nothing
  * numeric that the foot line does not compute.
  *
- * One line per tier on what the step buys, each one taken from that tier's
- * bullets in pricing-v4.config.ts (the live plan table, docs/decisions/0005):
- *   Free      unlimited DMs, the full scheduler, bio link and short links
- *   Starter   trigger blocks, branding off, lead export, API access
- *   Growth    post metrics, content templates, bulk upload, AI insights
- *   Business  approvals, custom permissions, attribution
+ * One line per tier on what the step buys, checked against the catalogue:
+ *   Starter   scheduler, short links, lead capture  - all in the Starter bullets
+ *   Growth    post analytics, templates, 5 follow-ups - all in the Growth bullets
+ *   Business  seats, permissions, approval, attribution - teamMembers 15, RBAC,
+ *             the Approval workflow module, per-automation attribution
  *   Agency    workspace count derived from planWorkspacesIncluded
  *
- * No step past Free says "unlimited DMs": DMs are unlimited on every plan, so
- * it is not something any step buys.
+ * 🚩 No API row. D4 withheld the external API from V4 launch (maxApiCredentials
+ * 0, apiRequestsPerDay 0, no API module), so the design's "Seats, permissions,
+ * approval, attribution, API" would reinstate the exact claim PR #5 removed.
  */
 
 const STEP_NOTES: Record<string, string> = {
-  Free: "Unlimited DMs, the full scheduler, bio link and short links",
-  Starter: "Trigger blocks, branding off, lead export, API access",
-  Growth: "Post metrics, content templates, bulk upload, AI insights",
-  Business: "Approvals, custom permissions, attribution",
+  Free: "One real automation, end to end, on your own account",
+  Starter: "Unlimited DMs, scheduler, short links, lead capture",
+  Growth: "Post analytics, content templates, five follow-ups",
+  Business: "Seats, permissions, an approval step, attribution",
 };
 
 function agencyNote(): string {
@@ -94,9 +94,9 @@ export default function PricingLadder({ plans }: { plans: PricingPlan[] }) {
         eyebrow="The ladder"
         title="Two crossable steps, where there used to be one cliff."
       >
-        Growth exists because a creator who outgrows Starter does not need approvals or custom
-        permissions. They need to know how their posts are performing. Each step is now worth
-        crossing on its own merits.
+        Growth exists because a solo creator who outgrows Starter does not need team seats - they
+        need to know how their posts are performing. Each step is now worth crossing on its own
+        merits.
       </SectionHead>
 
       <div className="rounded-2xl border border-[#EAE4DC] bg-white px-5 pb-6 pt-7 sm:px-7 sm:pt-8">
@@ -165,8 +165,8 @@ export default function PricingLadder({ plans }: { plans: PricingPlan[] }) {
                 <b className="text-[#17131A]">{withoutGrowth}</b>.
               </>
             ) : null}{" "}
-            Business is gated on an event, a team that needs approvals and custom permissions,
-            not on a number a creator drifts past.
+            Business is gated on an event - someone else joining the account - not on a number a
+            solo creator drifts past.
           </p>
         ) : null}
 

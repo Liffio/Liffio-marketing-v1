@@ -14,11 +14,11 @@ export function normalizePolicyContent(raw: string): string {
       .replace(/reactova\.com/gi, SITE_HOST)
       .replace(/support@reactova\.com/gi, SUPPORT_EMAIL)
       .replace(/hi@reactova\.com/gi, SUPPORT_EMAIL)
-      // "Powered by @Liffio" is NOT rewritten. It is the product's own text:
-      // the bio link badge prints it verbatim (Frontend public-bio-link.tsx),
-      // so the policy has to quote it verbatim. A rule here used to turn it into
-      // "@getliffio", which put words in the policy the product never shows.
-      // @getliffio stays the handle for disclosures (Section 6.3), below.
+      // Creators Policy 6.2 fixes the handle as @getliffio, not @Liffio. Both
+      // rules below used to resolve to the bare brand name, which would have
+      // rewritten a correct handle into a wrong one the moment the source text
+      // carried "Powered by @Liffio".
+      .replace(/Powered by @Liffio/g, `Powered by @${INSTAGRAM_HANDLE}`)
       .replace(/@Reactova/g, `@${INSTAGRAM_HANDLE}`)
       .replace(new RegExp(`${SITE_HOST}/terms(?!-)`, "g"), `${SITE_HOST}/terms-of-service`)
       .replace(new RegExp(`${SITE_HOST}/privacy(?!-)`, "g"), `${SITE_HOST}/privacy-policy`)

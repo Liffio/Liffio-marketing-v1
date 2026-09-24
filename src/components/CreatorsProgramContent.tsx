@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { FEATURE_SALE_TRACKING } from "@/config/feature-flags";
 import { TechBadge } from "@/components/TechBadge";
 import { siteConfig } from "@/config/site.config";
 
@@ -17,41 +18,43 @@ const STATIC_BENEFITS = [
   {
     title: "Advanced Analytics",
     description:
-      "Conversion rate, time series, post and video metrics, profile outcomes and automation attribution. See what's driving results at every step.",
+      FEATURE_SALE_TRACKING
+        ? "Full conversion tracking: comment → DM → click → sale. See exactly what's driving your revenue at every step of the funnel."
+        : "Full conversion tracking: comment → DM → click. See exactly what's driving results at every step of the funnel.",
     tag: "Full attribution",
   },
   {
-    title: "Bio Link & Short Links",
+    title: "Smart Link System",
     description:
-      "A styled bio link with click tracking, and short links with custom slugs for every link you send in a DM.",
-    tag: "Custom slugs",
+      "Branded short links with click tracking and UTM attribution built in. Every link delivered inside your DMs is tracked end-to-end.",
+    tag: "Click-level tracking",
   },
   {
     title: "Team Members",
     description:
-      "Invite your VA, manager, or team to collaborate on your workspace. Roles and custom permissions included at no extra cost.",
-    tag: "Up to 15 team members",
+      "Invite your VA, manager, or team to collaborate on your workspace. Full role-based access included at no extra cost.",
+    tag: "Up to 5 seats",
   },
   {
-    title: "API Access & Priority Support",
+    title: "Priority Support",
     description:
-      "API access with Business limits: 1,000 requests, 400 automations and 400 scheduled posts a day, and 15 API keys. Plus priority email support from our core team.",
-    tag: "Business API limits",
+      "Skip the queue. Direct access to our core team for onboarding, strategy calls, and technical help - whenever you need it.",
+    tag: "Direct team access",
   },
 ];
 
 function getBenefits(businessPlanValue: string) {
   return [
     {
-      title: "Business Features, Free",
-      description: `Everything in our ${businessPlanValue} Business plan at zero cost, except one thing: Liffio branding stays on, in your DMs and on your bio link page.`,
+      title: "Free Business Plan",
+      description: `Full access to our ${businessPlanValue} Business plan - at zero cost. Every Business feature unlocked from day one.`,
       tag: `Worth ${businessPlanValue}`,
     },
     {
-      title: "Up to 250 Automations",
+      title: "Up to 150 Automations",
       description:
-        "Build up to 250 comment-to-DM workflows across your posts. Every one sends unlimited automated DMs: no throttling, no hidden per-message fees.",
-      tag: "250 workflows",
+        "Build up to 150 comment-to-DM workflows across your posts. Every one sends unlimited automated DMs - no throttling, no hidden per-message fees.",
+      tag: "150 workflows",
     },
     ...STATIC_BENEFITS,
   ];
@@ -67,18 +70,17 @@ const QUALIFICATIONS = [
 ];
 
 const REQUIREMENTS = [
-  // Creators Program Policy 6.1 and 6.2, the binding text. There is no DM minimum.
   {
-    label: "Automation",
-    text: "Keep at least one Liffio automation active every calendar month",
+    label: "Volume",
+    text: "Send at least 300 automated DMs per month via Liffio",
   },
   {
-    label: "Posts",
-    text: "Publish at least 2 posts or reels a month that use a Liffio automation",
+    label: "Activity",
+    text: "Keep at least 2 active automation campaigns running every 30 days",
   },
   {
     label: "Branding",
-    text: 'Keep Liffio branding on: the "I automate my DMs with @Liffio" line in your DMs, the branded follow-up DM, and the "Powered by @Liffio" bio link badge',
+    text: 'Keep the "Powered by @getliffio" tag in place',
   },
 ];
 
@@ -96,7 +98,7 @@ const HOW_STEPS = [
   {
     num: "3",
     title: "Start for Free",
-    desc: "Accepted creators get every Business feature at zero cost, from day one. Liffio branding stays on your DMs and your bio link page.",
+    desc: "Accepted creators get immediate full Business plan access - zero cost, every feature, from day one.",
   },
 ];
 
@@ -175,17 +177,17 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
 
           <h1 className="font-extrabold text-[#0a0a0a] leading-tight mb-5"
             style={{ fontFamily: "var(--font-outfit,sans-serif)", fontSize: "clamp(2.2rem,5vw,3.75rem)" }}>
-            Every{" "}
+            Get{" "}
             <span style={{ background: "linear-gradient(130deg,#ff7c49,#f5184c,#b20d8f)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              Business feature
+              Business Plan
             </span>
-            , free,{" "}
+            {" "}access -{" "}
             <br className="hidden sm:block" />
-            for keeping Liffio branding on.
+            completely free.
           </h1>
 
           <p className="text-base sm:text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto mb-7">
-            We&apos;re selecting <strong className="text-[#0a0a0a]">{spotsCap} Instagram creators</strong> who already drive comment engagement to use every Liffio Business feature at zero cost. In exchange, you use Liffio actively and keep Liffio branding on your DMs and your bio link page.
+            We&apos;re selecting <strong className="text-[#0a0a0a]">{spotsCap} Instagram creators</strong> who already drive comment engagement to use Liffio&apos;s full Business plan at zero cost - in exchange for real, active usage that helps us grow organically.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-gray-500">
@@ -260,10 +262,10 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
             <p className="text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-2">What you get</p>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0a0a0a] mb-3"
               style={{ fontFamily: "var(--font-outfit,sans-serif)" }}>
-              Everything in Business. One Trade.
+              Everything Included. No Strings.
             </h2>
             <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base">
-              Accepted creators get everything in the Business plan, including API access, except turning off Liffio branding. Your automated DMs end with a line recommending Liffio, a branded follow-up DM goes out when an automation has no follow-ups of its own, and your bio link page keeps the &ldquo;Powered by @Liffio&rdquo; badge. That is the trade for free access. Not a trial: every workflow, from day one.
+              Accepted creators get the full Business plan - not a trial, not limited access. Every feature, every workflow, from day one.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

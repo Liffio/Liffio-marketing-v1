@@ -27,7 +27,7 @@ const faqCategories: FaqCategory[] = [
         id: "is-liffio-better",
         question: "Is Liffio better than ManyChat for Instagram?",
         answer:
-          "For Instagram-only DM automation, Liffio is the better choice for most creators and small agencies. Liffio is built specifically for Instagram and includes unlimited automated DMs on every plan, with no per-contact pricing. ManyChat is a strong choice if you need multi-channel automation across Facebook Messenger, WhatsApp, and Instagram simultaneously. If Instagram is your only channel, you end up paying for infrastructure you don't use. Liffio also includes post scheduling, bio links (bio.liffio.com), and short links (go.liffio.com) in the same workspace, which replaces two or three separate tools most creators pay for.",
+          "For Instagram-only DM automation, Liffio is the better choice for most creators and small agencies. Liffio is built specifically for Instagram and includes unlimited automated DMs on every paid plan, with no per-contact pricing. ManyChat is a strong choice if you need multi-channel automation across Facebook Messenger, WhatsApp, and Instagram simultaneously. If Instagram is your only channel, you end up paying for infrastructure you don't use. Liffio also includes post scheduling, bio links (bio.liffio.com), and short links (go.liffio.com) in the same workspace, which replaces two or three separate tools most creators pay for.",
       },
       {
         id: "does-liffio-work-with-reels",
@@ -45,7 +45,7 @@ const faqCategories: FaqCategory[] = [
         id: "free-trial",
         question: "Does Liffio have a free trial?",
         answer:
-          "Liffio has a free plan, not a time-limited free trial. There is no credit card required and no trial period that expires. The free plan includes unlimited automated DMs, comment keyword triggers on posts and Reels, public comment replies, the full post scheduler, and a bio link page at bio.liffio.com. It is intended to run in production, not as a demo that locks you out after 14 days. It connects one Instagram account, the same as every workspace on any tier. If you outgrow the free plan's 3 automation workflows, paid plans start at $9/month and add more workflows, DM follow-ups and trigger blocks.",
+          "Liffio has a free plan, not a time-limited free trial. There is no credit card required and no trial period that expires. The free plan includes comment keyword triggers on posts and Reels, public comment auto-replies, a bio link page at bio.liffio.com, and basic analytics. It is intended to run in production, not as a demo that locks you out after 14 days. It connects one Instagram account, the same as every workspace on any tier. If you outgrow the free plan's 3 automations, paid plans start at $9/month and add unlimited automated DMs.",
       },
       {
         id: "manychat-flows-switch",
@@ -98,7 +98,7 @@ export default function ManyChatAlternativePage() {
             <p className="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
               ManyChat popularised comment-to-DM, but growing creators need simpler pricing, no
               per-contact fees, and tools built only for Instagram. Liffio delivers all three, with
-              unlimited automated DMs on every plan and a free plan that actually works in
+              unlimited automated DMs on every paid plan and a free plan that actually works in
               production.
             </p>
             <div className="mt-8 flex flex-wrap gap-4 justify-center">
@@ -226,7 +226,7 @@ export default function ManyChatAlternativePage() {
               </p>
               <p>
                 Liffio charges a flat monthly rate regardless of how many automated DMs you send or
-                how many contacts you accumulate. Every plan, Free included, covers unlimited DMs
+                how many contacts you accumulate. The $9/month Starter plan covers unlimited DMs
                 whether you are sending to 500 people or 50,000. That predictability matters when
                 you are scaling a launch campaign and cannot afford a surprise overage charge.
               </p>
@@ -282,7 +282,7 @@ export default function ManyChatAlternativePage() {
                   Liffio's analytics track the full comment-to-DM-to-click chain, which gives
                   DTC teams a clear signal on which posts convert to link clicks and which posts
                   generate engagement without purchase intent. The Business plan adds
-                  automation attribution that ties each automation to downstream actions.
+                  conversion analytics that ties comment volume to downstream actions.
                 </p>
               </div>
 

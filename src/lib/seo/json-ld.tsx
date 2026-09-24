@@ -178,7 +178,7 @@ const OFFER_LADDER: {
     name: "Free",
     usd: { price: "0", monthly: "$0", annualPerMonth: null },
     inr: { price: "0", monthly: "₹0", annualPerMonth: null },
-    describe: () => "Free plan. Unlimited DMs. No credit card required.",
+    describe: () => "Free plan. No credit card required.",
   },
   {
     name: "Starter",
@@ -217,15 +217,15 @@ const OFFER_LADDER: {
       `Business plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Flat rate: unlimited DMs and contacts.`,
   },
   {
-    // 🚩 Agency is everything in Business, per workspace, across a fixed 20
-    // workspaces, plus agency branding and hide Liffio branding. It is NOT
-    // wider white label: client workspaces, custom domains and theme colour are
-    // not switched on. Describe what ships, and nothing more.
+    // 🚩 Agency is NOT white-label and does NOT include unlimited workspaces:
+    // all seven agency:* capabilities are granted to no package, and the limit
+    // is a fixed 20 workspaces. What ships is 20 full Business workspaces on a
+    // single subscription. Describe that, and nothing more.
     name: "Agency",
     usd: { price: "549.00", monthly: "$549", annualPerMonth: "$457.50" },
     inr: { price: "22999", monthly: "₹22,999", annualPerMonth: "₹19,167" },
     describe: (monthly, annualPerMonth) =>
-      `Agency plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. 20 workspaces, each with every Business feature and limit: 250 automation workflows, 15 team members and unlimited automated DMs per workspace, on one bill and one billing date.`,
+      `Agency plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. 20 workspaces, each a full Business workspace: 150 automations, 15 seats and unlimited automated DMs per workspace, on one subscription, one invoice and one renewal date.`,
   },
 ];
 

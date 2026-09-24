@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
+import { FEATURE_SALE_TRACKING } from "@/config/feature-flags";
 import Footer from "@/components/Footer";
 import { PricingBottomCta } from "@/components/PricingPlansGrid";
 import EditorialPlansGrid from "@/components/pricing/EditorialPlansGrid";
@@ -43,19 +44,21 @@ function Section({ children, id }: { children: ReactNode; id?: string }) {
 const PLATFORM_PILLARS = [
   {
     title: "Comment-to-DM engine",
-    desc: "Keyword triggers send automated DMs, unlimited on every plan. Public replies, reply variants and a DM button are free; follow-ups and trigger blocks start on Starter.",
+    desc: "Keyword triggers send rapid automated DMs with a custom 10-60s delay from comment. Public auto-replies, follow-ups, and multi-step flows included on paid plans.",
   },
   {
     title: "Post scheduler",
-    desc: "Schedule feed posts, reels, stories and carousels on every plan, Free included. Caption templates, hashtag groups and bulk upload start on Growth.",
+    desc: "Schedule Instagram feed posts from a calendar UI with caption templates and publish tracking.",
   },
   {
     title: "Bio link & short links",
-    desc: "A bio link page and short links on every plan. Custom slugs, bio link styling and click tracking start on Starter.",
+    desc: "Public pages at bio.liffio.com and branded redirects at go.liffio.com with click and referrer analytics.",
   },
   {
     title: "Lead capture & analytics",
-    desc: "A leads list and timeline on every plan. Lead export, conversion rate and time series analytics start on Starter.",
+    desc: FEATURE_SALE_TRACKING
+      ? "Track comment to DM to click to sale. Capture leads from automations and link clicks, workspace-scoped."
+      : "Track comment to DM to click. Capture leads from automations and link clicks, workspace-scoped.",
   },
 ];
 
@@ -113,9 +116,9 @@ export default async function PricingPage() {
               Instagram DM automation pricing - plans that grow with you.
             </h2>
             <p className="mx-auto mt-3 max-w-[60ch] text-[17px] leading-relaxed text-[#4A4350]">
-              Each plan runs a single Instagram account. You move up when the work changes: when
-              you start measuring, when a team needs approvals, when running each brand separately
-              costs more than running them together. {metaCopy.pricingHeroApis}
+              Each plan runs a single Instagram account. You move up when the work changes - when
+              you start measuring, when someone else joins the account, when running each brand
+              separately costs more than running them together. {metaCopy.pricingHeroApis}
             </p>
 
             <div className="mt-7 inline-flex flex-wrap overflow-hidden rounded-[13px] border border-[#EAE4DC] bg-white text-left">
@@ -130,8 +133,7 @@ export default async function PricingPage() {
               ))}
             </div>
             <p className="mt-4 text-[12.5px] text-[#8B8391]">
-              <b className="font-semibold text-[#17131A]">Unlimited DMs on every plan, Free included.</b>{" "}
-              No credit card required.
+              Free plan included - no credit card required.
             </p>
           </div>
 

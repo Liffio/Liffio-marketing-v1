@@ -27,7 +27,7 @@ const faqCategories: FaqCategory[] = [
         id: "liffio-vs-chatfuel",
         question: "How does Liffio compare to Chatfuel for Instagram?",
         answer:
-          "Chatfuel is a multi-platform chatbot builder that supports Instagram, Facebook Messenger, WhatsApp, and Telegram. Liffio is built specifically for Instagram. The difference shows up in two places: feature depth and pricing structure. Because Chatfuel spreads its feature set across multiple platforms, Instagram-specific features like comment-to-DM on Reels and story reply automation are less developed than in a dedicated tool. On pricing (as of July 2026), Chatfuel offers a free Light plan and a single paid AI PRO plan at $49/month with fair-use limits on AI usage. Liffio's paid plans start at $9/month flat, and every plan, Free included, sends unlimited automated DMs.",
+          "Chatfuel is a multi-platform chatbot builder that supports Instagram, Facebook Messenger, WhatsApp, and Telegram. Liffio is built specifically for Instagram. The difference shows up in two places: feature depth and pricing structure. Because Chatfuel spreads its feature set across multiple platforms, Instagram-specific features like comment-to-DM on Reels and story reply automation are less developed than in a dedicated tool. On pricing (as of July 2026), Chatfuel offers a free Light plan and a single paid AI PRO plan at $49/month with fair-use limits on AI usage. Liffio's paid plans start at $9/month flat, with unlimited automated DMs on every paid tier.",
       },
       {
         id: "chatfuel-instagram-dms",
@@ -39,7 +39,7 @@ const faqCategories: FaqCategory[] = [
         id: "chatfuel-pricing-2026",
         question: "How does Chatfuel's pricing work in 2026?",
         answer:
-          "As of July 2026, Chatfuel lists two plans: Chatfuel Light, a free plan, and AI PRO at $49/month (discounted on annual billing). Chatfuel historically charged per conversation on Instagram, but its current published pricing is a flat AI PRO subscription with fair-use limits on AI usage. The practical difference for creators: Chatfuel's single paid tier starts at $49/month and is built around AI chatbot conversations across multiple platforms, while Liffio's paid plans start at $9/month and are built specifically around Instagram keyword automations, with unlimited automated DMs on every plan.",
+          "As of July 2026, Chatfuel lists two plans: Chatfuel Light, a free plan, and AI PRO at $49/month (discounted on annual billing). Chatfuel historically charged per conversation on Instagram, but its current published pricing is a flat AI PRO subscription with fair-use limits on AI usage. The practical difference for creators: Chatfuel's single paid tier starts at $49/month and is built around AI chatbot conversations across multiple platforms, while Liffio's paid plans start at $9/month and are built specifically around Instagram keyword automations, with unlimited automated DMs on every paid plan.",
       },
       {
         id: "chatfuel-free-plan",
@@ -60,7 +60,7 @@ const faqCategories: FaqCategory[] = [
 const chatfuelRows = [
   { name: "Comment-to-DM", liffio: true, competitor: true },
   { name: "Story auto reply", liffio: true, competitor: "limited" },
-  { name: "Unlimited DMs (every plan)", liffio: true, competitor: false },
+  { name: "Unlimited DMs (paid plans)", liffio: true, competitor: false },
   { name: "Free plan (permanent)", liffio: true, competitor: true },
   { name: "Instagram accounts per subscription", liffio: "1 per workspace (Agency: 20)", competitor: false },
   { name: "Bio link pages", liffio: true, competitor: false },
@@ -169,7 +169,7 @@ export default function ChatfuelAlternativePage() {
                 </li>
                 <li className="flex gap-3">
                   <span className="text-[#f5184c] font-bold mt-0.5">→</span>
-                  <span><strong className="text-gray-900">Free tier depth:</strong> Chatfuel&apos;s free Light plan is an entry point to its AI chatbot suite. Liffio&apos;s free plan runs a real production automation (comment triggers and a bio link page) with no expiry date, no credit card and unlimited automated DMs, like every plan.</span>
+                  <span><strong className="text-gray-900">Free tier depth:</strong> Chatfuel&apos;s free Light plan is an entry point to its AI chatbot suite. Liffio&apos;s free plan runs a real production automation (comment triggers and a bio link page) with no expiry date and no credit card, and unlimited automated DMs come with every paid plan.</span>
                 </li>
               </ul>
             </div>
@@ -233,9 +233,9 @@ export default function ChatfuelAlternativePage() {
                 and Instagram, not as a dedicated Instagram automation tool.
               </p>
               <p>
-                Every Liffio plan, Free included, has unlimited DMs and no quota; Starter is
-                $9/month flat. The Business plan at $59/month adds approvals, custom
-                permissions, and automation attribution. Agency at $549/month bundles 20
+                Liffio&apos;s Starter plan is $9/month flat, with unlimited DMs, unlimited conversations,
+                no quota. The Business plan at $59/month adds multi-step flows, conversion
+                analytics, and story reply automation. Agency at $549/month bundles 20
                 workspaces, one Instagram account each, into a single subscription. All
                 plans include INR pricing for Indian users through Razorpay.
               </p>
