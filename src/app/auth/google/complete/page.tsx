@@ -3,7 +3,8 @@
 import { Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { authStore } from '@/lib/auth/store';
-import { getAuthMe, appHandoffUrl } from '@/lib/auth/api';
+import { getAuthMe } from '@/lib/auth/api';
+import { nextSignupStep } from '@/lib/auth/signup-steps';
 import { Spinner } from '@/lib/auth/ui';
 
 function GoogleAuthCompleteInner() {
@@ -23,17 +24,11 @@ function GoogleAuthCompleteInner() {
       authStore.setSession({ accessToken: token });
       const authMe = await getAuthMe({ token });
       authStore.setAuthMe(authMe);
-      const { emailVerified, isOnboarded } = authStore.getState();
-
-      if (!emailVerified) {
-        router.replace(`/confirm-email?redirect=${encodeURIComponent(redirectPath)}`);
-        return;
-      }
-      if (!isOnboarded) {
-        router.replace('/onboarding');
-        return;
-      }
-      window.location.href = appHandoffUrl(token, redirectPath);
+      // A new Google account owes consent (Terms + country), then email verification, then
+      // onboarding, the same steps as an email signup. An existing account goes straight in.
+      const next = nextSignupStep(authStore.getState(), token, redirectPath);
+      if (next.kind === 'site') router.replace(next.path);
+      else window.location.href = next.url;
     };
 
     finish().catch(() => router.replace('/login?error=google_failed'));

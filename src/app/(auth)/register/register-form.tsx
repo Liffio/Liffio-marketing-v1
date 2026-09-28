@@ -146,6 +146,7 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
         email,
         password: pw,
         country: country || undefined,
+        acceptedTerms: true,
         referralCode: referralCode.trim() || refPayload.referralCode,
         clientRef: refPayload.clientRef,
         sessionRef: refPayload.sessionRef,

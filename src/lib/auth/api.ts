@@ -110,6 +110,8 @@ export type RegisterInput = {
   name: string;
   password: string;
   country?: string;
+  /** The Terms checkbox; the form cannot submit without it. */
+  acceptedTerms?: true;
   referralCode?: string;
   clientRef?: string;
   sessionRef?: string;
@@ -196,6 +198,18 @@ export function setMyCountry(country: string) {
     method: 'PATCH',
     body: { country },
   });
+}
+
+/**
+ * The consent screen's submit: Terms / Privacy agreement plus the confirmed country, in one call.
+ * A "Continue with Google" signup never saw the register form, so this is where it gives both.
+ * The workspace API refuses (`TERMS_NOT_ACCEPTED`) until it has been recorded.
+ */
+export function submitSignupConsent(country: string) {
+  return apiRequest<{ termsAccepted: true; termsAcceptedAt: string; country: string }>(
+    `${V1}/auth/signup-consent`,
+    { method: 'POST', body: { acceptedTerms: true, country } },
+  );
 }
 
 export function googleAuthUrl(redirectTo: string, frontendOrigin: string): string {

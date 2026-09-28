@@ -10,9 +10,9 @@ import {
   mfaLoginVerify,
   getAuthMe,
   googleAuthUrl,
-  appHandoffUrl,
   APP_BASE,
 } from '@/lib/auth/api';
+import { nextSignupStep } from '@/lib/auth/signup-steps';
 import {
   AuthCard,
   Button,
@@ -78,17 +78,11 @@ function LoginPageInner() {
   }, [expiresIn]);
 
   async function navigatePostAuth() {
-    const { emailVerified, isOnboarded, accessToken } = authStore.getState();
+    const { accessToken } = authStore.getState();
     if (!accessToken) return;
-    if (!emailVerified) {
-      router.replace(`/confirm-email?redirect=${encodeURIComponent(redirectPath)}`);
-      return;
-    }
-    if (!isOnboarded) {
-      router.replace('/onboarding');
-      return;
-    }
-    window.location.href = appHandoffUrl(accessToken, redirectPath);
+    const next = nextSignupStep(authStore.getState(), accessToken, redirectPath);
+    if (next.kind === 'site') router.replace(next.path);
+    else window.location.href = next.url;
   }
 
   async function onSubmit(e: React.FormEvent) {

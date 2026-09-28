@@ -49,6 +49,7 @@ function ConfirmEmailPageInner() {
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
+  const [accountChecked, setAccountChecked] = useState(false);
 
   // Accept token passed from app.liffio.com guard or auth-navigation
   useEffect(() => {
@@ -69,15 +70,34 @@ function ConfirmEmailPageInner() {
     }
   }, [mounted, redirectPath, router]);
 
-  // Auto-send verification email on mount
+  // Consent comes before verification. Re-read the account first (the store may be empty when the
+  // app's guard sent us here), and send a session that still owes the Terms + country back to it.
   useEffect(() => {
-    if (!mounted || initialSendDone.current) return;
+    if (!mounted) return;
+    const { accessToken } = authStore.getState();
+    if (!accessToken) return;
+    getAuthMe({ token: accessToken })
+      .then((me) => {
+        authStore.setAuthMe(me);
+        if (me.termsAccepted === false) {
+          router.replace(`/complete-signup${redirectPath !== '/dashboard' ? `?redirect=${encodeURIComponent(redirectPath)}` : ''}`);
+          return;
+        }
+        setAccountChecked(true);
+      })
+      .catch(() => setAccountChecked(true));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted]);
+
+  // Auto-send verification email once the account check above has cleared.
+  useEffect(() => {
+    if (!accountChecked || initialSendDone.current) return;
     const { accessToken, emailVerified } = authStore.getState();
     if (!accessToken || emailVerified) return;
     initialSendDone.current = true;
     sendCode();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mounted]);
+  }, [accountChecked]);
 
   useEffect(() => {
     if (resendIn <= 0) return;

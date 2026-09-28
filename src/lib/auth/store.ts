@@ -24,6 +24,9 @@ export type AuthMePayload = {
   isPlatformSuperAdmin: boolean;
   isOnboarded: boolean;
   emailVerified: boolean;
+  /** Terms / Privacy agreed. Optional so an older API (before the field existed) reads as agreed
+   *  rather than trapping every account on the consent screen during a deploy. */
+  termsAccepted?: boolean;
   mfaEnabled: boolean;
   mfaEmailOtpEnabled: boolean;
   mfaSmsOtpEnabled: boolean;
@@ -36,6 +39,7 @@ export type AuthState = {
   workspaceId: string | null;
   isOnboarded: boolean;
   emailVerified: boolean;
+  termsAccepted: boolean;
   role: string | null;
   permissions: string[];
 };
@@ -49,6 +53,7 @@ const initialState: AuthState = {
   workspaceId: null,
   isOnboarded: false,
   emailVerified: false,
+  termsAccepted: false,
   role: null,
   permissions: [],
 };
@@ -81,6 +86,7 @@ export const authStore = {
       workspaceId: payload.workspaceId,
       isOnboarded: payload.isOnboarded,
       emailVerified: payload.emailVerified,
+      termsAccepted: payload.termsAccepted !== false,
       role: payload.role,
       permissions: payload.permissions,
     });
@@ -98,6 +104,7 @@ const serverSnapshot: AuthState = {
   workspaceId: null,
   isOnboarded: false,
   emailVerified: false,
+  termsAccepted: false,
   role: null,
   permissions: [],
 };

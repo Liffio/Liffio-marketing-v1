@@ -30,6 +30,7 @@ import {
 } from '@/lib/auth/meta-oauth-popup';
 import { AlertCircleIcon, Button, CheckIcon, ErrorMsg, InstagramIcon, Spinner } from '@/lib/auth/ui';
 import { CountrySelect, isKnownCountryCode } from '@/lib/auth/countries';
+import { nextSignupStep } from '@/lib/auth/signup-steps';
 import { trackSignupStep } from '@/lib/analytics/analytics';
 import { commentMatchesKeywords } from '@/lib/onboarding/keyword-match';
 import {
@@ -618,6 +619,13 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
     getAuthMe({ token })
       .then((me) => {
         authStore.setAuthMe(me);
+        // Consent and email verification come before onboarding. Reaching this page directly (a
+        // bookmark, the app's guard) must not skip them.
+        const next = nextSignupStep(authStore.getState(), token);
+        if (next.kind === 'site' && next.path !== '/onboarding') {
+          router.replace(next.path);
+          return;
+        }
         countryNeeded.current = !me.user.country;
       })
       .catch(() => {
