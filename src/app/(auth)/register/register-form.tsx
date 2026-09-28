@@ -246,7 +246,7 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
           <div className="space-y-1.5">
             <Label htmlFor="pw">Password</Label>
             <div className="relative">
-              <Input id="pw" type={showPw ? 'text' : 'password'} value={pw} onChange={(e) => setPw(e.target.value)} onFocus={markFormStarted} required autoComplete="new-password" className="pr-10" placeholder="At least 8 characters" />
+              <Input id="pw" name="new-password" type={showPw ? 'text' : 'password'} value={pw} onChange={(e) => setPw(e.target.value)} onFocus={markFormStarted} required autoComplete="new-password" className="pr-10" placeholder="At least 8 characters" />
               <button type="button" onClick={() => setShowPw((v) => !v)} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                 <EyeIcon open={showPw} />
               </button>
@@ -262,7 +262,7 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
 
           <div className="space-y-1.5">
             <Label htmlFor="cpw">Confirm password</Label>
-            <Input id="cpw" value={cpw} onChange={(e) => setCpw(e.target.value)} onFocus={markFormStarted} type={showPw ? 'text' : 'password'} required autoComplete="new-password" />
+            <Input id="cpw" name="confirm-password" value={cpw} onChange={(e) => setCpw(e.target.value)} onFocus={markFormStarted} type={showPw ? 'text' : 'password'} required autoComplete="new-password" />
             {pw !== cpw && cpw.length > 0 && <p className="text-xs text-destructive">Passwords do not match</p>}
           </div>
 

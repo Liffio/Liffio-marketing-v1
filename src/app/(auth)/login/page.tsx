@@ -221,7 +221,7 @@ function LoginPageInner() {
                 </div>
               )}
               <div className="pt-1">
-                <OtpInput value={otp} onChange={setOtp} disabled={mfaLoading} />
+                <OtpInput value={otp} onChange={setOtp} disabled={mfaLoading} name="totp" />
               </div>
             </div>
 
@@ -249,7 +249,7 @@ function LoginPageInner() {
             <form className="space-y-4" onSubmit={onSubmit}>
               <div className="space-y-1.5">
                 <Label htmlFor="email">Email address</Label>
-                <Input id="email" type="email" placeholder="you@brand.com" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Input id="email" name="email" type="email" placeholder="you@brand.com" required autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
 
               <div className="space-y-1.5">
@@ -258,7 +258,7 @@ function LoginPageInner() {
                   <Link href="/forgot-password" className="text-xs text-primary hover:opacity-80">Forgot password?</Link>
                 </div>
                 <div className="relative">
-                  <Input id="password" type={showPw ? 'text' : 'password'} placeholder="••••••••" required autoComplete="current-password" className="pr-10" value={password} onChange={(e) => setPassword(e.target.value)} />
+                  <Input id="password" name="password" type={showPw ? 'text' : 'password'} placeholder="••••••••" required autoComplete="current-password" className="pr-10" value={password} onChange={(e) => setPassword(e.target.value)} />
                   <button type="button" onClick={() => setShowPw((s) => !s)} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                     <EyeIcon open={showPw} />
                   </button>

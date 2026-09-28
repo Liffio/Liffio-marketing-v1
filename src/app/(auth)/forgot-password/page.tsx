@@ -112,7 +112,7 @@ export default function ForgotPasswordPage() {
               <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); void sendCode(); }}>
                 <div className="space-y-1.5">
                   <Label htmlFor="email">Email address</Label>
-                  <Input id="email" type="email" required autoComplete="email" placeholder="you@brand.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <Input id="email" name="email" type="email" required autoComplete="username" placeholder="you@brand.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <ErrorMsg message={error} />
                 <Button type="submit" className="w-full" loading={loading}>Send reset code</Button>
@@ -132,7 +132,7 @@ export default function ForgotPasswordPage() {
                 <div className="space-y-1.5">
                   <Label htmlFor="pw">New password</Label>
                   <div className="relative">
-                    <Input id="pw" type={showPw ? 'text' : 'password'} required autoComplete="new-password" className="pr-10" placeholder="At least 8 characters" value={pw} onChange={(e) => setPw(e.target.value)} />
+                    <Input id="pw" name="new-password" type={showPw ? 'text' : 'password'} required autoComplete="new-password" className="pr-10" placeholder="At least 8 characters" value={pw} onChange={(e) => setPw(e.target.value)} />
                     <button type="button" onClick={() => setShowPw((v) => !v)} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                       <EyeIcon open={showPw} />
                     </button>
@@ -141,7 +141,7 @@ export default function ForgotPasswordPage() {
 
                 <div className="space-y-1.5">
                   <Label htmlFor="cpw">Confirm new password</Label>
-                  <Input id="cpw" type={showPw ? 'text' : 'password'} required autoComplete="new-password" value={cpw} onChange={(e) => setCpw(e.target.value)} />
+                  <Input id="cpw" name="confirm-password" type={showPw ? 'text' : 'password'} required autoComplete="new-password" value={cpw} onChange={(e) => setCpw(e.target.value)} />
                   {pw !== cpw && cpw.length > 0 && <p className="text-xs text-destructive">Passwords do not match</p>}
                 </div>
 

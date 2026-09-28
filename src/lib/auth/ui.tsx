@@ -112,11 +112,17 @@ export function OtpInput({
   onChange,
   disabled,
   state = 'idle',
+  name = 'one-time-code',
 }: {
   value: string;
   onChange: (v: string) => void;
   disabled?: boolean;
   state?: OtpState;
+  /**
+   * Field name password managers key on. Pass `totp` for an authenticator-app code so Bitwarden,
+   * 1Password etc. offer the TOTP they store for this login; email codes keep the default.
+   */
+  name?: string;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [focused, setFocused] = useState(false);
@@ -214,24 +220,40 @@ export function OtpInput({
       className={`relative flex gap-1.5 sm:gap-2 justify-center cursor-text ${state === 'error' ? 'animate-otp-shake' : ''}`}
       onClick={() => !disabled && inputRef.current?.focus()}
     >
+      {/*
+        The one real input, laid transparently over the six cells rather than hidden with
+        `sr-only`. Password managers (Bitwarden, 1Password) and iOS/Android SMS autofill skip fields
+        they judge invisible, and a clipped 1px input is exactly that, so autofill never offered the
+        code. Transparent-but-present keeps it fillable, tappable and long-press-pastable.
+
+        No `maxLength`: a manager or clipboard may deliver `123 456` or `123-456`, and a 6-char cap
+        would truncate that before the non-digits are stripped below.
+      */}
       <input
         ref={inputRef}
+        id={name}
+        name={name}
         type="text"
         inputMode="numeric"
-        maxLength={LEN}
+        pattern="[0-9]*"
         value={value.replace(/\s/g, '')}
         onChange={(e) => onChange(e.target.value.replace(/\D/g, '').slice(0, LEN))}
         onPaste={(e) => {
-          e.preventDefault();
           const text = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, LEN);
-          if (text) onChange(text);
+          if (!text) return;
+          e.preventDefault();
+          onChange(text);
         }}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         disabled={disabled}
         autoComplete="one-time-code"
+        autoCorrect="off"
+        spellCheck={false}
         aria-label="Enter verification code"
-        className="sr-only"
+        className="absolute inset-0 z-10 h-full w-full cursor-text border-0 bg-transparent text-base text-transparent caret-transparent outline-none selection:bg-transparent"
+        // Keep autofill from painting its highlight/text over the cells.
+        style={{ WebkitTextFillColor: 'transparent', transition: 'background-color 600000s 0s' }}
       />
       {Array.from({ length: LEN }).map((_, i) => {
         const digit = digits[i]?.trim() || '';
