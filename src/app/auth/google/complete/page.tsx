@@ -24,8 +24,8 @@ function GoogleAuthCompleteInner() {
       authStore.setSession({ accessToken: token });
       const authMe = await getAuthMe({ token });
       authStore.setAuthMe(authMe);
-      // A new Google account owes consent (Terms + country), then email verification, then
-      // onboarding, the same steps as an email signup. An existing account goes straight in.
+      // Terms + Privacy acceptance first, for every account that has not agreed yet (new Google
+      // signups always land there). Google already verified the email, so onboarding is next.
       const next = nextSignupStep(authStore.getState(), token, redirectPath);
       if (next.kind === 'site') router.replace(next.path);
       else window.location.href = next.url;

@@ -4,9 +4,10 @@ import { getCountryCodeFromHeaders } from '@/lib/pricing-region';
 import CompleteSignupForm from './complete-signup-form';
 
 /**
- * Consent screen for accounts that never saw the register form: "Continue with Google" signups
- * (plan/google-signup-gates.md). Server shell only for the geo header, the same fallback prefill
- * `/register` uses; the account's own country (prefilled server-side from the Google account) wins.
+ * Terms / Privacy consent screen, mandatory for every account that has not yet agreed: new
+ * "Continue with Google" signups and all accounts that predate recorded agreement. Server shell
+ * only for the geo header, the same fallback prefill `/register` uses; the account's own country
+ * (prefilled server-side from the Google account) wins.
  */
 export default async function CompleteSignupPage() {
   const headerStore = await headers();

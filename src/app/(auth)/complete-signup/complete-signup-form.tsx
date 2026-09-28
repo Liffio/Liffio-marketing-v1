@@ -10,8 +10,10 @@ import { AuthCard, Button, CheckIcon, ErrorMsg, Label, Spinner } from '@/lib/aut
 import { CountrySelect, isKnownCountryCode } from '@/lib/auth/countries';
 
 /**
- * The Terms agreement and country a Google signup owes us, asked once, before email verification
- * and onboarding. The same checkbox and country field as the register form, nothing else.
+ * The Terms of Service / Privacy Policy agreement, mandatory for EVERY account before anything else:
+ * new Google signups (who never saw the register form) and every account that existed before
+ * agreement was recorded. Asked once, together with a confirmed country. The same checkbox and
+ * country field as the register form, nothing else.
  *
  * The server enforces it (`TERMS_NOT_ACCEPTED` on the workspace API), so this page is the only way
  * forward for such an account, not a suggestion.
@@ -87,10 +89,10 @@ export default function CompleteSignupForm({ defaultCountry }: { defaultCountry:
     <div className="w-full max-w-md">
       <AuthCard>
         <header className="mb-6 border-b border-border pb-5">
-          <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">Finish creating your account</h1>
+          <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">Review and accept our terms</h1>
           <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-            Signed in with Google as <span className="rr-mask font-semibold text-foreground">{email}</span>. Confirm your
-            country and agree to our terms to continue.
+            Signed in as <span className="rr-mask font-semibold text-foreground">{email}</span>. To use Liffio, please
+            confirm your country and accept our Terms of Service and Privacy Policy.
           </p>
         </header>
 
@@ -119,7 +121,7 @@ export default function CompleteSignupForm({ defaultCountry }: { defaultCountry:
           <ErrorMsg message={error} />
 
           <Button type="submit" className="w-full" loading={saving} disabled={!agreed || !country}>
-            Continue
+            Accept and continue
           </Button>
         </form>
       </AuthCard>
