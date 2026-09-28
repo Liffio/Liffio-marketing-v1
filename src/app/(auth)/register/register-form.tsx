@@ -106,7 +106,7 @@ export default function RegisterForm({ defaultCountry }: { defaultCountry: strin
   const s = useMemo(() => strengthScore(pw), [pw]);
   const strengthColor = s <= 1 ? 'bg-destructive' : s === 2 ? 'bg-warning' : s === 3 ? 'bg-primary' : 'bg-success';
 
-  const gUrl = mounted ? googleAuthUrl(redirectPath || '/dashboard', window.location.origin) : '#';
+  const gUrl = mounted ? googleAuthUrl(redirectPath || '/dashboard', window.location.origin, referralCode) : '#';
 
   function showEmailError(message: string) {
     setEmailError(message);

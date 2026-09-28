@@ -1,4 +1,5 @@
 import { authStore, type AuthMePayload } from './store';
+import { getStoredReferralCode } from './referral';
 
 export const API_BASE: string =
   (process.env.NEXT_PUBLIC_API_URL as string | undefined) ?? 'https://api.liffio.com';
@@ -212,8 +213,23 @@ export function submitSignupConsent(country: string) {
   );
 }
 
-export function googleAuthUrl(redirectTo: string, frontendOrigin: string): string {
-  return `${API_BASE}${V1}/auth/google?redirect=${encodeURIComponent(redirectTo)}&fe=${encodeURIComponent(frontendOrigin)}`;
+/**
+ * Start URL for "Continue with Google".
+ *
+ * Carries the affiliate referral code as `ref`, because a Google signup never reaches the register
+ * form that sends it on the email path: without this, someone who arrived through an affiliate link
+ * and chose Google lost the referral. The API puts `ref` inside its signed OAuth state and attributes
+ * the new account on the callback (existing accounts are never re-attributed).
+ *
+ * `referralCode` is what the visitor typed on /register; otherwise the code liffio.com stored when
+ * they landed (session/localStorage, then the `.liffio.com` cookie, via `getStoredReferralCode`).
+ */
+export function googleAuthUrl(redirectTo: string, frontendOrigin: string, referralCode?: string): string {
+  const ref = referralCode?.trim() || getStoredReferralCode();
+  return (
+    `${API_BASE}${V1}/auth/google?redirect=${encodeURIComponent(redirectTo)}&fe=${encodeURIComponent(frontendOrigin)}` +
+    (ref ? `&ref=${encodeURIComponent(ref)}` : '')
+  );
 }
 
 export function verifyEmailCode(code: string) {

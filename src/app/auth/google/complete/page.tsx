@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { authStore } from '@/lib/auth/store';
 import { getAuthMe } from '@/lib/auth/api';
 import { nextSignupStep } from '@/lib/auth/signup-steps';
+import { clearStoredReferralCode } from '@/lib/auth/referral';
 import { Spinner } from '@/lib/auth/ui';
 
 function GoogleAuthCompleteInner() {
@@ -22,6 +23,10 @@ function GoogleAuthCompleteInner() {
 
     const finish = async () => {
       authStore.setSession({ accessToken: token });
+      // A NEW account was just created and the API has taken the referral code it carried (in its
+      // signed OAuth state), so drop the stored copy, exactly as the email register form does. A
+      // plain Google sign-in leaves it alone.
+      if (params.get('signup') === '1') clearStoredReferralCode();
       const authMe = await getAuthMe({ token });
       authStore.setAuthMe(authMe);
       // Terms + Privacy acceptance first, for every account that has not agreed yet (new Google
