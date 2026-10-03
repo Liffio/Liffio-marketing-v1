@@ -1,5 +1,5 @@
 import { metaCopy } from "@/config/meta-copy";
-import { FEATURE_BRANCHING_LOGIC, FEATURE_CRM_INTEGRATION, FEATURE_SALE_TRACKING, FEATURE_WELCOME_DM } from "@/config/feature-flags";
+import { v4FeatureList } from "@/config/pricing-v4.config";
 import type { PricingRegion } from "@/lib/pricing-region";
 import { INR_TAX_NOTE_LONG, USD_TAX_NOTE } from "@/config/tax-copy";
 import { siteConfig } from "./site.config";
@@ -137,111 +137,25 @@ export function isZeroPrice(price: string): boolean {
 }
 
 /**
- * The opening lines every plan card shares.
+ * The fallback bullets ARE the plan sheet's bullets.
  *
- * 🚩 This used to be one `unlimitedCore` spread into Free, Starter, Business and
- * Agency alike, and BOTH of its claims were wrong somewhere. "Unlimited
- * Instagram accounts" was true of no tier at all, `planWorkspacesIncluded`
- * below is 1 everywhere except Agency's 20, and one workspace connects exactly
- * one Instagram account. "Unlimited automated DMs" is a paid-tier fact: V4 gives
- * Free a monthly allowance, so Free carries the account line only.
+ * 🚩 This sheet renders during an API outage AND ships in the client bundle. It
+ * used to carry its own hand-written lists, and they drifted ("seats", story
+ * automations, a dedicated account manager). Reading them from pricing-v4.config
+ * means plan copy is written in one place.
  *
- * `UNSUPPORTED_CLAIMS` in marketing-plans.server.ts already strips both strings
- * out of the API payload. This sheet is the fallback that renders during an API
- * outage AND ships in the client bundle, so it must not reintroduce them.
+ * 🚩 Never throw here. This module loads on every page that shows a price, so a
+ * missing tier must degrade to an empty list, not take the site down.
  */
-const accountCore: PlanFeature[] = [
-  { text: "One Instagram account per workspace", included: true },
-];
+function sheetFeatures(plan: string): PlanFeature[] {
+  return v4FeatureList(plan) ?? [];
+}
 
-const paidCore: PlanFeature[] = [
-  ...accountCore,
-  { text: "Unlimited automated DMs", included: true },
-];
-
-const freeFeatures: PlanFeature[] = [
-  ...accountCore,
-  { text: "Comment keyword triggers", included: true },
-  { text: "Public comment auto-replies", included: true },
-  // 3 automations, not "3 DM message templates". No template limit exists ,
-  // package_limits has 8 keys and none counts templates, while the automation
-  // count is the cap Free actually enforces (V4 Automations row: 3).
-  { text: "3 automation workflows", included: true },
-  { text: "Bio link page (bio.liffio.com)", included: true },
-  { text: "Basic analytics", included: true },
-  { text: "Story & multi-step flows", included: false },
-  { text: "Short links & lead capture", included: false },
-  { text: "External API access", included: false },
-];
-
-const starterFeatures: PlanFeature[] = [
-  ...paidCore,
-  { text: "All automation trigger types", included: true },
-  { text: "Unlimited templates & multi-step flows", included: true },
-  { text: FEATURE_WELCOME_DM ? "Story & welcome DM automations" : "Story automations", included: true },
-  { text: "Advanced analytics dashboard", included: true },
-  { text: "Short links (go.liffio.com) + click tracking", included: true },
-  { text: "Lead capture from DMs & link clicks", included: true },
-  { text: "Post scheduler (Instagram feed)", included: true },
-  { text: "Priority email support", included: true },
-  // Starter has NO external API access. Backend `BILLING_PLANS[Plan.STARTER]`
-  // is `features.apiEnabled: false` with `maxApiCredentials: 0` and
-  // `apiRequestsPerDay: 0`, and there is no longer an `api` gate declaring
-  // Starter. The live catalogue agrees (`/api/v1/marketing/plans` serves this
-  // entry as `included: false`), so the earlier `true` here was a claim the
-  // product does not honour.
-  { text: "External API access", included: false },
-];
-
-const growthFeatures: PlanFeature[] = [
-  { text: "Everything in Starter", included: true },
-  { text: "Instagram post, video & profile analytics", included: true },
-  { text: "Caption, hashtag & schedule templates", included: true },
-  { text: "Bulk upload", included: true },
-  { text: "5 follow-up messages per automation", included: true },
-  { text: "5 seats", included: true },
-  { text: "Team management", included: false },
-  { text: "Per-automation attribution", included: false },
-  { text: "External API access", included: false },
-];
-
-const businessFeatures: PlanFeature[] = [
-  ...paidCore,
-  { text: "Everything in Starter", included: true },
-  { text: FEATURE_SALE_TRACKING ? "Full conversion analytics (comment → sale)" : "Full conversion analytics (comment → DM → click)", included: true },
-  { text: "Instagram account-level insights", included: true },
-  // Business has NO external API either. D4 withheld it from V4 launch: every
-  // package is maxApiCredentials 0 / apiRequestsPerDay 0 and there is no API
-  // module among the 14 parent modules. UNSUPPORTED_CLAIMS drops the API-served
-  // "External API keys (plan-gated)" string; this sheet now agrees with Free,
-  // Starter and Growth instead of selling it.
-  { text: "External API access", included: false },
-  // 15, not 5: package_limits.teamMembers is 15 for business. UNSUPPORTED_CLAIMS
-  // rewrites the API's "5 seats" at render, but this sheet is the fallback and
-  // shipped the wrong number in the bundle regardless.
-  { text: "Team members (up to 15 seats)", included: true },
-  { text: "Branded short links with UTM attribution", included: true },
-  { text: "Follow-up DM sequences", included: true },
-  { text: "Priority support + onboarding call", included: true },
-];
-
-const agencyFeatures: PlanFeature[] = [
-  ...paidCore,
-  // 🚩 What Agency actually is: 20 workspaces, each a COMPLETE Business
-  // workspace, on one subscription. It is not a white-label product and it has
-  // no client sub-workspace hierarchy, all seven `agency:*` capabilities are
-  // granted to no package (ADR 0002 B6, ADR 0004:48), so "Agency white-label
-  // workspaces" and "Client sub-workspaces (CLIENT role)" described a tier that
-  // does not exist. "Full API access & webhooks" fails the same way Business's
-  // API line did: 0 credentials, 0 requests/day, no API module.
-  { text: "20 workspaces, each a complete Business workspace", included: true },
-  { text: "One subscription, one invoice, one renewal date", included: true },
-  { text: "Dedicated account manager", included: true },
-  ...(FEATURE_CRM_INTEGRATION ? [{ text: "Custom integrations & CRM sync", included: true }] : []),
-  { text: "Affiliate program management", included: true },
-  { text: "SLA-backed priority support", included: true },
-  { text: "Volume & multi-workspace pricing", included: true },
-];
+const freeFeatures = sheetFeatures("Free");
+const starterFeatures = sheetFeatures("Starter");
+const growthFeatures = sheetFeatures("Growth");
+const businessFeatures = sheetFeatures("Business");
+const agencyFeatures = sheetFeatures("Agency");
 
 const planSignupUrl = (plan: string) => `${signup}?plan=${plan}&source=liffio`;
 
@@ -251,7 +165,7 @@ const globalPricingPlans: PricingPlan[] = [
     monthly: usdMonthly(0),
     annual: usdMonthly(0),
     annualTotal: null,
-    description: "Get started with comment-to-DM automation - no credit card required.",
+    description: "Get started with comment to DM automation and chatbots. Unlimited DMs, no credit card required.",
     badge: null,
     highlight: false,
     popular: false,
@@ -319,7 +233,7 @@ const indiaPricingPlans: PricingPlan[] = [
     monthly: inrMonthly(0),
     annual: inrMonthly(0),
     annualTotal: null,
-    description: "Get started with comment-to-DM automation - no credit card required.",
+    description: "Get started with comment to DM automation and chatbots. Unlimited DMs, no credit card required.",
     badge: null,
     highlight: false,
     popular: false,
@@ -416,17 +330,15 @@ export const pricingPerks = [
 
 export function getFreePlanFaqAnswer(region: PricingRegion): string {
   const price = region === "india" ? "₹0/month" : "$0/month";
-  // Not "unlimited automated DMs", that is a paid-tier fact. Free's enforced
-  // cap is 3 automations (workflows); its DM allowance is unmetered, so it is
-  // not restated here as a number nothing counts.
-  return `Yes. The Free plan is ${price}. No credit card required. You get one Instagram account, three automation workflows, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.`;
+  // DMs are unlimited on every plan, Free included. Never restate a DM cap.
+  return `Yes. The Free plan is ${price}. No credit card required. You get unlimited DMs, three automation workflows, 2 live chatbots, comment keyword triggers, public replies, a leads list, a bio link and short links, and overview analytics.`;
 }
 
 export function getPlansOfferedFaqAnswer(region: PricingRegion): string {
   if (region === "india") {
-    return `Five tiers: Free (₹0, $0), Starter (₹499/mo; $9/mo in USD), Growth (₹1,499/mo; $29/mo in USD), Business (₹2,499/mo; $59/mo in USD), and Agency (₹22,999/mo; $549/mo in USD). ${INR_TAX_NOTE_LONG} Annual billing charges 10 months instead of 12, so two months are free. Every plan connects one Instagram account per workspace, and every paid plan includes unlimited automated DMs.`;
+    return `Five tiers: Free (₹0, $0), Starter (₹499/mo; $9/mo in USD), Growth (₹1,499/mo; $29/mo in USD), Business (₹2,499/mo; $59/mo in USD), and Agency (₹22,999/mo; $549/mo in USD). ${INR_TAX_NOTE_LONG} Annual billing charges 10 months instead of 12, so two months are free. Every plan, Free included, sends unlimited automated DMs and includes chatbots, and every plan connects one Instagram account per workspace.`;
   }
-  return `Five tiers: Free ($0), Starter ($9/mo; ₹499/mo in India), Growth ($29/mo; ₹1,499/mo in India), Business ($59/mo; ₹2,499/mo in India), and Agency ($549/mo; ₹22,999/mo in India). ${USD_TAX_NOTE} Annual billing charges 10 months instead of 12, so two months are free. Every plan connects one Instagram account per workspace, and every paid plan includes unlimited automated DMs.`;
+  return `Five tiers: Free ($0), Starter ($9/mo; ₹499/mo in India), Growth ($29/mo; ₹1,499/mo in India), Business ($59/mo; ₹2,499/mo in India), and Agency ($549/mo; ₹22,999/mo in India). ${USD_TAX_NOTE} Annual billing charges 10 months instead of 12, so two months are free. Every plan, Free included, sends unlimited automated DMs and includes chatbots, and every plan connects one Instagram account per workspace.`;
 }
 
 export function getBusinessPlanValueLabel(region: PricingRegion): string {
@@ -435,16 +347,15 @@ export function getBusinessPlanValueLabel(region: PricingRegion): string {
 
 export function getCreatorsProgramFaqAnswer(region: PricingRegion): string {
   const value = getBusinessPlanValueLabel(region);
-  return `Yes. Qualified Instagram creators (5K to 100K followers) can apply for our Creators Program and receive the full Business plan (${value} value) at no cost in exchange for active platform usage. No credit card required.`;
+  return `Yes. Qualified Instagram creators (5K to 100K followers) can apply for our Creators Program and get everything in the Business plan (${value} value), chatbots included, at no cost in exchange for active platform usage. The one exception is Liffio branding, which stays on. No credit card required.`;
 }
 
 /**
  * The comparison matrix.
  *
- * Now the V4 design's own 87 rows, shipped verbatim - see pricing-v4.config.ts
- * for the list of rows that state entitlements production does not grant, and
- * why they are here anyway. Re-exported under the old name so the component and
- * the tests keep reading one source.
+ * The live plan table, chatbots in a group of their own: see pricing-v4.config.ts.
+ * Re-exported under the old name so the component and the tests keep reading one
+ * source.
  */
 export { V4_FEATURE_CATEGORIES as featureCategories } from "./pricing-v4.config";
 
@@ -524,7 +435,7 @@ export function getPricingFaqs(region: PricingRegion) {
     },
     {
       q: "What's included in the Agency plan?",
-      a: "Agency includes 20 complete Business workspaces on a single subscription - one invoice, one renewal date, and workspace switching from one login - plus dedicated account management, SLA-backed priority support, and volume pricing tailored to your agency.",
+      a: "Agency includes 20 complete Business workspaces on one subscription, with one invoice and one renewal date, every Business chatbot feature in each workspace, agency branding, the option to hide Liffio branding, client workspaces and workspace switching from one login. Every limit is per workspace.",
     },
     {
       q: "Do you offer a Creators Program?",

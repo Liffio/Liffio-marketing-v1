@@ -22,23 +22,17 @@ import { INR_TAX_NOTE, USD_TAX_NOTE } from "@/config/tax-copy";
  * was drawn for. So the ratios are derived and the headline says nothing
  * numeric that the foot line does not compute.
  *
- * One line per tier on what the step buys, checked against the catalogue:
- *   Starter   scheduler, short links, lead capture  - all in the Starter bullets
- *   Growth    post analytics, templates, 5 follow-ups - all in the Growth bullets
- *   Business  seats, permissions, approval, attribution - teamMembers 15, RBAC,
- *             the Approval workflow module, per-automation attribution
- *   Agency    workspace count derived from planWorkspacesIncluded
- *
- * 🚩 No API row. D4 withheld the external API from V4 launch (maxApiCredentials
- * 0, apiRequestsPerDay 0, no API module), so the design's "Seats, permissions,
- * approval, attribution, API" would reinstate the exact claim PR #5 removed.
+ * One line per tier on what the step buys, each one taken from that tier's
+ * bullets in pricing-v4.config.ts (the live plan table, docs/decisions/0006).
+ * No step past Free says "unlimited DMs": DMs are unlimited on every plan, so it
+ * is not something any step buys.
  */
 
 const STEP_NOTES: Record<string, string> = {
-  Free: "One real automation, end to end, on your own account",
-  Starter: "Unlimited DMs, scheduler, short links, lead capture",
-  Growth: "Post analytics, content templates, five follow-ups",
-  Business: "Seats, permissions, an approval step, attribution",
+  Free: "Unlimited DMs, comment to DM and 2 live chatbots",
+  Starter: "Branding off, trigger blocks, chatbot questions and conditions",
+  Growth: "Ice breakers, story triggers, post metrics, templates",
+  Business: "Chatbot lead capture, approvals, team permissions",
 };
 
 function agencyNote(): string {
@@ -94,7 +88,7 @@ export default function PricingLadder({ plans }: { plans: PricingPlan[] }) {
         eyebrow="The ladder"
         title="Two crossable steps, where there used to be one cliff."
       >
-        Growth exists because a solo creator who outgrows Starter does not need team seats - they
+        Growth exists because a solo creator who outgrows Starter does not need team permissions - they
         need to know how their posts are performing. Each step is now worth crossing on its own
         merits.
       </SectionHead>

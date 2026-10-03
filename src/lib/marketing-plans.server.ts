@@ -63,12 +63,6 @@ const UNSUPPORTED_CLAIMS: ReadonlyArray<{
       'One account per workspace at every tier. workspacesIncluded is 1 on Free/Starter/Growth/Business and 20 on Agency, and V4 models 1 workspace = 1 account = 1 subscription. True of no tier.',
   },
   {
-    match: /^Unlimited automated DMs$/i,
-    plans: ['Free'],
-    reason:
-      'V4 gives Free 500 DMs/month, but nothing meters DMs: no DM key in package_limits, every dmsSent* reference is analytics, and V4 flags the cap as unbuilt (line 667, blocker 25.3). Dropped rather than restated with a number nothing enforces. The enforced Free cap is 3 automations (workflows), not a DM count.',
-  },
-  {
     match: /^3 DM message templates$/i,
     plans: ['Free'],
     reason: 'No template limit exists. package_limits has 8 keys and none counts templates.',
@@ -82,7 +76,7 @@ const UNSUPPORTED_CLAIMS: ReadonlyArray<{
   {
     match: /^Team members \(up to 5 seats\)$/i,
     plans: ['Business'],
-    replaceWith: 'Team members (up to 15 seats)',
+    replaceWith: 'Up to 15 team members',
     reason: 'package_limits.teamMembers is 15 for business. The card understated the package.',
   },
   {
@@ -140,7 +134,9 @@ function sanitizeFeatures(planName: string, features: PlanFeatureItem[]): PlanFe
       return { ...f, text: text.trim() }
     })
     .filter((f) => {
-      const liveLeak = /\bLive\b/i.test(f.text)
+      // "Live" automation is the claim being blocked. "live chatbots" is the
+      // chatbot count every card states, and must survive.
+      const liveLeak = /\bLive\b(?!\s+chatbots?\b)/i.test(f.text)
       const welcomeLeak = !FEATURE_WELCOME_DM && /welcome/i.test(f.text)
       const crmLeak = !FEATURE_CRM_INTEGRATION && /\bCRM\b|HubSpot|Zapier|Salesforce/i.test(f.text)
       // Narrow on purpose: bare /sale|revenue|phone/ would swallow benign plan
@@ -471,26 +467,13 @@ const TIER_COUNT_WORDS: Record<number, string> = {
   6: 'Six',
 }
 
-// 🚩 "unlimited automated DMs" is a PAID-tier fact and must not appear here.
-// UNSUPPORTED_CLAIMS above already drops that exact string from the Free tier of
-// the API payload, but this template is hardcoded, so the guard never sees it
-// and the claim shipped anyway. The Free caps that ARE published are 3
-// automations (workflows). Deliberately NOT a DM count: see UNSUPPORTED_CLAIMS above : 
-// nothing meters DMs, and ADR 0004 contains the 500 figure to the V4 matrix and the
-// Free card Limits panel. Do not restate it here.
-//
-// 🚩 The DM figure is stated, not omitted. This answer used to list what Free
-// includes and say nothing about DMs, while the sibling "Are automated DMs
-// unlimited?" answer and the visible V4 limits table both say 500/month, so
-// /pricing gave two accounts of the same allowance, and the silent one is what
-// an AI engine quotes when asked whether Free is capped. All three now agree on
-// 500. (Enforcement is a separate matter: V4 blocker 25.3 still has nothing
-// metering DMs. That is a reason to build the meter, not to leave the published
-// allowance unstated on one answer out of three.)
+// 🚩 DMs are unlimited on every plan, Free included. This answer, the "Are
+// automated DMs unlimited?" answer and the Free card's limits all say so. Never
+// restate a DM cap here: there is none on any plan.
 export function buildFreePlanFaqAnswer(region: PricingRegion, plans: PricingPlan[]): string {
   const free = plans.find((p) => p.name === 'Free')
   const price = free?.monthly ?? (region === 'india' ? '₹0' : '$0')
-  return `Yes. The Free plan is ${price}/month. No credit card required. You get one Instagram account, three automation workflows, comment keyword triggers, public auto-replies, a bio link page, and basic analytics.`
+  return `Yes. The Free plan is ${price}/month. No credit card required. You get unlimited DMs, three automation workflows, 2 live chatbots with link buttons and chat analytics, comment keyword triggers, public replies, a leads list, a bio link and short links, and overview analytics.`
 }
 
 export function buildPlansOfferedFaqAnswer(region: PricingRegion, plans: PricingPlan[]): string {
@@ -513,16 +496,14 @@ export function buildPlansOfferedFaqAnswer(region: PricingRegion, plans: Pricing
   // Derived, never hardcoded: this list is whatever the catalogue returns, so a
   // literal "Four tiers" here would silently misdescribe a five-tier response.
   const count = TIER_COUNT_WORDS[parts.length] ?? String(parts.length)
-  // The account half is true of every tier and stays. The DM half is not: Free
-  // has an allowance, so "unlimited" is scoped to the paid tiers where it holds
-  // and Free's 500 is named, the same figure buildFreePlanFaqAnswer, the
-  // "Are automated DMs unlimited?" answer and the V4 limits table all state.
+  // Both halves are true of every tier, Free included: unlimited DMs and one
+  // Instagram account per workspace.
   // Terms 7.3, derived from the currency the catalogue actually served rather
   // than from `region`, so the sentence matches the figures beside it.
   const tax = region === 'india' ? ` ${INR_TAX_NOTE_LONG}` : ` ${USD_TAX_NOTE}`
-  return `${count} tiers: ${parts.join(', ')}.${tax} Every plan connects one Instagram account per workspace, and every paid plan includes unlimited automated DMs; the Free plan includes 500 a month.`
+  return `${count} tiers: ${parts.join(', ')}.${tax} Every plan, Free included, sends unlimited automated DMs and includes chatbots, and every plan connects one Instagram account per workspace.`
 }
 
 export function buildCreatorsProgramFaqAnswer(businessPlanValue: string): string {
-  return `Yes. Qualified Instagram creators (5K to 100K followers) can apply for our Creators Program and receive the full Business plan (${businessPlanValue} value) at no cost in exchange for active platform usage. No credit card required.`
+  return `Yes. Qualified Instagram creators (5K to 100K followers) can apply for our Creators Program and get everything in the Business plan (${businessPlanValue} value), chatbots included, at no cost in exchange for active platform usage. The one exception is Liffio branding, which stays on. No credit card required.`
 }

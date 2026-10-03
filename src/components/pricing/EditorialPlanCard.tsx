@@ -19,11 +19,10 @@ import { taxNoteForPrice } from "@/config/tax-copy";
  * now: `applyV4Content` puts the same V4 bullets on `plan.features`, so the two
  * pages cannot describe a tier differently.
  *
- * 🔴 Bullets, audience line and limits come from `pricing-v4.config.ts`. That is
- * what shipping the design verbatim means, and it is why several of them state
- * entitlements the catalogue does not grant - the list is at the top of that
- * file. Only the PRICE is live: it comes from `plan`, so a repricing still moves
- * the card, and `npm run check:prices` still guards it.
+ * 🔴 Bullets, audience line and limits come from `pricing-v4.config.ts`, the
+ * plans live on production (docs/decisions/0006). Only the PRICE is live from
+ * the API: it comes from `plan`, so a repricing still moves the card, and
+ * `npm run check:prices` still guards it.
  */
 
 const BRAND_GRADIENT = "linear-gradient(100deg,#FF7C49 0%,#F5184C 52%,#B20D8F 100%)";
@@ -61,19 +60,15 @@ function emphasize(text: string): ReactNode[] {
   });
 }
 
+/**
+ * The bullet marker: a plain tick character in the brand pink, at the bullet's
+ * own font size and line height so it sits on the first line of the text. No
+ * box, no background, no icon component, matching liffio-pricing-cards.html.
+ */
 function FeatureMark() {
   return (
-    <span className="absolute left-0 top-[5px] block h-[10px] w-[10px]" aria-hidden>
-      <span className="absolute inset-0 rounded-[3px] bg-[#F5184C] opacity-[0.16]" />
-      <svg viewBox="0 0 10 10" className="absolute inset-0 h-[10px] w-[10px]" fill="none">
-        <path
-          d="M2.4 5.2l1.8 1.8 3.4-4"
-          stroke="#F5184C"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+    <span className="flex-none font-bold text-[#F5184C]" aria-hidden>
+      {"✓"}
     </span>
   );
 }
@@ -156,53 +151,40 @@ export default function EditorialPlanCard({
   // vanishing - the same reason PositioningStrip filters instead of assuming.
   const features = content?.features ?? plan.features.filter((f) => f.included).map((f) => f.text);
   const limits = content?.limits ?? [];
+  // Two groups, same treatment. API limits get their own heading so a buyer
+  // cannot read an API figure as a cap on what the app itself does.
+  const limitGroups = [
+    { label: content?.limitsLabel, rows: limits },
+    { label: content?.apiLimitsLabel, rows: content?.apiLimits ?? [] },
+  ].filter((group) => group.rows.length > 0);
 
   return (
     /*
-      🚩 The emphasis ring is a BORDER, not a `shadow-[0_0_0_2px]` ring.
-      A ring sits outside the border box, so the gradient cap had to be pulled
-      out with negative insets to reach it, and at 2px ring against 1px inset
-      the cap overhung the corner radius on both sides and clipped the
-      neighbouring card. Widening the border instead keeps the cap inside the
-      padding box, where `top-0 inset-x-0` is exactly right and the radius
-      matches (16px outer − 2px border = 14px).
+      🚩 The emphasis ring is a BORDER, not a `shadow-[0_0_0_2px]` ring, and it
+      is the ONLY pink line on the card. A gradient cap used to be drawn across
+      the top edge as well, which doubled the line under the badge and ran a
+      second pink bar to its right. The badge now floats on the border alone.
     */
     <div
       className={`relative flex h-full flex-col rounded-2xl bg-white ${
         plan.highlight
-          ? // Padding is 1px tighter to absorb the extra border, so the text
-            // baselines line up across every card in the row.
-            "border-2 border-[#F5184C] px-[17px] pb-[21px] pt-[23px] shadow-[0_18px_40px_-22px_rgba(245,24,76,0.5)]"
-          : "border border-[#EAE4DC] px-[18px] pb-[22px] pt-6"
+          ? // 1px less padding absorbs the extra border, so every card has
+            // the same 20px x 22px content inset and the baselines line up.
+            "border-2 border-[#F5184C] px-[19px] py-[21px] shadow-[0_18px_40px_-22px_rgba(245,24,76,0.5)]"
+          : "border border-[#EAE4DC] px-5 py-[22px]"
       }`}
     >
-      {/*
-        🚩 The gradient cap is CLIPPED by a rounded wrapper, never rounded itself.
-
-        A 4px-tall bar with a 14px corner radius is the bug this replaces: the
-        radius is larger than the element's own height, so its top corners curve
-        away far too steeply and expose the coral border behind them, the two
-        hooks either side of the flag. Any `rounded-t-*` on a bar this thin has
-        the same problem, whatever the value, because the curve is governed by
-        the radius and the bar has no height to spend on it.
-
-        Clipping instead lets the wrapper own the 16px radius at full card
-        height, so the cap follows the card's real corner curve exactly.
-        `-inset-0.5` is the 2px border, so the cap covers the top edge rather
-        than sitting inside it.
-      */}
-      {plan.highlight ? (
-        <span
-          className="pointer-events-none absolute -inset-0.5 overflow-hidden rounded-2xl"
-          aria-hidden
-        >
-          <span className="absolute inset-x-0 top-0 h-1" style={{ background: BRAND_GRADIENT }} />
-        </span>
-      ) : null}
-
       {flag ? (
         <span
-          className="absolute -top-2.5 left-[17px] whitespace-nowrap rounded-md px-2.5 py-1 text-[9.5px] font-bold uppercase tracking-[0.09em] text-white"
+          className={`absolute z-10 whitespace-nowrap rounded-full px-[11px] py-[5px] text-[10px] font-bold uppercase leading-none tracking-[0.08em] text-white ${
+            // A pill on every card (999px radius, 10px text, 5px x 11px), as in
+            // liffio-pricing-cards.html; only the fill differs by tone.
+            // 11px above the card's OUTER edge and 20px in from it, on every
+            // card. Absolute offsets start inside the border, so the 2px
+            // highlighted border needs 1px more than the 1px ones, or the
+            // Growth badge sits lower and lands on its gradient border.
+            plan.highlight ? "-top-[13px] left-[18px]" : "-top-[12px] left-[19px]"
+          }`}
           style={{
             fontFamily: "var(--font-mono, ui-monospace, monospace)",
             background: flag.tone === "brand" ? BRAND_GRADIENT : "#17131A",
@@ -298,28 +280,30 @@ export default function EditorialPlanCard({
       >
         {content?.includedLabel ?? "Included"}
       </p>
-      <ul className="grid gap-[7px]">
+      {/*
+        11px between bullets, 13.5px text at 1.5 line height. The bold lead-in
+        and the rest of the sentence share one inline span, so the line wraps
+        naturally with no break after the colon.
+      */}
+      <ul className="flex flex-col gap-[11px]">
         {features.map((feature) => (
-          <li
-            key={feature}
-            className="relative pl-[17px] text-[12.5px] leading-[1.42] text-[#4A4350]"
-          >
+          <li key={feature} className="flex gap-[9px] text-[13.5px] leading-[1.5] text-[#4A4350]">
             <FeatureMark />
-            {emphasize(feature)}
+            <span className="min-w-0">{emphasize(feature)}</span>
           </li>
         ))}
       </ul>
 
-      {limits.length > 0 ? (
-        <>
+      {limitGroups.map((group, index) => (
+        <div key={group.label ?? index} className={index === 0 ? "mt-auto pt-4" : "pt-3"}>
           <p
-            className="mb-2 mt-auto border-t border-[#F1ECE5] pt-3.5 text-[9.5px] font-medium uppercase tracking-[0.11em] text-[#8B8391]"
+            className="mb-2 border-t border-[#F1ECE5] pt-3.5 text-[9.5px] font-medium uppercase tracking-[0.11em] text-[#8B8391]"
             style={{ fontFamily: "var(--font-mono, ui-monospace, monospace)" }}
           >
-            {content?.limitsLabel}
+            {group.label}
           </p>
           <dl className="grid gap-1">
-            {limits.map((limit) => (
+            {group.rows.map((limit) => (
               <div key={limit.label} className="flex justify-between gap-2 text-[11.5px]">
                 <dt className="text-[#8B8391]">
                   {limit.label}
@@ -334,8 +318,8 @@ export default function EditorialPlanCard({
               </div>
             ))}
           </dl>
-        </>
-      ) : null}
+        </div>
+      ))}
     </div>
   );
 }

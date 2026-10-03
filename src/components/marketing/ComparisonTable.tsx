@@ -4,21 +4,31 @@ type ComparisonRow = {
   competitor: boolean | string;
 };
 
-// Row set follows docs/decisions/0002-unsupported-feature-claims.md and 0004:
-// one workspace connects exactly one Instagram account (`workspacesIncluded` is 1
-// on every plan except Agency, which has 20), and unlimited DMs are a paid-plan
-// fact. The agency white-label row is dropped pending stage B6 and the external
-// API row pending stage D4; do not restore either row here.
+// One workspace connects exactly one Instagram account (`workspacesIncluded` is 1
+// on every plan except Agency, which has 20), and unlimited DMs are true of every
+// plan, Free included. No agency white-label row: only agency branding and hide
+// Liffio branding ship.
+//
+// Chatbot rows state Liffio's live plan table (docs/decisions/0006). Chatbots
+// are a separate module from comment to DM, which is the advantage: a simple
+// automation needs no flow builder. A competitor's chatbot tiers are not
+// verified here, so those cells read "Check their plans".
 const DEFAULT_ROWS: ComparisonRow[] = [
   { name: "Comment-to-DM", liffio: true, competitor: true },
   { name: "Story auto reply", liffio: true, competitor: true },
-  { name: "Unlimited DMs (paid plans)", liffio: true, competitor: false },
+  { name: "Unlimited DMs (every plan)", liffio: true, competitor: false },
   { name: "Free plan", liffio: true, competitor: "limited" },
   { name: "Instagram accounts per subscription", liffio: "1 per workspace (Agency: 20)", competitor: false },
   { name: "Bio link pages", liffio: true, competitor: false },
   { name: "Post scheduler", liffio: true, competitor: false },
   { name: "Lead capture", liffio: true, competitor: true },
   { name: "Razorpay / INR billing", liffio: true, competitor: false },
+  { name: "Chatbots for full DM conversations", liffio: true, competitor: true },
+  { name: "Chatbots separate from comment to DM", liffio: true, competitor: false },
+  { name: "Live chatbots on the free plan", liffio: "2", competitor: "Check their plans" },
+  { name: "Chatbot questions, conditions and media", liffio: "Starter and up", competitor: "Check their plans" },
+  { name: "Ice breakers and story triggers", liffio: "Growth and up", competitor: "Check their plans" },
+  { name: "Chatbot lead capture and webhook step", liffio: "Business and Agency", competitor: "Check their plans" },
 ];
 
 function CellValue({ value }: { value: boolean | string }) {

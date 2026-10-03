@@ -104,7 +104,7 @@ export default function ComparePage() {
                 Try Liffio free
               </h2>
               <p className="mt-2 text-white/90">
-                Free plan, no credit card. Unlimited automated DMs on every paid plan.
+                Free plan with 2 live chatbots, no credit card. Unlimited automated DMs on every plan.
               </p>
               <a
                 href={siteConfig.urls.appSignup}

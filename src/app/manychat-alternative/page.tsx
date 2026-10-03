@@ -27,13 +27,13 @@ const faqCategories: FaqCategory[] = [
         id: "is-liffio-better",
         question: "Is Liffio better than ManyChat for Instagram?",
         answer:
-          "For Instagram-only DM automation, Liffio is the better choice for most creators and small agencies. Liffio is built specifically for Instagram and includes unlimited automated DMs on every paid plan, with no per-contact pricing. ManyChat is a strong choice if you need multi-channel automation across Facebook Messenger, WhatsApp, and Instagram simultaneously. If Instagram is your only channel, you end up paying for infrastructure you don't use. Liffio also includes post scheduling, bio links (bio.liffio.com), and short links (go.liffio.com) in the same workspace, which replaces two or three separate tools most creators pay for.",
+          "For Instagram-only DM automation, Liffio is the better choice for most creators and small agencies. Liffio is built specifically for Instagram and includes unlimited automated DMs on every plan, Free included, with no per-contact pricing. ManyChat is a strong choice if you need multi-channel automation across Facebook Messenger, WhatsApp, and Instagram simultaneously. If Instagram is your only channel, you end up paying for infrastructure you don't use. Liffio also includes post scheduling, bio links (bio.liffio.com), and short links (go.liffio.com) in the same workspace, which replaces two or three separate tools most creators pay for.",
       },
       {
         id: "does-liffio-work-with-reels",
         question: "Does Liffio work with Instagram Reels?",
         answer:
-          "Yes. Comment-to-DM automation works on both feed posts and Reels. When someone comments a keyword on your Reel, Liffio sends the automated DM after your chosen delay, whether that Reel gets 50 comments or 50,000. Story reply automation works when someone replies to a Story you have published, including Stories that promote a Reel, and is available on paid plans. Comment-to-DM on feed posts and Reels is available on the free plan.",
+          "Yes. Comment-to-DM automation works on both feed posts and Reels. When someone comments a keyword on your Reel, Liffio sends the automated DM after your chosen delay, whether that Reel gets 50 comments or 50,000. Story reply and story mention triggers fire when someone replies to or mentions a Story, including Stories that promote a Reel, and come with chatbots on Growth and above. Comment-to-DM on feed posts and Reels is available on the free plan.",
       },
       {
         id: "run-both",
@@ -45,7 +45,7 @@ const faqCategories: FaqCategory[] = [
         id: "free-trial",
         question: "Does Liffio have a free trial?",
         answer:
-          "Liffio has a free plan, not a time-limited free trial. There is no credit card required and no trial period that expires. The free plan includes comment keyword triggers on posts and Reels, public comment auto-replies, a bio link page at bio.liffio.com, and basic analytics. It is intended to run in production, not as a demo that locks you out after 14 days. It connects one Instagram account, the same as every workspace on any tier. If you outgrow the free plan's 3 automations, paid plans start at $9/month and add unlimited automated DMs.",
+          "Liffio has a free plan, not a time-limited free trial. There is no credit card required and no trial period that expires. The free plan includes unlimited DMs, comment keyword triggers on posts and Reels, public comment auto-replies, 2 live chatbots, a bio link page at bio.liffio.com, and overview analytics. It is intended to run in production, not as a demo that locks you out after 14 days. It connects one Instagram account, the same as every workspace on any tier. If you outgrow the free plan's 3 automations, paid plans start at $9/month and add more automations and chatbots.",
       },
       {
         id: "manychat-flows-switch",
@@ -98,7 +98,7 @@ export default function ManyChatAlternativePage() {
             <p className="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
               ManyChat popularised comment-to-DM, but growing creators need simpler pricing, no
               per-contact fees, and tools built only for Instagram. Liffio delivers all three, with
-              unlimited automated DMs on every paid plan and a free plan that actually works in
+              unlimited automated DMs on every plan, Free included and a free plan that actually works in
               production.
             </p>
             <div className="mt-8 flex flex-wrap gap-4 justify-center">
@@ -142,7 +142,9 @@ export default function ManyChatAlternativePage() {
               <p>
                 A creator running comment-to-DM on three Reels per week does not need a general
                 chatbot platform. They need reliable keyword triggers, clean analytics, flat pricing,
-                and a predictable price for every Instagram account they manage.
+                and a predictable price for every Instagram account they manage. When they do want a
+                full conversation in the DM, Liffio&apos;s chatbots are a separate module, so the
+                simple automation stays simple.
               </p>
               <ul className="mt-4 space-y-2 list-none">
                 <li className="flex gap-3">
@@ -281,8 +283,9 @@ export default function ManyChatAlternativePage() {
                 <p className="mt-3 text-gray-600 leading-relaxed">
                   Liffio's analytics track the full comment-to-DM-to-click chain, which gives
                   DTC teams a clear signal on which posts convert to link clicks and which posts
-                  generate engagement without purchase intent. The Business plan adds
-                  conversion analytics that ties comment volume to downstream actions.
+                  generate engagement without purchase intent. The Business plan adds per
+                  automation attribution and chatbot lead capture, so answers land straight in
+                  the leads list.
                 </p>
               </div>
 

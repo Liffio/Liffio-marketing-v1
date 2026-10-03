@@ -128,7 +128,7 @@ export function WebSiteJsonLd() {
         name: siteConfig.brand.name,
         url: SITE_URL,
         description:
-          "Instagram auto DM tool with auto comment reply, comment-to-DM, and story reply automation.",
+          "Instagram auto DM tool with auto comment reply, comment-to-DM, chatbots, and story reply automation.",
         inLanguage: "en",
         publisher: { "@id": `${SITE_URL}/#organization` },
         // 🚩 Do NOT re-add a SearchAction here. The removed one advertised
@@ -178,14 +178,14 @@ const OFFER_LADDER: {
     name: "Free",
     usd: { price: "0", monthly: "$0", annualPerMonth: null },
     inr: { price: "0", monthly: "₹0", annualPerMonth: null },
-    describe: () => "Free plan. No credit card required.",
+    describe: () => "Free plan. Unlimited DMs, 3 automations and 2 live chatbots. No credit card required.",
   },
   {
     name: "Starter",
     usd: { price: "9.00", monthly: "$9", annualPerMonth: "$7.50" },
     inr: { price: "499", monthly: "₹499", annualPerMonth: "₹417" },
     describe: (monthly, annualPerMonth) =>
-      `Starter plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Flat rate: unlimited DMs and contacts.`,
+      `Starter plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Flat rate: unlimited DMs and contacts, 25 automations and 5 live chatbots.`,
   },
   {
     // 🚩 Growth IS purchasable now: the card ships a live "Start Growth" CTA
@@ -207,25 +207,24 @@ const OFFER_LADDER: {
     usd: { price: "29.00", monthly: "$29", annualPerMonth: "$24.17" },
     inr: { price: "1499", monthly: "₹1,499", annualPerMonth: "₹1,250" },
     describe: (monthly, annualPerMonth) =>
-      `Growth plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Post, video and profile analytics with bulk upload.`,
+      `Growth plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Ice breakers, story triggers, 15 live chatbots, and post, video and profile analytics.`,
   },
   {
     name: "Business",
     usd: { price: "59.00", monthly: "$59", annualPerMonth: "$49.17" },
     inr: { price: "2499", monthly: "₹2,499", annualPerMonth: "₹2,084" },
     describe: (monthly, annualPerMonth) =>
-      `Business plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Flat rate: unlimited DMs and contacts.`,
+      `Business plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Flat rate: unlimited DMs and contacts, unlimited live chatbots with lead capture, up to 15 team members.`,
   },
   {
-    // 🚩 Agency is NOT white-label and does NOT include unlimited workspaces:
-    // all seven agency:* capabilities are granted to no package, and the limit
-    // is a fixed 20 workspaces. What ships is 20 full Business workspaces on a
-    // single subscription. Describe that, and nothing more.
+    // 🚩 Agency is 20 full Business workspaces on one subscription, plus agency
+    // branding and hide Liffio branding. No wider white label: describe that, and
+    // nothing more.
     name: "Agency",
     usd: { price: "549.00", monthly: "$549", annualPerMonth: "$457.50" },
     inr: { price: "22999", monthly: "₹22,999", annualPerMonth: "₹19,167" },
     describe: (monthly, annualPerMonth) =>
-      `Agency plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. 20 workspaces, each a full Business workspace: 150 automations, 15 seats and unlimited automated DMs per workspace, on one subscription, one invoice and one renewal date.`,
+      `Agency plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. 20 workspaces, each a full Business workspace: 250 automations, unlimited live chatbots, 15 team members and unlimited automated DMs per workspace, on one subscription, one invoice and one renewal date.`,
   },
 ];
 
@@ -279,10 +278,11 @@ export function SoftwareApplicationJsonLd() {
         url: SITE_URL,
         publisher: { "@id": `${SITE_URL}/#organization` },
         description:
-          "Liffio is an Instagram DM automation tool. It sends automatic replies to comments, story mentions, and DMs using keyword triggers. It connects through Instagram's official OAuth API, with no password or third-party login required.",
+          "Liffio is an Instagram DM automation tool with chatbots. It sends automatic replies to comments using keyword triggers, and its chatbots hold full conversations inside the DM. It connects through Instagram's official OAuth API, with no password or third-party login required.",
         offers: pricingOffers(),
         featureList: [
           "Comment-to-DM automation",
+          "Instagram chatbots",
           "Story reply automation",
           "DM reply automation",
           "Ask Follow (follow gating)",

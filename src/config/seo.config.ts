@@ -66,6 +66,8 @@ export const SEO_KEYWORDS = [
   "igdm alternative",
   // Bot/engagement terms
   "Instagram dm bot",
+  "Instagram chatbot",
+  "Instagram DM chatbot",
   "Instagram engagement automation",
   "Instagram marketing automation",
   "Instagram lead generation tool",
@@ -148,7 +150,7 @@ export function buildPageMetadata({
 export const rootSeo = buildPageMetadata({
   title: "Liffio: Instagram DM Automation for Creators and Brands",
   description:
-    "Auto-reply to Instagram comments, story mentions, and DMs with keyword triggers. Runs 24/7 on the official Instagram API. Free plan, no card needed.",
+    "Comment to DM automation and Instagram chatbots on the official Instagram API. Unlimited DMs on every plan. Free plan with 2 live chatbots, no card needed.",
   pathname: "/",
   ogImagePath: siteConfig.meta.ogImagePath,
   ogImageAlt: siteConfig.meta.ogImageAlt,
@@ -158,7 +160,7 @@ export const pageSeo = {
   features: buildPageMetadata({
     title: "Instagram DM & Comment Automation Features | Liffio",
     description:
-      "Comment-to-DM, story reply, DM sequences, follow gating, and more. Every automation type in one place. Built on Instagram’s official API.",
+      "Comment-to-DM, chatbots, story reply, DM sequences, follow gating, and more. Every automation type in one place. Built on Instagram’s official API.",
     pathname: "/features",
   }),
   pricing: buildPageMetadata({
@@ -172,16 +174,15 @@ export const pageSeo = {
       // "unlimited Instagram accounts" was removed here for the same reason it
       // was removed from the cards, the FAQ and llms.txt: workspacesIncluded is
       // 1 on every tier but Agency. See docs/decisions/0002.
-      // "unlimited automated DMs" stays qualified with "on paid plans", Free
-      // is capped at 500 DMs/month.
-      "Free plan, no credit card. From $9/mo, or ₹499/mo in India, GST included on a GST invoice. One account per workspace, unlimited automated DMs on paid plans.",
+      // DMs are unlimited on every plan, Free included: never qualify it.
+      "Free plan with 2 live chatbots, no credit card. From $9/mo, or ₹499/mo in India, GST included. Unlimited DMs and chatbots on every plan.",
     pathname: "/pricing",
   }),
   signup: {
     ...buildPageMetadata({
       title: "Start Free - Instagram Auto DM & Comment Automation",
       description:
-        "Create your free Liffio account in minutes. Set up auto DMs, auto comment replies, and keyword triggers without a credit card.",
+        "Create your free Liffio account in minutes. Set up auto DMs, auto comment replies, keyword triggers and 2 live chatbots without a credit card.",
       pathname: "/signup",
     }),
     robots: { index: false, follow: true },
@@ -215,7 +216,7 @@ export const pageSeo = {
     // Program"; "Instagram" kept because it is the keyword doing the work.
     title: "Liffio Creators Program: Free Business Plan for Instagram",
     description:
-      "Qualifying creators with 5K to 100K followers get Liffio’s Business plan free. Apply in 2 minutes. No credit card. Up to 50 spots available.",
+      "Qualifying creators with 5K to 100K followers get Liffio’s Business plan free, chatbots included. Apply in 2 minutes. No credit card. Up to 50 spots.",
     pathname: "/creators-program",
   }),
 } as const;

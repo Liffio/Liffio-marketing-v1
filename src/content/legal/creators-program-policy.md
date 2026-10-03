@@ -6,7 +6,7 @@ This Creators Program Policy ("Policy") governs the Liffio Creators Program. By 
 
 ## 1. What is the Creators Program?
 
-The Liffio Creators Program is an invite-only program that gives selected Instagram creators free access to the Liffio Business plan (worth $59/month, or ₹2,499/month in India).
+The Liffio Creators Program is an invite-only program that gives selected Instagram creators free access to everything in the Liffio Business plan (worth $59/month, or ₹2,499/month in India). The one difference from a paid Business plan is that Liffio branding stays on and cannot be turned off.
 
 In exchange, creators actively use Liffio and keep a short "Powered by @getliffio" line in their automated DMs, which Liffio adds automatically.
 
@@ -49,11 +49,11 @@ Membership is not exclusive. We may accept several creators from the same niche,
 
 For as long as you remain an active, compliant member, you get at no cost:
 
-- Full access to Liffio Business plan features, as listed on our pricing page
+- Everything in the Liffio Business plan, with the Business limits, as listed on our pricing page. This includes chatbots and API access: 1,000 API requests a day, 15 API keys, and 400 automations and 400 scheduled posts a day through the API.
 - No monthly cap on automated DMs. Meta's sending limits still apply, and Liffio applies them for you.
-- Priority support
+- Priority email support. This is a benefit of the program, not a feature of the Business plan.
 
-Creator access does not include white label features, API access, or Agency plan features.
+The one exception to Business plan access is Liffio branding: it stays on, including in your automated DMs and chatbots, and you cannot turn it off. Creator access also covers one workspace only, so it does not include Agency plan features such as additional workspaces, agency branding, or hiding Liffio branding.
 
 Access is month to month and depends on following this Policy. There is no guaranteed minimum period.
 

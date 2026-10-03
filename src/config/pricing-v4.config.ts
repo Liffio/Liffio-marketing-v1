@@ -1,42 +1,34 @@
 /**
- * The V4 pricing design, shipped verbatim.
+ * The plan sheet: card copy, limits and the comparison matrix.
  *
  * 🔴 READ THIS BEFORE CHANGING A ROW.
  *
- * This sheet is transcribed from the V4 design prototype and `PRICING_PACKAGES_V4.md`
- * on an explicit decision to ship the design as drawn. Neither source lives in
- * this repo: both carry unreleased pricing and this repo is public. It is therefore the ONE
- * place on the marketing site that deliberately states entitlements the live
- * `packages` catalogue does not grant today. `docs/decisions/0004` records the
- * list and the owner of each.
+ * Rewritten 2026-10-03 to the plans live on production, chatbots included.
+ * Every bullet, limit and matrix row below comes from the owner's plan table
+ * (docs/decisions/0006) and nothing else: a capability that is not in it does
+ * not get a row.
  *
- * Known divergences from production, all intentional and all recorded:
+ * Deliberately NOT stated anywhere on the site:
  *
- *   API keys 10 / API requests per day 5,000    packages grant 0 and 0 (D4)
- *   Free "500 DMs / month"                      nothing meters DMs (blocker 25.3)
- *   AI token figures and rollover               unverified against ai_token_plan_configs
- *   Agency white-label / client sub-workspaces  all seven agency:* caps granted to nobody (B6)
+ *   Agency white label beyond "agency branding and hide Liffio branding"
+ *   Any DM cap                  DMs are unlimited on every plan, Free included
+ *   The Creator plan as a tier  it is given by Liffio, never sold
+ *   Buttons per step as a tier difference: 13 is Instagram's own cap, the
+ *     same on every plan
  *
- * The design's launch/standard price mechanic is NOT here. It was removed on
- * instruction: there is one price per tier - today's catalogue price - and no
- * post-window figure, so the page never promises a price change it cannot honour.
+ * Prices are NOT here. They come live from `/marketing/plans`, so a repricing
+ * moves every card and `npm run check:prices` guards every figure.
  *
- * 🚩 This sheet BYPASSES `sanitizeFeatures()`, and it now feeds BOTH the pricing
- * page and the homepage cards (via `applyV4Content` in marketing-plans.server).
- * That guard still runs on the `/marketing/plans` payload first, so the API
- * bullets are still sanitized before this replaces them - but nothing the site
- * renders is protected by it any more. The divergences above are visible here,
- * in one file, rather than reintroduced somewhere the guard was expected to
- * catch them.
+ * 🚩 This sheet BYPASSES `sanitizeFeatures()` and feeds BOTH the pricing page
+ * and the homepage cards (via `applyV4Content` in marketing-plans.server), so
+ * it is the one place plan copy is written.
  */
 
 /**
  * `**bold**` segments are rendered with emphasis, as `<b>` does in the design.
  *
  * `{beta}` is the one other inline marker: it renders a small Beta pill where it
- * sits. Lyra AI is the only thing wearing it - the suite ships to every tier,
- * including Free, but it is not out of beta, and the card is where a buyer
- * decides. `stripEmphasis()` removes both markers for plain-text surfaces.
+ * sits. `stripEmphasis()` removes both markers for plain-text surfaces.
  */
 export type V4Feature = string;
 
@@ -50,41 +42,57 @@ export type V4PlanContent = {
   flag?: { text: string; tone: "brand" | "ink" };
   cta: string;
   /**
-   * In-page anchor instead of signup.
-   *
-   * Unused today. Agency carried `#agency-break-even` behind a "See the maths"
-   * label; the label is now "Choose Agency", which promises a checkout, so the
-   * anchor had to go with it. The break-even section still renders on /pricing
-   * - nothing links to it from the cards any more.
+   * In-page anchor instead of signup. Unused today: every card CTA promises a
+   * checkout, so it goes to signup.
    */
   ctaAnchor?: string;
   includedLabel: string;
+  /**
+   * The tier's own bullets. Every card carries at least six, each one
+   * capability per line, so no tier reads as "the one below, plus a little".
+   */
   features: V4Feature[];
   limitsLabel: string;
   limits: V4Limit[];
+  /**
+   * Limits on calls through the Liffio API, under their own heading. They do
+   * NOT limit scheduling, automations or chatbots in the app, which is why
+   * they are not mixed into `limits`.
+   */
+  apiLimitsLabel: string;
+  apiLimits: V4Limit[];
 };
 
 export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
   Free: {
     audience:
-      "Test whether comment-to-DM converts on your own audience before paying anything.",
+      "Test whether comment to DM converts on your own audience before paying anything.",
     cta: "Start free",
     includedLabel: "Included",
     features: [
-      "**A complete automation loop**: keyword trigger, any-comment trigger, public auto-reply",
-      "Bio link page, Liffio badge shown",
-      "Lead capture by username",
-      "Overview analytics, 7-day history",
-      "**Lyra AI**{beta}: AI Insights + zero-token answers",
-      "Affiliate programme, 50% recurring",
+      "**Comment to DM that works**: keyword and any comment triggers, public auto reply",
+      "**2 live chatbots** with link buttons and chat analytics",
+      "**Bio link page and short links**, Liffio badge shown",
+      "**Leads list** with the full interaction timeline",
+      "**Overview analytics**",
+      "**Unlimited DMs**, no quota, no contact caps",
     ],
     limitsLabel: "Limits",
     limits: [
       { label: "Automations", value: "3" },
-      { label: "DMs / month", value: "500" },
-      { label: "Follow-ups", value: "0" },
-      { label: "Seats", value: "1" },
-      { label: "Lyra AI tokens", value: "1,000", beta: true },
+      { label: "DMs", value: "Unlimited" },
+      { label: "DM follow-ups", value: "0" },
+      { label: "Live chatbots", value: "2" },
+      { label: "Steps per bot", value: "15" },
+      { label: "Keywords per bot", value: "5" },
+      { label: "Follow-ups per step", value: "0" },
+      { label: "Team members", value: "1" },
+      { label: "AI tokens / month", value: "1,000" },
+    ],
+    apiLimitsLabel: "API limits",
+    apiLimits: [
+      { label: "API requests / day", value: "0" },
+      { label: "API keys", value: "0" },
     ],
   },
 
@@ -93,22 +101,31 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     cta: "Choose Starter",
     includedLabel: "Everything in Free, plus",
     features: [
-      "**Unlimited DMs**: no quota, no contact caps",
-      "All 15 automation capabilities",
-      "**Follow-up sequences**: 2 per automation",
-      "Full post scheduler + media library",
-      "Short links, lead emails, CSV export",
-      "Bio link unlocked, **badge removed**",
-      "30-day analytics, conversion rate",
-      "The full **Lyra AI** creative suite{beta}",
+      "**Liffio branding off**, on DMs, chatbots and your bio link",
+      "**Trigger blocks**: a different reply for every keyword on one post",
+      "**Follow before DM**, on automations and chatbots",
+      "**5 live chatbots** with questions, conditions, media and personalization",
+      "**Follow-up sequences**, 2 per automation, plus 1 follow-up per chatbot step",
+      "**Lead export**, conversion rate and 30 day history",
+      "**Custom slugs and bio link styling** with click tracking",
+      "**API access**: 200 requests a day, 5 keys",
     ],
     limitsLabel: "Limits",
     limits: [
       { label: "Automations", value: "25" },
-      { label: "DMs / month", value: "Unlimited" },
-      { label: "Follow-ups", value: "2" },
-      { label: "Seats", value: "3" },
-      { label: "Lyra AI tokens", value: "10,000", beta: true },
+      { label: "DMs", value: "Unlimited" },
+      { label: "DM follow-ups", value: "2" },
+      { label: "Live chatbots", value: "5" },
+      { label: "Steps per bot", value: "40" },
+      { label: "Keywords per bot", value: "15" },
+      { label: "Follow-ups per step", value: "1" },
+      { label: "Team members", value: "3" },
+      { label: "AI tokens / month", value: "10,000" },
+    ],
+    apiLimitsLabel: "API limits",
+    apiLimits: [
+      { label: "API requests / day", value: "200" },
+      { label: "API keys", value: "5" },
     ],
   },
 
@@ -119,21 +136,31 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     cta: "Choose Growth",
     includedLabel: "Everything in Starter, plus",
     features: [
-      "**Instagram post analytics**: reach, views, saves, shares, engagement rate",
-      "Video metrics and profile outcomes",
-      "**Best-time-to-post heatmap** from your own data",
-      "90-day analytics history",
-      "**Caption templates, hashtag groups, schedule templates**",
-      "Bulk upload",
-      "**5 follow-up messages** per automation",
+      "**Ice breakers**: 4 tappable questions above every empty DM thread",
+      "**Story reply and story mention triggers**",
+      "**Default reply** answers any DM that matches nothing",
+      "**15 live chatbots** with chain bots, templates and tags",
+      "**Start a chatbot from a comment**",
+      "**Post, video and profile metrics** with 90 day history",
+      "**Caption and schedule templates**, hashtag groups, bulk upload",
+      "**5 follow-ups per automation**, 2 per chatbot step, and 30,000 AI tokens",
     ],
     limitsLabel: "Limits",
     limits: [
-      { label: "Automations", value: "75" },
-      { label: "DMs / month", value: "Unlimited" },
-      { label: "Follow-ups", value: "5" },
-      { label: "Seats", value: "5" },
-      { label: "Lyra AI tokens", value: "30,000", beta: true },
+      { label: "Automations", value: "100" },
+      { label: "DMs", value: "Unlimited" },
+      { label: "DM follow-ups", value: "5" },
+      { label: "Live chatbots", value: "15" },
+      { label: "Steps per bot", value: "100" },
+      { label: "Keywords per bot", value: "40" },
+      { label: "Follow-ups per step", value: "2" },
+      { label: "Team members", value: "5" },
+      { label: "AI tokens / month", value: "30,000" },
+    ],
+    apiLimitsLabel: "API limits",
+    apiLimits: [
+      { label: "API requests / day", value: "500" },
+      { label: "API keys", value: "10" },
     ],
   },
 
@@ -143,44 +170,65 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     cta: "Choose Business",
     includedLabel: "Everything in Growth, plus",
     features: [
-      "**Team management**: invite, assign roles, revoke",
-      "Per-user, per-module, per-action access control and ABAC",
-      "**Post approval workflow** + activity log",
-      "**Per-automation attribution**: DMs → clicks → leads",
-      "Analytics export",
-      "External API: 10 keys, 5,000 requests/day",
-      "Proactive **Lyra AI** growth alerts{beta}",
-      "AI token rollover up to 25,000",
+      "**Chatbot lead capture**: answers land straight in your leads list",
+      "**Webhook step**: send answers to your own system mid chat",
+      "**A/B testing on chatbot steps**",
+      "**Handover routing and business hours**",
+      "**Unlimited live chatbots**",
+      "**Post approvals and activity log**",
+      "**Per person permissions** for up to 15 team members",
+      "**Analytics export** and per automation attribution",
     ],
     limitsLabel: "Limits",
     limits: [
-      { label: "Automations", value: "150" },
-      { label: "DMs / month", value: "Unlimited" },
-      { label: "Follow-ups", value: "5" },
-      { label: "Seats", value: "15" },
-      { label: "Lyra AI tokens", value: "75,000", beta: true },
+      { label: "Automations", value: "250" },
+      { label: "DMs", value: "Unlimited" },
+      { label: "DM follow-ups", value: "10" },
+      { label: "Live chatbots", value: "Unlimited" },
+      { label: "Steps per bot", value: "Unlimited" },
+      { label: "Keywords per bot", value: "Unlimited" },
+      { label: "Follow-ups per step", value: "3" },
+      { label: "Team members", value: "15" },
+      { label: "AI tokens / month", value: "75,000" },
+    ],
+    apiLimitsLabel: "API limits",
+    apiLimits: [
+      { label: "API requests / day", value: "1,000" },
+      { label: "API keys", value: "15" },
     ],
   },
 
   Agency: {
-    audience: "Studios and multi-brand operators running 10 to 20 Instagram accounts.",
+    audience: "Studios and multi brand operators running 10 to 20 Instagram accounts.",
     flag: { text: "20 workspaces", tone: "ink" },
     cta: "Choose Agency",
     includedLabel: "Twenty complete Business workspaces",
     features: [
       "**Every workspace is a full Business workspace**: same features, same limits",
-      "One subscription, one invoice, one renewal date",
-      "**Slot-based allocation**: create workspaces as you win clients",
-      "Workspace switching from a single login",
-      "**Cheaper per workspace than a single Growth plan**",
+      "**One subscription, one invoice**, one renewal date for all 20",
+      "**Agency branding** and hide Liffio branding",
+      "**Client workspaces**, created as you win clients",
+      "**Switch workspaces** from one login",
+      "**Cheaper per workspace** than a single Growth plan",
     ],
-    limitsLabel: "Per workspace",
+    // Every figure below is Business's, per workspace. Stated plainly rather
+    // than as "250 x 20", which reads as one pooled allowance of 5,000.
+    limitsLabel: "Per workspace, across 20",
     limits: [
-      { label: "Automations", value: "150 × 20" },
-      { label: "DMs / month", value: "Unlimited" },
-      { label: "Seats", value: "15 × 20" },
-      { label: "API requests/day", value: "5,000 × 20" },
-      { label: "Lyra AI tokens", value: "75,000 × 20", beta: true },
+      { label: "Automations", value: "250" },
+      { label: "DMs", value: "Unlimited" },
+      { label: "DM follow-ups", value: "10" },
+      { label: "Live chatbots", value: "Unlimited" },
+      { label: "Steps per bot", value: "Unlimited" },
+      { label: "Keywords per bot", value: "Unlimited" },
+      { label: "Follow-ups per step", value: "3" },
+      { label: "Team members", value: "15" },
+      { label: "AI tokens / month", value: "75,000" },
+    ],
+    apiLimitsLabel: "API limits, per workspace",
+    apiLimits: [
+      { label: "API requests / day", value: "1,000" },
+      { label: "API keys", value: "15" },
     ],
   },
 };
@@ -191,23 +239,27 @@ export function stripEmphasis(feature: V4Feature): string {
 }
 
 /**
- * The V4 bullets as the `PlanFeature[]` shape the homepage cards expect.
+ * The bullets as the `PlanFeature[]` shape the homepage cards expect.
  *
- * Every entry is `included: true`. The V4 sheet lists only what a tier HAS, and
- * there is no exclusion list, so the homepage's ✗ rows disappear along with
- * the claims that produced them ("Story & multi-step flows" on Free, which
- * ADR 0002 already flagged as half-wrong).
+ * Every entry is `included: true`. The sheet lists only what a tier HAS, and
+ * there is no exclusion list, so the homepage shows no ✗ rows. The homepage
+ * card has no "Everything in Free, plus" heading of its own, so it leads the
+ * list for every tier that builds on another.
  */
 export function v4FeatureList(planName: string): Array<{ text: string; included: boolean }> | null {
   const content = V4_PLAN_CONTENT[planName];
   if (!content) return null;
-  return content.features.map((feature) => ({ text: stripEmphasis(feature), included: true }));
+  const lead = content.includedLabel === "Included" ? [] : [content.includedLabel];
+  return [...lead, ...content.features].map((feature) => ({
+    text: stripEmphasis(feature),
+    included: true,
+  }));
 }
 
 // ── The capability matrix ────────────────────────────────────────────────────
 //
-// All 87 rows of the V4 design, in its groups and its wording. `true` renders a
-// tick, `false` a dash, a string renders the value.
+// Only capabilities named in the live plan table, in plain words. `true` renders
+// a tick, `false` a dash, a string renders the value.
 
 type MatrixRow = {
   name: string;
@@ -227,7 +279,7 @@ const all = (name: string): MatrixRow => ({
   agency: true,
 });
 
-/** Free excluded, every paid tier included, the commonest shape in the sheet. */
+/** Starter and up: Free excluded, every paid tier included. */
 const paid = (name: string): MatrixRow => ({
   name,
   free: false,
@@ -257,6 +309,16 @@ const businessUp = (name: string): MatrixRow => ({
   agency: true,
 });
 
+/** Agency only. */
+const agencyOnly = (name: string): MatrixRow => ({
+  name,
+  free: false,
+  starter: false,
+  growth: false,
+  business: false,
+  agency: true,
+});
+
 const values = (
   name: string,
   free: string,
@@ -274,146 +336,147 @@ export const V4_FEATURE_CATEGORIES: ReadonlyArray<{
   features: MatrixRow[];
 }> = [
   {
-    name: "Automation",
-    features: [
-      all("Comment keyword trigger"),
-      all("Any-comment trigger"),
-      all("Public comment auto-reply"),
-      all("Post scope: all posts"),
-      paid("Post scope: next / specific post"),
-      paid("Excluded keywords"),
-      paid("DM button + link"),
-      paid("DM button click tracking"),
-      paid("Reply variants"),
-      paid("Follow-before-DM"),
-      paid("Structured trigger blocks"),
-      { name: "DM follow-up sequences", free: false, starter: "2", growth: "5", business: "5", agency: "5" },
-      all("Auto-retry & account-trust protection"),
-    ],
-  },
-  {
+    // First, on purpose: it is the one line that is the same on every plan.
     name: "DMs",
+    description: "No cap on any plan, Free included.",
+    features: [values("Automated DMs", "Unlimited", "Unlimited", "Unlimited", "Unlimited", "Unlimited")],
+  },
+  {
+    name: "Comment to DM automation",
     features: [
-      values("Automated DM sending", "500/mo", "Unlimited", "Unlimited", "Unlimited", "Unlimited"),
-      all("DM retry with backoff"),
-      all("Instagram trust-tier protection"),
+      all("Keyword triggers"),
+      all("Excluded keywords"),
+      all("Any comment trigger"),
+      all("Public replies"),
+      all("Reply variants"),
+      all("DM button"),
+      paid("Trigger blocks: the multi-keyword builder"),
+      paid("Follow before DM"),
+      paid("Turn off Liffio branding"),
     ],
   },
   {
-    name: "Scheduler",
+    // Its own group, never mixed into automations: chatbots are a separate
+    // module, and folding them in would hide how much there is.
+    name: "Chatbots",
+    description: "Full DM conversations, a separate module from comment to DM automation.",
     features: [
-      paid("Feed posts, Reels, carousels"),
-      paid("Trial reels, collaborators, first comment"),
-      paid("Instagram music on Reels"),
-      paid("Alt text, cover selection, thumbnail offset"),
-      paid("Location tag, timezone scheduling"),
-      paid("Media library"),
-      growthUp("Best-time-to-post heatmap"),
-      growthUp("Caption templates"),
-      growthUp("Hashtag groups"),
-      growthUp("Posting schedule templates"),
+      all("Build and publish a chatbot"),
+      all("Manage contacts"),
+      all("Link buttons"),
+      all("Chat analytics"),
+      paid("Questions"),
+      paid("Conditions"),
+      paid("Media messages"),
+      paid("Personalization"),
+      paid("Follow-ups inside a chat"),
+      paid("Follow gate before the bot replies"),
+      paid("Turn off Liffio chatbot branding"),
+      growthUp("Ice breakers"),
+      growthUp("Story reply and story mention triggers"),
+      growthUp("Default reply for unmatched DMs"),
+      growthUp("Chain bots"),
+      growthUp("Chatbot templates"),
+      growthUp("Tags"),
+      growthUp("Start a chatbot from a comment"),
+      businessUp("Lead capture into the leads list"),
+      businessUp("Webhook step"),
+      businessUp("A/B testing on a step"),
+      businessUp("Handover routing"),
+      businessUp("Business hours"),
+      businessUp("Notify step"),
+      values("Live chatbots", "2", "5", "15", "Unlimited", "Unlimited"),
+      values("Steps per bot", "15", "40", "100", "Unlimited", "Unlimited"),
+      values("Keywords per bot", "5", "15", "40", "Unlimited", "Unlimited"),
+      values("Condition rules", "0", "5", "15", "Unlimited", "Unlimited"),
+      values("Follow-ups per step", "0", "1", "2", "3", "3"),
+      values("Chatbot conversations a month", "500", "Unlimited", "Unlimited", "Unlimited", "Unlimited"),
+      values("Buttons per step, Instagram's own cap", "13", "13", "13", "13", "13"),
+    ],
+  },
+  {
+    name: "Post scheduler",
+    features: [
+      all("Feed posts, reels, stories, carousels"),
+      all("Media library"),
+      all("First comment, music, alt text"),
+      all("Cover selection, timezone scheduling"),
       growthUp("Bulk upload"),
-      businessUp("Approval workflow + approve posts"),
-      businessUp("Post activity log"),
+      growthUp("Caption templates"),
+      growthUp("Schedule templates"),
+      growthUp("Hashtag groups"),
+      businessUp("Approval workflow and approve posts"),
+      businessUp("Activity log"),
     ],
   },
   {
     name: "Bio link & short links",
     features: [
-      all("Bio link page, link items, socials, ordering"),
-      paid("Bio link custom slug, icons, thumbnails, visibility"),
-      paid("Bio link click analytics"),
-      paid("Remove “Powered by Liffio” badge"),
-      paid("Short links + custom slug + edit destination"),
-      paid("Short link click tracking"),
-      paid("Short link lead attribution"),
+      all("Bio link"),
+      paid("Bio link custom slug"),
+      paid("Hide the bio link badge"),
+      paid("Bio link styling"),
+      paid("Bio link click tracking"),
+      all("Short links"),
+      paid("Short link custom slugs"),
     ],
   },
   {
     name: "Leads",
-    features: [
-      all("Lead capture + dedupe"),
-      all("Lead identity (username)"),
-      paid("Lead email addresses"),
-      paid("Click state, follow state"),
-      paid("Source media, trigger provenance"),
-      paid("Lead CSV export"),
-    ],
+    features: [all("Leads list and timeline"), paid("Lead export")],
   },
   {
     name: "Analytics",
     features: [
-      all("Overview: DMs, leads, clicks, automations"),
-      { name: "Time-series charts", free: false, starter: "30d", growth: "90d", business: "90d", agency: "90d" },
+      all("Overview analytics"),
       paid("Conversion rate"),
-      growthUp("Post metrics: reach, views, saves, shares, ER"),
+      { name: "Analytics history", free: false, starter: "30 days", growth: "90 days", business: "90 days", agency: "90 days" },
+      growthUp("Post metrics"),
       growthUp("Video metrics"),
       growthUp("Profile outcomes"),
-      businessUp("Per-automation attribution"),
+      growthUp("AI insights"),
       businessUp("Analytics export"),
+      businessUp("Per automation attribution"),
     ],
   },
   {
-    name: "Lyra AI",
-    beta: true,
+    name: "Team & account",
     features: [
-      all("AI Insights across dashboard, analytics, scheduler"),
-      all("Zero-token quick answers"),
-      paid("Caption, hashtag, content-idea assist"),
-      paid("Media analyze: summary, OCR, vision"),
-      paid("Automation Copilot + keyword suggest"),
-      paid("DM message assist, bio text assist"),
-      paid("Creator Assistant"),
-      businessUp("Proactive AI growth alerts"),
-      values("Monthly tokens per workspace", "1,000", "10,000", "30,000", "75,000", "75,000"),
-      { name: "AI token rollover", free: false, starter: false, growth: false, business: "25,000", agency: "25,000" },
+      all("Team invites and roles"),
+      businessUp("Per person permissions"),
+      all("Audit log"),
+      all("Two factor authentication"),
+      all("Affiliate programme"),
     ],
   },
   {
-    name: "Team, permissions & approval",
+    name: "Agency",
     features: [
-      all("View members"),
-      businessUp("Invite / remove members, assign roles"),
-      businessUp("Resend / revoke invites"),
-      businessUp("Per-user × per-module × per-action access control"),
-      businessUp("Per-capability overrides: user and workspace"),
-      businessUp("ABAC policies"),
-    ],
-  },
-  {
-    name: "API",
-    features: [
-      businessUp("API key create / view / revoke"),
-      businessUp("API docs access, usage stats, key expiry"),
+      agencyOnly("One bill and one billing date for all 20 workspaces"),
+      agencyOnly("Agency branding and hide Liffio branding"),
+      agencyOnly("Client workspaces"),
     ],
   },
   {
     name: "Limits: per workspace, never pooled",
     features: [
-      values("Workspaces per subscription", "1", "1", "1", "1", "20"),
-      values("Instagram accounts per workspace", "1", "1", "1", "1", "1 each"),
-      values("Automations", "3", "25", "75", "150", "150"),
-      values("DMs per month", "500", "Unlimited", "Unlimited", "Unlimited", "Unlimited"),
-      values("Follow-ups per automation", "0", "2", "5", "5", "5"),
-      values("Team seats", "1", "3", "5", "15", "15"),
-      values("Scheduled posts per day", "3", "30", "100", "200", "200"),
-      values("API keys", "0", "0", "0", "10", "10"),
-      values("API requests per day", "0", "0", "0", "5,000", "5,000"),
-      values("Analytics history", "7 days", "30 days", "90 days", "90 days", "90 days"),
-      values("Lead storage", "Unlimited", "Unlimited", "Unlimited", "Unlimited", "Unlimited"),
+      values("Workspaces", "1", "1", "1", "1", "20"),
+      values("Automation workflows", "3", "25", "100", "250", "250"),
+      values("DM follow-ups per automation", "0", "2", "5", "10", "10"),
+      values("Team members", "1", "3", "5", "15", "15"),
+      values("AI tokens per month", "1,000", "10,000", "30,000", "75,000", "75,000"),
     ],
   },
   {
-    name: "Account, notifications & programmes",
+    name: "API limits",
+    description:
+      "Calls through the Liffio API, per workspace. Scheduling, automations and chatbots in the app are not limited by these.",
     features: [
-      all("Instagram connect, workspace rename, workspace switch"),
-      all("Drafts autosave"),
-      all("In-app notifications"),
-      all("Two-factor authentication"),
-      all("Billing self-service: invoices, portal, cancel"),
-      all("Affiliate programme: 50% recurring"),
-      all("Creator Program eligibility"),
-      values("Support", "Community", "Email", "Email", "Priority", "Priority"),
+      paid("API access"),
+      values("API requests per day", "0", "200", "500", "1,000", "1,000"),
+      values("API keys", "0", "5", "10", "15", "15"),
+      values("Automations per day via API", "0", "50", "150", "400", "400"),
+      values("Scheduled posts per day via API", "0", "50", "150", "400", "400"),
     ],
   },
 ];

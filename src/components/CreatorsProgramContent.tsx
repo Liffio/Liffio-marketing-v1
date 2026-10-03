@@ -33,13 +33,15 @@ const STATIC_BENEFITS = [
     title: "Team Members",
     description:
       "Invite your VA, manager, or team to collaborate on your workspace. Full role-based access included at no extra cost.",
-    tag: "Up to 5 seats",
+    tag: "Up to 15 team members",
   },
   {
+    // A Creators Program benefit, not a Business plan feature: paid Business
+    // plans do not list priority support, so it is described as the program's.
     title: "Priority Support",
     description:
-      "Skip the queue. Direct access to our core team for onboarding, strategy calls, and technical help - whenever you need it.",
-    tag: "Direct team access",
+      "Priority email support from our team for as long as you are in the program. It is a benefit of the Creators Program itself, on top of your Business plan access.",
+    tag: "Program benefit",
   },
 ];
 
@@ -47,14 +49,20 @@ function getBenefits(businessPlanValue: string) {
   return [
     {
       title: "Free Business Plan",
-      description: `Full access to our ${businessPlanValue} Business plan - at zero cost. Every Business feature unlocked from day one.`,
+      description: `Full access to our ${businessPlanValue} Business plan at zero cost. Every Business feature unlocked from day one, with Liffio branding kept on.`,
       tag: `Worth ${businessPlanValue}`,
     },
     {
-      title: "Up to 150 Automations",
+      title: "Business Chatbots",
       description:
-        "Build up to 150 comment-to-DM workflows across your posts. Every one sends unlimited automated DMs - no throttling, no hidden per-message fees.",
-      tag: "150 workflows",
+        "Every Business chatbot feature: unlimited live chatbots, lead capture into your leads list, the webhook step, A/B testing on a step, handover routing, business hours and the notify step. Liffio branding stays on in your chatbots.",
+      tag: "Unlimited live chatbots",
+    },
+    {
+      title: "Up to 250 Automations",
+      description:
+        "Build up to 250 comment-to-DM workflows across your posts. Every one sends unlimited automated DMs, with no throttling and no hidden per-message fees.",
+      tag: "250 workflows",
     },
     ...STATIC_BENEFITS,
   ];
@@ -98,7 +106,7 @@ const HOW_STEPS = [
   {
     num: "3",
     title: "Start for Free",
-    desc: "Accepted creators get immediate full Business plan access - zero cost, every feature, from day one.",
+    desc: "Accepted creators get immediate Business plan access, chatbots included, at zero cost from day one. Liffio branding stays on.",
   },
 ];
 
@@ -265,7 +273,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
               Everything Included. No Strings.
             </h2>
             <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base">
-              Accepted creators get the full Business plan - not a trial, not limited access. Every feature, every workflow, from day one.
+              Accepted creators get the Business plan, chatbots included. Not a trial, not limited access: every Business feature from day one, with Liffio branding kept on.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

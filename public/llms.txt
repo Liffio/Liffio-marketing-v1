@@ -1,6 +1,6 @@
 # Liffio
 
-> Liffio is an Instagram DM automation platform. It sends automatic direct messages via Instagram's official API when users trigger events: commenting on a post, replying to a story, or sending a DM.
+> Liffio is an Instagram DM automation platform with chatbots. It sends automatic direct messages via Instagram's official API when someone comments on a post, and its chatbots hold full conversations inside the DM. DMs are unlimited on every plan, Free included.
 
 ## What Liffio does
 
@@ -15,19 +15,32 @@ Liffio connects to Instagram via official OAuth, with no passwords stored. After
 - Follow-up sequences: scheduled follow-up messages within an active conversation
 - Collect Data: capture email addresses shared in DM conversations and store them as leads
 
+## Chatbots
+
+Chatbots are a separate module from comment to DM automation. A simple comment to DM automation needs no flow builder; a chatbot is for a full conversation inside the DM.
+
+- Free: build and publish chatbots, manage contacts, link buttons, chat analytics. 2 live chatbots, 15 steps and 5 keywords per bot, 500 chatbot conversations a month
+- Starter: adds questions, conditions, media messages, personalization, follow-ups inside a chat, a follow gate, and turning off chatbot branding. 5 live chatbots, 40 steps and 15 keywords per bot, 1 follow-up per step
+- Growth: adds ice breakers, story reply and story mention triggers, a default reply for unmatched DMs, chain bots, templates, tags, and starting a chatbot from a comment. 15 live chatbots, 100 steps and 40 keywords per bot, 2 follow-ups per step
+- Business: adds lead capture into the leads list, a webhook step, A/B testing on a step, handover routing, business hours and a notify step. Unlimited live chatbots, steps and keywords, 3 follow-ups per step
+- Agency: the same as Business in each of its 20 workspaces
+- Every plan: up to 13 buttons per step, which is Instagram's own limit
+
 ## Pricing (USD, billed monthly)
 
-- Free: $0/month: 3 automation workflows, comment keyword triggers, bio link page, basic analytics
-- Starter: $9/month ($7.50/month billed annually): all automation types, unlimited templates, post scheduler, short links, lead capture
-- Growth (coming soon, announced but not yet available for purchase): $29/month ($24.17/month billed annually). Everything in Starter plus post, video and profile analytics, caption and schedule templates, bulk upload, 5 seats
-- Business: $59/month ($49.17/month billed annually): everything in Starter plus conversion analytics, team members (15 seats), account-level insights, follow-up sequences
-- Agency: $549/month ($457.50/month billed annually): 20 workspaces, each a complete Business workspace, on one subscription with one invoice and one renewal date, plus a dedicated account manager, affiliate program management and SLA-backed priority support
+DMs are unlimited on every plan, Free included.
+
+- Free: $0/month: unlimited DMs, 3 automation workflows, keyword and any comment triggers, public auto reply, 2 live chatbots, bio link page and short links, leads list, overview analytics, 1 team member
+- Starter: $9/month ($7.50/month billed annually): Liffio branding off, trigger blocks, follow before DM, 25 automations with 2 follow-ups each, 5 live chatbots with questions, conditions, media and personalization, lead export, 30 day analytics history, API access (200 requests a day, 5 keys), 3 team members
+- Growth: $29/month ($24.17/month billed annually): ice breakers, story reply and story mention triggers, default reply, 15 live chatbots with chain bots, templates and tags, start a chatbot from a comment, post, video and profile metrics with 90 day history, caption and schedule templates, hashtag groups, bulk upload, 100 automations with 5 follow-ups each, 5 team members
+- Business: $59/month ($49.17/month billed annually): chatbot lead capture, webhook step, A/B testing on chatbot steps, handover routing and business hours, unlimited live chatbots, post approvals and activity log, per person permissions for up to 15 team members, analytics export and per automation attribution, 250 automations with 10 follow-ups each
+- Agency: $549/month ($457.50/month billed annually): 20 workspaces, each a complete Business workspace, on one subscription with one invoice and one renewal date, agency branding and hide Liffio branding, client workspaces, and every limit per workspace
 
 Annual billing charges 10 months instead of 12, so two months are free.
 
 US dollar prices are billed as an export. No Indian GST applies. Prices shown in rupees include GST, so the amount shown is the amount charged, and a GST tax invoice is issued for every payment.
 
-India pricing available via Razorpay in INR, incl. GST: Free ₹0, Starter ₹499, Growth ₹1,499 (coming soon), Business ₹2,499, Agency ₹22,999 per month. Every plan connects one Instagram account per workspace (Agency includes 20 workspaces). Every paid plan includes unlimited automated DMs.
+India pricing available via Razorpay in INR, incl. GST: Free ₹0, Starter ₹499, Growth ₹1,499, Business ₹2,499, Agency ₹22,999 per month. Every plan connects one Instagram account per workspace (Agency includes 20 workspaces). Every plan, Free included, includes unlimited automated DMs and chatbots.
 
 ## Key facts
 
@@ -56,7 +69,7 @@ India pricing available via Razorpay in INR, incl. GST: Free ₹0, Starter ₹49
 - Liffio vs InstaChamp: https://liffio.com/vs/instachamp
 - Blog: https://liffio.com/blog
 - About: https://liffio.com/about
-- Creators Program: https://liffio.com/creators-program (apply at https://app.liffio.com/creators-program)
+- Creators Program: https://liffio.com/creators-program (apply at https://app.liffio.com/creators-program). Accepted creators get Business plan features, chatbots included, with Liffio branding kept on
 - Affiliate Program: https://liffio.com/affiliate
 - Contact: support@liffio.com
 

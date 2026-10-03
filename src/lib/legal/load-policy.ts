@@ -20,7 +20,9 @@ import { join } from "path";
 const PUBLICATION_DATES: Partial<Record<PolicySlug, string>> = {
   "acceptable-use-policy": "15 September 2026",
   "cookie-policy": "15 September 2026",
-  "creators-program-policy": "15 September 2026",
+  // Section 5 corrected: Business access includes API access, and the one
+  // exception is that Liffio branding stays on.
+  "creators-program-policy": "3 October 2026",
   "refund-policy": "15 September 2026",
   "shipping-delivery-policy": "15 September 2026",
   "terms-and-conditions": "15 September 2026",

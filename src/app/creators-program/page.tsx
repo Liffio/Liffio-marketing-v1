@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
   // is 3 chars longer and used to truncate worse (158 chars USD / 161 INR).
   // "at no cost" -> "free" and "our full" -> "the" brings both variants under
   // 155: 147 chars USD, 150 INR.
-  const description = `Apply to the Liffio Creators Program and get the Business plan (${value} value) free - Instagram auto DM tool access for creators with 5K+ followers.`;
+  const description = `Apply to the Liffio Creators Program and get the Business plan (${value} value) free, chatbots included, for Instagram creators with 5K+ followers.`;
   return {
     ...pageSeo.creatorsProgram,
     description,

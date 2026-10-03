@@ -167,7 +167,7 @@ export default async function VsPage({ params }: Props) {
               Liffio vs {cmp.competitor}: feature comparison
             </h2>
             <p className="text-gray-600 mb-8">
-              Compare comment-to-DM, automation types, account limits, and pricing model side by side.
+              Compare comment-to-DM, chatbots, automation types, account limits, and pricing model side by side.
             </p>
             <ComparisonTable
               competitorName={cmp.competitor}
