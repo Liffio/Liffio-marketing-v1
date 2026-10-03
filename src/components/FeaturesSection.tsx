@@ -9,6 +9,7 @@ import { SimulationContent } from "@/components/simulation/SimulationContent";
 import { SimulationMobileStage } from "@/components/simulation/SimulationMobileStage";
 import { SimulationShell } from "@/components/simulation/SimulationShell";
 import { TechBadge } from "@/components/TechBadge";
+import ChatbotsModule from "@/components/features/ChatbotsModule";
 import Image from "next/image";
 import { DEMO_POST_IMAGES } from "@/config/demo-images.config";
 import { SimulationAvatar } from "@/components/simulation/SimulationAvatar";
@@ -729,14 +730,14 @@ export default function FeaturesSection() {
               <span className="text-foreground">One Dashboard.</span>
             </h2>
             <p className="mt-3 text-base leading-relaxed text-gray-500 sm:text-lg">
-              Auto DMs from comments, stories & inbox - Liffio is your complete Instagram auto DM tool.
+              Auto DMs from comments, stories & inbox, plus chatbots for full conversations - Liffio is your complete Instagram auto DM tool.
             </p>
           </div>
           <div className="flex flex-wrap gap-2 lg:max-w-sm lg:justify-end">
             {[
               { label: "Auto DM + Auto Comment", color: "#ff7c49" },
               { label: "10 to 60s custom delay", color: "#f5184c" },
-              { label: "Unlimited auto DMs (paid)", color: "#b20d8f" },
+              { label: "Unlimited auto DMs (every plan)", color: "#b20d8f" },
             ].map((chip) => (
               <TechBadge key={chip.label} label={chip.label} variant="chip" accent={chip.color} />
             ))}
@@ -1123,6 +1124,8 @@ export default function FeaturesSection() {
             </div>
           </div>
         </div>
+
+        <ChatbotsModule />
       </div>
 
       <div

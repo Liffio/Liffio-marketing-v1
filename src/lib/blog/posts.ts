@@ -51,7 +51,7 @@ export const BLOG_POSTS: BlogPost[] = [
         paragraphs: [
           "Connect Instagram through Meta login so you are on the official API, not a grey-market login that risks the account.",
           "Create a Comment automation, choose the post or Reel, and type the trigger exactly as you want it matched. Most teams use \"contains\" matching so GUIDE also catches \"guide please\".",
-          "Write the DM in two or three short lines. Put the link on its own line or use a button if you are on a paid plan. Set the delay to something between 15 and 45 seconds. Instant DMs can feel abrupt; a short pause gives the reply a natural conversational rhythm.",
+          "Write the DM in two or three short lines. Put the link on its own line or use a DM button. Set the delay to something between 15 and 45 seconds. Instant DMs can feel abrupt; a short pause gives the reply a natural conversational rhythm.",
           "Turn on a public reply if you want social proof under the comment. Something like \"Sent you a DM with the link\" stops the same person from commenting twelve times because they think it broke.",
           "Before you promote the post, comment from a second account and confirm the DM lands, the link opens on mobile, and the public reply looks right.",
         ],
@@ -87,7 +87,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         question: "Can I use more than one keyword on the same post?",
         answer:
-          "You can run separate automations per keyword, or use multi-step flows on paid plans if you want different messages for LINK vs PRICE on one post.",
+          "You can run separate automations per keyword, or use trigger blocks on Starter and up if you want different messages for LINK vs PRICE on one post.",
       },
     ],
     references: [
@@ -134,7 +134,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "ManyChat vs Liffio for Instagram-only work",
         paragraphs: [
-          "Both handle keyword comment-to-DM, story reply automations, and follow-up sequences. ManyChat has a longer track record and a huge template library. Liffio is built around Instagram growth workflows: unlimited automated DMs on every paid plan, post scheduling, bio links, and short links in the same account.",
+          "Both handle keyword comment-to-DM, story reply automations, and follow-up sequences. ManyChat has a longer track record and a huge template library. Liffio is built around Instagram growth workflows: unlimited automated DMs on every plan, Free included, post scheduling, bio links, and short links in the same account.",
           "ManyChat's free tier is workable for experiments but tight for always-on Instagram campaigns. Liffio's free plan is meant to run comment-to-DM in production, not just as a demo.",
           "If you already invested months in ManyChat flows, migration is mostly copy and recreate, not a magic import button. Budget an hour per active automation.",
         ],
@@ -144,7 +144,7 @@ export const BLOG_POSTS: BlogPost[] = [
         paragraphs: [
           "SendDM and LinkDM are focused products. You get comment-to-DM and related Instagram triggers without much else. That is great if you want minimal UI and you already use separate tools for scheduling and analytics.",
           "SuperProfile leans hard into bio link storefronts. Automation exists, but the product story centers the link-in-bio page. Creators who live in the bio page often start there; creators who live in Reels comments often want the automation product first.",
-          "Zorcha is popular with Indian creators and agencies who want local pricing and support hours that match IST. Compare feature parity on live automation and team seats, not just the rupee price on the landing page.",
+          "Zorcha is popular with Indian creators and agencies who want local pricing and support hours that match IST. Compare feature parity on live automation, chatbots and team members, not just the rupee price on the landing page.",
           "Liffio sits in the middle: Instagram automation is the core, but scheduling, go.liffio.com short links, and lead capture mean you can replace two or three subscriptions over time.",
         ],
       },
@@ -163,7 +163,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         question: "Is Liffio really free to start?",
         answer:
-          "Yes. You can connect Instagram and run comment-to-DM on the free plan without a card. Paid plans add unlimited automated DMs, more automation slots, and team seats.",
+          "Yes. You can connect Instagram and run comment-to-DM on the free plan without a card. Paid plans add more automation slots, more chatbots, and more team members.",
       },
       {
         question: "Do agencies use Liffio?",

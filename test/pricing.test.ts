@@ -265,90 +265,44 @@ test("USD annual always shows two decimals, so $7.50 never renders as $7.5", () 
 
 // ── The comparison matrix ────────────────────────────────────────────────────
 //
-// ⚠️ WEAK BY CONSTRUCTION, and shipped anyway.
-//
-// These rows are static in pricing.config.ts. `/marketing/plans` serves no
-// matrix data and `/billing/packages` serves no limits and no capabilities, so
-// the drift check cannot see them, the same shape as the $299 that sat wrong
-// for weeks. Six cells were wrong here, one of them contradicting the Business
-// CARD on the same page after PR #5 corrected it.
-//
-// The expectations below were transcribed by the same hand that wrote the rows,
-// so this cannot prove them right. What it does is turn silent drift into a
-// visible expectation: changing a cell now requires changing this table too,
-// with the query below to check against.
-//
-// Verified 2026-08-24 against production:
-//
-//   SELECT p.key, l.key, l.value FROM package_limits l
-//     JOIN packages p ON p.id = l.package_id
-//    WHERE p.deleted_at IS NULL AND p.is_active;
-//
-//   SELECT pm.name, cm.name, string_agg(p.key, ',' ORDER BY p.sort_order)
-//     FROM package_features pf
-//     JOIN packages p ON p.id = pf.package_id
-//     JOIN parent_modules pm ON pm.id = pf.parent_module_id
-//     JOIN child_modules cm ON cm.id = pf.child_module_id
-//    WHERE p.deleted_at IS NULL AND p.is_active GROUP BY 1, 2;
-//
-// Replace this with a real comparison the day M3 exposes those two tables
-// publicly (docs/decisions/0003).
+// ⚠️ WEAK BY CONSTRUCTION. These rows are static in pricing-v4.config.ts:
+// `/marketing/plans` serves no matrix data, so the drift check cannot see them.
+// The expectations below are the owner's live plan table (docs/decisions/0006),
+// transcribed by the same hand that wrote the rows, so this cannot prove them
+// right. What it does is turn silent drift into a visible expectation: changing
+// a cell now requires changing this table too.
 
 const MATRIX_EXPECTATIONS: Array<{
   row: string;
-  cells: Partial<Record<Lowercase<(typeof comparisonPlanNames)[number]>, boolean | string>>;
-  source: string;
+  cells: Record<Lowercase<(typeof comparisonPlanNames)[number]>, boolean | string>;
 }> = [
-  {
-    row: "Team seats",
-    cells: { free: "1", starter: "3", growth: "5", business: "15", agency: "15" },
-    source: "package_limits.teamMembers = 1/3/5/15/15",
-  },
-  {
-    row: "DM follow-up sequences",
-    cells: { free: false, starter: "2", growth: "5", business: "5", agency: "5" },
-    source: "package_limits.dmFollowUps = 0/2/5/5/5",
-  },
-  {
-    row: "Automations",
-    cells: { free: "3", starter: "25", growth: "75", business: "150", agency: "150" },
-    source: "package_limits.workflows = 3/25/75/150/150",
-  },
-  {
-    row: "Workspaces per subscription",
-    cells: { free: "1", starter: "1", growth: "1", business: "1", agency: "20" },
-    source: "package_limits.workspacesIncluded = 1/1/1/1/20",
-  },
-  {
-    row: "Scheduled posts per day",
-    cells: { free: "3", starter: "30", growth: "100", business: "200", agency: "200" },
-    source: "package_limits.schedulerPostsPerDay = 3/30/100/200/200",
-  },
-  {
-    row: "ABAC policies",
-    cells: { free: false, starter: false, growth: false, business: true, agency: true },
-    source: "Team > Assign roles + Custom permissions = business,agency",
-  },
-  {
-    row: "Per-automation attribution",
-    cells: { free: false, starter: false, growth: false, business: true, agency: true },
-    source: "Analytics > Automation attribution = business,agency",
-  },
-  {
-    row: "Analytics export",
-    cells: { free: false, starter: false, growth: false, business: true, agency: true },
-    source: "Analytics > Export analytics = business,agency",
-  },
-  {
-    row: "Post metrics: reach, views, saves, shares, ER",
-    cells: { free: false, starter: false, growth: true, business: true, agency: true },
-    source: "Analytics > Post metrics = growth,business,agency",
-  },
-  {
-    row: "Affiliate programme: 50% recurring",
-    cells: { free: true, starter: true, growth: true, business: true, agency: true },
-    source: "all ten Affiliate children = free,starter,growth,business,agency",
-  },
+  { row: "Automated DMs", cells: { free: "Unlimited", starter: "Unlimited", growth: "Unlimited", business: "Unlimited", agency: "Unlimited" } },
+  { row: "Automation workflows", cells: { free: "3", starter: "25", growth: "100", business: "250", agency: "250" } },
+  { row: "DM follow-ups per automation", cells: { free: "0", starter: "2", growth: "5", business: "10", agency: "10" } },
+  { row: "Team members", cells: { free: "1", starter: "3", growth: "5", business: "15", agency: "15" } },
+  { row: "Workspaces", cells: { free: "1", starter: "1", growth: "1", business: "1", agency: "20" } },
+  { row: "AI tokens per month", cells: { free: "1,000", starter: "10,000", growth: "30,000", business: "75,000", agency: "75,000" } },
+  { row: "API requests per day", cells: { free: "0", starter: "200", growth: "500", business: "1,000", agency: "1,000" } },
+  { row: "API keys", cells: { free: "0", starter: "5", growth: "10", business: "15", agency: "15" } },
+  // Chatbot ladder
+  { row: "Build and publish a chatbot", cells: { free: true, starter: true, growth: true, business: true, agency: true } },
+  { row: "Chat analytics", cells: { free: true, starter: true, growth: true, business: true, agency: true } },
+  { row: "Questions", cells: { free: false, starter: true, growth: true, business: true, agency: true } },
+  { row: "Follow gate before the bot replies", cells: { free: false, starter: true, growth: true, business: true, agency: true } },
+  { row: "Turn off Liffio chatbot branding", cells: { free: false, starter: true, growth: true, business: true, agency: true } },
+  { row: "Ice breakers", cells: { free: false, starter: false, growth: true, business: true, agency: true } },
+  { row: "Start a chatbot from a comment", cells: { free: false, starter: false, growth: true, business: true, agency: true } },
+  { row: "Lead capture into the leads list", cells: { free: false, starter: false, growth: false, business: true, agency: true } },
+  { row: "Webhook step", cells: { free: false, starter: false, growth: false, business: true, agency: true } },
+  { row: "Notify step", cells: { free: false, starter: false, growth: false, business: true, agency: true } },
+  // Chatbot limits
+  { row: "Live chatbots", cells: { free: "2", starter: "5", growth: "15", business: "Unlimited", agency: "Unlimited" } },
+  { row: "Steps per bot", cells: { free: "15", starter: "40", growth: "100", business: "Unlimited", agency: "Unlimited" } },
+  { row: "Keywords per bot", cells: { free: "5", starter: "15", growth: "40", business: "Unlimited", agency: "Unlimited" } },
+  { row: "Condition rules", cells: { free: "0", starter: "5", growth: "15", business: "Unlimited", agency: "Unlimited" } },
+  { row: "Follow-ups per step", cells: { free: "0", starter: "1", growth: "2", business: "3", agency: "3" } },
+  { row: "Chatbot conversations a month", cells: { free: "500", starter: "Unlimited", growth: "Unlimited", business: "Unlimited", agency: "Unlimited" } },
+  { row: "Buttons per step, Instagram's own cap", cells: { free: "13", starter: "13", growth: "13", business: "13", agency: "13" } },
 ];
 
 const matrixRow = (name: string) => {
@@ -360,88 +314,147 @@ const matrixRow = (name: string) => {
   return row as Record<string, boolean | string>;
 };
 
-test("matrix cells match what production actually grants", () => {
-  for (const { row, cells, source } of MATRIX_EXPECTATIONS) {
+test("matrix cells match the live plan table", () => {
+  for (const { row, cells } of MATRIX_EXPECTATIONS) {
     const actual = matrixRow(row);
     for (const [plan, expected] of Object.entries(cells)) {
-      assert.equal(actual[plan], expected, `${row} / ${plan}, ${source}`);
+      assert.equal(actual[plan], expected, `${row} / ${plan}`);
+    }
+  }
+});
+
+test("chatbots are a group of their own, not mixed into automations", () => {
+  const chatbots = featureCategories.find((c) => c.name === "Chatbots");
+  assert.ok(chatbots, "expected a Chatbots group in the matrix");
+  const automation = featureCategories.find((c) => c.name === "Comment to DM automation");
+  assert.ok(automation, "expected the automation group");
+  for (const row of automation.features) {
+    assert.equal(/chatbot|\bbot\b/i.test(row.name), false, `"${row.name}" is a chatbot row inside automations`);
+  }
+  for (const name of ["Live chatbots", "Webhook step", "Ice breakers", "Questions"]) {
+    assert.ok(chatbots.features.some((r) => r.name === name), `"${name}" missing from the Chatbots group`);
+  }
+});
+
+test("API limits sit in their own group, labelled as API", () => {
+  const api = featureCategories.find((c) => c.name === "API limits");
+  assert.ok(api, "expected an API limits group");
+  for (const category of featureCategories) {
+    if (category === api) continue;
+    for (const row of category.features) {
+      assert.equal(/\bAPI\b/.test(row.name), false, `API row "${row.name}" outside the API group`);
     }
   }
 });
 
 /**
- * Cells the catalogue CONTRADICTS, pinned so they cannot move quietly.
- *
- * 🔴 The old test here asserted no cell may say "Unlimited", the PR #5
- * false-claim class. Shipping the V4 design verbatim was an explicit decision
- * that reintroduces that class, so deleting the guard outright would leave the
- * page's most load-bearing false claims with no test at all.
- *
- * This is the inverse guard: it asserts the divergences are EXACTLY these and
- * no others. Adding a new unverified claim fails the count check below; fixing
- * one at source fails its row. Either way somebody has to come back here and
- * read docs/decisions/0004 before the page changes.
+ * "Unlimited" is allowed only where the live table says it. DMs are unlimited
+ * everywhere; the chatbot limits lift to unlimited on Business and Agency, and
+ * conversations on every paid tier. Anything else saying "Unlimited" is a new
+ * claim nobody checked.
  */
-const KNOWN_DIVERGENT_CELLS: Array<{ row: string; plans: string[]; why: string }> = [
-  { row: "Automated DM sending", plans: ["free", "starter", "growth", "business", "agency"], why: "no DM metering exists (blocker 25.3)" },
-  { row: "DMs per month", plans: ["free", "starter", "growth", "business", "agency"], why: "same: no DM key in package_limits" },
-  { row: "API key create / view / revoke", plans: ["business", "agency"], why: "D4: maxApiCredentials 0" },
-  { row: "API docs access, usage stats, key expiry", plans: ["business", "agency"], why: "D4: no API module" },
-  { row: "API keys", plans: ["business", "agency"], why: "D4: maxApiCredentials 0" },
-  { row: "API requests per day", plans: ["business", "agency"], why: "D4: apiRequestsPerDay 0" },
-  { row: "Monthly tokens per workspace", plans: ["free", "starter", "growth", "business", "agency"], why: "never verified against ai_token_plan_configs" },
-  { row: "AI token rollover", plans: ["business", "agency"], why: "same" },
-  { row: "Lead storage", plans: ["free", "starter", "growth", "business", "agency"], why: "no lead-storage key in package_limits" },
-];
+const UNLIMITED_ROWS = new Set([
+  "Automated DMs",
+  "Live chatbots",
+  "Steps per bot",
+  "Keywords per bot",
+  "Condition rules",
+  "Chatbot conversations a month",
+]);
 
-test("the matrix's unverified claims are exactly the recorded ones", () => {
-  const recorded = new Set(KNOWN_DIVERGENT_CELLS.map((c) => c.row));
-
-  // Every recorded row still exists and still carries the claim.
-  for (const { row, plans, why } of KNOWN_DIVERGENT_CELLS) {
-    const actual = matrixRow(row);
-    for (const plan of plans) {
-      assert.notEqual(actual[plan], false, `"${row}" / ${plan} no longer claims anything, ${why}`);
-    }
-  }
-
-  // And no NEW "Unlimited" has appeared outside them.
+test("no Unlimited cell outside the rows the live table makes unlimited", () => {
   for (const category of featureCategories) {
     for (const row of category.features) {
-      if (recorded.has(row.name)) continue;
+      if (UNLIMITED_ROWS.has(row.name)) continue;
       for (const plan of comparisonPlanNames) {
         const value = getPlanColumnValue(row as never, plan);
         assert.notEqual(
           typeof value === "string" && /unlimited/i.test(value),
           true,
-          `${row.name} / ${plan} says "${String(value)}" and is not in KNOWN_DIVERGENT_CELLS`,
+          `${row.name} / ${plan} says "${String(value)}"`,
         );
       }
     }
   }
 });
 
-test("the matrix does not contradict the cards on seats or limits", () => {
-  // PR #5 corrected the card to 15 while this row still said 5, on one page.
-  // The pricing page now draws its limits from the V4 sheet, so both must agree.
-  assert.equal(matrixRow("Team seats").business, "15");
+test("buttons per step is the same on every plan, never a tier difference", () => {
+  const row = matrixRow("Buttons per step, Instagram's own cap");
+  const values = comparisonPlanNames.map((p) => row[p.toLowerCase()]);
+  assert.equal(new Set(values).size, 1);
+  for (const content of Object.values(V4_PLAN_CONTENT)) {
+    assert.equal(
+      [...content.features, ...content.limits.map((l) => l.label)].some((t) => /button/i.test(t) && /13/.test(t)),
+      false,
+      "buttons per step must not be sold on a card",
+    );
+  }
+});
 
+// ── The plan cards ───────────────────────────────────────────────────────────
+
+test("every card carries at least six bullets of its own", () => {
+  for (const [plan, content] of Object.entries(V4_PLAN_CONTENT)) {
+    assert.ok(content.features.length >= 6, `${plan} has ${content.features.length} bullets`);
+  }
+});
+
+test("DMs are unlimited on every card, with no cap anywhere", () => {
+  for (const [plan, content] of Object.entries(V4_PLAN_CONTENT)) {
+    assert.equal(content.limits.find((l) => l.label === "DMs")?.value, "Unlimited", `${plan} DMs`);
+  }
+  const everything = JSON.stringify({ V4_PLAN_CONTENT, featureCategories });
+  assert.equal(/\d[\d,]*\s*(DMs?|messages)\s*(\/|a|per)\s*month/i.test(everything), false, "a DM cap appears");
+});
+
+test("every card's limits panel carries the four chatbot limits", () => {
+  const expected: Record<string, Record<string, string>> = {
+    Free: { "Live chatbots": "2", "Steps per bot": "15", "Keywords per bot": "5", "Follow-ups per step": "0" },
+    Starter: { "Live chatbots": "5", "Steps per bot": "40", "Keywords per bot": "15", "Follow-ups per step": "1" },
+    Growth: { "Live chatbots": "15", "Steps per bot": "100", "Keywords per bot": "40", "Follow-ups per step": "2" },
+    Business: { "Live chatbots": "Unlimited", "Steps per bot": "Unlimited", "Keywords per bot": "Unlimited", "Follow-ups per step": "3" },
+    Agency: { "Live chatbots": "Unlimited", "Steps per bot": "Unlimited", "Keywords per bot": "Unlimited", "Follow-ups per step": "3" },
+  };
+  for (const [plan, limits] of Object.entries(expected)) {
+    const content = V4_PLAN_CONTENT[plan];
+    assert.ok(content, `no card content for ${plan}`);
+    for (const [label, value] of Object.entries(limits)) {
+      assert.equal(content.limits.find((l) => l.label === label)?.value, value, `${plan} ${label}`);
+    }
+    // API figures live in their own group, never in the main limits panel.
+    assert.equal(content.limits.some((l) => /API/.test(l.label)), false, `${plan} mixes API into limits`);
+    assert.ok(content.apiLimits.length > 0 && /API/.test(content.apiLimitsLabel), `${plan} API group`);
+  }
+});
+
+test("the cards and the matrix agree on every shared limit", () => {
+  const shared: Array<[string, string]> = [
+    ["Automations", "Automation workflows"],
+    ["DM follow-ups", "DM follow-ups per automation"],
+    ["Team members", "Team members"],
+    ["AI tokens / month", "AI tokens per month"],
+    ["Live chatbots", "Live chatbots"],
+    ["Steps per bot", "Steps per bot"],
+    ["Keywords per bot", "Keywords per bot"],
+    ["Follow-ups per step", "Follow-ups per step"],
+  ];
   for (const [plan, content] of Object.entries(V4_PLAN_CONTENT)) {
     const column = plan.toLowerCase();
-    const seats = content.limits.find((l) => l.label === "Seats")?.value;
-    const automations = content.limits.find((l) => l.label === "Automations")?.value;
-
-    // Agency states its limits as "15 × 20", per workspace, times the slots.
-    const expectedSeats = matrixRow("Team seats")[column];
-    const expectedAutomations = matrixRow("Automations")[column];
-
-    if (seats && !seats.includes("×")) {
-      assert.equal(seats, expectedSeats, `${plan} card seats disagree with the matrix`);
-    }
-    if (automations && !automations.includes("×")) {
-      assert.equal(automations, expectedAutomations, `${plan} card automations disagree with the matrix`);
+    for (const [cardLabel, rowName] of shared) {
+      const card = content.limits.find((l) => l.label === cardLabel)?.value;
+      assert.equal(card, matrixRow(rowName)[column], `${plan}: card "${cardLabel}" vs matrix "${rowName}"`);
     }
   }
+});
+
+test("wording rules: no seats, no white label, no Creator tier, no dashes", () => {
+  const text = JSON.stringify({ V4_PLAN_CONTENT, featureCategories, faqs: [getPricingFaqs("global"), getPricingFaqs("india")] });
+  assert.equal(/\bseats?\b/i.test(text), false, "say team members, never seats");
+  assert.equal(/white[\s-]?label/i.test(text), false, "no white label claim");
+  assert.equal(Object.keys(V4_PLAN_CONTENT).includes("Creator"), false, "Creator is not a purchasable plan");
+  assert.equal((comparisonPlanNames as readonly string[]).includes("Creator"), false);
+  const dashes = [0x2013, 0x2014].map((code) => String.fromCharCode(code));
+  assert.equal(dashes.some((dash) => text.includes(dash)), false, "no em or en dashes");
 });
 
 // ── The Agency break-even calculator ─────────────────────────────────────────

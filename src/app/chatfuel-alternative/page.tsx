@@ -27,31 +27,31 @@ const faqCategories: FaqCategory[] = [
         id: "liffio-vs-chatfuel",
         question: "How does Liffio compare to Chatfuel for Instagram?",
         answer:
-          "Chatfuel is a multi-platform chatbot builder that supports Instagram, Facebook Messenger, WhatsApp, and Telegram. Liffio is built specifically for Instagram. The difference shows up in two places: feature depth and pricing structure. Because Chatfuel spreads its feature set across multiple platforms, Instagram-specific features like comment-to-DM on Reels and story reply automation are less developed than in a dedicated tool. On pricing (as of July 2026), Chatfuel offers a free Light plan and a single paid AI PRO plan at $49/month with fair-use limits on AI usage. Liffio's paid plans start at $9/month flat, with unlimited automated DMs on every paid tier.",
+          "Chatfuel is a multi-platform chatbot builder that supports Instagram, Facebook Messenger, WhatsApp, and Telegram. Liffio is built specifically for Instagram. The difference shows up in two places: feature depth and pricing structure. Because Chatfuel spreads its feature set across multiple platforms, Instagram-specific features like comment-to-DM on Reels and story reply automation are less developed than in a dedicated tool. On pricing (as of July 2026), Chatfuel offers a free Light plan and a single paid AI PRO plan at $49/month with fair-use limits on AI usage. Liffio's paid plans start at $9/month flat, with unlimited automated DMs on every plan, Free included.",
       },
       {
         id: "chatfuel-instagram-dms",
         question: "Does Chatfuel handle Instagram comment-to-DM automation?",
         answer:
-          "Chatfuel does support comment-to-DM flows on Instagram, but with some limitations compared to Instagram-specific tools. The flow builder is designed for multi-platform chatbot logic: it works for Instagram, but requires navigating a more complex interface than you need if all you want is a keyword trigger that sends a DM. Liffio's setup for a comment-to-DM automation on a Reel takes about five minutes: select the post, set the keyword, write the message, choose the delay. There is no chatbot-style flow builder to navigate, just the automation you need.",
+          "Chatfuel does support comment-to-DM flows on Instagram, but with some limitations compared to Instagram-specific tools. The flow builder is designed for multi-platform chatbot logic: it works for Instagram, but requires navigating a more complex interface than you need if all you want is a keyword trigger that sends a DM. Liffio's setup for a comment-to-DM automation on a Reel takes about five minutes: select the post, set the keyword, write the message, choose the delay. A comment-to-DM automation needs no chatbot-style flow builder, just the automation you need. When you do want a full conversation, Liffio's chatbots are a separate module, with 2 live chatbots on the free plan.",
       },
       {
         id: "chatfuel-pricing-2026",
         question: "How does Chatfuel's pricing work in 2026?",
         answer:
-          "As of July 2026, Chatfuel lists two plans: Chatfuel Light, a free plan, and AI PRO at $49/month (discounted on annual billing). Chatfuel historically charged per conversation on Instagram, but its current published pricing is a flat AI PRO subscription with fair-use limits on AI usage. The practical difference for creators: Chatfuel's single paid tier starts at $49/month and is built around AI chatbot conversations across multiple platforms, while Liffio's paid plans start at $9/month and are built specifically around Instagram keyword automations, with unlimited automated DMs on every paid plan.",
+          "As of July 2026, Chatfuel lists two plans: Chatfuel Light, a free plan, and AI PRO at $49/month (discounted on annual billing). Chatfuel historically charged per conversation on Instagram, but its current published pricing is a flat AI PRO subscription with fair-use limits on AI usage. The practical difference for creators: Chatfuel's single paid tier starts at $49/month and is built around AI chatbot conversations across multiple platforms, while Liffio's paid plans start at $9/month and are built specifically around Instagram keyword automations, with unlimited automated DMs on every plan, Free included.",
       },
       {
         id: "chatfuel-free-plan",
         question: "Does Chatfuel have a free plan for Instagram?",
         answer:
-          "Yes. As of July 2026 Chatfuel offers a free Chatfuel Light plan, with its paid AI PRO plan at $49/month. The comparison point is what the free tiers include: Liffio's free plan runs real automations in production (comment keyword triggers on posts and Reels, public comment replies, a bio link page at bio.liffio.com, and basic analytics) with no credit card required. Check Chatfuel's current pricing page for exactly what Light includes, as plan contents change.",
+          "Yes. As of July 2026 Chatfuel offers a free Chatfuel Light plan, with its paid AI PRO plan at $49/month. The comparison point is what the free tiers include: Liffio's free plan runs real automations in production (comment keyword triggers on posts and Reels, public comment replies, 2 live chatbots, a bio link page at bio.liffio.com, and overview analytics, with unlimited DMs) with no credit card required. Check Chatfuel's current pricing page for exactly what Light includes, as plan contents change.",
       },
       {
         id: "switch-from-chatfuel",
         question: "How hard is it to switch from Chatfuel to Liffio?",
         answer:
-          "Switching is straightforward for most Instagram automations. Chatfuel flows cannot be exported and imported directly into Liffio, so migration is manual. The practical steps are: identify your active Chatfuel automations for Instagram (keyword triggers, DM templates, story reply flows), create a Liffio account, connect your Instagram account through the Meta OAuth flow, and recreate each automation in Liffio. Simple comment-to-DM flows take five to ten minutes each. If you have complex multi-step chatbot sequences in Chatfuel, plan for those to take longer. Liffio's multi-step DM flows are available on the Business plan. Run both tools in parallel for a short period before fully cutting over.",
+          "Switching is straightforward for most Instagram automations. Chatfuel flows cannot be exported and imported directly into Liffio, so migration is manual. The practical steps are: identify your active Chatfuel automations for Instagram (keyword triggers, DM templates, story reply flows), create a Liffio account, connect your Instagram account through the Meta OAuth flow, and recreate each automation in Liffio. Simple comment-to-DM flows take five to ten minutes each. If you have multi-step chatbot sequences in Chatfuel, rebuild them in Liffio's chatbot module and plan for those to take longer: questions and conditions come with Starter, chain bots and templates with Growth, and lead capture and the webhook step with Business. Run both tools in parallel for a short period before fully cutting over.",
       },
     ],
   },
@@ -60,7 +60,7 @@ const faqCategories: FaqCategory[] = [
 const chatfuelRows = [
   { name: "Comment-to-DM", liffio: true, competitor: true },
   { name: "Story auto reply", liffio: true, competitor: "limited" },
-  { name: "Unlimited DMs (paid plans)", liffio: true, competitor: false },
+  { name: "Unlimited DMs (every plan)", liffio: true, competitor: false },
   { name: "Free plan (permanent)", liffio: true, competitor: true },
   { name: "Instagram accounts per subscription", liffio: "1 per workspace (Agency: 20)", competitor: false },
   { name: "Bio link pages", liffio: true, competitor: false },
@@ -68,6 +68,12 @@ const chatfuelRows = [
   { name: "Lead capture", liffio: true, competitor: true },
   { name: "Razorpay / INR billing", liffio: true, competitor: false },
   { name: "Instagram-only focus", liffio: true, competitor: false },
+  { name: "Chatbots for full DM conversations", liffio: true, competitor: true },
+  { name: "Chatbots separate from comment to DM", liffio: true, competitor: false },
+  { name: "Live chatbots on the free plan", liffio: "2", competitor: "Check their plans" },
+  { name: "Chatbot questions, conditions and media", liffio: "Starter and up", competitor: "Check their plans" },
+  { name: "Ice breakers and story triggers", liffio: "Growth and up", competitor: "Check their plans" },
+  { name: "Chatbot lead capture and webhook step", liffio: "Business and Agency", competitor: "Check their plans" },
 ];
 
 const competitorPricing = [
@@ -169,7 +175,7 @@ export default function ChatfuelAlternativePage() {
                 </li>
                 <li className="flex gap-3">
                   <span className="text-[#f5184c] font-bold mt-0.5">→</span>
-                  <span><strong className="text-gray-900">Free tier depth:</strong> Chatfuel&apos;s free Light plan is an entry point to its AI chatbot suite. Liffio&apos;s free plan runs a real production automation (comment triggers and a bio link page) with no expiry date and no credit card, and unlimited automated DMs come with every paid plan.</span>
+                  <span><strong className="text-gray-900">Free tier depth:</strong> Chatfuel&apos;s free Light plan is an entry point to its AI chatbot suite. Liffio&apos;s free plan runs a real production automation (comment triggers, 2 live chatbots and a bio link page) with no expiry date and no credit card, and unlimited automated DMs come with every plan, Free included.</span>
                 </li>
               </ul>
             </div>
@@ -233,11 +239,13 @@ export default function ChatfuelAlternativePage() {
                 and Instagram, not as a dedicated Instagram automation tool.
               </p>
               <p>
-                Liffio&apos;s Starter plan is $9/month flat, with unlimited DMs, unlimited conversations,
-                no quota. The Business plan at $59/month adds multi-step flows, conversion
-                analytics, and story reply automation. Agency at $549/month bundles 20
-                workspaces, one Instagram account each, into a single subscription. All
-                plans include INR pricing for Indian users through Razorpay.
+                Liffio&apos;s Starter plan is $9/month flat, with unlimited DMs, unlimited chatbot
+                conversations, no quota, and 5 live chatbots with questions, conditions and media.
+                Growth at $29/month adds ice breakers, story reply and story mention triggers, and
+                15 live chatbots. Business at $59/month adds chatbot lead capture, the webhook step
+                and unlimited live chatbots. Agency at $549/month bundles 20 workspaces, one
+                Instagram account each, into a single subscription. All plans include INR pricing
+                for Indian users through Razorpay.
               </p>
               <p>
                 ManyChat uses a per-contact model: paid plans start at $14/month for 250
@@ -288,6 +296,8 @@ export default function ChatfuelAlternativePage() {
                   multi-platform chatbot builder requires navigating flows designed for
                   general bot logic. In Liffio, the same setup takes five minutes: select
                   the post, enter the keyword, write the message, set the delay, activate.
+                  Chatbots live in their own module, so you only open a flow builder when you
+                  actually want a full conversation.
                 </p>
               </div>
 
@@ -358,7 +368,7 @@ export default function ChatfuelAlternativePage() {
                 {
                   step: "3",
                   title: "Recreate your comment-to-DM flows first",
-                  body: "Start with your most active automation, typically the comment-to-DM trigger on your most recent or most promoted Reel. In Liffio, create a Comment automation, select the post, enter the keyword, write the message, and set the delay. A simple comment-to-DM flow takes five to ten minutes. Multi-step DM flows are available on the Business plan and can be configured after the basic automations are running.",
+                  body: "Start with your most active automation, typically the comment-to-DM trigger on your most recent or most promoted Reel. In Liffio, create a Comment automation, select the post, enter the keyword, write the message, and set the delay. A simple comment-to-DM flow takes five to ten minutes. Multi-step conversations go in the chatbot module and can be built after the basic automations are running.",
                 },
                 {
                   step: "4",

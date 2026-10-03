@@ -44,7 +44,11 @@ function Section({ children, id }: { children: ReactNode; id?: string }) {
 const PLATFORM_PILLARS = [
   {
     title: "Comment-to-DM engine",
-    desc: "Keyword triggers send rapid automated DMs with a custom 10-60s delay from comment. Public auto-replies, follow-ups, and multi-step flows included on paid plans.",
+    desc: "Keyword triggers send rapid automated DMs with a custom 10-60s delay from comment. Public auto replies on every plan, follow-up sequences on paid plans. Unlimited DMs on every plan.",
+  },
+  {
+    title: "Chatbots",
+    desc: "A separate module for full DM conversations: questions, conditions, media and follow-ups, then ice breakers, story triggers and lead capture as you move up. 2 live chatbots on Free.",
   },
   {
     title: "Post scheduler",
@@ -148,11 +152,11 @@ export default async function PricingPage() {
 
           <Section>
             <SectionHead eyebrow="Full platform" title="More than DM automation.">
-              Liffio is a complete Instagram growth toolkit - comment-to-DM engine, post scheduler,
-              bio links, short links, lead capture, analytics, and team collaboration in one
-              workspace.
+              Liffio is a complete Instagram growth toolkit - comment-to-DM engine, chatbots, post
+              scheduler, bio links, short links, lead capture, analytics, and team collaboration in
+              one workspace.
             </SectionHead>
-            <div className="grid grid-cols-1 gap-[11px] sm:grid-cols-2 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-[11px] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
               {PLATFORM_PILLARS.map((item) => (
                 <div key={item.title} className="rounded-[14px] border border-[#EAE4DC] bg-white p-5">
                   <h3
@@ -173,8 +177,8 @@ export default async function PricingPage() {
 
           <Section>
             <SectionHead eyebrow="Every capability, every plan" title="What is actually in each plan.">
-              Limits are per workspace and never pooled. Agency mirrors Business exactly - twenty
-              times over.
+              Limits are per workspace and never pooled. Agency is Business in every workspace,
+              twenty times over, plus agency branding and client workspaces.
             </SectionHead>
             <PricingComparisonSection />
           </Section>

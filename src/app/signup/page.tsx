@@ -35,6 +35,12 @@ const FEATURES = [
     tag: "Core engine",
   },
   {
+    title: "Chatbots",
+    description:
+      "A separate module for full DM conversations: link buttons, contacts and chat analytics on Free, then questions, conditions and media as you move up. 2 live chatbots on the free plan.",
+    tag: "New module",
+  },
+  {
     title: "Full Conversion Analytics",
     description:
       FEATURE_SALE_TRACKING
@@ -59,6 +65,7 @@ const QUICK_STATS = [
 
 const BENEFITS = [
   "Auto-reply to every comment with a keyword trigger",
+  "2 live chatbots on the free plan, unlimited DMs on every plan",
   FEATURE_STORY_REACTIONS ? "Story mentions & reactions handled automatically" : "Story replies & mentions handled automatically",
   FEATURE_BRANCHING_LOGIC ? "Multi-step DM sequences with conditional logic" : "Multi-step DM follow-up sequences",
   ...(FEATURE_WELCOME_DM ? ["Welcome new followers with a personalised message"] : []),
@@ -193,7 +200,7 @@ export default async function SignupPage() {
                     Get started for free
                   </h2>
                   <p className="text-sm text-gray-500">
-                    Unlimited automated DMs on every paid plan - upgrade anytime.
+                    Unlimited automated DMs and 2 live chatbots on Free. Upgrade anytime.
                   </p>
                 </div>
 
@@ -226,9 +233,9 @@ export default async function SignupPage() {
         <section className="py-16 px-4 bg-white">
           <div className="mx-auto max-w-6xl">
             <p className="text-center text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-8">
-              What&apos;s included on every plan
+              What you can run on Liffio
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
               {FEATURES.map((f) => (
                 <div
                   key={f.title}
