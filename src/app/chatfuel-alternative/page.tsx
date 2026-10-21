@@ -23,6 +23,12 @@ const faqCategories: FaqCategory[] = [
     id: "chatfuel-alt",
     label: "Chatfuel alternative FAQ",
     items: [
+        {
+          id: "is-it-safe",
+          question: "Is it safe to connect my Instagram account?",
+          answer:
+            "Liffio connects through the official Instagram API using Instagram Login: you approve the permissions on Instagram's own consent screen, no password is shared, and you can revoke access from Instagram at any time. Liffio's business is Meta-verified as a Tech Provider and its Instagram permissions passed Meta's App Review. Any tool running on the official API needs both, so treat this as the baseline to check for rather than a point of difference. The question worth asking about any Instagram tool is whether it uses the official API at all, or signs in as you and drives the app in a browser.",
+        },
       {
         id: "liffio-vs-chatfuel",
         question: "How does Liffio compare to Chatfuel for Instagram?",
@@ -51,7 +57,7 @@ const faqCategories: FaqCategory[] = [
         id: "switch-from-chatfuel",
         question: "How hard is it to switch from Chatfuel to Liffio?",
         answer:
-          "Switching is straightforward for most Instagram automations. Chatfuel flows cannot be exported and imported directly into Liffio, so migration is manual. The practical steps are: identify your active Chatfuel automations for Instagram (keyword triggers, DM templates, story reply flows), create a Liffio account, connect your Instagram account through the Meta OAuth flow, and recreate each automation in Liffio. Simple comment-to-DM flows take five to ten minutes each. If you have multi-step chatbot sequences in Chatfuel, rebuild them in Liffio's chatbot module and plan for those to take longer: questions and conditions come with Starter, chain bots and templates with Growth, and lead capture and the webhook step with Business. Run both tools in parallel for a short period before fully cutting over.",
+          "Switching is straightforward for most Instagram automations. Chatfuel flows cannot be exported and imported directly into Liffio, so migration is manual. The practical steps are: identify your active Chatfuel automations for Instagram (keyword triggers, DM templates, story reply flows), create a Liffio account, connect your Instagram account through Instagram Login, and recreate each automation in Liffio. Simple comment-to-DM flows take five to ten minutes each. If you have multi-step chatbot sequences in Chatfuel, rebuild them in Liffio's chatbot module and plan for those to take longer: questions and conditions come with Starter, chain bots and templates with Growth, and lead capture and the webhook step with Business. Run both tools in parallel for a short period before fully cutting over.",
       },
     ],
   },
@@ -328,7 +334,7 @@ export default function ChatfuelAlternativePage() {
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
                 Yes. Liffio uses Meta&apos;s official OAuth flow to connect to your Instagram account.
-                You authorize through a standard Meta login screen, Meta issues an access token
+                You authorize through Instagram's own login screen, Meta issues an access token
                 to Liffio, and your Instagram password is never shared with Liffio at any point.
               </p>
               <p>
@@ -363,7 +369,7 @@ export default function ChatfuelAlternativePage() {
                 {
                   step: "2",
                   title: "Create a Liffio account and connect Instagram",
-                  body: "Sign up at app.liffio.com. No credit card is required on the free plan. Connect your Instagram account through the Meta OAuth flow, which takes about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace, and the Agency plan bundles 20 workspaces into a single subscription.",
+                  body: "Sign up at app.liffio.com. No credit card is required on the free plan. Connect your Instagram account through Instagram Login, which takes about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace, and the Agency plan bundles 20 workspaces into a single subscription.",
                 },
                 {
                   step: "3",

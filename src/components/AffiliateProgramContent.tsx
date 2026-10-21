@@ -3,6 +3,7 @@ import { siteConfig } from "@/config/site.config";
 import {
   ATTRIBUTION_WINDOW_DAYS,
   COMMISSION_RATE,
+  COMMISSION_MONTHS_COUNT,
   GRACE_PERIOD_DAYS,
   HOLD_PERIOD_DAYS,
   MINIMUM_WITHDRAWAL_USD,
@@ -23,48 +24,31 @@ const RATE_LABEL = `${Math.round(COMMISSION_RATE * 100)}%`;
 const DISCOUNT_LABEL = `${Math.round(REFERRED_USER_FIRST_PAYMENT_DISCOUNT * 100)}%`;
 
 /*
-  🔴 The commission model is the policy's: Section 2.1 pays 50% of Net Revenue
-  on EVERY payment a referred workspace makes, for as long as its subscription
-  runs unbroken. This block used to draw a 25% / 10% / 10% taper that stopped at
-  month three and a "Month 4+ / No further commission" row, none of which the
-  policy has ever said. The rate is the same on every row now, because that is
-  the product: what changes down the column is only the discount on the referred
-  user's first payment, which Section 2.3 grants and Section 2.2 then takes out
-  of Net Revenue before commission is worked out.
+  🔴 CHANGED 2026-10-21. The programme moved from lifetime recurring to a fixed
+  COMMISSION_MONTHS_COUNT-month term. The RATE does not taper - every qualifying
+  payment pays the same 50% of Net Revenue - what changed is that the stream now
+  ENDS. The row count is derived from the constant, so changing the term in
+  affiliate.config.ts changes this table too.
+
+  🚩 THE ROWS ARE MONTHS, NOT PAYMENTS. The term is six months from the
+  workspace's first payment and the affiliate earns on every payment inside it,
+  so a monthly workspace pays six commissions and an annual workspace pays ONE.
+  A first draft of this table labelled the rows "Payments 2 to 5" and "Payment 7
+  onwards", which told an annual referrer they would be paid six times, i.e.
+  across three years. See the window note in affiliate.config.ts.
+
+  An earlier version of this block drew a 25% / 10% / 10% taper the policy never
+  granted. Do not reintroduce a taper: the rate is flat, the duration is capped.
 */
 const COMMISSION_MONTHS = [
-  {
-    month: "First payment",
-    rate: RATE_LABEL,
-    desc: `Of Net Revenue, after their ${DISCOUNT_LABEL} first-payment discount`,
-    color: "#ff7c49",
-    width: "90%",
-  },
-  {
-    month: "Month 2",
-    rate: RATE_LABEL,
-    desc: "Of Net Revenue on the full price",
-    color: "#f5184c",
-    width: "100%",
-  },
-  {
-    month: "Month 3",
-    rate: RATE_LABEL,
-    desc: "Of Net Revenue on the full price",
-    color: "#2ea957",
-    width: "100%",
-  },
-  {
-    month: "Month 4 onwards",
-    rate: RATE_LABEL,
-    desc: "Unchanged, for the life of the subscription",
-    color: "#b20d8f",
-    width: "100%",
-  },
+  { month: "Month 1", rate: RATE_LABEL, desc: `Of Net Revenue, after their ${DISCOUNT_LABEL} first-payment discount`, color: "#ff7c49", width: "90%" },
+  { month: `Months 2 to ${COMMISSION_MONTHS_COUNT - 1}`, rate: RATE_LABEL, desc: "Of Net Revenue on every payment inside the term, at the same rate", color: "#f5184c", width: "90%" },
+  { month: `Month ${COMMISSION_MONTHS_COUNT}`, rate: RATE_LABEL, desc: "The last month that earns commission", color: "#b20d8f", width: "90%" },
+  { month: `Month ${COMMISSION_MONTHS_COUNT + 1} onwards`, rate: "0%", desc: "Commission ends; the subscription continues as normal", color: "#9ca3af", width: "0%" },
 ];
 
 const KEY_STATS = [
-  { value: RATE_LABEL, label: "Lifetime recurring commission", accent: "#ff7c49" },
+  { value: RATE_LABEL, label: `Recurring for ${COMMISSION_MONTHS_COUNT} months`, accent: "#ff7c49" },
   { value: `${ATTRIBUTION_WINDOW_DAYS}d`, label: "Attribution window", accent: "#f5184c" },
   { value: `${MINIMUM_WITHDRAWAL_USD}`, label: "Minimum withdrawal", accent: "#b20d8f" },
   { value: String(HOLD_PERIOD_DAYS), label: "Day hold before payout", accent: "#2ea957" },
@@ -119,7 +103,7 @@ const ATTRIBUTION_RULES = [
     // Section 2.4: per workspace, independently, and a lapse on one leaves the
     // others alone. Not a "3-month commission cycle", which nothing grants.
     title: "Per workspace",
-    desc: "Each workspace earns its own commission stream, independently, for as long as that workspace stays subscribed.",
+    desc: `Each workspace earns its own commission stream, independently, for ${COMMISSION_MONTHS_COUNT} months from that workspace's own first payment.`,
   },
 ];
 
@@ -185,9 +169,9 @@ export default function AffiliateProgramContent({ plans }: { plans: PricingPlan[
             <br className="hidden sm:block" /> for every referral
           </h1>
           <p className="mx-auto max-w-2xl text-base leading-relaxed text-gray-600 sm:text-lg">
-            Share {brand}, refer paying workspaces, and earn {RATE_LABEL} of Net Revenue on every payment they
-            make, for as long as their subscription stays active. Reliable tracking, on-demand payouts,
-            and {DISCOUNT_LABEL} off their first payment for the person you refer.
+            Share {brand}, refer paying workspaces, and earn {RATE_LABEL} of Net Revenue on every
+            payment they make in their first {COMMISSION_MONTHS_COUNT} months. Reliable tracking,
+            on-demand payouts, and {DISCOUNT_LABEL} off their first payment for the person you refer.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a href={siteConfig.urls.appSignup} className="btn-primary inline-flex items-center gap-2">
@@ -270,8 +254,8 @@ export default function AffiliateProgramContent({ plans }: { plans: PricingPlan[
               🔴 Both figures are computed from the live catalogue price at
               {RATE_LABEL}. The line this replaces read "$59/mo Business plan →
               ~$14.75 month 1, ~$5.90 months 2 & 3", which was the old taper
-              applied to a tier the policy pays 50% on, every month, for as long
-              as the workspace stays subscribed.
+              applied to a tier the policy pays 50% on, for every payment inside
+              the term.
             */}
             <div className="border-t border-brand-100 pt-4 text-center">
               {cheapest && cheapestCommission ? (
@@ -284,12 +268,15 @@ export default function AffiliateProgramContent({ plans }: { plans: PricingPlan[
                       <b className="text-[#0a0a0a]">{exampleCommission}</b> a month
                     </>
                   ) : null}
-                  , for as long as that workspace stays subscribed.
+                  , for each of the {COMMISSION_MONTHS_COUNT} months the term runs.
                 </p>
               ) : null}
               <p className="mt-2 text-[11px] leading-relaxed text-gray-400">
-                {NET_REVENUE_BASIS_NOTE} A workspace that lapses for more than{" "}
-                {GRACE_PERIOD_DAYS} days ends its commission permanently.{" "}
+                The term is {COMMISSION_MONTHS_COUNT} months from a workspace&apos;s first
+                payment, and you earn on every payment inside it: {COMMISSION_MONTHS_COUNT} on a
+                monthly plan, one on an annual plan, where that one commission is{" "}
+                {RATE_LABEL} of the whole annual amount. {NET_REVENUE_BASIS_NOTE} A workspace that
+                lapses for more than {GRACE_PERIOD_DAYS} days ends its commission permanently.{" "}
                 {PROJECTION_DISCLAIMER}
               </p>
             </div>

@@ -99,7 +99,7 @@ const geoComplianceCategory: FaqCategory = {
       id: "does-instagram-allow-automation",
       question: "Does Instagram allow DM automation?",
       answer:
-        "Yes. Instagram permits DM automation through its official API, which is part of Meta's developer platform. Tools that connect via the official API using OAuth, rather than scraping or using your password, are the path Instagram's platform policy allows. Liffio integrates exclusively through this official API using OAuth: you approve the permissions on Meta's consent screen when you connect, and you can revoke access at any time from your Instagram settings. Never passwords, scraping, or unofficial endpoints. The distinction matters practically: tools operating outside the official API (browser automation, credential scraping, or unofficial endpoints) work outside Meta's permitted use guidelines, which is where account risk comes from.",
+        "Yes. Instagram permits DM automation through its official API, which is part of Meta's developer platform. Tools that connect via the official API using OAuth, rather than scraping or using your password, are the path Instagram's platform policy allows. Liffio integrates exclusively through this official API using OAuth: you approve the permissions on Instagram's consent screen when you connect, and you can revoke access at any time from your Instagram settings. Never passwords, scraping, or unofficial endpoints. The distinction matters practically: tools operating outside the official API (browser automation, credential scraping, or unofficial endpoints) work outside Meta's permitted use guidelines, which is where account risk comes from.",
     },
     {
       id: "what-is-comment-to-dm",
@@ -190,7 +190,7 @@ const seoDiscoveryCategory: FaqCategory = {
       id: "auto-dm-safe",
       question: "Are auto DM tools safe for my Instagram account?",
       answer:
-        "Yes, when you use a compliant auto DM tool like Liffio. We use official Instagram APIs, configurable send delays (10-60 seconds), and rate limiting. Unofficial bots that log in with your password or simulate a browser operate outside Meta's permitted use guidelines. Liffio connects only through Meta's OAuth consent flow.",
+        "Yes, when you use a compliant auto DM tool like Liffio. We use official Instagram APIs, configurable send delays (10-60 seconds), and rate limiting. Unofficial bots that log in with your password or simulate a browser operate outside Meta's permitted use guidelines. Liffio connects only through Instagram's own login and consent screen.",
     },
   ],
 };
@@ -294,13 +294,13 @@ const affiliateCategory: FaqCategory = {
       id: "affiliate-commission",
       question: "How much commission do affiliates earn?",
       answer:
-        "Affiliates earn 50% lifetime recurring commission on every payment made by a referred workspace subscription. The 50% rate applies with no sliding scale, no cap, and no expiry, for as long as the referred user maintains an active subscription. For example, refer someone on Business ($59/mo) and earn $29.50 every month they stay subscribed.",
+        "Affiliates earn 50% recurring commission on every payment a referred workspace makes in the six months following its first payment. The rate is flat, with no sliding scale and no taper: each qualifying payment pays the same 50%. For example, refer someone on Business ($59/mo) and earn $29.50 a month for six months. On an annual plan that six-month term contains a single payment, so you earn 50% of the whole annual amount once rather than six monthly commissions.",
     },
     {
       id: "affiliate-recurring",
       question: "Is the commission recurring?",
       answer:
-        "Yes, fully recurring for the lifetime of the referred subscription. As long as the referred user keeps their subscription active and unbroken (within the 15-day grace period on renewal), you earn 50% of every billing cycle. The commission stops permanently if the referred user's subscription lapses beyond the 15-day grace period.",
+        "Yes, for six months from the workspace's first payment. You earn 50% of every billing cycle that falls inside that term, as long as the referred user keeps the subscription active and unbroken (renewing within the 15-day grace period). A monthly plan pays you six times, a quarterly plan twice, an annual plan once on the full annual amount. Commission stops permanently if the subscription lapses beyond the 15-day grace period, and it ends in any case once the six months are up.",
     },
     {
       id: "affiliate-payout",
@@ -482,7 +482,7 @@ const homeOverviewCategory: FaqCategory = {
       id: "is-liffio-safe",
       question: "Is Liffio safe for my Instagram account?",
       answer:
-        "Yes. Liffio connects through Instagram's official API using Meta's OAuth consent flow, so your password is never shared, and sends every DM with a configurable 10 to 60 second delay so replies arrive at a natural conversational pace.",
+        "Yes. Liffio connects through Instagram's official API using Instagram Login, so your password is never shared, and sends every DM with a configurable 10 to 60 second delay so replies arrive at a natural conversational pace.",
     },
   ],
 };
@@ -688,7 +688,7 @@ const userSupportCategory: FaqCategory = {
       id: "reconnect-instagram",
       question: "How do I reconnect my Instagram account?",
       answer:
-        "Go to Settings → Connected Accounts in your Liffio dashboard. Click 'Disconnect' next to your Instagram account, then click 'Connect Instagram' to re-authorise via Meta login. This refreshes your access token and resolves most permission-related issues.",
+        "Go to Settings → Connected Accounts in your Liffio dashboard. Click 'Disconnect' next to your Instagram account, then click 'Connect Instagram' to re-authorise via Instagram Login. This refreshes your access token and resolves most permission-related issues.",
     },
     {
       id: "meta-permission-error",
@@ -742,7 +742,7 @@ const userSupportCategory: FaqCategory = {
       id: "reset-password",
       question: "How do I reset my password?",
       answer:
-        "Go to liffio.com/login and click Forgot Password. Enter the email address associated with your Liffio account and check your inbox for a reset email (check spam if it does not arrive within 2 minutes). Click the reset link, enter your new password, and confirm. If you signed up via Google or Meta OAuth, use the same OAuth sign-in method, because there is no separate Liffio password to reset.",
+        "Go to liffio.com/login and click Forgot Password. Enter the email address associated with your Liffio account and check your inbox for a reset email (check spam if it does not arrive within 2 minutes). Click the reset link, enter your new password, and confirm. If you signed up with Google or Instagram, use the same sign-in method, because there is no separate Liffio password to reset.",
     },
     {
       id: "add-team-members",
@@ -760,7 +760,7 @@ const userSupportCategory: FaqCategory = {
       id: "connect-multiple-accounts",
       question: "How do I connect multiple Instagram accounts?",
       answer:
-        "Go to Settings → Connected Accounts in your Liffio dashboard and click Connect Instagram. Each account requires its own Meta OAuth authorization. A workspace connects one Instagram account, so a second account needs a second workspace - and only Agency includes more than one (20). Each workspace's automations run independently.",
+        "Go to Settings → Connected Accounts in your Liffio dashboard and click Connect Instagram. Each account requires its own Instagram Login authorisation. A workspace connects one Instagram account, so a second account needs a second workspace - and only Agency includes more than one (20). Each workspace's automations run independently.",
     },
     {
       id: "contact-support",

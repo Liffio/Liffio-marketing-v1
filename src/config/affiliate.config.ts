@@ -35,8 +35,46 @@
  * presented as the amount that will land in a balance.
  */
 
-/** Section 2.1. Lifetime recurring, no sliding scale, no cap, no expiry. */
+/** Section 2.1. 50% of Net Revenue, no sliding scale, no cap. */
 export const COMMISSION_RATE = 0.5;
+
+/**
+ * Section 2.1. How many MONTHS a referred workspace earns commission for.
+ *
+ * 🔴 CHANGED 2026-10-21 from lifetime recurring to a fixed six-month term, on
+ * the owner's instruction that the programme has been updated. Every surface
+ * reads this constant - never hardcode "6", and never write "lifetime" again.
+ *
+ * 🚩 IT IS A WINDOW, NOT A PAYMENT COUNT, and the distinction is the whole
+ * rule. The term is six months measured from the workspace's FIRST payment, and
+ * the affiliate earns 50% of every payment that lands inside it. The number of
+ * commissions therefore depends on the billing cycle, not on the constant:
+ *   - monthly  -> six payments, six commissions
+ *   - quarterly -> two payments, two commissions
+ *   - annual   -> ONE payment, ONE commission, on the full annual amount
+ * A payment made after the six months earns nothing, so an annual referral's
+ * next renewal (month 13) is outside the term and pays zero. An earlier version
+ * of this file and of AffiliateProgramContent read the constant as a count of
+ * six payments, which paid an annual referral six times over three years. It
+ * does not.
+ *
+ * ✅ RESOLVED 2026-10-21 by the owner, in their words: "annual also counts as 1
+ * it gets 50% of it ... its calculated by no of payment in 6 month".
+ *
+ * ✅ RESOLVED 2026-10-21 by the owner: Section 4's 15-day grace period stands
+ * exactly as written. It was queried because it reads like protection for a
+ * lifetime stream, and under a capped term a lapse after the term costs
+ * nothing. The owner confirmed the logic is correct and intended: inside the
+ * six months a lapse still forfeits the rest, so the clause does real work
+ * where it matters. Do NOT rewrite Section 4 or GRACE_PERIOD_DAYS on the
+ * theory that the cap made it redundant.
+ *
+ * ⚠️ ONE THING IS STILL UNRESOLVED, recorded here only - nothing on the public
+ * policy page admits to an open question. Grandfathering: affiliates who joined
+ * under "no expiry" are owed an answer, and this constant applies the new term
+ * to everyone.
+ */
+export const COMMISSION_MONTHS_COUNT = 6;
 
 /** Section 2.3. The referred user's FIRST payment only, applied automatically. */
 export const REFERRED_USER_FIRST_PAYMENT_DISCOUNT = 0.1;

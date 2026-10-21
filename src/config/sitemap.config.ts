@@ -48,11 +48,16 @@ type SitemapEntry = {
 
 /** Public, indexable marketing routes only (matches src/app route pages). */
 export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
-  // Hero, How-it-works, Features and SEO sections all had plan claims rewritten.
-  { path: "", changeFrequency: "weekly", priority: 1, lastModified: "2026-09-11" },
+  // 2026-10-21: the hero badge came out, OfficialApiSection went in under the
+  // hero, TestimonialsSection and StatsSection were commented out, and
+  // CreatorUseCasesSection replaced the testimonials slot. That is a larger
+  // change to this route's own content than the 2026-09-11 copy pass was.
+  { path: "", changeFrequency: "weekly", priority: 1, lastModified: "2026-10-21" },
   { path: "/features", changeFrequency: "weekly", priority: 0.9, lastModified: "2026-09-11" },
-  // Plan cards, the plans FAQ and the derived plan answers all changed.
-  { path: "/pricing", changeFrequency: "weekly", priority: 0.9, lastModified: "2026-09-11" },
+  // 2026-10-21: three outbound links added above the FAQ (this route had none),
+  // and faq.config answers it renders were corrected. /pricing is primary for
+  // the plans FAQ, which is why it moves with it and most routes do not.
+  { path: "/pricing", changeFrequency: "weekly", priority: 0.9, lastModified: "2026-10-21" },
   // The index renders each post's title and excerpt only, so it moves when those
   // move (2026-08-09). The 2026-09-11 edit to posts.ts rewrote body copy inside
   // /blog/manychat-alternatives: that belongs on the post's own `updatedAt`,
@@ -60,21 +65,39 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   { path: "/blog", changeFrequency: "weekly", priority: 0.8, lastModified: "2026-08-09" },
   // Hub renders hubBlurb/ALTERNATIVE_PAGES out of comparisons.config.ts; three
   // hubBlurbs were rewritten on 2026-09-11.
-  { path: "/compare", changeFrequency: "weekly", priority: 0.85, lastModified: "2026-09-11" },
-  // All three: page copy plus ComparisonTable's DEFAULT_ROWS were corrected.
-  { path: "/manychat-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-09-11" },
-  { path: "/senddm-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-09-11" },
-  { path: "/chatfuel-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-09-11" },
+  // 2026-10-21: Zorcha's unlimited-DM row corrected from a false negative, the
+  // LinkDM "Meta Business Partner" claim removed, and row defaults hardened so
+  // an unverified field can no longer publish a negative claim about a rival.
+  { path: "/compare", changeFrequency: "weekly", priority: 0.85, lastModified: "2026-10-21" },
+  // All three were corrected on 2026-09-11 (page copy plus ComparisonTable's
+  // DEFAULT_ROWS) and again on 2026-10-21, when "Meta OAuth" and "Meta login"
+  // became Instagram Login throughout and a safety FAQ was prepended.
+  { path: "/manychat-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-10-21" },
+  { path: "/senddm-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-10-21" },
+  { path: "/chatfuel-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-10-21" },
+
+  // NEW 2026-10-21. Three routes added to cover queries the site ranked for
+  // nothing on: the category head term, the uncapped-DM differentiator, and the
+  // safety objection. Priorities sit at or just under /features because the
+  // first of them is a head-term landing page, not a secondary one.
+  { path: "/instagram-comment-to-dm", changeFrequency: "monthly", priority: 0.9, lastModified: "2026-10-21" },
+  { path: "/unlimited-instagram-dms", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-10-21" },
+  { path: "/is-instagram-dm-automation-safe", changeFrequency: "monthly", priority: 0.8, lastModified: "2026-10-21" },
   // No visible copy changed here, but the page stopped emitting its duplicate
   // Organization node, a structured-data change worth a re-crawl.
   { path: "/about", changeFrequency: "monthly", priority: 0.7, lastModified: "2026-09-11" },
   // The FAQ set is what /help exists to serve, and answers were corrected in
-  // five of its categories (geo-compliance, discovery, plans, safety, support).
-  { path: "/help", changeFrequency: "weekly", priority: 0.7, lastModified: "2026-09-11" },
+  // five of its categories on 2026-09-11 (geo-compliance, discovery, plans,
+  // safety, support). 2026-10-21 rewrote the two affiliate answers, which had
+  // been left self-contradictory: "first six payments" and "no expiry" at once.
+  { path: "/help", changeFrequency: "weekly", priority: 0.7, lastModified: "2026-10-21" },
   { path: "/creators-program", changeFrequency: "monthly", priority: 0.6, lastModified: "2026-09-11" },
   // Bumped from 2026-06-07: AffiliateCalculator's Business/Agency prices were
   // corrected ($79→$59, $299→$549), which changes what this page renders.
-  { path: "/affiliate", changeFrequency: "monthly", priority: 0.6, lastModified: "2026-09-11" },
+  // 2026-10-21 is larger than that price correction: the programme moved from
+  // lifetime recurring to a six-month term, which rewrote the hero, the payout
+  // table, the key stats and the calculator's arithmetic.
+  { path: "/affiliate", changeFrequency: "monthly", priority: 0.6, lastModified: "2026-10-21" },
   // 2026-09-15 is the policy pack: these seven routes were rewritten wholesale
   // from src/content/legal/*.md and each now prints "Last updated:
   // 15 September 2026" in its own body, so the lastmod and the page agree -
@@ -90,11 +113,18 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   // as the processor receiving customer data, and Stripe left the backend on
   // 11 September.
   { path: "/privacy-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-09-15" },
-  // 🚩 KEEPS its old date because it still serves its old text. The replacement
-  // is final and carries no placeholder, but publishing it starts a 30-day
-  // notice obligation to existing affiliates, so it is held pending that
-  // decision. Move this date in the same change that switches the route.
-  { path: "/affiliate-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-08-09" },
+  // 🚩 This route used to serve its pre-rewrite text, and this entry
+  // was held at 2026-08-09 for exactly that reason. It no longer applies: on
+  // 2026-10-21 the inline policy THIS route renders was edited directly, moving
+  // Sections 2.1, 2.4, 4 and 4.1 from lifetime recurring to a six-month term,
+  // so the date moves with that edit.
+  //
+  // What is still held is src/content/legal/affiliate-program-policy.md, the
+  // full replacement draft, which remains unpublished and still describes a
+  // lifetime stream. Switching the route to read from that file is a separate
+  // decision and still starts a 30-day notice obligation to existing
+  // affiliates. Move this date again in the same change that switches it.
+  { path: "/affiliate-policy", changeFrequency: "yearly", priority: 0.3, lastModified: "2026-10-21" },
 ] as const;
 
 /**
@@ -107,11 +137,11 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
  * `rows()` helper and ComparisonTable that all five render.
  */
 const COMPARISON_LAST_MODIFIED: Record<string, string> = {
-  replyrush: "2026-09-11",
-  linkdm: "2026-09-11",
-  superprofile: "2026-09-11",
-  zorcha: "2026-09-11",
-  instachamp: "2026-09-11",
+  replyrush: "2026-10-21",
+  linkdm: "2026-10-21",
+  superprofile: "2026-10-21",
+  zorcha: "2026-10-21",
+  instachamp: "2026-10-21",
 };
 
 /**

@@ -23,6 +23,12 @@ const faqCategories: FaqCategory[] = [
     id: "manychat-alt",
     label: "ManyChat alternative FAQ",
     items: [
+        {
+          id: "is-it-safe",
+          question: "Is it safe to connect my Instagram account?",
+          answer:
+            "Liffio connects through the official Instagram API using Instagram Login: you approve the permissions on Instagram's own consent screen, no password is shared, and you can revoke access from Instagram at any time. Liffio's business is Meta-verified as a Tech Provider and its Instagram permissions passed Meta's App Review. Any tool running on the official API needs both, so treat this as the baseline to check for rather than a point of difference. The question worth asking about any Instagram tool is whether it uses the official API at all, or signs in as you and drives the app in a browser.",
+        },
       {
         id: "is-liffio-better",
         question: "Is Liffio better than ManyChat for Instagram?",
@@ -322,7 +328,7 @@ export default function ManyChatAlternativePage() {
               <p>
                 Yes, and the reason is the connection method. Liffio connects to your Instagram
                 account through Meta&apos;s official OAuth flow, the same authorization mechanism used by
-                major social media management tools. You see a standard Meta login screen, you
+                major social media management tools. You see Instagram's own login screen, you
                 approve the requested permissions, and Meta issues an access token directly to
                 Liffio. Your Instagram password is never entered into Liffio at any point.
               </p>
@@ -364,7 +370,7 @@ export default function ManyChatAlternativePage() {
                 {
                   step: "2",
                   title: "Sign up for Liffio and connect Instagram",
-                  body: "Create a Liffio account at app.liffio.com and connect your Instagram account through the Meta OAuth flow. The connection takes about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace, and the Agency plan bundles 20 workspaces into a single subscription.",
+                  body: "Create a Liffio account at app.liffio.com and connect your Instagram account through Instagram Login. The connection takes about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace, and the Agency plan bundles 20 workspaces into a single subscription.",
                 },
                 {
                   step: "3",

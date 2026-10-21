@@ -7,7 +7,9 @@ import HeroSection from "@/components/HeroSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import OfficialApiSection from "@/components/OfficialApiSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
+// Restore alongside the commented-out testimonials block below:
+// import TestimonialsSection from "@/components/TestimonialsSection";
+import CreatorUseCasesSection from "@/components/CreatorUseCasesSection";
 import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
 import AboutSection from "@/components/AboutSection";
@@ -46,9 +48,27 @@ export default async function Home() {
         <TrackSection name="how_it_works">
           <HowItWorksSection />
         </TrackSection>
+        <CreatorUseCasesSection />
+        {/*
+          COMMENTED OUT, not deleted - restore by uncommenting this block AND the
+          TestimonialsSection import at the top of the file.
+
+          These quotes are attributed to initials only, and git history shows the
+          initials were produced by renaming real names in abf286e (2026-08-07):
+          "Ryan Callahan" -> "R. C.", "Sophie Mercer" -> "S. M.", "Aisha Al-Farsi"
+          -> "A. A.", "Lippi Patel" -> "L. P.", "Jake Thornton" -> "J. T.". Four
+          others were deleted outright in the same pass. Initialising a name does
+          not make the attribution verifiable - it only makes it unfalsifiable,
+          which is the thing the compliance pass was meant to remove.
+
+          Pull back ONLY the quotes from people who are not team members and who
+          have agreed to be quoted. A first name plus a role a reader could check
+          beats seven initials. Do not restore the full set wholesale.
+
         <TrackSection name="testimonials">
           <TestimonialsSection />
         </TrackSection>
+        */}
         <TrackSection name="pricing">
           <PricingSection plans={plans} region={region} countryCode={countryCode} />
         </TrackSection>

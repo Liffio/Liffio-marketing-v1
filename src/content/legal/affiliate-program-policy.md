@@ -12,7 +12,7 @@ The Affiliate Program lets any registered Liffio user, including users on the Fr
 
 Key features:
 
-- 50% lifetime recurring commission on the Net Revenue of every payment a referred workspace makes
+- 50% recurring commission on the Net Revenue of every payment a referred workspace makes in the six months after its first payment
 - 90-day attribution window
 - 15-day grace period if a referred subscription lapses
 - 20-day hold before earnings can be withdrawn
@@ -24,7 +24,9 @@ Key features:
 
 ### 2.1 Rate and duration
 
-You earn 50% of the Net Revenue from every payment a referred workspace makes, for as long as that workspace keeps an unbroken active paid subscription. There is no time limit and no cap on total earnings.
+You earn 50% of the Net Revenue from every payment a referred workspace makes during the six months following its first payment, while that workspace keeps an unbroken active paid subscription. The rate is flat, with no sliding scale and no taper, and there is no cap on total earnings. Commission ends six months after that first payment; the workspace's subscription continues unaffected.
+
+How many commissions that produces depends on the billing cycle rather than on a payment count. A monthly workspace makes six payments inside the term, a quarterly workspace two, and an annual workspace one.
 
 Commission on a workspace ends permanently if its subscription lapses beyond the grace period in Section 4.
 
@@ -49,9 +51,11 @@ Commission is calculated per workspace. If a referred user buys several workspac
 
 ### 2.5 Annual plans
 
-Annual subscriptions are sold on the Starter, Growth and Business plans. Commission on an annual payment is 50% of its Net Revenue, credited to you in 12 equal monthly instalments across the year rather than as a single payment.
+Annual subscriptions are sold on the Starter, Growth and Business plans. An annual payment is a single payment, so it earns a single commission: 50% of the Net Revenue of the full annual amount, credited once.
 
-Each instalment enters the 20-day hold when it is credited. If the annual payment is refunded or charged back, or the subscription ends, instalments that have not yet been credited stop, and credited ones are clawed back under Section 7.
+Because the term in Section 2.1 runs for six months from the workspace's first payment, that single commission is the whole of what an annual workspace earns. The next annual renewal falls twelve months later, outside the term, and earns nothing.
+
+The commission enters the 20-day hold when it is credited. If the annual payment is refunded or charged back, it is clawed back under Section 7.
 
 ### 2.6 Eligible plans
 
@@ -81,7 +85,7 @@ Attribution is tied to the referred user's account, not to individual workspaces
 
 ### 4.1 Continuous subscription
 
-Lifetime recurring commission is earned only while each referred workspace keeps an unbroken, active subscription. Commission is workspace-specific.
+Recurring commission is earned only while each referred workspace keeps an unbroken, active subscription, and only on payments that fall inside the six-month term set out in Section 2.1. Commission is workspace-specific.
 
 ### 4.2 The 15-day grace period
 
@@ -167,7 +171,6 @@ You need at least $50 of available (not held) earnings to withdraw. If your bala
 
 ### 6.4 Payout stages
 
-- **Scheduled:** an annual-plan instalment not yet credited
 - **Pending:** credited, within the 20-day hold
 - **Available:** hold complete, ready to withdraw
 - **Withdrawal requested:** you've asked for a payout
@@ -185,7 +188,6 @@ If a referred user gets a refund, or a payment is reversed through a chargeback 
 - If the commission is still pending or available, we deduct it directly
 - If it has already been paid out, we deduct it from your next available balance
 - If your balance isn't enough, your account carries a negative balance that must be cleared before future withdrawals
-- For annual plans, instalments that have not yet been credited are cancelled
 
 Repeatedly referring users who request refunds or dispute payments may lead to a review or suspension of your affiliate account.
 
@@ -258,7 +260,7 @@ We may suspend or terminate any affiliate account for breaking this Policy, for 
 
 If you joined the program under an earlier version of this Policy, we will email you at least 30 days before this version applies to your existing referrals. Until then, those referrals are treated under the earlier terms.
 
-The commission rate and lifetime recurring structure are unchanged from the previous version. What has changed is that commission is calculated on Net Revenue rather than the gross payment, that annual-plan commission is credited in monthly instalments, and that chargebacks are clawed back alongside refunds.
+The 50% commission rate is unchanged from the previous version. What has changed is that recurring commission now runs for six months from a workspace's first payment rather than for the life of the subscription, that commission is calculated on Net Revenue rather than the gross payment, that an annual payment earns one commission on the full annual amount rather than twelve monthly instalments, and that chargebacks are clawed back alongside refunds.
 
 ## 13. Changes to this Policy
 

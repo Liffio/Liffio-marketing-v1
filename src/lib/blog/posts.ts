@@ -16,7 +16,206 @@ export type BlogPost = {
   references?: { label: string; url: string }[];
 };
 
+/*
+ * 🔴 TWO POSTS ADDED 2026-10-21, and the rule they were written under matters
+ * more than the posts: NEITHER NAMES A COMPETITOR'S PRICE. The India post
+ * describes pricing MODELS (flat, per-contact, per-message with add-ons) and
+ * never attaches a number to a named rival, because a price scraped today is
+ * wrong next quarter and a wrong price published about a named company is the
+ * same defect that put a false negative in the Zorcha comparison row. Describe
+ * the shape, let the reader check the vendor.
+ *
+ * Liffio's own figures come from src/config/pricing.config.ts and must not be
+ * retyped from memory when they move.
+ */
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    slug: "instagram-dm-automation-pricing-india",
+    category: "Pricing",
+    title: "Instagram DM Automation Pricing in India (2026)",
+    excerpt:
+      "What Instagram DM automation actually costs in India, how the three pricing models in this market differ, and why the sticker price is rarely the number you end up paying.",
+    readTime: "5 min read",
+    date: "October 21, 2026",
+    author: "Liffio Team",
+    publishedAt: "2026-10-21",
+    updatedAt: "2026-10-21",
+    gradient: "from-orange-500 to-rose-600",
+    sections: [
+      {
+        heading: "The sticker price is not the price",
+        paragraphs: [
+          "Shopping for Instagram DM automation in India is confusing for a reason that has nothing to do with the rupee amount on the pricing page. Three different pricing models are competing in this market, and they produce wildly different bills from similar-looking headline numbers.",
+          "The first is flat monthly pricing: you pay a fixed amount and the usage is included. The second is per-contact pricing, where the bill is driven by how many unique people your automations have messaged in a month. The third, most common among WhatsApp-first platforms that also sell Instagram features, is a base plan plus per-message charges plus paid add-ons.",
+          "Only the first of those lets you know in advance what you will pay. The other two are priced on things you want more of, which is an odd thing to agree to when the point of the tool is to handle more conversations.",
+        ],
+      },
+      {
+        heading: "Why per-contact pricing behaves badly for creators",
+        paragraphs: [
+          "Per-contact billing counts unique people reached, usually resetting monthly. That sounds proportionate until you notice what it is indexed to: reach. The best thing that can happen to a creator is a Reel that finds twenty thousand people who have never heard of them. Under per-contact pricing, that is also the thing that moves the invoice.",
+          "The practical result is a decision nobody should have to make. A post performs, the comments arrive, and instead of serving the people asking, you are working out which tier you are about to cross. Some people turn the automation off halfway through a campaign, which means switching off the thing answering their customers because answering them costs money.",
+          "If you are comparing tools, ask one question of each: does the price change if a post does ten times better than planned? That single answer separates the models faster than any feature table.",
+        ],
+      },
+      {
+        heading: "The add-on trap on base-plus-usage plans",
+        paragraphs: [
+          "The third model is the one that catches Indian buyers most often, because the headline number genuinely is low. A base plan looks affordable, then keyword automation turns out to be a separate paid module, the AI assistant is another line, extra seats are priced per user, and messages are billed per delivery on top of all of it.",
+          "There is nothing dishonest about that structure as long as you add it up before you commit. The mistake is comparing a base plan against an all-in plan and concluding the base plan is cheaper. Write down the four numbers you will actually pay each month: base, the add-on that unlocks the automation you came for, seats, and expected message volume. Then compare.",
+          "A useful sanity check: if basic keyword automation is not in the plan you are quoting, you are not quoting the price of the product you want.",
+        ],
+      },
+      {
+        heading: "What Liffio costs in India",
+        paragraphs: [
+          "Liffio prices flat, in rupees, through Razorpay. Free is ₹0, Starter is ₹499 a month, Growth ₹1,499, Business ₹2,499, and Agency ₹22,999. Annual billing charges ten months instead of twelve, so two months are free.",
+          "Automated DMs are not metered on any of those plans, free included, and there is no per-contact fee. What the plan decides is how many automation workflows run at once: 3 on Free, 25 on Starter, 100 on Growth, and 250 on Business and Agency.",
+          "Rupee prices include GST, so the amount shown is the amount charged, and a GST tax invoice is issued for every payment. That matters more than it sounds if you are claiming input credit or filing for a registered business, because a USD charge from a foreign processor is an import of service and does not give you a GST invoice in the same way.",
+        ],
+      },
+      {
+        heading: "Paying in dollars versus paying in rupees",
+        paragraphs: [
+          "Plenty of good tools in this category only bill in USD. If you are an individual creator, that is mostly a nuisance: your card issuer adds a cross-border markup, the amount moves with the exchange rate, and you cannot predict the rupee figure that will hit the statement.",
+          "If you are a registered business, it is more than a nuisance. A foreign-currency subscription is an import of service for GST purposes and the paperwork is different from a domestic invoice. Finance teams notice; sole proprietors filing their own returns notice later, usually in a hurry.",
+          "This is not an argument that INR billing makes a tool better. It is an argument that the comparison is not like for like, and that the rupee figure you should compare against is the one including the markup, not the converted sticker price.",
+        ],
+      },
+      {
+        heading: "A short checklist before you pay anyone",
+        paragraphs: [
+          "Is keyword comment-to-DM in the plan you are pricing, or is it a paid add-on?",
+          "Does the bill change with reach, with messages sent, or not at all?",
+          "Are seats included, and how many do you actually need?",
+          "Is the price in rupees, and does it include GST with a tax invoice?",
+          "Is there a free plan you can run in production, or only a trial that expires?",
+          "Does the tool connect through Instagram's own consent screen, or does it ask for your password? That last one is a safety question rather than a pricing question, and it is the one worth checking first.",
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: "How much does Instagram DM automation cost in India?",
+        answer:
+          "It ranges from free to tens of thousands of rupees a month, and the spread is mostly about the pricing model rather than the feature set. Flat-rate Instagram-only tools generally start between ₹400 and ₹1,500 a month for a single account. Platforms that bill per contact or per message can start lower and end much higher, because the bill moves with volume. Liffio's Indian plans are ₹0, ₹499, ₹1,499, ₹2,499 and ₹22,999 a month, GST included, with automated DMs not metered on any of them.",
+      },
+      {
+        question: "Is there a free Instagram comment-to-DM tool in India?",
+        answer:
+          "Yes, several tools offer a free tier, though what is free varies a lot. Check whether the free plan includes keyword comment-to-DM at all, whether it is capped by contacts or messages, and whether it expires. Liffio's free plan includes keyword triggers on posts and Reels, public comment auto-replies and unmetered automated DMs, limited to 3 automation workflows at a time, with no card and no expiry.",
+      },
+      {
+        question: "Do Indian prices include GST?",
+        answer:
+          "On Liffio, yes: rupee prices are GST-inclusive, the amount shown is the amount charged, and a GST tax invoice is issued for every payment. This is not universal, so check. Some platforms quote rupee prices excluding GST and add it at checkout, and some only mention GST in the context of KYC rather than invoicing.",
+      },
+      {
+        question: "Is it cheaper to pay annually?",
+        answer:
+          "On Liffio, annual billing charges ten months instead of twelve, so two months are free. Whether that is worth it depends on how settled you are: an annual commitment on a tool you have used for a week is a worse deal than a monthly plan on a tool you have used for a quarter, whatever the discount says.",
+      },
+    ],
+    references: [
+      {
+        label: "Liffio pricing, including Indian rupee plans",
+        url: "https://liffio.com/pricing",
+      },
+      {
+        label: "Instagram Messaging API: Meta for Developers",
+        url: "https://developers.facebook.com/docs/messenger-platform/instagram",
+      },
+    ],
+  },
+  {
+    slug: "comment-to-dm-for-online-stores",
+    category: "Use Cases",
+    title: "Comment-to-DM for Online Stores: Send Prices and Links Automatically",
+    excerpt:
+      "How small shops use one keyword per product to answer the price question at scale, what belongs in the DM, and the mistakes that cost sales.",
+    readTime: "4 min read",
+    date: "October 21, 2026",
+    author: "Liffio Team",
+    publishedAt: "2026-10-21",
+    updatedAt: "2026-10-21",
+    gradient: "from-rose-500 to-pink-500",
+    sections: [
+      {
+        heading: "The price question is the whole problem",
+        paragraphs: [
+          "If you sell anything on Instagram, you already know the comment. Price? How much? DM me. It arrives on every post, dozens of times, and each one is a person who has told you plainly that they are considering buying.",
+          "Answering them by hand works until it does not. A post that reaches well produces more of those comments in an evening than you can reply to between other jobs, and the ones you answer at noon the next day are answering someone whose moment has passed. Meanwhile the comment sits there publicly unanswered, which reads to the next reader as a shop that does not reply.",
+          "Comment-to-DM is the fix because it matches the shape of the problem exactly. The question is always the same, the answer is always the same, and the person asking has already raised their hand.",
+        ],
+      },
+      {
+        heading: "One keyword per product, not one keyword per shop",
+        paragraphs: [
+          "The instinct is to set up PRICE as a single trigger across everything. It works, but it wastes the opportunity, because then the DM has to be generic and you are back to a conversation.",
+          "Better: name the keyword after the product and put it in the caption and the video. SHIRT, HOODIE, SET01, whatever matches how you already refer to it. The DM can then carry the actual price, the actual link, and the actual sizes for that one item, which is an answer rather than an invitation to ask again.",
+          "Keep the words short and spellable on a phone. If the product has a name people mistype, use the shorter half of it. And say the word out loud in the Reel: people comment what they heard, not what is written in the caption they did not read.",
+        ],
+      },
+      {
+        heading: "What belongs in the DM",
+        paragraphs: [
+          "Three lines, in this order. Name the thing they asked about. Give the price. Give the link, on its own line or as a tappable button.",
+          "That is it. Resist adding the other four products, the shipping policy and a discount code, because a DM with one job gets acted on and a DM with five gets read and closed. If you sell variants, one short line asking which size is better than a list of all of them.",
+          "Turn on the public reply as well. Something as plain as sent you a DM with the price does two jobs: it tells that commenter to check their inbox, and it shows the next reader that this shop answers. Use reply variants so the comment section does not read as the same sentence forty times.",
+        ],
+      },
+      {
+        heading: "What this looks like in practice",
+        paragraphs: [
+          "A clothing shop posts a Reel of a new drop and says comment SET01 for the price. Someone does, and about twenty seconds later they have the price, the sizes in stock and a link straight to that product page, while the comment underneath the Reel says a DM is on its way.",
+          "The difference is not that the shop replied faster. It is that the shop replied to everyone, including the people who commented at one in the morning, and nobody had to decide which comments were worth the effort.",
+          "You can see three real accounts running this on the Liffio homepage, including a clothing store using it exactly this way.",
+        ],
+      },
+      {
+        heading: "Mistakes that cost sales",
+        paragraphs: [
+          "Promising a price and sending a sales pitch. People who asked for a number and got a paragraph block you, and they are the warmest audience you had.",
+          "Linking to the homepage instead of the product. Making someone search your catalogue after they told you which item they wanted is the opposite of helpful.",
+          "A link that breaks on mobile. Everyone who reads this DM is on a phone. Test it on a phone.",
+          "Not testing at all before promoting the post. Comment from a second account first and check three things: the DM lands, the link opens, and the public reply reads the way you meant it.",
+          "Letting the keyword outlive the product. When the item sells out, either update the DM to say so with an alternative, or turn the automation off. A DM confidently selling something you no longer have is worse than silence.",
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: "Can I use a different keyword for every product?",
+        answer:
+          "Yes, and for a shop it is usually the better setup. Each automation watches one post for one keyword, so a keyword per product lets each DM carry that product's real price and link. How many you can run at once depends on the plan: 3 on Liffio's free plan, 25 on Starter, 100 on Growth, 250 on Business and Agency.",
+      },
+      {
+        question: "Should I put the price in the DM or just the link?",
+        answer:
+          "Put the price in. The reason the comment exists is that the price was not in the caption, so a DM containing only a link is asking them to go and find the thing they already asked you for. Price, then link, in that order.",
+      },
+      {
+        question: "What if someone replies to the automated DM?",
+        answer:
+          "Then you have a conversation, which is the point. The automation gets them the number; a person takes it from there. If the same follow-up questions keep arriving, a chatbot can handle the first round of them, which is a separate module from comment-to-DM.",
+      },
+      {
+        question: "Does this work on Reels as well as feed posts?",
+        answer:
+          "Yes, and Reels are usually where the volume is, because a Reel reaches people who do not follow you yet. The behaviour is the same on both.",
+      },
+    ],
+    references: [
+      {
+        label: "How to turn Instagram comments into DMs automatically",
+        url: "https://liffio.com/blog/how-to-turn-instagram-comments-into-dms",
+      },
+      {
+        label: "Instagram comment-to-DM automation on Liffio",
+        url: "https://liffio.com/instagram-comment-to-dm",
+      },
+    ],
+  },
   {
     slug: "how-to-turn-instagram-comments-into-dms",
     category: "Automation",
@@ -27,7 +226,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "May 15, 2026",
     author: "Liffio Team",
     publishedAt: "2026-05-15",
-    updatedAt: "2026-05-15",
+    updatedAt: "2026-10-21",
     gradient: "from-orange-500 to-rose-600",
     sections: [
       {
@@ -49,7 +248,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "Set it up in Liffio (about five minutes)",
         paragraphs: [
-          "Connect Instagram through Meta login so you are on the official API, not a grey-market login that risks the account.",
+          "Connect Instagram through Instagram Login so you are on the official API, not a grey-market login that risks the account.",
           "Create a Comment automation, choose the post or Reel, and type the trigger exactly as you want it matched. Most teams use \"contains\" matching so GUIDE also catches \"guide please\".",
           "Write the DM in two or three short lines. Put the link on its own line or use a DM button. Set the delay to something between 15 and 45 seconds. Instant DMs can feel abrupt; a short pause gives the reply a natural conversational rhythm.",
           "Turn on a public reply if you want social proof under the comment. Something like \"Sent you a DM with the link\" stops the same person from commenting twelve times because they think it broke.",
@@ -111,7 +310,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "June 1, 2026",
     author: "Liffio Team",
     publishedAt: "2026-06-01",
-    updatedAt: "2026-06-01",
+    updatedAt: "2026-10-21",
     gradient: "from-rose-500 to-rose-600",
     sections: [
       {
@@ -152,7 +351,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "A sane migration checklist",
         paragraphs: [
           "Screenshot your active ManyChat flows: trigger words, delay settings, DM text, and public comment replies.",
-          "Reconnect Instagram inside the new tool with Meta login. Revoke old tokens if you are decommissioning the old account entirely.",
+          "Reconnect Instagram inside the new tool with Instagram Login. Revoke old tokens if you are decommissioning the old account entirely.",
           "Recreate your highest revenue automation first, usually the main LINK comment flow on your best recent Reel.",
           "Run both tools in parallel for five to seven days on a smaller post before you move the big campaign. Watch for duplicate DMs, which confuse people fast.",
           "Tell your audience once if the keyword changed. Silence is fine; unnecessary drama is not.",

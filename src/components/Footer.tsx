@@ -6,6 +6,12 @@ const footerLinks = {
   Product: [
     { label: "Features", href: "/features" },
     { label: "Pricing", href: "/pricing" },
+    // Added 2026-10-21 with the three new landing pages. The footer is the only
+    // site-wide internal link they get, and a route that appears in the sitemap
+    // but nowhere in the nav or footer has no internal weight pointing at it.
+    { label: "Comment to DM", href: "/instagram-comment-to-dm" },
+    { label: "Unlimited DMs", href: "/unlimited-instagram-dms" },
+    { label: "Is DM automation safe?", href: "/is-instagram-dm-automation-safe" },
     { label: "Blog", href: "/blog" },
     { label: "Help Center", href: "/help" },
   ],

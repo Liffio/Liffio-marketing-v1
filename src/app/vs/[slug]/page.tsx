@@ -319,6 +319,12 @@ export default async function VsPage({ params }: Props) {
                   Liffio vs {c.competitor}
                 </a>
               ))}
+              <a href="/pricing" className="rounded-full border border-gray-200 px-4 py-2 text-sm text-gray-700 hover:border-[#f5184c] hover:text-[#f5184c] transition-colors">
+                Liffio pricing
+              </a>
+              <a href="/features" className="rounded-full border border-gray-200 px-4 py-2 text-sm text-gray-700 hover:border-[#f5184c] hover:text-[#f5184c] transition-colors">
+                All features
+              </a>
               <a
                 href="/compare"
                 className="rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-[#b20d8f] hover:border-[#f5184c] transition-colors"

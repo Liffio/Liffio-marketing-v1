@@ -74,9 +74,9 @@ function rows(competitor: Partial<Record<string, boolean | string>>): Comparison
   return [
     { feature: "Comment-to-DM automation", liffio: true, competitor: competitor.commentDm ?? true },
     { feature: "Story reply automation", liffio: true, competitor: competitor.story ?? true },
-    { feature: "Unlimited automated DMs (every plan)", liffio: true, competitor: competitor.unlimitedDm ?? false },
+    { feature: "Unlimited automated DMs (every plan)", liffio: true, competitor: competitor.unlimitedDm ?? "Check their plans" },
     { feature: "Free plan that works in production", liffio: true, competitor: competitor.free ?? "limited" },
-    { feature: "Instagram accounts per subscription", liffio: "1 per workspace (Agency: 20)", competitor: competitor.unlimitedAccounts ?? false },
+    { feature: "Instagram accounts per subscription", liffio: "1 per workspace (Agency: 20)", competitor: competitor.unlimitedAccounts ?? "Check their plans" },
     { feature: "Flat pricing (no per-contact fees)", liffio: true, competitor: competitor.flat ?? false },
     { feature: "Instagram-only focus", liffio: true, competitor: competitor.igOnly ?? true },
     { feature: "Native INR billing + GST invoices", liffio: true, competitor: competitor.inr ?? false },
@@ -123,6 +123,11 @@ export const COMPARISONS: Comparison[] = [
       "ReplyRush offers a free tier and paid plans priced by usage tier. Liffio's difference is flat pricing with unlimited DMs on every plan: the bill does not move when a Reel goes viral. Each Instagram account runs in its own workspace, and Agency bundles 20 of them into one flat subscription.",
     faq: [
       {
+        question: "Is it safe to connect my Instagram account?",
+        answer:
+          "Liffio connects through the official Instagram API using Instagram Login: you approve the permissions on Instagram's own consent screen, no password is shared, and you can revoke access from Instagram at any time. Liffio's business is Meta-verified as a Tech Provider and its Instagram permissions passed Meta's App Review. Any tool running on the official API needs both, so treat this as the baseline to check for rather than a point of difference. The question worth asking about any Instagram tool is whether it uses the official API at all, or signs in as you and drives the app in a browser.",
+      },
+      {
         question: "Is Liffio a good ReplyRush alternative?",
         answer:
           "Yes, especially if you manage more than one Instagram account or want a free plan you can run in production. Liffio includes unlimited automated DMs on every plan, Free included, with flat pricing that does not scale with your contact count. Each Instagram account lives in its own workspace, and the Agency plan includes 20 workspaces on one subscription. Both tools connect through Instagram's official API.",
@@ -135,7 +140,7 @@ export const COMPARISONS: Comparison[] = [
       {
         question: "Do both tools use the official Instagram API?",
         answer:
-          "Yes. Both Liffio and ReplyRush connect through Meta's official OAuth flow: no password sharing, no browser automation. Liffio uses the permissions you approve on Meta's consent screen and adds a configurable send delay so replies arrive at a conversational pace.",
+          "Yes. Both Liffio and ReplyRush connect through Instagram's official login flow: no password sharing, no browser automation. Liffio uses the permissions you approve on Instagram's consent screen and adds a configurable send delay so replies arrive at a conversational pace.",
       },
     ],
   },
@@ -149,7 +154,7 @@ export const COMPARISONS: Comparison[] = [
       `LinkDM focuses on link-in-DM delivery. Liffio covers the full automation stack, from comment-to-DM to ${FEATURE_WELCOME_DM ? "welcome messages" : "follow-up sequences"}, with a production-ready free plan and a 20-workspace Agency plan.`,
     hubBlurb: "Full automation stack and a 20-workspace Agency plan vs LinkDM's link-delivery focus.",
     whyIntro: [
-      "LinkDM is a clean, focused Instagram tool built around delivering links via DM when someone comments a keyword. It does that one job well and is a Meta Business Partner.",
+      "LinkDM is a clean, focused Instagram tool built around delivering links via DM when someone comments a keyword. It does that one job well. Liffio covers the same ground and adds story replies, follow-up sequences and chatbots, on an Instagram API integration that is Meta-verified as a Tech Provider with App Review approval.",
       "Creators comparing the two usually want more than link delivery: story automation, follow-up sequences, lead capture, and a predictable way to run several accounts. That is where the feature surface starts to matter.",
     ],
     whyPoints: [
@@ -172,6 +177,11 @@ export const COMPARISONS: Comparison[] = [
       "LinkDM is Instagram-focused with paid plans. Liffio adds a production-ready free plan, unlimited DMs on every plan, and a broader automation set at a lower entry price. Verify LinkDM's current pricing on their site, as plans change.",
     faq: [
       {
+        question: "Is it safe to connect my Instagram account?",
+        answer:
+          "Liffio connects through the official Instagram API using Instagram Login: you approve the permissions on Instagram's own consent screen, no password is shared, and you can revoke access from Instagram at any time. Liffio's business is Meta-verified as a Tech Provider and its Instagram permissions passed Meta's App Review. Any tool running on the official API needs both, so treat this as the baseline to check for rather than a point of difference. The question worth asking about any Instagram tool is whether it uses the official API at all, or signs in as you and drives the app in a browser.",
+      },
+      {
         question: "Is Liffio a good LinkDM alternative?",
         answer:
           "Yes, if you want more than link-in-DM delivery. Liffio covers the full range of Instagram automation types and includes a free plan that runs in production. Each Instagram account runs in its own workspace, and the Agency plan includes 20 workspaces on a single subscription. Both tools are Instagram-focused and use the official API.",
@@ -184,7 +194,7 @@ export const COMPARISONS: Comparison[] = [
       {
         question: "How do I switch from LinkDM to Liffio?",
         answer:
-          "Document your active LinkDM automations, connect your Instagram account to Liffio through Meta OAuth, recreate each automation, and run both in parallel for a few days before revoking LinkDM's access in Instagram settings. Most setups take under two hours.",
+          "Document your active LinkDM automations, connect your Instagram account to Liffio through Instagram Login, recreate each automation, and run both in parallel for a few days before revoking LinkDM's access in Instagram settings. Most setups take under two hours.",
       },
     ],
   },
@@ -215,11 +225,29 @@ export const COMPARISONS: Comparison[] = [
         body: "Paid plans start at $9/month flat: you pay for DM automation, not a bundled storefront platform.",
       },
     ],
-    tableRows: rows({ igOnly: "part of suite", flat: "suite pricing", unlimitedAccounts: "varies", inr: true }),
-    pricing: { name: "SuperProfile", free: true, paidFrom: "Suite pricing", perContact: false, instagramOnly: false },
+    // Verified on superprofile.bio/pricing, 21 Oct 2026. Three fields were
+    // placeholders and are now facts:
+    //   - unlimitedDm: the free Starter plan lists "Unlimited AutoDMs on Reels
+    //     & Posts" and Creator lists "Unlimited AutoDMs across Reels, Posts,
+    //     Stories, DMs & Lives". So DMs are uncapped there too, free included.
+    //     This row previously fell through to "Check their plans", which was
+    //     honest but uninformative; it must never fall through to a bare false.
+    //   - unlimitedAccounts: Creator states "Connect up to 5 Instagram
+    //     accounts". "varies" was a guess.
+    //   - paidFrom: Creator renews at $29/month. The page also shows a $4.99
+    //     first-month promo, which is NOT quoted here: a promotional rate
+    //     compared against a standing rate is not a like-for-like comparison,
+    //     and the promo will expire before this file is next read.
+    tableRows: rows({ igOnly: "part of suite", flat: "suite pricing", unlimitedDm: true, unlimitedAccounts: "Up to 5 (Creator)", inr: true }),
+    pricing: { name: "SuperProfile", free: true, paidFrom: "From $29/month", perContact: false, instagramOnly: false },
     pricingNote:
-      "SuperProfile bundles bio-link and storefront tools with automation, priced as a suite. Liffio prices the automation directly: flat, from $9/month, with unlimited DMs on every plan. Choose SuperProfile if the storefront is central; choose Liffio if DM automation is the priority.",
+      "SuperProfile bundles bio-link and storefront tools with automation, priced as a suite from $29/month. Liffio prices the automation directly, flat, from $9/month. Both leave automated DMs uncapped, so the question is not volume but what you are buying: choose SuperProfile if the storefront is central, choose Liffio if DM automation is the priority and you do not need the rest.",
     faq: [
+      {
+        question: "Is it safe to connect my Instagram account?",
+        answer:
+          "Liffio connects through the official Instagram API using Instagram Login: you approve the permissions on Instagram's own consent screen, no password is shared, and you can revoke access from Instagram at any time. Liffio's business is Meta-verified as a Tech Provider and its Instagram permissions passed Meta's App Review. Any tool running on the official API needs both, so treat this as the baseline to check for rather than a point of difference. The question worth asking about any Instagram tool is whether it uses the official API at all, or signs in as you and drives the app in a browser.",
+      },
       {
         question: "Is Liffio a good SuperProfile alternative?",
         answer:
@@ -264,11 +292,22 @@ export const COMPARISONS: Comparison[] = [
         body: "No per-contact metering. Your bill stays flat whether a Reel gets 50 comments or 50,000.",
       },
     ],
-    tableRows: rows({ inr: true }),
-    pricing: { name: "Zorcha", free: "varies", paidFrom: "Check site", perContact: false, instagramOnly: true },
+    // Verified on zorcha.com/pricing, 21 Oct 2026: the plan table states
+    // "DMs: Unlimited" and "Automations: Unlimited" on every tier, Free included.
+    // unlimitedDm MUST stay true - leaving it to the `?? false` default rendered a
+    // cross on a capability Zorcha genuinely offers. What Zorcha gates on Free is
+    // FEATURES (Re Run, Follow Up, Personalised DMs, Multi Message, Flow Builder are
+    // all absent), not volume - so compete on depth, not on the DM row.
+    tableRows: rows({ inr: true, unlimitedDm: true }),
+    pricing: { name: "Zorcha", free: true, paidFrom: "From $14.99/month", perContact: false, instagramOnly: true },
     pricingNote:
       "Zorcha's plans and free tier change as a newer product, so verify current details on their site. Liffio's constant is flat pricing from $9/month with unlimited DMs on every plan, and an Agency tier that bundles 20 workspaces into one subscription.",
     faq: [
+      {
+        question: "Is it safe to connect my Instagram account?",
+        answer:
+          "Liffio connects through the official Instagram API using Instagram Login: you approve the permissions on Instagram's own consent screen, no password is shared, and you can revoke access from Instagram at any time. Liffio's business is Meta-verified as a Tech Provider and its Instagram permissions passed Meta's App Review. Any tool running on the official API needs both, so treat this as the baseline to check for rather than a point of difference. The question worth asking about any Instagram tool is whether it uses the official API at all, or signs in as you and drives the app in a browser.",
+      },
       {
         question: "Is Liffio a good Zorcha alternative?",
         answer:
@@ -313,11 +352,24 @@ export const COMPARISONS: Comparison[] = [
         body: "Predictable flat pricing with no per-contact fees, plus native INR billing for creators in India.",
       },
     ],
+    // 🚩 unlimitedDm is deliberately left to its "Check their plans" default.
+    // Checked 21 Oct 2026: InstaChamp's own page (app.mobilemonkey.com/
+    // instachamp, by Customers.ai) publishes no pricing table and no DM or
+    // contact limits anywhere on it. Third-party comparison sites state figures
+    // for it, but a competitor claim sourced from another competitor's blog is
+    // exactly how the false Zorcha row got published. If you want a real value
+    // here, get it from Customers.ai's own pricing page or a signed-in account,
+    // and cite it the way the SuperProfile block above does.
     tableRows: rows({ igOnly: "multi-channel", inr: true, chatbots: true }),
     pricing: { name: "InstaChamp", free: true, paidFrom: "From ~$29/month", perContact: false, instagramOnly: false },
     pricingNote:
       "InstaChamp offers a free tier and paid plans from the MobileMonkey platform. Liffio's difference is an Instagram-only focus, unlimited DMs on every plan, and flat pricing from $9/month. Verify InstaChamp's current pricing on their site.",
     faq: [
+      {
+        question: "Is it safe to connect my Instagram account?",
+        answer:
+          "Liffio connects through the official Instagram API using Instagram Login: you approve the permissions on Instagram's own consent screen, no password is shared, and you can revoke access from Instagram at any time. Liffio's business is Meta-verified as a Tech Provider and its Instagram permissions passed Meta's App Review. Any tool running on the official API needs both, so treat this as the baseline to check for rather than a point of difference. The question worth asking about any Instagram tool is whether it uses the official API at all, or signs in as you and drives the app in a browser.",
+      },
       {
         question: "Is Liffio a good InstaChamp alternative?",
         answer:
@@ -331,7 +383,7 @@ export const COMPARISONS: Comparison[] = [
       {
         question: "How do I migrate from InstaChamp to Liffio?",
         answer:
-          "Document your active InstaChamp automations, connect Instagram to Liffio via Meta OAuth, recreate each automation, and run both in parallel briefly before revoking InstaChamp's access in Instagram settings. Typical migration takes one to two hours.",
+          "Document your active InstaChamp automations, connect Instagram to Liffio via Instagram Login, recreate each automation, and run both in parallel briefly before revoking InstaChamp's access in Instagram settings. Typical migration takes one to two hours.",
       },
     ],
   },

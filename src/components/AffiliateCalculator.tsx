@@ -9,6 +9,7 @@ import {
   type PricingPlan,
 } from "@/config/pricing.config";
 import {
+  COMMISSION_MONTHS_COUNT,
   COMMISSION_RATE,
   NET_REVENUE_BASIS_NOTE,
   PROJECTION_DISCLAIMER,
@@ -16,14 +17,21 @@ import {
 } from "@/config/affiliate.config";
 
 /**
- * What one referred workspace is worth, for as long as it stays subscribed.
+ * What one referred workspace is worth over the commission term.
  *
  * 🔴 The arithmetic is the policy's, not a marketing shape. Section 2.1 pays
- * 50% of Net Revenue on EVERY payment a referred workspace makes, for the life
- * of an unbroken subscription. The previous version of this component paid 25%
- * in month one and 10% in months two and three and then stopped, which appears
- * nowhere in the policy and understated a Business referral's second year by
- * its entire value.
+ * 50% of Net Revenue on every payment a referred workspace makes inside a
+ * COMMISSION_MONTHS_COUNT-month term measured from its first payment. An
+ * earlier version paid 25% in month one and 10% in months two and three, a
+ * taper the policy never granted; the version after that ran the 50% on to
+ * twelve months and beyond, which was right while the programme was lifetime
+ * and became an overstatement on 2026-10-21 when the term was capped.
+ *
+ * 🚩 This component models a MONTHLY subscription, which is what the plan
+ * selector shows (`plan.monthly`). On an annual plan the term contains ONE
+ * payment, so the affiliate earns 50% of the annual amount once and nothing
+ * after - do not multiply an annual price by the month count. The footnote
+ * below says so, because the selector cannot.
  *
  * 🚩 Prices are passed in, never written down here. They used to be three
  * literals with a note to "bump these by hand when the ladder moves", which had
@@ -62,15 +70,16 @@ export default function AffiliateCalculator({ plans }: { plans: PricingPlan[] })
 
   const firstPayments = referrals * perReferralFirst;
   const ongoingMonthly = referrals * perReferralOngoing;
-  // Their first payment, then eleven at the ongoing rate. Nothing here assumes
-  // a second cohort arrives, because nothing in the policy predicts one.
-  const firstYear = firstPayments + ongoingMonthly * 11;
+  // Their discounted first payment, then the rest of the term at the ongoing
+  // rate. Nothing here assumes a second cohort arrives, because nothing in the
+  // policy predicts one.
+  const termTotal = firstPayments + ongoingMonthly * (COMMISSION_MONTHS_COUNT - 1);
 
   const figures = [
     { label: "Their first payment", value: firstPayments, highlight: false },
     { label: "Every month after", value: ongoingMonthly, highlight: true },
     { label: "Per referral, per month", value: perReferralOngoing, highlight: false },
-    { label: "Across 12 months", value: firstYear, highlight: true },
+    { label: `Across ${COMMISSION_MONTHS_COUNT} months`, value: termTotal, highlight: true },
   ];
 
   return (
@@ -84,8 +93,8 @@ export default function AffiliateCalculator({ plans }: { plans: PricingPlan[] })
             Recurring commission calculator
           </h2>
           <p className="text-sm text-gray-500 mb-6">
-            50% of every payment a referred workspace makes, for as long as its subscription stays
-            active. Pick how many workspaces you refer and which plan they buy.
+            50% of every payment a referred workspace makes in the {COMMISSION_MONTHS_COUNT}{" "}
+            months after its first one. Pick how many workspaces you refer and which plan they buy.
           </p>
 
           <div className="space-y-5 mb-8">
@@ -168,8 +177,12 @@ export default function AffiliateCalculator({ plans }: { plans: PricingPlan[] })
             {selected.name} at {selected.monthly}/month, each earning{" "}
             {Math.round(COMMISSION_RATE * 100)}% of every payment. Their first payment is{" "}
             {Math.round(REFERRED_USER_FIRST_PAYMENT_DISCOUNT * 100)}% off, so your first month is
-            lower than the months after it. {NET_REVENUE_BASIS_NOTE} Commission on a workspace
-            stops if its subscription lapses past the grace period.
+            lower than the months after it. Commission runs for{" "}
+            {COMMISSION_MONTHS_COUNT} months from a workspace&apos;s first payment and then stops.
+            An annual subscription makes one payment in that term, so it earns one commission of{" "}
+            {Math.round(COMMISSION_RATE * 100)}% of the annual amount rather than{" "}
+            {COMMISSION_MONTHS_COUNT} monthly ones. {NET_REVENUE_BASIS_NOTE} Commission on a
+            workspace also stops if its subscription lapses past the grace period.
           </p>
         </div>
       </div>

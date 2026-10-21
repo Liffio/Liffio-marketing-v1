@@ -20,8 +20,8 @@ The Affiliate Program allows all registered users to earn commissions by referri
 
 Key features of the program:
 - Open to all registered users
-- 50% lifetime recurring commission on every payment from referred workspaces
-- Commission continues as long as referred user maintains continuous active subscription
+- 50% recurring commission on every payment a referred workspace makes in its first six months
+- Commission runs for six months from a workspace's first payment, while the subscription stays continuously active
 - 10% discount applied to referred user's first payment only
 - 15-day grace period for subscription renewal before affiliate commission is permanently lost
 - Workspaces purchased within the 15-day grace period remain eligible for future commission
@@ -31,11 +31,12 @@ Key features of the program:
 
 2. Commission Structure
 
-2.1 Lifetime Recurring Commission
-Affiliates earn 50% of every payment made by a referred workspace subscription for as long as the referred user maintains an unbroken, continuously active subscription. There is no expiry on commission as long as the subscription remains active and continuous.
+2.1 Recurring Commission
+Affiliates earn 50% of every payment a referred workspace makes during the six months following its first payment, while the referred user maintains an unbroken, continuously active subscription. Commission ends six months after that first payment; the referred user's subscription continues unaffected.
 
-- Commission rate: 50% of every recurring payment
-- Applies to: every billing cycle (monthly, quarterly, or yearly)
+- Commission rate: 50% of each qualifying payment
+- Commission duration: six months from the workspace's first payment
+- Qualifying payments: every payment falling inside those six months, on any billing cycle. A monthly workspace makes six, a quarterly workspace two, an annual workspace one
 - Applies per workspace independently
 - No cap on total commission earned
 - Commission stops permanently if the referred user's subscription lapses beyond the 15-day grace period described in Section 4
@@ -47,7 +48,7 @@ Users who sign up through a referral link or enter a valid referral code at sign
 Commission applies per workspace independently. If a referred user creates multiple workspaces within the 90-day attribution window, each workspace starts its own independent commission stream. Affiliates benefit from referring power users and agencies who manage multiple workspaces.
 
 2.4 Annual Plan Commission
-For yearly subscriptions, commission is calculated on the full annual payment amount as a single commission event - not split into 12 monthly commissions. Example: if a referred user buys a Business annual plan, the affiliate earns 50% of that full annual payment as one commission. The next commission for that workspace is due on the following annual renewal.
+For yearly subscriptions, commission is calculated on the full annual payment amount as a single commission event - not split into 12 monthly commissions. Example: if a referred user buys a Business annual plan, the affiliate earns 50% of that full annual payment as one commission. Because commission runs for six months from the first payment, and an annual payment is a single payment, that one commission is the whole of what the workspace earns: the following annual renewal falls outside the six-month term and earns nothing.
 
 2.5 Eligible Plans
 Commissions are earned on all paid plan subscriptions in both USD and INR billing. Free plan signups do not generate commission. Creator Program access does not generate commission as it involves no payment.
@@ -64,10 +65,10 @@ Attribution is assigned to the first affiliate link clicked or the first referra
 Attribution is tied to the referred user account, not to individual workspaces. You do not need separate referral links for each workspace the user creates.
 
 4. Recurring Commission Policy and Grace Period
-This section governs how lifetime recurring commission is maintained, lost, and how workspaces are treated during lapses.
+This section governs how recurring commission is maintained, lost, and how workspaces are treated during lapses, within the six-month term set out in Section 2.1.
 
 4.1 Continuous Subscription Requirement
-Lifetime recurring commission is earned only while the referred user maintains an unbroken, continuously active subscription on each workspace. Commission is workspace-specific - a lapse on one workspace does not affect commission on other workspaces owned by the same referred user.
+Recurring commission is earned only while the referred user maintains an unbroken, continuously active subscription on each workspace, and only on payments that fall inside the six-month term. Commission is workspace-specific - a lapse on one workspace does not affect commission on other workspaces owned by the same referred user.
 
 4.2 The 15-Day Grace Period
 When a referred user's workspace subscription expires or fails to renew, a 15-day grace period begins immediately from the expiry date.

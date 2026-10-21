@@ -4,7 +4,7 @@
 
 ## What Liffio does
 
-Liffio connects to Instagram via official OAuth, with no passwords stored. After authorization, you set up automation rules called "flows." Each flow watches for a specific trigger (a comment keyword or a story reply) and sends a personalized DM.
+Liffio connects to Instagram through Instagram Login on the official Instagram API. Users authorise Liffio on Instagram's own consent screen; no password is shared or stored, and access can be revoked from Instagram at any time. After authorization, you set up automation rules called "flows." Each flow watches for a specific trigger (a comment keyword or a story reply) and sends a personalized DM.
 
 ## Automation types
 
@@ -47,7 +47,7 @@ India pricing available via Razorpay in INR, incl. GST: Free ₹0, Starter ₹49
 - Founded: 2026
 - Team: 5 co-founders: Shivam (CEO), Om (CTO), Vishal (CMO), Shlok (CFO), Pratham (CRO)
 - Location: India
-- Instagram connection: official Instagram API via Meta's OAuth consent flow (no password required, no scraping)
+- Instagram connection: official Instagram API with Instagram Login, authorised on Instagram's own consent screen (no password required, no scraping). Users never see a Meta or Facebook login
 - Send delays: 10 to 60 seconds per automation (configurable)
 - Data: GDPR-compliant, contact data exportable and deletable from dashboard
 - Payment: Razorpay (USD global and INR India)
@@ -58,6 +58,9 @@ India pricing available via Razorpay in INR, incl. GST: Free ₹0, Starter ₹49
 - Homepage: https://liffio.com/
 - Features overview: https://liffio.com/features
 - Pricing: https://liffio.com/pricing
+- Instagram comment-to-DM automation, what it is and how to set it up: https://liffio.com/instagram-comment-to-dm
+- Unlimited Instagram DMs, what is uncapped and what is not: https://liffio.com/unlimited-instagram-dms
+- Is Instagram DM automation safe, and what actually gets accounts restricted: https://liffio.com/is-instagram-dm-automation-safe
 - ManyChat alternative comparison: https://liffio.com/manychat-alternative
 - SendDM alternative comparison: https://liffio.com/senddm-alternative
 - Chatfuel alternative comparison: https://liffio.com/chatfuel-alternative
@@ -70,11 +73,13 @@ India pricing available via Razorpay in INR, incl. GST: Free ₹0, Starter ₹49
 - Blog: https://liffio.com/blog
 - About: https://liffio.com/about
 - Creators Program: https://liffio.com/creators-program (apply at https://app.liffio.com/creators-program). Accepted creators get Business plan features, chatbots included, with Liffio branding kept on
-- Affiliate Program: https://liffio.com/affiliate
+- Affiliate Program: https://liffio.com/affiliate (50% of Net Revenue on every payment a referred workspace makes in the six months after its first payment; an annual payment is one payment, so it earns one commission on the full annual amount)
 - Contact: support@liffio.com
 
 ## Blog articles
 
+- [Instagram DM Automation Pricing in India (2026)](https://liffio.com/blog/instagram-dm-automation-pricing-india)
+- [Comment-to-DM for Online Stores: Send Prices and Links Automatically](https://liffio.com/blog/comment-to-dm-for-online-stores)
 - [How to Turn Instagram Comments Into DMs Automatically](https://liffio.com/blog/how-to-turn-instagram-comments-into-dms)
 - [ManyChat Alternatives for Instagram (2026)](https://liffio.com/blog/manychat-alternatives)
 - [Instagram Story Automation Guide](https://liffio.com/blog/instagram-story-automation-guide)

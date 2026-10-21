@@ -11,7 +11,7 @@ import type { FaqCategory } from "@/config/faq.config";
 export const metadata: Metadata = buildPageMetadata({
   title: "Alternative to SendDM for Instagram DM Automation | Liffio",
   description:
-    "Liffio vs SendDM for Instagram DM automation. Flat pricing in USD or INR, a free plan with no credit card, and unlimited automated DMs on every plan, Free included.",
+    "Liffio vs SendDM for Instagram DM automation. Flat pricing in USD or INR, a free plan with no credit card, and unlimited automated DMs on every plan.",
   pathname: "/senddm-alternative",
   ogImagePath: siteConfig.meta.ogImagePath,
   ogImageAlt: siteConfig.meta.ogImageAlt,
@@ -22,6 +22,12 @@ const faqCategories: FaqCategory[] = [
     id: "senddm-alt",
     label: "SendDM alternative FAQ",
     items: [
+        {
+          id: "is-it-safe",
+          question: "Is it safe to connect my Instagram account?",
+          answer:
+            "Liffio connects through the official Instagram API using Instagram Login: you approve the permissions on Instagram's own consent screen, no password is shared, and you can revoke access from Instagram at any time. Liffio's business is Meta-verified as a Tech Provider and its Instagram permissions passed Meta's App Review. Any tool running on the official API needs both, so treat this as the baseline to check for rather than a point of difference. The question worth asking about any Instagram tool is whether it uses the official API at all, or signs in as you and drives the app in a browser.",
+        },
       {
         id: "liffio-vs-senddm",
         question: "How does Liffio compare to SendDM?",
@@ -38,13 +44,13 @@ const faqCategories: FaqCategory[] = [
         id: "switch-from-senddm",
         question: "How long does it take to switch from SendDM to Liffio?",
         answer:
-          "Most creators switch in under two hours. The process is: document your active SendDM automations (trigger keywords, DM copy, which posts they are attached to), create a Liffio account, connect Instagram through the Meta OAuth flow, and recreate each automation in Liffio. Liffio's comment-to-DM setup takes five to ten minutes per automation. Once your automations are running in Liffio, run both tools in parallel for a short period to verify delivery before disabling SendDM and revoking its Instagram access.",
+          "Most creators switch in under two hours. The process is: document your active SendDM automations (trigger keywords, DM copy, which posts they are attached to), create a Liffio account, connect Instagram through Instagram Login, and recreate each automation in Liffio. Liffio's comment-to-DM setup takes five to ten minutes per automation. Once your automations are running in Liffio, run both tools in parallel for a short period to verify delivery before disabling SendDM and revoking its Instagram access.",
       },
       {
         id: "senddm-instagram-api",
         question: "Does Liffio use official Instagram APIs like SendDM?",
         answer:
-          "Yes. Liffio connects to Instagram through Meta's official OAuth flow and sends messages through Instagram's official API. Your Instagram password is never entered into Liffio at any point: you approve the permissions on Meta's consent screen when you connect, and you can revoke access anytime from your Instagram settings. Liffio also spaces automated sends with a configurable 10 to 60 second delay, which keeps the reply pacing natural for the person receiving it.",
+          "Yes. Liffio connects to Instagram through Instagram's official login flow and sends messages through Instagram's official API. Your Instagram password is never entered into Liffio at any point: you approve the permissions on Instagram's consent screen when you connect, and you can revoke access anytime from your Instagram settings. Liffio also spaces automated sends with a configurable 10 to 60 second delay, which keeps the reply pacing natural for the person receiving it.",
       },
       {
         id: "senddm-agency",
@@ -324,7 +330,7 @@ export default function SendDMAlternativePage() {
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
                 Yes. Liffio connects through Meta&apos;s official OAuth flow, the same mechanism
-                used by every compliant Instagram tool. You see a standard Meta login screen,
+                used by every compliant Instagram tool. You see Instagram's own login screen,
                 approve the permissions, and Meta issues an access token directly to Liffio.
                 Your Instagram password is never shared with Liffio at any point.
               </p>
@@ -363,7 +369,7 @@ export default function SendDMAlternativePage() {
                 {
                   step: "2",
                   title: "Create a Liffio account and connect Instagram",
-                  body: "Sign up at app.liffio.com. No credit card is required on the free plan. Connect your Instagram account through the Meta OAuth flow. The connection takes about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace, and the Agency plan bundles 20 workspaces into a single subscription.",
+                  body: "Sign up at app.liffio.com. No credit card is required on the free plan. Connect your Instagram account through Instagram Login. The connection takes about two minutes. If you manage multiple Instagram accounts, note that each one runs in its own workspace, and the Agency plan bundles 20 workspaces into a single subscription.",
                 },
                 {
                   step: "3",

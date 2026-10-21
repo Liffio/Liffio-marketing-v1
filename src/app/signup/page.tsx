@@ -31,7 +31,7 @@ const FEATURES = [
   {
     title: "Comment → DM Automation",
     description:
-      "Someone comments a keyword on your post → Liffio sends them a personalised DM on your schedule. Set a custom delay from 10 to 60 seconds so replies arrive at a natural pace, around the clock.",
+      "Someone comments a keyword on your post, Liffio sends them a personalised DM. Set a 10 to 60 second delay so replies land at a natural pace.",
     tag: "Core engine",
   },
   {

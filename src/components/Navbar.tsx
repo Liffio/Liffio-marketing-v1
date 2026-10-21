@@ -26,6 +26,10 @@ const navLinks: { href: string; label: string; navKey?: "features" | "pricing" }
   { href: "/", label: "Home" },
   { href: "/features", label: "Features", navKey: "features" },
   { href: "/pricing", label: "Pricing", navKey: "pricing" },
+  // /compare and the five /vs/* pages were reachable only from the footer, which
+  // is why they sit at position 19-45 while pulling impressions. One nav entry
+  // makes the whole comparison cluster a first-class part of the site.
+  { href: "/compare", label: "Compare" },
   { href: "/creators-program", label: "Creators" },
   { href: "/help", label: "Support" },
 ];

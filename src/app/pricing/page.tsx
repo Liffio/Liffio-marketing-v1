@@ -187,6 +187,31 @@ export default async function PricingPage() {
             <PositioningStrip plans={plans} />
           </Section>
 
+          {/*
+            /pricing had ZERO outbound internal body links. Google infers which
+            pages matter from how a site links to them, so the comparison cluster
+            looked like an afterthought while pulling impressions at position
+            19-45. These three point the money page at the pages that answer the
+            question a pricing visitor is actually asking.
+          */}
+          <Section>
+            <p className="mx-auto max-w-2xl text-center text-sm leading-relaxed text-gray-600">
+              Comparing tools? See how flat plans work out against{" "}
+              <a href="/manychat-alternative" className="font-semibold text-[#f5184c] hover:underline">
+                ManyChat&apos;s per-contact pricing
+              </a>
+              , read the{" "}
+              <a href="/compare" className="font-semibold text-[#f5184c] hover:underline">
+                side-by-side comparisons
+              </a>{" "}
+              of every tool we are measured against, or check{" "}
+              <a href="/features" className="font-semibold text-[#f5184c] hover:underline">
+                what each plan actually includes
+              </a>
+              .
+            </p>
+          </Section>
+
           <Section>
             <SiteFaqSection
               categories={faqCategories}
