@@ -55,18 +55,6 @@
   overflow: hidden;
 }
 
-@media (max-width: 900px) {
-  .a2-shell {
-    grid-template-columns: 1fr;
-  }
-  .a2-story {
-    display: none;
-  }
-  .a2-side {
-    padding: 20px 18px;
-  }
-}
-
 /* ── Form side ─────────────────────────────────────────────────────────── */
 
 .a2-side {
@@ -961,6 +949,27 @@
 .a2-facts strong {
   color: #fff;
   font-weight: 600;
+}
+
+/*
+  Responsive override, placed last in the file on purpose: `.a2-story` and
+  `.a2-shell` both get unconditional declarations further up (the story
+  side's `display: flex`, the shell's two-column grid), and at equal CSS
+  specificity the LATER rule in source order wins regardless of whether it
+  sits inside a media query. Putting this block early (as it originally was)
+  meant the "hide on mobile" rule got silently overridden by the later
+  unconditional one, so the story panel never actually hid below 900px.
+*/
+@media (max-width: 900px) {
+  .a2-shell {
+    grid-template-columns: 1fr;
+  }
+  .a2-story {
+    display: none;
+  }
+  .a2-side {
+    padding: 20px 18px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
