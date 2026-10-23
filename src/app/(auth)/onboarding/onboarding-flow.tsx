@@ -812,7 +812,6 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
     setPicked(next ?? 'skip');
     setRole(next);
     save({ role: next });
-    trackSignupStep('workspace_created');
     advance(2);
   };
 

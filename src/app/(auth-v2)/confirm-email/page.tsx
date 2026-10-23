@@ -5,7 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { authStore } from '@/lib/auth/store';
 import { verifyEmailCode, resendEmailVerification, getAuthMe, appHandoffUrl } from '@/lib/auth/api';
-import { AuthCard, Button, ErrorMsg, MailIcon, OtpInput, type OtpState } from '@/lib/auth/ui';
+import { MailIcon, OtpInput, type OtpState } from '@/lib/auth/ui';
+import { useHydrated } from '@/lib/auth/use-hydrated';
+import { AuthShell } from '@/components/auth-v2/AuthShell';
 
 // PRO is retired: non-public in `packages`, hidden in `plan_catalog`, and not
 // sold by any path, so it can never legitimately be a pending plan.
@@ -18,16 +20,30 @@ const PAID_PLANS = ['BUSINESS', 'AGENCY'];
 
 function SuccessScreen() {
   return (
-    <div className="animate-otp-success-pop text-center py-2">
-      <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-success/10">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-success">
+    <div className="animate-otp-success-pop" style={{ textAlign: 'center', padding: '8px 0' }}>
+      <div
+        style={{
+          margin: '0 auto 20px',
+          width: 64,
+          height: 64,
+          borderRadius: 16,
+          background: 'hsl(var(--success) / 0.1)',
+          display: 'grid',
+          placeItems: 'center',
+        }}
+      >
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--success))" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <polyline points="20 6 9 17 4 12" />
         </svg>
       </div>
-      <h2 className="text-xl font-semibold text-foreground mb-1.5">Email verified!</h2>
-      <p className="text-sm text-muted-foreground mb-6">Your account is ready. Taking you in…</p>
-      <div className="h-1 w-32 mx-auto rounded-full bg-muted overflow-hidden">
-        <div className="h-full bg-success rounded-full animate-otp-progress" />
+      <h2 className="a2-h1" style={{ fontSize: 22 }}>
+        Email verified!
+      </h2>
+      <p className="a2-sub" style={{ margin: '6px 0 22px', maxWidth: 'none' }}>
+        Your account is ready. Taking you in…
+      </p>
+      <div style={{ width: 128, height: 4, borderRadius: 4, background: 'var(--a2-sand)', margin: '0 auto', overflow: 'hidden' }}>
+        <div className="animate-otp-progress" style={{ display: 'block', height: '100%', background: 'hsl(var(--success))' }} />
       </div>
     </div>
   );
@@ -45,10 +61,8 @@ function ConfirmEmailPageInner() {
   const [deliveryError, setDeliveryError] = useState('');
   const [phase, setPhase] = useState<'input' | 'success'>('input');
   const initialSendDone = useRef(false);
-  const userTriggeredResend = useRef(false);
 
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const mounted = useHydrated();
   const [accountChecked, setAccountChecked] = useState(false);
 
   // Accept token passed from app.liffio.com guard or auth-navigation
@@ -125,8 +139,11 @@ function ConfirmEmailPageInner() {
   async function sendCode(userTriggered = false) {
     setDeliveryError('');
     try {
-      const data = await resendEmailVerification() as { emailVerified?: boolean; retryAfterSec?: number };
-      if (data.emailVerified) { handleVerified(); return; }
+      const data = (await resendEmailVerification()) as { emailVerified?: boolean; retryAfterSec?: number };
+      if (data.emailVerified) {
+        handleVerified();
+        return;
+      }
       setResendIn(60);
     } catch (err) {
       const msg = (err as Error).message;
@@ -171,59 +188,79 @@ function ConfirmEmailPageInner() {
 
   const user = authStore.getState().user;
 
+  const topRight = (
+    <>
+      Have an account?{' '}
+      <Link href="/login" className="a2-swap">
+        Sign in
+      </Link>
+    </>
+  );
+
+  const glow = phase === 'success' ? undefined : otpState === 'error' ? 'err' : otpState === 'success' ? 'ok' : undefined;
+
   return (
-    <div className="w-full max-w-md">
-      <AuthCard otpState={otpState}>
-        {phase === 'success' ? (
-          <SuccessScreen />
-        ) : (
-          <>
-            <header className="mb-6 border-b border-border pb-5">
-              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary/10">
-                <MailIcon />
-              </div>
-              <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">Verify your email</h1>
-              <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                We sent a 6-digit code to{' '}
-                <span className="rr-mask font-semibold text-foreground">{user?.email ?? 'your inbox'}</span>
-              </p>
-            </header>
+    <AuthShell topRight={topRight} storyHeadline="Someone comments. They get your link in their DMs." glow={glow}>
+      {phase === 'success' ? (
+        <SuccessScreen />
+      ) : (
+        <section aria-labelledby="h-confirm-email">
+          <div className="a2-mailic">
+            <MailIcon />
+          </div>
+          <h1 id="h-confirm-email" className="a2-h1">
+            Verify your email
+          </h1>
+          <p className="a2-sub">
+            We sent a 6-digit code to <strong className="rr-mask" style={{ color: 'var(--a2-ink)' }}>{user?.email ?? 'your inbox'}</strong>
+          </p>
 
-            <div className="mb-5">
-              <OtpInput value={otp} onChange={setOtp} state={otpState} />
+          <div className="a2-prog" aria-hidden="true">
+            <span className="a2-done" />
+            <span className="a2-done" />
+            <span className="a2-now" />
+          </div>
+          <div className="a2-progtxt">Step 3 of 3, verify email</div>
+
+          <div style={{ marginTop: 22 }}>
+            <OtpInput value={otp} onChange={setOtp} state={otpState} />
+          </div>
+
+          {otpState === 'loading' && <p className="a2-note">Verifying…</p>}
+
+          {error && (
+            <div className="a2-msg" role="alert">
+              {error}
             </div>
+          )}
 
-            {otpState === 'loading' && (
-              <p className="mb-4 text-center text-xs text-muted-foreground">Verifying…</p>
-            )}
-
-            <ErrorMsg message={error} />
-
-            {deliveryError && (
-              <div className="mb-4 rounded-xl border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-xs text-destructive">
-                {deliveryError}
-              </div>
-            )}
-
-            <div className="space-y-3">
-              <Button
-                variant="outline"
-                className="w-full"
-                disabled={resendIn > 0 || otpState === 'loading'}
-                loading={false}
-                onClick={() => { setOtp(''); setOtpState('idle'); sendCode(true); }}
-              >
-                {resendIn > 0 ? `Resend in ${resendIn}s` : 'Resend code'}
-              </Button>
-              <p className="text-center text-xs text-muted-foreground">
-                Wrong address?{' '}
-                <Link href="/register" className="font-semibold gradient-text hover:opacity-90">Sign up again</Link>
-              </p>
+          {deliveryError && (
+            <div className="a2-alert" role="alert">
+              {deliveryError}
             </div>
-          </>
-        )}
-      </AuthCard>
-    </div>
+          )}
+
+          <button
+            className="a2-outline"
+            type="button"
+            disabled={resendIn > 0 || otpState === 'loading'}
+            onClick={() => {
+              setOtp('');
+              setOtpState('idle');
+              sendCode(true);
+            }}
+          >
+            {resendIn > 0 ? `Resend in ${resendIn}s` : 'Resend code'}
+          </button>
+          <p className="a2-note">
+            Wrong address?{' '}
+            <Link href="/register" style={{ color: 'var(--a2-ink)', fontWeight: 600 }}>
+              Change it
+            </Link>
+          </p>
+        </section>
+      )}
+    </AuthShell>
   );
 }
 

@@ -19,12 +19,12 @@ export default function HelpContactForm() {
       message: (form.elements.namedItem("help-message") as HTMLTextAreaElement).value,
     };
     try {
-      const res = await fetch("/api/register", {
+      const res = await fetch("/api/help-contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, source: "help-contact" }),
+        body: JSON.stringify(data),
       });
-      if (res.ok || res.status === 409) {
+      if (res.ok) {
         setEmail(data.email);
         setState("success");
       } else {

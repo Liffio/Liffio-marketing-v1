@@ -178,15 +178,6 @@ export const pageSeo = {
       "Free plan with 2 live chatbots, no credit card. From $9/mo, or ₹499/mo in India, GST included. Unlimited DMs and chatbots on every plan.",
     pathname: "/pricing",
   }),
-  signup: {
-    ...buildPageMetadata({
-      title: "Start Free - Instagram Auto DM & Comment Automation",
-      description:
-        "Create your free Liffio account in minutes. Set up auto DMs, auto comment replies, keyword triggers and 2 live chatbots without a credit card.",
-      pathname: "/signup",
-    }),
-    robots: { index: false, follow: true },
-  },
   blog: buildPageMetadata({
     // 630px -> 537px. "and Tutorials" dropped; "Guides" already covers it and
     // the description spells out the tutorial topics.

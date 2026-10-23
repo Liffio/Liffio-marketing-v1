@@ -35,7 +35,7 @@ export function signupEmailError(email: string): string | null {
     return 'Email addresses with a "+" are not allowed. Please use your main address.';
   }
   if (GMAIL_DOMAINS.has(parts.domain) && parts.local.includes('.')) {
-    return 'Please enter your Gmail address without dots, for example johnsmith@gmail.com.';
+    return "Gmail ignores dots, so john.smith@gmail.com and johnsmith@gmail.com are the same inbox. Please type it without the dots.";
   }
   return null;
 }
