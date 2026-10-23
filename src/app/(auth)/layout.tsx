@@ -1,27 +1,24 @@
 import type { ReactNode } from 'react';
-import type { Metadata } from 'next';
 import Logo from '@/components/Logo';
+import { authPageMetadata } from '@/lib/auth/metadata';
 
-// `robots` used to be the only field set here. None of the five routes in this
-// group (login, register, onboarding, forgot-password, confirm-email) exports
-// metadata of its own (all five are client components), so Next.js's shallow
-// per-field merge handed every unset field down from the ROOT layout, which
-// spreads `rootSeo` (src/config/seo.config.ts). Five noindexed auth screens
-// therefore served the homepage's title, description, `alternates.canonical`
-// (resolving to "/"), openGraph block (homepage title/description, url =
-// SITE_URL, homepage OG card) and twitter card.
+// `robots` used to be the only field set here. None of the routes in this
+// group (onboarding, forgot-password, complete-signup) exports metadata of
+// its own (all are client components), so Next.js's shallow per-field merge
+// hands every unset field down from the ROOT layout, which spreads `rootSeo`
+// (src/config/seo.config.ts). Noindexed auth screens therefore served the
+// homepage's title, description, `alternates.canonical` (resolving to "/"),
+// openGraph block (homepage title/description, url = SITE_URL, homepage OG
+// card) and twitter card.
 //
-// The title and description below replace the two of those five that describe
+// `authPageMetadata` (shared with the (auth-v2) layout, which covers
+// register, login and confirm-email) replaces the two fields that describe
 // the page itself; one pair covers the whole group. Canonical and the
-// openGraph/twitter block are still inherited from root and still describe the
-// homepage, deliberately left alone here, since `robots: 'noindex'` already
-// keeps these URLs out of the index and changing them is a separate call.
-export const metadata: Metadata = {
-  title: 'Account | Liffio',
-  description:
-    'Sign in to Liffio or create an account to set up Instagram DM automations.',
-  robots: 'noindex',
-};
+// openGraph/twitter block are still inherited from root and still describe
+// the homepage, deliberately left alone here, since `robots: 'noindex'`
+// already keeps these URLs out of the index and changing them is a separate
+// call.
+export const metadata = authPageMetadata;
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
