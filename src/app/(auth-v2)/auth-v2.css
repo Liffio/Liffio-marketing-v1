@@ -513,8 +513,8 @@
   transition: 0.15s;
 }
 .a2-agree input:checked + .a2-cb {
-  background: var(--a2-ink);
-  border-color: var(--a2-ink);
+  background: var(--a2-coral);
+  border-color: var(--a2-coral);
 }
 .a2-agree input:checked + .a2-cb svg {
   opacity: 1;
@@ -535,29 +535,21 @@
   height: 50px;
   border: 0;
   border-radius: 14px;
-  background: var(--a2-ink);
+  background: var(--a2-grad);
   color: #fff;
   font-weight: 600;
   font-size: 15px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.15s;
+  transition: transform 0.15s, opacity 0.15s;
   cursor: pointer;
 }
 .a2-go:disabled {
   cursor: default;
   opacity: 0.6;
 }
-.a2-go::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--a2-grad);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.a2-go:not(:disabled):hover::before {
-  opacity: 1;
+.a2-go:not(:disabled):hover {
+  opacity: 0.92;
 }
 .a2-go span {
   position: relative;
