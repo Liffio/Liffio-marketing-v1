@@ -179,9 +179,6 @@ export function AuthStoryPanel({ headline }: { headline: string }) {
           <strong>Razorpay</strong> billing
         </span>
         <span>
-          <strong>GST</strong> invoices in India
-        </span>
-        <span>
           <strong>Cancel</strong> any time
         </span>
       </div>
