@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
         destination: "https://liffio.com/:path*",
         permanent: true,
       },
+      // /signup was the pre-launch waitlist page. Permanent redirect to
+      // /register, with the query string (ref, plan) carried over.
+      {
+        source: "/signup",
+        destination: "/register",
+        permanent: true,
+      },
     ];
   },
   env: {
