@@ -6,6 +6,7 @@ import {
   getPreRegistrationAlertSubject,
   getPreRegistrationAlertText,
 } from './templates/internal-notifications'
+import { getHelpContactHtml, getHelpContactSubject, getHelpContactText } from './templates/help-contact'
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -97,6 +98,36 @@ export async function sendPreRegistrationAlert(params: SendPreRegistrationAlertP
     return { success: true }
   } catch (error) {
     console.error('Failed to send preregistration alert:', error)
+    return { success: false, error }
+  }
+}
+
+interface SendHelpContactMessageParams {
+  name: string
+  email: string
+  subject: string
+  message: string
+}
+
+export async function sendHelpContactMessage(params: SendHelpContactMessageParams) {
+  const { brand } = siteConfig
+  const fromAddr = getSmtpFromAddress()
+  const toAddr = getAdminNotificationRecipients()
+
+  if (!fromAddr) return { success: false }
+
+  try {
+    await transporter.sendMail({
+      from: `"${brand.name} Help Center" <${fromAddr}>`,
+      to: toAddr,
+      replyTo: params.email,
+      subject: getHelpContactSubject(params),
+      text: getHelpContactText(params),
+      html: getHelpContactHtml(params),
+    })
+    return { success: true }
+  } catch (error) {
+    console.error('Failed to send help contact message:', error)
     return { success: false, error }
   }
 }
