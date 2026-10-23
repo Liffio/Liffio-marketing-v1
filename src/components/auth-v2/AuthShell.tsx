@@ -27,7 +27,7 @@ export function AuthShell({
           <div className="a2-top">
             <Link href="/" className="a2-brand" aria-label="Liffio home">
               {/* eslint-disable-next-line @next/next/no-img-element -- fixed local asset, no next/image intrinsic size needed */}
-              <img src="/logo/colored.png" alt="Liffio" style={{ height: 28, width: 'auto', display: 'block' }} />
+              <img src="/logo/favicon-red.png" alt="Liffio" style={{ height: 28, width: 'auto', display: 'block' }} />
             </Link>
             <div>{topRight}</div>
           </div>
