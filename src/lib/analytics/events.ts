@@ -56,13 +56,14 @@ export type CtaButton = (typeof CTA_BUTTONS)[number];
 export const NAV_ITEMS = ["features", "pricing"] as const;
 export type NavItem = (typeof NAV_ITEMS)[number];
 
-export const FORMS = ["signup"] as const;
+export const FORMS = ["register"] as const;
 export type FormName = (typeof FORMS)[number];
 
 export const SIGNUP_STEPS = [
   "landing",
   "cta_clicked",
   "signup_started",
+  "details_started",
   "account_created",
   "workspace_created",
   "instagram_connected",
