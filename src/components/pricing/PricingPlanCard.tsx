@@ -2,13 +2,13 @@ import type { ReactNode } from "react";
 import { PlanPriceBlock } from "@/components/pricing/PlanPriceBlock";
 import type { PricingPlan } from "@/config/pricing.config";
 
-function CheckIcon({ highlight }: { highlight?: boolean }) {
+function CheckIcon() {
   return (
     <svg viewBox="0 0 16 16" className="mt-0.5 h-4 w-4 shrink-0" fill="none" aria-hidden>
-      <circle cx="8" cy="8" r="8" fill={highlight ? "rgba(255,255,255,0.2)" : "rgba(245, 24, 76,0.1)"} />
+      <circle cx="8" cy="8" r="8" fill="rgba(245, 24, 76,0.1)" />
       <path
         d="M4.5 8.5l2 2 4.5-5"
-        stroke={highlight ? "white" : "#f5184c"}
+        stroke="#f5184c"
         strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -36,53 +36,60 @@ type PricingPlanCardProps = {
 export function PricingPlanCard({ plan, annual, compact = false, className = "" }: PricingPlanCardProps) {
   return (
     <div
-      className={`relative flex h-full flex-col rounded-2xl p-5 sm:rounded-3xl sm:p-7 ${compact ? "md:p-7" : "md:p-8"} ${className}`}
+      className={`relative flex h-full flex-col rounded-2xl bg-white p-6 sm:p-7 ${compact ? "md:p-7" : "md:p-8"} ${className}`}
       style={
+        /*
+          V4 marks the featured tier with a coral ring and a gradient top edge,
+          on the SAME white card as every other tier — not a filled dark card.
+          The ladder reads as five comparable steps with one emphasised, rather
+          than one object of a different kind. It also removes every
+          light-on-dark branch this component used to carry.
+        */
         plan.highlight
           ? {
-              background: "linear-gradient(155deg,#ff7c49,#f5184c,#b20d8f)",
-              boxShadow: "0 28px 64px rgba(178, 13, 143,0.38), 0 0 0 1px rgba(245, 24, 76,0.4)",
+              boxShadow: "0 0 0 2px #F5184C, 0 18px 40px -22px rgba(245,24,76,0.5)",
             }
           : {
-              background: "white",
-              border: "1px solid rgba(20, 20, 30,0.08)",
-              boxShadow: "0 2px 20px rgba(0, 0, 0, 0.05)",
+              border: "1px solid #EAE4DC",
+              boxShadow: "none",
             }
       }
     >
+      {plan.highlight ? (
+        <span
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-1 rounded-t-2xl"
+          style={{ background: "linear-gradient(100deg,#FF7C49 0%,#F5184C 52%,#B20D8F 100%)" }}
+        />
+      ) : null}
       {plan.badge ? (
         <span
-          className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1.5 text-[11px] font-bold text-white shadow-lg"
-          style={{ background: "linear-gradient(135deg,#f59e0b,#f97316)" }}
+          className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md px-2.5 py-1 text-[9.5px] font-bold uppercase tracking-[0.09em] text-white shadow-sm"
+          style={{ background: "linear-gradient(100deg,#FF7C49 0%,#F5184C 52%,#B20D8F 100%)", fontFamily: "var(--font-mono, ui-monospace, monospace)" }}
         >
           {plan.badge}
         </span>
       ) : null}
 
       <div className="mb-6">
-        <h3 className={`mb-0.5 text-lg font-bold ${plan.highlight ? "text-white" : "text-[#0a0a0a]"}`}>
+        <h3
+          className="mb-1 text-[19px] font-bold tracking-[-0.02em] text-[#17131A]"
+          style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+        >
           {plan.name}
         </h3>
-        <p className={`mb-6 min-h-[2.5rem] text-sm ${plan.highlight ? "text-white/65" : "text-gray-400"}`}>
+        <p className="mb-4 min-h-[3.25rem] text-[12.5px] leading-[1.42] text-[#8B8391]">
           {plan.description}
         </p>
-        <PlanPriceBlock plan={plan} annual={annual} highlight={plan.highlight} compact={compact} />
+        <PlanPriceBlock plan={plan} annual={annual} compact={compact} />
       </div>
 
       <ul className="mb-8 flex-1 space-y-2.5">
         {plan.features.map((feat) => (
           <li key={feat.text} className="flex items-start gap-2.5">
-            {feat.included ? <CheckIcon highlight={plan.highlight} /> : <XIcon />}
+            {feat.included ? <CheckIcon /> : <XIcon />}
             <span
-              className={`text-sm leading-snug ${
-                plan.highlight
-                  ? feat.included
-                    ? "text-white/85"
-                    : "text-white/30"
-                  : feat.included
-                    ? "text-gray-700"
-                    : "text-gray-300"
-              }`}
+              className={`text-[13px] leading-snug ${feat.included ? "text-[#4A4350]" : "text-[#B9B2C0]"}`}
             >
               {feat.text}
             </span>
@@ -101,11 +108,7 @@ export function PricingPlanCard({ plan, annual, compact = false, className = "" 
         <span
           id={`pricing-${plan.name.toLowerCase()}`}
           aria-disabled="true"
-          className={`block w-full cursor-default rounded-xl border border-dashed py-3.5 text-center text-sm font-semibold ${
-            // Growth carries the emphasis now, so the inert CTA has to stay
-            // legible on the highlighted (dark) card as well as the plain one.
-            plan.highlight ? "border-white/40 text-white/70" : "border-gray-300 text-gray-400"
-          }`}
+          className="block w-full cursor-default rounded-xl border border-dashed border-[#D9D2CA] py-3.5 text-center text-sm font-semibold text-[#8B8391]"
         >
           {plan.cta}
         </span>
@@ -119,9 +122,9 @@ export function PricingPlanCard({ plan, annual, compact = false, className = "" 
           style={
             plan.highlight
               ? {
-                  background: "white",
-                  color: "#b20d8f",
-                  boxShadow: "0 4px 16px rgba(0,0,0,0.14)",
+                  background: "linear-gradient(100deg,#FF7C49 0%,#F5184C 52%,#B20D8F 100%)",
+                  color: "white",
+                  boxShadow: "0 8px 20px -10px rgba(245,24,76,0.6)",
                 }
               : {
                   background: "rgba(245, 24, 76,0.08)",
