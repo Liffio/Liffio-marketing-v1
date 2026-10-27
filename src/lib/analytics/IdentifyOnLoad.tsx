@@ -3,15 +3,17 @@
 import { useEffect, useRef } from "react";
 import { authStore } from "@/lib/auth/store";
 import { getAuthMe } from "@/lib/auth/api";
-import { identifyUser } from "./analytics";
 
 /**
  * Mounted once in the root layout. authStore only persists the access token
  * across page loads (not the user object), so a returning visitor with a
- * valid session still needs one getAuthMe() call before we know who they
- * are. Without this, only the exact moment of submitting the login form
- * gets identified: a bookmarked/reopened tab with a still-valid token
- * would stay anonymous even though it's the same known user.
+ * valid session still needs one getAuthMe() call before the page knows who
+ * they are (the Navbar reads `session.user`).
+ *
+ * 🔴 It no longer tells analytics who they are. It used to pass the user id to
+ * `umami.identify`, which stored raw user UUIDs in Umami. That call is gone
+ * for good (see `analytics.ts`); the name is kept only to avoid churn in the
+ * layout, and this restores the session's user and nothing else.
  */
 export function IdentifyOnLoad() {
   const checked = useRef(false);
@@ -26,10 +28,9 @@ export function IdentifyOnLoad() {
     getAuthMe({ token: accessToken })
       .then((authMe) => {
         authStore.setAuthMe(authMe);
-        identifyUser(authMe.user.id);
       })
       .catch(() => {
-        // Expired/invalid token, non-fatal, just skip identification.
+        // Expired/invalid token, non-fatal: the visitor is simply logged out.
       });
   }, []);
 

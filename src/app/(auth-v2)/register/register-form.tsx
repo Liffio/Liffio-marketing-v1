@@ -23,7 +23,6 @@ import {
   trackFormSubmit,
   trackFormAbandon,
   trackSignupStep,
-  identifyUser,
 } from '@/lib/analytics/analytics';
 import type { PricingRegion } from '@/lib/pricing-region';
 import { getPricingPlans } from '@/config/pricing.config';
@@ -245,7 +244,6 @@ export default function RegisterForm({
       // The workspace is created together with the account, right here, not
       // at any point in onboarding. See CHECKLIST.md C5.
       trackSignupStep('workspace_created');
-      identifyUser(authMe.user.id);
       router.replace(`/confirm-email${redirectPath ? `?redirect=${encodeURIComponent(redirectPath)}` : ''}`);
     } catch (err) {
       trackFormError('register');
