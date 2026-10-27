@@ -7,8 +7,11 @@ import { CookieConsent } from "@/components/consent/CookieConsent";
 import { DelegatedClicks } from "@/lib/analytics/DelegatedClicks";
 import { ScrollDepthTracker } from "@/lib/analytics/ScrollDepthTracker";
 import { IdentifyOnLoad } from "@/lib/analytics/IdentifyOnLoad";
+import { UMAMI_BEFORE_SEND, umamiPrivacyScript } from "@/lib/analytics/umamiPrivacy";
 import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
+
+const UMAMI_WEBSITE_ID = "a165b0eb-ac11-422f-85cf-68b32d97ae95";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -69,15 +72,16 @@ export default function RootLayout({
         {/* Plain <script> (not next/script): Umami reads document.currentScript for
             its config, which is null when Next.js's Script component injects the tag
             dynamically after hydration. A parser-inserted tag preserves currentScript. */}
+        {/* Before script.js: defines the payload scrubber and loads recorder.js only off /auth and
+            /oauth, so a login token in the URL never reaches Umami. The recorder is appended by
+            this inline script while the page is still parsing, not by Next.js after hydration, and
+            currentScript is set for it (checked in headless Chrome). See `lib/analytics/umamiPrivacy.ts`. */}
+        <script dangerouslySetInnerHTML={{ __html: umamiPrivacyScript(UMAMI_WEBSITE_ID) }} />
         <script
           defer
           src="https://umami-analytics-rkhr.srv1772252.hstgr.cloud/script.js"
-          data-website-id="a165b0eb-ac11-422f-85cf-68b32d97ae95"
-        />
-        <script
-          defer
-          src="https://umami-analytics-rkhr.srv1772252.hstgr.cloud/recorder.js"
-          data-website-id="a165b0eb-ac11-422f-85cf-68b32d97ae95"
+          data-website-id={UMAMI_WEBSITE_ID}
+          data-before-send={UMAMI_BEFORE_SEND}
         />
       </body>
     </html>
