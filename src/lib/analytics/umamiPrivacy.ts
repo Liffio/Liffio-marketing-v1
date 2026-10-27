@@ -25,14 +25,29 @@ export const UMAMI_BEFORE_SEND = "liffioUmamiBeforeSend";
 
 export const umamiPrivacyScript = (websiteId: string) => `(function(){
   var SENSITIVE = /^\\/(auth|oauth)(\\/|$)/;
+  // Never in analytics, on any path: \`ref\` is an affiliate's code and \`b\` a customer's branding
+  // link code (both resolve to a person), \`fbclid\` is Facebook's per-click id. The page's own
+  // URL is untouched, so the affiliate capture still reads \`ref\` from location.
+  var DROP_PARAMS = ["ref", "fbclid", "b"];
   function scrub(value) {
     if (typeof value !== "string" || !value) return value;
     try {
       var url = new URL(value, location.origin);
-      if (!SENSITIVE.test(url.pathname)) return value;
-      url.search = "";
-      url.hash = "";
-      return /^[a-z][a-z0-9+.-]*:/i.test(value) ? url.toString() : url.pathname;
+      var changed = false;
+      if (SENSITIVE.test(url.pathname)) {
+        changed = Boolean(url.search || url.hash);
+        url.search = "";
+        url.hash = "";
+      } else {
+        for (var i = 0; i < DROP_PARAMS.length; i++) {
+          if (url.searchParams.has(DROP_PARAMS[i])) {
+            url.searchParams.delete(DROP_PARAMS[i]);
+            changed = true;
+          }
+        }
+      }
+      if (!changed) return value;
+      return /^[a-z][a-z0-9+.-]*:/i.test(value) ? url.toString() : url.pathname + url.search + url.hash;
     } catch (e) {
       return value;
     }
@@ -44,7 +59,16 @@ export const umamiPrivacyScript = (websiteId: string) => `(function(){
     }
     return payload;
   };
-  if (!SENSITIVE.test(location.pathname)) {
+  // recorder.js has no hook and records location.href itself, so it stays off for a page load
+  // carrying any of the dropped params, as it does on /auth and /oauth.
+  var carriesDropped = false;
+  try {
+    var params = new URLSearchParams(location.search);
+    for (var j = 0; j < DROP_PARAMS.length; j++) if (params.has(DROP_PARAMS[j])) carriesDropped = true;
+  } catch (e) {
+    carriesDropped = true;
+  }
+  if (!SENSITIVE.test(location.pathname) && !carriesDropped) {
     var s = document.createElement("script");
     s.defer = true;
     s.src = "${UMAMI_RECORDER_SRC}";

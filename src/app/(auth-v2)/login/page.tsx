@@ -7,7 +7,6 @@ import { authStore } from '@/lib/auth/store';
 import { login, mfaLoginEmailSend, mfaLoginVerify, getAuthMe, googleAuthUrl } from '@/lib/auth/api';
 import { nextSignupStep } from '@/lib/auth/signup-steps';
 import { EyeIcon, GoogleIcon, OtpInput, SignedInNotice, Spinner } from '@/lib/auth/ui';
-import { identifyUser } from '@/lib/analytics/analytics';
 import { useRedirectWhenSignedIn } from '@/lib/auth/app-redirect';
 import { markEmailAuthUsed, wasGoogleLastUsed } from '@/lib/auth/last-auth-method';
 import { useHydrated } from '@/lib/auth/use-hydrated';
@@ -76,7 +75,6 @@ function LoginPageInner() {
       markEmailAuthUsed();
       const authMe = await getAuthMe({ token: loginSuccess.accessToken });
       authStore.setAuthMe(authMe);
-      identifyUser(authMe.user.id);
       await navigatePostAuth();
     } catch (err) {
       setError((err as Error).message);
@@ -95,7 +93,6 @@ function LoginPageInner() {
       markEmailAuthUsed();
       const authMe = await getAuthMe({ token: result.accessToken });
       authStore.setAuthMe(authMe);
-      identifyUser(authMe.user.id);
       await navigatePostAuth();
     } catch (err) {
       setMfaError((err as Error).message);

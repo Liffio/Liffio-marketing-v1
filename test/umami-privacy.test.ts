@@ -54,3 +54,46 @@ test("the session recorder is not loaded on /auth or /oauth, and is everywhere e
   assert.match(appended[0].src, /\/recorder\.js$/);
   assert.equal(appended[0].attrs["data-website-id"], "site-1");
 });
+
+/*
+  ref, fbclid and b never reach Umami, on any path. Umami had stored real
+  affiliate codes (ref=8v94HD2b) and Facebook click ids in recorded URLs.
+*/
+test("ref, fbclid and b are stripped from url and referrer; UTMs stay", () => {
+  const { hook } = run("https://liffio.com/");
+  const out = hook("event", {
+    url: "https://liffio.com/?ref=8v94HD2b&utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0",
+    referrer: "/register?b=Ab12Cd&utm_campaign=launch",
+  });
+  assert.equal(out.url, "https://liffio.com/?utm_source=ig&utm_medium=social&utm_content=link_in_bio");
+  assert.equal(out.referrer, "/register?utm_campaign=launch");
+  const text = JSON.stringify(out);
+  for (const leaked of ["8v94HD2b", "PAZXh0bgNhZW0", "Ab12Cd"]) assert.ok(!text.includes(leaked), leaked);
+});
+
+test("a URL that is only ref= keeps its path and loses the query entirely", () => {
+  const { hook } = run("https://liffio.com/register?ref=SZZBjG9h");
+  assert.equal(hook("event", { url: "https://liffio.com/register?ref=SZZBjG9h" }).url, "https://liffio.com/register");
+});
+
+test("URLs without those params are returned exactly as given", () => {
+  const { hook } = run("https://liffio.com/pricing?utm_source=x");
+  for (const url of ["https://liffio.com/pricing?utm_source=x", "/features", "https://liffio.com/?reference=keep&bb=1"]) {
+    assert.equal(hook("event", { url }).url, url, url);
+  }
+});
+
+test("/auth and /oauth still lose the whole query string and fragment", () => {
+  const { hook } = run("https://liffio.com/auth/google/complete?token=eyJ.x&ref=abc");
+  assert.equal(
+    hook("event", { url: "https://liffio.com/auth/google/complete?token=eyJ.x&ref=abc#f" }).url,
+    "https://liffio.com/auth/google/complete",
+  );
+});
+
+test("the session recorder does not load on a landing carrying ref, fbclid or b, and does otherwise", () => {
+  for (const href of ["https://liffio.com/?ref=8v94HD2b", "https://liffio.com/?fbclid=x", "https://liffio.com/register?b=Ab12Cd"]) {
+    assert.equal(run(href).appended.length, 0, href);
+  }
+  assert.equal(run("https://liffio.com/?utm_source=ig&utm_medium=bio").appended.length, 1);
+});

@@ -8,11 +8,23 @@ import {
   type SignupStep,
 } from "./events";
 
+/*
+  🔴 No `umami.identify`, anywhere. (16-SPEC-tracking.md hard constraint)
+
+  This file used to identify every logged-in visitor by their user id, which
+  stored raw user UUIDs in Umami's session table: every sampled one joined to
+  a real user, the support account among them. An id that resolves to a
+  person is exactly what analytics must never hold. A salted hash was the
+  other option and was rejected: a stable pseudonym still links one person's
+  sessions across time and devices, which is still personal data, and nothing
+  we measure needs it now that acquisition source is stored on the user in
+  our own database. So the method is not even declared here, and any new call
+  to it will fail to type-check.
+*/
 declare global {
   interface Window {
     umami?: {
       track: (event: string, data?: Record<string, unknown>) => void;
-      identify: (uniqueIdOrData: string | Record<string, unknown>, data?: Record<string, unknown>) => void;
     };
   }
 }
@@ -28,7 +40,7 @@ const isDevSuppressed =
 // on initial mount). Without buffering, those events hit `window.umami ===
 // undefined` and are silently dropped. Queue and flush once it's ready; give
 // up after ~5s so a permanently blocked/missing script doesn't retry forever.
-type QueuedCall = { kind: "track"; event: string; data?: Record<string, unknown> } | { kind: "identify"; uniqueId: string };
+type QueuedCall = { event: string; data?: Record<string, unknown> };
 let queue: QueuedCall[] = [];
 let flushing = false;
 
@@ -42,8 +54,7 @@ function flushWhenReady(attemptsLeft = 50) {
       flushing = false;
       for (const call of pending) {
         try {
-          if (call.kind === "track") window.umami.track(call.event, call.data);
-          else window.umami.identify(call.uniqueId);
+          window.umami.track(call.event, call.data);
         } catch {
           // Analytics must never block user interaction.
         }
@@ -66,21 +77,7 @@ function safeTrack(event: string, data?: Record<string, unknown>) {
     if (window.umami?.track) {
       window.umami.track(event, data);
     } else {
-      queue.push({ kind: "track", event, data });
-      flushWhenReady();
-    }
-  } catch {
-    // Analytics must never block user interaction.
-  }
-}
-
-function safeIdentify(uniqueId: string) {
-  if (isDevSuppressed) return;
-  try {
-    if (window.umami?.identify) {
-      window.umami.identify(uniqueId);
-    } else {
-      queue.push({ kind: "identify", uniqueId });
+      queue.push({ event, data });
       flushWhenReady();
     }
   } catch {
@@ -128,7 +125,3 @@ export function trackSignupStep(step: SignupStep) {
   safeTrack(EVENTS.SIGNUP_STEP, { step });
 }
 
-/** Call once, as early as possible after account_created, to stitch pre- and post-account sessions together. */
-export function identifyUser(userId: string) {
-  safeIdentify(userId);
-}
