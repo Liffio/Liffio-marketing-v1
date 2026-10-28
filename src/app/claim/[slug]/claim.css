@@ -1,26 +1,17 @@
 /*
   liffio.com/claim/:slug, from liffio-partner-program designs/claim-page.html.
-  Every rule is scoped under .cl-root, which also carries the page's own
-  tokens (light, and dark from prefers-color-scheme), so nothing here touches
-  the rest of the site.
+  Every rule is scoped under .cl-root, so nothing here touches the rest of the
+  site. The tokens are the site's own: white hero ground, #0a0a0a ink, gray
+  neutrals and the navbar's crimson→magenta CTA gradient. Light only, like
+  every other marketing page.
 */
-.cl-root{background:var(--bg);color:var(--fg);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
-.cl-root{--sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --display:"Space Grotesk",Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;
+.cl-root{background:linear-gradient(180deg,#ffffff 0%,#fbfbfc 60%,#f8f8fa 100%);color:var(--fg);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+.cl-root{--sans:"Inter","Inter Fallback",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --display:var(--font-display);
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --bg:#FBF9F5;--fg:#160A08;--surface:#FFFFFF;--hover:#F3EEE8;--muted-fg:#625551;--faint:#8C807C;--line:#E7E1DA;
-  --primary:#F5184C;--primary-soft:#FDE7EC;--ok:#03A14A;--ok-soft:#E3F5E8;--warn:#B57A00;--warn-soft:#FFF4D6;--danger:#DF1E39;
-  --btn-p:#E3103F;--btn-p-h:#CC0C38;
-  --grad:linear-gradient(135deg,#FF7C49 0%,#F5184C 50%,#B20D8F 100%);
-  --shadow:0 24px 60px -24px rgba(178,13,60,.45);}
-@media (prefers-color-scheme: dark){
-.cl-root{--bg:#030406;--fg:#F5F3F0;--surface:#0B0D10;--hover:#15171A;--muted-fg:#9A9EA4;--faint:#6F7379;--line:#202327;
-  --primary:#FF5F67;--primary-soft:#2A1013;--ok:#28BC5E;--ok-soft:#0C2416;--warn:#FDB600;--warn-soft:#2A2005;--danger:#F53A51;
-  --shadow:0 24px 60px -24px rgba(245,24,76,.35);}
-}
-.cl-root[data-theme="dark"] .cl-root{--bg:#030406;--fg:#F5F3F0;--surface:#0B0D10;--hover:#15171A;--muted-fg:#9A9EA4;--faint:#6F7379;--line:#202327;
-  --primary:#FF5F67;--primary-soft:#2A1013;--ok:#28BC5E;--ok-soft:#0C2416;--warn:#FDB600;--warn-soft:#2A2005;--danger:#F53A51;
-  --shadow:0 24px 60px -24px rgba(245,24,76,.35);}
+  --fg:#0a0a0a;--surface:#FFFFFF;--hover:#F4F4F6;--muted-fg:#4B5563;--faint:#9CA3AF;--line:#E5E7EB;
+  --primary:#F5184C;--primary-soft:#FFF1F2;--ok:#16A34A;--ok-soft:#DCFCE7;--warn:#B45309;--warn-soft:#FEF3C7;--danger:#E00E40;
+  --grad:linear-gradient(135deg,#F5184C 0%,#B20D8F 100%);}
 .cl-root *{box-sizing:border-box;margin:0;padding:0}
 .cl-root h1,.cl-root h2,.cl-root h3{font-family:var(--display);letter-spacing:-.025em;line-height:1.12;font-weight:600}
 .cl-root button,.cl-root input{font:inherit;color:inherit}
@@ -29,8 +20,7 @@
 .cl-root svg.i{width:18px;height:18px;flex:none}
 .cl-root [hidden]{display:none!important}
 .cl-root .top{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:1080px;margin:0 auto;padding:16px 20px}
-.cl-root .brand{display:flex;align-items:center;gap:8px;font:700 18px/1 var(--display);text-decoration:none}
-.cl-root .mark{width:22px;height:22px;border-radius:7px;background:var(--grad)}
+.cl-root .brand{display:flex;align-items:center;text-decoration:none}
 .cl-root .login{font-size:14px;color:var(--muted-fg);text-decoration:none;padding:8px 0}
 .cl-root .login b{color:var(--fg);font-weight:600}
 .cl-root .wrap{max-width:1080px;margin:0 auto;padding:12px 20px calc(48px + env(safe-area-inset-bottom))}
@@ -43,8 +33,8 @@
 .cl-root .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 22px;border-radius:12px;font-weight:600;font-size:16px;white-space:nowrap;border:1px solid var(--line);background:var(--surface);color:var(--fg);box-shadow:0 1px 2px rgba(22,10,8,.06);transition:background .15s,transform .06s;text-decoration:none}
 .cl-root .btn:hover{background:var(--hover)}
 .cl-root .btn:active{transform:translateY(1px)}
-.cl-root .btn.p{background:var(--btn-p);color:#fff;border-color:transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 0 0 1px rgba(150,8,40,.55),0 8px 20px -10px rgba(227,16,63,.7)}
-.cl-root .btn.p:hover{background:var(--btn-p-h)}
+.cl-root .btn.p{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 8px 20px -10px rgba(245,24,76,.7);transition:opacity .2s,box-shadow .2s,transform .06s}
+.cl-root .btn.p:hover{background:var(--grad);opacity:.9;box-shadow:0 12px 28px -10px rgba(245,24,76,.6)}
 .cl-root .btn.block{width:100%}
 .cl-root .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
 .cl-root .btn.sm{height:44px;padding:0 16px;font-size:15px;border-radius:10px}
@@ -55,7 +45,6 @@
 .cl-root .ocard{border:1px solid var(--line);border-radius:18px;background:var(--surface);overflow:hidden}
 .cl-root .oc-h{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px 0}
 .cl-root .cobrand{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted-fg);font-weight:500}
-.cl-root .cobrand .mark{width:20px;height:20px;border-radius:6px}
 .cl-root .cobrand .plogo{width:20px;height:20px;font-size:9px}
 .cl-root .cobrand .x{color:var(--faint)}
 .cl-root .tag{font-size:11.5px;font-weight:600;color:var(--primary);background:var(--primary-soft);padding:4px 9px;border-radius:999px;white-space:nowrap}

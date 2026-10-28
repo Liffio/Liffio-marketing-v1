@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { API_BASE, APP_BASE } from '@/lib/auth/api';
 import { useSession } from '@/lib/auth/session';
+import { LiffioLogoMark } from '@/components/Logo';
 import { v4FeatureList } from '@/config/pricing-v4.config';
 import {
   checkClaim,
@@ -71,8 +72,8 @@ function OfferCard({ p }: { p: PublicPartner }) {
     <div className="ocard">
       <div className="oc-h">
         <span className="cobrand">
-          <span className="mark" />
-          Liffio <span className="x">×</span> <PartnerMark p={p} /> {p.name}
+          <LiffioLogoMark size="xs" />
+          <span className="x">×</span> <PartnerMark p={p} /> {p.name}
         </span>
         <span className="tag">Partner perk</span>
       </div>
@@ -216,15 +217,15 @@ export default function ClaimPage({ slug }: { slug: string }) {
       Start on Liffio Free
     </Link>
   );
+  // The site's own login; its `?redirect=` sends the user on to that app path once signed in.
   const loginHref = (h?: string | null) =>
-    `${APP_BASE}/login${h ? `?redirect=${encodeURIComponent(partnerClaimPath(h))}` : ''}`;
+    `/login${h ? `?redirect=${encodeURIComponent(partnerClaimPath(h))}` : ''}`;
 
   return (
     <div className="cl-root">
       <header className="top">
         <Link className="brand" href="/" aria-label="Liffio home">
-          <span className="mark" />
-          Liffio
+          <LiffioLogoMark size="medium" priority />
         </Link>
         <a className="login" href={loginHref(hold?.id)}>
           Have an account? <b>Log in</b>
