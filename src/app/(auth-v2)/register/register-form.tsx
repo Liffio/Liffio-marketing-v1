@@ -13,6 +13,7 @@ import {
 } from '@/lib/auth/referral';
 import { SignedInNotice, CheckIcon, EyeIcon, GoogleIcon, Spinner } from '@/lib/auth/ui';
 import { useRedirectWhenSignedIn } from '@/lib/auth/app-redirect';
+import { isHoldId, partnerClaimPath } from '@/lib/partner-claim';
 import { useHydrated } from '@/lib/auth/use-hydrated';
 import { COUNTRIES, CountryFlagImg, isKnownCountryCode } from '@/lib/auth/countries';
 import { precheckRegistration } from './actions';
@@ -78,7 +79,10 @@ export default function RegisterForm({
 }) {
   const router = useRouter();
   const params = useSearchParams();
-  const redirectPath = params.get('redirect') ?? '';
+  // A partner perk hold from liffio.com/claim/:slug rides the same redirect the email, Google
+  // and login paths already carry, landing on the app's attach route after signup.
+  const hold = params.get('hold');
+  const redirectPath = params.get('redirect') ?? (isHoldId(hold) ? partnerClaimPath(hold) : '');
   const pendingPlanParam = params.get('plan')?.toUpperCase() ?? null;
 
   const [step, setStep] = useState<1 | 2>(1);
