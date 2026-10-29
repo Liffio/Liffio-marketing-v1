@@ -24,8 +24,8 @@ import {
 */
 
 const partner = (over: Partial<PublicPartner> = {}): PublicPartner => ({
-  slug: "joinsecret",
-  name: "JoinSecret",
+  slug: "example-partner",
+  name: "Example Partner",
   logoUrl: null,
   brandColor: "#475569",
   method: "codes",
@@ -74,9 +74,9 @@ test("an LF- code is still auto-formatted as it is typed", () => {
 });
 
 test("a custom shared code typed by hand is kept as typed", () => {
-  assert.deepEqual(codeEntry("boostdesk-blog", "JS"), {
-    display: "BOOSTDESK-BLOG",
-    submit: "BOOSTDESK-BLOG",
+  assert.deepEqual(codeEntry("liffio-blog", "JS"), {
+    display: "LIFFIO-BLOG",
+    submit: "LIFFIO-BLOG",
     complete: true,
     kind: "custom",
   });
