@@ -8,6 +8,7 @@ import { verifyEmailCode, resendEmailVerification, getAuthMe, appHandoffUrl } fr
 import { MailIcon, OtpInput, type OtpState } from '@/lib/auth/ui';
 import { useHydrated } from '@/lib/auth/use-hydrated';
 import { AuthShell } from '@/components/auth-v2/AuthShell';
+import { pendingHold, takeHandoffRedirect } from '@/lib/partner-claim';
 
 // PRO is retired: non-public in `packages`, hidden in `plan_catalog`, and not
 // sold by any path, so it can never legitimately be a pending plan.
@@ -123,6 +124,17 @@ function ConfirmEmailPageInner() {
     const { accessToken, isOnboarded } = authStore.getState();
     if (!accessToken) return;
     const pendingPlan = localStorage.getItem('pending_plan');
+    // A partner perk hold outranks a plan picked on the pricing page: the perk is the free version
+    // of the same plan, and checkout is still one click away from it.
+    if (pendingHold()) {
+      if (pendingPlan) localStorage.removeItem('pending_plan');
+      if (!isOnboarded) {
+        router.replace('/onboarding');
+        return;
+      }
+      window.location.href = appHandoffUrl(accessToken, takeHandoffRedirect(redirectPath));
+      return;
+    }
     if (pendingPlan && PAID_PLANS.includes(pendingPlan)) {
       localStorage.removeItem('pending_plan');
       window.location.href = appHandoffUrl(accessToken, `/checkout?plan=${pendingPlan}`);
@@ -133,7 +145,7 @@ function ConfirmEmailPageInner() {
       router.replace('/onboarding');
       return;
     }
-    window.location.href = appHandoffUrl(accessToken, redirectPath);
+    window.location.href = appHandoffUrl(accessToken, takeHandoffRedirect(redirectPath));
   }
 
   async function sendCode(userTriggered = false) {

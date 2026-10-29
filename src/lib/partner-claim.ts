@@ -109,6 +109,77 @@ export const partnerClaimPath = (holdId: string): string => `/partner-claim?hold
 export const isHoldId = (v: string | null | undefined): v is string =>
   typeof v === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(v);
 
+/*
+  The hold this tab is carrying through signup (partner-codes v2 SPEC §2).
+
+  Register puts it in `?redirect=`, but a new account then goes through confirm-email and
+  onboarding, which hand off to the app's dashboard, and the Meta OAuth full-page return to
+  /onboarding drops every query param. So the hold is also kept in sessionStorage from the first
+  page that sees it, and the handoff to the app sends it to the attach route instead of the
+  dashboard. sessionStorage: it lasts 30 minutes and belongs to this tab's signup only.
+*/
+const PENDING_HOLD_KEY = 'liffio:pending-partner-hold';
+
+/** `?hold=<id>`, or `?redirect=/partner-claim?hold=<id>`. Null when neither carries a uuid. */
+export function holdFromSearch(params: URLSearchParams): string | null {
+  const direct = params.get('hold');
+  if (isHoldId(direct)) return direct;
+  const redirect = params.get('redirect');
+  if (!redirect || !redirect.startsWith('/partner-claim')) return null;
+  const q = redirect.indexOf('?');
+  if (q < 0) return null;
+  const nested = new URLSearchParams(redirect.slice(q + 1)).get('hold');
+  return isHoldId(nested) ? nested : null;
+}
+
+export function rememberPendingHold(params: URLSearchParams): void {
+  const hold = holdFromSearch(params);
+  if (!hold) return;
+  try {
+    sessionStorage.setItem(PENDING_HOLD_KEY, hold);
+  } catch {
+    /* storage blocked: the ?redirect= still carries it where query strings survive */
+  }
+}
+
+export function pendingHold(): string | null {
+  try {
+    const v = sessionStorage.getItem(PENDING_HOLD_KEY);
+    return isHoldId(v) ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Where the handoff to the app should land. A pending hold replaces the plain dashboard default;
+ * an explicit other redirect is kept. Read-only, so it is safe in `nextSignupStep`, whose result
+ * some callers only inspect.
+ */
+export function handoffRedirect(redirectPath: string): string {
+  const hold = pendingHold();
+  if (!hold) return redirectPath;
+  const isDefault = redirectPath === '/dashboard' || redirectPath === '' || redirectPath === '/';
+  return isDefault ? partnerClaimPath(hold) : redirectPath;
+}
+
+/**
+ * `handoffRedirect`, for the moment the browser actually leaves for the app: once the hold is in
+ * the handoff the app owns it (and keeps its own copy), so this tab's copy is cleared.
+ */
+export function takeHandoffRedirect(redirectPath: string): string {
+  const hold = pendingHold();
+  const target = handoffRedirect(redirectPath);
+  if (hold && target.includes(hold)) {
+    try {
+      sessionStorage.removeItem(PENDING_HOLD_KEY);
+    } catch {
+      /* nothing to clear */
+    }
+  }
+  return target;
+}
+
 /** Page states, after the program state and the check result are combined. */
 export type ClaimView = 'loading' | 'offer' | 'claimed' | 'expired' | 'invalid' | 'ended';
 

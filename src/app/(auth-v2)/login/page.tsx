@@ -11,6 +11,7 @@ import { useRedirectWhenSignedIn } from '@/lib/auth/app-redirect';
 import { markEmailAuthUsed, wasGoogleLastUsed } from '@/lib/auth/last-auth-method';
 import { useHydrated } from '@/lib/auth/use-hydrated';
 import { AuthShell } from '@/components/auth-v2/AuthShell';
+import { rememberPendingHold } from '@/lib/partner-claim';
 
 function LoginPageInner() {
   const router = useRouter();
@@ -36,6 +37,9 @@ function LoginPageInner() {
   const mounted = useHydrated();
 
   const signedIn = useRedirectWhenSignedIn(redirectPath);
+
+  // A partner perk hold in `?redirect=` is kept in case login leads through onboarding first.
+  useEffect(() => rememberPendingHold(params), [params]);
 
   useEffect(() => {
     if (resendIn <= 0) return;
