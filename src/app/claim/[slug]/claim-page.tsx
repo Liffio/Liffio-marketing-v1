@@ -8,18 +8,18 @@ import { LiffioLogoMark } from '@/components/Logo';
 import { v4FeatureList } from '@/config/pricing-v4.config';
 import {
   checkClaim,
-  cleanCode,
-  codeComplete,
-  codeShapeError,
+  codeEntry,
+  codeFromHash,
+  codeHint,
   durationLabel,
   fetchPartner,
-  formatCode,
   initials,
   inr,
   partnerClaimPath,
   perkWorthInr,
   tokenFromHash,
   viewFor,
+  type CheckResult,
   type CheckState,
   type PublicPartner,
 } from '@/lib/partner-claim';
@@ -34,6 +34,11 @@ import {
   removed with history.replaceState, so the token never sits in the address
   bar, the history entry, a Referer or an analytics hit. What travels after
   that is the 30-minute holdId.
+
+  Code links arrive as #code=<code> (partner-codes v2 §8) and are read and
+  stripped the same way, then checked exactly as if Redeem had been pressed.
+  Only code partners use them; a signed-link partner ignores the code, and
+  `?code=` is never read.
 */
 
 const Icon = ({ d, className }: { d: ReactNode; className?: string }) => (
@@ -174,6 +179,7 @@ export default function ClaimPage({ slug }: { slug: string }) {
   const [hold, setHold] = useState<{ id: string; expiresAt: string } | null>(null);
   const [linkExp, setLinkExp] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
+  const [linkCode, setLinkCode] = useState<{ display: string; error: string | null } | null>(null);
   const started = useRef(false);
 
   useEffect(() => {
@@ -181,6 +187,7 @@ export default function ClaimPage({ slug }: { slug: string }) {
     started.current = true;
     // Read and strip the fragment before anything else can see it.
     const token = tokenFromHash(window.location.hash);
+    const code = codeFromHash(window.location.hash);
     if (window.location.hash) {
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
     }
@@ -188,6 +195,18 @@ export default function ClaimPage({ slug }: { slug: string }) {
       try {
         const p = await fetchPartner(API_BASE, slug);
         setPartner(p);
+        if (p && p.method === 'codes' && p.programState === 'active' && code) {
+          // The link's code, checked exactly as pressing Redeem would check it.
+          const entry = codeEntry(code, p.codePrefix ?? '');
+          let error: string | null = entry.complete ? null : CODE_ERRORS.invalid!;
+          if (entry.complete) {
+            const r = await checkClaim(API_BASE, slug, { code: entry.submit });
+            if (r.state === 'valid' && r.holdId && r.holdExpiresAt) setHold({ id: r.holdId, expiresAt: r.holdExpiresAt });
+            else if (codeErrorFor(r)) error = codeErrorFor(r);
+            else setCheck(r.state);
+          }
+          setLinkCode({ display: entry.display, error });
+        }
         if (p && p.method === 'signed' && p.programState === 'active') {
           if (!token) {
             setCheck('invalid');
@@ -241,7 +260,15 @@ export default function ClaimPage({ slug }: { slug: string }) {
         )}
 
         {view === 'offer' && partner && (
-          <Offer partner={partner} hold={hold} setHold={setHold} setCheck={setCheck} linkExp={linkExp} signedIn={session.status === 'authenticated'} />
+          <Offer
+            partner={partner}
+            hold={hold}
+            setHold={setHold}
+            setCheck={setCheck}
+            linkExp={linkExp}
+            linkCode={linkCode}
+            signedIn={session.status === 'authenticated'}
+          />
         )}
 
         {view === 'claimed' && (
@@ -312,13 +339,15 @@ function Offer({
   setHold,
   setCheck,
   linkExp,
+  linkCode,
   signedIn,
 }: {
   partner: PublicPartner;
   hold: { id: string; expiresAt: string } | null;
-  setHold: (h: { id: string; expiresAt: string }) => void;
+  setHold: (h: { id: string; expiresAt: string } | null) => void;
   setCheck: (s: CheckState) => void;
   linkExp: string | null;
+  linkCode: { display: string; error: string | null } | null;
   signedIn: boolean;
 }) {
   const d = durationLabel(p.duration);
@@ -358,13 +387,13 @@ function Offer({
           ) : (
             <>
               <p className="lede">Enter the code you got from {p.name} to unlock it.</p>
-              <CodeForm p={p} accepted={Boolean(hold)} onAccepted={setHold} onState={setCheck} />
+              <CodeForm p={p} accepted={Boolean(hold)} onAccepted={setHold} onState={setCheck} linkCode={linkCode} />
               {hold && (
                 <div className="actions" style={{ marginTop: 8 }}>
                   {claimBtn}
                 </div>
               )}
-              <p className="small">{I.circleCheck}No card needed. Each code works once.</p>
+              <p className="small">{I.circleCheck}No card needed. One perk per Liffio account.</p>
             </>
           )}
         </div>
@@ -382,42 +411,50 @@ const CODE_ERRORS: Partial<Record<CheckState, string>> = {
   already_claimed: 'This code was already used. Each code works once.',
 };
 
+/**
+ * The answers shown under the code box rather than as a full page: not found, already used, and a
+ * shared code whose uses are all taken (the offer itself is still open). Null for the rest.
+ */
+const codeErrorFor = (r: CheckResult): string | null =>
+  r.state === 'ended' && r.reason === 'code_limit'
+    ? 'This code has reached its limit.'
+    : r.state === 'invalid' || r.state === 'already_claimed'
+      ? CODE_ERRORS[r.state]!
+      : null;
+
 function CodeForm({
   p,
   accepted,
   onAccepted,
   onState,
+  linkCode,
 }: {
   p: PublicPartner;
   accepted: boolean;
-  onAccepted: (h: { id: string; expiresAt: string }) => void;
+  onAccepted: (h: { id: string; expiresAt: string } | null) => void;
   onState: (s: CheckState) => void;
+  linkCode: { display: string; error: string | null } | null;
 }) {
   const prefix = p.codePrefix ?? '';
-  const [value, setValue] = useState('');
+  // Filled from the link, the page has already checked it: show that answer from the start.
+  const [value, setValue] = useState(linkCode?.display ?? '');
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(linkCode?.error ?? null);
+  const [fromLink, setFromLink] = useState(Boolean(linkCode && !linkCode.error));
   const inputRef = useRef<HTMLInputElement>(null);
-  const clean = cleanCode(value, prefix);
+  const entry = codeEntry(value, prefix);
   const placeholder = `LF-${prefix}-XXXX-XXXX`;
 
-  const submit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!codeComplete(clean, prefix) || busy) return;
-    const shape = codeShapeError(clean, prefix, p.name);
-    if (shape) {
-      setError(shape);
-      inputRef.current?.focus();
-      return;
-    }
+  const run = async (code: string) => {
     setBusy(true);
     setError(null);
     try {
-      const r = await checkClaim(API_BASE, p.slug, { code: clean });
+      const r = await checkClaim(API_BASE, p.slug, { code });
       if (r.state === 'valid' && r.holdId && r.holdExpiresAt) {
+        setFromLink(false);
         onAccepted({ id: r.holdId, expiresAt: r.holdExpiresAt });
-      } else if (r.state === 'invalid' || r.state === 'already_claimed') {
-        setError(CODE_ERRORS[r.state]!);
+      } else if (codeErrorFor(r)) {
+        setError(codeErrorFor(r));
         inputRef.current?.focus();
       } else {
         onState(r.state);
@@ -433,6 +470,19 @@ function CodeForm({
     }
   };
 
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    if (!entry.complete || busy || accepted) return;
+    void run(entry.submit);
+  };
+
+  const change = () => {
+    onAccepted(null);
+    setFromLink(false);
+    setValue('');
+    setTimeout(() => inputRef.current?.focus(), 0);
+  };
+
   return (
     <form className="redeem" onSubmit={submit} noValidate>
       <label htmlFor="code">Your {p.name} code</label>
@@ -446,18 +496,23 @@ function CodeForm({
           spellCheck={false}
           inputMode="text"
           placeholder={placeholder}
-          maxLength={placeholder.length}
+          maxLength={Math.max(placeholder.length, 24)}
           readOnly={accepted}
           aria-describedby="codeMsg"
           aria-invalid={error ? 'true' : undefined}
-          value={formatCode(clean, prefix)}
+          value={entry.display}
           onChange={(e) => {
             setValue(e.target.value);
             setError(null);
           }}
         />
+        {accepted && (
+          <button className="btn" type="button" onClick={change}>
+            Change
+          </button>
+        )}
         {!accepted && (
-          <button className="btn p" type="submit" disabled={!codeComplete(clean, prefix) || busy}>
+          <button className="btn p" type="submit" disabled={!entry.complete || busy}>
             {busy ? (
               <>
                 <span className="spin" aria-hidden />
@@ -478,9 +533,11 @@ function CodeForm({
         ) : accepted ? (
           <>
             {I.circleCheck}
-            <span>Code accepted. Your perk is ready.</span>
+            <span>{fromLink ? 'Code added from your link and checked' : 'Code accepted. Your perk is ready.'}</span>
           </>
-        ) : null}
+        ) : (
+          <span className="hint">{codeHint(prefix)}</span>
+        )}
       </div>
     </form>
   );

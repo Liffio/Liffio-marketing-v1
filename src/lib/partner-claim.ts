@@ -20,7 +20,8 @@ export type PublicPartner = {
   programState: ProgramState;
 };
 
-export type CheckResult = { state: CheckState; holdId?: string; holdExpiresAt?: string };
+/** `reason: 'code_limit'` comes with `ended` for a shared code whose uses are all taken. */
+export type CheckResult = { state: CheckState; holdId?: string; holdExpiresAt?: string; reason?: 'code_limit' };
 
 const V1 = '/api/v1/public/partner-claims';
 
@@ -56,6 +57,52 @@ export function tokenFromHash(hash: string): string | null {
   return t && t.length > 0 ? t : null;
 }
 
+/**
+ * `#code=<code>` → the code, or null (partner-codes v2 §8). Read the same way as `#t=`: the
+ * fragment only, never `?code=`, so a code in a link never reaches a server log, a Referer or an
+ * analytics hit before the page strips it.
+ */
+export function codeFromHash(hash: string): string | null {
+  const raw = hash.startsWith('#') ? hash.slice(1) : hash;
+  const c = new URLSearchParams(raw).get('code');
+  return c && c.trim().length > 0 ? c.trim().slice(0, 64) : null;
+}
+
+/** A custom shared code: 6 to 24 characters of letters, numbers and dashes. */
+export const CUSTOM_CODE_MIN = 6;
+export const CUSTOM_CODE_MAX = 24;
+
+export type CodeEntry = {
+  /** What the input shows. */
+  display: string;
+  /** What is sent to /check. The server normalises it, so dashes and case don't matter. */
+  submit: string;
+  /** Whether Redeem can be pressed. */
+  complete: boolean;
+  kind: 'generated' | 'custom';
+};
+
+/**
+ * The code input's model. Anything that is (or is on its way to being) this partner's `LF-<prefix>-`
+ * shape is auto-formatted as before. Anything else is a custom shared code, kept as typed:
+ * uppercased, letters, numbers and dashes only, up to 24, ready at 6 letters or numbers.
+ */
+export function codeEntry(value: string, prefix: string): CodeEntry {
+  const lead = `LF${prefix.toUpperCase()}`;
+  const plain = value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (plain.length === 0 || lead.startsWith(plain) || plain.startsWith(lead)) {
+    const clean = cleanCode(value, prefix);
+    return { display: formatCode(clean, prefix), submit: clean, complete: codeComplete(clean, prefix), kind: 'generated' };
+  }
+  const display = value.toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, CUSTOM_CODE_MAX);
+  const letters = display.replace(/-/g, '').length;
+  return { display, submit: display, complete: letters >= CUSTOM_CODE_MIN, kind: 'custom' };
+}
+
+/** The hint under the code box: both shapes are fine. Replaces the old "Codes start with LF-XX" error. */
+export const codeHint = (prefix: string): string =>
+  `Codes look like LF-${prefix}-XXXX-XXXX, or a word code from a post or newsletter.`;
+
 /** Uppercase letters and digits only, capped at `LF` + prefix + 8. */
 export function cleanCode(value: string, prefix: string): string {
   return value
@@ -73,14 +120,6 @@ export function formatCode(clean: string, prefix: string): string {
 }
 
 export const codeComplete = (clean: string, prefix: string): boolean => clean.length === 2 + prefix.length + 8;
-
-/** A plain-words reason before any request, or null when the code has the right shape. */
-export function codeShapeError(clean: string, prefix: string, partnerName: string): string | null {
-  if (!clean.startsWith(`LF${prefix}`)) {
-    return `That doesn't look like a ${partnerName} code. Codes start with LF-${prefix}.`;
-  }
-  return null;
-}
 
 export const durationLabel = (d: { value: number; unit: DurationUnit }): string =>
   `${d.value} ${d.unit === 'days' ? (d.value === 1 ? 'day' : 'days') : d.value === 1 ? 'month' : 'months'}`;

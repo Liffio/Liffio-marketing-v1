@@ -4,7 +4,9 @@ import test from "node:test";
 import {
   cleanCode,
   codeComplete,
-  codeShapeError,
+  codeEntry,
+  codeFromHash,
+  codeHint,
   durationLabel,
   formatCode,
   isHoldId,
@@ -50,9 +52,45 @@ test("codes are cleaned and grouped as typed, for any prefix length", () => {
   assert.equal(codeComplete(cleanCode("LF-JS-7K2Q", "JS"), "JS"), false);
 });
 
-test("a code for another partner is refused before any request", () => {
-  assert.match(codeShapeError("LFAB7K2QM9XD", "JS", "JoinSecret") ?? "", /Codes start with LF-JS/);
-  assert.equal(codeShapeError("LFJS7K2QM9XD", "JS", "JoinSecret"), null);
+test("#code= is read from the fragment only, never from ?code=", () => {
+  assert.equal(codeFromHash("#code=LF-JS-7K2Q-M9XD"), "LF-JS-7K2Q-M9XD");
+  assert.equal(codeFromHash("#x=1&code=boost-blog"), "boost-blog");
+  assert.equal(codeFromHash("#code="), null);
+  assert.equal(codeFromHash(""), null);
+  // The page only ever passes location.hash, which is empty for a ?code= link.
+  assert.equal(codeFromHash(new URL("https://liffio.com/claim/js?code=LF-JS-7K2Q-M9XD").hash), null);
+});
+
+test("an LF- code is still auto-formatted as it is typed", () => {
+  assert.deepEqual(codeEntry("lfjs7k2qm9xd", "JS"), {
+    display: "LF-JS-7K2Q-M9XD",
+    submit: "LFJS7K2QM9XD",
+    complete: true,
+    kind: "generated",
+  });
+  assert.equal(codeEntry("l", "JS").kind, "generated");
+  assert.equal(codeEntry("LF-J", "JS").display, "LF-J");
+  assert.equal(codeEntry("LF-JS-7K2Q", "JS").complete, false);
+});
+
+test("a custom shared code typed by hand is kept as typed", () => {
+  assert.deepEqual(codeEntry("boostdesk-blog", "JS"), {
+    display: "BOOSTDESK-BLOG",
+    submit: "BOOSTDESK-BLOG",
+    complete: true,
+    kind: "custom",
+  });
+  assert.equal(codeEntry("blog 2026!", "JS").display, "BLOG2026");
+  assert.equal(codeEntry("AB-12", "JS").complete, false, "under 6 letters or numbers");
+  assert.equal(codeEntry("A-B-C-D-E-F", "JS").complete, true);
+  assert.equal(codeEntry("X".repeat(30), "JS").display.length, 24);
+  // Another partner's LF code is no longer refused in the page; the server answers invalid.
+  assert.equal(codeEntry("LFAB7K2QM9XD", "JS").complete, true);
+});
+
+test("the hint allows both shapes", () => {
+  assert.match(codeHint("JS"), /LF-JS-XXXX-XXXX/);
+  assert.match(codeHint("JS"), /word code/);
 });
 
 test("the hold goes to the app's attach route, and only a uuid counts", () => {
