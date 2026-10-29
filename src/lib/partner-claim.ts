@@ -20,7 +20,8 @@ export type PublicPartner = {
   programState: ProgramState;
 };
 
-export type CheckResult = { state: CheckState; holdId?: string; holdExpiresAt?: string };
+/** `reason: 'code_limit'` comes with `ended` for a shared code whose uses are all taken. */
+export type CheckResult = { state: CheckState; holdId?: string; holdExpiresAt?: string; reason?: 'code_limit' };
 
 const V1 = '/api/v1/public/partner-claims';
 
@@ -56,6 +57,52 @@ export function tokenFromHash(hash: string): string | null {
   return t && t.length > 0 ? t : null;
 }
 
+/**
+ * `#code=<code>` → the code, or null (partner-codes v2 §8). Read the same way as `#t=`: the
+ * fragment only, never `?code=`, so a code in a link never reaches a server log, a Referer or an
+ * analytics hit before the page strips it.
+ */
+export function codeFromHash(hash: string): string | null {
+  const raw = hash.startsWith('#') ? hash.slice(1) : hash;
+  const c = new URLSearchParams(raw).get('code');
+  return c && c.trim().length > 0 ? c.trim().slice(0, 64) : null;
+}
+
+/** A custom shared code: 6 to 24 characters of letters, numbers and dashes. */
+export const CUSTOM_CODE_MIN = 6;
+export const CUSTOM_CODE_MAX = 24;
+
+export type CodeEntry = {
+  /** What the input shows. */
+  display: string;
+  /** What is sent to /check. The server normalises it, so dashes and case don't matter. */
+  submit: string;
+  /** Whether Redeem can be pressed. */
+  complete: boolean;
+  kind: 'generated' | 'custom';
+};
+
+/**
+ * The code input's model. Anything that is (or is on its way to being) this partner's `LF-<prefix>-`
+ * shape is auto-formatted as before. Anything else is a custom shared code, kept as typed:
+ * uppercased, letters, numbers and dashes only, up to 24, ready at 6 letters or numbers.
+ */
+export function codeEntry(value: string, prefix: string): CodeEntry {
+  const lead = `LF${prefix.toUpperCase()}`;
+  const plain = value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (plain.length === 0 || lead.startsWith(plain) || plain.startsWith(lead)) {
+    const clean = cleanCode(value, prefix);
+    return { display: formatCode(clean, prefix), submit: clean, complete: codeComplete(clean, prefix), kind: 'generated' };
+  }
+  const display = value.toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, CUSTOM_CODE_MAX);
+  const letters = display.replace(/-/g, '').length;
+  return { display, submit: display, complete: letters >= CUSTOM_CODE_MIN, kind: 'custom' };
+}
+
+/** The hint under the code box: both shapes are fine. Replaces the old "Codes start with LF-XX" error. */
+export const codeHint = (prefix: string): string =>
+  `Codes look like LF-${prefix}-XXXX-XXXX, or a word code from a post or newsletter.`;
+
 /** Uppercase letters and digits only, capped at `LF` + prefix + 8. */
 export function cleanCode(value: string, prefix: string): string {
   return value
@@ -73,14 +120,6 @@ export function formatCode(clean: string, prefix: string): string {
 }
 
 export const codeComplete = (clean: string, prefix: string): boolean => clean.length === 2 + prefix.length + 8;
-
-/** A plain-words reason before any request, or null when the code has the right shape. */
-export function codeShapeError(clean: string, prefix: string, partnerName: string): string | null {
-  if (!clean.startsWith(`LF${prefix}`)) {
-    return `That doesn't look like a ${partnerName} code. Codes start with LF-${prefix}.`;
-  }
-  return null;
-}
 
 export const durationLabel = (d: { value: number; unit: DurationUnit }): string =>
   `${d.value} ${d.unit === 'days' ? (d.value === 1 ? 'day' : 'days') : d.value === 1 ? 'month' : 'months'}`;
@@ -108,6 +147,77 @@ export const partnerClaimPath = (holdId: string): string => `/partner-claim?hold
 /** Holds are server-issued uuids; anything else in `?hold=` is ignored. */
 export const isHoldId = (v: string | null | undefined): v is string =>
   typeof v === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(v);
+
+/*
+  The hold this tab is carrying through signup (partner-codes v2 SPEC §2).
+
+  Register puts it in `?redirect=`, but a new account then goes through confirm-email and
+  onboarding, which hand off to the app's dashboard, and the Meta OAuth full-page return to
+  /onboarding drops every query param. So the hold is also kept in sessionStorage from the first
+  page that sees it, and the handoff to the app sends it to the attach route instead of the
+  dashboard. sessionStorage: it lasts 30 minutes and belongs to this tab's signup only.
+*/
+const PENDING_HOLD_KEY = 'liffio:pending-partner-hold';
+
+/** `?hold=<id>`, or `?redirect=/partner-claim?hold=<id>`. Null when neither carries a uuid. */
+export function holdFromSearch(params: URLSearchParams): string | null {
+  const direct = params.get('hold');
+  if (isHoldId(direct)) return direct;
+  const redirect = params.get('redirect');
+  if (!redirect || !redirect.startsWith('/partner-claim')) return null;
+  const q = redirect.indexOf('?');
+  if (q < 0) return null;
+  const nested = new URLSearchParams(redirect.slice(q + 1)).get('hold');
+  return isHoldId(nested) ? nested : null;
+}
+
+export function rememberPendingHold(params: URLSearchParams): void {
+  const hold = holdFromSearch(params);
+  if (!hold) return;
+  try {
+    sessionStorage.setItem(PENDING_HOLD_KEY, hold);
+  } catch {
+    /* storage blocked: the ?redirect= still carries it where query strings survive */
+  }
+}
+
+export function pendingHold(): string | null {
+  try {
+    const v = sessionStorage.getItem(PENDING_HOLD_KEY);
+    return isHoldId(v) ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Where the handoff to the app should land. A pending hold replaces the plain dashboard default;
+ * an explicit other redirect is kept. Read-only, so it is safe in `nextSignupStep`, whose result
+ * some callers only inspect.
+ */
+export function handoffRedirect(redirectPath: string): string {
+  const hold = pendingHold();
+  if (!hold) return redirectPath;
+  const isDefault = redirectPath === '/dashboard' || redirectPath === '' || redirectPath === '/';
+  return isDefault ? partnerClaimPath(hold) : redirectPath;
+}
+
+/**
+ * `handoffRedirect`, for the moment the browser actually leaves for the app: once the hold is in
+ * the handoff the app owns it (and keeps its own copy), so this tab's copy is cleared.
+ */
+export function takeHandoffRedirect(redirectPath: string): string {
+  const hold = pendingHold();
+  const target = handoffRedirect(redirectPath);
+  if (hold && target.includes(hold)) {
+    try {
+      sessionStorage.removeItem(PENDING_HOLD_KEY);
+    } catch {
+      /* nothing to clear */
+    }
+  }
+  return target;
+}
 
 /** Page states, after the program state and the check result are combined. */
 export type ClaimView = 'loading' | 'offer' | 'claimed' | 'expired' | 'invalid' | 'ended';

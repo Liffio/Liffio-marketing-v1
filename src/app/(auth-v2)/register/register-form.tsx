@@ -13,7 +13,7 @@ import {
 } from '@/lib/auth/referral';
 import { SignedInNotice, CheckIcon, EyeIcon, GoogleIcon, Spinner } from '@/lib/auth/ui';
 import { useRedirectWhenSignedIn } from '@/lib/auth/app-redirect';
-import { isHoldId, partnerClaimPath } from '@/lib/partner-claim';
+import { isHoldId, partnerClaimPath, rememberPendingHold } from '@/lib/partner-claim';
 import { useHydrated } from '@/lib/auth/use-hydrated';
 import { COUNTRIES, CountryFlagImg, isKnownCountryCode } from '@/lib/auth/countries';
 import { precheckRegistration } from './actions';
@@ -126,6 +126,8 @@ export default function RegisterForm({
   }
 
   useEffect(() => {
+    // First sight of a partner perk hold: kept for the rest of this tab's signup (see partner-claim.ts).
+    rememberPendingHold(params);
     if (pendingPlanParam) localStorage.setItem('pending_plan', pendingPlanParam);
     const urlRef = params.get('ref');
     /*

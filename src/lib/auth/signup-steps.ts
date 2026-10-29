@@ -1,4 +1,5 @@
 import { appHandoffUrl } from './api';
+import { handoffRedirect } from '../partner-claim';
 import type { AuthState } from './store';
 
 /**
@@ -19,5 +20,6 @@ export function nextSignupStep(
   if (!state.termsAccepted) return { kind: 'site', path: `/complete-signup${redirectQs}` };
   if (!state.emailVerified) return { kind: 'site', path: `/confirm-email${redirectQs}` };
   if (!state.isOnboarded) return { kind: 'site', path: '/onboarding' };
-  return { kind: 'app', url: appHandoffUrl(token, redirectPath) };
+  // A pending partner perk hold lands on the app's attach route instead of the dashboard.
+  return { kind: 'app', url: appHandoffUrl(token, handoffRedirect(redirectPath)) };
 }

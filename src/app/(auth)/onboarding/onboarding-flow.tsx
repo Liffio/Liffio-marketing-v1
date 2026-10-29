@@ -31,6 +31,7 @@ import {
 import { AlertCircleIcon, Button, CheckIcon, ErrorMsg, InstagramIcon, Spinner } from '@/lib/auth/ui';
 import { CountrySelect, isKnownCountryCode } from '@/lib/auth/countries';
 import { nextSignupStep } from '@/lib/auth/signup-steps';
+import { takeHandoffRedirect } from '@/lib/partner-claim';
 import { trackSignupStep } from '@/lib/analytics/analytics';
 import { commentMatchesKeywords } from '@/lib/onboarding/keyword-match';
 import {
@@ -678,7 +679,7 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
       router.replace('/login');
       return;
     }
-    if (isOnboarded) window.location.href = appHandoffUrl(accessToken, '/dashboard');
+    if (isOnboarded) window.location.href = appHandoffUrl(accessToken, takeHandoffRedirect('/dashboard'));
   }, [mounted, router]);
 
   /**
@@ -749,7 +750,8 @@ function OnboardingFlow({ defaultCountry }: { defaultCountry: string }) {
     } catch {
       /* see the note above, the handoff happens regardless */
     }
-    window.location.href = appHandoffUrl(accessToken, '/dashboard');
+    // A partner perk hold picked up at signup goes to the app's attach route, not the dashboard.
+    window.location.href = appHandoffUrl(accessToken, takeHandoffRedirect('/dashboard'));
   }, [resolveWorkspaceId, role, goal, router]);
 
   /**
