@@ -6,6 +6,7 @@ import {
   codeComplete,
   codeEntry,
   codeFromHash,
+  codeHash,
   codeHint,
   durationLabel,
   formatCode,
@@ -15,6 +16,7 @@ import {
   perkWorthInr,
   perkWorthUsd,
   priceDisplay,
+  stripHashOnLoad,
   tokenFromHash,
   usd,
   viewFor,
@@ -63,6 +65,27 @@ test("#code= is read from the fragment only, never from ?code=", () => {
   assert.equal(codeFromHash(""), null);
   // The page only ever passes location.hash, which is empty for a ?code= link.
   assert.equal(codeFromHash(new URL("https://liffio.com/claim/js?code=LF-JS-7K2Q-M9XD").hash), null);
+});
+
+test("#code= stays in the address bar on load; #t= is still stripped", () => {
+  assert.equal(stripHashOnLoad("#code=LF-JS-7K2Q-M9XD"), false);
+  assert.equal(stripHashOnLoad("#code=boost-blog"), false);
+  assert.equal(stripHashOnLoad("#t=abc.def.ghi"), true);
+  // A token always goes, even next to a code.
+  assert.equal(stripHashOnLoad("#code=boost-blog&t=abc.def.ghi"), true);
+  // Anything else in the fragment is cleaned as before.
+  assert.equal(stripHashOnLoad("#x=1"), true);
+  assert.equal(stripHashOnLoad("#code="), true);
+  assert.equal(stripHashOnLoad(""), false);
+});
+
+test("the code box writes back to #code=, and clearing it drops the fragment", () => {
+  assert.equal(codeHash("LF-JS-7K2Q-M9XD"), "#code=LF-JS-7K2Q-M9XD");
+  assert.equal(codeHash("BOOST BLOG"), "#code=BOOST%20BLOG");
+  assert.equal(codeHash(""), "");
+  assert.equal(codeHash("   "), "");
+  // What is written is read back the same, so a reopened URL fills the box again.
+  assert.equal(codeFromHash(codeHash("LF-JS-7K2Q-M9XD")), "LF-JS-7K2Q-M9XD");
 });
 
 test("an LF- code is still auto-formatted as it is typed", () => {
