@@ -2,7 +2,7 @@
  * Keeps login tokens out of Umami. (10-SPEC-autonomous-fixes.md §5, stopgap)
  *
  * The API redirects a Google sign-in started here to liffio.com/auth/google/complete?token=<JWT>,
- * and Umami records the full URL of every pageview, so access tokens were landing in analytics —
+ * and Umami records the full URL of every pageview, so access tokens were landing in analytics,
  * at least one still valid when found. The real fix is to stop putting the token in the URL; until
  * that ships, this stops Umami from recording it. The app (Client-v2) carries the same script for
  * its own /auth/google/complete and /auth/handoff pages.
