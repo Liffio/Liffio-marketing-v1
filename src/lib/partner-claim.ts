@@ -3,6 +3,9 @@
  * formatting rules the page shows. No React here, so the rules are tested directly.
  */
 
+import { formatMoney, formatMoneyPrecise } from '@/config/pricing.config';
+import type { PricingRegion } from '@/lib/pricing-region';
+
 export type ProgramState = 'active' | 'not_started' | 'ended' | 'paused' | 'cap_reached' | 'unknown';
 export type CheckState = 'invalid' | 'ended' | 'expired' | 'already_claimed' | 'valid';
 export type DurationUnit = 'days' | 'months';
@@ -130,7 +133,29 @@ export const perkWorthInr = (p: Pick<PublicPartner, 'plan' | 'duration'>): numbe
     ? null
     : Math.round((p.plan.monthlyPriceInrPaise / 100) * (p.duration.unit === 'months' ? p.duration.value : p.duration.value / 30));
 
-export const inr = (rupees: number): string => `₹${Math.round(rupees).toLocaleString('en-IN')}`;
+/** Same formatting as /pricing: whole rupees, en-IN grouping. */
+export const inr = (rupees: number): string => formatMoney(rupees, '₹');
+
+/** What the perk is worth at the plan's monthly USD price (days pro-rated on 30), in dollars to the cent. */
+export const perkWorthUsd = (p: Pick<PublicPartner, 'plan' | 'duration'>): number =>
+  Math.round(p.plan.monthlyPriceUsdCents * (p.duration.unit === 'months' ? p.duration.value : p.duration.value / 30)) / 100;
+
+/** `9` → `$9`, `4.2` → `$4.20`: the /pricing formatters, with cents only when it isn't a whole dollar. */
+export const usd = (dollars: number): string =>
+  Math.round(dollars * 100) % 100 === 0 ? formatMoney(dollars, '$') : formatMoneyPrecise(dollars, '$');
+
+export type PriceDisplay = { monthly: number | null; worth: number | null; format: (amount: number) => string };
+
+/**
+ * The one place the page picks a currency: INR for India, USD for everyone else. An Indian visitor
+ * on a plan with no INR price gets USD rather than no price at all.
+ */
+export function priceDisplay(p: Pick<PublicPartner, 'plan' | 'duration'>, region: PricingRegion): PriceDisplay {
+  if (region === 'india' && p.plan.monthlyPriceInrPaise != null) {
+    return { monthly: p.plan.monthlyPriceInrPaise / 100, worth: perkWorthInr(p), format: inr };
+  }
+  return { monthly: p.plan.monthlyPriceUsdCents / 100, worth: perkWorthUsd(p), format: usd };
+}
 
 export const initials = (name: string): string =>
   name

@@ -14,15 +14,15 @@ import {
   durationLabel,
   fetchPartner,
   initials,
-  inr,
   partnerClaimPath,
-  perkWorthInr,
+  priceDisplay,
   tokenFromHash,
   viewFor,
   type CheckResult,
   type CheckState,
   type PublicPartner,
 } from '@/lib/partner-claim';
+import type { PricingRegion } from '@/lib/pricing-region';
 
 /*
   The claim page, built from designs/claim-page.html. The marketing side owns
@@ -70,9 +70,8 @@ function PartnerMark({ p }: { p: PublicPartner }) {
 
 const features = (p: PublicPartner): string[] => (v4FeatureList(p.plan.name) ?? []).map((f) => f.text).slice(0, 5);
 
-function OfferCard({ p }: { p: PublicPartner }) {
-  const worth = perkWorthInr(p);
-  const monthly = p.plan.monthlyPriceInrPaise != null ? p.plan.monthlyPriceInrPaise / 100 : null;
+function OfferCard({ p, region }: { p: PublicPartner; region: PricingRegion }) {
+  const { monthly, worth, format } = priceDisplay(p, region);
   return (
     <div className="ocard">
       <div className="oc-h">
@@ -86,8 +85,8 @@ function OfferCard({ p }: { p: PublicPartner }) {
         <small>Your plan</small>
         <div className="nm">Liffio {p.plan.name}</div>
         <div className="price">
-          {monthly != null && <s>{inr(monthly)}/mo</s>}
-          <b>₹0</b>
+          {monthly != null && <s>{format(monthly)}/mo</s>}
+          <b>{format(0)}</b>
           <span>for {durationLabel(p.duration)}</span>
         </div>
       </div>
@@ -102,7 +101,7 @@ function OfferCard({ p }: { p: PublicPartner }) {
       <div className="oc-foot">
         {I.circleCheck}
         <span>
-          {worth != null ? `Worth ${inr(worth)}. ` : ''}No card needed. When it ends, the plan stops unless you subscribe.
+          {worth != null ? `Worth ${format(worth)}. ` : ''}No card needed. When it ends, the plan stops unless you subscribe.
           Nothing is charged automatically.
         </span>
       </div>
@@ -171,7 +170,7 @@ function Status({
 const fmtDay = (iso: string) =>
   new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 
-export default function ClaimPage({ slug }: { slug: string }) {
+export default function ClaimPage({ slug, region }: { slug: string; region: PricingRegion }) {
   const session = useSession();
   const [partner, setPartner] = useState<PublicPartner | null>(null);
   const [loaded, setLoaded] = useState(false);
@@ -267,6 +266,7 @@ export default function ClaimPage({ slug }: { slug: string }) {
             setCheck={setCheck}
             linkExp={linkExp}
             linkCode={linkCode}
+            region={region}
             signedIn={session.status === 'authenticated'}
           />
         )}
@@ -340,6 +340,7 @@ function Offer({
   setCheck,
   linkExp,
   linkCode,
+  region,
   signedIn,
 }: {
   partner: PublicPartner;
@@ -348,6 +349,7 @@ function Offer({
   setCheck: (s: CheckState) => void;
   linkExp: string | null;
   linkCode: { display: string; error: string | null } | null;
+  region: PricingRegion;
   signedIn: boolean;
 }) {
   const d = durationLabel(p.duration);
@@ -398,7 +400,7 @@ function Offer({
           )}
         </div>
         <div className="visual">
-          <OfferCard p={p} />
+          <OfferCard p={p} region={region} />
         </div>
       </section>
       <Steps p={p} />

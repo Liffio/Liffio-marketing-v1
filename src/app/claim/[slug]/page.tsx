@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
+import { getPricingContext } from '@/lib/pricing-region.server';
 import ClaimPage from './claim-page';
 import './claim.css';
 
@@ -20,9 +21,10 @@ type Props = { params: Promise<{ slug: string }> };
 
 export default async function ClaimSlugPage({ params }: Props) {
   const { slug } = await params;
+  const { region } = await getPricingContext();
   return (
     <Suspense fallback={null}>
-      <ClaimPage slug={slug.toLowerCase()} />
+      <ClaimPage slug={slug.toLowerCase()} region={region} />
     </Suspense>
   );
 }

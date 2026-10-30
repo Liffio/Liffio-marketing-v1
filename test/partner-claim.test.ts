@@ -9,10 +9,14 @@ import {
   codeHint,
   durationLabel,
   formatCode,
+  inr,
   isHoldId,
   partnerClaimPath,
   perkWorthInr,
+  perkWorthUsd,
+  priceDisplay,
   tokenFromHash,
+  usd,
   viewFor,
   type PublicPartner,
 } from "@/lib/partner-claim";
@@ -116,4 +120,42 @@ test("the page state: unknown slug is a bad link, a closed program has ended, th
   assert.equal(viewFor(partner(), "expired"), "expired");
   assert.equal(viewFor(partner(), "already_claimed"), "claimed");
   assert.equal(viewFor(partner(), "invalid"), "invalid");
+});
+
+test("usd shows whole dollars bare and cents only when there are some", () => {
+  assert.equal(usd(9), "$9");
+  assert.equal(usd(0), "$0");
+  assert.equal(usd(4.2), "$4.20");
+  assert.equal(usd(29.99), "$29.99");
+  assert.equal(usd(1299), "$1,299");
+});
+
+test("perkWorthUsd pro-rates days on 30 and multiplies months", () => {
+  const growth = { key: "growth", name: "Growth", monthlyPriceInrPaise: 149900, monthlyPriceUsdCents: 2900 };
+  assert.equal(perkWorthUsd(partner({ plan: growth, duration: { value: 2, unit: "months" } })), 58);
+  assert.equal(perkWorthUsd(partner({ duration: { value: 14, unit: "days" } })), 4.2);
+  assert.equal(perkWorthUsd(partner({ duration: { value: 30, unit: "days" } })), 9);
+});
+
+test("priceDisplay: India gets INR, everyone else USD, and India without an INR price falls back to USD", () => {
+  const months = partner({ duration: { value: 3, unit: "months" } });
+  const india = priceDisplay(months, "india");
+  assert.equal(india.monthly, 499);
+  assert.equal(india.worth, 1497);
+  assert.equal(india.format, inr);
+  assert.equal(india.format(0), "₹0");
+
+  const global = priceDisplay(months, "global");
+  assert.equal(global.monthly, 9);
+  assert.equal(global.worth, 27);
+  assert.equal(global.format, usd);
+  assert.equal(global.format(0), "$0");
+
+  const noInr = priceDisplay(
+    partner({ duration: { value: 3, unit: "months" }, plan: { key: "starter", name: "Starter", monthlyPriceInrPaise: null, monthlyPriceUsdCents: 900 } }),
+    "india",
+  );
+  assert.equal(noInr.monthly, 9);
+  assert.equal(noInr.worth, 27);
+  assert.equal(noInr.format, usd);
 });
