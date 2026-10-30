@@ -287,7 +287,7 @@ export default function ClaimPage({ slug, region }: { slug: string; region: Pric
           <Status
             tone="mute"
             icon={I.lock}
-            title="This perk was already claimed"
+            title={partner?.method === 'codes' ? 'This code has already been used' : 'This perk was already claimed'}
             actions={
               <>
                 <a className="btn p block" href={loginHref()}>
@@ -306,7 +306,7 @@ export default function ClaimPage({ slug, region }: { slug: string; region: Pric
             }
           >
             {partner?.method === 'codes'
-              ? 'Each code works once. If that was you, log in to see your plan.'
+              ? 'If you claimed it, log in to Liffio to use your plan. If not, try a different code.'
               : `Each ${partner?.name ?? 'partner'} customer can claim it once. If that was you, log in to see your plan.`}
           </Status>
         )}
