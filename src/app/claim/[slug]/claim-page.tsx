@@ -236,6 +236,12 @@ export default function ClaimPage({ slug, region }: { slug: string; region: Pric
   }, [slug]);
 
   const view = !loaded ? 'loading' : failed ? 'error' : viewFor(partner, check);
+  // From the "already claimed" page: drop #code= and go back to an empty code box.
+  const tryAnotherCode = () => {
+    window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search);
+    setLinkCode(null);
+    setCheck(null);
+  };
   const startFree = (
     <Link className="btn p block" href="/register">
       Start on Liffio Free
@@ -287,6 +293,12 @@ export default function ClaimPage({ slug, region }: { slug: string; region: Pric
                 <a className="btn p block" href={loginHref()}>
                   Log in to Liffio
                 </a>
+                {partner?.method === 'codes' && (
+                  // /check is anonymous, so "used" means by anyone: let them try another code.
+                  <button className="btn block" type="button" onClick={tryAnotherCode}>
+                    Use a different code
+                  </button>
+                )}
                 <Link className="link" href="/help">
                   Think this is a mistake? Contact support
                 </Link>
