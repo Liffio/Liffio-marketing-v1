@@ -10,12 +10,14 @@ import {
   checkClaim,
   codeEntry,
   codeFromHash,
+  codeHash,
   codeHint,
   durationLabel,
   fetchPartner,
   initials,
   partnerClaimPath,
   priceDisplay,
+  stripHashOnLoad,
   tokenFromHash,
   viewFor,
   type CheckResult,
@@ -35,10 +37,12 @@ import type { PricingRegion } from '@/lib/pricing-region';
   bar, the history entry, a Referer or an analytics hit. What travels after
   that is the 30-minute holdId.
 
-  Code links arrive as #code=<code> (partner-codes v2 §8) and are read and
-  stripped the same way, then checked exactly as if Redeem had been pressed.
-  Only code partners use them; a signed-link partner ignores the code, and
-  `?code=` is never read.
+  Code links arrive as #code=<code> (partner-codes v2 §8) and are checked
+  exactly as if Redeem had been pressed, but the fragment stays: Instagram and
+  Telegram pass the current URL to "Open in browser", so stripping it lost the
+  code. Editing the box keeps #code= in step (replaceState), clearing it drops
+  the fragment. Only code partners use them; a signed-link partner ignores the
+  code, and `?code=` is never read.
 */
 
 const Icon = ({ d, className }: { d: ReactNode; className?: string }) => (
@@ -184,10 +188,10 @@ export default function ClaimPage({ slug, region }: { slug: string; region: Pric
   useEffect(() => {
     if (started.current) return;
     started.current = true;
-    // Read and strip the fragment before anything else can see it.
+    // Read the fragment, and strip a signed token before anything else can see it.
     const token = tokenFromHash(window.location.hash);
     const code = codeFromHash(window.location.hash);
-    if (window.location.hash) {
+    if (stripHashOnLoad(window.location.hash)) {
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
     }
     void (async () => {
@@ -201,6 +205,8 @@ export default function ClaimPage({ slug, region }: { slug: string; region: Pric
           if (entry.complete) {
             const r = await checkClaim(API_BASE, slug, { code: entry.submit });
             if (r.state === 'valid' && r.holdId && r.holdExpiresAt) setHold({ id: r.holdId, expiresAt: r.holdExpiresAt });
+            // A link reopened after its claim is the full "already claimed" page, not a box error.
+            else if (r.state === 'already_claimed') setCheck(r.state);
             else if (codeErrorFor(r)) error = codeErrorFor(r);
             else setCheck(r.state);
           }
@@ -230,6 +236,12 @@ export default function ClaimPage({ slug, region }: { slug: string; region: Pric
   }, [slug]);
 
   const view = !loaded ? 'loading' : failed ? 'error' : viewFor(partner, check);
+  // From the "already claimed" page: drop #code= and go back to an empty code box.
+  const tryAnotherCode = () => {
+    window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search);
+    setLinkCode(null);
+    setCheck(null);
+  };
   const startFree = (
     <Link className="btn p block" href="/register">
       Start on Liffio Free
@@ -275,12 +287,18 @@ export default function ClaimPage({ slug, region }: { slug: string; region: Pric
           <Status
             tone="mute"
             icon={I.lock}
-            title="This perk was already claimed"
+            title={partner?.method === 'codes' ? 'This code has already been used' : 'This perk was already claimed'}
             actions={
               <>
                 <a className="btn p block" href={loginHref()}>
                   Log in to Liffio
                 </a>
+                {partner?.method === 'codes' && (
+                  // /check is anonymous, so "used" means by anyone: let them try another code.
+                  <button className="btn block" type="button" onClick={tryAnotherCode}>
+                    Use a different code
+                  </button>
+                )}
                 <Link className="link" href="/help">
                   Think this is a mistake? Contact support
                 </Link>
@@ -288,7 +306,7 @@ export default function ClaimPage({ slug, region }: { slug: string; region: Pric
             }
           >
             {partner?.method === 'codes'
-              ? 'Each code works once. If that was you, log in to see your plan.'
+              ? 'If you claimed it, log in to Liffio to use your plan. If not, try a different code.'
               : `Each ${partner?.name ?? 'partner'} customer can claim it once. If that was you, log in to see your plan.`}
           </Status>
         )}
@@ -478,10 +496,18 @@ function CodeForm({
     void run(entry.submit);
   };
 
+  // Keep #code= in the address bar in step with the box, so "Open in browser" carries it.
+  const syncHash = (next: string) => {
+    const hash = codeHash(codeEntry(next, prefix).display);
+    if (hash === window.location.hash) return;
+    window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search + hash);
+  };
+
   const change = () => {
     onAccepted(null);
     setFromLink(false);
     setValue('');
+    syncHash('');
     setTimeout(() => inputRef.current?.focus(), 0);
   };
 
@@ -506,6 +532,7 @@ function CodeForm({
           onChange={(e) => {
             setValue(e.target.value);
             setError(null);
+            syncHash(e.target.value);
           }}
         />
         {accepted && (

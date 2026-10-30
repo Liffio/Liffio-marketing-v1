@@ -62,13 +62,28 @@ export function tokenFromHash(hash: string): string | null {
 
 /**
  * `#code=<code>` → the code, or null (partner-codes v2 §8). Read the same way as `#t=`: the
- * fragment only, never `?code=`, so a code in a link never reaches a server log, a Referer or an
- * analytics hit before the page strips it.
+ * fragment only, never `?code=`, so a code in a link never reaches a server log or a Referer.
  */
 export function codeFromHash(hash: string): string | null {
   const raw = hash.startsWith('#') ? hash.slice(1) : hash;
   const c = new URLSearchParams(raw).get('code');
   return c && c.trim().length > 0 ? c.trim().slice(0, 64) : null;
+}
+
+/**
+ * Whether the page strips the fragment on load. A signed `#t=` token is always removed; a
+ * `#code=` link is kept as it is, because in-app browsers (Instagram, Telegram) hand the current
+ * URL to "Open in browser" and the code would be lost with it.
+ */
+export function stripHashOnLoad(hash: string): boolean {
+  if (!hash || hash === '#') return false;
+  return tokenFromHash(hash) !== null || codeFromHash(hash) === null;
+}
+
+/** The fragment for what's in the code box: `#code=<value>`, or '' once the box is empty. */
+export function codeHash(value: string): string {
+  const v = value.trim();
+  return v ? `#code=${encodeURIComponent(v)}` : '';
 }
 
 /** A custom shared code: 6 to 24 characters of letters, numbers and dashes. */
