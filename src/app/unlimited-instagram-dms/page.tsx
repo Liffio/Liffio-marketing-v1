@@ -188,8 +188,9 @@ export default function UnlimitedInstagramDmsPage() {
                 them costs money, is the wrong incentive to build a business on.
               </p>
               <p>
-                Liffio prices on how much automation you are running, not on how many people it
-                reaches. Automated DMs are uncapped on every plan, there is no per-contact fee, and
+                Liffio never prices on how many people your automations reach. Free and Starter cap
+                how many automations you can have, at 3 and 50, and automations are unlimited from
+                Growth up. Automated DMs are uncapped on every plan, there is no per-contact fee, and
                 the number on your invoice is the number you picked when you chose the plan.
               </p>
             </div>

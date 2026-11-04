@@ -101,6 +101,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     cta: "Choose Starter",
     includedLabel: "Everything in Free, plus",
     features: [
+      "**50 automations**",
       "**Liffio branding off**, on DMs, chatbots and your bio link",
       "**Trigger blocks**: a different reply for every keyword on one post",
       "**Follow before DM**, on automations and chatbots",
@@ -136,6 +137,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     cta: "Choose Growth",
     includedLabel: "Everything in Starter, plus",
     features: [
+      "**Unlimited automations**",
       "**Ice breakers**: 4 tappable questions above every empty DM thread",
       "**Story reply and story mention triggers**",
       "**Default reply** answers any DM that matches nothing",
@@ -170,6 +172,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     cta: "Choose Business",
     includedLabel: "Everything in Growth, plus",
     features: [
+      "**Unlimited automations**",
       "**Chatbot lead capture**: answers land straight in your leads list",
       "**Webhook step**: send answers to your own system mid chat",
       "**A/B testing on chatbot steps**",
@@ -204,6 +207,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     cta: "Choose Agency",
     includedLabel: "Twenty complete Business workspaces",
     features: [
+      "**Unlimited automations**",
       "**Every workspace is a full Business workspace**: same features, same limits",
       "**One subscription, one invoice**, one renewal date for all 20",
       "**Agency branding** and hide Liffio branding",
@@ -475,7 +479,6 @@ export const V4_FEATURE_CATEGORIES: ReadonlyArray<{
       paid("API access"),
       values("API requests per day", "0", "200", "500", "1,000", "1,000"),
       values("API keys", "0", "5", "10", "15", "15"),
-      values("Automations per day via API", "0", "50", "150", "400", "400"),
       values("Scheduled posts per day via API", "0", "50", "150", "400", "400"),
     ],
   },
