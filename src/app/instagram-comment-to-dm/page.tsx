@@ -22,7 +22,7 @@ import type { FaqCategory } from "@/config/faq.config";
  *   - trigger and reply features: the "Comment to DM automation" group in
  *     src/config/pricing-v4.config.ts
  *   - "Unlimited" automated DMs on every plan: the "DMs" group, same file
- *   - automation workflow counts (3 / 25 / 100 / 250 / 250): the
+ *   - automation workflow counts (3 / 50 / unlimited from Growth up): the
  *     "Limits: per workspace, never pooled" group, same file
  *   - the 10 to 60 second delay: STATS in src/components/OfficialApiSection.tsx
  *   - prices: src/config/pricing.config.ts, never retyped from memory
@@ -64,7 +64,7 @@ const faqCategories: FaqCategory[] = [
         id: "is-comment-to-dm-free",
         question: "Can I do comment-to-DM for free?",
         answer:
-          "Yes. Liffio's free plan includes comment keyword triggers on feed posts and Reels, public comment auto-replies, and unlimited automated DMs, with no credit card and no trial expiry. The free plan runs 3 automation workflows at a time, which covers one keyword each on three posts. Paid plans start at $9 a month (Rs.499 in India) and raise that to 25 workflows, then 100, then 250.",
+          "Yes. Liffio's free plan includes comment keyword triggers on feed posts and Reels, public comment auto-replies, and unlimited automated DMs, with no credit card and no trial expiry. The free plan runs 3 automation workflows at a time, which covers one keyword each on three posts. Paid plans start at $9 a month (Rs.499 in India) and raise that to 50 workflows, then unlimited from Growth up.",
       },
       {
         id: "does-it-work-on-reels",
@@ -290,8 +290,8 @@ export default function InstagramCommentToDmPage() {
                 The DMs themselves are not metered. Automated DMs are unlimited on every Liffio
                 plan, free included, and there is no per-contact fee, so a Reel that outperforms
                 does not produce a bill you did not plan for. What the plan decides is how many
-                automation workflows you can have running at once: 3 on Free, 25 on Starter, 100 on
-                Growth, and 250 on Business and Agency.
+                automation workflows you can have at once: 3 on Free and 50 on Starter. Unlimited
+                automations from Growth up.
               </p>
               <p>
                 Paid plans start at $9 a month, or Rs.499 with native INR billing and GST-friendly

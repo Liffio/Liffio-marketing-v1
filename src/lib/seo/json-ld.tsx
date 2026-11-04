@@ -185,7 +185,7 @@ const OFFER_LADDER: {
     usd: { price: "9.00", monthly: "$9", annualPerMonth: "$7.50" },
     inr: { price: "499", monthly: "₹499", annualPerMonth: "₹417" },
     describe: (monthly, annualPerMonth) =>
-      `Starter plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Flat rate: unlimited DMs and contacts, 25 automations and 5 live chatbots.`,
+      `Starter plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. Flat rate: unlimited DMs and contacts, 50 automations and 5 live chatbots.`,
   },
   {
     // 🚩 Growth IS purchasable now: the card ships a live "Start Growth" CTA
@@ -224,7 +224,7 @@ const OFFER_LADDER: {
     usd: { price: "549.00", monthly: "$549", annualPerMonth: "$457.50" },
     inr: { price: "22999", monthly: "₹22,999", annualPerMonth: "₹19,167" },
     describe: (monthly, annualPerMonth) =>
-      `Agency plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. 20 workspaces, each a full Business workspace: 250 automations, unlimited live chatbots, 15 team members and unlimited automated DMs per workspace, on one subscription, one invoice and one renewal date.`,
+      `Agency plan. ${monthly}/month, or ${annualPerMonth}/month billed annually. 20 workspaces, each a full Business workspace: unlimited automations, unlimited live chatbots, 15 team members and unlimited automated DMs per workspace, on one subscription, one invoice and one renewal date.`,
   },
 ];
 

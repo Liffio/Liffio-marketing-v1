@@ -70,7 +70,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "What Liffio costs in India",
         paragraphs: [
           "Liffio prices flat, in rupees, through Razorpay. Free is ₹0, Starter is ₹499 a month, Growth ₹1,499, Business ₹2,499, and Agency ₹22,999. Annual billing charges ten months instead of twelve, so two months are free.",
-          "Automated DMs are not metered on any of those plans, free included, and there is no per-contact fee. What the plan decides is how many automation workflows run at once: 3 on Free, 25 on Starter, 100 on Growth, and 250 on Business and Agency.",
+          "Automated DMs are not metered on any of those plans, free included, and there is no per-contact fee. What the plan decides is how many automation workflows you can have at once: 3 on Free, 50 on Starter, and unlimited on Growth, Business and Agency.",
           "Rupee prices include GST, so the amount shown is the amount charged, and a GST tax invoice is issued for every payment. That matters more than it sounds if you are claiming input credit or filing for a registered business, because a USD charge from a foreign processor is an import of service and does not give you a GST invoice in the same way.",
         ],
       },
@@ -187,7 +187,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         question: "Can I use a different keyword for every product?",
         answer:
-          "Yes, and for a shop it is usually the better setup. Each automation watches one post for one keyword, so a keyword per product lets each DM carry that product's real price and link. How many you can run at once depends on the plan: 3 on Liffio's free plan, 25 on Starter, 100 on Growth, 250 on Business and Agency.",
+          "Yes, and for a shop it is usually the better setup. Each automation watches one post for one keyword, so a keyword per product lets each DM carry that product's real price and link. How many you can have at once depends on the plan: 3 on Liffio's free plan, 50 on Starter, and unlimited on Growth, Business and Agency.",
       },
       {
         question: "Should I put the price in the DM or just the link?",

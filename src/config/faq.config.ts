@@ -359,14 +359,14 @@ const pricingDetailCategory: FaqCategory = {
       id: "growth-features",
       question: "What features require Growth ($29/mo, ₹1,499/mo in India)?",
       answer:
-        "Growth adds ice breakers (4 tappable questions above every empty DM thread), story reply and story mention triggers, a default reply for any DM that matches nothing, and starting a chatbot from a comment. It runs 15 live chatbots with chain bots, templates and tags, 100 automations with 5 follow-ups each, and 2 follow-ups per chatbot step. It also adds post, video and profile metrics with 90 day history, caption and schedule templates, hashtag groups, bulk upload, 30,000 AI tokens a month and up to 5 team members.",
+        "Growth adds ice breakers (4 tappable questions above every empty DM thread), story reply and story mention triggers, a default reply for any DM that matches nothing, and starting a chatbot from a comment. It runs 15 live chatbots with chain bots, templates and tags, unlimited automations with 5 follow-ups each, and 2 follow-ups per chatbot step. It also adds post, video and profile metrics with 90 day history, caption and schedule templates, hashtag groups, bulk upload, 30,000 AI tokens a month and up to 5 team members.",
     },
     {
       // Every line here is something Growth does NOT already grant.
       id: "business-features",
       question: "What features require Business ($59/mo, ₹2,499/mo in India)?",
       answer:
-        "Business adds chatbot lead capture, so answers land straight in your leads list, a webhook step that sends answers to your own system mid chat, A/B testing on chatbot steps, handover routing, business hours and a notify step. Live chatbots, steps and keywords per bot are unlimited, with 3 follow-ups per chatbot step. It also adds post approvals and an activity log, per person permissions for up to 15 team members, analytics export and per automation attribution, and 250 automations with 10 follow-ups each.",
+        "Business adds chatbot lead capture, so answers land straight in your leads list, a webhook step that sends answers to your own system mid chat, A/B testing on chatbot steps, handover routing, business hours and a notify step. Live chatbots, steps and keywords per bot are unlimited, with 3 follow-ups per chatbot step. It also adds post approvals and an activity log, per person permissions for up to 15 team members, analytics export and per automation attribution, and 10 follow-ups per automation.",
     },
     {
       id: "agency-features",

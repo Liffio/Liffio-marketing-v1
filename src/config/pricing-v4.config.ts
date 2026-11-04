@@ -112,7 +112,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     ],
     limitsLabel: "Limits",
     limits: [
-      { label: "Automations", value: "25" },
+      { label: "Automations", value: "50" },
       { label: "DMs", value: "Unlimited" },
       { label: "DM follow-ups", value: "2" },
       { label: "Live chatbots", value: "5" },
@@ -147,7 +147,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     ],
     limitsLabel: "Limits",
     limits: [
-      { label: "Automations", value: "100" },
+      { label: "Automations", value: "Unlimited" },
       { label: "DMs", value: "Unlimited" },
       { label: "DM follow-ups", value: "5" },
       { label: "Live chatbots", value: "15" },
@@ -181,7 +181,7 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     ],
     limitsLabel: "Limits",
     limits: [
-      { label: "Automations", value: "250" },
+      { label: "Automations", value: "Unlimited" },
       { label: "DMs", value: "Unlimited" },
       { label: "DM follow-ups", value: "10" },
       { label: "Live chatbots", value: "Unlimited" },
@@ -212,10 +212,10 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
       "**Cheaper per workspace** than a single Growth plan",
     ],
     // Every figure below is Business's, per workspace. Stated plainly rather
-    // than as "250 x 20", which reads as one pooled allowance of 5,000.
+    // than as "15 x 20", which reads as one pooled allowance of 300.
     limitsLabel: "Per workspace, across 20",
     limits: [
-      { label: "Automations", value: "250" },
+      { label: "Automations", value: "Unlimited" },
       { label: "DMs", value: "Unlimited" },
       { label: "DM follow-ups", value: "10" },
       { label: "Live chatbots", value: "Unlimited" },
@@ -461,7 +461,7 @@ export const V4_FEATURE_CATEGORIES: ReadonlyArray<{
     name: "Limits: per workspace, never pooled",
     features: [
       values("Workspaces", "1", "1", "1", "1", "20"),
-      values("Automation workflows", "3", "25", "100", "250", "250"),
+      values("Automation workflows", "3", "50", "Unlimited", "Unlimited", "Unlimited"),
       values("DM follow-ups per automation", "0", "2", "5", "10", "10"),
       values("Team members", "1", "3", "5", "15", "15"),
       values("AI tokens per month", "1,000", "10,000", "30,000", "75,000", "75,000"),

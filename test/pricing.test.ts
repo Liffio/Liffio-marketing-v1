@@ -277,7 +277,7 @@ const MATRIX_EXPECTATIONS: Array<{
   cells: Record<Lowercase<(typeof comparisonPlanNames)[number]>, boolean | string>;
 }> = [
   { row: "Automated DMs", cells: { free: "Unlimited", starter: "Unlimited", growth: "Unlimited", business: "Unlimited", agency: "Unlimited" } },
-  { row: "Automation workflows", cells: { free: "3", starter: "25", growth: "100", business: "250", agency: "250" } },
+  { row: "Automation workflows", cells: { free: "3", starter: "50", growth: "Unlimited", business: "Unlimited", agency: "Unlimited" } },
   { row: "DM follow-ups per automation", cells: { free: "0", starter: "2", growth: "5", business: "10", agency: "10" } },
   { row: "Team members", cells: { free: "1", starter: "3", growth: "5", business: "15", agency: "15" } },
   { row: "Workspaces", cells: { free: "1", starter: "1", growth: "1", business: "1", agency: "20" } },
@@ -355,6 +355,7 @@ test("API limits sit in their own group, labelled as API", () => {
  */
 const UNLIMITED_ROWS = new Set([
   "Automated DMs",
+  "Automation workflows",
   "Live chatbots",
   "Steps per bot",
   "Keywords per bot",

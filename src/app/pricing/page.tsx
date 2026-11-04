@@ -177,8 +177,8 @@ export default async function PricingPage() {
 
           <Section>
             <SectionHead eyebrow="Every capability, every plan" title="What is actually in each plan.">
-              Limits are per workspace and never pooled. Agency is Business in every workspace,
-              twenty times over, plus agency branding and client workspaces.
+              Limits are per workspace and never pooled. Unlimited automations from Growth up.
+              Agency is Business in every workspace, twenty times over, plus agency branding and client workspaces.
             </SectionHead>
             <PricingComparisonSection />
           </Section>
