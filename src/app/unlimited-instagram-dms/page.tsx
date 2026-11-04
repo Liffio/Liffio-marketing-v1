@@ -21,7 +21,7 @@ import type { FaqCategory } from "@/config/faq.config";
  * times and never names a cap reads as marketing and gets discounted. Naming
  * the real caps is what makes the uncapped claim credible, and all of them are
  * already published on /pricing:
- *   - automation workflows per workspace: 3 / 25 / 100 / 250 / 250
+ *   - automation workflows per workspace: 3 / 50 / unlimited from Growth up
  *   - DM follow-ups per automation: 0 / 2 / 5 / 10 / 10
  *   - chatbot conversations a month: 500 on Free, unlimited on every paid plan
  *   - one Instagram account per workspace, 20 workspaces on Agency
@@ -58,13 +58,13 @@ const faqCategories: FaqCategory[] = [
         id: "really-unlimited",
         question: "Are Instagram DMs really unlimited on the free plan?",
         answer:
-          "Automated DMs are not metered on any Liffio plan, and that includes the free one. There is no monthly DM allowance to run out of and no per-contact fee, so a Reel that reaches far more people than you expected does not change what you pay. What the free plan does limit is how many automation workflows you can run at once, which is 3. The DMs those three automations send are uncapped.",
+          "Automated DMs are not metered on any Liffio plan, and that includes the free one. There is no monthly DM allowance to run out of and no per-contact fee, so a Reel that reaches far more people than you expected does not change what you pay. What the free plan does limit is how many automation workflows you can have at once, which is 3. The DMs those three automations send are uncapped.",
       },
       {
         id: "what-is-capped",
         question: "What is capped, then?",
         answer:
-          "Four things, all published on the pricing page. Automation workflows per workspace: 3 on Free, 25 on Starter, 100 on Growth, 250 on Business and Agency. DM follow-ups per automation: none on Free, then 2, 5 and 10. Chatbot conversations a month: 500 on Free, unlimited on every paid plan. And one Instagram account per workspace, with Agency providing 20 workspaces. None of those meters count DMs.",
+          "Four things, all published on the pricing page. Automation workflows per workspace: 3 on Free, 50 on Starter, unlimited from Growth up. DM follow-ups per automation: none on Free, then 2, 5 and 10. Chatbot conversations a month: 500 on Free, unlimited on every paid plan. And one Instagram account per workspace, with Agency providing 20 workspaces. None of those meters count DMs.",
       },
       {
         id: "per-contact",
@@ -88,7 +88,7 @@ const faqCategories: FaqCategory[] = [
         id: "upgrade-reason",
         question: "If DMs are unlimited on Free, why upgrade?",
         answer:
-          "For the number of automations running at once, and for the chatbot module. Three workflows is enough to test the idea on three posts; a creator posting several times a week runs out of slots quickly, which is what Starter at $9 a month (Rs.499) and its 25 workflows is for. Paid plans also add DM follow-ups, the multi-keyword trigger builder, a follow-before-DM gate, and the ability to turn Liffio branding off.",
+          "For the number of automations you can have at once, and for the chatbot module. Three workflows is enough to test the idea on three posts; a creator posting several times a week runs out of slots quickly, which is what Starter at $9 a month (Rs.499) and its 50 workflows is for. Paid plans also add DM follow-ups, the multi-keyword trigger builder, a follow-before-DM gate, and the ability to turn Liffio branding off.",
       },
     ],
   },
@@ -102,7 +102,7 @@ const UNCAPPED = [
 ];
 
 const CAPPED = [
-  { name: "Automation workflows", values: "3 / 25 / 100 / 250 / 250", body: "Per workspace, by plan. This is the limit most people actually hit." },
+  { name: "Automation workflows", values: "3 / 50 / Unlimited", body: "Per workspace, by plan. Unlimited automations from Growth up." },
   { name: "DM follow-ups per automation", values: "0 / 2 / 5 / 10 / 10", body: "Follow-up messages after the first DM, not the first DM itself." },
   { name: "Chatbot conversations a month", values: "500 on Free, unlimited on paid", body: "Chatbots are a separate module from comment-to-DM, with their own meter." },
   { name: "Instagram accounts", values: "1 per workspace, 20 workspaces on Agency", body: "One connected account per workspace on every tier." },
@@ -188,8 +188,9 @@ export default function UnlimitedInstagramDmsPage() {
                 them costs money, is the wrong incentive to build a business on.
               </p>
               <p>
-                Liffio prices on how much automation you are running, not on how many people it
-                reaches. Automated DMs are uncapped on every plan, there is no per-contact fee, and
+                Liffio never prices on how many people your automations reach. Free and Starter cap
+                how many automations you can have, at 3 and 50, and automations are unlimited from
+                Growth up. Automated DMs are uncapped on every plan, there is no per-contact fee, and
                 the number on your invoice is the number you picked when you chose the plan.
               </p>
             </div>

@@ -19,6 +19,13 @@ import { SwipeHint } from "@/components/pricing/PricingPlanCard";
  * scan down, which is the only way the boundary is visible.
  */
 
+/**
+ * Phones only. The right edge fade sits over the table, so at the end of the
+ * scroll it would cover the last plan. This padding pulls that plan clear of it.
+ */
+const lastColumnClearsFade = (i: number) =>
+  i === comparisonPlanNames.length - 1 ? "max-sm:pr-12" : "";
+
 function CellValue({ value }: { value: boolean | string }) {
   if (typeof value === "string") {
     return (
@@ -54,21 +61,21 @@ export default function PricingComparisonSection() {
         />
 
         <div className="overflow-x-auto rounded-2xl border border-[#EAE4DC] bg-white scrollbar-hide">
-          <table className="w-full min-w-[840px] border-collapse text-left lg:min-w-0">
+          <table className="w-full min-w-[840px] border-collapse text-left max-sm:min-w-0 lg:min-w-0">
             <thead>
               <tr>
                 <th
                   scope="col"
-                  className="sticky left-0 top-0 z-30 min-w-[270px] bg-white px-5 py-4 text-left text-[13.5px] font-bold tracking-[-0.01em] text-[#17131A]"
+                  className="sticky left-0 top-0 z-30 min-w-[270px] bg-white px-5 py-4 max-sm:w-32 max-sm:min-w-32 max-sm:max-w-32 max-sm:px-3 text-left text-[13.5px] font-bold tracking-[-0.01em] text-[#17131A]"
                   style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
                 >
                   Capability
                 </th>
-                {comparisonPlanNames.map((plan) => (
+                {comparisonPlanNames.map((plan, i) => (
                   <th
                     key={plan}
                     scope="col"
-                    className={`sticky top-0 z-20 min-w-[5.5rem] bg-white px-3 py-4 text-center text-[13.5px] font-bold tracking-[-0.01em] sm:px-4 ${
+                    className={`sticky top-0 z-20 min-w-[5.5rem] bg-white px-3 py-4 text-center text-[13.5px] font-bold tracking-[-0.01em] sm:px-4 ${lastColumnClearsFade(i)} ${
                       plan === comparisonHighlightPlan ? "text-[#F5184C]" : "text-[#17131A]"
                     }`}
                     style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
@@ -141,14 +148,14 @@ function CategoryRows({
         <tr key={row.name} className="group border-b border-[#F1ECE5] last:border-b-0">
           <th
             scope="row"
-            className="sticky left-0 z-10 bg-white px-5 py-3 text-left text-[13px] font-medium text-[#17131A] shadow-[4px_0_8px_-4px_rgba(0,0,0,0.06)] group-hover:bg-[#FDFBF8]"
+            className="sticky left-0 z-10 bg-white px-5 py-3 max-sm:w-32 max-sm:min-w-32 max-sm:max-w-32 max-sm:px-3 text-left text-[13px] font-medium text-[#17131A] shadow-[4px_0_8px_-4px_rgba(0,0,0,0.06)] group-hover:bg-[#FDFBF8]"
           >
             {row.name}
           </th>
-          {comparisonPlanNames.map((plan) => (
+          {comparisonPlanNames.map((plan, i) => (
             <td
               key={plan}
-              className={`min-w-[5.5rem] px-3 py-3 text-center align-middle text-[13px] text-[#4A4350] sm:px-4 group-hover:bg-[#FDFBF8] ${
+              className={`min-w-[5.5rem] px-3 py-3 text-center align-middle text-[13px] text-[#4A4350] sm:px-4 group-hover:bg-[#FDFBF8] ${lastColumnClearsFade(i)} ${
                 plan === comparisonHighlightPlan ? "bg-[rgba(245,24,76,0.04)]" : ""
               }`}
             >

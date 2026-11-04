@@ -19,7 +19,7 @@ previewed with both `next dev` and `next start` before being handed over.
 | | Free | Starter | Growth | Business | Agency |
 | --- | --- | --- | --- | --- | --- |
 | DMs | Unlimited | Unlimited | Unlimited | Unlimited | Unlimited |
-| Automation workflows | 3 | 25 | 100 | 250 | 250 per workspace |
+| Automation workflows | 3 | 50 | Unlimited | Unlimited | Unlimited per workspace |
 | DM follow-ups per automation | 0 | 2 | 5 | 10 | 10 |
 | Team members | 1 | 3 | 5 | 15 | 15 per workspace |
 | AI tokens a month | 1,000 | 10,000 | 30,000 | 75,000 | 75,000 |

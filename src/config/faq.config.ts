@@ -261,7 +261,7 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
           id: "automation-types",
           question: "What can Liffio automate?",
           answer:
-            `Liffio automates comment-to-DM, ${FEATURE_STORY_REACTIONS ? "story mentions and reactions" : "story replies and story mentions"}, ${FEATURE_WELCOME_DM ? "welcome DMs for new followers, " : ""}inbound DM replies, ask for follow, follow-up sequences, and data collection. Each automation sends its DM after a delay you set between 10 and 60 seconds. The Free plan runs 3 automations, Starter 25, Growth 100, and Business 250. Chatbots are a separate module, with 2 live chatbots on Free.`,
+            `Liffio automates comment-to-DM, ${FEATURE_STORY_REACTIONS ? "story mentions and reactions" : "story replies and story mentions"}, ${FEATURE_WELCOME_DM ? "welcome DMs for new followers, " : ""}inbound DM replies, ask for follow, follow-up sequences, and data collection. Each automation sends its DM after a delay you set between 10 and 60 seconds. The Free plan runs 3 automations, Starter 50, and Growth and up are unlimited. Chatbots are a separate module, with 2 live chatbots on Free.`,
         },
       ],
     },
@@ -359,14 +359,14 @@ const pricingDetailCategory: FaqCategory = {
       id: "growth-features",
       question: "What features require Growth ($29/mo, ₹1,499/mo in India)?",
       answer:
-        "Growth adds ice breakers (4 tappable questions above every empty DM thread), story reply and story mention triggers, a default reply for any DM that matches nothing, and starting a chatbot from a comment. It runs 15 live chatbots with chain bots, templates and tags, 100 automations with 5 follow-ups each, and 2 follow-ups per chatbot step. It also adds post, video and profile metrics with 90 day history, caption and schedule templates, hashtag groups, bulk upload, 30,000 AI tokens a month and up to 5 team members.",
+        "Growth adds ice breakers (4 tappable questions above every empty DM thread), story reply and story mention triggers, a default reply for any DM that matches nothing, and starting a chatbot from a comment. It runs 15 live chatbots with chain bots, templates and tags, unlimited automations with 5 follow-ups each, and 2 follow-ups per chatbot step. It also adds post, video and profile metrics with 90 day history, caption and schedule templates, hashtag groups, bulk upload, 30,000 AI tokens a month and up to 5 team members.",
     },
     {
       // Every line here is something Growth does NOT already grant.
       id: "business-features",
       question: "What features require Business ($59/mo, ₹2,499/mo in India)?",
       answer:
-        "Business adds chatbot lead capture, so answers land straight in your leads list, a webhook step that sends answers to your own system mid chat, A/B testing on chatbot steps, handover routing, business hours and a notify step. Live chatbots, steps and keywords per bot are unlimited, with 3 follow-ups per chatbot step. It also adds post approvals and an activity log, per person permissions for up to 15 team members, analytics export and per automation attribution, and 250 automations with 10 follow-ups each.",
+        "Business adds chatbot lead capture, so answers land straight in your leads list, a webhook step that sends answers to your own system mid chat, A/B testing on chatbot steps, handover routing, business hours and a notify step. Live chatbots, steps and keywords per bot are unlimited, with 3 follow-ups per chatbot step. It also adds post approvals and an activity log, per person permissions for up to 15 team members, analytics export and per automation attribution, and 10 follow-ups per automation.",
     },
     {
       id: "agency-features",
@@ -536,7 +536,7 @@ export function getFeaturesFaqCategories(): FaqCategory[] {
           id: "automation-types-features",
           question: "What types of Instagram automation does Liffio support?",
           answer:
-            `Liffio supports comment-to-DM, story reply, inbound DM reply, ask for follow, follow-up sequences, ${FEATURE_WELCOME_DM ? "data collection, and welcome DM for new followers" : "and data collection"}, all through Instagram's official API. Each one fires after a delay you set between 10 and 60 seconds. The Free plan runs 3 of these automations at a time, Starter 25, Growth 100, and Business 250. Chatbots are a separate module, with 2 live chatbots on Free.`,
+            `Liffio supports comment-to-DM, story reply, inbound DM reply, ask for follow, follow-up sequences, ${FEATURE_WELCOME_DM ? "data collection, and welcome DM for new followers" : "and data collection"}, all through Instagram's official API. Each one fires after a delay you set between 10 and 60 seconds. The Free plan runs 3 of these automations at a time, Starter 50, and Growth and up are unlimited. Chatbots are a separate module, with 2 live chatbots on Free.`,
         },
         {
           id: "manychat-alternative-features",
@@ -642,13 +642,13 @@ export function getCreatorsFaqCategories(
           id: "approval-time",
           question: "How long does approval take?",
           answer:
-            "All applications are reviewed manually within 48 to 72 hours. If accepted, you receive confirmation via email and immediate full Business plan access from day one. If not accepted, you can reapply after a cooldown period, which we tell you in that email. Liffio does not provide reasons for rejection.",
+            "All applications are reviewed manually within 48 to 72 hours. If accepted, you receive confirmation via email and immediate Business plan access from day one. If not accepted, you can reapply after a cooldown period, which we tell you in that email. Liffio does not provide reasons for rejection.",
         },
         {
           id: "creators-features-included",
           question: "What features are included in the Creators Program?",
           answer:
-            "Creators Program includes everything in the Business plan for one workspace, chatbots included: unlimited automated DMs, 250 automation workflows, unlimited live chatbots with lead capture, webhook step, A/B testing, handover routing, business hours and the notify step, post approvals, analytics export and per automation attribution, and up to 15 team members. The one difference from a paid Business plan is that Liffio branding stays on, in automations, chatbots and your bio link. Not included: additional workspaces or any other Agency feature.",
+            "Creators Program includes everything in the Business plan for one workspace, with up to 250 automations, chatbots included: unlimited automated DMs, unlimited live chatbots with lead capture, webhook step, A/B testing, handover routing, business hours and the notify step, post approvals, analytics export and per automation attribution, and up to 15 team members. The two differences from a paid Business plan: automations stop at 250, and Liffio branding stays on, in automations, chatbots and your bio link. Not included: additional workspaces or any other Agency feature.",
         },
         {
           id: "how-to-apply",
