@@ -347,7 +347,7 @@ export function getBusinessPlanValueLabel(region: PricingRegion): string {
 
 export function getCreatorsProgramFaqAnswer(region: PricingRegion): string {
   const value = getBusinessPlanValueLabel(region);
-  return `Yes. Qualified Instagram creators (5K to 100K followers) can apply for our Creators Program and get everything in the Business plan (${value} value), chatbots included, at no cost in exchange for active platform usage. The one exception is Liffio branding, which stays on. No credit card required.`;
+  return `Yes. Qualified Instagram creators (5K to 100K followers) can apply for our Creators Program and get everything in the Business plan (${value} value), chatbots included, at no cost in exchange for active platform usage. Two things differ from paid Business: automations stop at 250, and Liffio branding stays on. No credit card required.`;
 }
 
 /**

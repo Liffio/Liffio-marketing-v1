@@ -49,7 +49,7 @@ function getBenefits(businessPlanValue: string) {
   return [
     {
       title: "Free Business Plan",
-      description: `Full access to our ${businessPlanValue} Business plan at zero cost. Every Business feature unlocked from day one, with Liffio branding kept on.`,
+      description: `Our ${businessPlanValue} Business plan at zero cost. Every Business feature unlocked from day one, with up to 250 automations and Liffio branding kept on.`,
       tag: `Worth ${businessPlanValue}`,
     },
     {
@@ -106,7 +106,7 @@ const HOW_STEPS = [
   {
     num: "3",
     title: "Start for Free",
-    desc: "Accepted creators get immediate Business plan access, chatbots included, at zero cost from day one. Liffio branding stays on.",
+    desc: "Accepted creators get immediate Business plan access, chatbots included, at zero cost from day one, with up to 250 automations. Liffio branding stays on.",
   },
 ];
 
@@ -195,7 +195,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
           </h1>
 
           <p className="text-base sm:text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto mb-7">
-            We&apos;re selecting <strong className="text-[#0a0a0a]">{spotsCap} Instagram creators</strong> who already drive comment engagement to use Liffio&apos;s full Business plan at zero cost - in exchange for real, active usage that helps us grow organically.
+            We&apos;re selecting <strong className="text-[#0a0a0a]">{spotsCap} Instagram creators</strong> who already drive comment engagement to use Liffio&apos;s Business plan at zero cost - in exchange for real, active usage that helps us grow organically.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-gray-500">
@@ -273,7 +273,7 @@ export default function CreatorsProgramContent({ businessPlanValue }: { business
               Everything Included. No Strings.
             </h2>
             <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base">
-              Accepted creators get the Business plan, chatbots included. Not a trial, not limited access: every Business feature from day one, with Liffio branding kept on.
+              Accepted creators get the Business plan, chatbots included. Not a trial: every Business feature from day one, with up to 250 automations and Liffio branding kept on.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

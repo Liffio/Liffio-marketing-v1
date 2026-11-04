@@ -261,7 +261,7 @@ export function getFaqCategories(region: PricingRegion, overrides?: MarketingFaq
           id: "automation-types",
           question: "What can Liffio automate?",
           answer:
-            `Liffio automates comment-to-DM, ${FEATURE_STORY_REACTIONS ? "story mentions and reactions" : "story replies and story mentions"}, ${FEATURE_WELCOME_DM ? "welcome DMs for new followers, " : ""}inbound DM replies, ask for follow, follow-up sequences, and data collection. Each automation sends its DM after a delay you set between 10 and 60 seconds. The Free plan runs 3 automations, Starter 25, Growth 100, and Business 250. Chatbots are a separate module, with 2 live chatbots on Free.`,
+            `Liffio automates comment-to-DM, ${FEATURE_STORY_REACTIONS ? "story mentions and reactions" : "story replies and story mentions"}, ${FEATURE_WELCOME_DM ? "welcome DMs for new followers, " : ""}inbound DM replies, ask for follow, follow-up sequences, and data collection. Each automation sends its DM after a delay you set between 10 and 60 seconds. The Free plan runs 3 automations, Starter 50, and Growth and up are unlimited. Chatbots are a separate module, with 2 live chatbots on Free.`,
         },
       ],
     },
@@ -536,7 +536,7 @@ export function getFeaturesFaqCategories(): FaqCategory[] {
           id: "automation-types-features",
           question: "What types of Instagram automation does Liffio support?",
           answer:
-            `Liffio supports comment-to-DM, story reply, inbound DM reply, ask for follow, follow-up sequences, ${FEATURE_WELCOME_DM ? "data collection, and welcome DM for new followers" : "and data collection"}, all through Instagram's official API. Each one fires after a delay you set between 10 and 60 seconds. The Free plan runs 3 of these automations at a time, Starter 25, Growth 100, and Business 250. Chatbots are a separate module, with 2 live chatbots on Free.`,
+            `Liffio supports comment-to-DM, story reply, inbound DM reply, ask for follow, follow-up sequences, ${FEATURE_WELCOME_DM ? "data collection, and welcome DM for new followers" : "and data collection"}, all through Instagram's official API. Each one fires after a delay you set between 10 and 60 seconds. The Free plan runs 3 of these automations at a time, Starter 50, and Growth and up are unlimited. Chatbots are a separate module, with 2 live chatbots on Free.`,
         },
         {
           id: "manychat-alternative-features",
@@ -642,7 +642,7 @@ export function getCreatorsFaqCategories(
           id: "approval-time",
           question: "How long does approval take?",
           answer:
-            "All applications are reviewed manually within 48 to 72 hours. If accepted, you receive confirmation via email and immediate full Business plan access from day one. If not accepted, you can reapply after a cooldown period, which we tell you in that email. Liffio does not provide reasons for rejection.",
+            "All applications are reviewed manually within 48 to 72 hours. If accepted, you receive confirmation via email and immediate Business plan access from day one. If not accepted, you can reapply after a cooldown period, which we tell you in that email. Liffio does not provide reasons for rejection.",
         },
         {
           id: "creators-features-included",
