@@ -38,8 +38,10 @@
 }
 
 .a2-stage {
+  min-height: 100vh;
   padding: 24px 16px 56px;
   display: flex;
+  align-items: center;
   justify-content: center;
 }
 
@@ -969,6 +971,13 @@
   }
   .a2-side {
     padding: 20px 18px;
+  }
+}
+
+/* Even padding on desktop, so the centred card sits in the true middle. */
+@media (min-width: 901px) {
+  .a2-stage {
+    padding-bottom: 24px;
   }
 }
 
