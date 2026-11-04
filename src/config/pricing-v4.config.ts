@@ -172,7 +172,6 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     cta: "Choose Business",
     includedLabel: "Everything in Growth, plus",
     features: [
-      "**Unlimited automations**",
       "**Chatbot lead capture**: answers land straight in your leads list",
       "**Webhook step**: send answers to your own system mid chat",
       "**A/B testing on chatbot steps**",
@@ -207,7 +206,6 @@ export const V4_PLAN_CONTENT: Record<string, V4PlanContent> = {
     cta: "Choose Agency",
     includedLabel: "Twenty complete Business workspaces",
     features: [
-      "**Unlimited automations**",
       "**Every workspace is a full Business workspace**: same features, same limits",
       "**One subscription, one invoice**, one renewal date for all 20",
       "**Agency branding** and hide Liffio branding",

@@ -61,8 +61,8 @@ function getBenefits(businessPlanValue: string) {
     {
       title: "Up to 250 Automations",
       description:
-        "Build up to 250 comment-to-DM workflows across your posts. Every one sends unlimited automated DMs, with no throttling and no hidden per-message fees.",
-      tag: "250 workflows",
+        "Everything in Business, with up to 250 comment-to-DM automations across your posts. Every one sends unlimited automated DMs, with no throttling and no hidden per-message fees.",
+      tag: "Up to 250 workflows",
     },
     ...STATIC_BENEFITS,
   ];

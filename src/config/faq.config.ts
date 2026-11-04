@@ -648,7 +648,7 @@ export function getCreatorsFaqCategories(
           id: "creators-features-included",
           question: "What features are included in the Creators Program?",
           answer:
-            "Creators Program includes everything in the Business plan for one workspace, chatbots included: unlimited automated DMs, 250 automation workflows, unlimited live chatbots with lead capture, webhook step, A/B testing, handover routing, business hours and the notify step, post approvals, analytics export and per automation attribution, and up to 15 team members. The one difference from a paid Business plan is that Liffio branding stays on, in automations, chatbots and your bio link. Not included: additional workspaces or any other Agency feature.",
+            "Creators Program includes everything in the Business plan for one workspace, with up to 250 automations, chatbots included: unlimited automated DMs, unlimited live chatbots with lead capture, webhook step, A/B testing, handover routing, business hours and the notify step, post approvals, analytics export and per automation attribution, and up to 15 team members. The two differences from a paid Business plan: automations stop at 250, and Liffio branding stays on, in automations, chatbots and your bio link. Not included: additional workspaces or any other Agency feature.",
         },
         {
           id: "how-to-apply",
