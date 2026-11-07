@@ -29,6 +29,15 @@ export const umamiPrivacyScript = (websiteId: string) => `(function(){
   // link code (both resolve to a person), \`fbclid\` is Facebook's per-click id. The page's own
   // URL is untouched, so the affiliate capture still reads \`ref\` from location.
   var DROP_PARAMS = ["ref", "fbclid", "b"];
+  // \`t\` is a partner claim link's signed token (/claim/<slug>#t=<jwt>) and \`code\` its redeem code
+  // (#code=<code>). The claim page keeps both in the address bar so "Open in browser" carries them,
+  // so both are dropped from the query and from the fragment, on any path; anything else in the
+  // fragment is left alone.
+  var DROP_ANYWHERE = ["t", "code"];
+  function hashParams(hash) {
+    var raw = hash.charAt(0) === "#" ? hash.slice(1) : hash;
+    return raw.indexOf("=") === -1 ? null : new URLSearchParams(raw);
+  }
   function scrub(value) {
     if (typeof value !== "string" || !value) return value;
     try {
@@ -42,6 +51,18 @@ export const umamiPrivacyScript = (websiteId: string) => `(function(){
         for (var i = 0; i < DROP_PARAMS.length; i++) {
           if (url.searchParams.has(DROP_PARAMS[i])) {
             url.searchParams.delete(DROP_PARAMS[i]);
+            changed = true;
+          }
+        }
+        var hp = hashParams(url.hash);
+        for (var k = 0; k < DROP_ANYWHERE.length; k++) {
+          if (url.searchParams.has(DROP_ANYWHERE[k])) {
+            url.searchParams.delete(DROP_ANYWHERE[k]);
+            changed = true;
+          }
+          if (hp && hp.has(DROP_ANYWHERE[k])) {
+            hp.delete(DROP_ANYWHERE[k]);
+            url.hash = hp.toString();
             changed = true;
           }
         }
@@ -60,11 +81,16 @@ export const umamiPrivacyScript = (websiteId: string) => `(function(){
     return payload;
   };
   // recorder.js has no hook and records location.href itself, so it stays off for a page load
-  // carrying any of the dropped params, as it does on /auth and /oauth.
+  // carrying any of the dropped params (t= in the query or the fragment), as it does on /auth and
+  // /oauth.
   var carriesDropped = false;
   try {
     var params = new URLSearchParams(location.search);
     for (var j = 0; j < DROP_PARAMS.length; j++) if (params.has(DROP_PARAMS[j])) carriesDropped = true;
+    var landingHash = hashParams(location.hash || "");
+    for (var m = 0; m < DROP_ANYWHERE.length; m++) {
+      if (params.has(DROP_ANYWHERE[m]) || (landingHash && landingHash.has(DROP_ANYWHERE[m]))) carriesDropped = true;
+    }
   } catch (e) {
     carriesDropped = true;
   }
