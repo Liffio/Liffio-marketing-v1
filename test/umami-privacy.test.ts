@@ -114,11 +114,11 @@ test("the claim token is dropped from the fragment of url and referrer", () => {
   assert.ok(!JSON.stringify(out).includes(JWT));
 });
 
-test("with #t= and #code= together, the token goes and the code stays", () => {
+test("with #t= and #code= together, both go", () => {
   const { hook } = run("https://liffio.com/claim/js");
   for (const hash of [`#code=boost-blog&t=${JWT}`, `#t=${JWT}&code=boost-blog`]) {
     const out = hook("event", { url: `https://liffio.com/claim/js?utm_source=ig${hash}` });
-    assert.equal(out.url, "https://liffio.com/claim/js?utm_source=ig#code=boost-blog", hash);
+    assert.equal(out.url, "https://liffio.com/claim/js?utm_source=ig", hash);
   }
 });
 
@@ -128,16 +128,40 @@ test("t= in the query is dropped too, on any path", () => {
   assert.equal(hook("event", { url: `/pricing?t=${JWT}` }).url, "/pricing");
 });
 
-test("#code= alone and other fragments are untouched", () => {
+test("other fragments are untouched", () => {
   const { hook } = run("https://liffio.com/claim/js");
-  for (const url of ["https://liffio.com/claim/js#code=boost-blog", "https://liffio.com/features#pricing", "/blog/post#top"]) {
+  for (const url of ["https://liffio.com/features#pricing", "/blog/post#top", "https://liffio.com/claim/js#x=1"]) {
     assert.equal(hook("event", { url }).url, url, url);
   }
 });
 
-test("the session recorder does not load on a landing carrying #t= or ?t=", () => {
+test("the session recorder does not load on a landing carrying t= or code=", () => {
   assert.equal(run(`https://liffio.com/claim/js#t=${JWT}`).appended.length, 0);
   assert.equal(run(`https://liffio.com/claim/js#code=boost-blog&t=${JWT}`).appended.length, 0);
   assert.equal(run(`https://liffio.com/claim/js?t=${JWT}`).appended.length, 0);
-  assert.equal(run("https://liffio.com/claim/js#code=boost-blog").appended.length, 1);
+  assert.equal(run("https://liffio.com/claim/js#code=boost-blog").appended.length, 0);
+  assert.equal(run("https://liffio.com/claim/js?code=boost-blog").appended.length, 0);
+  assert.equal(run("https://liffio.com/claim/js").appended.length, 1);
+});
+
+/*
+  Redeem codes (#code=<code>, and ?code= for good measure) never reach Umami
+  either: not in url, not in referrer, after ? or #.
+*/
+test("Umami never receives a code, in url or referrer, after ? or #", () => {
+  const CODES = ["LF-JS-7K2Q-M9XD", "boost-blog"];
+  const { hook } = run("https://liffio.com/claim/js#code=LF-JS-7K2Q-M9XD");
+  const cases: Array<[string, string]> = [
+    ["https://liffio.com/claim/js#code=LF-JS-7K2Q-M9XD", "https://liffio.com/claim/js"],
+    ["https://liffio.com/claim/js?code=boost-blog", "https://liffio.com/claim/js"],
+    ["https://liffio.com/claim/js?code=boost-blog&utm_source=ig#code=LF-JS-7K2Q-M9XD", "https://liffio.com/claim/js?utm_source=ig"],
+    ["/claim/js#code=boost-blog", "/claim/js"],
+  ];
+  for (const [url, expected] of cases) {
+    const out = hook("event", { url, referrer: url });
+    assert.equal(out.url, expected, url);
+    assert.equal(out.referrer, expected, url);
+    const text = JSON.stringify(out);
+    for (const code of CODES) assert.ok(!text.includes(code), `${code} leaked from ${url}`);
+  }
 });

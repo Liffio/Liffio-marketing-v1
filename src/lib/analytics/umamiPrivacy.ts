@@ -29,10 +29,11 @@ export const umamiPrivacyScript = (websiteId: string) => `(function(){
   // link code (both resolve to a person), \`fbclid\` is Facebook's per-click id. The page's own
   // URL is untouched, so the affiliate capture still reads \`ref\` from location.
   var DROP_PARAMS = ["ref", "fbclid", "b"];
-  // \`t\` is a partner claim link's signed token (/claim/<slug>#t=<jwt>). The claim page keeps it in
-  // the address bar so "Open in browser" carries it, so it is dropped from the query and from the
-  // fragment, on any path; anything else in the fragment (#code=) is left alone.
-  var DROP_ANYWHERE = ["t"];
+  // \`t\` is a partner claim link's signed token (/claim/<slug>#t=<jwt>) and \`code\` its redeem code
+  // (#code=<code>). The claim page keeps both in the address bar so "Open in browser" carries them,
+  // so both are dropped from the query and from the fragment, on any path; anything else in the
+  // fragment is left alone.
+  var DROP_ANYWHERE = ["t", "code"];
   function hashParams(hash) {
     var raw = hash.charAt(0) === "#" ? hash.slice(1) : hash;
     return raw.indexOf("=") === -1 ? null : new URLSearchParams(raw);
