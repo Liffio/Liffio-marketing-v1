@@ -67,12 +67,17 @@ test("#code= is read from the fragment only, never from ?code=", () => {
   assert.equal(codeFromHash(new URL("https://liffio.com/claim/js?code=LF-JS-7K2Q-M9XD").hash), null);
 });
 
-test("#code= stays in the address bar on load; #t= is still stripped", () => {
+test("#code= and #t= both stay in the address bar on load", () => {
   assert.equal(stripHashOnLoad("#code=LF-JS-7K2Q-M9XD"), false);
   assert.equal(stripHashOnLoad("#code=boost-blog"), false);
-  assert.equal(stripHashOnLoad("#t=abc.def.ghi"), true);
-  // A token always goes, even next to a code.
-  assert.equal(stripHashOnLoad("#code=boost-blog&t=abc.def.ghi"), true);
+  // In-app browsers hand the current URL to "Open in browser", so the token must survive too.
+  assert.equal(stripHashOnLoad("#t=abc.def.ghi"), false);
+  // Both together: the whole fragment is kept.
+  assert.equal(stripHashOnLoad("#code=boost-blog&t=abc.def.ghi"), false);
+  assert.equal(stripHashOnLoad("#t=abc.def.ghi&code=boost-blog"), false);
+  // Kept means still readable on the next load, e.g. the same URL opened in a fresh browser.
+  assert.equal(tokenFromHash("#code=boost-blog&t=abc.def.ghi"), "abc.def.ghi");
+  assert.equal(codeFromHash("#code=boost-blog&t=abc.def.ghi"), "boost-blog");
   // Anything else in the fragment is cleaned as before.
   assert.equal(stripHashOnLoad("#x=1"), true);
   assert.equal(stripHashOnLoad("#code="), true);

@@ -97,3 +97,47 @@ test("the session recorder does not load on a landing carrying ref, fbclid or b,
   }
   assert.equal(run("https://liffio.com/?utm_source=ig&utm_medium=bio").appended.length, 1);
 });
+
+/*
+  Partner claim links (/claim/<slug>#t=<jwt>) now keep the signed token in the
+  address bar, so Umami must never see it: not in url, not in referrer, not
+  in the query, and not through recorder.js.
+*/
+const JWT = "eyJhbGciOiJIUzI1NiJ9.eyJwIjoianMiLCJleHAiOjE4MDB9.c2lnbmF0dXJl";
+
+test("the claim token is dropped from the fragment of url and referrer", () => {
+  const href = `https://liffio.com/claim/js#t=${JWT}`;
+  const { hook } = run(href);
+  const out = hook("event", { url: href, referrer: `/claim/js#t=${JWT}` });
+  assert.equal(out.url, "https://liffio.com/claim/js");
+  assert.equal(out.referrer, "/claim/js");
+  assert.ok(!JSON.stringify(out).includes(JWT));
+});
+
+test("with #t= and #code= together, the token goes and the code stays", () => {
+  const { hook } = run("https://liffio.com/claim/js");
+  for (const hash of [`#code=boost-blog&t=${JWT}`, `#t=${JWT}&code=boost-blog`]) {
+    const out = hook("event", { url: `https://liffio.com/claim/js?utm_source=ig${hash}` });
+    assert.equal(out.url, "https://liffio.com/claim/js?utm_source=ig#code=boost-blog", hash);
+  }
+});
+
+test("t= in the query is dropped too, on any path", () => {
+  const { hook } = run("https://liffio.com/");
+  assert.equal(hook("event", { url: `https://liffio.com/claim/js?t=${JWT}&utm_source=ig` }).url, "https://liffio.com/claim/js?utm_source=ig");
+  assert.equal(hook("event", { url: `/pricing?t=${JWT}` }).url, "/pricing");
+});
+
+test("#code= alone and other fragments are untouched", () => {
+  const { hook } = run("https://liffio.com/claim/js");
+  for (const url of ["https://liffio.com/claim/js#code=boost-blog", "https://liffio.com/features#pricing", "/blog/post#top"]) {
+    assert.equal(hook("event", { url }).url, url, url);
+  }
+});
+
+test("the session recorder does not load on a landing carrying #t= or ?t=", () => {
+  assert.equal(run(`https://liffio.com/claim/js#t=${JWT}`).appended.length, 0);
+  assert.equal(run(`https://liffio.com/claim/js#code=boost-blog&t=${JWT}`).appended.length, 0);
+  assert.equal(run(`https://liffio.com/claim/js?t=${JWT}`).appended.length, 0);
+  assert.equal(run("https://liffio.com/claim/js#code=boost-blog").appended.length, 1);
+});

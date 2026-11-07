@@ -71,13 +71,14 @@ export function codeFromHash(hash: string): string | null {
 }
 
 /**
- * Whether the page strips the fragment on load. A signed `#t=` token is always removed; a
- * `#code=` link is kept as it is, because in-app browsers (Instagram, Telegram) hand the current
- * URL to "Open in browser" and the code would be lost with it.
+ * Whether the page strips the fragment on load. A `#t=` or `#code=` link is kept exactly as it
+ * is (both together keep the whole fragment), because in-app browsers (Instagram, Telegram) hand
+ * the current URL to "Open in browser" and the token or code would be lost with it. Only a
+ * fragment carrying neither is cleaned.
  */
 export function stripHashOnLoad(hash: string): boolean {
   if (!hash || hash === '#') return false;
-  return tokenFromHash(hash) !== null || codeFromHash(hash) === null;
+  return tokenFromHash(hash) === null && codeFromHash(hash) === null;
 }
 
 /** The fragment for what's in the code box: `#code=<value>`, or '' once the box is empty. */

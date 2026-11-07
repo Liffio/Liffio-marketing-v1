@@ -32,10 +32,12 @@ import type { PricingRegion } from '@/lib/pricing-region';
   bad link, offer ended); "Unlocked" and "IG already used" happen in the app
   after Instagram connects.
 
-  Signed links arrive as #t=<jwt>. The fragment is posted to /check and then
-  removed with history.replaceState, so the token never sits in the address
-  bar, the history entry, a Referer or an analytics hit. What travels after
-  that is the 30-minute holdId.
+  Signed links arrive as #t=<jwt>. The token is posted to /check and the
+  fragment stays in the address bar, as #code= does: Instagram and Telegram
+  pass the current URL to "Open in browser", so stripping it lost the token.
+  A fragment is never sent in a Referer, and the Umami hook drops t= from
+  every URL it reports (lib/analytics/umamiPrivacy.ts). What travels to the
+  app is the 30-minute holdId.
 
   Code links arrive as #code=<code> (partner-codes v2 §8) and are checked
   exactly as if Redeem had been pressed, but the fragment stays: Instagram and
@@ -188,7 +190,7 @@ export default function ClaimPage({ slug, region }: { slug: string; region: Pric
   useEffect(() => {
     if (started.current) return;
     started.current = true;
-    // Read the fragment, and strip a signed token before anything else can see it.
+    // Read the fragment. #t= and #code= stay; only a fragment with neither is cleaned.
     const token = tokenFromHash(window.location.hash);
     const code = codeFromHash(window.location.hash);
     if (stripHashOnLoad(window.location.hash)) {
