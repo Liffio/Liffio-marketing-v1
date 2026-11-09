@@ -100,6 +100,8 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   { path: "/affiliate", changeFrequency: "monthly", priority: 0.6, lastModified: "2026-10-21" },
   // Partner rewards: the one code box for every partner's code (/claim/* stays noindex).
   { path: "/redeem", changeFrequency: "monthly", priority: 0.4, lastModified: "2026-11-09" },
+  // Public partner docs: claim links, webhooks, status API.
+  { path: "/partners/docs", changeFrequency: "monthly", priority: 0.4, lastModified: "2026-11-09" },
   // 2026-09-15 is the policy pack: these seven routes were rewritten wholesale
   // from src/content/legal/*.md and each now prints "Last updated:
   // 15 September 2026" in its own body, so the lastmod and the page agree -
