@@ -353,13 +353,20 @@ export default function ClaimPage({ slug }: { slug: string | null }) {
               {view.notice?.kind !== 'paid' && (
                 <>
                   <form className="field" onSubmit={submit} noValidate>
-                    <label htmlFor="code">Your code</label>
+                    <label htmlFor="perk">Your code</label>
                     <div className={`cbox${boxError ? ' bad' : ''}`}>
                       <input
                         ref={inputRef}
-                        id="code"
-                        name="code"
-                        autoComplete="one-time-code"
+                        // Not a login code: "one-time-code" (and a field named "code") made browsers,
+                        // phone keyboards and password managers offer the latest sign-in code here,
+                        // which is never a partner code.
+                        id="perk"
+                        name="perk"
+                        autoComplete="off"
+                        data-1p-ignore="true"
+                        data-lpignore="true"
+                        data-bwignore="true"
+                        data-form-type="other"
                         autoCapitalize="characters"
                         spellCheck={false}
                         inputMode="text"
