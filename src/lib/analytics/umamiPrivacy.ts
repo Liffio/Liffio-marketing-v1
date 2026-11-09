@@ -83,8 +83,10 @@ export const umamiPrivacyScript = (websiteId: string) => `(function(){
   // recorder.js has no hook and records location.href itself, so it stays off for a page load
   // carrying any of the dropped params (t= in the query or the fragment), as it does on /auth and
   // /oauth. It is also never loaded on the claim pages (/redeem, /claim, /claim/<slug>): their
-  // code box writes #code= into the address bar after load, and the recorder would see it.
-  var NO_RECORDER = /^\\/(redeem|claim)(\\/|$)/;
+  // code box writes #code= into the address bar after load, and the recorder would see it. Nor on
+  // sign-up (/register, and /signup which redirects there): its "Have a code?" box takes a partner
+  // code typed by hand, which a recording would show.
+  var NO_RECORDER = /^\\/(redeem|claim|register|signup)(\\/|$)/;
   var carriesDropped = false;
   try {
     var params = new URLSearchParams(location.search);

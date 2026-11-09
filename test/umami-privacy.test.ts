@@ -158,6 +158,20 @@ test("the session recorder never loads on the claim pages, with or without a cod
   assert.equal(run("https://liffio.com/claims-guide").appended.length, 1);
 });
 
+test("the session recorder never loads on sign-up, where a partner code is typed", () => {
+  for (const href of [
+    "https://liffio.com/register",
+    "https://liffio.com/register?hold=3b1f2c4d-0000-4000-8000-000000000001",
+    "https://liffio.com/register/",
+    "https://liffio.com/signup",
+  ]) {
+    assert.equal(run(href).appended.length, 0, href);
+  }
+  // Only those paths: other pages, login included, still record.
+  assert.equal(run("https://liffio.com/registered-trademarks").appended.length, 1);
+  assert.equal(run("https://liffio.com/login").appended.length, 1);
+});
+
 /*
   Redeem codes (#code=<code>, and ?code= for good measure) never reach Umami
   either: not in url, not in referrer, after ? or #.
