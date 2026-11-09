@@ -141,7 +141,21 @@ test("the session recorder does not load on a landing carrying t= or code=", () 
   assert.equal(run(`https://liffio.com/claim/js?t=${JWT}`).appended.length, 0);
   assert.equal(run("https://liffio.com/claim/js#code=boost-blog").appended.length, 0);
   assert.equal(run("https://liffio.com/claim/js?code=boost-blog").appended.length, 0);
-  assert.equal(run("https://liffio.com/claim/js").appended.length, 1);
+});
+
+test("the session recorder never loads on the claim pages, with or without a code", () => {
+  for (const href of [
+    "https://liffio.com/redeem",
+    "https://liffio.com/redeem?utm_source=card",
+    "https://liffio.com/claim",
+    "https://liffio.com/claim/js",
+    "https://liffio.com/claim/js/",
+  ]) {
+    assert.equal(run(href).appended.length, 0, href);
+  }
+  // Only those paths: a page whose name merely starts the same way still records.
+  assert.equal(run("https://liffio.com/redeemable").appended.length, 1);
+  assert.equal(run("https://liffio.com/claims-guide").appended.length, 1);
 });
 
 /*
