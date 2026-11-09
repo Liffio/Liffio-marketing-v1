@@ -1,9 +1,8 @@
 /*
   liffio.com/redeem, /claim and /claim/:slug. Built from the approved design.
   Every rule is scoped under .cl-root, so nothing here touches the rest of the site. Fonts are the
-  site's own (Inter, Space Grotesk, JetBrains Mono through next/font). Unlike the rest of the
-  marketing site this page follows the visitor's dark mode, as the design does: people arrive from
-  a partner's app or email, often at night on a phone.
+  site's own (Inter, Space Grotesk, JetBrains Mono through next/font). Light only, like the rest of
+  the marketing site: the device's dark mode does not change it.
 */
 .cl-root{
   --sans:var(--font-inter),"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
@@ -16,13 +15,6 @@
   background:var(--bg);color:var(--fg);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased;
   min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden;color-scheme:light;
 }
-@media (prefers-color-scheme:dark){
-  .cl-root{
-    --bg:#030406;--fg:#F5F3F0;--surface:#0B0D10;--hover:#15171A;--muted:#9A9EA4;--faint:#6F7379;--line:#202327;
-    --primary:#FF5F67;--primary-soft:#2A1013;--ok:#28BC5E;--ok-soft:#0C2416;--warn:#FDB600;--warn-soft:#2A2005;--danger:#F53A51;
-    --pc:#AEB4FF;--pc-soft:#16183A;--shadow:0 24px 60px -24px rgba(0,0,0,.8);color-scheme:dark;
-  }
-}
 .cl-root *{box-sizing:border-box;margin:0;padding:0}
 .cl-root h1,.cl-root h2{font-family:var(--display);letter-spacing:-.025em;line-height:1.1;font-weight:600}
 .cl-root button,.cl-root input{font:inherit;color:inherit}
@@ -30,10 +22,9 @@
 .cl-root a{color:inherit}
 .cl-root svg.i{width:18px;height:18px;flex:none}
 
-/* Liffio mark: the light or the dark file, by theme */
+/* Liffio mark: always the light file */
 .cl-root .lf{display:inline-flex;align-items:center}
 .cl-root .lf .lf-d{display:none}
-@media (prefers-color-scheme:dark){.cl-root .lf .lf-l{display:none}.cl-root .lf .lf-d{display:block}}
 
 /* header */
 .cl-root .top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 28px;max-width:1180px;width:100%;margin:0 auto}

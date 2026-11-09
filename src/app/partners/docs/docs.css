@@ -1,8 +1,8 @@
 /*
   liffio.com/partners/docs. Built from the approved design. Scoped
   under .pd-root. The site's fonts (Inter, Space Grotesk, JetBrains Mono via next/font) and its
-  paper/ink/crimson palette; follows the reader's dark mode like the design (developers read
-  docs in dark editors). The site's Navbar and Footer stay as they are everywhere else.
+  paper/ink/crimson palette. Light only, like the rest of the marketing site: the device's dark
+  mode does not change it. The site's Navbar and Footer stay as they are everywhere else.
 */
 .pd-root{
   --sans:var(--font-inter),"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
@@ -16,18 +16,6 @@
   --shadow:0 24px 60px -30px rgba(22,10,8,.25);
   background:var(--bg);color:var(--fg);font:15.5px/1.6 var(--sans);-webkit-font-smoothing:antialiased;color-scheme:light;
   overflow-x:clip;
-}
-@media (prefers-color-scheme:dark){
-  .pd-root{
-    --bg:#030406;--fg:#F5F3F0;--surface:#0B0D10;--hover:#15171A;--muted:#9A9EA4;--faint:#6F7379;--line:#202327;
-    --primary:#FF5F67;--primary-soft:#2A1013;--ok:#28BC5E;--ok-soft:#0C2416;--warn:#FDB600;--warn-soft:#2A2005;--danger:#F53A51;
-    --info:#7AA7FF;--info-soft:#0F1A2E;--purple:#C99BFF;--purple-soft:#1E1230;
-    --code-bg:#0B0D10;--code-h:#111418;--code-fg:#E9E6E2;--code-mute:#8B9096;
-    --shadow:0 24px 60px -30px rgba(0,0,0,.8);color-scheme:dark;
-  }
-  .pd-root .plw-title{color:var(--faint)}
-  .pd-root .plw-name{color:var(--fg)}
-  .pd-root .plw-ini{background:var(--hover);color:var(--muted)}
 }
 .pd-root *{box-sizing:border-box}
 .pd-root h1,.pd-root h2,.pd-root h3{font-family:var(--display);letter-spacing:-.025em;font-weight:700;margin:0}

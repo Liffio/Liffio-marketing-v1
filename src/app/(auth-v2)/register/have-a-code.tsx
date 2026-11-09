@@ -60,7 +60,13 @@ export function HaveACode({ onChange, error }: { onChange: (c: AppliedCode) => v
           className={`a2-input a2-code${shown ? ' a2-bad' : found ? ' a2-good' : ''}`}
           placeholder="e.g. BOOST30"
           autoCapitalize="characters"
+          // Not a login code and not a saved value: keep browsers and password managers out.
+          name="perk"
           autoComplete="off"
+          data-1p-ignore="true"
+          data-lpignore="true"
+          data-bwignore="true"
+          data-form-type="other"
           spellCheck={false}
           maxLength={CODE_INPUT_MAX}
           value={value}
