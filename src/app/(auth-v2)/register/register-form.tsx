@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { authStore } from '@/lib/auth/store';
-import { register, getAuthMe, googleAuthUrl, validateAffiliateCode } from '@/lib/auth/api';
+import { API_BASE, register, getAuthMe, googleAuthUrl, validateAffiliateCode } from '@/lib/auth/api';
 import {
   readReferralCodeFromSearch,
   getStoredReferralCode,
@@ -13,7 +13,8 @@ import {
 } from '@/lib/auth/referral';
 import { SignedInNotice, CheckIcon, EyeIcon, GoogleIcon, Spinner } from '@/lib/auth/ui';
 import { useRedirectWhenSignedIn } from '@/lib/auth/app-redirect';
-import { isHoldId, partnerClaimPath, rememberPendingHold } from '@/lib/partner-claim';
+import { BOX_ERRORS, checkClaim, codeOutcome, holdFromSearch, isHoldId, partnerClaimPath, rememberPendingHold } from '@/lib/partner-claim';
+import { HaveACode, type AppliedCode } from './have-a-code';
 import { useHydrated } from '@/lib/auth/use-hydrated';
 import { COUNTRIES, CountryFlagImg, isKnownCountryCode } from '@/lib/auth/countries';
 import { precheckRegistration } from './actions';
@@ -110,7 +111,11 @@ export default function RegisterForm({
   const [termsError, setTermsError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [partnerCode, setPartnerCode] = useState<AppliedCode>({ status: 'empty' });
+  const [partnerCodeError, setPartnerCodeError] = useState<string | null>(null);
   const mounted = useHydrated();
+  // Already carrying a perk from a claim page: the code row would only offer a second one.
+  const carriesHold = holdFromSearch(params) !== null;
 
   const signedIn = useRedirectWhenSignedIn(redirectPath);
 
@@ -212,6 +217,11 @@ export default function RegisterForm({
       trackFormError('register');
       return;
     }
+    if (partnerCode.status === 'pending') {
+      setPartnerCodeError('Press Apply to use this code, or clear it to sign up without one.');
+      trackFormError('register');
+      return;
+    }
 
     setError('');
     setLoading(true);
@@ -226,6 +236,36 @@ export default function RegisterForm({
         setEmailError(precheck.error);
         setLoading(false);
         return;
+      }
+
+      /*
+        A code applied in "Have a code?": hold it now, exactly as Claim on /claim/<slug> does, and
+        carry the hold the same way (?redirect= to confirm-email, sessionStorage through
+        onboarding and the Instagram connect, then the app's attach route applies it).
+      */
+      let nextRedirect = redirectPath;
+      if (partnerCode.status === 'found') {
+        const checked = await checkClaim(API_BASE, partnerCode.slug, { code: partnerCode.code }).catch((err: unknown) =>
+          err instanceof Error && err.message === 'rate_limited' ? ('rate_limited' as const) : null,
+        );
+        if (checked && checked !== 'rate_limited' && checked.state === 'valid' && checked.holdId) {
+          rememberPendingHold(new URLSearchParams({ hold: checked.holdId }));
+          nextRedirect = partnerClaimPath(checked.holdId);
+        } else {
+          const out = checked && checked !== 'rate_limited' ? codeOutcome(checked, null) : null;
+          setPartnerCodeError(
+            checked === 'rate_limited'
+              ? BOX_ERRORS.tooMany
+              : out?.kind === 'box'
+                ? `${out.message} Remove it to sign up without one.`
+                : out?.kind === 'notice'
+                  ? `${out.notice.title}. Remove the code to sign up without it.`
+                  : `${BOX_ERRORS.failed} Or remove it to sign up without one.`,
+          );
+          trackFormError('register');
+          setLoading(false);
+          return;
+        }
       }
 
       const refPayload = getReferralPayloadForRegister();
@@ -250,7 +290,7 @@ export default function RegisterForm({
       // The workspace is created together with the account, right here, not
       // at any point in onboarding. See CHECKLIST.md C5.
       trackSignupStep('workspace_created');
-      router.replace(`/confirm-email${redirectPath ? `?redirect=${encodeURIComponent(redirectPath)}` : ''}`);
+      router.replace(`/confirm-email${nextRedirect ? `?redirect=${encodeURIComponent(nextRedirect)}` : ''}`);
     } catch (err) {
       trackFormError('register');
       setError((err as Error).message);
@@ -552,6 +592,16 @@ export default function RegisterForm({
                   </div>
                 )}
               </div>
+            )}
+
+            {!carriesHold && (
+              <HaveACode
+                error={partnerCodeError}
+                onChange={(c) => {
+                  setPartnerCode(c);
+                  setPartnerCodeError(null);
+                }}
+              />
             )}
 
             <label className="a2-agree" htmlFor="terms">

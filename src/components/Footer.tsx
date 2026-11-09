@@ -6,6 +6,8 @@ const footerLinks = {
   Product: [
     { label: "Features", href: "/features" },
     { label: "Pricing", href: "/pricing" },
+    // Partner rewards SPEC 9.5: any partner's code, one page.
+    { label: "Got a code? Redeem", href: "/redeem" },
     // Added 2026-10-21 with the three new landing pages. The footer is the only
     // site-wide internal link they get, and a route that appears in the sitemap
     // but nowhere in the nav or footer has no internal weight pointing at it.

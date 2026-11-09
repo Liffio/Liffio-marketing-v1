@@ -139,6 +139,13 @@ export default async function PricingPage() {
             <p className="mt-4 text-[12.5px] text-[#8B8391]">
               Free plan included - no credit card required.
             </p>
+            {/* A plain <a>: a full page load, so /redeem decides about the session recorder itself. */}
+            <p className="mt-1.5 text-[12.5px] text-[#8B8391]">
+              Got a code?{" "}
+              <a href="/redeem" className="font-semibold text-[#f5184c] hover:underline">
+                Redeem
+              </a>
+            </p>
           </div>
 
           {/* Plans */}

@@ -57,7 +57,7 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   // 2026-10-21: three outbound links added above the FAQ (this route had none),
   // and faq.config answers it renders were corrected. /pricing is primary for
   // the plans FAQ, which is why it moves with it and most routes do not.
-  { path: "/pricing", changeFrequency: "weekly", priority: 0.9, lastModified: "2026-10-21" },
+  { path: "/pricing", changeFrequency: "weekly", priority: 0.9, lastModified: "2026-11-09" },
   // The index renders each post's title and excerpt only, so it moves when those
   // move (2026-08-09). The 2026-09-11 edit to posts.ts rewrote body copy inside
   // /blog/manychat-alternatives: that belongs on the post's own `updatedAt`,
@@ -98,6 +98,10 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   // lifetime recurring to a six-month term, which rewrote the hero, the payout
   // table, the key stats and the calculator's arithmetic.
   { path: "/affiliate", changeFrequency: "monthly", priority: 0.6, lastModified: "2026-10-21" },
+  // Partner rewards: the one code box for every partner's code (/claim/* stays noindex).
+  { path: "/redeem", changeFrequency: "monthly", priority: 0.4, lastModified: "2026-11-09" },
+  // Public partner docs: claim links, webhooks, status API.
+  { path: "/partners/docs", changeFrequency: "monthly", priority: 0.4, lastModified: "2026-11-09" },
   // 2026-09-15 is the policy pack: these seven routes were rewritten wholesale
   // from src/content/legal/*.md and each now prints "Last updated:
   // 15 September 2026" in its own body, so the lastmod and the page agree -
