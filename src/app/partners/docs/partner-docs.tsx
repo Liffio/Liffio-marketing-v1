@@ -23,7 +23,7 @@ import {
 import { highlight, pretty } from './highlight';
 
 /*
-  liffio.com/partners/docs, built from liffio-partner-program designs/partner-docs-public.html
+  liffio.com/partners/docs, built from the approved design
   section by section. Every rule on this page was checked against the live API code; where the
   design and the code disagreed, the page says what the code does.
 */

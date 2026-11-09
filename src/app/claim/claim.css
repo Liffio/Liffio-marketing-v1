@@ -1,5 +1,5 @@
 /*
-  liffio.com/redeem, /claim and /claim/:slug, from liffio-partner-program designs/claim-redeem.html.
+  liffio.com/redeem, /claim and /claim/:slug. Built from the approved design.
   Every rule is scoped under .cl-root, so nothing here touches the rest of the site. Fonts are the
   site's own (Inter, Space Grotesk, JetBrains Mono through next/font). Unlike the rest of the
   marketing site this page follows the visitor's dark mode, as the design does: people arrive from
