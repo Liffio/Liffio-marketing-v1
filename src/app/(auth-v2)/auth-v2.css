@@ -989,3 +989,81 @@
     transition: none !important;
   }
 }
+
+/* "Have a code?" (partner rewards SPEC 9.5): any partner's code, optional, on the details step. */
+.a2-have {
+  margin-top: 16px;
+  border: 1px dashed var(--a2-line);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.a2-have-h {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--a2-ink);
+}
+.a2-have-h small {
+  margin-left: auto;
+  font-weight: 500;
+  font-size: 12.5px;
+  color: var(--a2-mute);
+}
+.a2-have-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.a2-have-row .a2-input {
+  flex: 1;
+  min-width: 0;
+}
+.a2-code {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.a2-code::placeholder {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+.a2-have-btn {
+  flex: none;
+  height: 46px;
+  padding: 0 16px;
+  border: 1px solid var(--a2-line);
+  border-radius: 12px;
+  background: var(--a2-card);
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--a2-ink);
+  cursor: pointer;
+}
+.a2-have-btn:hover:not(:disabled) {
+  background: var(--a2-sand);
+}
+.a2-have-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.a2-have-ok {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #e3f5e8;
+  color: var(--a2-green);
+  font-size: 13.5px;
+  font-weight: 500;
+}
+.a2-have-ok svg {
+  flex: none;
+  margin-top: 2px;
+}

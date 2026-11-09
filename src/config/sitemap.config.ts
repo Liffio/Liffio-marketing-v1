@@ -57,7 +57,7 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   // 2026-10-21: three outbound links added above the FAQ (this route had none),
   // and faq.config answers it renders were corrected. /pricing is primary for
   // the plans FAQ, which is why it moves with it and most routes do not.
-  { path: "/pricing", changeFrequency: "weekly", priority: 0.9, lastModified: "2026-10-21" },
+  { path: "/pricing", changeFrequency: "weekly", priority: 0.9, lastModified: "2026-11-09" },
   // The index renders each post's title and excerpt only, so it moves when those
   // move (2026-08-09). The 2026-09-11 edit to posts.ts rewrote body copy inside
   // /blog/manychat-alternatives: that belongs on the post's own `updatedAt`,
