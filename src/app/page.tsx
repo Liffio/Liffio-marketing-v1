@@ -7,6 +7,7 @@ import HeroSection from "@/components/HeroSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import OfficialApiSection from "@/components/OfficialApiSection";
+import PartnerLogoWall from "@/components/PartnerLogoWall";
 // Restore alongside the commented-out testimonials block below:
 // import TestimonialsSection from "@/components/TestimonialsSection";
 import CreatorUseCasesSection from "@/components/CreatorUseCasesSection";
@@ -42,6 +43,8 @@ export default async function Home() {
             no work below the fold. It reinforces the hero's "Verified Meta Tech
             Provider" chip with the specifics (which API, which approvals). */}
         <OfficialApiSection />
+        {/* Partner logos (SPEC 9.7). Renders nothing until an admin shows a partner on the site. */}
+        <PartnerLogoWall />
         <TrackSection name="features">
           <FeaturesSection />
         </TrackSection>
