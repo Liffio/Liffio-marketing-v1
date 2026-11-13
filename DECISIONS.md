@@ -611,3 +611,32 @@ and the five `/vs/` entries, whose chatbot rows are honest but thinner than the 
 
 Logged rather than acted on, because adding feature claims after being told "no changes needed"
 is not a call I should make unasked.
+
+---
+
+## D22. The three chatbot features are now on the agency page
+
+Owner authorized this on 2026-11-13 and supplied the backend evidence:
+
+- **Chatbot lead capture**, backed by `chatbot_sessions.lead_id`, a real FK to the leads table
+- **Webhook step**, supported by `chatbot_steps` through its `config` jsonb
+- **Conditions**, `chatbotConditionRules` in `package_limits`: Starter 5, Growth 15, and no cap
+  row for Business or Agency, which is what unlimited means
+
+Added to `/instagram-automation-for-agencies` as a new section, "Chatbots that qualify the lead
+before you touch it", placed after client reporting because the webhook step is the piece that
+connects to an agency's reporting stack.
+
+**Numbers are read, not typed.** The per-plan table pulls from `V4_FEATURE_CATEGORIES` by row
+name, so a plan change moves this page automatically and it cannot drift from the pricing sheet.
+I verified the matrix already matches the backend the owner quoted: `Live chatbots` reads
+2/5/15/Unlimited/Unlimited and `Condition rules` reads 0/5/15/Unlimited/Unlimited across Free,
+Starter, Growth, Business and Agency.
+
+Also added: a `TODO:SCREENSHOT` marker for the chatbot builder showing a condition step with two
+branches and a webhook, and an FAQ entry on reaching a CRM mid chat, which feeds the page's
+existing FAQ schema. The FAQ interpolates the same config values rather than restating them.
+
+**Framing kept honest.** Lead capture and the webhook step are named as Business and Agency
+features rather than implied to be universal, and conditions are credited as starting on Starter,
+with Agency removing the ceiling per workspace across all twenty.

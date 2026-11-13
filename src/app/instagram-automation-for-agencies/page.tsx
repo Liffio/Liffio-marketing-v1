@@ -10,7 +10,7 @@ import { metaCopy } from "@/config/meta-copy";
 import { BreadcrumbJsonLd, FaqPageJsonLd } from "@/lib/seo/json-ld";
 import type { FaqCategory } from "@/config/faq.config";
 import { getPricingPlans, planWorkspacesIncluded, type PricingPlan } from "@/config/pricing.config";
-import { V4_PLAN_CONTENT } from "@/config/pricing-v4.config";
+import { V4_FEATURE_CATEGORIES, V4_PLAN_CONTENT } from "@/config/pricing-v4.config";
 import { INR_TAX_NOTE_LONG, USD_TAX_NOTE } from "@/config/tax-copy";
 import type { PricingRegion } from "@/lib/pricing-region";
 
@@ -82,11 +82,50 @@ const AGENCY_API_LIMITS = V4_PLAN_CONTENT.Agency.apiLimits;
 /** The contact-sales route that actually exists today. See the TODO above. */
 const AGENCY_CONTACT_HREF = `mailto:${siteConfig.contact.email}?subject=Agency%20plan%20walkthrough`;
 
+/*
+  Chatbot limits are READ from the plan matrix, never typed here. Entitlement
+  lives in the backend's package_limits table and V4_FEATURE_CATEGORIES is the
+  marketing mirror of it, so a plan change moves this section automatically.
+  Owner-confirmed 2026-11-13: chatbot_sessions.lead_id is a real FK to leads,
+  chatbot_steps carries the webhook step in its config jsonb, and
+  chatbotConditionRules caps Starter at 5 and Growth at 15 with no cap row for
+  Business or Agency, which is what "Unlimited" means in the row below.
+*/
+const CHATBOT_ROWS = V4_FEATURE_CATEGORIES.find((c) => c.name === "Chatbots")?.features ?? [];
+
+function chatbotLimit(rowName: string, plan: "starter" | "growth" | "business" | "agency"): string {
+  const row = CHATBOT_ROWS.find((f) => f.name === rowName);
+  const value = row?.[plan];
+  return typeof value === "string" ? value : value ? "Yes" : "No";
+}
+
+const CHATBOT_LIMIT_ROWS = ["Live chatbots", "Condition rules", "Steps per bot", "Keywords per bot"];
+
+const CHATBOT_POINTS = [
+  {
+    title: "Answers land in the leads list, not in a transcript",
+    body: "When a chatbot asks a question, the answer attaches to that lead rather than sitting in a conversation nobody reads twice. For an agency that means a qualified list per client workspace, exportable, instead of a team member scrolling DMs to find who said they wanted the pricing sheet.",
+  },
+  {
+    title: "A webhook step hands answers to your own system mid chat",
+    body: "A chatbot step can post what it just collected to your endpoint while the conversation is still open. That is the piece that makes this fit an agency stack: qualified leads reach the client's CRM, your reporting sheet or a Slack channel as they happen, rather than waiting for an export at the end of the month.",
+  },
+  {
+    title: "Conditions branch the conversation by what people say",
+    body: "Condition rules send someone down a different path depending on their answer, so one bot handles the buyer, the browser and the person who typed the keyword by accident. This is the difference between a chatbot and a canned reply, and it is where a client notices the work.",
+  },
+];
+
 const faqCategories: FaqCategory[] = [
   {
     id: "instagram-automation-for-agencies",
     label: "Instagram automation for agencies FAQ",
     items: [
+      {
+        id: "chatbot-webhook-crm",
+        question: "Can chatbot answers reach our CRM or reporting stack?",
+        answer: `Yes, through the webhook step, which is a Business and Agency feature. A chatbot step can post what it has just collected to your endpoint while the conversation is still open, so a qualified lead reaches the client's CRM, your reporting sheet or a Slack channel as it happens rather than in a monthly export. Answers also attach to the lead inside Liffio, so each client workspace keeps its own exportable list. Condition rules branch the conversation on those answers: ${chatbotLimit("Condition rules", "starter")} on Starter, ${chatbotLimit("Condition rules", "growth")} on Growth, and ${chatbotLimit("Condition rules", "business").toLowerCase()} on Business and Agency.`,
+      },
       {
         id: "how-many-accounts",
         question: "How many Instagram accounts can an agency run on Liffio?",
@@ -399,6 +438,60 @@ export default function InstagramAutomationForAgenciesPage() {
                 figure that does not exist. If a client wants revenue in the report, pair the click
                 numbers from Liffio with the order numbers from their own commerce analytics, and
                 label which side each came from.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Chatbots */}
+        <section id="chatbots" className="py-16 bg-white border-t border-gray-100">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-3" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
+              Chatbots that qualify the lead before you touch it
+            </h2>
+            <p className="text-gray-600 leading-relaxed mb-8">
+              Comment to DM starts the conversation. A chatbot is what carries it, and on the
+              agency plan it is a separate module rather than a longer autoreply. Three parts of it
+              matter when the account belongs to a client rather than to you.
+            </p>
+            <div className="space-y-6">
+              {CHATBOT_POINTS.map((point) => (
+                <div key={point.title} className="rounded-xl border border-gray-200 p-5">
+                  <h3 className="font-semibold text-gray-900 mb-1">{point.title}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">{point.body}</p>
+                </div>
+              ))}
+            </div>
+            {/* TODO:SCREENSHOT alt="Liffio chatbot builder with a condition step open, showing two branches leading to different replies and a webhook step on one of them" */}
+            <div className="mt-10 overflow-x-auto">
+              <h3 className="font-semibold text-gray-900 mb-3">What each plan allows</h3>
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-gray-200 text-left">
+                    <th className="py-3 px-4 font-semibold text-gray-700">Chatbots</th>
+                    <th className="py-3 px-4 font-semibold text-gray-700">Starter</th>
+                    <th className="py-3 px-4 font-semibold text-gray-700">Growth</th>
+                    <th className="py-3 px-4 font-semibold text-gray-700">Business</th>
+                    <th className="py-3 px-4 font-semibold text-[#f5184c]">Agency</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {CHATBOT_LIMIT_ROWS.map((rowName) => (
+                    <tr key={rowName} className="border-b border-gray-100">
+                      <td className="py-3 px-4 font-medium text-gray-900">{rowName}</td>
+                      <td className="py-3 px-4 text-gray-600">{chatbotLimit(rowName, "starter")}</td>
+                      <td className="py-3 px-4 text-gray-600">{chatbotLimit(rowName, "growth")}</td>
+                      <td className="py-3 px-4 text-gray-600">{chatbotLimit(rowName, "business")}</td>
+                      <td className="py-3 px-4 text-gray-900 font-medium">{chatbotLimit(rowName, "agency")}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="mt-4 text-sm text-gray-600 leading-relaxed">
+                Lead capture into the leads list and the webhook step are Business and Agency
+                features. Conditions start on Starter, so a smaller retainer can still branch a
+                conversation; the Agency plan simply removes the ceiling, per workspace, on all
+                twenty.
               </p>
             </div>
           </div>
