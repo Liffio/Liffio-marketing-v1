@@ -10,9 +10,9 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import type { FaqCategory } from "@/config/faq.config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Free ManyChat Alternative for Instagram DM Automation | Liffio",
+  title: "ManyChat vs Liffio: Should You Switch? (2026)",
   description:
-    "Looking for a free ManyChat alternative? ManyChat’s free tier caps you at 25 contacts a month. Liffio’s free plan has no per-contact fees. From $9/month.",
+    "Already comparing ManyChat and Liffio? Where each one wins, what switching costs you, and how to move your automations across in about two hours.",
   pathname: "/manychat-alternative",
   ogImagePath: siteConfig.meta.ogImagePath,
   ogImageAlt: siteConfig.meta.ogImageAlt,
@@ -63,12 +63,76 @@ const faqCategories: FaqCategory[] = [
   },
 ];
 
-const competitorPricing = [
-  { name: "Liffio", free: true, startingPrice: "$0/month", paidFrom: "$9/month", perContact: false, instagramOnly: true },
-  { name: "ManyChat", free: true, startingPrice: "Free capped at 25 contacts/mo", paidFrom: "$14/month + per-contact fees", perContact: true, instagramOnly: false },
-  { name: "SendDM", free: true, startingPrice: "Free tier (DM-capped)", paidFrom: "₹399/month (India)", perContact: false, instagramOnly: true },
-  { name: "LinkDM", free: false, startingPrice: "No free plan", paidFrom: "From ~$19/month", perContact: false, instagramOnly: true },
-  { name: "SuperProfile", free: true, startingPrice: "Free tier available", paidFrom: "From ~$15/month", perContact: false, instagramOnly: false },
+// Competitor pricing verified 2026-11-13 by reading each vendor's own live
+// pricing page. Refresh from these URLs only, never from memory or an article,
+// and keep "as of November 2026" in the visible copy next to the table:
+//   ManyChat      https://manychat.com/pricing      (blocks automated fetching,
+//                                                    refresh in a real browser)
+//   SendDM        https://senddm.ai/pricing
+//   LinkDM        https://www.linkdm.com/pricing
+//   SuperProfile  https://superprofile.bio/in/pricing and /pricing
+const competitorPricing: {
+  name: string;
+  free: boolean | string;
+  startingPrice: string;
+  paidFrom: string;
+  perContact: boolean;
+  instagramOnly: boolean;
+}[] = [
+  // Liffio's own figures come from src/config/pricing.config.ts. Never retype
+  // them from memory. Both rate cards are real, so both are shown.
+  { name: "Liffio", free: true, startingPrice: "₹0 / $0 per month", paidFrom: "₹499/month in India, $9/month internationally", perContact: false, instagramOnly: true },
+  // MANYCHAT, read from https://manychat.com/pricing, verified 2026-11-13 in a
+  // real browser.
+  // 🚩 manychat.com blocks automated fetching: a domain-wide Cloudflare bot
+  // check returns HTTP 403 to curl, to WebFetch and to headless browser
+  // engines. A refresh therefore needs a REAL browser, not curl. The
+  // interstitial clears after roughly 8 seconds. Blocked != unlisted: the
+  // figures below are published, so do not replace them with a placeholder
+  // just because an automated fetch failed.
+  // Monthly, then annual, then active-contact cap / channels / users:
+  //   Free       $0                                25 / 2 / 1
+  //   Essential  $14/mo    $168/yr   (18% off)    250 / 2 / 2
+  //   Pro        $29/mo    $348/yr   (25% off)  2,500 / 3 / 3
+  //   Business   $69/mo    $828/yr   (30% off)  7,500 / unlimited / 5
+  //   Advanced   $139/mo   $1,668/yr           25,000 / unlimited / 10
+  // The billing unit is the Active Contact: one real person interacted with
+  // during a monthly billing period counts once for that month. Going over the
+  // cap does not switch automations off; ManyChat charges a small overage fee
+  // per additional Active Contact. On annual plans contacts are still counted
+  // monthly and overages billed monthly. Free needs no card, carries Manychat
+  // branding and allows up to 4 live triggers; Essential and above remove the
+  // branding. 14-day free trial on Essential or Pro. Prices exclude tax and
+  // depend on the billing country.
+  // 🔴 USD ONLY, and NO INR. https://manychat.com/pricing?country=IN still
+  // rendered $29/mo with no rupee symbol anywhere on the page. So the accurate
+  // statement is "its pricing page shows USD only and publishes no rupee
+  // price". Do NOT write "bills Indian users in USD": the page never says so.
+  { name: "ManyChat", free: "Yes, 25 contacts", startingPrice: "$0/month (25 active contacts)", paidFrom: "$14/month (Essential, 250 contacts)", perContact: true, instagramOnly: false },
+  // https://senddm.ai/pricing, verified 2026-11-13 in BOTH regional views: curl
+  // for the international rate card, an India-geolocated browser for the rupee
+  // rate card. The page GEO-LOCALIZES, so a curl result shows only the default
+  // or US view and is not evidence about what an Indian customer sees. An
+  // earlier pass made exactly that mistake and wrote "USD only, no rupee
+  // pricing" here. The original "₹399/month" was correct all along: it is
+  // Creator on annual billing. Tier names match in both regions (Free, Creator,
+  // Growth, Scale, Custom). Annual per month / monthly / billed yearly:
+  //   India:         Free ₹0; Creator ₹399/₹499/₹4,790; Growth ₹719/₹899/₹8,630;
+  //                  Scale ₹1,439/₹1,799/₹17,270; Custom quote
+  //   International: Free $0;  Creator $9/$11/$105.60;   Growth $16/$20/$192;
+  //                  Scale $31/$39/$374;                 Custom quote
+  // Free is capped at 300 DMs/month with 1 Instagram account; every PAID tier
+  // has UNLIMITED DMs, so never present unlimited DMs as a Liffio-only edge
+  // over SendDM.
+  { name: "SendDM", free: true, startingPrice: "₹0 / $0 (300 DMs/mo cap)", paidFrom: "₹399/month in India, $9/month internationally (annual billing)", perContact: false, instagramOnly: true },
+  // Verified 2026-11-13: LinkDM DOES have a permanent free plan (1 Instagram
+  // account, 1,000 DMs/month). The previous "No free plan" row was a false
+  // negative about a named competitor, which is exactly what this file's
+  // verification rule exists to prevent.
+  { name: "LinkDM", free: true, startingPrice: "$0 (1 account, 1,000 DMs/mo)", paidFrom: "$19/month (Pro)", perContact: false, instagramOnly: true },
+  // Verified 2026-11-13: India ₹99 first month then ₹499; global $4.99 first
+  // month then $29/month. The previous "From ~$15/month" matched neither.
+  { name: "SuperProfile", free: true, startingPrice: "Free Starter tier", paidFrom: "₹499/month India, $29/month global", perContact: false, instagramOnly: false },
 ];
 
 export default function ManyChatAlternativePage() {
@@ -78,7 +142,7 @@ export default function ManyChatAlternativePage() {
       <BreadcrumbJsonLd
         items={[
           { name: "Home", item: SITE_URL },
-          { name: "ManyChat Alternative", item: `${SITE_URL}/manychat-alternative` },
+          { name: "ManyChat vs Liffio", item: `${SITE_URL}/manychat-alternative` },
         ]}
       />
       <FaqPageJsonLd categories={faqCategories} />
@@ -92,21 +156,22 @@ export default function ManyChatAlternativePage() {
               className="justify-center mb-6"
               items={[
                 { label: "Home", href: "/" },
-                { label: "ManyChat Alternative", href: "/manychat-alternative" },
+                { label: "ManyChat vs Liffio", href: "/manychat-alternative" },
               ]}
             />
             <h1
               className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight"
               style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
             >
-              The Best ManyChat Alternative for Instagram DM Automation
+              ManyChat vs Liffio: should you switch?
             </h1>
             <p className="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
-              ManyChat popularised comment-to-DM, but growing creators need simpler pricing, no
-              per-contact fees, and tools built only for Instagram. Liffio delivers all three, with
-              unlimited automated DMs on every plan, Free included and a free plan that actually works in
-              production.
+              You already know both tools. This page is about the decision: where each one is
+              genuinely better, what switching actually costs you in time, and how to move your
+              automations across without losing a campaign. ManyChat is the stronger pick if you
+              run Messenger and WhatsApp too. If Instagram is your only channel, keep reading.
             </p>
+            <p className="mt-4 text-sm text-gray-500">Last updated: November 2026</p>
             <div className="mt-8 flex flex-wrap gap-4 justify-center">
               <a
                 href={siteConfig.urls.appSignup}
@@ -155,7 +220,7 @@ export default function ManyChatAlternativePage() {
               <ul className="mt-4 space-y-2 list-none">
                 <li className="flex gap-3">
                   <span className="text-[#f5184c] font-bold mt-0.5">→</span>
-                  <span><strong className="text-gray-900">Per-contact pricing:</strong> ManyChat charges based on your total contact count. A single viral Reel can push you into a higher tier before you have time to review the bill.</span>
+                  <span><strong className="text-gray-900">Per-contact pricing:</strong> ManyChat bills by Active Contact, and the caps are tight at the bottom of the ladder: 25 on the free plan and 250 on the $14/month Essential plan as of November 2026. One Reel that performs can clear 250 unique people in an afternoon and put you into overage before you have reviewed the bill.</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-[#f5184c] font-bold mt-0.5">→</span>
@@ -163,7 +228,7 @@ export default function ManyChatAlternativePage() {
                 </li>
                 <li className="flex gap-3">
                   <span className="text-[#f5184c] font-bold mt-0.5">→</span>
-                  <span><strong className="text-gray-900">No INR billing:</strong> Indian creators pay in USD via international processing fees. Liffio offers native INR billing through Razorpay with GST-friendly invoices.</span>
+                  <span><strong className="text-gray-900">No rupee price:</strong> ManyChat&apos;s pricing page shows US dollars only and publishes no rupee price, as of November 2026, even with the billing country set to India. Liffio bills in INR natively through Razorpay with GST-friendly invoices.</span>
                 </li>
               </ul>
             </div>
@@ -215,7 +280,7 @@ export default function ManyChatAlternativePage() {
                       <td className="py-3 px-4 font-semibold text-gray-900">
                         {i === 0 ? <span className="text-[#f5184c]">{tool.name} ★</span> : tool.name}
                       </td>
-                      <td className="py-3 px-4 text-gray-600">{tool.free ? "✓ Yes" : "✗ No"}</td>
+                      <td className="py-3 px-4 text-gray-600">{typeof tool.free === "string" ? tool.free : tool.free ? "✓ Yes" : "✗ No"}</td>
                       <td className="py-3 px-4 text-gray-600">{tool.paidFrom}</td>
                       <td className="py-3 px-4 text-gray-600">{tool.perContact ? "Yes, scales with contacts" : "No, flat pricing"}</td>
                       <td className="py-3 px-4 text-gray-600">{tool.instagramOnly ? "Yes" : "No, multi-channel"}</td>
@@ -226,23 +291,69 @@ export default function ManyChatAlternativePage() {
             </div>
             <div className="mt-6 space-y-4 text-gray-600 leading-relaxed">
               <p>
-                The structural difference between Liffio and ManyChat on pricing is not just the
-                starting number. It is the pricing model. ManyChat charges based on your total contact
-                count. At 1,000 contacts the price is manageable; at 10,000 contacts the bill is
-                meaningfully higher, and you hit 10,000 contacts faster than you expect when
-                comment-to-DM automation is running on active Reels.
+                The structural difference between Liffio and ManyChat on pricing is not the starting
+                number. It is the unit.{" "}
+                <a
+                  href="https://manychat.com/pricing"
+                  target="_blank"
+                  rel="noopener nofollow"
+                  className="text-[#b20d8f] font-semibold hover:underline"
+                >
+                  ManyChat&apos;s pricing page, as of November 2026
+                </a>
+                , prices by Active Contact: Free at $0 for 25 active contacts, Essential at
+                $14/month for 250, Pro at $29/month for 2,500, Business at $69/month for 7,500,
+                and Advanced at $139/month for 25,000. On annual billing those four paid tiers
+                are $168, $348, $828 and $1,668 for the year. An Active Contact is one real
+                person your automations interacted with during a monthly billing period, counted
+                once for that month. Going over the cap does not switch your automations off:
+                ManyChat charges a small overage fee for each extra Active Contact instead, and
+                on annual plans contacts are still counted monthly with overages billed monthly.
+                Prices exclude tax and depend on your billing country.
+              </p>
+              <p>
+                The caps matter more than the dollar figures. 25 active contacts on Free and 250
+                on the $14 plan are small numbers for anyone running comment-to-DM on a Reel that
+                performs, because every person who comments your keyword is a contact. Clear the
+                cap and the bill starts moving with your reach, which is the wrong way round for
+                a creator. Watch the $29 collision too, because the two plans are not the same
+                deal: ManyChat Pro at $29/month caps at 2,500 active contacts with overage
+                beyond, while Liffio Growth at $29/month, or ₹1,499/month in India, has no
+                contact ceiling at all. No Liffio plan meters DMs or contacts, Free included.
+              </p>
+              <p>
+                ManyChat&apos;s free plan needs no credit card, which is worth knowing if you
+                want to try it, but it carries Manychat branding and allows up to 4 live
+                triggers. Essential and above remove the branding, and there is a 14-day
+                free trial on Essential or Pro. Liffio&apos;s free plan has no expiry, no card
+                requirement and no DM ceiling, and it is capped on automation workflows rather
+                than on the people who reach you.
               </p>
               <p>
                 Liffio charges a flat monthly rate regardless of how many automated DMs you send or
-                how many contacts you accumulate. The $9/month Starter plan covers unlimited DMs
-                whether you are sending to 500 people or 50,000. That predictability matters when
+                how many contacts you accumulate. The Starter plan, $9/month internationally or
+                ₹499/month in India as of November 2026, covers unlimited DMs whether you are
+                sending to 500 people or 50,000. That predictability matters when
                 you are scaling a launch campaign and cannot afford a surprise overage charge.
               </p>
               <p>
-                SendDM and LinkDM are simpler tools with focused feature sets. Neither has
-                transparent public pricing at the time of writing. SuperProfile bundles a bio-link
-                storefront with its automation product, which is useful if the link-in-bio is your primary
-                need, but heavier than necessary if DM automation is the priority.
+                SendDM and LinkDM are simpler tools with focused feature sets, and both publish
+                their prices openly.{" "}
+                <a
+                  href="https://senddm.ai/pricing"
+                  target="_blank"
+                  rel="noopener nofollow"
+                  className="text-[#b20d8f] font-semibold hover:underline"
+                >
+                  SendDM
+                </a>{" "}
+                is free with a 300 DM per month cap, then Creator at ₹399/month in India, or
+                $9/month internationally, both on annual billing (₹499 or $11 month to month).
+                Its pricing page geo-localizes, so both rate cards are real, and its paid tiers
+                carry unlimited DMs. LinkDM Pro is $19/month, US dollars only. All figures are as
+                of November 2026. SuperProfile bundles a bio-link
+                storefront with a genuine comment-to-DM tool, which is useful if the link-in-bio is
+                your primary need, though it has no chatbot layer if full DM conversations matter.
               </p>
             </div>
           </div>

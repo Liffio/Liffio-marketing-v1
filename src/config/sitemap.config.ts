@@ -68,21 +68,24 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   // 2026-10-21: Zorcha's unlimited-DM row corrected from a false negative, the
   // LinkDM "Meta Business Partner" claim removed, and row defaults hardened so
   // an unverified field can no longer publish a negative claim about a rival.
-  { path: "/compare", changeFrequency: "weekly", priority: 0.85, lastModified: "2026-10-21" },
+  { path: "/compare", changeFrequency: "weekly", priority: 0.85, lastModified: "2026-11-13" },
   // All three were corrected on 2026-09-11 (page copy plus ComparisonTable's
   // DEFAULT_ROWS) and again on 2026-10-21, when "Meta OAuth" and "Meta login"
   // became Instagram Login throughout and a safety FAQ was prepended.
-  { path: "/manychat-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-10-21" },
-  { path: "/senddm-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-10-21" },
-  { path: "/chatfuel-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-10-21" },
+  { path: "/manychat-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-11-13" },
+  { path: "/senddm-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-11-13" },
+  { path: "/chatfuel-alternative", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-11-13" },
 
   // NEW 2026-10-21. Three routes added to cover queries the site ranked for
   // nothing on: the category head term, the uncapped-DM differentiator, and the
   // safety objection. Priorities sit at or just under /features because the
   // first of them is a head-term landing page, not a secondary one.
-  { path: "/instagram-comment-to-dm", changeFrequency: "monthly", priority: 0.9, lastModified: "2026-10-21" },
+  { path: "/instagram-comment-to-dm", changeFrequency: "monthly", priority: 0.9, lastModified: "2026-11-13" },
   { path: "/unlimited-instagram-dms", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-10-21" },
-  { path: "/is-instagram-dm-automation-safe", changeFrequency: "monthly", priority: 0.8, lastModified: "2026-10-21" },
+  { path: "/is-instagram-dm-automation-safe", changeFrequency: "monthly", priority: 0.8, lastModified: "2026-11-13" },
+  // Added 2026-11-13: the Agency plan is the highest-value SKU and previously
+  // had no page of its own, only a short subsection inside comparison pages.
+  { path: "/instagram-automation-for-agencies", changeFrequency: "monthly", priority: 0.85, lastModified: "2026-11-13" },
   // No visible copy changed here, but the page stopped emitting its duplicate
   // Organization node, a structured-data change worth a re-crawl.
   { path: "/about", changeFrequency: "monthly", priority: 0.7, lastModified: "2026-09-11" },
@@ -98,8 +101,8 @@ export const SITEMAP_ENTRIES: readonly SitemapEntry[] = [
   // lifetime recurring to a six-month term, which rewrote the hero, the payout
   // table, the key stats and the calculator's arithmetic.
   { path: "/affiliate", changeFrequency: "monthly", priority: 0.6, lastModified: "2026-10-21" },
-  // Partner rewards: the one code box for every partner's code (/claim/* stays noindex).
-  { path: "/redeem", changeFrequency: "monthly", priority: 0.4, lastModified: "2026-11-09" },
+  // Partner rewards: /redeem is noindex as of 2026-11-13 and therefore absent
+  // from the sitemap (/claim/* was already noindex). The URL still resolves.
   // Public partner docs: claim links, webhooks, status API.
   { path: "/partners/docs", changeFrequency: "monthly", priority: 0.4, lastModified: "2026-11-09" },
   // 2026-09-15 is the policy pack: these seven routes were rewritten wholesale

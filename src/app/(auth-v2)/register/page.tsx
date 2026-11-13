@@ -1,8 +1,16 @@
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { headers } from 'next/headers';
 import { getCountryCodeFromHeaders } from '@/lib/pricing-region';
 import { getPricingContext } from '@/lib/pricing-region.server';
 import RegisterForm from './register-form';
+
+// robots.txt no longer disallows /register, so agentic browsers that honour it
+// (Claude-User among them) can reach sign-up. Indexing is still unwanted, so it
+// is refused here at the page level instead of at the crawler level.
+export const metadata: Metadata = {
+  robots: { index: false, follow: true },
+};
 
 // Read the raw Vercel geo header directly: getPricingContext() returns
 // countryCode: null for non-India regions which would leave the dropdown

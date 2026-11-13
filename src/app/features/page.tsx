@@ -51,6 +51,20 @@ export default async function FeaturesPage() {
               can be paused, edited, or deleted at any time from the dashboard. Analytics track trigger
               count, DM delivered count, and link click-through per automation.
             </p>
+            {/*
+              Descriptive in-prose links into the comparison cluster. This page had
+              no internal links at all before 2026-11-13.
+            */}
+            <p>
+              Comparing this against another tool? Start with the{' '}
+              <a href="/compare" className="underline underline-offset-2 hover:text-foreground transition-colors">Instagram DM automation tools comparison</a>, or read{' '}
+              <a href="/manychat-alternative" className="underline underline-offset-2 hover:text-foreground transition-colors">ManyChat vs Liffio</a> and{' '}
+              <a href="/vs/replyrush" className="underline underline-offset-2 hover:text-foreground transition-colors">Liffio vs ReplyRush</a> for the head-to-head detail.
+              For the mechanics of the main workflow, see the{' '}
+              <a href="/instagram-comment-to-dm" className="underline underline-offset-2 hover:text-foreground transition-colors">Instagram comment to DM guide</a>. Agencies
+              running several client accounts should read{' '}
+              <a href="/instagram-automation-for-agencies" className="underline underline-offset-2 hover:text-foreground transition-colors">Instagram automation for agencies</a>.
+            </p>
           </div>
         </section>
         <SiteFaqSection categories={faqCategories} defaultOpenId="comment-to-dm-how" />

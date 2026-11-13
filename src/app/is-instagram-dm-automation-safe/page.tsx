@@ -37,16 +37,35 @@ import type { FaqCategory } from "@/config/faq.config";
  *     approves a submission of specific permissions, which is a different
  *     sentence.
  *   - "Meta Verified": a trademarked paid consumer badge product, unrelated.
+ *   - "Powered by Meta", or any wording that reads as co-branding. The Meta and
+ *     Instagram LOGOS are out of scope entirely: those route through Brand
+ *     Review, which Liffio does not hold. Text only on this page.
+ *   - "Meta login": users authorise on INSTAGRAM's own consent screen via
+ *     Instagram Login and never see a Meta login. "Meta's platform terms" IS
+ *     correct, because those do govern the integration.
  *   - Any promise that an account cannot be restricted. Liffio does not control
  *     Instagram's enforcement and must never imply it does.
  * The credential is stated ONCE, in the hero badge, from metaCopy. See the
  * note at the top of src/config/meta-copy.ts.
+ *
+ * 🚩 PLATFORM RULES SECTION: the three rules stated there are Instagram's, not
+ * Liffio's, and they are the credibility spine of the page. One private reply
+ * per comment within 7 days of that comment, message requests for recipients
+ * who do not follow the account, and Instagram's own rate and sending limits.
+ * Do not soften any of them into a Liffio capability, and do not add a fourth
+ * rule without a documented source.
+ *
+ * 🚩 FEATURE FLAGS: nothing on this page may describe story reactions, welcome
+ * or new-follower DMs, comment @mention triggers, branching logic, in-DM data
+ * prompting, CRM integrations or sale tracking. See
+ * src/config/feature-flags.ts. The triggers named here are comment keywords,
+ * story replies and DMs, all of which ship.
  */
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Is Instagram DM Automation Safe? What Actually Risks a Ban",
+  title: "Is Instagram DM Automation Safe? What Risks a Ban",
   description:
-    "Automating Instagram DMs is safe when the tool uses the official Instagram API and you only message people who asked. Here is what actually gets accounts restricted.",
+    "Instagram DM automation is safe when the tool runs on the official Instagram API. How to check yours, and what actually gets accounts restricted.",
   pathname: "/is-instagram-dm-automation-safe",
   ogImagePath: siteConfig.meta.ogImagePath,
   ogImageAlt: siteConfig.meta.ogImageAlt,
@@ -67,13 +86,19 @@ const faqCategories: FaqCategory[] = [
         id: "will-i-get-banned",
         question: "Will my Instagram account get banned for using a DM automation tool?",
         answer:
-          "Using a compliant tool to reply to people who commented on your post is not what gets accounts actioned. Accounts get restricted for behaviour: messaging people who never interacted with you, sending identical text at machine speed, using a tool that logs in as you, or buying followers and engagement alongside it. No tool can guarantee an account will never be restricted, and any tool that guarantees it is telling you something about its own honesty. What a tool can do is stay inside the API and the platform terms, which is the part you can actually check.",
+          "Using a compliant tool to reply to people who commented on your post is not what gets accounts actioned. Accounts get restricted for behaviour: messaging people who never interacted with you, sending identical text at machine speed, using a tool that logs in as you, or buying followers and engagement alongside it. No tool can guarantee an account will never be restricted, and any tool that guarantees it is telling you something about its own honesty. What a tool can do is stay inside the API and the platform terms, which is the part you can check.",
       },
       {
         id: "official-api-check",
         question: "How do I tell whether a tool uses the official Instagram API?",
         answer:
           "Watch what happens when you connect it. A compliant tool sends you to Instagram's own consent screen, where Instagram tells you which permissions the app is asking for and you approve them there. You never type your password into the tool, and the connection appears in your Instagram settings where you can revoke it. If a tool asks for your Instagram username and password directly, it is not using the official API, whatever its marketing says.",
+      },
+      {
+        id: "password-tell",
+        question: "Is it ever safe to give an Instagram automation tool my password?",
+        answer:
+          "No, and you should not have to. Tools on the official Instagram API never need it, because Instagram issues them a permission-scoped token after you approve the connection yourself. A password request means the tool intends to sign in as you and drive the app from the inside, which is the pattern enforcement is built to catch, and it is a credential you cannot take back without changing your password.",
       },
       {
         id: "what-meta-requires",
@@ -85,13 +110,25 @@ const faqCategories: FaqCategory[] = [
         id: "liffio-safe",
         question: "Is Liffio safe to connect to my Instagram account?",
         answer:
-          "Liffio connects through the official Instagram API using Instagram Login. You approve the permissions on Instagram's own consent screen, no password is shared with Liffio, and you can revoke access from Instagram at any time. Liffio's business passed Meta's business verification and access verification, and its Instagram permissions passed App Review. As above, those are the baseline for any tool on the official API, so the useful question to ask about any Instagram tool is whether it is on that API at all.",
+          "Liffio connects through the official Instagram API using Instagram Login. You approve the permissions on Instagram's own consent screen, no password is shared with Liffio, and you can revoke access from Instagram at any time. Liffio's business passed Meta's business verification and access verification, and its Instagram permissions passed App Review. Those are the baseline for any tool on the official API, so the useful question about any Instagram tool is whether it is on that API at all.",
+      },
+      {
+        id: "one-dm-per-comment",
+        question: "Can an automation send more than one DM for the same comment?",
+        answer:
+          "Not through the official route. Instagram's Private Replies API allows exactly one private reply to a given comment, and only within 7 days of that comment being posted. One comment, one DM, and after a week that comment can no longer be answered privately at all. It is an Instagram rule rather than a plan limit, so it applies to every tool on the official API, and it means an automation cannot turn into a stream of messages to the same person. If they reply, the conversation reopens and follow-ups can be sent within 24 hours of that reply, which is a separate window from the 7 day one.",
+      },
+      {
+        id: "message-requests",
+        question: "Why did my automated DM land in the recipient's message requests?",
+        answer:
+          "Because they do not follow the account. Instagram routes messages from accounts a person does not follow into their message requests folder, and that is Instagram's behaviour rather than a fault in the tool. The practical answer is to turn on the public comment reply, so the commenter knows a DM was sent and goes looking for it.",
       },
       {
         id: "how-many-dms",
         question: "How many automated DMs can I send before it looks like spam?",
         answer:
-          "Volume is not the signal that matters; consent is. Ten thousand DMs to people who each commented a keyword on your post is a conversation you were invited into. Fifty DMs to people who never interacted with you is cold outreach, and Instagram's own spam reports come from recipients, not from counters. Keep the automation tied to an action the recipient took, write a message that reads like you, and put a short delay on it rather than replying in the same instant.",
+          "Volume is not the signal that matters; consent is. Ten thousand DMs to people who each commented a keyword on your post is a conversation you were invited into. Fifty DMs to people who never interacted with you is cold outreach, and Instagram's own spam reports come from recipients, not from counters. Keep the automation tied to an action the recipient took, write a message that reads like you, and put a short delay on it rather than replying in the same instant. Instagram applies its own rate and sending limits underneath all of this, and those are Instagram's to set and change.",
       },
       {
         id: "revoke",
@@ -100,6 +137,36 @@ const faqCategories: FaqCategory[] = [
           "Yes, and you do not need the tool's permission. Because the connection is an Instagram authorisation rather than a stored password, you can revoke it from inside Instagram, in the apps and websites settings, and the access ends there. This is a practical reason to prefer official-API tools: you keep the ability to end the connection yourself.",
       },
     ],
+  },
+];
+
+const PLATFORM_RULES = [
+  {
+    title: "One private reply per comment, within 7 days",
+    body: "Instagram's Private Replies API allows exactly one private reply to any given comment, and only within 7 days of that comment being posted. One comment, one DM. After a week that comment cannot be answered privately at all, which is why an automation switched on late cannot sweep up last month's Reel. No tool can lift this: the endpoint is the thing that refuses. Follow-ups are allowed only once the person replies, and then only within 24 hours of their reply.",
+  },
+  {
+    title: "People who do not follow you get a message request",
+    body: "Instagram puts messages from accounts a person does not follow into their message requests folder. That is platform behaviour, not a defect in any tool. Turning on the public comment reply is the usual fix: the commenter is told a DM is waiting, so they go and look for it.",
+  },
+  {
+    title: "Instagram's own rate and sending limits still apply",
+    body: "Messaging on the official API is rate limited by Instagram, whatever any tool promises, so during an unusually large spike messages queue. A plan that does not meter your DMs is a statement about billing, not about the platform underneath it, and a tool offering to get around Instagram's limits is describing something it should not be doing.",
+  },
+];
+
+const APP_REVIEW_MEANS = [
+  {
+    label: "What it does mean",
+    body: "A named app, belonging to a verified business, asked Meta for named Instagram permissions, said what it would do with each, and had that submission approved.",
+  },
+  {
+    label: "What it does not mean",
+    body: "It is not an endorsement, a partnership, or a guarantee about your account. It says nothing about how you use the tool.",
+  },
+  {
+    label: "Why it is worth checking",
+    body: "A tool that cannot show you this is almost certainly not on the official API, and that is the difference that reaches your account.",
   },
 ];
 
@@ -117,6 +184,10 @@ const RISK_FACTORS = [
     body: "The same sentence, sent the same second, to everyone, looks like what it is. A short delay and a couple of message variants cost nothing and make the pattern ordinary.",
   },
   {
+    title: "Working around a platform limit instead of accepting it",
+    body: "The comment is older than the private reply window, so someone sends a cold DM instead. The message landed in requests, so someone sends three more. Both turn a supported action into an unsolicited one, and the limit was the thing keeping it supported.",
+  },
+  {
     title: "Bought followers and engagement",
     body: "Accounts that buy engagement tend to get looked at, and once an account is being looked at everything on it is in scope. Automation is rarely the reason such an account gets actioned, but it is often what the owner blames.",
   },
@@ -128,9 +199,10 @@ const RISK_FACTORS = [
 
 const CHECKLIST = [
   "Connecting it sends you to Instagram's own consent screen, and you never type your password into the tool.",
-  "The permissions Instagram shows you on that screen match what the tool claims to do.",
+  "The permissions Instagram shows you on that screen match what the tool claims to do, and go no wider.",
   "The connection appears in your Instagram settings, under apps and websites, where you can revoke it yourself.",
   "The company behind it is identifiable: a real business name, a real address, a published privacy policy.",
+  "It describes Instagram's limits accurately rather than offering to beat them.",
   "It does not promise that your account cannot be restricted, because nobody can promise that.",
   "It does not offer to get you followers, likes or views alongside the automation.",
 ];
@@ -198,10 +270,26 @@ export default function IsInstagramDmAutomationSafePage() {
                 account. Some tools still work this way.
               </p>
               <p>
+                The two categories look identical in their marketing. The difference shows up on one
+                screen only, the screen where you connect your account.
+              </p>
+              <div className="rounded-2xl border border-[#ffe4e6] bg-[#fff7f7] p-5">
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  <strong className="text-gray-900">The test that settles it:</strong> if a tool asks
+                  for your Instagram <strong>password</strong>, it is not using the official
+                  Instagram API. Tools on the official API never need it, because Instagram issues
+                  them a permission-scoped token after you approve the connection yourself.
+                </p>
+              </div>
+              <p>
                 So the question worth asking is not &quot;is DM automation safe&quot;. It is
                 &quot;does this particular tool use the official API, and am I messaging people who
-                asked me to&quot;. Both are things you can check in a couple of minutes, and the
-                rest of this page is how.
+                asked me to&quot;. Both are things you can check in a couple of minutes. For the
+                mechanics of the automation itself, the walkthrough of{" "}
+                <a href="/instagram-comment-to-dm" className="text-[#b20d8f] font-semibold hover:underline">
+                  how Instagram comment-to-DM automation works
+                </a>{" "}
+                covers triggers, delays and public replies.
               </p>
             </div>
           </div>
@@ -211,11 +299,16 @@ export default function IsInstagramDmAutomationSafePage() {
         <section className="py-16 bg-[#fff7f7] border-y border-[#ffe4e6]">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
-              Official API versus logging in as you
+              Official API tools versus browser bots
             </h2>
+            <p className="text-gray-600 leading-relaxed mb-6">
+              This is the whole distinction, and every other safety question on this page follows
+              from it. Two tools can send the same looking DM and be doing completely different
+              things underneath.
+            </p>
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="rounded-2xl border border-[#ffe4e6] bg-white p-6">
-                <h3 className="font-semibold text-gray-900">On the official API</h3>
+                <h3 className="font-semibold text-gray-900">On the official Instagram API</h3>
                 <p className="mt-2 text-sm text-gray-600 leading-relaxed">
                   You are sent to Instagram&apos;s own consent screen. Instagram lists the
                   permissions the app wants and you grant them there. The tool receives a token
@@ -223,23 +316,47 @@ export default function IsInstagramDmAutomationSafePage() {
                   Instagram settings and you can revoke it yourself, at any time, without asking
                   the tool.
                 </p>
+                <p className="mt-3 text-sm text-gray-600 leading-relaxed">
+                  Everything it can do afterwards is bounded by the permissions you granted. It does
+                  not browse as you, and it cannot do anything the API will not carry.
+                </p>
               </div>
               <div className="rounded-2xl border border-gray-200 bg-white p-6">
-                <h3 className="font-semibold text-gray-900">Signing in as you</h3>
+                <h3 className="font-semibold text-gray-900">Signing in as you (browser bots)</h3>
                 <p className="mt-2 text-sm text-gray-600 leading-relaxed">
                   You type your Instagram username and password into the tool. It then logs in and
                   operates the app on your behalf, usually in an automated browser. There is no
                   permission list, nothing in your Instagram settings to revoke, and the only way
-                  to end access is to change your password. This is the pattern that gets accounts
-                  restricted.
+                  to end access is to change your password.
+                </p>
+                <p className="mt-3 text-sm text-gray-600 leading-relaxed">
+                  It also has no boundaries: a browser session is your whole account. The activity
+                  arrives at Instagram as a login behaving inhumanly fast, which is the pattern
+                  automated-behaviour enforcement exists to catch.
                 </p>
               </div>
             </div>
-            <p className="mt-6 text-sm text-gray-600 leading-relaxed">
-              The test is the connect screen, not the marketing. A tool can describe itself as safe,
-              compliant and official on every page of its site and still ask for your password on
-              the one screen that matters.
-            </p>
+            <div className="mt-6 space-y-4 text-sm text-gray-600 leading-relaxed">
+              <p>
+                To revoke an official-API connection, open Instagram, go to Settings, then Apps and
+                Websites, and remove the app. Access stops there, with no password change. If a tool
+                you use does not appear in that list, it never had an authorisation: it has your
+                credentials instead.
+              </p>
+              <p>
+                The test is the connect screen, not the marketing. A tool can describe itself as
+                safe, compliant and official on every page of its site and still ask for your
+                password on the one screen that matters. If you are weighing up options, the{" "}
+                <a href="/compare" className="text-[#b20d8f] font-semibold hover:underline">
+                  side-by-side comparison of Instagram DM automation tools
+                </a>{" "}
+                is organised around what each one does, and the{" "}
+                <a href="/vs/instachamp" className="text-[#b20d8f] font-semibold hover:underline">
+                  Liffio and InstaChamp comparison
+                </a>{" "}
+                is a worked example of reading two official-API tools against each other.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -259,47 +376,112 @@ export default function IsInstagramDmAutomationSafePage() {
                 messages.
               </p>
               <p>
-                It is worth being clear about what that does and does not tell you. Every tool
-                legitimately operating on the official Instagram API has all three, because without
-                them the endpoints simply do not answer. They are the floor, not a feature. Treat
-                them as a box to check rather than a reason to choose, and spend your attention on
-                the question that genuinely separates tools: whether it is on that API at all.
+                That last one is the part people misread, so it is worth separating carefully.
+              </p>
+            </div>
+            <dl className="mt-6 grid gap-4 sm:grid-cols-3">
+              {APP_REVIEW_MEANS.map((m) => (
+                <div key={m.label} className="rounded-2xl border border-gray-200 bg-white p-5">
+                  <dt className="font-semibold text-gray-900 text-sm">{m.label}</dt>
+                  <dd className="mt-1.5 text-sm text-gray-600 leading-relaxed">{m.body}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="mt-6 space-y-4 text-gray-600 leading-relaxed">
+              <p>
+                Every tool legitimately operating on the official Instagram API has all three,
+                because without them the endpoints simply do not answer. They are the floor, not a
+                feature. Treat them as a box to check rather than a reason to choose, and spend your
+                attention on the question that genuinely separates tools: whether it is on that API
+                at all. That is why the{" "}
+                <a href="/manychat-alternative" className="text-[#b20d8f] font-semibold hover:underline">
+                  Liffio and ManyChat comparison
+                </a>{" "}
+                spends its time on features, pricing and migration rather than on who is compliant.
               </p>
               <p>
-                Liffio connects through Instagram Login on the official Instagram API. Its business
-                passed business verification and access verification, and its Instagram permissions
-                passed App Review. You can see what the connection looks like before committing:
-                the free plan asks for no card.
+                Since this is the page where the question gets asked: Liffio connects through
+                Instagram Login on the official Instagram API. Its business passed business
+                verification and access verification, and its Instagram permissions passed App
+                Review, covering the connected business profile, managing and sending messages,
+                managing comments, insights and content publishing. You authorise those on
+                Instagram&apos;s own consent screen, and the integration operates within
+                Meta&apos;s platform terms.
+              </p>
+              <p>
+                None of that is a promise about your account, and you should be wary of any tool
+                that frames it as one. What happens to your account still depends mostly on who you
+                message and what you send them.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Real risk factors */}
+        {/* Platform rules */}
         <section className="py-16 bg-[#fff7f7] border-y border-[#ffe4e6]">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
-              What actually gets Instagram accounts restricted
+            <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
+              The rules every Instagram tool lives under
             </h2>
+            <p className="text-gray-600 leading-relaxed mb-8">
+              These are Instagram&apos;s rules, not any tool&apos;s, and they are a useful way to
+              judge whether a product describes the platform honestly.
+            </p>
             <dl className="space-y-5">
-              {RISK_FACTORS.map((r) => (
+              {PLATFORM_RULES.map((r) => (
                 <div key={r.title} className="rounded-2xl border border-[#ffe4e6] bg-white p-5">
                   <dt className="font-semibold text-gray-900">{r.title}</dt>
                   <dd className="mt-1.5 text-sm text-gray-600 leading-relaxed">{r.body}</dd>
                 </div>
               ))}
             </dl>
+            <p className="mt-6 text-sm text-gray-600 leading-relaxed">
+              Read those three together and a lot of marketing starts to sound off. No tool can
+              bombard one commenter from one comment, reach into a non-follower&apos;s main inbox, or
+              send faster than Instagram will accept. When a tool says it does not cap your DMs, that
+              is billing rather than platform: Liffio&apos;s{" "}
+              <a href="/pricing" className="text-[#b20d8f] font-semibold hover:underline">
+                pricing page explains what unlimited DMs actually covers
+              </a>
+              , and the limits above still sit underneath it.
+            </p>
+          </div>
+        </section>
+
+        {/* Real risk factors */}
+        <section className="py-16 bg-white">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
+              What actually gets Instagram accounts restricted
+            </h2>
+            <p className="text-gray-600 leading-relaxed mb-8">
+              Almost nobody loses an account because a DM was automated. They lose it because of one
+              of the following, usually in combination.
+            </p>
+            <dl className="space-y-5">
+              {RISK_FACTORS.map((r) => (
+                <div key={r.title} className="rounded-2xl border border-gray-200 bg-white p-5">
+                  <dt className="font-semibold text-gray-900">{r.title}</dt>
+                  <dd className="mt-1.5 text-sm text-gray-600 leading-relaxed">{r.body}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-6 text-sm text-gray-600 leading-relaxed">
+              The reassuring part: everything on that list is a decision, not an accident. Point the
+              automation at people who raised their hand, give it a human delay, write something
+              worth opening, and you are running the quiet kind nobody reports.
+            </p>
           </div>
         </section>
 
         {/* Checklist */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-[#fff7f7] border-y border-[#ffe4e6]">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-3" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
               How to vet any Instagram automation tool
             </h2>
             <p className="text-gray-600 mb-8">
-              Six checks, none of which require taking anyone&apos;s word for anything.
+              Seven checks, none of which require taking anyone&apos;s word for anything.
             </p>
             <ul className="space-y-3 list-none">
               {CHECKLIST.map((item) => (
@@ -311,7 +493,11 @@ export default function IsInstagramDmAutomationSafePage() {
                 </li>
               ))}
             </ul>
-            <p className="mt-8 text-sm text-gray-600">
+            <p className="mt-8 text-sm text-gray-600 leading-relaxed">
+              You can run most of that list without paying anyone. Start the connect flow, read the
+              screen Instagram shows you, and stop there if you want to.
+            </p>
+            <p className="mt-6 text-sm text-gray-600">
               Related reading:{" "}
               <a href="/instagram-comment-to-dm" className="text-[#b20d8f] font-semibold hover:underline">
                 how comment-to-DM works
@@ -319,6 +505,10 @@ export default function IsInstagramDmAutomationSafePage() {
               {" · "}
               <a href="/blog/instagram-automation-mistakes" className="text-[#b20d8f] font-semibold hover:underline">
                 common automation mistakes
+              </a>
+              {" · "}
+              <a href="/compare" className="text-[#b20d8f] font-semibold hover:underline">
+                compare the tools
               </a>
               {" · "}
               <a href="/help" className="text-[#b20d8f] font-semibold hover:underline">
@@ -329,7 +519,7 @@ export default function IsInstagramDmAutomationSafePage() {
         </section>
 
         {/* FAQ */}
-        <section className="py-16 bg-[#fff7f7] border-y border-[#ffe4e6]">
+        <section className="py-16 bg-white">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-8" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
               Frequently asked questions
@@ -346,15 +536,16 @@ export default function IsInstagramDmAutomationSafePage() {
         </section>
 
         {/* CTA */}
-        <section className="py-16 bg-white text-center">
+        <section className="py-16 bg-[#fff7f7] border-t border-[#ffe4e6] text-center">
           <div className="mx-auto max-w-2xl px-4 sm:px-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
               See the connection for yourself
             </h2>
             <p className="text-gray-600 mb-8">
               The fastest way to judge a tool is to start the connect flow and read the screen
-              Instagram shows you. Liffio&apos;s free plan asks for no card, so you can get that
-              far without committing to anything.
+              Instagram shows you. Liffio&apos;s free plan asks for no card, so you can get that far
+              without committing to anything, and you can revoke the connection from Instagram the
+              moment you want to.
             </p>
             <a
               href={siteConfig.urls.appSignup}

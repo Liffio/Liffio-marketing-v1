@@ -107,6 +107,26 @@ export default async function Home() {
                 Automating stories too? See the{' '}
                 <a href="/blog/instagram-story-automation-guide" className="underline underline-offset-2 hover:text-foreground transition-colors">story automation guide</a>.
               </p>
+              {/*
+                Body-content links into the comparison cluster. Before this, every
+                comparison page was reachable only from the footer, so the internal
+                link graph said all nine were equally unimportant. These are
+                descriptive anchors in prose, which is the part that counts.
+              */}
+              <p>
+                Weighing Liffio against something else? The{' '}
+                <a href="/compare" className="underline underline-offset-2 hover:text-foreground transition-colors">Instagram DM automation tools comparison</a>{' '}
+                covers the main options side by side, or go straight to{' '}
+                <a href="/manychat-alternative" className="underline underline-offset-2 hover:text-foreground transition-colors">ManyChat vs Liffio</a>,{' '}
+                <a href="/vs/linkdm" className="underline underline-offset-2 hover:text-foreground transition-colors">Liffio vs LinkDM</a>, or{' '}
+                <a href="/vs/zorcha" className="underline underline-offset-2 hover:text-foreground transition-colors">Liffio vs Zorcha</a>. If you are still deciding
+                whether any of this is safe for your account, read{' '}
+                <a href="/is-instagram-dm-automation-safe" className="underline underline-offset-2 hover:text-foreground transition-colors">is Instagram DM automation safe</a>.
+                Running client accounts instead of your own? See{' '}
+                <a href="/instagram-automation-for-agencies" className="underline underline-offset-2 hover:text-foreground transition-colors">Instagram automation for agencies</a>,
+                and for the mechanics themselves, the{' '}
+                <a href="/instagram-comment-to-dm" className="underline underline-offset-2 hover:text-foreground transition-colors">Instagram comment to DM guide</a>.
+              </p>
             </div>
           </div>
         </section>

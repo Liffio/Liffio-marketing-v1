@@ -89,6 +89,7 @@ export function OrganizationJsonLd() {
           siteConfig.social.twitter,
           siteConfig.social.instagram,
           siteConfig.social.linkedin,
+          siteConfig.social.youtube,
         ],
         contactPoint: {
           "@type": "ContactPoint",

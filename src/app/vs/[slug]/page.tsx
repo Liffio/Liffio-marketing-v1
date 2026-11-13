@@ -36,6 +36,47 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const brandGradient = "[background:linear-gradient(135deg,#f5184c,#b20d8f)]";
 
+// The freshness date comes from each entry's own `lastUpdated` in
+// comparisons.config.ts, so re-verifying one competitor updates only that page.
+
+/**
+ * Every pricingNote ends with the vendor's own pricing URL so a reader can check
+ * the figures themselves. The note is a plain string in comparisons.config.ts,
+ * so the URL arrives as text; this turns it into a real link at render time
+ * rather than pushing JSX into the config.
+ */
+function linkifyNote(note: string) {
+  const parts = note.split(/(https?:\/\/[^\s,.)]+)/g);
+  return parts.map((part, i) =>
+    /^https?:\/\//.test(part) ? (
+      <a
+        key={i}
+        href={part}
+        rel="nofollow noopener noreferrer"
+        target="_blank"
+        className="underline underline-offset-2 hover:text-gray-900"
+      >
+        {part.replace(/^https?:\/\//, "")}
+      </a>
+    ) : (
+      part
+    ),
+  );
+}
+// Renders an entry's ISO lastUpdated as a reader-facing month. Both the visible
+// line and schema.org dateModified derive from that one field, so they cannot
+// drift apart, which is worse than having no date at all.
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+function monthLabel(iso: string): string {
+  const [year, month] = iso.split("-");
+  const index = Number(month) - 1;
+  return MONTHS[index] ? `${MONTHS[index]} ${year}` : iso;
+}
+
 export default async function VsPage({ params }: Props) {
   const { slug } = await params;
   const cmp = getComparison(slug);
@@ -93,6 +134,28 @@ export default async function VsPage({ params }: Props) {
         ]}
       />
       <FaqPageJsonLd categories={faqCategories} />
+      {/*
+        Freshness signal. Every competing SERP result for these terms carries a
+        year in its title and a visible date; these pages previously published
+        neither. dateModified MUST match the "Last updated" line rendered below,
+        because a structured date that disagrees with the visible one is worse
+        than no date at all.
+      */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "@id": `${pageUrl}#webpage`,
+            url: pageUrl,
+            name: cmp.metaTitle,
+            description: cmp.metaDescription,
+            dateModified: cmp.lastUpdated,
+            isPartOf: { "@id": `${SITE_URL}/#website` },
+          }),
+        }}
+      />
       <Navbar />
       <main id="main-content" className="flex-1">
         {/* Hero */}
@@ -113,6 +176,10 @@ export default async function VsPage({ params }: Props) {
               Liffio vs {cmp.competitor}
             </h1>
             <p className="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">{cmp.heroSubtitle}</p>
+            <p className="mt-4 text-sm text-gray-500">
+              Last updated: {monthLabel(cmp.lastUpdated)}. Competitor pricing was read from each
+              vendor&apos;s own pricing page on that date.
+            </p>
             <div className="mt-8 flex flex-wrap gap-4 justify-center">
               <a
                 href={siteConfig.urls.appSignup}
@@ -221,7 +288,7 @@ export default async function VsPage({ params }: Props) {
                 </tbody>
               </table>
             </div>
-            <p className="mt-6 text-gray-600 leading-relaxed">{cmp.pricingNote}</p>
+            <p className="mt-6 text-gray-600 leading-relaxed">{linkifyNote(cmp.pricingNote)}</p>
             <p className="mt-3 text-xs text-gray-400">
               Competitor pricing and features are summarized as of publication and may change, so check{" "}
               {cmp.competitor}&apos;s site for current details.

@@ -418,7 +418,7 @@ const homepageSeoCategory: FaqCategory = {
       id: "automated-dms-increase-engagement",
       question: "How do automated Instagram DMs increase engagement?",
       answer:
-        `Automated DMs increase engagement by responding to every comment and ${FEATURE_STORY_REACTIONS ? "story reaction" : "story reply"}, even at 3am, even when a Reel unexpectedly goes viral. Most manually managed accounts respond to 10-20% of comment-driven DM requests; automation responds to 100%. Higher response rates mean more link clicks, more lead captures, and more conversations started, which Instagram's algorithm rewards with further reach.`,
+        `Automated DMs reply to every comment and ${FEATURE_STORY_REACTIONS ? "story reaction" : "story reply"} that matches one of your keywords, even at 3am, even when a Reel unexpectedly goes viral. Replying by hand depends on someone being awake and holding a phone, which is where most comment-driven DM requests quietly go unanswered. Answering all of them means more link clicks, more lead captures and more conversations started.`,
     },
     {
       id: "comment-automation-generate-leads",

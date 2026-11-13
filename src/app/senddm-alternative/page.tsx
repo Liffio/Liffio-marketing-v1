@@ -9,9 +9,9 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import type { FaqCategory } from "@/config/faq.config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Alternative to SendDM for Instagram DM Automation | Liffio",
+  title: "SendDM Alternative: Flat Pricing, Unlimited DMs | Liffio",
   description:
-    "Liffio vs SendDM for Instagram DM automation. Flat pricing in USD or INR, a free plan with no credit card, and unlimited automated DMs on every plan.",
+    "Moving off SendDM? Liffio runs comment-to-DM with flat pricing, a free plan with no credit card, and unlimited automated DMs on every plan.",
   pathname: "/senddm-alternative",
   ogImagePath: siteConfig.meta.ogImagePath,
   ogImageAlt: siteConfig.meta.ogImageAlt,
@@ -32,13 +32,13 @@ const faqCategories: FaqCategory[] = [
         id: "liffio-vs-senddm",
         question: "How does Liffio compare to SendDM?",
         answer:
-          "Both tools handle comment-to-DM automation on Instagram. The practical differences come down to plan limits and scope. SendDM (as of July 2026) prices in INR from ₹399/month, caps its free tier by DM volume, and caps paid tiers by connected accounts. No Liffio plan carries a DM cap, Free included, and it bundles bio link pages and post scheduling into the same workspace. Each Liffio workspace connects one Instagram account, and the Agency plan bundles 20 workspaces into a single flat subscription. For creators and small agencies who want predictable costs through viral spikes and a tool that covers more than just DMs, Liffio is the more straightforward choice.",
+          "Both tools handle comment-to-DM automation on Instagram, both publish prices in rupees and dollars, and both lift the DM cap on their paid plans. So the dividing line is scope and billing, not DM volume. As of November 2026, SendDM's pricing page (https://senddm.ai/pricing) shows Creator at ₹399/month in India, or $9/month internationally, both on annual billing; Growth at ₹719 or $16; Scale at ₹1,439 or $31. Liffio's Starter is ₹499/month in India, or $9/month internationally. Only SendDM's Free plan is capped, at 300 automated DMs a month; its paid tiers are unlimited, as are all of Liffio's including Free. What actually differs: Liffio runs chatbots as their own module for full DM conversations, bills from an Indian entity with a GST invoice, and gives each Instagram account its own workspace, with 20 workspaces bundled into the Agency plan on one flat subscription. If you want chatbots and a GST invoice alongside comment-to-DM, Liffio is the more straightforward choice; if you only need comment triggers, the two are closer than the price tags suggest.",
       },
       {
         id: "senddm-free-plan",
         question: "Does SendDM have a free plan?",
         answer:
-          "Yes. As of July 2026 SendDM offers a free plan, capped at a fixed number of automated DMs per month, with paid plans from ₹399/month that lift the DM cap but limit connected accounts per tier. Liffio's free plan includes comment-to-DM automation on posts and Reels, 2 live chatbots, a bio link page at bio.liffio.com and overview analytics. No credit card is required and there is no trial period that expires. The free plan is designed for actual production use, not just for testing; unlimited automated DMs come with every plan, Free included, and paid plans start at $9/month.",
+          "Yes. As of November 2026, SendDM's free plan is ₹0 in India or $0 internationally, capped at 300 automated DMs a month, with 1 Instagram account, 3 message templates, basic keyword triggers, 1 conversation starter, 5 links in bio, 5 scheduled posts a month and 2 story mention replies (https://senddm.ai/pricing). Its cheapest paid tier is Creator at ₹399/month in India, or $9/month internationally, both on annual billing (₹499 or $11 month to month), and that tier lifts the DM cap entirely. Liffio's free plan includes comment-to-DM automation on posts and Reels, 2 live chatbots, a bio link page at bio.liffio.com and overview analytics. No credit card is required and there is no trial period that expires. The difference on the free tiers is the DM ceiling: Liffio sends unlimited automated DMs on every plan, Free included, so you can run a real automation on a real post before paying anything. Liffio's paid plans start at ₹499/month in India, or $9/month internationally.",
       },
       {
         id: "switch-from-senddm",
@@ -56,22 +56,35 @@ const faqCategories: FaqCategory[] = [
         id: "senddm-agency",
         question: "Can I use Liffio for multiple client Instagram accounts?",
         answer:
-          "Yes, through workspaces. A Liffio workspace connects exactly one Instagram account, so several client accounts means several workspaces. The Agency plan includes 20 workspaces on a single subscription, each one a full Business workspace, billed on one invoice with one renewal date. There is no per-account surcharge within that allowance. For agencies that have been paying per-user or per-account fees with SendDM or other tools, switching to Liffio's Agency plan at a flat rate typically reduces the monthly cost as the account count grows.",
+          "Yes, through workspaces. A Liffio workspace connects exactly one Instagram account, so several client accounts means several workspaces. The Agency plan includes 20 workspaces on a single subscription, each one a full Business workspace, billed on one invoice with one renewal date. There is no per-account surcharge within that allowance. Worth being straight about the comparison: SendDM bundles connected accounts into its tiers instead, with 5 on Creator, 10 on Growth and 20 on Scale as of November 2026 (https://senddm.ai/pricing), and on headline price alone that is the cheaper way to attach a lot of accounts. What a Liffio workspace gives you per account is isolation plus the full Business feature set, chatbots included, and a GST invoice from an Indian entity. Price the two against the features you actually bill clients for.",
       },
     ],
   },
 ];
 
+// Rows reflect https://senddm.ai/pricing, verified 2026-11-13 in both regions
+// (curl for the international view, an India-geolocated browser for the rupee
+// view). SendDM publishes a rupee price list, carries links in bio and post
+// scheduling on every tier including Free, and bundles connected accounts into
+// its paid tiers. None of those may be marked as a competitor "false".
 const sendDmRows = [
   { name: "Comment-to-DM", liffio: true, competitor: true },
   { name: "Story auto reply", liffio: true, competitor: true },
-  { name: "Unlimited DMs (every plan)", liffio: true, competitor: false },
+  // SendDM's PAID tiers have unlimited DMs. Only its Free plan is capped, at
+  // 300 a month. Unlimited DMs is therefore NOT a Liffio-only advantage here:
+  // the only gap is on the free tier.
+  { name: "Unlimited DMs on paid plans", liffio: true, competitor: true },
+  { name: "Unlimited DMs on the free plan", liffio: true, competitor: "300 DMs/month" },
   { name: "Free plan", liffio: true, competitor: true },
-  { name: "Instagram accounts per subscription", liffio: "1 per workspace (Agency: 20)", competitor: false },
-  { name: "Bio link pages", liffio: true, competitor: false },
-  { name: "Post scheduler", liffio: true, competitor: false },
+  { name: "Instagram accounts per subscription", liffio: "1 per workspace (Agency: 20)", competitor: "1 free, 5 / 10 / 20 on paid tiers" },
+  { name: "Bio link pages", liffio: true, competitor: true },
+  { name: "Post scheduler", liffio: true, competitor: true },
   { name: "Lead capture", liffio: true, competitor: true },
-  { name: "Razorpay / INR billing", liffio: true, competitor: true },
+  // Both vendors publish a rupee price list, so this row is a true for both.
+  // SendDM's payment rails and invoicing entity are not stated on its pricing
+  // page, so the GST row below reads "Not stated", never a negative.
+  { name: "Rupee price list for India", liffio: true, competitor: true },
+  { name: "GST invoice from an Indian entity", liffio: true, competitor: "Not stated" },
   { name: "Public pricing page", liffio: true, competitor: true },
   { name: "Chatbots for full DM conversations", liffio: true, competitor: "Check their plans" },
   { name: "Chatbots separate from comment to DM", liffio: true, competitor: "Check their plans" },
@@ -81,11 +94,80 @@ const sendDmRows = [
   { name: "Chatbot lead capture and webhook step", liffio: "Business and Agency", competitor: "Check their plans" },
 ];
 
+// Competitor pricing below was read from each vendor's own live pricing page on
+// 2026-11-13. Refresh it from these same URLs, never from memory or from an
+// article, and keep the "as of November 2026" note in the visible copy:
+//   SendDM    https://senddm.ai/pricing
+//   ManyChat  https://manychat.com/pricing  (blocks automated fetching, see below)
+//   LinkDM    https://www.linkdm.com/pricing
+//
+// 🔴 READ THIS BEFORE REFRESHING ANY FIGURE BELOW. Vendor pricing pages
+// geo-localize. A curl result shows the vendor's DEFAULT or US view and is not
+// evidence about what an Indian customer sees. Currency and regional claims
+// must be read in a browser located in the relevant region. An earlier pass
+// read senddm.ai/pricing with curl, saw dollars, and wrote "USD only, no rupee
+// pricing" across this site. That was false and has been removed. Do not
+// reintroduce it.
+//
+// SENDDM, https://senddm.ai/pricing, verified 2026-11-13 in BOTH views: curl
+// for the international rate card, an India-geolocated browser for the rupee
+// rate card. Tier names are identical in both regions.
+//   India, annual per month / monthly / billed yearly:
+//     Free     ₹0
+//     Creator  ₹399   / ₹499   / ₹4,790
+//     Growth   ₹719   / ₹899   / ₹8,630
+//     Scale    ₹1,439 / ₹1,799 / ₹17,270
+//     Custom   quote
+//   International, annual per month / monthly / billed yearly:
+//     Free     $0
+//     Creator  $9  / $11 / $105.60
+//     Growth   $16 / $20 / $192
+//     Scale    $31 / $39 / $374
+//     Custom   quote
+//   Monthly/annual toggle, annual marked "20% off" with a yearly total shown.
+//   Free limits, all per month: 300 DMs, 1 Instagram account, 3 message
+//   templates, basic keyword triggers, 1 conversation starter, 5 links in bio,
+//   5 scheduled posts, 2 story mention replies.
+//   Creator: UNLIMITED DMs, 5 accounts, 2,000 AI credits/month, unlimited
+//   templates, advanced triggers, Rewind, analytics.
+//   Growth: 10 accounts, 10,000 AI credits, WhatsApp/Email redirect, priority
+//   support. Scale: 20 accounts, 25,000 AI credits.
+//   🔴 Every PAID tier has unlimited DMs. Only Free is capped at 300. Never
+//   write or imply that unlimited DMs is a Liffio-only advantage over SendDM.
+//   🔴 SendDM genuinely discounts India: ₹399 is roughly $4.75 against its own
+//   $9 international price. That is a real, sourced observation. Keep it.
+//   The page displays a "Verified Tech Provider" badge.
+//   🚩 Payment rails and the invoicing entity are NOT stated on the page, so
+//   describe GST invoicing as not stated, never as absent.
 const competitorPricing = [
-  { name: "Liffio", free: true, paidFrom: "$9/month", perContact: false, publicPricing: true },
-  { name: "SendDM", free: true, paidFrom: "₹399/month (India-only billing)", perContact: false, publicPricing: true },
-  { name: "ManyChat", free: true, paidFrom: "$14/month + per-contact fees", perContact: true, publicPricing: true },
-  { name: "LinkDM", free: false, paidFrom: "From ~$19/month", perContact: false, publicPricing: false },
+  { name: "Liffio", free: true, paidFrom: "₹499/month in India, $9/month internationally", perContact: false, publicPricing: true },
+  { name: "SendDM", free: true, paidFrom: "₹399/month in India, $9/month internationally (annual billing; ₹499 or $11 monthly)", perContact: false, publicPricing: true },
+  // MANYCHAT, read from https://manychat.com/pricing, verified 2026-11-13 in a
+  // real browser.
+  // 🚩 manychat.com blocks automated fetching: a domain-wide Cloudflare bot
+  // check returns HTTP 403 to curl, to WebFetch and to headless engines, and the
+  // interstitial clears after about 8 seconds in a real browser. Refresh these
+  // figures in a real browser, never with curl, and do not swap them back for a
+  // placeholder because an automated fetch failed. The prices ARE public.
+  // Monthly, then annual, then active-contact cap / channels / users:
+  //   Free       $0                               25 / 2 / 1
+  //   Essential  $14/mo   $168/yr   (18% off)    250 / 2 / 2
+  //   Pro        $29/mo   $348/yr   (25% off)  2,500 / 3 / 3
+  //   Business   $69/mo   $828/yr   (30% off)  7,500 / unlimited / 5
+  //   Advanced   $139/mo  $1,668/yr           25,000 / unlimited / 10
+  // Billing unit is the Active Contact: one real person interacted with in a
+  // monthly billing period, counted once for the month. Over the cap, automations
+  // keep running and ManyChat charges a small overage fee per extra Active
+  // Contact; annual plans still count contacts monthly and bill overages monthly.
+  // Free needs no card, carries Manychat branding and allows up to 4 live
+  // triggers. 14-day free trial on Essential or Pro. Prices exclude tax.
+  // 🔴 USD only, no INR: /pricing?country=IN still showed $29/mo with no rupee
+  // symbol. Say "its pricing page shows USD only", never "bills Indian users in
+  // USD".
+  { name: "ManyChat", free: true, paidFrom: "$14/month (Essential, 250 contacts)", perContact: true, publicPricing: true },
+  // Verified 2026-11-13: Pro $19/month, or $182/year. Pricing IS public, which the
+  // previous publicPricing:false contradicted while still printing a price.
+  { name: "LinkDM", free: true, paidFrom: "$19/month (Pro)", perContact: false, publicPricing: true },
 ];
 
 export default function SendDMAlternativePage() {
@@ -119,10 +201,12 @@ export default function SendDMAlternativePage() {
               The Best SendDM Alternative for Instagram DM Automation
             </h1>
             <p className="mt-5 text-lg text-gray-600 max-w-2xl mx-auto">
-              SendDM handles the basics, but caps DMs on its free tier and connected accounts
-              on paid tiers. Liffio gives you the same Instagram DM automation with flat-rate
-              pricing, unlimited DMs on every plan, and bio links and scheduling included.
+              SendDM handles the basics well, and its free plan stops at 300 DMs a month.
+              Liffio runs the same Instagram DM automation with no DM ceiling on any plan,
+              Free included, chatbots as their own module, and a GST invoice from an Indian
+              entity. Both tools publish rupee and dollar prices.
             </p>
+            <p className="mt-4 text-sm text-gray-500">Last updated: November 2026</p>
             <div className="mt-8 flex flex-wrap gap-4 justify-center">
               <a
                 href={siteConfig.urls.appSignup}
@@ -149,39 +233,51 @@ export default function SendDMAlternativePage() {
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
                 SendDM does what it says: it automates Instagram DMs triggered by comments and
-                story replies. For a tool that covers a specific workflow, it works. The friction
-                starts when you try to figure out what it costs before signing up, or when
-                you need the tool to do something beyond sending a DM.
+                story replies. For a tool that covers a specific workflow, it works, and it is
+                priced properly for India. The friction starts on the free plan, or when you
+                need full DM conversations rather than single-trigger replies.
               </p>
               <p>
-                The biggest complaint from creators looking to switch is plan limits.
-                SendDM's free tier caps how many automated DMs you can send each month, and
-                its paid tiers (from ₹399/month as of July 2026) cap how many Instagram
-                accounts you can connect. That structure penalizes exactly the moments
-                automation matters most, namely a viral post or a growing client roster. No Liffio
-                plan has a DM cap, Free included, and a growing roster is handled by the
-                Agency plan&apos;s 20 workspaces on a single flat subscription.
+                The complaint we hear most from creators looking to switch is the free-plan cap.{" "}
+                <a
+                  href="https://senddm.ai/pricing"
+                  target="_blank"
+                  rel="noopener nofollow"
+                  className="text-[#b20d8f] font-semibold hover:underline"
+                >
+                  SendDM&apos;s free plan, as of November 2026
+                </a>
+                , caps you at 300 automated DMs a month, along with 1 Instagram account, 3
+                message templates, 1 conversation starter, 5 links in bio, 5 scheduled posts and
+                2 story mention replies. A cap of 300 runs out on exactly the post you want it to
+                work on, namely the one that takes off. Clearing it means moving to the Creator
+                tier at ₹399/month in India, or $9/month internationally, both on annual billing
+                (₹499 or $11 month to month). Be clear on what that buys: SendDM&apos;s paid
+                tiers do have unlimited DMs, so the ceiling is a free-plan problem, not a SendDM
+                problem. Liffio has no DM ceiling on any plan, Free included, which is why you
+                can prove the workflow before paying.
               </p>
               <p>
-                The second issue is scope. SendDM is focused narrowly on DM sequences and comment
-                triggers. If you also need a bio link page to replace Linktree, a post scheduler
-                to plan your content calendar, or short links for tracking, you are paying for
-                those separately. Liffio includes all of it in the same workspace, plus
-                chatbots as a separate module for full DM conversations, which simplifies the
-                tool stack and reduces the total monthly spend.
+                The second issue is what happens after the first message. SendDM covers
+                single-trigger DM sequences and comment triggers, and it carries links in bio and
+                post scheduling on every tier including Free. Its pricing page does not break out
+                a chatbot tier, so check their plans if full back-and-forth DM conversations
+                matter to you. Liffio keeps comment-to-DM simple and puts conversations in their
+                own chatbot module, with 2 live chatbots on the free plan, so a simple automation
+                never has to go through a flow builder.
               </p>
               <ul className="mt-4 space-y-2 list-none">
                 <li className="flex gap-3">
                   <span className="text-[#f5184c] font-bold mt-0.5">→</span>
-                  <span><strong className="text-gray-900">DM caps on the free tier:</strong> SendDM&apos;s free plan limits automated DMs per month. Liffio&apos;s free plan runs real automations in production (comment triggers, 2 live chatbots and a bio link page) with no credit card required, and unlimited automated DMs come with every plan, Free included.</span>
+                  <span><strong className="text-gray-900">300 DMs a month on the free plan:</strong> that is SendDM&apos;s free cap as of November 2026, alongside 1 Instagram account, 3 message templates and 1 conversation starter. Its paid tiers lift the cap entirely. Liffio&apos;s free plan runs real automations in production (comment triggers, 2 live chatbots and a bio link page) with no credit card required, and unlimited automated DMs come with every plan, Free included.</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-[#f5184c] font-bold mt-0.5">→</span>
-                  <span><strong className="text-gray-900">Account caps on paid tiers:</strong> SendDM&apos;s paid plans limit how many Instagram accounts you can connect, so costs step up as a client roster grows. Liffio prices by workspace, one Instagram account each, and the Agency plan covers 20 of them on a single flat subscription.</span>
+                  <span><strong className="text-gray-900">GST invoicing is the India gap, not the currency:</strong> both tools publish rupee prices as of November 2026, and SendDM&apos;s rupee rate card is genuinely discounted rather than converted. SendDM&apos;s pricing page does not state who invoices you or on what rails. Liffio bills in INR through Razorpay from an Indian entity with a GST-compliant tax invoice, which is what a GST-registered business needs to claim input credit.</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-[#f5184c] font-bold mt-0.5">→</span>
-                  <span><strong className="text-gray-900">India-only billing:</strong> SendDM lists prices in INR only. Liffio bills in USD or INR (via Razorpay with GST-friendly invoices), whichever fits where you and your clients are.</span>
+                  <span><strong className="text-gray-900">Conversations, not just triggers:</strong> SendDM covers DM sequences, comment triggers, links in bio and post scheduling. Liffio puts all of that in one workspace and adds chatbots as their own module for full DM conversations, with 2 live chatbots on the free plan.</span>
                 </li>
               </ul>
             </div>
@@ -238,26 +334,76 @@ export default function SendDMAlternativePage() {
             </div>
             <div className="mt-6 space-y-4 text-gray-600 leading-relaxed">
               <p>
-                The core pricing difference between Liffio and SendDM is what the plans cap.
-                SendDM publishes its pricing in INR (from ₹399/month as of July 2026) and caps
-                the free tier by DM volume and paid tiers by connected accounts. No Liffio
-                plan carries a DM cap, Free included, and multi-account work is priced by
-                workspace, one Instagram account each, with 20 workspaces bundled into the
-                Agency plan.
+                Both tools publish two rate cards, one in rupees and one in dollars, so the
+                comparison is like for like in either currency.{" "}
+                <a
+                  href="https://senddm.ai/pricing"
+                  target="_blank"
+                  rel="noopener nofollow"
+                  className="text-[#b20d8f] font-semibold hover:underline"
+                >
+                  SendDM&apos;s pricing page, as of November 2026
+                </a>
+                , geo-localizes and runs a monthly/annual toggle with annual marked 20% off. The
+                tier names are the same in both regions. Free is ₹0 or $0. Creator is ₹399/month
+                in India, or $9/month internationally, both on annual billing (₹4,790 or $105.60
+                billed yearly), and ₹499 or $11 month to month. Growth is ₹719 or $16 annual,
+                ₹899 or $20 monthly. Scale is ₹1,439 or $31 annual, ₹1,799 or $39 monthly. Above
+                that is a Custom quote. Only the free plan is capped, at 300 automated DMs a
+                month; every paid tier is unlimited. Connected accounts are bundled into the
+                tiers: 1 on Free, then 5, 10 and 20.
               </p>
               <p>
-                Liffio charges a flat monthly rate: $0 on the free plan, $9/month on Starter,
-                $29/month on Growth, $59/month on Business, $549/month on Agency. No per-contact charges. No
-                usage-based tiers that kick in when a post goes viral and your DM volume
-                spikes. The same flat rate whether you send 200 DMs in a month or 20,000.
+                Worth saying plainly, because it cuts against us: SendDM&apos;s rupee card is a
+                real India discount, not a conversion. ₹399 works out to roughly $4.75 against
+                its own $9 international price.
               </p>
               <p>
-                ManyChat is included in the comparison because it is the most common starting
-                point for Instagram DM automation. It has a free tier (capped at 25 Active
-                Contacts per month as of the March 2026 pricing change) and its paid plans
-                start at $14/month with per-contact fees that grow with your audience.
-                LinkDM focuses on comment-to-link automation specifically and does not
-                publish pricing publicly.
+                The two $9 figures are also not the same deal, and the difference is not DM
+                limits, because both tools send unlimited DMs on paid plans. Liffio&apos;s Starter
+                is $9/month, or ₹499/month in India, charged month to month. SendDM&apos;s $9 is
+                the annual-billing rate on Creator, paid a year up front at $105.60; month to
+                month that tier is $11. What the Liffio plan adds at that price is chatbots as a
+                separate module, a workspace per Instagram account, and a GST invoice from an
+                Indian entity. What the SendDM plan adds is 5 connected accounts and 2,000 AI
+                credits a month.
+              </p>
+              <p>
+                Liffio charges a flat monthly rate: Free at $0 or ₹0, Starter $9 or ₹499, Growth
+                $29 or ₹1,499, Business $59 or ₹2,499, Agency $549 or ₹22,999, all as of November
+                2026. No per-contact charges. No usage-based tiers that kick in when a post goes
+                viral and your DM volume spikes. The same flat rate whether you send 200 DMs in a
+                month or 20,000.
+              </p>
+              <p>
+                ManyChat is in the comparison because it is the most common starting point for
+                Instagram DM automation, and it prices on a different axis from either of the
+                other two.{" "}
+                <a
+                  href="https://manychat.com/pricing"
+                  target="_blank"
+                  rel="noopener nofollow"
+                  className="text-[#b20d8f] font-semibold hover:underline"
+                >
+                  Its pricing page, as of November 2026
+                </a>
+                , bills by Active Contact: a free plan at $0 for 25 active contacts, then
+                Essential at $14/month for 250 contacts, Pro at $29/month for 2,500, Business at
+                $69/month for 7,500, and Advanced at $139/month for 25,000. Clear the cap and
+                automations keep running, with a small overage fee per additional Active Contact.
+                Those bottom two caps are the part to price honestly: 25 people on Free and 250 on
+                the $14 plan go quickly when comment-to-DM is running on a Reel that works. The
+                page shows US dollars only and publishes no rupee price.{" "}
+                <a
+                  href="https://www.linkdm.com/pricing"
+                  target="_blank"
+                  rel="noopener nofollow"
+                  className="text-[#b20d8f] font-semibold hover:underline"
+                >
+                  LinkDM
+                </a>{" "}
+                is narrower, focused on comment-to-link automation, with Pro at $19/month as of
+                November 2026.
               </p>
             </div>
           </div>
@@ -290,15 +436,28 @@ export default function SendDMAlternativePage() {
                   Indian creators and agencies
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Both tools bill in INR, so the India comparison comes down to plan structure
-                  rather than currency. Liffio's INR pricing through Razorpay comes with a
-                  GST-compliant invoice and no per-account caps. For agencies billing clients
-                  in India, that simplifies the paper trail.
+                  Both tools have a rupee price, so currency is not the decision here.{" "}
+                  <a
+                    href="https://senddm.ai/pricing"
+                    target="_blank"
+                    rel="noopener nofollow"
+                    className="text-[#b20d8f] font-semibold hover:underline"
+                  >
+                    SendDM&apos;s pricing page, as of November 2026
+                  </a>
+                  , geo-localizes: loaded in India it shows Creator at ₹399/month on annual
+                  billing against $9/month internationally, which is a genuine India discount
+                  rather than a straight conversion. Credit where it is due.
                 </p>
                 <p className="mt-3 text-gray-600 leading-relaxed">
-                  Liffio's Starter plan is ₹499/month incl. GST in India, paid through a local
-                  payment method. Business is ₹2,499/month incl. GST and adds chatbot lead capture, the webhook
-                  step and unlimited live chatbots.
+                  What is left to compare is the invoice and the scope. SendDM&apos;s pricing page
+                  does not state which entity bills you or on what rails. Liffio charges in INR
+                  through Razorpay from an Indian entity and issues a GST-compliant tax invoice,
+                  which is what you need to claim input credit rather than treating the
+                  subscription as an import of service. Starter is ₹499/month incl. GST, or
+                  $9/month internationally. Business is ₹2,499/month incl. GST, or $59/month,
+                  and adds chatbot lead capture, the webhook step and unlimited live chatbots.
+                  Every plan sends unlimited automated DMs, Free included.
                 </p>
               </div>
 
@@ -307,13 +466,16 @@ export default function SendDMAlternativePage() {
                   Agencies managing multiple client accounts
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Liffio's Agency plan is a flat ₹22,999/month incl. GST in India (or $549/month) and includes
-                  20 workspaces on a single subscription: one Instagram account each, every
-                  workspace a full Business workspace, one invoice and one renewal date.
-                  There is no per-account surcharge within that allowance. Agencies that
-                  have been paying per user or per account elsewhere, or who have been using
-                  multiple SendDM accounts for different clients, typically find the Agency
-                  plan cheaper once they are managing five or more client accounts.
+                  Liffio's Agency plan is a flat ₹22,999/month incl. GST in India, or $549/month
+                  internationally, as of November 2026, and includes 20 workspaces on a single
+                  subscription: one Instagram account each, every workspace a full Business
+                  workspace, one invoice and one renewal date. There is no per-account surcharge
+                  within that allowance. The honest comparison: SendDM&apos;s Scale tier also
+                  covers 20 accounts, at ₹1,439/month in India or $31/month internationally on
+                  annual billing, so if account count is all you are buying, SendDM is cheaper.
+                  Liffio&apos;s Agency plan is priced for agencies that need each client isolated
+                  in its own workspace with the full Business feature set, chatbots included, on
+                  one GST invoice.
                 </p>
               </div>
 

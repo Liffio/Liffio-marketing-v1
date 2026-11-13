@@ -90,6 +90,9 @@ export const siteConfig = {
     // links to has to be that same account.
     instagram: "https://instagram.com/getliffio",
     linkedin: "https://linkedin.com/company/liffio",
+    // Verified live 2026-11-13. Listed in Organization sameAs so answer engines
+    // can tie the channel to the brand entity.
+    youtube: "https://www.youtube.com/@liffio",
   },
 
   creatorsProgram: {
