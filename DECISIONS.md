@@ -640,3 +640,39 @@ existing FAQ schema. The FAQ interpolates the same config values rather than res
 **Framing kept honest.** Lead capture and the webhook step are named as Business and Agency
 features rather than implied to be universal, and conditions are credited as starting on Starter,
 with Agency removing the ceiling per workspace across all twenty.
+
+---
+
+## D23. Product screenshots: what was captured, and two things I changed
+
+Captured 2026-11-13 from the `thedmguy.ai` test account, which the owner confirmed is safe to
+screenshot and publish. Nine images in `public/screenshots/`, wired into all 11 markers (two
+images serve two markers each, always on different pages).
+
+**I cropped one image rather than publish a personal email address.** The team settings screen
+shows the owner's member row with a real Gmail address. The page it feeds is public and indexed,
+so the address would be scraped for spam. `team-roles-and-seats.png` is cropped to 1015x495,
+above the members table, keeping the part that matters: invite by email, the role selector,
+customize access, and seats used. Nothing about the feature is lost.
+
+**Alt text was rewritten wherever the real screen differed from what the marker assumed**, per
+the owner's instruction not to leave blank or broken images:
+
+| Marker assumed | Actually captured |
+|---|---|
+| Workspace switcher with 20 client workspaces | Workspace settings: name, workspace ID, plan. The test account has one workspace, not twenty. |
+| Chatbot builder with a condition step and webhook | The new chatbot template picker. The account has 0 chatbots, so no builder existed to open. |
+| Agency branding settings with a hide-branding toggle | Automation delivery settings, which carry the real "Liffio branding" toggle. |
+| Instagram's own OAuth authorisation screen | Liffio's Instagram connection panel: connected account, health, token expiry, DM send rate. |
+| Keyword field filled with LINK | The live keyword, which is GUIDE. |
+| DM composer with a phone preview | The composer as it actually renders: public reply, DM message, button. There is no phone preview. |
+| Automation settings with a 30 second delay | The settings that exist: follow gate, branding, chatbot handoff, follow-up sequence. |
+
+**I did not start the Instagram OAuth flow** to capture the authorisation screen. Completing or
+abandoning a consent flow on a connected production account risks the token, and the connection
+panel is the better screenshot anyway: it shows the account healthy, the token expiry and the
+rate limit, which is exactly what the safety page argues.
+
+**One side effect worth knowing:** opening `/automations/new` auto-saved a draft automation
+("GUIDE automation", draft saved to cloud). It is a draft on a test account and was never set
+live, but it is there if you want it deleted.

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AppLink from "@/components/AppLink";
@@ -365,7 +366,16 @@ export default function InstagramAutomationForAgenciesPage() {
               ))}
             </dl>
 
-            {/* TODO:SCREENSHOT alt="Liffio workspace switcher open, showing a list of twenty named client workspaces with the active one highlighted" */}
+            <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+              <Image
+                src="/screenshots/workspace-settings.png"
+                alt="Liffio workspace settings showing the workspace name, its workspace ID and the plan it runs on, which is the per client workspace an agency creates"
+                width={1015}
+                height={678}
+                className="w-full h-auto"
+                sizes="(max-width: 768px) 100vw, 768px"
+              />
+            </div>
 
             <div className="mt-10 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
               <table className="w-full text-sm">
@@ -428,7 +438,16 @@ export default function InstagramAutomationForAgenciesPage() {
               ))}
             </dl>
 
-            {/* TODO:SCREENSHOT alt="Client analytics view for a single workspace, showing comments triggered, DMs sent, link clicks and conversion rate for one comment to DM automation over a 30 day window" */}
+            <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+              <Image
+                src="/screenshots/analytics-overview.png"
+                alt="Liffio workspace analytics showing DMs sent, link clicks, leads captured and lead to click rate for the last 30 days, with a daily activity chart below"
+                width={1015}
+                height={678}
+                className="w-full h-auto"
+                sizes="(max-width: 768px) 100vw, 768px"
+              />
+            </div>
 
             <div className="mt-8 rounded-2xl border border-[#ffe4e6] bg-[#fff7f7] p-6">
               <h3 className="font-semibold text-gray-900">The number Liffio does not give you</h3>
@@ -462,7 +481,16 @@ export default function InstagramAutomationForAgenciesPage() {
                 </div>
               ))}
             </div>
-            {/* TODO:SCREENSHOT alt="Liffio chatbot builder with a condition step open, showing two branches leading to different replies and a webhook step on one of them" */}
+            <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+              <Image
+                src="/screenshots/chatbot-templates.png"
+                alt="The Liffio new chatbot dialog showing starter templates for pricing questions, discount codes, customer support and collab requests, with the step count on each"
+                width={1015}
+                height={678}
+                className="w-full h-auto"
+                sizes="(max-width: 768px) 100vw, 768px"
+              />
+            </div>
             <div className="mt-10 overflow-x-auto">
               <h3 className="font-semibold text-gray-900 mb-3">What each plan allows</h3>
               <table className="w-full text-sm border-collapse">
@@ -553,7 +581,16 @@ export default function InstagramAutomationForAgenciesPage() {
               </div>
             </div>
 
-            {/* TODO:SCREENSHOT alt="Agency branding settings for a workspace, with the hide Liffio branding toggle switched on and an agency logo uploaded" */}
+            <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+              <Image
+                src="/screenshots/automation-delivery-settings.png"
+                alt="Liffio automation delivery settings showing the Liffio branding toggle switched off, ask to follow before DM, hand off to a chatbot, and the follow-up sequence builder"
+                width={1015}
+                height={678}
+                className="w-full h-auto"
+                sizes="(max-width: 768px) 100vw, 768px"
+              />
+            </div>
 
             <p className="mt-6 text-sm text-gray-600 leading-relaxed">
               For most agency work the distinction that matters is the output, not the login: the
@@ -595,7 +632,16 @@ export default function InstagramAutomationForAgenciesPage() {
               </p>
             </div>
 
-            {/* TODO:SCREENSHOT alt="Per person permissions panel for one workspace, listing team members with their roles and the individual capabilities each one is granted" */}
+            <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+              <Image
+                src="/screenshots/team-roles-and-seats.png"
+                alt="Liffio team settings showing invite by email with a role selector, a customize access link, and one of fifteen seats used on the workspace"
+                width={1015}
+                height={495}
+                className="w-full h-auto"
+                sizes="(max-width: 768px) 100vw, 768px"
+              />
+            </div>
           </div>
         </section>
 

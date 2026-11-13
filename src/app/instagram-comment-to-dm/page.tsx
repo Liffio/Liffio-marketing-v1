@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import type { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -382,7 +383,16 @@ export default function InstagramCommentToDmPage() {
                   messaging permissions only exist for those. Switching is free and takes a minute
                   in Instagram&apos;s own settings.
                 </p>
-                {/* TODO:SCREENSHOT alt="Instagram's own authorisation screen during the Liffio connect flow, listing the requested Instagram permissions with the Allow button below them" */}
+                <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+                  <Image
+                    src="/screenshots/instagram-connection.png"
+                    alt="Liffio Instagram connection settings showing the connected professional account marked healthy, its token expiry, reconnect and disconnect, and the DM send rate limit"
+                    width={1015}
+                    height={678}
+                    className="w-full h-auto"
+                    sizes="(max-width: 768px) 100vw, 768px"
+                  />
+                </div>
               </SetupStep>
 
               <SetupStep num="02" title="Pick the post or Reel the automation watches">
@@ -397,7 +407,16 @@ export default function InstagramCommentToDmPage() {
                   pushing the post. Because of the 7 day private reply window, every minute the post
                   is live without the automation running is comments you cannot go back and answer.
                 </p>
-                {/* TODO:SCREENSHOT alt="The Liffio post picker inside the automation builder, showing a grid of recent Instagram posts and Reels with one Reel thumbnail selected" */}
+                <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+                  <Image
+                    src="/screenshots/automation-choose-post.png"
+                    alt="The first step of the Liffio automation builder, choosing between picking an existing post or auto-attaching to the next upload, with the selected post shown"
+                    width={1015}
+                    height={678}
+                    className="w-full h-auto"
+                    sizes="(max-width: 768px) 100vw, 768px"
+                  />
+                </div>
               </SetupStep>
 
               <SetupStep num="03" title="Set the trigger word">
@@ -413,7 +432,16 @@ export default function InstagramCommentToDmPage() {
                   trigger replies to everyone who comments on that post, which suits giveaways where
                   the comment itself is the entry.
                 </p>
-                {/* TODO:SCREENSHOT alt="The Liffio automation builder with the keyword field filled in with LINK, contains matching selected, and one excluded keyword listed below it" */}
+                <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+                  <Image
+                    src="/screenshots/automation-post-grid-keywords.png"
+                    alt="The Liffio post grid with one Reel selected, above the keywords and response step showing GUIDE set as the trigger keyword"
+                    width={1015}
+                    height={678}
+                    className="w-full h-auto"
+                    sizes="(max-width: 768px) 100vw, 768px"
+                  />
+                </div>
               </SetupStep>
 
               <SetupStep num="04" title="Write the DM">
@@ -433,7 +461,16 @@ export default function InstagramCommentToDmPage() {
                   </a>
                   .
                 </p>
-                {/* TODO:SCREENSHOT alt="The Liffio DM composer showing a short three line message with a link button attached, and a phone preview of how the DM appears in an Instagram thread" */}
+                <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+                  <Image
+                    src="/screenshots/automation-dm-composer.png"
+                    alt="The Liffio DM composer showing the public comment reply, the DM message with its character count, and a button with a label and URL attached under the DM"
+                    width={1015}
+                    height={678}
+                    className="w-full h-auto"
+                    sizes="(max-width: 768px) 100vw, 768px"
+                  />
+                </div>
               </SetupStep>
 
               <SetupStep num="05" title="Set the delay and the public reply">
@@ -449,7 +486,16 @@ export default function InstagramCommentToDmPage() {
                   everyone scrolling the comments that the thing is real. Add a few reply variants so
                   forty identical sentences do not stack up under the post.
                 </p>
-                {/* TODO:SCREENSHOT alt="Liffio automation settings showing the send delay set to 30 seconds and three rotating public comment reply variants listed underneath" */}
+                <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+                  <Image
+                    src="/screenshots/automation-delivery-settings.png"
+                    alt="Liffio automation settings showing ask to follow before DM, the Liffio branding toggle, hand off to a chatbot, and an empty follow-up sequence"
+                    width={1015}
+                    height={678}
+                    className="w-full h-auto"
+                    sizes="(max-width: 768px) 100vw, 768px"
+                  />
+                </div>
               </SetupStep>
 
               <SetupStep num="06" title="Test it from a second account, then promote the post">
@@ -466,7 +512,16 @@ export default function InstagramCommentToDmPage() {
                   comments and few DMs is usually a keyword mismatch; lots of DMs and few clicks is
                   the message copy.
                 </p>
-                {/* TODO:SCREENSHOT alt="The Liffio analytics panel for a single automation, showing counts for comments received, DMs sent, and link clicks over the last seven days" */}
+                <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+                  <Image
+                    src="/screenshots/analytics-overview.png"
+                    alt="The Liffio analytics panel showing DMs sent, link clicks, leads captured and lead to click rate, with a daily activity chart for DMs, clicks and leads"
+                    width={1015}
+                    height={678}
+                    className="w-full h-auto"
+                    sizes="(max-width: 768px) 100vw, 768px"
+                  />
+                </div>
               </SetupStep>
 
             </ol>
