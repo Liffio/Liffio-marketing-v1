@@ -98,6 +98,10 @@ age out; they are not evidence of a live misconfiguration.
 
 ## D5. The "Story Auto Reply" feature question is resolved, not open
 
+> **CONFIRMED BY OWNER 2026-11-13.** The backend enum and code support `STORY_REPLY` and
+> `STORY_MENTION` triggers. They are defined and functional, just not yet used by customers.
+> The marketing claims are accurate and stay.
+
 The audit left this flagged as VERIFY: comparison tables claim story reply automation, and a
 code check three months ago found no handler.
 
@@ -115,6 +119,9 @@ than a three-month-old audit note.
 ---
 
 ## D6. I did NOT 301 `/vs/superprofile`. The brief's stated reason is factually wrong.
+
+> **CONFIRMED BY OWNER 2026-11-13:** keep `/vs/superprofile`, do not redirect it. SuperProfile
+> is a real competitor doing comment-to-DM at ₹499. This decision stands and the TODO is closed.
 
 **The brief says:** "301 redirect /vs/superprofile to /compare. It has zero impressions in 180
 days and SuperProfile is a storefront, not a DM automation competitor."
@@ -233,6 +240,11 @@ The roundup format for "manychat alternatives for instagram" lives on
 
 ## D11. No YouTube video was embedded, and this is deliberate
 
+> **CONFIRMED BY OWNER 2026-11-13:** skip `VideoObject` schema and video embeds entirely; the
+> channel's two short clips are not worth embedding yet. Keep `youtube.com/@liffio` in `sameAs`.
+> Verified on the branch: zero `VideoObject` nodes and zero embeds exist, so nothing needed
+> removing. The `sameAs` entry is in place.
+
 The brief asked me to embed existing YouTube videos with `VideoObject` schema. The channel
 `youtube.com/@liffio` is live (verified 2026-11-13, HTTP 200) and has exactly two videos:
 
@@ -332,6 +344,15 @@ visible instead of invisible.
 
 ## D14. Two configs contradict each other about what chatbots can do. I changed neither.
 
+> **RESOLVED BY OWNER 2026-11-13. This was not a contradiction and not a blocker.** The owner
+> checked the backend directly: `package_limits` carries chatbot limits for every plan (Free 2
+> bots, Starter 5, Growth 15, Business and Agency unlimited), and `chatbot_trigger_type` supports
+> `KEYWORD`, `STORY_REPLY`, `STORY_MENTION`, `DEFAULT_REPLY` and `COMMENT_AUTOMATION`. The
+> `feature_flags` table is empty because entitlement runs through `package_limits`, not through
+> `feature_flags`. So `pricing-v4.config.ts` and `feature-flags.ts` are two different systems
+> rather than two disagreeing ones, and the chatbot marketing claims are accurate. No changes
+> required. See D21 for what my conservative reading cost.
+
 `src/config/pricing-v4.config.ts` sells four chatbot capabilities on the pricing page:
 
 | Line | Claim |
@@ -375,6 +396,12 @@ because the flags file is unusually specific about what is missing and why.
 
 ## D15. `npm run check:prices` fails, it is pre-existing, and it is worth your attention anyway
 
+> **RESOLVED BY OWNER 2026-11-13: not a real pricing error.** The backend holds Agency yearly
+> INR at 22,999,900 paise, which is ₹2,29,999. The roughly ₹9 difference the script reports is a
+> rounding artifact of the 17% annual discount arithmetic, not a customer-facing discrepancy. No
+> changes required. The script's separate note about `/marketing/plans` now serving "Growth"
+> remains a tidy-up, not a defect.
+
 `npm test` passes 117 of 117. The separate `check:prices` guard fails, and I did not cause it:
 `src/config/pricing.config.ts` and `src/config/pricing-v4.config.ts` are byte-identical to HEAD.
 
@@ -413,6 +440,9 @@ price without being asked is not a judgment call I should make.
 ---
 
 ## D16. I was wrong about SendDM, and about how vendor pricing pages behave. Reversing D13.
+
+> **ACKNOWLEDGED BY OWNER 2026-11-13:** geo-localized vendor pricing is now a standing rule for
+> future verification. No further action on this branch; the corrections are already in.
 
 **D13 said SendDM has no rupee pricing at all. That is false, and I acted on it.**
 
@@ -540,3 +570,44 @@ Related to D14. The phrase appears in a pre-existing comparison row and a Busine
 `FEATURE_CRM_INTEGRATION` says no outbound webhook delivery code exists anywhere. I kept the new
 copy clear of it and did not touch the existing uses, because removing a sold feature is a
 product decision. It belongs in the same two-minute backend check as D14.
+
+---
+
+## D21. Owner resolutions, 2026-11-13, and the one thing they leave on the table
+
+All open questions from this pass were answered by the owner after checking the backend. Recorded
+here in full so the branch is self-explaining.
+
+| Item | Resolution |
+|---|---|
+| Chatbot config "contradiction" (D14) | **Not a contradiction.** `package_limits` drives entitlement; the `feature_flags` table is empty by design. Chatbot claims are accurate. No changes. |
+| `check:prices` Agency INR drift (D15) | **Not a pricing error.** Backend holds ₹2,29,999 exactly; the ~₹9 gap is rounding in the 17% annual discount math. No changes. |
+| `/vs/superprofile` redirect (D6) | **Confirmed: keep the page.** Do not redirect. SuperProfile is a real comment-to-DM competitor at ₹499. |
+| Agency CTA (D-agencies) | **Keep `support@liffio.com`.** No booking or demo page exists yet; swap the CTA when one does. |
+| YouTube `VideoObject` (D11) | **Skip embeds and schema.** Two short clips are not worth embedding. Keep `youtube.com/@liffio` in `sameAs`. Verified: zero `VideoObject` nodes and zero embeds on the branch, so nothing needed removing. |
+| Geo-localized vendor pricing (D16) | **Noted as a standing rule** for future verification. No action on this branch. |
+| `TODO:SCREENSHOT` markers | **Leave in place.** Owner will add real screenshots before deploy. Not blocking. |
+| Story reply / story mention (D5) | **Confirmed working.** Backend enum and code support `STORY_REPLY` and `STORY_MENTION`. Claims are accurate and stay. |
+
+### The one thing worth revisiting, which these answers open up
+
+My reading of D14 was conservative, and it had a cost. Believing the chatbot features were
+ungated-but-unshipped, I kept three accurate capabilities out of the new pages:
+
+- **Chatbot lead capture**, answers landing in the leads list
+- **Webhook step**, sending answers to your own system mid chat
+- **Conditions / condition rules**, 5 on Starter rising to unlimited
+
+Now that `package_limits` is confirmed as the real entitlement source, all three are true and
+sellable. They are missing from exactly the page that needed them most:
+**`/instagram-automation-for-agencies`**, where "send answers to your own system mid chat" is a
+direct answer to the agency objection about client reporting, and conditions are what separate a
+chatbot from a canned reply.
+
+The owner said no changes needed, so I made none. But this is a real gap I introduced, not a
+neutral omission: the highest-value SKU's page under-sells the product by three features. It is a
+contained edit to one file whenever you want it. The same applies, less sharply, to `/compare`
+and the five `/vs/` entries, whose chatbot rows are honest but thinner than the product.
+
+Logged rather than acted on, because adding feature claims after being told "no changes needed"
+is not a call I should make unasked.

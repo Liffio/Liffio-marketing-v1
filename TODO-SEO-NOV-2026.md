@@ -1,5 +1,24 @@
 # TODO: items needing your input
 
+> **ALL ITEMS RESOLVED BY THE OWNER ON 2026-11-13.** Nothing below blocks the branch. The
+> resolutions are recorded in DECISIONS.md D21. Kept as the record of what was asked and what
+> came back.
+>
+> | Item | Outcome |
+> |---|---|
+> | 1. ManyChat pricing | Resolved. Read in the owner's browser; real ladder is live on the site. |
+> | 2. Screenshots | Markers stay. Owner adds real images before deploy. Not blocking. |
+> | 3. YouTube | Skip embeds and VideoObject. Keep the channel in `sameAs`. Verified none exist. |
+> | 4. `/vs/superprofile` | Confirmed: keep the page, do not redirect. |
+> | 5. Agency contact route | Keep `support@liffio.com` until a booking page exists. |
+> | 8. Chatbot config | Not a contradiction. `package_limits` drives entitlement. Claims accurate. |
+> | 9. `check:prices` | Not a real error. ~₹9 is rounding in the annual discount math. |
+> | 10. Geo-localized pricing | Noted as a standing rule for future verification. |
+>
+> One open opportunity, not a defect: see DECISIONS.md D21. My conservative reading of item 8
+> left three real chatbot features (lead capture, webhook step, conditions) out of
+> `/instagram-automation-for-agencies`. They are accurate and sellable. Contained edit when wanted.
+
 From the autonomous SEO pass on 2026-11-13, branch `seo/ctr-fixes-nov-2026`.
 Ordered by what blocks the most value. See DECISIONS.md for why each exists.
 
