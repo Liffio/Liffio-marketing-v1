@@ -39,11 +39,36 @@ export const metadata: Metadata = {
   ...rootSeo,
   metadataBase: new URL(SITE_URL),
   robots: "index, follow",
-  // Icons come from the app-directory file conventions - `favicon.ico`,
-  // `icon.png` and `apple-icon.png` sit next to this file. There is
-  // deliberately no `icons` key here: declaring one REPLACES those
-  // conventions wholesale, which silently dropped the apple-touch-icon link
-  // the last time this was done by hand.
+  /*
+    Icons are declared EXPLICITLY here and served from versioned paths under
+    public/icons/, rather than through the app-directory file conventions.
+
+    Why, as of 2026-11-23: Google caches a site's favicon PER URL, and it had
+    been serving the old purple mark in search results for months. The files at
+    /favicon.ico and /icon.png had been crimson since 2026-09-15 and
+    /apple-icon.png since 2026-11-13, yet Google's cached icon was still
+    76.7% purple pixels when checked on 2026-11-23. Changing a file's CONTENTS
+    at an unchanged URL is the weakest possible refresh signal; changing the URL
+    is the one lever with a track record.
+
+    ⚠️ ALL THREE entries below are required. A previous hand-written `icons`
+    key replaced the file conventions wholesale and silently dropped the
+    apple-touch-icon link, which is the icon Google had most likely latched
+    onto. If you add or change an entry, re-check the emitted <head> for all
+    three links before shipping.
+
+    To rev these again later: bump the filename (v3, v4...), update the three
+    paths here AND the /favicon.ico rewrite in next.config.ts, then request
+    indexing on / in Search Console. Google refetches on its own schedule.
+  */
+  icons: {
+    icon: [
+      { url: "/icons/favicon-v2.ico", sizes: "48x48", type: "image/x-icon" },
+      { url: "/icons/icon-v2.png", sizes: "256x256", type: "image/png" },
+    ],
+    apple: [{ url: "/icons/apple-icon-v2.png", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/icons/favicon-v2.ico"],
+  },
 };
 
 export default function RootLayout({

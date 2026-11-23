@@ -19,6 +19,23 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  /*
+    The icons moved to versioned paths under public/icons/ on 2026-11-23 so that
+    Google would see new URLs rather than changed bytes (see src/app/layout.tsx).
+    Moving them means nothing serves /favicon.ico any more, and browsers, feed
+    readers and crawlers still request that path blindly without reading the
+    <head>. These rewrites keep the conventional paths resolving, serving the
+    same crimson files without a redirect hop.
+
+    Bump these alongside the filenames when the icons are revved again.
+  */
+  async rewrites() {
+    return [
+      { source: "/favicon.ico", destination: "/icons/favicon-v2.ico" },
+      { source: "/icon.png", destination: "/icons/icon-v2.png" },
+      { source: "/apple-icon.png", destination: "/icons/apple-icon-v2.png" },
+    ];
+  },
   env: {
     IS_META_VERIFIED: process.env.IS_META_VERIFIED ?? process.env.isMetaVerified ?? "false",
     isMetaVerified: process.env.IS_META_VERIFIED ?? process.env.isMetaVerified ?? "false",
