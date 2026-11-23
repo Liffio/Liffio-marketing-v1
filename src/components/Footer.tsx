@@ -84,8 +84,25 @@ export default function Footer() {
   return (
     <footer className="bg-gray-950 text-gray-400">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6 lg:gap-10">
-          <div className="col-span-2 lg:col-span-2">
+        {/*
+          🔴 ONE COLUMN UNTIL lg, AND THAT IS NOT A STYLE PREFERENCE. The link
+          columns are accordions (FooterLinkColumn), and an accordion only works
+          in a stack. This grid was grid-cols-2 sm:grid-cols-3, which put two
+          accordions side by side below lg, and both failures a tester hit on
+          2026-11-23 came straight out of that:
+
+            1. Grid rows are as tall as their tallest item, so opening PRODUCT
+               stretched COMPANY's row and left a column-high hole under a
+               closed header.
+            2. `last:border-0` in FooterLinkColumn means "last in the stack". In
+               a 2-up grid the last child is whichever column lands bottom-right,
+               so LEGAL lost its rule while COMPARE beside it kept one.
+
+          Stacked, both are correct by construction rather than by patch. The
+          desktop six-column layout is unchanged.
+        */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-6 lg:gap-10">
+          <div className="lg:col-span-2">
             <Logo theme="dark" />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-gray-400">
               The smartest way to automate your Instagram DMs. Grow your audience and convert followers into
