@@ -12,6 +12,13 @@ import {
   clearStoredReferralCode,
   readReferralCodeFromSearch,
 } from "@/lib/auth/referral";
+import {
+  captureFirstTouch,
+  clearAttributionCookie,
+  heldFirstTouch,
+  holdFirstTouchInMemory,
+  persistFirstTouch,
+} from "@/lib/attribution/first-touch";
 
 /**
  * The cookie banner, and the gate on the referral cookie behind it.
@@ -71,21 +78,35 @@ export function CookieConsent() {
   /** Guards the "accept writes the referral" path from running before step 1. */
   const resolvedRef = useRef(false);
 
+  /*
+    Writes everything this gate guards: the referral cookie and the first-touch attribution cookie
+    (`lf_attr`, automation v1.3 Section 11). Same consent question, same answer, same moment.
+  */
   const persistReferral = useCallback(() => {
     const code = pendingRef.current;
     if (code) captureReferralFromUrl(`?ref=${encodeURIComponent(code)}`);
+    const touch = heldFirstTouch();
+    if (touch) persistFirstTouch(touch);
+  }, []);
+
+  const clearStored = useCallback(() => {
+    clearStoredReferralCode();
+    clearAttributionCookie();
   }, []);
 
   useEffect(() => {
     let cancelled = false;
 
     pendingRef.current = readReferralCodeFromSearch(window.location.search);
+    // The landing page's touch, in memory until consent decides whether it may be stored. This
+    // component mounts once per visit (root layout), so it is the page the visitor landed on.
+    holdFirstTouchInMemory(captureFirstTouch({ href: window.location.href, referrer: document.referrer }));
 
     const stored = readConsent();
     if (stored) {
       // `choice` already holds this, from the initialiser above.
       if (stored.choice === "accepted") persistReferral();
-      else clearStoredReferralCode();
+      else clearStored();
       resolvedRef.current = true;
       return;
     }
@@ -110,7 +131,7 @@ export function CookieConsent() {
     return () => {
       cancelled = true;
     };
-  }, [persistReferral]);
+  }, [persistReferral, clearStored]);
 
   useEffect(() => {
     function onOpenSettings() {
@@ -132,10 +153,10 @@ export function CookieConsent() {
       } else {
         // Changing an earlier "accept" to "reject" has to remove what that
         // "accept" wrote, not merely stop writing more.
-        clearStoredReferralCode();
+        clearStored();
       }
     },
-    [persistReferral],
+    [persistReferral, clearStored],
   );
 
   if (!open) return null;
