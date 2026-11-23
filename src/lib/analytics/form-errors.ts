@@ -48,6 +48,9 @@ export type FormErrorReason = (typeof FORM_ERROR_REASONS)[number];
 
 export type FormErrorDetail = { field: FormErrorField; reason: FormErrorReason };
 
+/** Mirrors email-rules.ts: Gmail's "+" tags are left to the API's same-mailbox 409. */
+const GMAIL_DOMAINS = new Set(['gmail.com', 'googlemail.com']);
+
 /**
  * Which rule `signupEmailError` refused this address under. Mirrors its order: invalid, then "+".
  * Returns null when the address passes. (`gmail_dots_blocked` stays in the enum so older events
@@ -56,7 +59,7 @@ export type FormErrorDetail = { field: FormErrorField; reason: FormErrorReason }
 export function emailErrorReason(email: string): FormErrorReason | null {
   const parts = splitEmail(email);
   if (!parts) return 'email_invalid';
-  if (parts.local.includes('+')) return 'email_plus_blocked';
+  if (parts.local.includes('+') && !GMAIL_DOMAINS.has(parts.domain)) return 'email_plus_blocked';
   return null;
 }
 
