@@ -50,16 +50,16 @@ const footerLinks = {
   ],
 };
 
+/*
+  🚩 X/Twitter is deliberately NOT here. Removed 2026-11-23 at the owner's
+  request: only Instagram and LinkedIn are linked from the footer.
+
+  `siteConfig.social.twitter` is left in place because the Organization
+  JSON-LD still lists it under `sameAs` (lib/seo/json-ld.tsx). That is an
+  entity-resolution signal for search engines, not a link anyone clicks, and
+  dropping it is a separate decision from dropping the icon.
+*/
 const socials = [
-  {
-    label: "Twitter",
-    href: siteConfig.social.twitter,
-    icon: (
-      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
-      </svg>
-    ),
-  },
   {
     label: "Instagram",
     href: siteConfig.social.instagram,
@@ -166,7 +166,17 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-10 border-t border-gray-800 pt-6">
+        {/*
+          🚩 No top margin below lg. Stacked, Legal is the last accordion row
+          and `last:border-0` leaves it without a rule, so a 40px margin here
+          put 52px of nothing under the word LEGAL while the three rows above it
+          closed with a rule 12px under their text. That asymmetry is what read
+          as "Legal has more space". At mt-0 this border IS Legal's rule, in the
+          same place as the others, and `pt-6` keeps the copyright clear of it.
+          Desktop keeps the 40px, where all four columns are open and the rule
+          genuinely separates two blocks.
+        */}
+        <div className="border-t border-gray-800 pt-6 lg:mt-10">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             {/*
               The registered office address that used to sit here was removed on

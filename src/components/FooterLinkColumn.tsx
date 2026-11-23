@@ -36,13 +36,22 @@ export function FooterLinkColumn({
 
   return (
     <div className="border-b border-gray-800 pb-3 last:border-0 lg:border-0 lg:pb-0">
-      <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+      {/*
+        🚩 `mb-4` is lg-only, and the button carries its own `py-2` below lg.
+        Collapsed, the heading IS the row, so a margin under it is 16px of dead
+        space inside every closed column. Three of the four hide that behind
+        their bottom rule; Legal has none, so its dead space ran straight into
+        the 40px above the copyright bar and read as a hole. Reported 2026-11-23.
+        The padding also makes the row a real tap target: the bare heading text
+        was about 21px tall, well under the 44px minimum.
+      */}
+      <h3 className="text-sm font-semibold uppercase tracking-wider text-white lg:mb-4">
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls={listId}
-          className="flex w-full items-center justify-between text-left uppercase tracking-wider lg:pointer-events-none"
+          className="flex w-full items-center justify-between py-2 text-left uppercase tracking-wider lg:pointer-events-none lg:py-0"
         >
           {category}
           <span
@@ -55,7 +64,7 @@ export function FooterLinkColumn({
       </h3>
       <ul
         id={listId}
-        className={`${open ? "block" : "hidden"} space-y-2 pb-2 sm:space-y-2.5 lg:block lg:pb-0`}
+        className={`${open ? "block" : "hidden"} mt-2 space-y-2 pb-2 sm:space-y-2.5 lg:mt-0 lg:block lg:pb-0`}
       >
         {children}
       </ul>
