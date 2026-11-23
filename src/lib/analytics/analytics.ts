@@ -7,6 +7,7 @@ import {
   type Section,
   type SignupStep,
 } from "./events";
+import type { FormErrorDetail } from "./form-errors";
 
 /*
   🔴 No `umami.identify`, anywhere. (16-SPEC-tracking.md hard constraint)
@@ -109,8 +110,12 @@ export function trackFormStart(form: FormName) {
   safeTrack(EVENTS.FORM_START, { form });
 }
 
-export function trackFormError(form: FormName) {
-  safeTrack(EVENTS.FORM_ERROR, { form });
+/**
+ * `field` and `reason` are fixed codes (automation v1.3, Section 12), typed so that nothing the
+ * visitor typed can be passed here. One event per failing field.
+ */
+export function trackFormError(form: FormName, detail?: FormErrorDetail) {
+  safeTrack(EVENTS.FORM_ERROR, detail ? { form, field: detail.field, reason: detail.reason } : { form });
 }
 
 export function trackFormSubmit(form: FormName) {

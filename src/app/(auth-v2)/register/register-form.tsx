@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { authStore } from '@/lib/auth/store';
-import { API_BASE, register, getAuthMe, googleAuthUrl, validateAffiliateCode } from '@/lib/auth/api';
+import { API_BASE, ApiError, register, getAuthMe, googleAuthUrl, validateAffiliateCode } from '@/lib/auth/api';
 import {
   readReferralCodeFromSearch,
   getStoredReferralCode,
@@ -19,6 +19,8 @@ import { useHydrated } from '@/lib/auth/use-hydrated';
 import { COUNTRIES, CountryFlagImg, isKnownCountryCode } from '@/lib/auth/countries';
 import { precheckRegistration } from './actions';
 import { signupEmailError, splitEmail } from '@/lib/auth/email-rules';
+import { attributionForSignup } from '@/lib/attribution/first-touch';
+import { emailErrorReason, serverErrorReason, type FormErrorReason } from '@/lib/analytics/form-errors';
 import {
   trackFormStart,
   trackFormError,
@@ -103,6 +105,7 @@ export default function RegisterForm({
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [nameError, setNameError] = useState(false);
+  const [countryError, setCountryError] = useState(false);
   const [country, setCountry] = useState(isKnownCountryCode(defaultCountry) ? defaultCountry : '');
   const [referralCode, setReferralCode] = useState('');
   const [referralOpen, setReferralOpen] = useState(false);
@@ -196,7 +199,10 @@ export default function RegisterForm({
     setCpwError(cpw.length === 0 ? 'Type your password again to confirm it.' : !matches ? "The two passwords don't match." : '');
 
     if (ruleError || !rules.len || !matches) {
-      trackFormError('register');
+      // One event per failing field, fixed codes only: never what was typed (v1.3 Section 12).
+      if (ruleError) trackFormError('register', { field: 'email', reason: emailErrorReason(email) ?? 'email_invalid' });
+      if (!rules.len) trackFormError('register', { field: 'password', reason: 'password_short' });
+      if (!matches) trackFormError('register', { field: 'password_confirm', reason: 'password_mismatch' });
       return;
     }
 
@@ -213,13 +219,17 @@ export default function RegisterForm({
     const ln = lastName.trim();
     setNameError(!fn || !ln);
     setTermsError(!agreed);
-    if (!fn || !ln || !agreed) {
-      trackFormError('register');
+    // The API requires a country (it decides INR or USD); asking here beats a bare 400 later.
+    setCountryError(!country);
+    if (!fn || !ln || !agreed || !country) {
+      if (!fn || !ln) trackFormError('register', { field: 'name', reason: 'name_short' });
+      if (!country) trackFormError('register', { field: 'country', reason: 'country_missing' });
+      if (!agreed) trackFormError('register', { field: 'terms', reason: 'terms_unchecked' });
       return;
     }
     if (partnerCode.status === 'pending') {
       setPartnerCodeError('Press Apply to use this code, or clear it to sign up without one.');
-      trackFormError('register');
+      trackFormError('register', { field: 'code', reason: 'code_not_applied' });
       return;
     }
 
@@ -231,7 +241,12 @@ export default function RegisterForm({
       // through to register rather than blocking.
       const precheck = await precheckRegistration(`@${splitEmail(email)?.domain ?? ''}`).catch(() => null);
       if (precheck && !precheck.ok) {
-        trackFormError('register');
+        const precheckReason: FormErrorReason = /too many/i.test(precheck.error)
+          ? 'rate_limited'
+          : /permanent/i.test(precheck.error)
+            ? 'email_disposable'
+            : 'email_invalid';
+        trackFormError('register', { field: 'email', reason: precheckReason });
         setStep(1);
         setEmailError(precheck.error);
         setLoading(false);
@@ -262,7 +277,7 @@ export default function RegisterForm({
                   ? `${out.notice.title}. Remove the code to sign up without it.`
                   : `${BOX_ERRORS.failed} Or remove it to sign up without one.`,
           );
-          trackFormError('register');
+          trackFormError('register', { field: 'code', reason: 'code_invalid' });
           setLoading(false);
           return;
         }
@@ -279,6 +294,8 @@ export default function RegisterForm({
         clientRef: refPayload.clientRef,
         sessionRef: refPayload.sessionRef,
         localRef: refPayload.localRef,
+        // Where this visitor first came from (lf_attr, else this visit's touch in memory).
+        attribution: attributionForSignup(),
       });
       clearStoredReferralCode();
       authStore.setSession({ accessToken: result.accessToken });
@@ -292,8 +309,13 @@ export default function RegisterForm({
       trackSignupStep('workspace_created');
       router.replace(`/confirm-email${nextRedirect ? `?redirect=${encodeURIComponent(nextRedirect)}` : ''}`);
     } catch (err) {
-      trackFormError('register');
-      setError((err as Error).message);
+      const status = err instanceof ApiError ? err.status : null;
+      trackFormError('register', { field: 'server', reason: serverErrorReason(status) });
+      setError(
+        status === 409
+          ? 'This email already has an account. Log in instead.'
+          : (err as Error).message,
+      );
     } finally {
       setLoading(false);
     }
@@ -541,10 +563,14 @@ export default function RegisterForm({
                 <span className="a2-flag">{country ? <CountryFlagImg code={country} /> : null}</span>
                 <select
                   id="country"
-                  className="a2-select"
+                  className={`a2-select${countryError && !country ? ' a2-bad' : ''}`}
                   value={country}
                   onFocus={markFormStarted}
-                  onChange={(e) => setCountry(e.target.value)}
+                  onChange={(e) => {
+                    setCountry(e.target.value);
+                    setCountryError(false);
+                  }}
+                  aria-invalid={countryError && !country}
                 >
                   <option value="" disabled>
                     Select your country…
@@ -556,6 +582,11 @@ export default function RegisterForm({
                   ))}
                 </select>
               </div>
+              {countryError && !country && (
+                <div className="a2-msg" role="alert">
+                  Pick your country.
+                </div>
+              )}
               <div className="a2-help">
                 {country === 'IN' ? "You'll see prices in rupees, GST included." : "You'll see prices in US dollars."}
               </div>
