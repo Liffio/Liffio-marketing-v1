@@ -35,7 +35,9 @@ export function signupEmailError(email: string): string | null {
     return 'Email addresses with a "+" are not allowed. Please use your main address.';
   }
   if (GMAIL_DOMAINS.has(parts.domain) && parts.local.includes('.')) {
-    return "Gmail ignores dots, so john.smith@gmail.com and johnsmith@gmail.com are the same inbox. Please type it without the dots.";
+    // Kept until the API's same-mailbox check (automation v1.3, backend Section 6) is live; then
+    // this rule goes and the API's 409 says "already has an account" instead (Section 13).
+    return 'Use your Gmail address without dots, Gmail ignores them anyway';
   }
   return null;
 }

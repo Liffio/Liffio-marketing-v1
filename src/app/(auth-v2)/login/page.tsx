@@ -147,7 +147,11 @@ function LoginPageInner() {
 
         {errorParam && !mfaPreAuthToken && (
           <div className="a2-alert" role="alert">
-            {errorParam === 'google_denied' ? 'Google sign in was cancelled.' : 'Google sign in failed. Please try again.'}
+            {errorParam === 'google_denied'
+              ? 'Google sign in was cancelled.'
+              : errorParam === 'email_in_use'
+                ? 'This email already has an account under a different spelling. Log in with that one instead.'
+                : 'Google sign in failed. Please try again.'}
           </div>
         )}
 

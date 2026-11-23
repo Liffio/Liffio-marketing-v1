@@ -1,5 +1,6 @@
 import { authStore, type AuthMePayload } from './store';
 import { getStoredReferralCode } from './referral';
+import type { SignupAttribution } from '../attribution/first-touch';
 
 export const API_BASE: string =
   (process.env.NEXT_PUBLIC_API_URL as string | undefined) ?? 'https://api.liffio.com';
@@ -117,6 +118,11 @@ export type RegisterInput = {
   clientRef?: string;
   sessionRef?: string;
   localRef?: string;
+  /**
+   * First-touch attribution (automation v1.3, Section 11): the backend's strict
+   * `signupAttributionSchema`. Omitted when there is none.
+   */
+  attribution?: SignupAttribution;
 };
 
 export type WorkspaceApi = {
