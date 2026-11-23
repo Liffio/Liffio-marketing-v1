@@ -1,6 +1,7 @@
 import Logo from "./Logo";
 import { siteConfig } from "@/config/site.config";
 import { CookieSettingsLink } from "@/components/consent/CookieSettingsLink";
+import { FooterLinkColumn } from "@/components/FooterLinkColumn";
 
 const footerLinks = {
   Product: [
@@ -82,8 +83,8 @@ const socials = [
 export default function Footer() {
   return (
     <footer className="bg-gray-950 text-gray-400">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6 lg:gap-12">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6 lg:gap-10">
           <div className="col-span-2 lg:col-span-2">
             <Logo theme="dark" />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-gray-400">
@@ -106,10 +107,22 @@ export default function Footer() {
             </div>
           </div>
 
+          {/*
+            Plain divs, deliberately. A <details> per column was tried on
+            2026-11-23 to shorten the footer on mobile and REVERTED the same day:
+            Chrome hides a closed details' content with content-visibility, which
+            a `display: block` override does not defeat, so every column rendered
+            as a heading with nothing under it on desktop. A devtools check
+            reported the computed display and a height and missed it; the bug was
+            only visible in a real browser.
+
+            If the mobile height is worth attacking again, do it by hiding
+            individual <li> items under a breakpoint, where display toggling is
+            reliable, or with a client component. Not with <details>.
+          */}
           {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
-              <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">{category}</h3>
-              <ul className="space-y-3">
+            <FooterLinkColumn key={category} category={category}>
+              <>
                 {links.map((link) => (
                   <li key={link.label}>
                     <a
@@ -131,22 +144,44 @@ export default function Footer() {
                     <CookieSettingsLink className="text-left text-sm text-gray-400 transition-colors duration-200 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400" />
                   </li>
                 ) : null}
-              </ul>
-            </div>
+              </>
+            </FooterLinkColumn>
           ))}
         </div>
 
-        <div className="mt-12 border-t border-gray-800 pt-8">
+        <div className="mt-10 border-t border-gray-800 pt-6">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            {/*
+              The registered office address that used to sit here was removed on
+              2026-11-23. It is still carried in the privacy, terms and shipping
+              policies and in the Organization JSON-LD, which is where a reader
+              or a regulator looks for it; repeating it on every page only cost
+              footer height. CIN and GSTIN stay, because an Indian company has to
+              show them where it transacts.
+            */}
             <p className="text-xs text-gray-500">
-              © {new Date().getFullYear()} Liffio Private Limited. All rights reserved. · CIN: U58200GJ2026PTC181271
+              © {new Date().getFullYear()} Liffio Private Limited. All rights reserved. · CIN:
+              U58200GJ2026PTC181271 · GSTIN: 24AAHCL0028K1ZP
             </p>
-            <p className="text-xs text-gray-600">Made with care for Instagram creators worldwide.</p>
+            {/*
+              text-gray-600 on bg-gray-950 was close to invisible, about 2:1
+              contrast. gray-400 matches the rest of the footer body text and
+              clears WCAG AA at this size.
+
+              The heart and globe are emoji because those render everywhere.
+              If a country flag is ever added here, use a flagcdn <img> the way
+              AboutSection, pricing/CountryFlag and auth/countries all do, never
+              the emoji: Windows has no glyph for regional-indicator pairs, so
+              an emoji flag renders as the bare letters (the India flag showed
+              as "IN") and reads as a typo.
+            */}
+            <p className="flex items-center gap-1.5 text-xs text-gray-400">
+              <span>Made with</span>
+              <span aria-hidden>&#10084;&#65039;</span>
+              <span>for Instagram creators worldwide</span>
+              <span aria-hidden>&#127758;</span>
+            </p>
           </div>
-          <p className="mt-3 text-center text-xs text-gray-600 sm:text-left">
-            Regd. Office: First Floor, Shreeji General Store, Sultanpura Naka Laheri Pura New Road, Vadodara - 390001,
-            Gujarat, India
-          </p>
         </div>
       </div>
     </footer>

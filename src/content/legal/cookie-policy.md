@@ -30,7 +30,7 @@ We use these for our Affiliate Program, to credit the person who referred you to
 | Referral backup (local storage and session storage) | liffio.com | Keeps a backup copy of the same referral code | Local storage until you clear it; session storage until you close the tab |
 | `lf_attr` | liffio.com | Remembers where you first arrived from (UTM campaign source, landing page, referrer) so we can measure which channels bring signups. Not used for ad targeting. | 90 days |
 
-Where the law requires your consent for these (for example, if you are in the EU or UK), we only set them after you agree. If you don't agree, you can still enter a referral code when you sign up and it will work the same way.
+Where the law requires your consent for these (for example, if you are in the EU or UK), we only set them after you agree. Saying no stops us storing anything on your device: it does not stop us crediting whoever recommended us for a sign-up you complete during that same visit, which we do from the link you arrived on and from memory that is gone the moment you close the tab. If you don't agree, you can also still enter a referral code when you sign up and it will work the same way.
 
 ### 2.3 Analytics
 

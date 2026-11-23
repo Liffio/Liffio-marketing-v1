@@ -80,53 +80,121 @@ export default async function Home() {
           <FAQSection categories={faqCategories} />
         </TrackSection>
         <AboutSection />
-        <section aria-label="About Liffio" className="py-10 sm:py-12">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6">
-            <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
-              <p>
-                Liffio is an Instagram DM automation tool built for creators, coaches, and agencies
-                who want to respond to audience interactions without doing it manually. When someone
-                comments on a post, replies to a story, {FEATURE_WELCOME_DM ? "sends a DM containing a specific keyword, or follows an account" : "or sends a DM containing a specific keyword"}, Liffio sends a pre-written direct message automatically within
-                10 to 60 seconds.
-              </p>
-              <p>
-                The tool connects through Instagram&apos;s official OAuth API, and no account password is
-                stored or shared. All automations run inside Meta&apos;s permitted use guidelines. Liffio
-                supports workflow types like comment-to-DM, story reply, DM reply,
-                follow gating, follow-up sequences, {FEATURE_WELCOME_DM ? "data collection, and welcome messages" : "and data collection"}. Pricing starts
-                at $0 and scales to $549 per month for agencies managing multiple accounts. Liffio
-                is built in India and works with Instagram accounts worldwide.{' '}
-                <a href="/about" className="underline underline-offset-2 hover:text-foreground transition-colors">Learn more about Liffio.</a>
-              </p>
-              <p>
-                New to DM automation? Start with our guides on{' '}
-                <a href="/blog/how-to-turn-instagram-comments-into-dms" className="underline underline-offset-2 hover:text-foreground transition-colors">turning Instagram comments into DMs</a>,{' '}
-                <a href="/blog/instagram-dm-scripts-that-convert" className="underline underline-offset-2 hover:text-foreground transition-colors">DM scripts that convert</a>,{' '}
-                <a href="/blog/first-comment-keyword-trigger" className="underline underline-offset-2 hover:text-foreground transition-colors">setting up your first keyword trigger</a>, and{' '}
-                <a href="/blog/instagram-automation-mistakes" className="underline underline-offset-2 hover:text-foreground transition-colors">common automation mistakes to avoid</a>.
-                Automating stories too? See the{' '}
-                <a href="/blog/instagram-story-automation-guide" className="underline underline-offset-2 hover:text-foreground transition-colors">story automation guide</a>.
-              </p>
-              {/*
-                Body-content links into the comparison cluster. Before this, every
-                comparison page was reachable only from the footer, so the internal
-                link graph said all nine were equally unimportant. These are
-                descriptive anchors in prose, which is the part that counts.
-              */}
-              <p>
-                Weighing Liffio against something else? The{' '}
-                <a href="/compare" className="underline underline-offset-2 hover:text-foreground transition-colors">Instagram DM automation tools comparison</a>{' '}
-                covers the main options side by side, or go straight to{' '}
-                <a href="/manychat-alternative" className="underline underline-offset-2 hover:text-foreground transition-colors">ManyChat vs Liffio</a>,{' '}
-                <a href="/vs/linkdm" className="underline underline-offset-2 hover:text-foreground transition-colors">Liffio vs LinkDM</a>, or{' '}
-                <a href="/vs/zorcha" className="underline underline-offset-2 hover:text-foreground transition-colors">Liffio vs Zorcha</a>. If you are still deciding
-                whether any of this is safe for your account, read{' '}
-                <a href="/is-instagram-dm-automation-safe" className="underline underline-offset-2 hover:text-foreground transition-colors">is Instagram DM automation safe</a>.
-                Running client accounts instead of your own? See{' '}
-                <a href="/instagram-automation-for-agencies" className="underline underline-offset-2 hover:text-foreground transition-colors">Instagram automation for agencies</a>,
-                and for the mechanics themselves, the{' '}
-                <a href="/instagram-comment-to-dm" className="underline underline-offset-2 hover:text-foreground transition-colors">Instagram comment to DM guide</a>.
-              </p>
+        {/*
+          This block carries the body-content links into the comparison cluster
+          and the blog, so it is doing real work for internal linking. It used to
+          render as an unlabelled wall of small grey prose directly under
+          AboutSection, duplicating that section's own "About Liffio" label.
+
+          Restyled 2026-11-23, patterned on how Mailchimp and GitBook present a
+          links-only resources section: explanation on the left, grouped link
+          columns on the right, arrow affordance and divider rules so each link
+          reads as a destination rather than as running text.
+
+          Every link target and every anchor label is unchanged from the prose
+          version, deliberately: the anchors are what the internal-link work was
+          for, and the Nov 13 SEO deploy is still being measured.
+        */}
+        <section
+          aria-labelledby="more-on-dm-automation"
+          className="bg-[#fff7f7] border-t border-[#ffe4e6] py-12 sm:py-16 lg:py-20"
+        >
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-16">
+              <div className="lg:col-span-5">
+                <p className="text-xs font-bold uppercase tracking-widest text-[#f5184c] mb-3">
+                  More on Instagram DM automation
+                </p>
+                <h2
+                  id="more-on-dm-automation"
+                  className="text-2xl sm:text-3xl font-extrabold text-[#0a0a0a] mb-5"
+                  style={{ fontFamily: "var(--font-outfit,sans-serif)" }}
+                >
+                  How it works, and where to read more
+                </h2>
+                <div className="space-y-4 text-base leading-relaxed text-gray-600">
+                  <p>
+                    Liffio is an Instagram DM automation tool built for creators, coaches, and
+                    agencies who want to respond to audience interactions without doing it
+                    manually. When someone comments on a post, replies to a story, {FEATURE_WELCOME_DM ? "sends a DM containing a specific keyword, or follows an account" : "or sends a DM containing a specific keyword"}, Liffio
+                    sends a pre-written direct message automatically within 10 to 60 seconds.
+                  </p>
+                  <p>
+                    The tool connects through Instagram&apos;s official OAuth API, and no account
+                    password is stored or shared. All automations run inside Meta&apos;s permitted
+                    use guidelines. Pricing starts at $0 and scales to $549 per month for agencies
+                    managing multiple accounts. Liffio is built in India and works with Instagram
+                    accounts worldwide.
+                  </p>
+                  <p>
+                    <a
+                      href="/about"
+                      className="inline-flex items-center gap-1 font-semibold text-[#f5184c] hover:gap-2 transition-all"
+                    >
+                      Learn more about Liffio
+                      <span aria-hidden>&rarr;</span>
+                    </a>
+                  </p>
+                </div>
+              </div>
+
+              <div className="lg:col-span-7 grid gap-6 sm:gap-10 sm:grid-cols-2">
+                <div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-[#0a0a0a] mb-4">
+                    Guides
+                  </h3>
+                  <ul className="space-y-0">
+                    {[
+                      { href: "/blog/how-to-turn-instagram-comments-into-dms", label: "turning Instagram comments into DMs" },
+                      { href: "/blog/instagram-dm-scripts-that-convert", label: "DM scripts that convert" },
+                      { href: "/blog/first-comment-keyword-trigger", label: "setting up your first keyword trigger" },
+                      { href: "/blog/instagram-automation-mistakes", label: "common automation mistakes to avoid" },
+                      { href: "/blog/instagram-story-automation-guide", label: "story automation guide" },
+                    ].map((item) => (
+                      <li key={item.href} className="border-b border-[#ffe4e6] last:border-0">
+                        <a
+                          href={item.href}
+                          className="group flex items-center justify-between gap-3 py-2.5 sm:py-3 text-base text-gray-700 hover:text-[#f5184c] transition-colors"
+                        >
+                          <span>{item.label}</span>
+                          <span aria-hidden className="text-[#f5184c] opacity-0 group-hover:opacity-100 transition-opacity">
+                            &rarr;
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-[#0a0a0a] mb-4">
+                    Compare and decide
+                  </h3>
+                  <ul className="space-y-0">
+                    {[
+                      { href: "/compare", label: "Instagram DM automation tools comparison" },
+                      { href: "/manychat-alternative", label: "ManyChat vs Liffio" },
+                      { href: "/vs/linkdm", label: "Liffio vs LinkDM" },
+                      { href: "/vs/zorcha", label: "Liffio vs Zorcha" },
+                      { href: "/is-instagram-dm-automation-safe", label: "is Instagram DM automation safe" },
+                      { href: "/instagram-automation-for-agencies", label: "Instagram automation for agencies" },
+                      { href: "/instagram-comment-to-dm", label: "Instagram comment to DM guide" },
+                    ].map((item) => (
+                      <li key={item.href} className="border-b border-[#ffe4e6] last:border-0">
+                        <a
+                          href={item.href}
+                          className="group flex items-center justify-between gap-3 py-2.5 sm:py-3 text-base text-gray-700 hover:text-[#f5184c] transition-colors"
+                        >
+                          <span>{item.label}</span>
+                          <span aria-hidden className="text-[#f5184c] opacity-0 group-hover:opacity-100 transition-opacity">
+                            &rarr;
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </section>

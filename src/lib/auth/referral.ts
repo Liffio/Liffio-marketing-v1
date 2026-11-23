@@ -8,6 +8,34 @@ const TTL_MS = 90 * 24 * 60 * 60 * 1000;
 const isBrowser = typeof window !== 'undefined';
 const isValidCode = (code: string) => /^[a-zA-Z0-9]{3,20}$/.test(code.trim());
 
+/*
+  The referral code for THIS visit, in memory. Not storage: it dies with the tab,
+  so holding it needs no consent in any country.
+
+  🔴 WHY IT EXISTS. Everything else in this file is storage, and storage is gated
+  behind the cookie banner for an EU, EEA or UK visitor. Before this, a visitor
+  who landed on `/?ref=abc` and then rejected the banner, or simply ignored it,
+  lost the code outright, and the affiliate lost the credit even when the signup
+  happened seconds later in the same tab. That is attribution, which is money.
+
+  The parallel for the first-touch source is `holdFirstTouchInMemory` in
+  attribution/first-touch.ts. Same idea, same reason, for the code itself.
+
+  🚩 First hold wins, matching the first-click rule the Affiliate Program Policy
+  states. A later `?ref=` in the same tab does not overwrite an earlier one.
+*/
+let pendingReferralCode: string | null = null;
+
+export function holdReferralCodeInMemory(code: string | null | undefined): void {
+  if (pendingReferralCode) return;
+  const clean = code?.trim();
+  if (clean && isValidCode(clean)) pendingReferralCode = clean;
+}
+
+export function heldReferralCode(): string | null {
+  return pendingReferralCode;
+}
+
 function setWithTs(storage: Storage, code: string) {
   storage.setItem(REF_KEY, code);
   storage.setItem(REF_TS_KEY, Date.now().toString());
@@ -87,8 +115,10 @@ export function captureReferralFromUrl(search: string): string | null {
 
 export function getStoredReferralCode(): string | null {
   if (!isBrowser) return null;
-  try { return getIfFresh(sessionStorage) ?? getIfFresh(localStorage) ?? getClientCookieRef(); }
-  catch { return getClientCookieRef(); }
+  // The in-memory hold is last, so a stored code still wins, and it is present at
+  // all, so a visitor who never let anything be stored is still attributed.
+  try { return getIfFresh(sessionStorage) ?? getIfFresh(localStorage) ?? getClientCookieRef() ?? heldReferralCode(); }
+  catch { return getClientCookieRef() ?? heldReferralCode(); }
 }
 
 export function getReferralPayloadForRegister() {
@@ -96,12 +126,28 @@ export function getReferralPayloadForRegister() {
   const sessionRef = getIfFresh(sessionStorage);
   const localRef = getIfFresh(localStorage);
   const clientRef = getClientCookieRef();
-  const code = sessionRef ?? localRef ?? clientRef ?? undefined;
+  // 🚩 `heldReferralCode()` is the tail of this chain and the whole point of it:
+  // with the banner rejected or unanswered, the three above are all null and this
+  // is the only thing standing between the affiliate and an uncredited signup. It
+  // is reported as `referralCode` only; the three storage fields stay honest about
+  // what was actually in storage, because the backend reconciles them.
+  const code = sessionRef ?? localRef ?? clientRef ?? heldReferralCode() ?? undefined;
   return { referralCode: code, clientRef: clientRef ?? undefined, sessionRef: sessionRef ?? undefined, localRef: localRef ?? undefined };
 }
 
 export function clearStoredReferralCode() {
   if (!isBrowser) return;
+  /*
+    🔴 DELIBERATELY NOT the in-memory hold. Rejecting the banner rejects STORAGE,
+    which is the only thing consent is about and the only thing the banner copy
+    promises. A visitor who says no and then signs up in that same visit is still
+    credited to whoever sent them, from memory, and nothing is left behind when
+    the tab closes. `clearAttributionCookie` in attribution/first-touch.ts leaves
+    `pendingTouch` standing for exactly the same reason; see its comment there.
+
+    If you ever change this, change the banner copy in CookieConsent with it. The
+    two are one promise.
+  */
   try {
     sessionStorage.removeItem(REF_KEY);
     sessionStorage.removeItem(REF_TS_KEY);

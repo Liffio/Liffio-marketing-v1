@@ -10,6 +10,7 @@ import {
 import {
   captureReferralFromUrl,
   clearStoredReferralCode,
+  holdReferralCodeInMemory,
   readReferralCodeFromSearch,
 } from "@/lib/auth/referral";
 import {
@@ -98,6 +99,14 @@ export function CookieConsent() {
     let cancelled = false;
 
     pendingRef.current = readReferralCodeFromSearch(window.location.search);
+    /*
+      The same code, in module memory, where the rest of the app can reach it.
+      `pendingRef` is private to this component and dies with it; the held copy
+      is what `getStoredReferralCode` falls back to and what ReferralLinkCarrier
+      puts on the signup link. Rejecting the banner does not clear it, because
+      rejecting is about storage. See the comment on `holdReferralCodeInMemory`.
+    */
+    holdReferralCodeInMemory(pendingRef.current);
     // The landing page's touch, in memory until consent decides whether it may be stored. This
     // component mounts once per visit (root layout), so it is the page the visitor landed on.
     holdFirstTouchInMemory(captureFirstTouch({ href: window.location.href, referrer: document.referrer }));
@@ -186,9 +195,21 @@ export function CookieConsent() {
         >
           Cookies on liffio.com
         </h2>
+        {/*
+          🔴 THIS COPY IS A PROMISE THE CODE KEEPS. The old wording said the cookie
+          was how the affiliate gets credited, which made "Reject" read as "do not
+          credit them" and cost real commissions. It was also inaccurate: a
+          rejected visitor who signs up in the same visit IS credited, from the
+          in-memory hold in referral.ts and the ?ref= that ReferralLinkCarrier
+          puts on the signup link. Consent governs STORAGE, so the copy says
+          storage. If the memory hold is ever gated too, this paragraph is wrong
+          the same day.
+        */}
         <p className="mt-1.5 text-[13px] leading-relaxed text-gray-600">
-          We use a referral cookie to credit the affiliate who sent you here. It is not needed for
-          the site to work, so we only set it if you agree. Essential cookies stay on either way.{" "}
+          If someone recommended Liffio to you, we save a small code so they get credited when you
+          sign up. It costs you nothing. Say no and we still credit them for a signup you finish in
+          this visit, we just will not remember it afterwards. Essential cookies stay either
+          way.{" "}
           <a
             href="/cookie-policy"
             className="font-semibold text-[#f5184c] underline underline-offset-2 hover:text-[#b20d8f]"
@@ -211,7 +232,7 @@ export function CookieConsent() {
             aria-pressed={choice === "accepted"}
             className="flex-1 rounded-xl border border-[#0a0a0a] bg-[#0a0a0a] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#2a2a2a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f5184c]"
           >
-            Accept referral cookies
+            Save the referral code
           </button>
           <button
             type="button"
@@ -219,14 +240,14 @@ export function CookieConsent() {
             aria-pressed={choice === "rejected"}
             className="flex-1 rounded-xl border border-[#0a0a0a] bg-white px-4 py-2.5 text-sm font-semibold text-[#0a0a0a] transition-colors hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f5184c]"
           >
-            Reject referral cookies
+            Do not save it
           </button>
         </div>
 
         {choice ? (
           <p className="mt-3 text-[11px] text-gray-500">
-            Your current choice is to {choice === "accepted" ? "accept" : "reject"} referral
-            cookies. Choosing again replaces it.
+            Your current choice is {choice === "accepted" ? "to save" : "not to save"} the referral
+            code. Choosing again replaces it.
           </p>
         ) : null}
       </div>

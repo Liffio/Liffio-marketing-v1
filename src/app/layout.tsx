@@ -4,6 +4,7 @@ import { rootSeo } from "@/config/seo.config";
 import { SITE_URL } from "@/config/site.config";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/lib/seo/json-ld";
 import { CookieConsent } from "@/components/consent/CookieConsent";
+import { ReferralLinkCarrier } from "@/components/consent/ReferralLinkCarrier";
 import { DelegatedClicks } from "@/lib/analytics/DelegatedClicks";
 import { ScrollDepthTracker } from "@/lib/analytics/ScrollDepthTracker";
 import { IdentifyOnLoad } from "@/lib/analytics/IdentifyOnLoad";
@@ -89,6 +90,13 @@ export default function RootLayout({
           stored, and it renders the banner that asks. Cookie Policy 2.2.
         */}
         <CookieConsent />
+        {/*
+          Puts the ?ref= code on the signup link the visitor clicks. Consent gates
+          STORAGE, and every CTA here is a plain <a> that reloads the page, so
+          without this a rejected or unanswered banner means the affiliate loses a
+          signup that happened a minute later in the same tab.
+        */}
+        <ReferralLinkCarrier />
         <DelegatedClicks />
         <ScrollDepthTracker />
         <IdentifyOnLoad />
