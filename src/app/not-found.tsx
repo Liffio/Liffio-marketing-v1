@@ -1,6 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+
+/*
+  Without its own metadata this route inherited the root layout's
+  `robots: "index, follow"` AND rootSeo's homepage canonical, on top of the
+  `noindex` Next.js emits for not-found. Every 404 therefore served two
+  contradictory robots tags and told Google it was a duplicate of the
+  homepage. Fixed 2026-11-23 while clearing the index-coverage report.
+
+  `follow: true` is deliberate: the page lists real links and a crawler that
+  lands here should keep walking them. `canonical: null` removes the inherited
+  one rather than pointing a 404 at anything.
+*/
+export const metadata: Metadata = {
+  title: "Page not found | Liffio",
+  description: "This page does not exist or has been moved.",
+  robots: { index: false, follow: true },
+  alternates: { canonical: null },
+};
 
 export default function NotFound() {
   return (

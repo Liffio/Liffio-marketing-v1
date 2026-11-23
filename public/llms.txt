@@ -55,25 +55,25 @@ India pricing available via Razorpay in INR, incl. GST: Free ₹0, Starter ₹49
 
 ## Pages
 
-- Homepage: https://liffio.com/
-- Features overview: https://liffio.com/features
-- Pricing: https://liffio.com/pricing
-- Instagram comment-to-DM automation, what it is and how to set it up: https://liffio.com/instagram-comment-to-dm
-- Unlimited Instagram DMs, what is uncapped and what is not: https://liffio.com/unlimited-instagram-dms
-- Is Instagram DM automation safe, and what actually gets accounts restricted: https://liffio.com/is-instagram-dm-automation-safe
-- ManyChat alternative comparison: https://liffio.com/manychat-alternative
-- SendDM alternative comparison: https://liffio.com/senddm-alternative
-- Chatfuel alternative comparison: https://liffio.com/chatfuel-alternative
-- All comparisons hub: https://liffio.com/compare
-- Liffio vs ReplyRush: https://liffio.com/vs/replyrush
-- Liffio vs LinkDM: https://liffio.com/vs/linkdm
-- Liffio vs SuperProfile: https://liffio.com/vs/superprofile
-- Liffio vs Zorcha: https://liffio.com/vs/zorcha
-- Liffio vs InstaChamp: https://liffio.com/vs/instachamp
-- Blog: https://liffio.com/blog
-- About: https://liffio.com/about
-- Creators Program: https://liffio.com/creators-program (apply at https://app.liffio.com/creators-program). Accepted creators get Business plan features, chatbots included, with up to 250 automations and Liffio branding kept on
-- Affiliate Program: https://liffio.com/affiliate (50% of Net Revenue on every payment a referred workspace makes in the six months after its first payment; an annual payment is one payment, so it earns one commission on the full annual amount)
+- [Homepage](https://liffio.com/)
+- [Features overview](https://liffio.com/features)
+- [Pricing](https://liffio.com/pricing)
+- [Instagram comment-to-DM automation, what it is and how to set it up](https://liffio.com/instagram-comment-to-dm)
+- [Unlimited Instagram DMs, what is uncapped and what is not](https://liffio.com/unlimited-instagram-dms)
+- [Is Instagram DM automation safe, and what actually gets accounts restricted](https://liffio.com/is-instagram-dm-automation-safe)
+- [ManyChat alternative comparison](https://liffio.com/manychat-alternative)
+- [SendDM alternative comparison](https://liffio.com/senddm-alternative)
+- [Chatfuel alternative comparison](https://liffio.com/chatfuel-alternative)
+- [All comparisons hub](https://liffio.com/compare)
+- [Liffio vs ReplyRush](https://liffio.com/vs/replyrush)
+- [Liffio vs LinkDM](https://liffio.com/vs/linkdm)
+- [Liffio vs SuperProfile](https://liffio.com/vs/superprofile)
+- [Liffio vs Zorcha](https://liffio.com/vs/zorcha)
+- [Liffio vs InstaChamp](https://liffio.com/vs/instachamp)
+- [Blog](https://liffio.com/blog)
+- [About](https://liffio.com/about)
+- [Creators Program](https://liffio.com/creators-program) (apply at https://app.liffio.com/creators-program). Accepted creators get Business plan features, chatbots included, with up to 250 automations and Liffio branding kept on
+- [Affiliate Program](https://liffio.com/affiliate) (50% of Net Revenue on every payment a referred workspace makes in the six months after its first payment; an annual payment is one payment, so it earns one commission on the full annual amount)
 - Contact: support@liffio.com
 
 ## Blog articles

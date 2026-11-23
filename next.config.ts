@@ -17,6 +17,19 @@ const nextConfig: NextConfig = {
         destination: "/register",
         permanent: true,
       },
+      /*
+        Short legal paths. The real pages are at the long names, but /terms
+        and /privacy are what other sites, app stores and payment providers
+        link to by convention, and all four were returning 404 in Search
+        Console's index-coverage report on 2026-11-23. Nothing on this site
+        links to them; the inbound links are external and historical, which is
+        exactly why a redirect beats leaving them broken.
+      */
+      { source: "/terms", destination: "/terms-of-service", permanent: true },
+      { source: "/tos", destination: "/terms-of-service", permanent: true },
+      { source: "/privacy", destination: "/privacy-policy", permanent: true },
+      { source: "/cookies", destination: "/cookie-policy", permanent: true },
+      { source: "/refund", destination: "/refund-policy", permanent: true },
     ];
   },
   /*
