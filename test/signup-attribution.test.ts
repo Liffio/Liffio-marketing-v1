@@ -168,7 +168,7 @@ test("the request body for /auth/register carries attribution.utmSource = chatgp
 test("email reasons follow the form's own rules", () => {
   assert.equal(emailErrorReason("not-an-email"), "email_invalid");
   assert.equal(emailErrorReason("a+x@outlook.com"), "email_plus_blocked");
-  assert.equal(emailErrorReason("a.b@gmail.com"), "gmail_dots_blocked");
+  assert.equal(emailErrorReason("a.b@gmail.com"), null);
   assert.equal(emailErrorReason("a.b@company.com"), null);
   assert.equal(emailErrorReason("ab@gmail.com"), null);
 });
@@ -188,10 +188,10 @@ test("form_error carries form, field, reason and nothing a visitor typed", async
   try {
     const { trackFormError } = await import("@/lib/analytics/analytics");
     const typed = ["secret.person@gmail.com", "Hunter2!", "Jane Q Public"];
-    trackFormError("register", { field: "email", reason: emailErrorReason(typed[0])! });
+    trackFormError("register", { field: "email", reason: emailErrorReason("not-an-email")! });
     trackFormError("register", { field: "server", reason: serverErrorReason(409) });
     assert.deepEqual(sent, [
-      { event: "form_error", data: { form: "register", field: "email", reason: "gmail_dots_blocked" } },
+      { event: "form_error", data: { form: "register", field: "email", reason: "email_invalid" } },
       { event: "form_error", data: { form: "register", field: "server", reason: "server_409" } },
     ]);
     for (const { data } of sent) {
@@ -210,11 +210,18 @@ test("form_error carries form, field, reason and nothing a visitor typed", async
   }
 });
 
-// ── Section 13: the Gmail dot rule while backend Section 6 is not deployed ───
+// ── Section 13.3: the Gmail dot rule is gone; the API's 409 handles a second spelling ─
 
-test("Gmail dots are still refused, with the shorter message; other domains' dots are fine", () => {
-  assert.equal(signupEmailError("a.b@gmail.com"), "Use your Gmail address without dots, Gmail ignores them anyway");
-  assert.equal(signupEmailError("a.b@googlemail.com"), "Use your Gmail address without dots, Gmail ignores them anyway");
+test("a.b@gmail.com submits without a client error; other domains' dots still fine; + still refused", () => {
+  assert.equal(signupEmailError("a.b@gmail.com"), null);
+  assert.equal(signupEmailError("a.b@googlemail.com"), null);
   assert.equal(signupEmailError("a.b@company.com"), null);
   assert.equal(signupEmailError("ab@gmail.com"), null);
+  assert.match(signupEmailError("a+x@gmail.com") ?? "", /\+/);
+});
+
+test("the register form turns the API's 409 into 'already has an account, log in instead'", async () => {
+  const { readFileSync } = await import("node:fs");
+  const form = readFileSync("src/app/(auth-v2)/register/register-form.tsx", "utf8");
+  assert.match(form, /status === 409\s*\?\s*'This email already has an account\. Log in instead\.'/);
 });

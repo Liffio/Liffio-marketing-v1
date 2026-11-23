@@ -48,17 +48,15 @@ export type FormErrorReason = (typeof FORM_ERROR_REASONS)[number];
 
 export type FormErrorDetail = { field: FormErrorField; reason: FormErrorReason };
 
-const GMAIL_DOMAINS = new Set(['gmail.com', 'googlemail.com']);
-
 /**
- * Which rule `signupEmailError` refused this address under. Mirrors its order: invalid, then "+",
- * then Gmail dots. Returns null when the address passes.
+ * Which rule `signupEmailError` refused this address under. Mirrors its order: invalid, then "+".
+ * Returns null when the address passes. (`gmail_dots_blocked` stays in the enum so older events
+ * still type-check; the form no longer raises it.)
  */
 export function emailErrorReason(email: string): FormErrorReason | null {
   const parts = splitEmail(email);
   if (!parts) return 'email_invalid';
   if (parts.local.includes('+')) return 'email_plus_blocked';
-  if (GMAIL_DOMAINS.has(parts.domain) && parts.local.includes('.')) return 'gmail_dots_blocked';
   return null;
 }
 
